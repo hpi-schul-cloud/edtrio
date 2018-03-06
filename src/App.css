@@ -1,0 +1,54 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: rgb(238, 238, 238);
+}
+
+.handle {
+  text-align: center;
+  width: 100%;
+  cursor: move;
+  color: #CCC;
+}
+
+.plugin .handle span {
+  color: transparent;
+}
+
+.plugin:hover .handle span {
+  color: #ccc;
+}
+
+.plugin:hover .handle:hover span {
+  color: rgb(97, 97, 97);
+}
+
+.plugin {
+  border-width: 0 5px 0 5px;
+  border-style: solid;
+  border-color: transparent;
+}
+
+.plugin .inner {
+  padding: 0 15px 20px 15px;
+}
+
+.toolbar {
+  padding: 0 15px;
+}
+
+.toolbar .menu.icons {
+  padding: 15px;
+  text-align: right;
+  color: #ccc;
+}
+
+.toolbar .menu.icons span:hover {
+  color: rgb(97, 97, 97);
+}
+
+.plugin.selected {
+  border-left: solid 5px rgb(97, 97, 97);
+  border-bottom: 1px solid rgba(204, 204, 204, 0.5);
+}
