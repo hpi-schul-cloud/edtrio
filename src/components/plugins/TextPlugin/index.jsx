@@ -1,5 +1,6 @@
 import { Editor } from 'slate-react'
 import { Value } from 'slate'
+import Plain from 'slate-plain-serializer'
 
 import React from 'react'
 import { isKeyHotkey } from 'is-hotkey'
@@ -38,9 +39,15 @@ class TextPlugin extends React.Component {
      *
      * @type {Object}
      */
-
-    state = {
-        value: Value.fromJSON(this.props.content), //TODO alternative if content empty
+    constructor(props) {
+        super(props)
+        
+        const initialValue = this.props.content
+            ? Value.fromJSON(this.props.content)
+            : Plain.deserialize('')
+        this.state = {
+            value: initialValue,
+        }
     }
 
     /**
@@ -261,7 +268,7 @@ class TextPlugin extends React.Component {
         return (
             <div className="editor">
                 <Editor
-                    placeholder="Enter some rich text..."
+                    placeholder="Enter some text..."
                     value={this.state.value}
                     onChange={this.onChange}
                     onKeyDown={this.onKeyDown}

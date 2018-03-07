@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
+import uuidv4 from 'uuid/v4'
 
 import initialContent from './dummyContent.json'
+import AddPlugin from './AddPlugin'
 
 import TextPlugin from './plugins/TextPlugin'
 import DummyPlugin from './plugins/DummyPlugin'
@@ -10,6 +12,10 @@ import MissingPlugin from './plugins/MissingPlugin'
 class Editor extends Component {
     constructor(props) {
         super(props)
+        this.pluginMapping = {
+            'sc/text': TextPlugin,
+            'dummy/text': DummyPlugin,
+        }
         this.state = {
             contentElements: initialContent
         }
@@ -21,20 +27,21 @@ class Editor extends Component {
      * @returns {plugin} Resolved plugin or `ErrorPlugin` if none was found
      */
     _resolvePlugin(pluginType) {
-        const mapping = {
-            'sc/text': TextPlugin,
-            'dummy/text': DummyPlugin,
-        }
-
-        if(mapping.hasOwnProperty(pluginType)) {
-            return mapping[pluginType]
+        if(this.pluginMapping.hasOwnProperty(pluginType)) {
+            return this.pluginMapping[pluginType]
         }
         
         return MissingPlugin
     }
 
+    /**
+     * Persist the content changes of a plugin into
+     * the global Editor document state
+     * @param {object} newContent JSON object of new content
+     * @param {string} pluginId ID of plugin that has changed content
+     */
     _handleContentChange(newContent, pluginId) {
-        let oldContentElements = this.state.contentElements
+        let oldContentElements = this.state.contentElements.slice()
 
         // 1. get id of element
         let indexOfPlugin = -1
@@ -54,18 +61,40 @@ class Editor extends Component {
         })
     }
 
+    /**
+     * Add a plugin to the current document by name
+     * @param {string} pluginName Name to be resolved via this.pluginMapping
+     */
+    _addPlugin(pluginName) {
+        const newElement = {
+            type: pluginName,
+            id: uuidv4(),
+            content: null
+        }
+        this.setState({
+            contentElements: [...this.state.contentElements, newElement]
+        })
+    }
+
     render() {
         return (
-            <div style={{ width: 800, padding: 15, margin: '0 auto' }}>
-                {this.state.contentElements.map((contentElement, i) => {
-                    const Plugin = this._resolvePlugin(contentElement.type)
-                    return (<Plugin key={i}
+            <React.Fragment>
+                <div style={{ width: 800, padding: 15, margin: '0 auto' }}>
+                    {this.state.contentElements.map((contentElement, i) => {
+                        const Plugin = this._resolvePlugin(contentElement.type)
+                        return (<Plugin
+                                    key={i}
                                     id={contentElement.id}
                                     type={contentElement.type}
                                     content={contentElement.content}
                                     saveToEditor={this._handleContentChange.bind(this)} />)
-                })}
-            </div>
+                    })}
+                </div>
+                <AddPlugin
+                    open={this.state.addPluginOpen}
+                    allPlugins={this.pluginMapping}
+                    addPlugin={this._addPlugin.bind(this)} />
+            </React.Fragment>
         )
     }
 }
