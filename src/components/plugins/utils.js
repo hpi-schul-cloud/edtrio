@@ -7,7 +7,12 @@ export default function makePlugin(WrappedComponent) {
         constructor(props) {
             super(props)
             this.state = {
-                editable: false
+                editable: false,
+                content: props.content
+            }
+
+            if(!props.id) {
+                throw Error('Plugin id missing!\nEvery plugin needs to have a unique id.')
             }
 
             this._setWrapperRef = this._setWrapperRef.bind(this)
@@ -48,14 +53,23 @@ export default function makePlugin(WrappedComponent) {
             }
             
             // we are outside
+            this._propagateContentChangeToEditor()
             this.setState({
                 editable: false
             })
             document.removeEventListener('click', this._handleOutsideClick, false)
         }
+
+        _propagateContentChangeToEditor() {
+            this.props.saveToEditor({
+                type: this.props.type,
+                id: this.props.id,
+                content: this.state.content
+            }, this.props.id)
+        }
         
         render() {
-            const { editable } = this.state
+            const { editable, content } = this.state
 
             return (
                 <div ref={this._setWrapperRef}>
@@ -68,7 +82,10 @@ export default function makePlugin(WrappedComponent) {
                             <span className="material-icons">drag_handle</span>
                         </div>
                         <div className="inner">
-                            <WrappedComponent {...this.props} editable={editable} />
+                            <WrappedComponent
+                                editable={editable}
+                                content={content}
+                                setContent={newContent => this.setState({content: newContent})} />
                         </div>
                         {
                             editable && (

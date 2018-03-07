@@ -33,14 +33,37 @@ class Editor extends Component {
         return MissingPlugin
     }
 
+    _handleContentChange(newContent, pluginId) {
+        let oldContentElements = this.state.contentElements
+
+        // 1. get id of element
+        let indexOfPlugin = -1
+        oldContentElements.filter((element, index) => {
+            if(element.id === pluginId) {
+                indexOfPlugin = index
+            }
+        })
+
+        // 2. manipulate old state
+        oldContentElements[indexOfPlugin] = newContent
+        const newContentElements = oldContentElements
+        
+        // 3. save new state
+        this.setState({
+            contentElements: newContentElements
+        })
+    }
+
     render() {
         return (
             <div style={{ width: 800, padding: 15, margin: '0 auto' }}>
                 {this.state.contentElements.map((contentElement, i) => {
                     const Plugin = this._resolvePlugin(contentElement.type)
                     return (<Plugin key={i}
+                                    id={contentElement.id}
                                     type={contentElement.type}
-                                    content={contentElement.content} />)
+                                    content={contentElement.content}
+                                    saveToEditor={this._handleContentChange.bind(this)} />)
                 })}
             </div>
         )

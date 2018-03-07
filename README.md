@@ -6,7 +6,7 @@ Having one global state enables consistent data across all plugins and simplifie
 This does in no way restrict a component from having its own local state. Permanent changes to the content [have to follow a specific schema](#dealing-with-the-plugins-content) though.
 
 ## Create a plugin
-Simple! Just create a regular React Component and apply the `makePlugin()`-[HOC](https://reactjs.org/docs/higher-order-components.html) at the very end.\
+Simple! Just create a regular React Component and apply the `makePlugin()` [HOC](https://reactjs.org/docs/higher-order-components.html) at the very end.\
 More information may be found in `/src/components/plugins/DummyPlugin.jsx`.
 
 ### Example
@@ -27,7 +27,7 @@ export default makePlugin(ExamplePlugin)
 ```
 
 ## Checking whether the plugin is editable
-After applying the `makePlugin`-HOC, each plugin gets supplied an `this.props.editable`. Simply listen to that and you'll be able to detect whether the plugin is currently editable.
+After applying the `makePlugin` HOC, each plugin gets supplied an `this.props.editable`. Simply listen to that and you'll be able to detect whether the plugin is currently editable.
 
 ### Example
 ```javascript

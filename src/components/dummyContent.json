@@ -1,6 +1,7 @@
 [
     {
         "type": "sc/text",
+        "id": "0313d5ae-1dec-4309-8437-aabfb074044f",
         "content": {
             "document": {
                 "nodes": [
@@ -110,10 +111,7 @@
     },
     {
         "type": "dummy/text",
-        "content": null
-    },
-    {
-        "type": "doesnt/exist",
+        "id": "9a4b3def-0bc0-4f54-8bf2-d64ce2befa53",
         "content": null
     }
 ]
