@@ -21,7 +21,7 @@ class DummyPlugin extends Component {
     }
 
     handleChange(e) {
-        this.props.handleX({
+        this.props.setContent({
             ...this.props.xIn,
             [e.target.name]: e.target.value
         })
@@ -30,7 +30,7 @@ class DummyPlugin extends Component {
     
     render() {
         const { val, editable } = this.props
-        const pxIn = this.props.xIn || {
+        const pxIn = this.props.content || {
             lx: 'XXX',
             ly: 'YYY'
         }

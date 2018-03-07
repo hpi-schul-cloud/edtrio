@@ -9,7 +9,6 @@ export default function makePlugin(WrappedComponent) {
             this.state = {
                 editable: false,
                 content: props.content,
-                x: props.content
             }
 
             if(!props.id) {
@@ -70,9 +69,9 @@ export default function makePlugin(WrappedComponent) {
         }
 
         _setContent(newContent) {
-            console.log('henlo there id like to change')
-            console.log(newContent)
-            //this.setState({content: newContent})
+            this.setState({
+                content: newContent
+            })
         }
 
         _propagateContentChangeToEditor() {
@@ -80,20 +79,14 @@ export default function makePlugin(WrappedComponent) {
             this.props.saveToEditor({
                 type: this.props.type,
                 id: this.props.id,
-                content: this.state.x
+                content: this.state.content
             }, this.props.id)
         }
 
         componentWillReceiveProps(newProps) {
             console.log(newProps.content)
             this.setState({
-                x: newProps.content
-            })
-        }
-
-        handleX(newX) {
-            this.setState({
-                x: newX
+                content: newProps.content
             })
         }
         
@@ -114,9 +107,7 @@ export default function makePlugin(WrappedComponent) {
                             <WrappedComponent
                                 editable={editable}
                                 content={content}
-                                xIn={this.state.x}
-                                handleX={this.handleX.bind(this)}
-                                setContent={(newC) => this._setContent(newC)} />
+                                setContent={this._setContent.bind(this)} />
                         </div>
                         {
                             editable && (
