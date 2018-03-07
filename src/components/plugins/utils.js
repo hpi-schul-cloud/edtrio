@@ -60,6 +60,7 @@ export default function makePlugin(WrappedComponent) {
             document.removeEventListener('click', this._handleOutsideClick, false)
         }
 
+        //COMMENT to unregister outclickhandler, !editable properly and then call upper
         _handleRemove() {
             this.setState({
                 editable: false
@@ -68,12 +69,14 @@ export default function makePlugin(WrappedComponent) {
             this.props.handleRemovePlugin(this.props.id)
         }
 
+        //COMMENT to set local plugin state
         _setContent(newContent) {
             this.setState({
                 content: newContent
             })
         }
 
+        //COMMENT to bubble up to Editor state
         _propagateContentChangeToEditor() {
             this.props.saveToEditor({
                 type: this.props.type,
@@ -82,6 +85,8 @@ export default function makePlugin(WrappedComponent) {
             }, this.props.id)
         }
 
+        //COMMENT to keep in sync with editor state
+        //(mostly when plugin deleted)
         componentWillReceiveProps(newProps) {
             console.log(newProps.content)
             this.setState({

@@ -71,6 +71,7 @@ class Editor extends Component {
         })
     }
 
+    //COMMENT deletes a plugin
     _removePlugin(pluginId) {
         const indexOfPlugin = this.state.contentElements.findIndex(e => e.id === pluginId)
         let newContentElements = this.state.contentElements.slice()
