@@ -270,7 +270,7 @@ class TextPlugin extends React.Component {
                 <Editor
                     placeholder="Enter some text..."
                     value={this.state.value}
-                    onChange={this.props.setContent}
+                    onChange={this.onChange}
                     onKeyDown={this.onKeyDown}
                     renderNode={this.renderNode}
                     renderMark={this.renderMark}

@@ -75,7 +75,6 @@ class Editor extends Component {
         const indexOfPlugin = this.state.contentElements.findIndex(e => e.id === pluginId)
         let newContentElements = this.state.contentElements.slice()
         if(indexOfPlugin === -1) {
-            alert('oi')
             return
         }
         newContentElements.splice(indexOfPlugin, 1)

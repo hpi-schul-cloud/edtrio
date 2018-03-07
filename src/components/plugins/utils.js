@@ -75,7 +75,6 @@ export default function makePlugin(WrappedComponent) {
         }
 
         _propagateContentChangeToEditor() {
-            console.log('propapgating up')
             this.props.saveToEditor({
                 type: this.props.type,
                 id: this.props.id,

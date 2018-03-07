@@ -25,7 +25,6 @@ class DummyPlugin extends Component {
             ...this.props.xIn,
             [e.target.name]: e.target.value
         })
-        //this.props.handleX(e.target.value)
     }
     
     render() {
