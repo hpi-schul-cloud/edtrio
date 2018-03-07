@@ -9,18 +9,50 @@ import makePlugin from './utils'
  * mode or not.
  * **DEVELOPMENT ONLY**
  */
-class TextPlugin extends Component {
+class DummyPlugin extends Component {
+    constructor(props) {
+        super(props)
+        this.handleChange = this.handleChange.bind(this)
+
+        this.state = {
+            lx: 'lx',
+            ly: 'ly'
+        }
+    }
+
+    handleChange(e) {
+        this.props.handleX({
+            ...this.props.xIn,
+            [e.target.name]: e.target.value
+        })
+        //this.props.handleX(e.target.value)
+    }
+    
     render() {
         const { val, editable } = this.props
+        const pxIn = this.props.xIn || {
+            lx: 'XXX',
+            ly: 'YYY'
+        }
         
         return (
-            <div>
+            <React.Fragment>
                 <div>unstyled</div>
                 <h2>{val || 'Static dummy text plugin'}</h2>
                 <div>{`Editable: ${editable}`}</div>
-            </div>
+                <input
+                    type="text"
+                    name="lx"
+                    value={pxIn.lx}
+                    onChange={this.handleChange} />
+                <input
+                    type="text"
+                    name="ly"
+                    value={pxIn.ly}
+                    onChange={this.handleChange} />
+            </React.Fragment>
         )
     }
 }
 
-export default makePlugin(TextPlugin)
+export default makePlugin(DummyPlugin)

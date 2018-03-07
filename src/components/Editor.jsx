@@ -44,12 +44,7 @@ class Editor extends Component {
         let oldContentElements = this.state.contentElements.slice()
 
         // 1. get id of element
-        let indexOfPlugin = -1
-        oldContentElements.filter((element, index) => {
-            if(element.id === pluginId) {
-                indexOfPlugin = index
-            }
-        })
+        const indexOfPlugin = this.state.contentElements.findIndex(e => e.id === pluginId)
 
         // 2. manipulate old state
         oldContentElements[indexOfPlugin] = newContent
@@ -76,6 +71,20 @@ class Editor extends Component {
         })
     }
 
+    _removePlugin(pluginId) {
+        const indexOfPlugin = this.state.contentElements.findIndex(e => e.id === pluginId)
+        let newContentElements = this.state.contentElements.slice()
+        if(indexOfPlugin === -1) {
+            alert('oi')
+            return
+        }
+        newContentElements.splice(indexOfPlugin, 1)
+
+        this.setState({
+            contentElements: newContentElements
+        })
+    }
+
     render() {
         return (
             <React.Fragment>
@@ -87,6 +96,7 @@ class Editor extends Component {
                                     id={contentElement.id}
                                     type={contentElement.type}
                                     content={contentElement.content}
+                                    handleRemovePlugin={this._removePlugin.bind(this)}
                                     saveToEditor={this._handleContentChange.bind(this)} />)
                     })}
                 </div>

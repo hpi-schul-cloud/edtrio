@@ -8,7 +8,8 @@ export default function makePlugin(WrappedComponent) {
             super(props)
             this.state = {
                 editable: false,
-                content: props.content
+                content: props.content,
+                x: props.content
             }
 
             if(!props.id) {
@@ -60,12 +61,40 @@ export default function makePlugin(WrappedComponent) {
             document.removeEventListener('click', this._handleOutsideClick, false)
         }
 
+        _handleRemove() {
+            this.setState({
+                editable: false
+            })
+            document.removeEventListener('click', this._handleOutsideClick, false)
+            this.props.handleRemovePlugin(this.props.id)
+        }
+
+        _setContent(newContent) {
+            console.log('henlo there id like to change')
+            console.log(newContent)
+            //this.setState({content: newContent})
+        }
+
         _propagateContentChangeToEditor() {
+            console.log('propapgating up')
             this.props.saveToEditor({
                 type: this.props.type,
                 id: this.props.id,
-                content: this.state.content
+                content: this.state.x
             }, this.props.id)
+        }
+
+        componentWillReceiveProps(newProps) {
+            console.log(newProps.content)
+            this.setState({
+                x: newProps.content
+            })
+        }
+
+        handleX(newX) {
+            this.setState({
+                x: newX
+            })
         }
         
         render() {
@@ -85,14 +114,20 @@ export default function makePlugin(WrappedComponent) {
                             <WrappedComponent
                                 editable={editable}
                                 content={content}
-                                setContent={newContent => this.setState({content: newContent})} />
+                                xIn={this.state.x}
+                                handleX={this.handleX.bind(this)}
+                                setContent={(newC) => this._setContent(newC)} />
                         </div>
                         {
                             editable && (
                                 <div className="toolbar">
                                     <Divider />
                                     <div className="menu icons">
-                                        <span className="material-icons">delete</span>
+                                        <span
+                                            className="material-icons"
+                                            onClick={this._handleRemove.bind(this)}>
+                                            delete
+                                        </span>
                                         <span className="material-icons">hot_tub</span>
                                         <span className="material-icons">info</span>
                                     </div>
