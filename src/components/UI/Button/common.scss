@@ -1,0 +1,18 @@
+@import "./../colors";
+
+.btn {
+    cursor: pointer;
+
+    color: #fff;
+    background-color: $main-color;
+
+    font-weight: bold;
+
+    box-shadow: 0px 2px 5px 1px #aaa;
+
+    transition: all 320ms ease;
+
+    &:hover {
+        background-color: lighten($main-color, 5%);
+    }
+}

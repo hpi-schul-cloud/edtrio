@@ -1,0 +1,69 @@
+
+.plugin {
+    border-width: 0 5px 0 5px;
+    border-style: solid;
+    border-color: transparent;
+
+    &:hover {
+        & > .handle {
+            & > span {
+                color: #ccc;
+            }
+
+            &:hover {
+                & > span {
+                    color: rgb(97, 97, 97);
+                }
+            }
+        }
+    }
+}
+.selected {
+    border-left: solid 5px rgb(97, 97, 97);
+    border-bottom: 1px solid rgba(204, 204, 204, 0.5);
+}
+
+.inner {
+    padding: 0 15px 20px 15px;
+}
+
+.handle {
+    text-align: center;
+    width: 100%;
+    cursor: move;
+    color: #CCC;
+
+    & > span {
+        color: transparent;
+    }
+
+    &:hover {
+        & > span {
+            color: #ccc;
+        }
+    }
+}
+
+.icons {
+    padding: 15px;
+    text-align: right;
+    color: #ccc;
+}
+
+.toolbar {
+    padding: 0 15px;
+
+    & > .menu.icons span:hover {
+        color: rgb(97, 97, 97);
+    }
+}
+
+.action_icon {
+    cursor: pointer;
+
+    transition: color 300ms ease;
+    
+    &:hover {
+        color: #888;
+    }
+}

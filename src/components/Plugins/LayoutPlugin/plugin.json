@@ -1,0 +1,6 @@
+{
+    "name": "Layout Plugin",
+    "version": "0.1.0",
+    "type": "GRID",
+    "description": "Plugin zum Erstellen von Layouts"
+}
