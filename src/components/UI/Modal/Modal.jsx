@@ -7,14 +7,14 @@ export default class Modal extends Component {
 
     componentWillReceiveProps({ open }) {
         if(open) {
-            document.body.classList.toggle(styles.blur);
-
             this.wrapper.classList.remove(`${styles.modal_wrapper_inactive}`);
             this.wrapper.classList.add(`${styles.modal_wrapper_active}`);
         } else {
             this.wrapper.classList.remove(`${styles.modal_wrapper_active}`);
             this.wrapper.classList.add(`${styles.modal_wrapper_inactive}`);
         }
+
+        document.body.classList.toggle(styles.blur);
     }
 
     render() {

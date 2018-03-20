@@ -18,6 +18,8 @@ import LinePlugin from "./../Plugins/LinePlugin";
 
 import styles from "./styles.scss";
 
+let id_count = 0;
+
 class Editor extends Component {
     constructor(props) {
         super(props)
@@ -40,37 +42,43 @@ class Editor extends Component {
      * @returns {plugin} Resolved plugin or `ErrorPlugin` if none was found
      */
     _resolvePlugin(plugin) {
-        if(Object.keys(plugin).length > 0) {
-            return (this.pluginMapping.find(({ info }) => info.name == plugin.name ) || MissingPlugin).Plugin;
-        } 
+        return (this.pluginMapping.find(({ info }) => info.name == plugin.name ) || MissingPlugin).Plugin;
     }
 
     /**
      * Add a plugin to the current document by name
      * @param {string} name Name to be resolved via this.pluginMapping
      */
-    _addPlugin({ name, type }) {
-        const plugin = new Plugin(name, type);
+    _addPlugin({ name, type, options }) {
+        const plugin = new Plugin({ 
+                        name, 
+                        type,
+                        id  : id_count,
+                    }, options);
+
+        id_count++;
 
         this.props.addPlugin(plugin);
         this.props.selectPlugin(plugin.id);
     }
 
     render() {
-        const { loaded } = this.props.plugin;
+        const { lookup } = this.props.plugin;
         const { addPluginOpen } = this.state;
 
         return (
             <React.Fragment>
                 <div className={styles.editor}>
-                    {loaded.map((plugin) => {
+                    {Object.values(lookup).map((plugin) => {
                         const Module = this._resolvePlugin(plugin);
 
-                        return (<Module
+                        return (!Number.isInteger(plugin.parent) && <Module
                                     key={plugin.id}
                                     id={plugin.id} 
-                                    children={Array.from(plugin.childs, (el) => this._resolvePlugin(el))}/>)
-                    })}
+                                    /*children={Array.from(plugin.childs, (el) => this._resolvePlugin(el))}*//>)
+                    })
+                    
+                    }
                 </div>
                 
                 <AddPlugin

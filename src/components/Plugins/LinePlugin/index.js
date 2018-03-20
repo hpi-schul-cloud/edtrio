@@ -4,9 +4,9 @@ import Loadable from 'react-loadable';
 import info from "./plugin.json";
 
 const Plugin = Loadable({
-    loader: () => import("./HorizontalLinePlugin"),
+    loader: () => import("./LinePlugin"),
     loading: () => (
-        <p>Lädt</p>
+        <p>Lädt..</p>
     )
 });
 

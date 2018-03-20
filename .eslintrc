@@ -12,7 +12,6 @@
         "prefer-const": "error",
         "no-var": "error",
         "no-new-object": "error",
-        "object-shorthand": ["error", "always"],
-        "no-array-constructor": "error"
+        "object-shorthand": ["error", "always"]
     }
 }

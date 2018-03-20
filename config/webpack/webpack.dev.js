@@ -6,7 +6,7 @@ const styles = require("./parts/webpack.style");
 module.exports = () => {
     return merge(
         {
-            devtool: "cheap-source-map"  
+            devtool: "cheap-source-map",
         }
     )
 }

@@ -15,6 +15,13 @@ import types from "./../Plugins/types";
 
 import styles from "./styles.scss";
 
+import {
+    dev_mode,
+    editable,
+    plugin_props,
+    t,
+} from "./selectors";
+
 const collect = (connect, monitor) => ({
     connectDragSource: connect.dragSource(),
     connectDragPreview: connect.dragPreview(),
@@ -48,9 +55,9 @@ export default function makePlugin(WrappedComponent, info, options = {}) {
             const { 
                 id, 
                 dev,
+                //childs,
                 content,
                 editable,
-                children,
                 saveContent, 
 
                 connectDragSource, 
@@ -70,7 +77,7 @@ export default function makePlugin(WrappedComponent, info, options = {}) {
                         </div>}
                             <WrappedComponent
                                 id={id}
-                                children={children}
+                                //childs={childs}
                                 editable={editable}
                                 content={content}
                                 saveContent={(content) => saveContent(id, content)} />
@@ -94,15 +101,12 @@ export default function makePlugin(WrappedComponent, info, options = {}) {
     }
 
     //refactor get_plugin __ all
-    const mapStateToProps = ({ plugin, env }, { id }) => {
-        const { parent, child } = Plugin.get_plugin(plugin.loaded, id);
-
-        return {
-            dev: env === "production" ? false : true, 
-            editable: plugin.active === id,
-            ...(Number.isInteger(child) ? plugin.loaded[parent].childs[child] : plugin.loaded[parent]),
-        }
-    };
+    const mapStateToProps = (state, { id }) => ({
+        dev: dev_mode(state), 
+        editable: editable(state, id),
+        //childs: state.plugin.lookup[id].childs
+        //...plugin_props(state, Plugin.get_plugin(state.plugin.loaded, id))
+    });
 
     const mapDispatchToProps = dispatch => ({
         selectPlugin: id => {

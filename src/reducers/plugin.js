@@ -17,43 +17,24 @@ import Plugin from "./../models/Plugin";
 
 const default_state = {
     active: "",
-    loaded: []
+    lookup: {},
 };
 
-//refactor
-const remove_plugin = (arr, id) => {
-    const { parent, child } = Plugin.get_plugin(arr, id);
+const deletePlugin = (lookup, key) => {
+    let start  = lookup[key];
+    let parent = [start];
 
-    if(Number.isInteger(child)) {
-        arr[parent].childs.splice(child, 1, {});
-    } else {
-        arr.splice(parent, 1);
+    //delete parent if exists
+    if(start.parent)
+        lookup[start.parent].childs.filter(childs => childs !== start.id);
+
+    while(parent.length > 0) {
+        start = parent.shift();
+
+        parent.push(...start.childs);
+
+        delete lookup[start.id];
     }
-}
-
-const set_content = (arr, id, content) => {
-    const { parent, child } = Plugin.get_plugin(arr, id);
-
-    if(Number.isInteger(child)) {
-        arr[parent].childs[child].content = content;
-    } else {
-        arr[parent].content = content;
-    }
-}
-
-const move_plugin = (arr, active, new_position, slot) => {
-    let plugin;
-    const { parent, child } = Plugin.get_plugin(arr, active);
-
-    if(Number.isInteger(child)) {
-        plugin = arr[parent].childs.splice(child, 1, {});
-    } else {
-        plugin = arr.splice(parent, 1);
-    }
-
-    const pos = Plugin.get_plugin(arr, new_position).parent;
-
-    arr[pos].childs[slot] = plugin[0];
 }
 
 const plugin = (state, action) => {
@@ -61,33 +42,46 @@ const plugin = (state, action) => {
         case SELECT_PLUGIN: 
             return {
                 active: action.id,
-                loaded: state.loaded,
+                lookup: state.lookup,
             }
         case LOAD_PLUGIN:
             return {
                 active: "",
-                loaded: [...state.loaded, action.plugin],
+                lookup: {
+                    ...state.lookup,
+                    [action.plugin.id]: action.plugin,
+                }
             }
         case REMOVE_PLUGIN:
-            remove_plugin(state.loaded, action.id);
+            deletePlugin(state.lookup, action.id);
 
             return {
                 active: "",
-                loaded: state.loaded,
+                lookup: state.lookup,
             }
         case SET_CONTENT:
-            set_content(state.loaded, action.id, action.content);
+            state.lookup[action.id].content = action.content;
 
             return {
                 active: state.active,
-                loaded: state.loaded,
+                lookup: state.lookup,
             }
         case MOVE_PLUGIN:
-            move_plugin(state.loaded, state.active, action.id, action.slot);
+            const dest = state.lookup[action.id];
+            const src  = state.lookup[state.active];
+            const parent = src.parent;
+
+            //delete from old slot
+            if(Number.isInteger(parent))
+                state.lookup[parent].childs[src.slot] = null;
+
+            src.slot = action.slot;
+            dest.childs[action.slot] = src.id;
+            src.parent = dest.id;
 
             return {
                 active: state.active,
-                loaded: state.loaded,
+                lookup: state.lookup,
             }
         default:
             return default_state;

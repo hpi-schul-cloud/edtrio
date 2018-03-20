@@ -9,16 +9,30 @@ import DropSlot from "./DropSlot";
 import styles from "./styles.scss";
 import info   from "./plugin.json";
 
+import DummyPlugin from './../DummyPlugin';
+import MissingPlugin from './../MissingPlugin';
+import LinePlugin from "./../LinePlugin";
+
 class LayoutPlugin extends Component {
     constructor(props) {
         super(props);
+
+        //Component in Plugin.Plugin
+        this.pluginMapping = [
+            DummyPlugin,
+            LinePlugin,
+        ]
+    }
+
+    _resolvePlugin(plugin) {
+        return (this.pluginMapping.find(({ info }) => info.name == plugin.name ) || MissingPlugin).Plugin;
     }
 
     render() {
-        const { id, children, childs }  = this.props;
+        const { id, childs } = this.props;
 
-        const First  = children[0] ? children[0] : null;
-        const Second = children[1] ? children[1] : null;
+        const First  = childs[0] ? this._resolvePlugin(childs[0]) : null;
+        const Second = childs[1] ? this._resolvePlugin(childs[1]) : null;
 
         return (
             <div className={styles.layout_wrapper} >
@@ -44,15 +58,16 @@ class LayoutPlugin extends Component {
 
     static propTypes = {
         children: PropTypes.arrayOf(PropTypes.func),
-        id   : PropTypes.string.isRequired,
+        id   : PropTypes.number.isRequired,
     }
 }
 
 
 const mapStateToProps = ({ plugin }, { id }) => {
+    const childs = plugin.lookup[id].childs;
 
     return {
-        childs: plugin.loaded.find(el => el.id === id).childs,
+        childs: childs.map(id => plugin.lookup[id]),
     };
 };
 

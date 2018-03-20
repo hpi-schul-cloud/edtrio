@@ -39,6 +39,8 @@ class DummyPlugin extends Component {
     render() {
         const { editable, saveContent } = this.props;
 
+        //console.log(this.props.id)
+
         return (
             <React.Fragment>
                 <div>unstyled</div>
