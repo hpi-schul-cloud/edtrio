@@ -1,0 +1,13 @@
+$diameter: 7rem;
+
+.fab_button {
+    width: $diameter;
+    height: $diameter;
+
+    border: none;
+    border-radius: 50%;
+
+    &:active, &:focus {
+        outline: none;
+    }
+}

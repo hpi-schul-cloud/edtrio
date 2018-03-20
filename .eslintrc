@@ -1,0 +1,17 @@
+{
+    "parser": "babel-eslint",
+    "parserOptions": {
+        "ecmaVersion": 8,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true,
+            "experimentalObjectRestSpread": true
+        }
+    },
+    "rules": {
+        "prefer-const": "error",
+        "no-var": "error",
+        "no-new-object": "error",
+        "object-shorthand": ["error", "always"]
+    }
+}

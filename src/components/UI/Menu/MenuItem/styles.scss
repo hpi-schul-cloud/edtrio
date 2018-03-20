@@ -1,0 +1,19 @@
+.item {
+    margin: 0;
+    padding: 1.6rem;
+
+    background-color: #fff;
+
+    cursor: pointer;
+
+    transition: background-color 320ms ease;
+
+    &:hover {
+        background-color: #ddd;
+    }
+}
+
+.disabled {
+    opacity: .45;
+    pointer-events: none;
+}

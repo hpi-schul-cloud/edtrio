@@ -1,33 +1,41 @@
-import React, { Component } from 'react'
-import './App.css'
+import React, { Component } from 'react';
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import HTML5Backend from 'react-dnd-html5-backend';
+import { DragDropContext } from 'react-dnd';
 
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import { grey700 } from 'material-ui/styles/colors'
-import getMuiTheme from 'material-ui/styles/getMuiTheme'
-import { AppBar } from 'material-ui'
+import {
+  AppBar,
+} from "./components/UI";
 
-import Editor from './components/Editor'
+import Editor from './components/Editor';
+import rootReducer from "./rootReducer";
 
+import { selectPlugin } from "./actions/plugin";
 
+import './App.scss';
+
+const store = createStore(
+  rootReducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
+
+@DragDropContext(HTML5Backend)
 class App extends Component {
   render() {
-    const muiTheme = getMuiTheme({
-      palette: {
-        primary1Color: grey700,
-      },
-    })
 
     return (
-      <MuiThemeProvider muiTheme={muiTheme}>
-        <div className="App">
-          <AppBar
-            title="Project X"
-            showMenuIconButton={false} />
-          <Editor />
-        </div>
-      </MuiThemeProvider>
+      <>
+        <Provider store={store}>
+          <>
+            <AppBar title="X"/>
+
+            <Editor />
+          </>
+        </Provider>
+      </>
     )
   }
 }
 
-export default App
+export default App;
