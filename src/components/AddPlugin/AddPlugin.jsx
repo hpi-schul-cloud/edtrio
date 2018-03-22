@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
 import {
     Modal,
@@ -11,17 +11,13 @@ import {
 
 import styles from "./styles.scss";
 
-class AddPlugin extends Component {
+class AddPlugin extends PureComponent {
     constructor(props) {
         super(props)
 
         this.state = {
             open: false,
         }
-    }
-
-    shouldComponentUpdate(_, nextState) {
-        return this.state.open !== nextState.open; 
     }
 
     handleOpen() {
@@ -31,7 +27,7 @@ class AddPlugin extends Component {
     handleClose() {
         this.setState({ open: false })
     }
-    
+
     render() {
         const { allPlugins } = this.props;
 

@@ -3,7 +3,7 @@
  *      active: ${plugin_id},
  *      loaded: [${class Plugin(id, name, content)}]
  * }
- */
+ */ 
 
 import {
     SELECT_PLUGIN,
@@ -20,9 +20,10 @@ const default_state = {
     lookup: {},
 };
 
+//delete all plugin references and children
 const deletePlugin = (lookup, key) => {
     let start  = lookup[key];
-    let parent = [start];
+    const parent = [start];
 
     //delete parent if exists
     if(start.parent)
@@ -31,7 +32,8 @@ const deletePlugin = (lookup, key) => {
     while(parent.length > 0) {
         start = parent.shift();
 
-        parent.push(...start.childs);
+        //push all children and filter array filled with undefined
+        parent.push(...(start.childs.filter(i => i)));
 
         delete lookup[start.id];
     }

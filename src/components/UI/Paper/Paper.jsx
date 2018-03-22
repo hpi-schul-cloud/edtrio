@@ -1,25 +1,20 @@
-import React, { PureComponent } from "react";
+import React from "react";
 import PropTypes from 'prop-types';
 
 import styles from "./styles.scss";
 
-export default class Paper extends PureComponent {
+const Paper = props => {
+    const { children, ...params } = props;
 
-    render() {
-
-        const { 
-            children,
-            ...props 
-        } = this.props;
-
-        return (
-            <div {...props} className={styles.paper}>
-                { children }
-            </div>
-        )
-    }
-
-    static propTypes = {
-        children: PropTypes.node,
-    }
+    return (
+        <div {...params} className={styles.paper}>
+            { children }
+        </div>
+    )
 }
+
+Paper.propTypes = {
+    children: PropTypes.node,
+}
+
+export default Paper;

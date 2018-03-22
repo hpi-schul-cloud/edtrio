@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux";
+import { batchActions } from 'redux-batched-actions';
+import isEqual from "lodash.isequal";
 
 import { 
     addPlugin,
@@ -15,10 +17,9 @@ import DummyPlugin from './../Plugins/DummyPlugin';
 import LayoutPlugin from "./../Plugins/LayoutPlugin";
 import MissingPlugin from './../Plugins/MissingPlugin';
 import LinePlugin from "./../Plugins/LinePlugin";
+//import SyntaxPlugin from "./../Plugins/SyntaxHighlight";
 
 import styles from "./styles.scss";
-
-let id_count = 0;
 
 class Editor extends Component {
     constructor(props) {
@@ -29,11 +30,10 @@ class Editor extends Component {
             DummyPlugin,
             LayoutPlugin,
             LinePlugin,
+            //SyntaxPlugin,
         ]
 
-        this.state = {
-            addPluginOpen: false,
-        }
+        this.id = 0;
     }
    
     /**
@@ -53,36 +53,33 @@ class Editor extends Component {
         const plugin = new Plugin({ 
                         name, 
                         type,
-                        id  : id_count,
+                        id  : this.id++,
                     }, options);
 
-        id_count++;
-
         this.props.addPlugin(plugin);
-        this.props.selectPlugin(plugin.id);
+    }
+
+    shouldComponentUpdate({ plugin }) {
+        return !isEqual(this.props.plugin, plugin);
     }
 
     render() {
-        const { lookup } = this.props.plugin;
-        const { addPluginOpen } = this.state;
+        const lookup = Object.values(this.props.plugin.lookup).sort((a, b) => a.slot > b.slot);
 
         return (
             <React.Fragment>
                 <div className={styles.editor}>
-                    {Object.values(lookup).map((plugin) => {
+                    {lookup.map((plugin) => {
                         const Module = this._resolvePlugin(plugin);
 
                         return (!Number.isInteger(plugin.parent) && <Module
                                     key={plugin.id}
-                                    id={plugin.id} 
-                                    /*children={Array.from(plugin.childs, (el) => this._resolvePlugin(el))}*//>)
-                    })
-                    
+                                    id={plugin.id} />)
+                        })
                     }
                 </div>
                 
                 <AddPlugin
-                    open={addPluginOpen}
                     allPlugins={this.pluginMapping}
                     addPlugin={(name) => this._addPlugin(name)} />
             </React.Fragment>
@@ -90,14 +87,14 @@ class Editor extends Component {
     }
 }
 
-const mapStateToProps = state => ({ ...state });
+const mapStateToProps = ({ plugin }) => ({ plugin });
 
 const mapDispatchToProps = dispatch => ({
     addPlugin: plugin => {
-        dispatch(addPlugin(plugin));
-    },
-    selectPlugin: id => {
-        dispatch(selectPlugin(id));
+        dispatch(batchActions([
+            addPlugin(plugin), 
+            selectPlugin(plugin.id)
+        ]));
     },
 });
 

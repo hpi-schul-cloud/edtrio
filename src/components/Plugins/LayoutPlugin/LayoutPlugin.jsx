@@ -12,6 +12,7 @@ import info   from "./plugin.json";
 import DummyPlugin from './../DummyPlugin';
 import MissingPlugin from './../MissingPlugin';
 import LinePlugin from "./../LinePlugin";
+//import SyntaxPlugin from "./../SyntaxHighlight";
 
 class LayoutPlugin extends Component {
     constructor(props) {
@@ -21,6 +22,7 @@ class LayoutPlugin extends Component {
         this.pluginMapping = [
             DummyPlugin,
             LinePlugin,
+            //SyntaxPlugin,
         ]
     }
 

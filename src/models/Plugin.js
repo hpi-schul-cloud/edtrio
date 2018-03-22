@@ -1,4 +1,3 @@
-import uuidv4 from 'uuid/v4';
 import {
     mandatory,
 } from "./../utils";
@@ -11,7 +10,13 @@ class Plugin {
         this.childs   = new Array(size);
         this.parent   = null;
         this.type     = type;
-        this.slot     = null;
+        this.slot     = id; //incrementing slot
+    }
+
+    static TYPES = {
+        GRID   : Symbol("Grid"),
+        CONTENT: Symbol("Content"),
+        LAYOUT : Symbol("Layout"),
     }
 }
 

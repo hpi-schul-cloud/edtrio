@@ -4,7 +4,7 @@ import Loadable from 'react-loadable';
 import info from "./plugin.json";
 
 const Plugin = Loadable({
-    loader: () => import("./MissingPlugin"),
+    loader: () => import("./MissingPlugin").then(object => object.default),
     loading: () => (
         <p>Lädt</p>
     )

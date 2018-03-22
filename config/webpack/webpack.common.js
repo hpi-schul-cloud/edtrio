@@ -16,6 +16,11 @@ module.exports = (src = {}) => {
             src,
             process.env.NODE_ENV === "production" ? prod() : dev(),
             {
+                resolve: {
+                    alias: {
+                        "react-loadable": "@7rulnik/react-loadable",
+                    }
+                },
                 plugins: [
                     new CleanWebpackPlugin(path.join("./public"), { root: path.join(__dirname, "../../") }),
                     new HtmlWebpackPlugin({

@@ -1,4 +1,4 @@
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = ({ include, exclude = /node_modules/, options } = {}) => ({
     module: {
@@ -7,27 +7,26 @@ module.exports = ({ include, exclude = /node_modules/, options } = {}) => ({
                 test: /\.s?css$/,
                 include,
                 exclude,
-                use: ExtractTextPlugin.extract({
-                    fallback: "style-loader",
-                    use: [
-                        {
-                            loader: "css-loader",
-                            options: {
-                                modules: true,
-                            }
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    {
+                        loader: "css-loader",
+                        options: {
+                            modules: true,
                         },
-                        {
-                            loader: "postcss-loader"
-                        },
-                        {
-                            loader: "sass-loader"
-                        }
-                    ]
-                })
-            }
-        ]
-    },
+                    },
+                    {
+                        loader: "postcss-loader"
+                    },
+                    {
+                        loader: "sass-loader"
+                    },
+            ]
+        },
+    ]},
     plugins: [
-        new ExtractTextPlugin("styles.css"),
+        new MiniCssExtractPlugin({
+            filename: "styles.css"
+        }),
     ]
 }); 

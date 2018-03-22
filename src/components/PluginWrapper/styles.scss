@@ -1,22 +1,7 @@
-
 .plugin {
     border-width: 0 5px 0 5px;
     border-style: solid;
     border-color: transparent;
-
-    &:hover {
-        & > .handle {
-            & > span {
-                color: #ccc;
-            }
-
-            &:hover {
-                & > span {
-                    color: rgb(97, 97, 97);
-                }
-            }
-        }
-    }
 }
 .selected {
     border-left: solid 5px rgb(97, 97, 97);
@@ -34,12 +19,14 @@
     color: #CCC;
 
     & > span {
-        color: transparent;
+        color: #ccc;
+
+        transition: color 400ms ease;
     }
 
     &:hover {
         & > span {
-            color: #ccc;
+            color: #888;
         }
     }
 }
@@ -65,5 +52,32 @@
     
     &:hover {
         color: #888;
+    }
+}
+
+.top_highlight, .bottom_highlight {
+    position: relative;
+
+    &::before {
+        content: "";
+
+        position: absolute;
+        left: 0;
+        right: 0;
+
+        z-index: 1;
+    }
+}
+
+.top_highlight {
+    &::before {
+        top: 0;
+        border-top: 4px dashed #333;
+    }
+}
+.bottom_highlight {
+    &::before {
+        bottom: 0;
+        border-top: 4px dashed #333;
     }
 }

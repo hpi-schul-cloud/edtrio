@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux";
 import PropTypes from 'prop-types';
+import isEqual from "lodash.isequal";
 
 import makePlugin from './../../PluginWrapper';
 
@@ -21,6 +22,10 @@ class DummyPlugin extends Component {
             ly: "YYY",
         };
     }
+
+    shouldComponentUpdate({ editable }, nextState) {
+        return editable && !isEqual(this.state, nextState);
+    }
     
     componentWillMount() {
         this.setState({
@@ -38,8 +43,6 @@ class DummyPlugin extends Component {
     
     render() {
         const { editable, saveContent } = this.props;
-
-        //console.log(this.props.id)
 
         return (
             <React.Fragment>

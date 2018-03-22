@@ -1,17 +1,16 @@
-import React, { Component } from "react";
+import React from "react";
 
 import styles from "./styles.scss";
 import common from "./../common.scss";
 
-export default class FabButton extends Component {
-    
-    render() {
-        const { children, className, ...props } = this.props;
+const FabButton = props => {
+    const { children, className, ...params } = props;
 
-        return (
-            <button {...props} className={`${styles.fab_button} ${common.btn} ${className}`}>
-                { children }
-            </button>
-        )
-    }
+    return (
+        <button {...params} className={`${styles.fab_button} ${common.btn} ${className}`}>
+            { children }
+        </button>
+    )
 }
+
+export default FabButton;

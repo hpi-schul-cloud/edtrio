@@ -5,10 +5,10 @@ import { DropTarget } from "react-dnd";
 
 import { movePlugin } from "./../../../actions/plugin";
 
-import types from "./../types";
+import Plugin from "./../../../models/Plugin";
 import styles from "./styles.scss";
 
-const accepted_types = Object.values(types).filter(type => type !== types["GRID"]);
+const accepted_types = Object.values(Plugin.TYPES).filter(type => type !== Plugin.TYPES["GRID"]);
 
 const collect_drop = (connect, monitor) => ({
     connectDropTarget: connect.dropTarget(),

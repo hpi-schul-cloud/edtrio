@@ -1,9 +1,4 @@
-import { Editor } from 'slate-react'
-import { Value } from 'slate'
-import Plain from 'slate-plain-serializer'
-
 import React from 'react'
-import { isKeyHotkey } from 'is-hotkey'
 
 import makePlugin from '../utils'
 import './style.css'

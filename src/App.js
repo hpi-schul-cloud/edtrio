@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Provider } from "react-redux";
 import { createStore } from "redux";
+import { enableBatching } from 'redux-batched-actions';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
 
@@ -16,7 +17,7 @@ import { selectPlugin } from "./actions/plugin";
 import './App.scss';
 
 const store = createStore(
-  rootReducer,
+  enableBatching(rootReducer),
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 

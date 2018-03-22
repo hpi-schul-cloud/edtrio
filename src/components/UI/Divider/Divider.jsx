@@ -1,17 +1,12 @@
-import React, { Component } from "react";
+import React from "react";
 
 import styles from "./styles.scss";
 
-export default class Divider extends Component {
+const Divider = () => {
 
-    shouldUpdateComponent() {
-        return false;
-    }
+    return (
+        <div className={styles.divider}></div>
+    )
+};
 
-    render() {
-
-        return (
-            <div className={styles.divider}></div>
-        )
-    }
-}
+export default Divider;

@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React from "react";
 import PropTypes from 'prop-types'
 
 import styles from "./styles.scss";
@@ -7,31 +7,27 @@ const effect = {
     disabled: styles.disabled,
 };
 
-export default class MenuItem extends PureComponent {
+const MenuItem = props => {
+    const { children, ...params } = props;
 
-    render() {
-        const {
-            children,
-            ...props
-        } = this.props;
+    const effects = Object.keys(params)
+                        .reduce((acc, key) => `${acc} ${effect[key] || ""}`, "");
 
-        const effects = Object.keys(this.props)
-                              .reduce((acc, key) => `${acc} ${effect[key] || ""}`, "");
-
-        return (
-            <div {...props} 
-                className={`${styles.item} ${effects}`} >
-                { children }
-            </div>
-        )
-    }
-
-    static propTypes = {
-        disabled: false,
-    }
-
-    static propTypes = {
-        disabled: PropTypes.bool,
-        children: PropTypes.arrayOf(PropTypes.node).isRequired,
-    }
+    return (
+        <div {...params} 
+            className={`${styles.item} ${effects}`} >
+            { children }
+        </div>
+    )
 }
+
+MenuItem.defaultTypes = {
+    disabled: false,
+}
+
+MenuItem.propTypes = {
+    disabled: PropTypes.bool,
+    children: PropTypes.arrayOf(PropTypes.node).isRequired,
+}
+
+export default MenuItem;

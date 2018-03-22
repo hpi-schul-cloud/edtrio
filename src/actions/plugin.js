@@ -28,8 +28,9 @@ export const setContent = (id, content) => ({
     content,
 });
 
-export const movePlugin = (id, slot = 0) => ({
+export const movePlugin = (id, slot = 0, adjust_slots = false) => ({
     type: MOVE_PLUGIN,
     id,
     slot,
+    adjust_slots,
 });
