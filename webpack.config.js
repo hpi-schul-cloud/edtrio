@@ -3,7 +3,7 @@ const path = require("path");
 const common = require("./config/webpack/webpack.common");
 
 const src = {
-    entry: "./src/index.js",
+    entry: "./src/editor/index.js",
     output: {
         filename: "bundle.js",
         path: path.join(__dirname, "public")

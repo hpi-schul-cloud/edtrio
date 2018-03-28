@@ -1,0 +1,12 @@
+{
+  "name": "LinePlugin",
+  "version": "0.1.0",
+  "description": "Zeichnet eine horizontale Trennlinie",
+  "main": "LinePlugin.jsx",
+  "author": "Florian Wirtz, Raoul Baron",
+  "license": "MIT",
+  "x": {
+    "displayName": "Horizontal Line Plugin",
+    "type": "CONTENT"
+  }
+}
