@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react';
 import {
     Modal,
     MenuItem
-} from "x-editor//UI";
+} from "x-editor/UI";
 
 import {
     FabButton,

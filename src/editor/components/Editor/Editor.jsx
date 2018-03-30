@@ -31,7 +31,7 @@ class Editor extends Component {
      * @returns {plugin} Resolved plugin or `ErrorPlugin` if none was found
      */
     _resolvePlugin(plugin) {
-        return (this.pluginMapping.find(({ info }) => info.name == plugin.name ) || MissingPlugin).Plugin;
+        return (this.pluginMapping.find(({ info }) => info.name === plugin.name ) || MissingPlugin).Plugin;
     }
 
     /**
@@ -42,8 +42,10 @@ class Editor extends Component {
         const plugin = new Plugin({ 
                         name, 
                         type,
-                        id  : this.id++,
+                        id  : this.id,
                     }, options);
+
+        this.id += 1;
 
         this.props.addPlugin(plugin);
     }

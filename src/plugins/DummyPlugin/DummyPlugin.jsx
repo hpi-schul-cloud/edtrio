@@ -23,7 +23,7 @@ class DummyPlugin extends Component {
         return editable && !isEqual(this.state, nextState);
     }
     
-    componentWillMount() {
+    componentDidMount() {
         this.setState({
             ...this.props.content,
         });

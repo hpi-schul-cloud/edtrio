@@ -137,76 +137,78 @@ export default function makePlugin(WrappedComponent, info, options = {}) {
 			const { highlight } = this.state;
 
             return (
-                <div ref={node => (this.wrapper = node)}>
-                    {
-                        <div
-                            ref={node => (this.plugin = node)}
-                            className={`${(isOver && canDrop) ? highlight : ""}`}
-                        >
-                            <Paper
-                                onMouseDown={e => this._handleClick(e)}
-                                className={
-                                    editable ? styles.selected : styles.plugin
-                                }
+                <React.StrictMode>
+                    <div ref={node => (this.wrapper = node)}>
+                        {
+                            <div
+                                ref={node => (this.plugin = node)}
+                                className={`${(isOver && canDrop) ? highlight : ""}`}
                             >
-                                <div
-                                    className={styles.handle}
-                                    ref={handle => (this.handle = handle)}
+                                <Paper
+                                    onMouseDown={e => this._handleClick(e)}
+                                    className={
+                                        editable ? styles.selected : styles.plugin
+                                    }
                                 >
-                                    <span className="material-icons">
-                                        drag_handle
-                                    </span>
-                                </div>
-                                <div className={styles.inner}>
-                                    {dev && (
-                                        <div>
-                                            <span>id: {id}</span>
+                                    <div
+                                        className={styles.handle}
+                                        ref={handle => (this.handle = handle)}
+                                    >
+                                        <span className="material-icons">
+                                            drag_handle
+                                        </span>
+                                    </div>
+                                    <div className={styles.inner}>
+                                        {dev && (
+                                            <div>
+                                                <span>id: {id}</span>
+                                            </div>
+                                        )}
+                                        <WrappedComponent
+                                            id={id}
+                                            editable={editable}
+                                            content={content}
+                                            saveContent={content =>
+                                                saveContent(content)
+                                            }
+                                        />
+                                    </div>
+                                    {editable && (
+                                        <div className={styles.toolbar}>
+                                            <Divider />
+                                            <div className={styles.icons}>
+                                                <span
+                                                    className={`material-icons ${
+                                                        styles.action_icon
+                                                    }`}
+                                                    onClick={() =>
+                                                        this._removePlugin()
+                                                    }
+                                                >
+                                                    delete
+                                                </span>
+                                                <span
+                                                    className={`material-icons ${
+                                                        styles.action_icon
+                                                    }`}
+                                                >
+                                                    hot_tub
+                                                </span>
+                                                <span
+                                                    className={`material-icons ${
+                                                        styles.action_icon
+                                                    }`}
+                                                >
+                                                    info
+                                                </span>
+                                            </div>
                                         </div>
                                     )}
-                                    <WrappedComponent
-                                        id={id}
-                                        editable={editable}
-                                        content={content}
-                                        saveContent={content =>
-                                            saveContent(content)
-                                        }
-                                    />
-                                </div>
-                                {editable && (
-                                    <div className={styles.toolbar}>
-                                        <Divider />
-                                        <div className={styles.icons}>
-                                            <span
-                                                className={`material-icons ${
-                                                    styles.action_icon
-                                                }`}
-                                                onClick={() =>
-                                                    this._removePlugin()
-                                                }
-                                            >
-                                                delete
-                                            </span>
-                                            <span
-                                                className={`material-icons ${
-                                                    styles.action_icon
-                                                }`}
-                                            >
-                                                hot_tub
-                                            </span>
-                                            <span
-                                                className={`material-icons ${
-                                                    styles.action_icon
-                                                }`}
-                                            >
-                                                info
-                                            </span>
-                                        </div>
-                                    </div>
-                                )}
-                            </Paper>
-                        </div>
-                    }
-                </div>
+                                </Paper>
+                            </div>
+                        }
+                    </div>
+                </React.StrictMode>
             );
         }
     }

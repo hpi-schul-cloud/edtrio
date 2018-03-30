@@ -258,7 +258,7 @@ class TextPlugin extends React.Component {
      * @return {Element}
      */
 
-    renderEditor = (editable) => {
+    renderEditor = editable => {
         return (
             <div className="editor">
                 <Editor

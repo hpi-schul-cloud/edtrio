@@ -16,7 +16,7 @@ class LayoutPlugin extends Component {
     }
 
     _resolvePlugin(plugin) {
-        return (this.pluginMapping.find(({ info }) => info.name == plugin.name ) || MissingPlugin).Plugin;
+        return (this.pluginMapping.find(({ info }) => info.name === plugin.name ) || MissingPlugin).Plugin;
     }
 
     render() {

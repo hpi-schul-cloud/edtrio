@@ -1,41 +1,52 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
-import { enableBatching } from 'redux-batched-actions';
-import HTML5Backend from 'react-dnd-html5-backend';
-import { DragDropContext } from 'react-dnd';
+import { enableBatching } from "redux-batched-actions";
+import HTML5Backend from "react-dnd-html5-backend";
+import { DragDropContext } from "react-dnd";
 
-import {
-  AppBar,
-} from "x-editor/UI";
+import { AppBar } from "x-editor/UI";
 
-import Editor from './components/Editor';
+import Editor from "./components/Editor";
 import rootReducer from "./rootReducer";
 
 import { selectPlugin } from "./actions/plugin";
 
-import './App.scss';
+import api from "./api";
 
-const store = createStore(
-  enableBatching(rootReducer),
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+import "./App.scss";
 
 @DragDropContext(HTML5Backend)
 class App extends Component {
-  render() {
-    return (
-      <>
-        <Provider store={store}>
-          <>
-            <AppBar title="X"/>
+    constructor(props) {
+        super(props);
 
-            <Editor />
-          </>
-        </Provider>
-      </>
-    )
-  }
+        this.state = {
+            store: createStore(
+                enableBatching(rootReducer),
+                api.getData(),
+                window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+            ),
+        };
+
+        this.state.store.subscribe(() => {
+            api.sendData(this.state.store.getState());
+        });
+    }
+
+    render() {
+        return (
+            <>
+                <Provider store={this.state.store}>
+                    <>
+                        <AppBar title="X" />
+
+                        <Editor />
+                    </>
+                </Provider>
+            </>
+        );
+    }
 }
 
 export default App;
