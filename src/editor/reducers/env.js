@@ -2,12 +2,12 @@ import {
     SWITCH_ENV,
 } from "./../actions/env";
 
-const env = (state, action) => {
+const env = (state = process.env.NODE_ENV, action) => {
     switch(action.type) {
         case SWITCH_ENV:
             return action.env;
         default:
-            return process.env.NODE_ENV;
+            return state;
     }
 };
 

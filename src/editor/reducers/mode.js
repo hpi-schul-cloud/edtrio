@@ -4,12 +4,12 @@ import {
 
 const modes = ["easy", "advanced"];
 
-const mode = (state, action) => {
+const mode = (state = modes[0], action) => {
     switch(action.type) {
         case SET_MODE:
             return modes.includes(action.mode) ? action.mode : modes[0];
         default:
-            return modes[0];
+            return state;
     }
 }
 

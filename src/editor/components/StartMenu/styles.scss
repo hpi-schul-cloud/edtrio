@@ -1,0 +1,16 @@
+@import "~x-editor/UI/_colors";
+
+.menu {
+    height: 100%;
+    width: 300px;
+
+    background-color: $main-color;
+
+    padding: 10% 5%;
+
+    color: white;
+}
+
+.sub_menu {
+    font-weight: 300;
+}

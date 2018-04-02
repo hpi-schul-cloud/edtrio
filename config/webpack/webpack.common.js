@@ -7,6 +7,7 @@ const ScriptExtHtmlWebpackPlugin = require("script-ext-html-webpack-plugin");
 
 const script  = require("./parts/webpack.script");
 const styles  = require("./parts/webpack.style");
+const images  = require("./parts/webpack.images");
 
 const dev     = require("./webpack.dev");
 const prod    = require("./webpack.prod");
@@ -33,5 +34,6 @@ module.exports = (src = {}) => {
             },
             script(),
             styles(),
+            images(),
         );
 };

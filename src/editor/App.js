@@ -5,14 +5,12 @@ import { enableBatching } from "redux-batched-actions";
 import HTML5Backend from "react-dnd-html5-backend";
 import { DragDropContext } from "react-dnd";
 
-import { AppBar } from "x-editor/UI";
+import Router from "./components/Router";
 
-import Editor from "./components/Editor";
 import rootReducer from "./rootReducer";
 
-import { selectPlugin } from "./actions/plugin";
-
 import api from "./api";
+import routes from "./routes";
 
 import "./App.scss";
 
@@ -24,7 +22,10 @@ class App extends Component {
         this.state = {
             store: createStore(
                 enableBatching(rootReducer),
-                api.getData(),
+                {
+                    ...api.getData(),
+                    route: window.location.pathname,
+                },
                 window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
             ),
         };
@@ -36,15 +37,13 @@ class App extends Component {
 
     render() {
         return (
-            <>
+            <React.StrictMode>
                 <Provider store={this.state.store}>
                     <>
-                        <AppBar title="X" />
-
-                        <Editor />
+                        <Router config={routes}/>
                     </>
                 </Provider>
-            </>
+            </React.StrictMode>
         );
     }
 }

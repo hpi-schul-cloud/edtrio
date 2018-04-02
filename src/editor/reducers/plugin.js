@@ -39,7 +39,7 @@ const deletePlugin = (lookup, key) => {
     }
 }
 
-const plugin = (state, action) => {
+const plugin = (state = default_state, action) => {
     switch(action.type) {
         case SELECT_PLUGIN: 
             return {
@@ -67,7 +67,7 @@ const plugin = (state, action) => {
             return {
                 ...state
             }
-        case MOVE_PLUGIN:
+        case MOVE_PLUGIN: {
             const dest = state.lookup[action.id];
             const src  = state.lookup[state.active];
             const { parent } = src;
@@ -83,8 +83,9 @@ const plugin = (state, action) => {
             return {
                 ...state
             }
+        }
         default:
-            return default_state;
+            return state;
     }
 };
 

@@ -5,7 +5,9 @@
   "dependencies": {
     "@7rulnik/react-loadable": "^5.3.2",
     "ajv": "^6.4.0",
+    "axios": "^0.18.0",
     "fastify": "^1.2.0",
+    "has": "^1.0.1",
     "lodash.flow": "^3.5.0",
     "lodash.isequal": "^4.5.0",
     "lodash.throttle": "^4.1.1",

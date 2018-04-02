@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ReactDOM  from "react-dom";
 import PropTypes from 'prop-types';
 
 import styles from "./styles.scss";
@@ -6,6 +7,11 @@ import styles from "./styles.scss";
 //TODO - remove body class on close
 
 export default class Modal extends Component {
+    constructor(props) {
+        super(props);
+
+        this.node = document.getElementById("modal");
+    }
 
     componentWillReceiveProps({ open }) {
         if(open) {
@@ -25,7 +31,7 @@ export default class Modal extends Component {
             onClose,
         } = this.props;
 
-        return (
+        return ReactDOM.createPortal(
             <>
                 { <div 
                     ref={(wrapper) => this.wrapper = wrapper} 
@@ -37,8 +43,7 @@ export default class Modal extends Component {
                         { this.props.children }
                     </div>  }
                 </div>}
-            </>
-        )
+            </>, this.node);
     }
 
     static defaultProps = {
