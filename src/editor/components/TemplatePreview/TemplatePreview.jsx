@@ -2,10 +2,6 @@ import React, { Component } from "react";
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 
-import {
-    gotoRoute
-} from "x-editor/editor/actions/route";
-
 import styles from "./styles.scss";
 
 class TemplatePreview extends Component {
@@ -34,12 +30,4 @@ class TemplatePreview extends Component {
     }
 }
 
-const mapStateToProps = () => ({});
-
-const mapDispatchToProps = (dispatch) => ({
-    loadEditor: (options) => {
-        dispatch(gotoRoute("/edit", options))
-    }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(TemplatePreview);
+export default TemplatePreview;

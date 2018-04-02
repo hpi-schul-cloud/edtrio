@@ -5,12 +5,12 @@ import { enableBatching } from "redux-batched-actions";
 import HTML5Backend from "react-dnd-html5-backend";
 import { DragDropContext } from "react-dnd";
 
-import Router from "./components/Router";
-
 import rootReducer from "./rootReducer";
 
 import api from "./api";
 import routes from "./routes";
+
+import Editor from "./screens/Editor";
 
 import "./App.scss";
 
@@ -24,7 +24,6 @@ class App extends Component {
                 enableBatching(rootReducer),
                 {
                     ...api.getData(),
-                    route: window.location.pathname,
                 },
                 window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
             ),
@@ -39,9 +38,7 @@ class App extends Component {
         return (
             <React.StrictMode>
                 <Provider store={this.state.store}>
-                    <>
-                        <Router config={routes}/>
-                    </>
+                    <Editor />
                 </Provider>
             </React.StrictMode>
         );
