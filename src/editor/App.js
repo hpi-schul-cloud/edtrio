@@ -22,9 +22,7 @@ class App extends Component {
         this.state = {
             store: createStore(
                 enableBatching(rootReducer),
-                {
-                    ...api.getData(),
-                },
+                api.getData(),
                 window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
             ),
         };
