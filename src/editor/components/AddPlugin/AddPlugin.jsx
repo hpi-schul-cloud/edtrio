@@ -3,13 +3,13 @@ import React, { PureComponent } from 'react';
 import {
     Modal,
     MenuItem
-} from "x-editor/UI";
+} from 'x-editor/UI';
 
 import {
     FabButton,
-} from "x-editor/UI/Button";
+} from 'x-editor/UI/Button';
 
-import styles from "./styles.scss";
+import styles from './styles.scss';
 
 class AddPlugin extends PureComponent {
     constructor(props) {

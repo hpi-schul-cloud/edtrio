@@ -1,18 +1,18 @@
-import React, { Component } from "react";
-import { Provider } from "react-redux";
-import { createStore } from "redux";
-import { enableBatching } from "redux-batched-actions";
-import HTML5Backend from "react-dnd-html5-backend";
-import { DragDropContext } from "react-dnd";
+import React, { Component } from 'react';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import { enableBatching } from 'redux-batched-actions';
+import HTML5Backend from 'react-dnd-html5-backend';
+import { DragDropContext } from 'react-dnd';
 
-import rootReducer from "./rootReducer";
+import rootReducer from './rootReducer';
 
-import api from "./api";
-import routes from "./routes";
+import api from './api';
+import routes from './routes';
 
-import Editor from "./screens/Editor";
+import Editor from './screens/Editor';
 
-import "./App.scss";
+import './App.scss';
 
 @DragDropContext(HTML5Backend)
 class App extends Component {

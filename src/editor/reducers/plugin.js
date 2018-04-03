@@ -11,12 +11,12 @@ import {
     REMOVE_PLUGIN,
     SET_CONTENT,
     MOVE_PLUGIN,
-} from "./../actions/plugin";
+} from './../actions/plugin';
 
-import Plugin from "x-editor/models/Plugin";
+import Plugin from 'x-editor/models/Plugin';
 
 const default_state = {
-    active: "",
+    active: '',
     lookup: {},
 };
 
@@ -48,7 +48,7 @@ const plugin = (state = default_state, action) => {
             }
         case LOAD_PLUGIN:
             return {
-                active: "",
+                active: '',
                 lookup: {
                     ...state.lookup,
                     [action.plugin.id]: action.plugin,
@@ -58,7 +58,7 @@ const plugin = (state = default_state, action) => {
             deletePlugin(state.lookup, action.id);
 
             return {
-                active: "",
+                active: '',
                 lookup: state.lookup,
             }
         case SET_CONTENT:

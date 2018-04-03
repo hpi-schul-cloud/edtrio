@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import styles from "./styles.scss";
+import styles from './styles.scss';
 
 const Divider = () => {
 

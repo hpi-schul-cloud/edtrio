@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
-import StartMenu from "./../../components/StartMenu/StartMenu";
-import TemplateMenu from "./../../components/TemplateMenu/TemplateMenu";
+import StartMenu from './../../components/StartMenu/StartMenu';
+import TemplateMenu from './../../components/TemplateMenu/TemplateMenu';
 
-import styles from "./styles.scss";
+import styles from './styles.scss';
 
 export default class Start extends Component {
 

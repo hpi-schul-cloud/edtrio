@@ -1,6 +1,6 @@
 import {
     SWITCH_ENV,
-} from "./../actions/env";
+} from './../actions/env';
 
 const env = (state = process.env.NODE_ENV, action) => {
     switch(action.type) {

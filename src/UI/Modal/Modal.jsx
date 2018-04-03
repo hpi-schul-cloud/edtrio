@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import ReactDOM  from "react-dom";
+import React, { Component } from 'react';
+import ReactDOM  from 'react-dom';
 import PropTypes from 'prop-types';
 
-import styles from "./styles.scss";
+import styles from './styles.scss';
 
 //TODO - remove body class on close
 
@@ -10,7 +10,7 @@ export default class Modal extends Component {
     constructor(props) {
         super(props);
 
-        this.node = document.getElementById("modal");
+        this.node = document.getElementById('modal');
     }
 
     componentWillReceiveProps({ open }) {
@@ -39,7 +39,7 @@ export default class Modal extends Component {
                     onClick={onClose}
                     >
 
-                    { <div className={`${styles.modal} ${open ? styles.modal_open : ""} `}>
+                    { <div className={`${styles.modal} ${open ? styles.modal_open : ''} `}>
                         { this.props.children }
                     </div>  }
                 </div>}

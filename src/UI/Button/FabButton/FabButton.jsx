@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
-import styles from "./styles.scss";
-import common from "./../common.scss";
+import styles from './styles.scss';
+import common from './../common.scss';
 
 const FabButton = props => {
     const { children, className, ...params } = props;

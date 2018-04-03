@@ -1,4 +1,4 @@
-import mandatory from "./mandatory";
+import mandatory from './mandatory';
 
 export {
     mandatory,

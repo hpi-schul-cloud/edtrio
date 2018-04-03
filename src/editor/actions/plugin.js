@@ -1,11 +1,11 @@
-export const SELECT_PLUGIN = "SELECT_PLUGIN";
-export const LOAD_PLUGIN   = "LOAD_PLUGIN";
-export const REMOVE_PLUGIN = "REMOVE_PLUGIN";
+export const SELECT_PLUGIN = 'SELECT_PLUGIN';
+export const LOAD_PLUGIN   = 'LOAD_PLUGIN';
+export const REMOVE_PLUGIN = 'REMOVE_PLUGIN';
 
-export const GET_CONTENT   = "GET_CONTENT";
-export const SET_CONTENT   = "SET_CONTENT";
+export const GET_CONTENT   = 'GET_CONTENT';
+export const SET_CONTENT   = 'SET_CONTENT';
 
-export const MOVE_PLUGIN   = "MOVE_PLUGIN";
+export const MOVE_PLUGIN   = 'MOVE_PLUGIN';
 
 export const selectPlugin = id => ({
     type: SELECT_PLUGIN,

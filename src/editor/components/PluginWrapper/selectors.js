@@ -1,6 +1,6 @@
-import { createSelector } from "reselect";
+import { createSelector } from 'reselect';
 
-const is_dev_mode = ({ env }) => { env !== "production" };
+const is_dev_mode = ({ env }) => { env !== 'production' };
 export const makeDevMode = () => createSelector([is_dev_mode], dev => dev); 
 
 const is_editable = ({ plugin }, { id }) => plugin.active === id;
