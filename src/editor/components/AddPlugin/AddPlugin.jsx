@@ -34,7 +34,6 @@ class AddPlugin extends PureComponent {
         return (
             <React.Fragment>
                 <Modal
-                    title="Add element"
                     open={this.state.open}
                     onClose={() => this.handleClose()}>
                     { <div>
@@ -55,7 +54,7 @@ class AddPlugin extends PureComponent {
                 <FabButton
                     className={styles.floating_button}
                     onClick={() => this.handleOpen()}>
-                    <p>hi</p>
+                    <i className="material-icons">add</i>
                 </FabButton>
             </React.Fragment>
         )

@@ -10,7 +10,7 @@ class EditorScreen extends Component {
 
         return (
             <>
-                <AppBar title="X" />
+                <AppBar title="edtr.io" />
 
                 <Editor />
             </>
