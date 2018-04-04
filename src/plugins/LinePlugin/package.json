@@ -1,7 +1,7 @@
 {
-  "name": "LinePlugin",
+  "name": "Horizontal rule",
   "version": "0.1.0",
-  "description": "Zeichnet eine horizontale Trennlinie",
+  "description": "Thematic brake",
   "main": "LinePlugin.jsx",
   "author": "Florian Wirtz, Raoul Baron",
   "license": "MIT",
