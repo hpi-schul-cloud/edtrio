@@ -8,30 +8,30 @@
             
     {
         Plugin: Loadable({
-            loader: () => import('./DummyPlugin/DummyPlugin.jsx').then(object => makePlugin(object.default, {"name":"Dummy Plugin","version":"0.1.0","description":"Leeres Plugin für Testzwecke","type":"CONTENT"})),
+            loader: () => import('./DummyPlugin/DummyPlugin.jsx').then(object => makePlugin(object.default, {"name":"Dummy Plugin","version":"0.1.0","description":"Empty Plugin for testing purposes","type":"CONTENT"})),
             loading: () => (
                 <p>Lädt</p>
             )
         }),
-        info: {"name":"Dummy Plugin","version":"0.1.0","description":"Leeres Plugin für Testzwecke","type":"CONTENT"},
+        info: {"name":"Dummy Plugin","version":"0.1.0","description":"Empty Plugin for testing purposes","type":"CONTENT"},
     },
     {
         Plugin: Loadable({
-            loader: () => import('./LayoutPlugin/LayoutPlugin.jsx').then(object => makePlugin(object.default, {"name":"Layout Plugin","version":"0.1.0","description":"Plugin zum Erstellen von Layouts","type":"LAYOUT"})),
+            loader: () => import('./LayoutPlugin/LayoutPlugin.jsx').then(object => makePlugin(object.default, {"name":"Layout Plugin","version":"0.1.0","description":"Two column layout","type":"LAYOUT"})),
             loading: () => (
                 <p>Lädt</p>
             )
         }),
-        info: {"name":"Layout Plugin","version":"0.1.0","description":"Plugin zum Erstellen von Layouts","type":"LAYOUT"},
+        info: {"name":"Layout Plugin","version":"0.1.0","description":"Two column layout","type":"LAYOUT"},
     },
     {
         Plugin: Loadable({
-            loader: () => import('./LinePlugin/LinePlugin.jsx').then(object => makePlugin(object.default, {"name":"Horizontal Line Plugin","version":"0.1.0","description":"Zeichnet eine horizontale Trennlinie","type":"CONTENT"})),
+            loader: () => import('./LinePlugin/LinePlugin.jsx').then(object => makePlugin(object.default, {"name":"Horizontal Line Plugin","version":"0.1.0","description":"Thematic brake","type":"CONTENT"})),
             loading: () => (
                 <p>Lädt</p>
             )
         }),
-        info: {"name":"Horizontal Line Plugin","version":"0.1.0","description":"Zeichnet eine horizontale Trennlinie","type":"CONTENT"},
+        info: {"name":"Horizontal Line Plugin","version":"0.1.0","description":"Thematic brake","type":"CONTENT"},
     },
     {
         Plugin: Loadable({

@@ -16,7 +16,7 @@ class SocketApi extends Api {
     }
 }
 
-const ws = new WebSocket('ws://localhost:8080');
+const ws = new WebSocket('ws://localhost:3030');
 
 ws.onopen = () => {
     console.log('Connection started..');
