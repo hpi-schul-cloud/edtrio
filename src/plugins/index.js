@@ -43,12 +43,12 @@
     },
     {
         Plugin: Loadable({
-            loader: () => import("./TextPlugin/TextPlugin.jsx").then(object => makePlugin(object.default, {"name":"Text Editor","version":"0.1.0","description":"Text Editor Plugin","type":"CONTENT"})),
+            loader: () => import("./SyntaxHighlight/SyntaxHighlight.jsx").then(object => makePlugin(object.default, {"name":"Syntax Highlight","version":"0.1.0","description":"Syntax Highlight Plugin","type":"CONTENT"})),
             loading: () => (
                 <p>Lädt</p>
             )
         }),
-        info: {"name":"Text Editor","version":"0.1.0","description":"Text Editor Plugin","type":"CONTENT"},
+        info: {"name":"Syntax Highlight","version":"0.1.0","description":"Syntax Highlight Plugin","type":"CONTENT"},
     }
         ]
     

@@ -4,6 +4,7 @@ const merge   = require("webpack-merge");
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin  = require('html-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require("script-ext-html-webpack-plugin");
+const WebpackShellPlugin = require('webpack-shell-plugin');
 
 const script  = require("./parts/webpack.script");
 const styles  = require("./parts/webpack.style");
@@ -23,6 +24,7 @@ module.exports = (src = {}) => {
                     }
                 },
                 plugins: [
+                    new WebpackShellPlugin({ onBuildStart:[`node scripts/generate_plugin_index.js`] }),
                     new CleanWebpackPlugin(path.join("./public"), { root: path.join(__dirname, "../../") }),
                     new HtmlWebpackPlugin({
                         template: "src/index.html"

@@ -24,7 +24,7 @@ const validate = ajv.compile(x_schema);
 
 const errors = [];
 
-const plugins_dir = path.join(__dirname, "../src/components/Plugins");
+const plugins_dir = path.join(__dirname, "../src/Plugins");
 const output_file = path.join(plugins_dir, "index.js");
 
 const pluginScript = function generatePluginScript(main, opts) {
