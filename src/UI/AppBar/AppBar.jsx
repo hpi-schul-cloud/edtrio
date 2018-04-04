@@ -1,6 +1,6 @@
-import React, { PureComponent } from "react";
+import React, { PureComponent } from 'react';
 
-import styles from "./styles.scss";
+import styles from './styles.scss';
 
 export default class AppBar extends PureComponent {
 

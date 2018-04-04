@@ -1,9 +1,9 @@
 import {
     mandatory,
-} from "./../utils";
+} from './../utils';
 
 class Plugin {
-    constructor({ id = mandatory("id"), name = mandatory("name"), type = madatory("type") }, { size } = { size : 0 }) {
+    constructor({ id = mandatory('id'), name = mandatory('name'), type = madatory('type') }, { size } = { size : 0 }) {
         this.id       = id;
         this.name     = name;
         this.content  = null;
@@ -14,9 +14,9 @@ class Plugin {
     }
 
     static TYPES = {
-        GRID   : Symbol("Grid"),
-        CONTENT: Symbol("Content"),
-        LAYOUT : Symbol("Layout"),
+        GRID   : Symbol('Grid'),
+        CONTENT: Symbol('Content'),
+        LAYOUT : Symbol('Layout'),
     }
 }
 

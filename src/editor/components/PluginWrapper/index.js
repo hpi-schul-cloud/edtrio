@@ -1,24 +1,24 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { DragSource, DropTarget } from "react-dnd";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { DragSource, DropTarget } from 'react-dnd';
 
-import throttle from "lodash.throttle";
-import isEqual from "lodash.isequal";
-import flow from "lodash.flow";
+import throttle from 'lodash.throttle';
+import isEqual from 'lodash.isequal';
+import flow from 'lodash.flow';
 
-import { Paper, Divider } from "x-editor/UI";
+import { Paper, Divider } from 'x-editor/UI';
 
-import Plugin from "x-editor/models/Plugin";
+import Plugin from 'x-editor/models/Plugin';
 
 import {
     selectPlugin,
     removePlugin,
     setContent
-} from "x-editor/editor/actions/plugin";
+} from 'x-editor/editor/actions/plugin';
 
-import styles from "./styles.scss";
+import styles from './styles.scss';
 
-import { makeDevMode, makeEditable, makePluginProps } from "./selectors";
+import { makeDevMode, makeEditable, makePluginProps } from './selectors';
 
 const accepted_types = Object.values(Plugin.TYPES);
 const cardTarget = {
@@ -27,7 +27,7 @@ const cardTarget = {
             return;
         }
 
-        console.log("drop");
+        console.log('drop');
     },
     canDrop: ({ editable }) => !editable
 };
@@ -52,7 +52,7 @@ export default function makePlugin(WrappedComponent, info, options = {}) {
             super(props);
 
             this.state = {
-                highlight: ""
+                highlight: ''
             };
         }
 
@@ -84,7 +84,7 @@ export default function makePlugin(WrappedComponent, info, options = {}) {
         }
 
         componentWillUnmount() {
-            this.plugin.removeEventListener("dragover", this.getHoverPosition);
+            this.plugin.removeEventListener('dragover', this.getHoverPosition);
         }
 
         componentDidMount() {
@@ -105,14 +105,14 @@ export default function makePlugin(WrappedComponent, info, options = {}) {
                 this.plugin.getBoundingClientRect()
             );
             this.plugin.addEventListener(
-                "dragover",
+                'dragover',
                 throttle(this._getHoverPosition, 100)
             );
         }
 
         componentWillReceiveProps({ isOver, canDrop }) {
             this.setState({
-                highlight: isOver && canDrop ? this.state.highlight : ""
+                highlight: isOver && canDrop ? this.state.highlight : ''
             });
         }
 
@@ -142,7 +142,7 @@ export default function makePlugin(WrappedComponent, info, options = {}) {
                     {
                         <div
                             ref={node => (this.plugin = node)}
-                            className={`${isOver && canDrop ? highlight : ""}`}
+                            className={`${isOver && canDrop ? highlight : ''}`}
                         >
                             <Paper
                                 onMouseDown={e => this._handleClick(e)}
@@ -154,7 +154,7 @@ export default function makePlugin(WrappedComponent, info, options = {}) {
                                     className={styles.handle}
                                     ref={handle => (this.handle = handle)}
                                 >
-                                    <span className="material-icons">
+                                    <span className='material-icons'>
                                         drag_handle
                                     </span>
                                 </div>

@@ -1,14 +1,14 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
-import TemplatePreview from "./../TemplatePreview/TemplatePreview";
+import TemplatePreview from './../TemplatePreview/TemplatePreview';
 
-import styles from "./styles.scss"
+import styles from './styles.scss'
 
-import blank_img from "x-editor/images/blank.png";;
+import blank_img from 'x-editor/images/blank.png';;
 
 const templates = [
     {
-        title: "Leeres Blatt",
+        title: 'Leeres Blatt',
         image: blank_img
     }
 ];

@@ -1,8 +1,8 @@
 import {
     SET_MODE
-} from "./../actions/mode";
+} from './../actions/mode';
 
-const modes = ["easy", "advanced"];
+const modes = ['easy', 'advanced'];
 
 const mode = (state = modes[0], action) => {
     switch(action.type) {

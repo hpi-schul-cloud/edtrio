@@ -1,4 +1,4 @@
-import Api from "./../models/Api";
+import Api from './../models/Api';
 
 class SocketApi extends Api {
     constructor(conn) {
@@ -16,10 +16,10 @@ class SocketApi extends Api {
     }
 }
 
-const ws = new WebSocket("ws://localhost:8080");
+const ws = new WebSocket('ws://localhost:8080');
 
 ws.onopen = () => {
-    console.log("Connection started..");
+    console.log('Connection started..');
 }
 
 const api = new SocketApi(ws);

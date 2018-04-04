@@ -1,4 +1,4 @@
-import FabButton from "./FabButton";
+import FabButton from './FabButton';
 
 export {
     FabButton,

@@ -1,5 +1,5 @@
 const default_document = {
-    title: "",
+    title: '',
 };
 
 const doc = (state = default_document, action) => {

@@ -1,26 +1,26 @@
 import React, { Component } from 'react'
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 import { batchActions } from 'redux-batched-actions';
-import isEqual from "lodash.isequal";
+import isEqual from 'lodash.isequal';
 
 import { 
     addPlugin,
     selectPlugin,
-} from "./../../actions/plugin";
+} from './../../actions/plugin';
 
-import Plugin from "./../../../models/Plugin";
+import Plugin from './../../../models/Plugin';
 
 import AddPlugin from './../AddPlugin'
 
-import Plugins from "./../../../plugins";
+import Plugins from './../../../plugins';
 
-import styles from "./styles.scss";
+import styles from './styles.scss';
 
 class Editor extends Component {
     constructor(props) {
         super(props)
 
-        this.pluginMapping = Plugins.filter(({ info }) => info.name !== "Missing Plugin");
+        this.pluginMapping = Plugins.filter(({ info }) => info.name !== 'Missing Plugin');
 
         this.id = 1;
     }

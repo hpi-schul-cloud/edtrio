@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
-import styles from "./styles.scss";
+import styles from './styles.scss';
 
 class StartMenu extends Component {
 

@@ -1,5 +1,5 @@
 
-        import React from "react";
+        import React from 'react';
         import Loadable from 'react-loadable';
         import makePlugin from 'x-editor/editor/components/PluginWrapper';
 
@@ -7,7 +7,7 @@
             
     {
         Plugin: Loadable({
-            loader: () => import("./DummyPlugin/DummyPlugin.jsx").then(object => makePlugin(object.default, {"name":"Dummy Plugin","version":"0.1.0","description":"Leeres Plugin für Testzwecke","type":"CONTENT"})),
+            loader: () => import('./DummyPlugin/DummyPlugin.jsx').then(object => makePlugin(object.default, {"name":"Dummy Plugin","version":"0.1.0","description":"Leeres Plugin für Testzwecke","type":"CONTENT"})),
             loading: () => (
                 <p>Lädt</p>
             )
@@ -16,7 +16,7 @@
     },
     {
         Plugin: Loadable({
-            loader: () => import("./LayoutPlugin/LayoutPlugin.jsx").then(object => makePlugin(object.default, {"name":"Layout Plugin","version":"0.1.0","description":"Plugin zum Erstellen von Layouts","type":"LAYOUT"})),
+            loader: () => import('./LayoutPlugin/LayoutPlugin.jsx').then(object => makePlugin(object.default, {"name":"Layout Plugin","version":"0.1.0","description":"Plugin zum Erstellen von Layouts","type":"LAYOUT"})),
             loading: () => (
                 <p>Lädt</p>
             )
@@ -25,7 +25,7 @@
     },
     {
         Plugin: Loadable({
-            loader: () => import("./LinePlugin/LinePlugin.jsx").then(object => makePlugin(object.default, {"name":"Horizontal Line Plugin","version":"0.1.0","description":"Zeichnet eine horizontale Trennlinie","type":"CONTENT"})),
+            loader: () => import('./LinePlugin/LinePlugin.jsx').then(object => makePlugin(object.default, {"name":"Horizontal Line Plugin","version":"0.1.0","description":"Zeichnet eine horizontale Trennlinie","type":"CONTENT"})),
             loading: () => (
                 <p>Lädt</p>
             )
@@ -34,7 +34,7 @@
     },
     {
         Plugin: Loadable({
-            loader: () => import("./MissingPlugin/MissingPlugin.jsx").then(object => makePlugin(object.default, {"name":"Missing Plugin","version":"0.1.0","type":"CONTENT"})),
+            loader: () => import('./MissingPlugin/MissingPlugin.jsx').then(object => makePlugin(object.default, {"name":"Missing Plugin","version":"0.1.0","type":"CONTENT"})),
             loading: () => (
                 <p>Lädt</p>
             )
@@ -43,7 +43,7 @@
     },
     {
         Plugin: Loadable({
-            loader: () => import("./SyntaxHighlight/SyntaxHighlight.jsx").then(object => makePlugin(object.default, {"name":"Syntax Highlight","version":"0.1.0","description":"Syntax Highlight Plugin","type":"CONTENT"})),
+            loader: () => import('./SyntaxHighlight/SyntaxHighlight.jsx').then(object => makePlugin(object.default, {"name":"Syntax Highlight","version":"0.1.0","description":"Syntax Highlight Plugin","type":"CONTENT"})),
             loading: () => (
                 <p>Lädt</p>
             )
