@@ -1,7 +1,7 @@
 {
   "name": "LayoutPlugin",
   "version": "0.1.0",
-  "description": "Plugin zum Erstellen von Layouts",
+  "description": "Two column layout",
   "main": "LayoutPlugin.jsx",
   "license": "MIT",
   "author": "Florian Wirtz, Raoul Baron",
