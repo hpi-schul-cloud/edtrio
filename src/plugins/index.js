@@ -1,4 +1,5 @@
 
+        /*eslint react/display-name:0*/
         import React from 'react';
         import Loadable from 'react-loadable';
         import makePlugin from 'x-editor/editor/components/PluginWrapper';

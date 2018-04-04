@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 
 import styles from './styles.scss';
 
@@ -13,5 +14,9 @@ export default class AppBar extends PureComponent {
                 </div>
             </header>
         )
+    }
+
+    static propTypes = {
+        title: PropTypes.string.isRequired,
     }
 }

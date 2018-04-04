@@ -35,6 +35,7 @@ class Slot extends Component {
     static propTypes = {
         slot : PropTypes.number.isRequired,
         id   : PropTypes.number.isRequired,
+        connectDropTarget: PropTypes.func.isRequired,
     }
 }
 

@@ -10,7 +10,6 @@ class TemplatePreview extends Component {
         const {
             title,
             image,
-            loadEditor
         } = this.props;
 
         return (

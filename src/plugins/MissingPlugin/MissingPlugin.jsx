@@ -21,8 +21,8 @@ class MissingPlugin extends PureComponent {
         )
     }
 
-    static defaultProps = {
-        PluginName: "Missing Plugin",
+    static propTypes = {
+        type: PropTypes.string.isRequired,
     }
 }
 

@@ -1,4 +1,6 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import Loadable from 'react-loadable';
 
 import {
     Modal,
@@ -62,8 +64,16 @@ class AddPlugin extends PureComponent {
     }
 
     static propTypes = {
-        
+        allPlugins: PropTypes.arrayOf(
+            PropTypes.shape({
+                info: PropTypes.object.isRequired,
+                Plugin: PropTypes.func.isRequired
+            })
+        ).isRequired,
+        addPlugin: PropTypes.func.isRequired,
     }
+
+    static displayName = "AddPlugin Button";
 }
 
 export default AddPlugin

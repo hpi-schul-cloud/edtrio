@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { batchActions } from 'redux-batched-actions';
 import isEqual from 'lodash.isequal';
+import PropTypes from "prop-types";
 
 import { 
     addPlugin,
@@ -23,6 +24,7 @@ class Editor extends Component {
         this.pluginMapping = Plugins.filter(({ info }) => info.name !== 'Missing Plugin');
 
         this.id = 1;
+        this._unselectPlugin = this._unselectPlugin.bind(this);
     }
    
     /**
@@ -48,6 +50,18 @@ class Editor extends Component {
         this.id += 1;
 
         this.props.addPlugin(plugin);
+    }
+
+    _unselectPlugin() {
+        this.props.unselectPlugin();
+    }
+
+    componentDidMount() {
+        document.body.addEventListener("mousedown", this._unselectPlugin);
+    }
+
+    componentWillUnmount() {
+        document.body.removeEventListener("mousedown", this._unselectPlugin);
     }
 
     shouldComponentUpdate({ plugin }) {
@@ -77,6 +91,13 @@ class Editor extends Component {
             </React.Fragment>
         )
     }
+
+    static propTypes = {
+        plugin: PropTypes.object.isRequired,
+        "plugin.lookup": PropTypes.object,
+        addPlugin: PropTypes.func.isRequired,
+        unselectPlugin: PropTypes.func.isRequired,
+    }
 }
 
 const mapStateToProps = ({ plugin }) => ({ plugin });
@@ -88,6 +109,9 @@ const mapDispatchToProps = dispatch => ({
             selectPlugin(plugin.id)
         ]));
     },
+    unselectPlugin: () => {
+        dispatch(selectPlugin(null));
+    }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Editor);

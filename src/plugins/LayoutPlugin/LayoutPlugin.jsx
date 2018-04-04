@@ -43,13 +43,9 @@ class LayoutPlugin extends Component {
         )
     }
 
-    static defaultProps = {
-        children: [null, null],
-    }
-
     static propTypes = {
-        children: PropTypes.arrayOf(PropTypes.func),
-        id   : PropTypes.number.isRequired,
+        childs: PropTypes.array.isRequired,
+        id : PropTypes.number.isRequired,
     }
 }
 

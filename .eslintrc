@@ -40,11 +40,13 @@
         "no-unneeded-ternary": "error",
         "no-mixed-operators": "error",
         "no-else-return": "error",
-        "no-new-wrappers": "error",
-        "react/no-array-index-key": "error"
+        "no-new-wrappers": "error"
     },
     "plugins": [
         "import",
         "react"
+    ],
+    "extends": [
+        "plugin:react/recommended"
     ]
 }
