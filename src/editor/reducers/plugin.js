@@ -15,6 +15,8 @@ import {
 
 import Plugin from 'x-editor/models/Plugin';
 
+import { deepclone } from "x-editor/utils";
+
 const default_state = {
     active: '',
     lookup: {},
@@ -68,21 +70,21 @@ const plugin = (state = default_state, action) => {
                 ...state
             }
         case MOVE_PLUGIN: {
-            const dest = state.lookup[action.id];
-            const src  = state.lookup[state.active];
+            const next = deepclone(state);
+
+            const dest = next.lookup[action.id];
+            const src  = next.lookup[state.active];
             const { parent } = src;
 
             //delete from old slot
             if(Number.isInteger(parent))
-                state.lookup[parent].childs[src.slot] = null;
+                next.lookup[parent].childs[src.slot] = null;
 
-            state.lookup[state.active].slot = action.slot;
-            state.lookup[action.id].childs[action.slot] = src.id;
-            state.lookup[state.active].parent = dest.id;
+            src.slot = action.slot;
+            dest.childs[action.slot] = src.id;
+            src.parent = dest.id;
 
-            return {
-                ...state
-            }
+            return next;
         }
         default:
             return state;

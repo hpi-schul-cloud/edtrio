@@ -19,8 +19,6 @@ import {
 
 import styles from "./styles.scss";
 
-import { makeDevMode, makeEditable, makePluginProps } from "./selectors";
-
 const accepted_types = Object.values(Plugin.TYPES);
 const cardTarget = {
     drop: (props, monitor, component) => {
@@ -46,6 +44,8 @@ const collectDrag = (connect, monitor) => ({
     connectDragPreview: connect.dragPreview(),
     isDragging: monitor.isDragging()
 });
+
+const tool_menu = ["none", "block"];
 
 export default function makePlugin(WrappedComponent, info, options = {}) {
     class Module extends Component {
@@ -176,37 +176,35 @@ export default function makePlugin(WrappedComponent, info, options = {}) {
                                         }
                                     />
                                 </div>
-                                {editable && (
-                                    <div className={styles.toolbar}>
-                                        <Divider />
-                                        <div className={styles.icons}>
-                                            <span
-                                                className={`material-icons ${
-                                                    styles.action_icon
-                                                }`}
-                                                onClick={() =>
-                                                    this._removePlugin()
-                                                }
-                                            >
-                                                delete
-                                            </span>
-                                            <span
-                                                className={`material-icons ${
-                                                    styles.action_icon
-                                                }`}
-                                            >
-                                                hot_tub
-                                            </span>
-                                            <span
-                                                className={`material-icons ${
-                                                    styles.action_icon
-                                                }`}
-                                            >
-                                                info
-                                            </span>
-                                        </div>
+                                <div className={styles.toolbar} style={{
+                                    display: tool_menu[Number(editable)]
+                                }}>
+                                    <Divider />
+                                    <div className={styles.icons}>
+                                        <span
+                                            className={`material-icons ${
+                                                styles.action_icon
+                                            }`}
+                                            onClick={() => this._removePlugin()}
+                                        >
+                                            delete
+                                        </span>
+                                        <span
+                                            className={`material-icons ${
+                                                styles.action_icon
+                                            }`}
+                                        >
+                                            hot_tub
+                                        </span>
+                                        <span
+                                            className={`material-icons ${
+                                                styles.action_icon
+                                            }`}
+                                        >
+                                            info
+                                        </span>
                                     </div>
-                                )}
+                                </div>
                             </Paper>
                         </div>
                     }
@@ -230,20 +228,12 @@ export default function makePlugin(WrappedComponent, info, options = {}) {
         };
     }
 
-    const makeMapStateToProps = () => {
-        const devMode = makeDevMode();
-        const isEditable = makeEditable();
-        const getContent = makePluginProps();
-
-        const mapStateToProps = (state, props) => {
-            return {
-                dev: devMode(state),
-                editable: isEditable(state, props),
-                content: getContent(state, props)
-            };
+    const mapStateToProps = ({ plugin, env }, { id }) => {
+        return {
+            dev: env !== 'production',
+            editable: plugin.active === id,
+            content: plugin.lookup[id].content,
         };
-
-        return mapStateToProps;
     };
 
     const mapDispatchToProps = (dispatch, { id }) => ({
@@ -261,6 +251,6 @@ export default function makePlugin(WrappedComponent, info, options = {}) {
     return flow(
         DragSource(Plugin.TYPES[info.type], cardSource, collectDrag),
         DropTarget(accepted_types, cardTarget, collectDrop),
-        connect(makeMapStateToProps, mapDispatchToProps)
+        connect(mapStateToProps, mapDispatchToProps)
     )(Module);
 }
