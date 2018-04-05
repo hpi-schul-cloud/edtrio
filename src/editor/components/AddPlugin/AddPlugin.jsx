@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import Loadable from 'react-loadable';
 
 import {
+    Accordion,
     Modal,
-    MenuItem
+    MenuItem,
 } from 'x-editor/UI';
 
 import {
@@ -38,18 +39,20 @@ class AddPlugin extends PureComponent {
                 <Modal
                     open={this.state.open}
                     onClose={() => this.handleClose()}>
-                    { <div>
-                        { allPlugins.map(({ info }) => {
-                            return (
-                            <MenuItem
-                                key={info.name}
-                                onClick={e => {
-                                    this.handleClose()
-                                    this.props.addPlugin(info)
-                                }} >{info.name} - {info.description}</MenuItem>)
+                    { <React.Fragment>
+                        <Accordion title="All Elements">
+                            {allPlugins.map(({ info }) => {
+                                return (
+                                    <MenuItem
+                                        key={info.name}
+                                        onClick={e => {
+                                            this.handleClose()
+                                            this.props.addPlugin(info)
+                                        }} >{info.name} - {info.description} - {info.type}</MenuItem>)
                             })
-                        }
-                    </div>
+                            }
+                        </Accordion>
+                    </React.Fragment>
                     }
                 </Modal>
                 

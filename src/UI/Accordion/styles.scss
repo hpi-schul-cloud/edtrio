@@ -1,0 +1,18 @@
+@import "./../colors";
+
+.accordion_wrapper {
+    border: 1px solid $main-color;
+    margin: 20px;
+    width: 500px;
+}
+
+.accordion_title * {
+    display: inline-flex;
+    vertical-align: middle;
+}
+
+.accordion_title {
+    width: 100%;
+    padding: 20px;
+    border-bottom: 1px solid $main-color;
+}

@@ -1,3 +1,4 @@
+import Accordion from './Accordion';
 import AppBar from './AppBar';
 import Button from './Button';
 import Modal  from './Modal';
@@ -6,6 +7,7 @@ import Paper from './Paper';
 import Divider from './Divider';
 
 export {
+    Accordion,
     AppBar,
     Button,
     Modal,
