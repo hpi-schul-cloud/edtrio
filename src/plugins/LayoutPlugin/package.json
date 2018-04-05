@@ -1,0 +1,15 @@
+{
+  "name": "LayoutPlugin",
+  "version": "0.1.0",
+  "description": "Two column layout",
+  "main": "LayoutPlugin.jsx",
+  "license": "MIT",
+  "author": "Florian Wirtz, Raoul Baron",
+  "x": {
+    "displayName": "Layout Plugin",
+    "type": "LAYOUT",
+    "options": {
+        "size": 2
+    }
+  }
+}

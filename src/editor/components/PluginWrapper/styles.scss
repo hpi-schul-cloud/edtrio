@@ -1,0 +1,83 @@
+.plugin {
+    border-width: 0 5px 0 5px;
+    border-style: solid;
+    border-color: transparent;
+}
+.selected {
+    border-left: solid 5px rgb(97, 97, 97);
+    border-bottom: 1px solid rgba(204, 204, 204, 0.5);
+}
+
+.inner {
+    padding: 0 15px 20px 15px;
+}
+
+.handle {
+    text-align: center;
+    width: 100%;
+    cursor: move;
+    color: #CCC;
+
+    & > span {
+        color: #ccc;
+
+        transition: color 400ms ease;
+    }
+
+    &:hover {
+        & > span {
+            color: #888;
+        }
+    }
+}
+
+.icons {
+    padding: 15px;
+    text-align: right;
+    color: #ccc;
+}
+
+.toolbar {
+    padding: 0 15px;
+
+    & > .menu.icons span:hover {
+        color: rgb(97, 97, 97);
+    }
+}
+
+.action_icon {
+    cursor: pointer;
+
+    transition: color 300ms ease;
+    
+    &:hover {
+        color: #888;
+    }
+}
+
+.top_highlight, .bottom_highlight {
+    position: relative;
+
+    &::before {
+        content: "";
+
+        position: absolute;
+        left: 0;
+        right: 0;
+
+        z-index: 1;
+    }
+}
+
+.top_highlight {
+    &::before {
+        top: 0;
+        border-top: 4px dashed #333;
+    }
+}
+.bottom_highlight {
+    &::before {
+        bottom: 0;
+        border-top: 4px dashed #333;
+    }
+}

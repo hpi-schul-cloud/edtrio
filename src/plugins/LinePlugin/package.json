@@ -1,0 +1,12 @@
+{
+  "name": "Horizontal rule",
+  "version": "0.1.0",
+  "description": "Thematic brake",
+  "main": "LinePlugin.jsx",
+  "author": "Florian Wirtz, Raoul Baron",
+  "license": "MIT",
+  "x": {
+    "displayName": "Horizontal Line Plugin",
+    "type": "CONTENT"
+  }
+}

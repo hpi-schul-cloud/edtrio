@@ -1,0 +1,56 @@
+.blur {
+    overflow: hidden;
+}
+
+.modal_wrapper {
+    position: fixed;
+    visibility: hidden;
+
+    z-index: 1;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    transition: background-color 500ms ease, 
+                visibility 500ms step-start;
+
+    will-change: background-color;
+}
+
+.modal_wrapper_active {
+    visibility: visible;
+
+    background-color: rgba(100, 100, 100, 0.65);
+}
+.modal_wrapper_inactive {
+    transition: background-color 500ms ease, visibility 500ms step-end;
+}
+
+.modal {
+    padding: 2rem;
+
+    background-color: #fff;
+
+    border-radius: 2px;
+
+    box-shadow: 0px 2px 10px 1px #666;
+
+    opacity: 0;
+    transform: translateY(-120%);
+}
+.modal_open {
+    animation: modal_slide 540ms ease forwards;
+}
+
+@keyframes modal_slide {
+    to { 
+        opacity: 1;
+        transform: translateY(-50%);
+    }
+}
