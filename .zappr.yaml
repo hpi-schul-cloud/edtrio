@@ -1,8 +1,3 @@
-commit:
-  message:
-    # note that there are no default patterns for commit messages
-    patterns:
-      - "^:[a-z]+:\s[A-Z].*" # has to begin with gitmoji and be followed by capital letter
 specification:
   # title requirements AND body AND template requirements have to match
   title:
