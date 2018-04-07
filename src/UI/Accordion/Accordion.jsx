@@ -32,7 +32,7 @@ class Accordion extends Component {
                     <i className="material-icons">{this.state.isExpanded ? 'keyboard_arrow_down' : 'keyboard_arrow_right'}</i>
                     <span>{title}</span>
                 </div>
-                {this.state.isExpanded ? <div>{children}</div> : null}
+                {this.state.isExpanded ? <div className={`${styles.accordion_inner}`}>{children}</div> : null}
             </section>
         )
     }

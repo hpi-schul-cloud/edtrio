@@ -1,7 +1,7 @@
 @import "./../colors";
 
 .accordion_wrapper {
-    border: 1px solid $main-color;
+    border: 1px solid $primaryColor;
     margin: 20px;
     width: 500px;
 }
@@ -14,5 +14,8 @@
 .accordion_title {
     width: 100%;
     padding: 20px;
-    border-bottom: 1px solid $main-color;
+}
+
+.accordion_inner {
+    border-top: 1px solid $primaryColor;
 }
