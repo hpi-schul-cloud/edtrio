@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 import styles from './styles.scss';
 
 
-class Accordion extends Component {
+class Collapsible extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            isExpanded: false
+            isExpanded: true
         };
     }
 
@@ -38,9 +38,9 @@ class Accordion extends Component {
     }
 }
 
-Accordion.propTypes = {
+Collapsible.propTypes = {
     title: PropTypes.string.isRequired,
     children: PropTypes.node
 }
 
-export default Accordion
+export default Collapsible

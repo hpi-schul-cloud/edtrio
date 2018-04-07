@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import Loadable from 'react-loadable';
 
 import {
-    Accordion,
+    Collapsible,
     Modal,
     MenuItem,
+    PluginPreview,
 } from 'x-editor/UI';
 
 import {
@@ -40,7 +41,7 @@ class AddPlugin extends PureComponent {
                     open={this.state.open}
                     onClose={() => this.handleClose()}>
                     { <React.Fragment>
-                        <Accordion title="All Elements">
+                        <Collapsible title="All Elements">
                             {allPlugins.map(({ info }) => {
                                 return (
                                     <MenuItem
@@ -48,10 +49,11 @@ class AddPlugin extends PureComponent {
                                         onClick={e => {
                                             this.handleClose()
                                             this.props.addPlugin(info)
-                                        }} >{info.name} - {info.description} - {info.type}</MenuItem>)
+                                        }} ><PluginPreview name={info.name}
+                                                           description={info.description} /></MenuItem>)
                             })
                             }
-                        </Accordion>
+                        </Collapsible>
                     </React.Fragment>
                     }
                 </Modal>

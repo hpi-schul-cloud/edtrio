@@ -1,0 +1,24 @@
+@import "./../../colors";
+
+.title {
+    font-weight: bold;
+    font-size: 20px;
+    padding-bottom: 20px;
+}
+
+.description {
+    font-size: 14px;
+}
+
+.previewImage {
+    height: 130px;
+    background-color: $primaryColor;
+}
+
+.wrapper {
+    width: 230px;
+}
+
+.content {
+    padding: 20px;
+}

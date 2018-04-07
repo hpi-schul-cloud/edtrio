@@ -1,3 +1,3 @@
-import Accordion from './Accordion';
+import Collapsible from './Collapsible';
 
-export default Accordion
+export default Collapsible

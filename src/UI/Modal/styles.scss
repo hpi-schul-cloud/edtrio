@@ -51,6 +51,6 @@
 @keyframes modal_slide {
     to { 
         opacity: 1;
-        transform: translateY(-50%);
+        transform: translateY(-10%); //TODO there is something broken here!
     }
 }
