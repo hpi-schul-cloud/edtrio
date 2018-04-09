@@ -14,7 +14,14 @@ const x_schema = {
     type: 'object',
     properties: {
         displayName: { type: 'string' },
-        type: { enum: ['GRID', 'CONTENT', 'LAYOUT'] }
+        type: { enum: ['GRID', 'CONTENT', 'LAYOUT'] },
+        options: { 
+            type: "object",
+            properties: {
+                size: { type: "number" },
+                allowPluginRearrangement: { type: "boolean" }
+            }
+        }
     },
     required: ['displayName', 'type']
 };
@@ -65,7 +72,8 @@ const indexScript = async function generateIndexScript(plugin) {
         name: x.displayName,
         version,
         description,
-        type: x.type
+        type: x.type,
+        options: x.options,
     };
 
     const { base } = path.parse(plugin);
