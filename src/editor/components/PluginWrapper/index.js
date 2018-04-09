@@ -7,6 +7,8 @@ import throttle from "lodash.throttle";
 import isEqual from "lodash.isequal";
 import flow from "lodash.flow";
 
+import has from "has";
+
 import { Paper, Divider } from "x-editor/UI";
 
 import Plugin from "x-editor/models/Plugin";
@@ -14,30 +16,27 @@ import Plugin from "x-editor/models/Plugin";
 import {
     selectPlugin,
     removePlugin,
-    setContent
+    setContent,
+    movePlugin
 } from "x-editor/editor/actions/plugin";
 
 import styles from "./styles.scss";
 
-const accepted_types = Object.values(Plugin.TYPES);
-const cardTarget = {
-    drop: (props, monitor, component) => {
-        if (monitor.didDrop()) {
-            return;
-        }
+const TOP = 0;
+const BOTTOM = 1;
+const HIGHLIGHT_STYLES = [styles.top_highlight, styles.bottom_highlight];
 
-        console.log("drop");
-    },
-    canDrop: ({ editable }) => !editable
-};
-const collectDrop = (connect, monitor) => ({
-    connectDropTarget: connect.dropTarget(),
-    isOver: monitor.isOver({ shallow: true }),
-    canDrop: monitor.canDrop()
-});
+const accepted_types = Object.values(Plugin.TYPES);
 
 const cardSource = {
-    beginDrag: () => ({})
+    beginDrag: () => ({}),
+    endDrag: (props, monitor) => {
+        const result = monitor.getDropResult();
+
+        if (!result) return;
+
+        if (has(result, "id")) props.movePlugin(result.id, result.position);
+    }
 };
 const collectDrag = (connect, monitor) => ({
     connectDragSource: connect.dragSource(),
@@ -45,21 +44,40 @@ const collectDrag = (connect, monitor) => ({
     isDragging: monitor.isDragging()
 });
 
+const cardTarget = {
+    drop: ({ id }, monitor, component) => {
+        if (monitor.didDrop()) {
+            return {};
+        }
+
+        return {
+            id,
+            position: component.decoratedComponentInstance.state.highlight
+        };
+    },
+    canDrop: ({ editable }) => !editable
+};
+
+const collectDrop = (connect, monitor) => ({
+    connectDropTarget: connect.dropTarget(),
+    isOver: monitor.isOver({ shallow: true }),
+    canDrop: monitor.canDrop()
+});
+
 const tool_menu = ["none", "block"];
 
-export default function makePlugin(WrappedComponent, info, options = {}) {
+export default function makePlugin(WrappedComponent, info) {
     class Module extends Component {
         constructor(props) {
             super(props);
 
             this.state = {
-                highlight: ""
+                highlight: null
             };
+
+            this.hoverListener = null;
         }
 
-        /**
-         * Toggles the components `editable` state
-         */
         _handleClick(e) {
             e.stopPropagation();
 
@@ -75,17 +93,34 @@ export default function makePlugin(WrappedComponent, info, options = {}) {
 
             if (pos <= height / 2) {
                 this.setState({
-                    highlight: styles.top_highlight
+                    highlight: TOP
                 });
             } else {
                 this.setState({
-                    highlight: styles.bottom_highlight
+                    highlight: BOTTOM
                 });
             }
         }
 
         componentWillUnmount() {
-            this.plugin.removeEventListener("dragover", this.getHoverPosition);
+            if (this.props.options.allowChildRearrangement) {
+                this.plugin.removeEventListener("dragover", this.hoverListener);
+            }
+        }
+
+        componentDidUpdate(prevProps) {
+            if (
+                this.props.plugin.slot !== prevProps.plugin.slot &&
+                this.props.options.allowChildRearrangement
+            ) {
+                this.getHoverPosition = throttle(
+                    this._getHoverPosition.bind(
+                        this,
+                        this.plugin.getBoundingClientRect()
+                    ),
+                    100
+                );
+            }
         }
 
         componentDidMount() {
@@ -101,25 +136,39 @@ export default function makePlugin(WrappedComponent, info, options = {}) {
 
             connectDragSource(this.handle);
 
-            this._getHoverPosition = this._getHoverPosition.bind(
-                this,
-                this.plugin.getBoundingClientRect()
-            );
-            this.plugin.addEventListener(
-                "dragover",
-                throttle(this._getHoverPosition, 100)
-            );
+            if (this.props.options.allowChildRearrangement) {
+                this.getHoverPosition = throttle(
+                    this._getHoverPosition.bind(
+                        this,
+                        this.plugin.getBoundingClientRect()
+                    ),
+                    100
+                );
+
+                this.hoverListener = e => this.getHoverPosition(e);
+
+                this.plugin.addEventListener("dragover", this.hoverListener);
+            }
         }
 
         componentWillReceiveProps({ isOver, canDrop }) {
-            this.setState({
-                highlight: isOver && canDrop ? this.state.highlight : ""
-            });
+            if (this.props.options.allowChildRearrangement) {
+                this.setState({
+                    highlight:
+                        isOver && canDrop
+                            ? HIGHLIGHT_STYLES[this.state.highlight]
+                            : null
+                });
+            }
         }
 
         shouldComponentUpdate(nextProps, nextState) {
+            //if(nextProps.plugin.slot !== this.props.plugin.slot)
+            //console.log(`Plugin: ${nextProps.id} changed slot from ${this.props.plugin.slot} to ${nextProps.plugin.slot}`);
+
             return !(
-                isEqual(this.props.content, nextProps.content) &&
+                isEqual(this.props.plugin.slot, nextProps.plugin.slot) &&
+                isEqual(this.props.plugin.content, nextProps.plugin.content) &&
                 isEqual(this.state.highlight, nextState.highlight) &&
                 isEqual(this.props.editable, nextProps.editable)
             );
@@ -129,7 +178,7 @@ export default function makePlugin(WrappedComponent, info, options = {}) {
             const {
                 id,
                 dev,
-                content,
+                plugin,
                 editable,
                 saveContent,
                 isOver,
@@ -146,7 +195,11 @@ export default function makePlugin(WrappedComponent, info, options = {}) {
                     {
                         <div
                             ref={node => (this.plugin = node)}
-                            className={`${isOver && canDrop ? highlight : ""}`}
+                            className={`${
+                                isOver && canDrop
+                                    ? HIGHLIGHT_STYLES[this.state.highlight]
+                                    : ""
+                            }`}
                         >
                             <Paper
                                 className={
@@ -169,16 +222,19 @@ export default function makePlugin(WrappedComponent, info, options = {}) {
                                     )}
                                     <WrappedComponent
                                         id={id}
-                                        editable={editable}
-                                        content={content}
+                                        isEditable={editable}
+                                        content={plugin.content}
                                         saveContent={content =>
                                             saveContent(content)
                                         }
                                     />
                                 </div>
-                                <div className={styles.toolbar} style={{
-                                    display: tool_menu[Number(editable)]
-                                }}>
+                                <div
+                                    className={styles.toolbar}
+                                    style={{
+                                        display: tool_menu[Number(editable)]
+                                    }}
+                                >
                                     <Divider />
                                     <div className={styles.icons}>
                                         <span
@@ -218,21 +274,30 @@ export default function makePlugin(WrappedComponent, info, options = {}) {
             saveContent: PropTypes.func.isRequired,
             dev: PropTypes.bool.isRequired,
             editable: PropTypes.bool.isRequired,
-            content: PropTypes.object,
+            plugin: PropTypes.object,
             connectDropTarget: PropTypes.func.isRequired,
             connectDragPreview: PropTypes.func.isRequired,
             connectDragSource: PropTypes.func.isRequired,
             isOver: PropTypes.bool.isRequired,
             canDrop: PropTypes.bool.isRequired,
-            id: PropTypes.number.isRequired
+            id: PropTypes.number.isRequired,
+            options: PropTypes.shape({
+                allowChildRearrangement: PropTypes.bool
+            })
+        };
+
+        static defaultProps = {
+            options: {
+                allowChildRearrangement: true
+            }
         };
     }
 
     const mapStateToProps = ({ plugin, env }, { id }) => {
         return {
-            dev: env !== 'production',
+            dev: env !== "production",
             editable: plugin.active === id,
-            content: plugin.lookup[id].content,
+            plugin: plugin.lookup[id]
         };
     };
 
@@ -245,6 +310,9 @@ export default function makePlugin(WrappedComponent, info, options = {}) {
         },
         saveContent: content => {
             dispatch(setContent(id, content));
+        },
+        movePlugin: (drop, pos) => {
+            dispatch(movePlugin(drop, pos, true));
         }
     });
 

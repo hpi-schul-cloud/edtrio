@@ -7,7 +7,7 @@ export const SET_CONTENT   = 'SET_CONTENT';
 
 export const MOVE_PLUGIN   = 'MOVE_PLUGIN';
 
-export const selectPlugin = id => ({
+export const selectPlugin = (id = "") => ({
     type: SELECT_PLUGIN,
     id,
 });

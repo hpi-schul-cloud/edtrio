@@ -9,7 +9,8 @@
     "displayName": "Layout Plugin",
     "type": "LAYOUT",
     "options": {
-        "size": 2
+        "size": 2,
+        "allowChildRearrangement": false
     }
   }
 }
