@@ -1,0 +1,12 @@
+{
+  "name": "Video",
+  "version": "0.1.0",
+  "description": "Videos von Youtube und Vimeo",
+  "main": "VideoPlugin.jsx",
+  "author": "Raoul Baron, Max Haubold",
+  "license": "MIT",
+  "x": {
+    "displayName": "Video Plugin",
+    "type": "CONTENT"
+  }
+}
