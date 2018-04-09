@@ -76,7 +76,7 @@ class Editor extends Component {
     render() {
         const lookup = Object.values(this.props.plugin).sort(
             (a, b) => a.slot > b.slot
-        );
+        ); 
 
         return (
             <React.Fragment>
@@ -107,7 +107,6 @@ class Editor extends Component {
 
     static propTypes = {
         plugin: PropTypes.object.isRequired,
-        "plugin.lookup": PropTypes.object,
         addPlugin: PropTypes.func.isRequired,
         unselectPlugin: PropTypes.func.isRequired
     };
@@ -120,7 +119,7 @@ const mapDispatchToProps = dispatch => ({
         dispatch(batchActions([addPlugin(plugin), selectPlugin(plugin.id)]));
     },
     unselectPlugin: () => {
-        dispatch(selectPlugin(null));
+        dispatch(selectPlugin());
     }
 });
 
