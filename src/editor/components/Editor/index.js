@@ -76,7 +76,7 @@ class Editor extends Component {
     render() {
         const lookup = Object.values(this.props.plugin).sort(
             (a, b) => a.slot > b.slot
-        ); 
+        );
 
         return (
             <React.Fragment>
