@@ -19,8 +19,8 @@ class DummyPlugin extends Component {
         };
     }
 
-    shouldComponentUpdate({ editable }, nextState) {
-        return editable && !isEqual(this.state, nextState);
+    shouldComponentUpdate({ isEditable }, nextState) {
+        return isEditable && !isEqual(this.state, nextState);
     }
     
     componentDidMount() {
@@ -38,16 +38,15 @@ class DummyPlugin extends Component {
     }
     
     render() {
-        const { editable, saveContent } = this.props;
+        const { isEditable } = this.props;
 
         return (
             <React.Fragment>
                 <div>unstyled</div>
                 <h2>Static dummy text plugin</h2>
-                <div>{`Editable: ${editable}`}</div>
+                <div>{`Editable: ${ isEditable }`}</div>
                 <input
                     autoFocus={true}
-                    ref={(el) => this.input = el}
                     type="text"
                     name="lx"
                     value={this.state.lx}
@@ -61,14 +60,12 @@ class DummyPlugin extends Component {
         )
     }
 
-    static defaultProps = {
-        editable: false,
-    };
-
     static propTypes = {
-        editable: PropTypes.bool,
+        isEditable: PropTypes.bool.isRequired,
         content : PropTypes.object,
-        saveContent: PropTypes.func,
+        saveContent: PropTypes.func.isRequired,
+        //isPrint: PropTypes.bool,
+        //isViewMode: PropTypes.bool,
     };
 }
 
