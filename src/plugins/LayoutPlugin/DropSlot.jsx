@@ -3,9 +3,9 @@ import { connect } from "react-redux";
 import PropTypes from 'prop-types';
 import { DropTarget } from "react-dnd";
 
-import { movePlugin } from "x-editor/editor/actions/plugin";
+import { movePlugin } from "edtrio/editor/actions/plugin";
 
-import Plugin from "x-editor/models/Plugin";
+import Plugin from "edtrio/models/Plugin";
 import styles from "./styles.scss";
 
 const accepted_types = Object.values(Plugin.TYPES).filter(type => type !== Plugin.TYPES["GRID"]);

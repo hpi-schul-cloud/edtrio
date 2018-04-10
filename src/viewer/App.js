@@ -1,10 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-export default class extends Component {
-
+export default class Viewer extends Component {
     render() {
-        return (
-
-        );
+        return <p>hallo</p>;
     }
 }

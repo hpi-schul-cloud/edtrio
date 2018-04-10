@@ -2,7 +2,7 @@
         /*eslint react/display-name:0*/
         import React from 'react';
         import Loadable from 'react-loadable';
-        import makePlugin from 'x-editor/editor/components/PluginWrapper';
+        import makePlugin from 'edtrio/editor/components/PluginWrapper';
 
         export default [
             
@@ -14,15 +14,6 @@
             )
         }),
         info: {"name":"Dummy Plugin","version":"0.1.0","description":"Empty Plugin for testing purposes","type":"CONTENT"},
-    },
-    {
-        Plugin: Loadable({
-            loader: () => import('./Image/Image.jsx').then(object => makePlugin(object.default, {"name":"Image Plugin","version":"0.1.0","description":"Display Images","type":"CONTENT"})),
-            loading: () => (
-                <p>Lädt</p>
-            )
-        }),
-        info: {"name":"Image Plugin","version":"0.1.0","description":"Display Images","type":"CONTENT"},
     },
     {
         Plugin: Loadable({
