@@ -35,6 +35,10 @@
 .modal {
     padding: 2rem;
 
+    max-height: 80vh;
+    max-width: 80vw;
+    overflow: scroll;
+
     background-color: #fff;
 
     border-radius: 2px;
@@ -51,6 +55,6 @@
 @keyframes modal_slide {
     to { 
         opacity: 1;
-        transform: translateY(-10%); //TODO there is something broken here!
+        transform: translateY(0%);
     }
 }
