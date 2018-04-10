@@ -26,13 +26,14 @@ class Collapsible extends Component {
 
         return (
             <section
-                onClick={this.toggleExpansion.bind(this)}
-                className={`${styles.accordion_wrapper}`}>
-                <div className={`${styles.accordion_title}`}>
+                className={styles.accordion_wrapper}>
+                <div
+                    className={styles.accordion_title}
+                    onClick={this.toggleExpansion.bind(this)}>
                     <i className="material-icons">{this.state.isExpanded ? 'keyboard_arrow_down' : 'keyboard_arrow_right'}</i>
                     <span>{title}</span>
                 </div>
-                {this.state.isExpanded ? <div className={`${styles.accordion_inner}`}>{children}</div> : null}
+                {this.state.isExpanded ? <div className={styles.accordion_inner}>{children}</div> : null}
             </section>
         )
     }

@@ -42,17 +42,27 @@ class AddPlugin extends PureComponent {
                     onClose={() => this.handleClose()}>
                     { <React.Fragment>
                         <Collapsible title="All Elements">
+                            <div  style={{
+                                display: 'flex',
+                                flexWrap: 'wrap'
+                            }}>
                             {allPlugins.map(({ info }) => {
                                 return (
-                                    <MenuItem
-                                        key={info.name}
-                                        onClick={e => {
-                                            this.handleClose()
-                                            this.props.addPlugin(info)
-                                        }} ><PluginPreview name={info.name}
-                                                           description={info.description} /></MenuItem>)
-                            })
-                            }
+                                    
+                                    <div key={info.name} className={styles.flexi}>
+                                            <MenuItem
+                                            key={info.name}
+                                            onClick={e => {
+                                                this.handleClose()
+                                                this.props.addPlugin(info)
+                                            }} ><PluginPreview name={info.name}
+                                                description={info.description} /></MenuItem>
+                                            </div>
+                                    
+                                    )
+                                
+                            })}
+                            </div>
                         </Collapsible>
                     </React.Fragment>
                     }

@@ -17,15 +17,6 @@
     },
     {
         Plugin: Loadable({
-            loader: () => import('./Image/Image.jsx').then(object => makePlugin(object.default, {"name":"Image Plugin","version":"0.1.0","description":"Display Images","type":"CONTENT"})),
-            loading: () => (
-                <p>Lädt</p>
-            )
-        }),
-        info: {"name":"Image Plugin","version":"0.1.0","description":"Display Images","type":"CONTENT"},
-    },
-    {
-        Plugin: Loadable({
             loader: () => import('./LayoutPlugin/LayoutPlugin.jsx').then(object => makePlugin(object.default, {"name":"Layout Plugin","version":"0.1.0","description":"Two column layout","type":"LAYOUT","options":{"size":2,"allowChildRearrangement":false}})),
             loading: () => (
                 <p>Lädt</p>

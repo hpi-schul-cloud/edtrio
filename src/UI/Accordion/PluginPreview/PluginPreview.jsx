@@ -18,7 +18,7 @@ class PluginPreview extends Component {
                         {name}
                     </div>
                     <div className={`${styles.description}`}>
-                        {description}
+                        {description.substr(0, 50)}
                     </div>
                 </div>
             </div>

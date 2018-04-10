@@ -3,7 +3,11 @@
 .title {
     font-weight: bold;
     font-size: 20px;
-    padding-bottom: 20px;
+    max-width: 180px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    padding-bottom: 5px;
 }
 
 .description {
@@ -15,10 +19,8 @@
     background-color: $primaryColor;
 }
 
-.wrapper {
-    width: 230px;
-}
-
 .content {
     padding: 20px;
+    height: 100px;
+    overflow: hidden;
 }
