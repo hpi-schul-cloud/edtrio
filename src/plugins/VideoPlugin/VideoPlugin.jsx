@@ -1,17 +1,16 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-import styles from "./styles.scss";
+import styles from './styles.scss';
 
-const youtubeR = /^.*(youtu.be\/|v\/|e\/|u\/\w+\/|embed\/|v=)([^#&?]*).*/m;
-const vimeoR = /(http|https)?:\/\/(www\.)?vimeo.com\/(?:channels\/(?:\w+\/)?|groups\/([^/]*)\/videos\/|)(\d+)(?:|\/\?)/;
+const parseUrlRegex = /(http:|https:|)\/\/(player.|www.)?(vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com))\/(video\/|embed\/|watch\?v=|v\/)?([A-Za-z0-9._%-]*)(\&\S+)?/;
 
 class VideoPlugin extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            embedURL: ""
+            embedURL: ''
         };
     }
 
@@ -41,7 +40,7 @@ class VideoPlugin extends Component {
                         name="url"
                         onInput={e => this.handleChange(e)}
                         disabled={!isEditable}
-                        placeholder="Gib eine Youtube URL ein"
+                        placeholder="Youtube oder Vimeo URL eingeben"
                     />
                 </div>
             </div>
@@ -49,18 +48,25 @@ class VideoPlugin extends Component {
     }
 
     handleChange(e) {
-        const [,, id] = youtubeR.exec(e.target.value);
+        const [,,, platform,,, id] = parseUrlRegex.exec(e.target.value);
+        
+        let embedPrefix = '';
+
+        if(platform.indexOf('youtu') > -1) {
+            embedPrefix = 'https://www.youtube.com/embed/';
+        } else if (platform.indexOf('vimeo') > -1) {
+            embedPrefix = 'https://player.vimeo.com/video/';
+        }
 
         this.setState(
             {
-                embedURL: `http://www.youtube.com/embed/${id}`
+                embedURL: embedPrefix + id
             },
             () => this.props.saveContent(this.state)
         );
     }
 
     static propTypes = {
-        // fuer Linting
         isEditable: PropTypes.bool,
         content: PropTypes.object,
         saveContent: PropTypes.func
