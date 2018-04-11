@@ -7,7 +7,12 @@
     margin: 0;
 }
 
-.flexi {
+.item {
     width: 33.333%;
     max-width: 33.333%;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
 }

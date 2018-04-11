@@ -34,38 +34,50 @@ class AddPlugin extends PureComponent {
 
     render() {
         const { allPlugins } = this.props;
+        const content = [];
+        const layout = [];
 
         return (
             <React.Fragment>
                 <Modal
                     open={this.state.open}
                     onClose={() => this.handleClose()}>
-                    { <React.Fragment>
-                        <Collapsible title="All Elements">
-                            <div  style={{
-                                display: 'flex',
-                                flexWrap: 'wrap'
-                            }}>
-                            {allPlugins.map(({ info }) => {
-                                return (
-                                    
-                                    <div key={info.name} className={styles.flexi}>
-                                            <MenuItem
-                                            key={info.name}
-                                            onClick={e => {
-                                                this.handleClose()
-                                                this.props.addPlugin(info)
-                                            }} ><PluginPreview name={info.name}
-                                                description={info.description} /></MenuItem>
-                                            </div>
-                                    
-                                    )
-                                
-                            })}
+                    <React.Fragment>
+                        {allPlugins.map(({ info }) => {
+                            const temp = (
+                                <div key={info.name} className={styles.item}>
+                                    <MenuItem
+                                        key={info.name}
+                                        onClick={e => {
+                                            this.handleClose()
+                                            this.props.addPlugin(info)
+                                        }}>
+                                        <PluginPreview
+                                            name={info.name}
+                                            description={info.description} />
+                                    </MenuItem>
+                                </div>)
+                            
+                            if(info.type === 'CONTENT') {
+                                content.push(temp)
+                            } else {
+                                layout.push(temp)
+                            }
+                        })}
+
+                        <Collapsible
+                            title="Inhaltselemente"
+                            isExpanded={true}>
+                            <div className={styles.container}>
+                                {content}
+                            </div>
+                        </Collapsible>
+                        <Collapsible title="Layout">
+                            <div className={styles.container}>
+                                {layout}
                             </div>
                         </Collapsible>
                     </React.Fragment>
-                    }
                 </Modal>
                 
                 <FabButton
@@ -73,9 +85,7 @@ class AddPlugin extends PureComponent {
                     onClick={() => this.handleOpen()}>
                     <i className="material-icons">add</i>
                 </FabButton>
-            </React.Fragment>
-        )
-    }
+            </React.Fragment>)}
 
     static propTypes = {
         allPlugins: PropTypes.arrayOf(

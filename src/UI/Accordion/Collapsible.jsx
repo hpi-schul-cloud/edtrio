@@ -9,7 +9,7 @@ class Collapsible extends Component {
         super(props);
 
         this.state = {
-            isExpanded: true
+            isExpanded: props.isExpanded | false
         };
     }
 
@@ -41,7 +41,8 @@ class Collapsible extends Component {
 
 Collapsible.propTypes = {
     title: PropTypes.string.isRequired,
-    children: PropTypes.node
+    children: PropTypes.node,
+    isExpanded: PropTypes.boolean,
 }
 
 export default Collapsible
