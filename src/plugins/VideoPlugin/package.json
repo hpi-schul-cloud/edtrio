@@ -1,0 +1,12 @@
+{
+  "name": "video",
+  "version": "0.1.0",
+  "description": "Videos von Youtube und Vimeo einbinden",
+  "main": "VideoPlugin.jsx",
+  "author": "Raoul Baron, Max Haubold, Florian Wirtz",
+  "license": "MIT",
+  "x": {
+    "displayName": "Video",
+    "type": "CONTENT"
+  }
+}
