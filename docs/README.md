@@ -1,4 +1,4 @@
-# Edtr.io Documentation
+# Edtr.io
 
 Edtr.io is an open-source project created by [Schul-Cloud](https://github.com/schul-cloud) to enable `<what>`.
 
