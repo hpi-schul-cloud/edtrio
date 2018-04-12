@@ -59,6 +59,15 @@
             )
         }),
         info: {"name":"Syntax Highlight","version":"0.1.0","description":"Syntax Highlight Plugin","type":"CONTENT"},
+    },
+    {
+        Plugin: Loadable({
+            loader: () => import('./VideoPlugin/VideoPlugin.jsx').then(object => makePlugin(object.default, {"name":"Video Plugin","version":"0.1.0","description":"Videos von Youtube und Vimeo","type":"CONTENT"})),
+            loading: () => (
+                <p>Lädt</p>
+            )
+        }),
+        info: {"name":"Video Plugin","version":"0.1.0","description":"Videos von Youtube und Vimeo","type":"CONTENT"},
     }
         ]
     
