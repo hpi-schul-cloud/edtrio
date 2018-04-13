@@ -1,11 +1,12 @@
 # Edtr.io [![Docs](https://img.shields.io/badge/docs-Gitbook.io-lightgrey.svg)](https://edtrio.gitbook.io/docs) 
 
-Edtr.io is an open-source project created by [Schul-Cloud](https://github.com/schul-cloud) to enable `<what>`.
+Edtr.io is an open-source project created by [Schul-Cloud](https://github.com/schul-cloud) to enable seamless content creation.
 
-It provides `<what else>`. <br/>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+It provides two things: A universal editor infrastructure to manipulate and create content and a set of 'lego block' plugins to make that process even easier. Edtr.io is React based and plugins [can be easily created](Develop_plugins.md).<br />
+Want to contribute? Check out our [Contributing.md](https://github.com/schul-cloud/edtrio/blob/master/.github/CONTRIBUTING.md)  and our [Roadmap](https://github.com/schul-cloud/edtrio/projects/1) to find issues to work on or [propose your own](https://github.com/schul-cloud/edtrio/issues).
 
-[Contributing.md](https://github.com/schul-cloud/edtrio/blob/master/.github/CONTRIBUTING.md) [Roadmap](https://github.com/schul-cloud/edtrio/projects/1)
+## Demo
+![Screenshot Edtr.io](https://github.com/schul-cloud/edtrio/raw/docs-init/docs/screenshot_editor.png "Edtr.io screenshot")
 
 ## Setup
 Installing Edtr.io is a fairly straight forward process:
@@ -21,7 +22,3 @@ After the installation is done you can launch the editor via:
 ```shell
 $ yarn start
 ```
-
-## Demo
-
-## Credits
