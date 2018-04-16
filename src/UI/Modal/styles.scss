@@ -17,8 +17,7 @@
     right: 0;
     bottom: 0;
 
-    transition: background-color 500ms ease, 
-                visibility 500ms step-start;
+    transition: background-color 500ms ease, visibility 500ms step-start;
 
     will-change: background-color;
 }
@@ -35,6 +34,12 @@
 .modal {
     padding: 2rem;
 
+    max-height: 80vh;
+    max-width: 80vw;
+
+    overflow: scroll;
+    overflow-x: hidden;
+
     background-color: #fff;
 
     border-radius: 2px;
@@ -49,8 +54,8 @@
 }
 
 @keyframes modal_slide {
-    to { 
+    to {
         opacity: 1;
-        transform: translateY(-50%);
+        transform: translateY(0%);
     }
 }

@@ -1,0 +1,15 @@
+{
+  "name": "text",
+  "version": "0.1.0",
+  "description": "Schreiben was das Zeug hält",
+  "main": "TextPlugin.jsx",
+  "author": "FWirtz",
+  "license": "MIT",
+  "x": {
+    "displayName": "Text",
+    "type": "CONTENT"
+  },
+  "dependencies": {
+    "react-quill": "^1.2.7"
+  }
+}

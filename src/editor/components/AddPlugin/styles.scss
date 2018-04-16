@@ -6,3 +6,13 @@
 
     margin: 0;
 }
+
+.item {
+    width: 33.333%;
+    max-width: 300px;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+}

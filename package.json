@@ -83,6 +83,6 @@
     }
   },
   "bin": {
-    "x-editor": "bin/index.js"
+    "edtrio": "bin/index.js"
   }
 }
