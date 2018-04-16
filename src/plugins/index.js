@@ -8,6 +8,15 @@
             
     {
         Plugin: Loadable({
+            loader: () => import('./DropSlot/DropSLot.jsx').then(object => makePlugin(object.default, {"name":"DropSlot","version":"0.1.0","type":"LAYOUT"})),
+            loading: () => (
+                <p>Lädt</p>
+            )
+        }),
+        info: {"name":"DropSlot","version":"0.1.0","type":"LAYOUT"},
+    },
+    {
+        Plugin: Loadable({
             loader: () => import('./DummyPlugin/DummyPlugin.jsx').then(object => makePlugin(object.default, {"name":"Dummy Plugin","version":"0.1.0","description":"Empty Plugin for testing purposes","type":"CONTENT"})),
             loading: () => (
                 <p>Lädt</p>
