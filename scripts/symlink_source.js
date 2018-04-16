@@ -1,7 +1,7 @@
 const fs   = require('fs');
 const path = require('path');
 
-const editor_path = path.join(__dirname, './../node_modules/x-editor');
+const editor_path = path.join(__dirname, './../node_modules/edtrio');
 const source_path = path.join(__dirname, './../src');
 
 fs.symlink(source_path, editor_path, 'dir', (err, res) => {
