@@ -53,6 +53,15 @@
     },
     {
         Plugin: Loadable({
+            loader: () => import('./Text/TextPlugin.jsx').then(object => makePlugin(object.default, {"name":"Text","version":"0.1.0","description":"Schreiben was das Zeug hält","type":"CONTENT"})),
+            loading: () => (
+                <p>Lädt</p>
+            )
+        }),
+        info: {"name":"Text","version":"0.1.0","description":"Schreiben was das Zeug hält","type":"CONTENT"},
+    },
+    {
+        Plugin: Loadable({
             loader: () => import('./VideoPlugin/VideoPlugin.jsx').then(object => makePlugin(object.default, {"name":"Video","version":"0.1.0","description":"Videos von Youtube und Vimeo einbinden","type":"CONTENT"})),
             loading: () => (
                 <p>Lädt</p>
