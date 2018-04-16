@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { batchActions } from "redux-batched-actions";
 import isEqual from "lodash.isequal";
+import { SortableContainer } from "react-sortable-hoc";
 import PropTypes from "prop-types";
 
-import { addPlugin, selectPlugin } from "./../../actions/plugin";
+import { addPlugin, selectPlugin, movePlugin } from "./../../actions/plugin";
 
 import Plugin from "./../../../models/Plugin";
 
@@ -61,6 +62,10 @@ class Editor extends Component {
         this.props.unselectPlugin();
     }
 
+    sortPlugins({ oldIndex, newIndex }) {
+        this.props.movePlugin(oldIndex, newIndex);
+    }
+
     componentDidMount() {
         this.listener.addEventListener("mousedown", this._unselectPlugin);
     }
@@ -78,15 +83,10 @@ class Editor extends Component {
             (a, b) => a.slot > b.slot
         );
 
-        return (
-            <React.Fragment>
-                <div
-                    className={styles.event_background}
-                    ref={listener => (this.listener = listener)}
-                />
-
-                <div className={styles.editor}>
-                    {lookup.map(plugin => {
+        const SortableList = SortableContainer(({ items }) => {
+            return (
+                <ul>
+                    {items.map(plugin => {
                         const Module = this._resolvePlugin(plugin);
 
                         return (
@@ -95,6 +95,23 @@ class Editor extends Component {
                             )
                         );
                     })}
+                </ul>
+            );
+        });
+
+        return (
+            <React.Fragment>
+                <div
+                    className={styles.event_background}
+                    ref={listener => (this.listener = listener)}
+                />
+
+                <div className={styles.editor}>
+                    <SortableList
+                        items={lookup}
+                        onSortEnd={index => this.sortPlugins(index)}
+                        useDragHandle={true}
+                    />
                 </div>
 
                 <AddPlugin
@@ -106,13 +123,16 @@ class Editor extends Component {
     }
 
     static propTypes = {
+        movePlugin: PropTypes.func,
         plugin: PropTypes.object.isRequired,
         addPlugin: PropTypes.func.isRequired,
         unselectPlugin: PropTypes.func.isRequired
     };
 }
 
-const mapStateToProps = ({ plugin }) => ({ plugin: plugin.lookup });
+const mapStateToProps = ({ plugin }) => ({
+    plugin: plugin.lookup
+});
 
 const mapDispatchToProps = dispatch => ({
     addPlugin: plugin => {
@@ -120,6 +140,9 @@ const mapDispatchToProps = dispatch => ({
     },
     unselectPlugin: () => {
         dispatch(selectPlugin());
+    },
+    movePlugin: (oldIndex, newIndex) => {
+        dispatch(movePlugin(oldIndex, newIndex));
     }
 });
 

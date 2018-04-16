@@ -1,9 +1,4 @@
-/* Schema
- * {
- *      active: ${plugin_id},
- *      loaded: [${class Plugin(id, name, content)}]
- * }
- */
+//import { arrayMove } from "react-sortable-hoc";
 
 import {
     SELECT_PLUGIN,
@@ -22,58 +17,36 @@ const default_state = {
     lookup: {}
 };
 
-//slot = 0 Position top, 1 Position bottom
-const movePlugin = (plugin, dest, slot) => {
-    //get parent from the drop target el and put above or below
-    const { parent } = plugin.lookup[dest];
+const movePlugin = (plugin, { oldIndex, newIndex }) => {
+    const plugins = Object.values(plugin.lookup);
 
-    const sorted = Object.values(plugin.lookup)
+    const { parent } = plugins.find(pl => pl.slot === newIndex);
+
+    const sorted = plugins
         .filter(pl => pl.parent === parent)
         .sort((a, b) => a.slot - b.slot);
 
-    let dest_index = sorted.findIndex(p => p.id === dest);
-    const src_index  = sorted.findIndex(
-        p => p.id === plugin.lookup[plugin.active].id
-    );
-
-    //top
-    if(!slot) {
-        //console.log("top");
-        //unten nach oben
-        if(src_index > dest_index) {
-            //ok
-            //console.log("unten nach oben")
-        } else {
-            //ok
-            dest_index -= 1;
-            //console.log("oben nach unten")
-        }
-    } 
-    //bottom
-    else {
-        //unten nach oben
-        //console.log("bottom");
-        if(src_index > dest_index) {
-            //console.log("unten nach oben")
-            dest_index += 1;
-        } else {
-            //ok
-            //console.log("oben nach unten")
-        }
-    }
+    const dest_index = sorted.findIndex(p => p.slot === newIndex);
+    const src_index = sorted.findIndex(p => p.slot === oldIndex);
 
     arrayMove(sorted, src_index, dest_index);
 
-    if(src_index > dest_index) {
-        for (let i = dest_index; i <= src_index - 1; i+=1) {
+    if (src_index > dest_index) {
+        for (let i = dest_index; i <= src_index - 1; i += 1) {
             //swap slots
-            [sorted[i].slot, sorted[i+1].slot] = [sorted[i+1].slot, sorted[i].slot];
+            [sorted[i].slot, sorted[i + 1].slot] = [
+                sorted[i + 1].slot,
+                sorted[i].slot
+            ];
         }
     } else {
         //TODO
-        for (let i = dest_index; i >= src_index + 1; i-=1) {
+        for (let i = dest_index; i >= src_index + 1; i -= 1) {
             //swap slots
-            [sorted[i].slot, sorted[i-1].slot] = [sorted[i-1].slot, sorted[i].slot];
+            [sorted[i].slot, sorted[i - 1].slot] = [
+                sorted[i - 1].slot,
+                sorted[i].slot
+            ];
         }
     }
 };
@@ -148,9 +121,11 @@ const plugin = (state = default_state, action) => {
         case MOVE_PLUGIN: {
             const next = deepclone(state);
 
-            action.adjust_slots
+            /*action.adjust_slots
                 ? movePlugin(next, action.id, action.slot)
-                : nestPlugin(next, action.id, action.slot);
+                : nestPlugin(next, action.id, action.slot);*/
+
+            movePlugin(next, action);
 
             return next;
         }
