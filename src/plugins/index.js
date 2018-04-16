@@ -17,6 +17,15 @@
     },
     {
         Plugin: Loadable({
+            loader: () => import('./Image/Image.jsx').then(object => makePlugin(object.default, {"name":"Image Plugin","version":"0.1.0","description":"Display Images","type":"CONTENT"})),
+            loading: () => (
+                <p>Lädt</p>
+            )
+        }),
+        info: {"name":"Image Plugin","version":"0.1.0","description":"Display Images","type":"CONTENT"},
+    },
+    {
+        Plugin: Loadable({
             loader: () => import('./LayoutPlugin/LayoutPlugin.jsx').then(object => makePlugin(object.default, {"name":"Layout Plugin","version":"0.1.0","description":"Two column layout","type":"LAYOUT","options":{"size":2,"allowChildRearrangement":false}})),
             loading: () => (
                 <p>Lädt</p>
@@ -53,21 +62,12 @@
     },
     {
         Plugin: Loadable({
-            loader: () => import('./Text/TextPlugin.jsx').then(object => makePlugin(object.default, {"name":"Text","version":"0.1.0","description":"Schreiben was das Zeug hält","type":"CONTENT"})),
+            loader: () => import('./VideoPlugin/VideoPlugin.jsx').then(object => makePlugin(object.default, {"name":"Video Plugin","version":"0.1.0","description":"Videos von Youtube und Vimeo","type":"CONTENT"})),
             loading: () => (
                 <p>Lädt</p>
             )
         }),
-        info: {"name":"Text","version":"0.1.0","description":"Schreiben was das Zeug hält","type":"CONTENT"},
-    },
-    {
-        Plugin: Loadable({
-            loader: () => import('./VideoPlugin/VideoPlugin.jsx').then(object => makePlugin(object.default, {"name":"Video","version":"0.1.0","description":"Videos von Youtube und Vimeo einbinden","type":"CONTENT"})),
-            loading: () => (
-                <p>Lädt</p>
-            )
-        }),
-        info: {"name":"Video","version":"0.1.0","description":"Videos von Youtube und Vimeo einbinden","type":"CONTENT"},
+        info: {"name":"Video Plugin","version":"0.1.0","description":"Videos von Youtube und Vimeo","type":"CONTENT"},
     }
         ]
     
