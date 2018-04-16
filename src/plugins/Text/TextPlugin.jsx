@@ -6,7 +6,11 @@ import PropTypes from "prop-types";
 class TextPlugin extends Component {
     constructor(props) {
         super(props);
-        this.state = { text: "" }; // You can also pass a Quill Delta here
+
+        this.state = {
+            text: "",
+            visible: false
+        };
     }
 
     componentDidMount() {
@@ -17,7 +21,7 @@ class TextPlugin extends Component {
 
     handleChange(value) {
         this.setState({ text: value }, () =>
-            this.props.saveContent(this.state)
+            this.props.saveContent({ text: this.state.text })
         );
     }
 
@@ -27,16 +31,32 @@ class TextPlugin extends Component {
 
     render() {
         const { isEditable } = this.props;
+        const { visible } = this.state;
 
-        if (isEditable) {
-            return (
-                <ReactQuill
-                    value={this.state.text}
-                    onChange={e => this.handleChange(e)}
+        return (
+            <>
+                <link
+                    rel="stylesheet"
+                    href="//cdn.quilljs.com/1.2.6/quill.snow.css"
+                    type="text/css"
+                    onLoad={() => this.setState({ visible: true })}
                 />
-            );
-        }
-        return <div dangerouslySetInnerHTML={{ __html: this.state.text }} />;
+
+                {isEditable &&
+                    visible && (
+                        <ReactQuill
+                            value={this.state.text}
+                            onChange={e => this.handleChange(e)}
+                        />
+                    )}
+
+                {!isEditable && (
+                    <div
+                        dangerouslySetInnerHTML={{ __html: this.state.text }}
+                    />
+                )}
+            </>
+        );
     }
 }
 
