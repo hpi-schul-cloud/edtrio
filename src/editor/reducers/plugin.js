@@ -13,9 +13,9 @@ import {
     MOVE_PLUGIN
 } from "./../actions/plugin";
 
-import Plugin from "x-editor/models/Plugin";
+import Plugin from "edtrio/models/Plugin";
 
-import { deepclone, arrayMove } from "x-editor/utils";
+import { deepclone, arrayMove } from "edtrio/utils";
 
 const default_state = {
     active: "",

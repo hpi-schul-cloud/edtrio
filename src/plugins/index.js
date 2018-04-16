@@ -2,7 +2,7 @@
         /*eslint react/display-name:0*/
         import React from 'react';
         import Loadable from 'react-loadable';
-        import makePlugin from 'x-editor/editor/components/PluginWrapper';
+        import makePlugin from 'edtrio/editor/components/PluginWrapper';
 
         export default [
             
@@ -53,12 +53,12 @@
     },
     {
         Plugin: Loadable({
-            loader: () => import('./VideoPlugin/VideoPlugin.jsx').then(object => makePlugin(object.default, {"name":"Video Plugin","version":"0.1.0","description":"Videos von Youtube und Vimeo","type":"CONTENT"})),
+            loader: () => import('./VideoPlugin/VideoPlugin.jsx').then(object => makePlugin(object.default, {"name":"Video","version":"0.1.0","description":"Videos von Youtube und Vimeo einbinden","type":"CONTENT"})),
             loading: () => (
                 <p>Lädt</p>
             )
         }),
-        info: {"name":"Video Plugin","version":"0.1.0","description":"Videos von Youtube und Vimeo","type":"CONTENT"},
+        info: {"name":"Video","version":"0.1.0","description":"Videos von Youtube und Vimeo einbinden","type":"CONTENT"},
     }
         ]
     

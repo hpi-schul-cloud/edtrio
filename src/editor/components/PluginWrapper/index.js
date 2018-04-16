@@ -9,16 +9,16 @@ import flow from "lodash.flow";
 
 import has from "has";
 
-import { Paper, Divider } from "x-editor/UI";
+import { Paper, Divider } from "edtrio/UI";
 
-import Plugin from "x-editor/models/Plugin";
+import Plugin from "edtrio/models/Plugin";
 
 import {
     selectPlugin,
     removePlugin,
     setContent,
     movePlugin
-} from "x-editor/editor/actions/plugin";
+} from "edtrio/editor/actions/plugin";
 
 import styles from "./styles.scss";
 

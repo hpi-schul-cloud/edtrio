@@ -18,5 +18,8 @@
 }
 
 .accordion_inner {
-    border-top: 1px solid $primaryColor;
+    height: 0px;
+    overflow: hidden;
+
+    transition: height 400ms ease;
 }

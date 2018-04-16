@@ -7,11 +7,11 @@ import {
     Modal,
     MenuItem,
     PluginPreview,
-} from 'x-editor/UI';
+} from 'edtrio/UI';
 
 import {
     FabButton,
-} from 'x-editor/UI/Button';
+} from 'edtrio/UI/Button';
 
 import styles from './styles.scss';
 

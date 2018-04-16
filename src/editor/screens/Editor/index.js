@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-import { AppBar } from 'x-editor/UI';
+import { AppBar } from 'edtrio/UI';
 
-import Editor from 'x-editor/editor/components/Editor';
+import Editor from 'edtrio/editor/components/Editor';
 
 class EditorScreen extends Component {
 
