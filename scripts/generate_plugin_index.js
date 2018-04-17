@@ -1,21 +1,21 @@
-const fs = require('fs');
-const path = require('path');
-const Ajv = require('ajv');
+const fs = require("fs");
+const path = require("path");
+const Ajv = require("ajv");
 
-const { promisify } = require('util');
+const { promisify } = require("util");
 
-const readDir    = promisify(fs.readdir);
-const readFile   = promisify(fs.readFile);
-const writeFile  = promisify(fs.writeFile);
+const readDir = promisify(fs.readdir);
+const readFile = promisify(fs.readFile);
+const writeFile = promisify(fs.writeFile);
 const deleteFile = promisify(fs.unlink);
-const fileExists = s => new Promise(r=>fs.access(s, fs.F_OK, e => r(!e)));
+const fileExists = s => new Promise(r => fs.access(s, fs.F_OK, e => r(!e)));
 
 const x_schema = {
-    type: 'object',
+    type: "object",
     properties: {
-        displayName: { type: 'string' },
-        type: { enum: ['GRID', 'CONTENT', 'LAYOUT'] },
-        options: { 
+        displayName: { type: "string" },
+        type: { enum: ["CONTENT", "LAYOUT"] },
+        options: {
             type: "object",
             properties: {
                 size: { type: "number" },
@@ -23,7 +23,7 @@ const x_schema = {
             }
         }
     },
-    required: ['displayName', 'type']
+    required: ["displayName", "type"]
 };
 
 const ajv = new Ajv();
@@ -51,7 +51,7 @@ const pluginScript = function generatePluginScript(main, opts) {
 
 const indexScript = async function generateIndexScript(plugin) {
     const content = await readDir(plugin);
-    const index = content.findIndex(el => el === 'package.json');
+    const index = content.findIndex(el => el === "package.json");
 
     if (index < 0) {
         throw new Error(`package.json is required in ${plugin}`);
@@ -60,12 +60,16 @@ const indexScript = async function generateIndexScript(plugin) {
     const package = path.join(plugin, content[index]);
 
     const { x, version, description, main } = JSON.parse(
-        await readFile(package)//.catch(fileError);
+        await readFile(package) //.catch(fileError);
     );
 
     const valid = validate(x);
     if (!valid) {
-        throw new Error(`x editor config not valid in ${package}. ${validate.errors.map(err => `Error: ${err.message}`).join(' ')}`);
+        throw new Error(
+            `x editor config not valid in ${package}. ${validate.errors
+                .map(err => `Error: ${err.message}`)
+                .join(" ")}`
+        );
     }
 
     const info = {
@@ -73,7 +77,7 @@ const indexScript = async function generateIndexScript(plugin) {
         version,
         description,
         type: x.type,
-        options: x.options,
+        options: x.options
     };
 
     const { base } = path.parse(plugin);
@@ -85,13 +89,15 @@ const fileError = ({ message }) => {
     console.log(`File operation error. ${message}`);
 
     process.exit(1);
-}
+};
 
 (async () => {
     const plugin_list = await readDir(plugins_dir).catch(fileError);
-    const plugins = plugin_list.map(fldr => path.join(plugins_dir, fldr)).filter(f => fs.statSync(f).isDirectory());
+    const plugins = plugin_list
+        .map(fldr => path.join(plugins_dir, fldr))
+        .filter(f => fs.statSync(f).isDirectory());
 
-    if(await fileExists(output_file))
+    if (await fileExists(output_file))
         await deleteFile(output_file).catch(fileError);
 
     const script = `
@@ -101,22 +107,26 @@ const fileError = ({ message }) => {
         import makePlugin from 'edtrio/editor/components/PluginWrapper';
 
         export default [
-            ${await Promise.all(plugins.map(plugin =>
-                indexScript(plugin).catch(err => errors.push(err.message))
-            ))}
+            ${await Promise.all(
+                plugins.map(plugin =>
+                    indexScript(plugin).catch(err => errors.push(err.message))
+                )
+            )}
         ]
     `;
 
-    if(errors.length > 0) {
+    if (errors.length > 0) {
         errors.forEach((error, i) => {
-            console.log(`${i + 1}. ${error}`)
+            console.log(`${i + 1}. ${error}`);
         });
 
         process.exit(1);
     } else {
-        await writeFile(path.join(plugins_dir, 'index.js'), script).catch(fileError);
+        await writeFile(path.join(plugins_dir, "index.js"), script).catch(
+            fileError
+        );
 
-        console.log('Done.')
+        console.log("Done.");
     }
 })().catch(err => {
     console.log(`Unknown error ${err.message}.`);

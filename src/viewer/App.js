@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-export default class extends Component {
+import PluginWrapper from "./Components/PluginWrapper";
 
+export default class Viewer extends Component {
     render() {
-        return (
-
-        );
+        return <PluginWrapper />;
     }
 }

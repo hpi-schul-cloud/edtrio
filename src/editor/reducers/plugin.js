@@ -52,6 +52,7 @@ const movePlugin = (plugin, { oldIndex, newIndex }) => {
 };
 
 const nestPlugin = (plugin, id, slot) => {
+    //fix slot removal
     const dest = plugin.lookup[id];
     const src = plugin.lookup[plugin.active];
     const { parent } = src;
@@ -71,8 +72,8 @@ const deletePlugin = (lookup, key) => {
 
     //delete from parent if exists
     if (start.parent) {
-        lookup[start.parent].childs = lookup[start.parent].childs.filter(
-            childs => childs !== key
+        lookup[start.parent].childs = lookup[start.parent].childs.map(
+            childs => childs
         );
     }
 

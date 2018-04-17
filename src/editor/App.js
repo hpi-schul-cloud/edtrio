@@ -5,12 +5,11 @@ import { enableBatching } from "redux-batched-actions";
 
 import rootReducer from "./rootReducer";
 
-import api from "./api";
-import routes from "./routes";
+import api from "edtrio/common/api";
 
 import Editor from "./screens/Editor";
 
-import "./App.scss";
+import "edtrio/common/base.scss";
 
 class App extends Component {
     constructor(props) {

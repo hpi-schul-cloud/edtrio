@@ -16,9 +16,12 @@ class Collapsible extends Component {
         e.preventDefault();
         e.stopPropagation();
 
-        this.setState({
-            isExpanded: !this.state.isExpanded
-        });
+        this.setState(
+            {
+                isExpanded: !this.state.isExpanded
+            },
+            this.props.onToggle
+        );
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -79,7 +82,8 @@ Collapsible.defaultProps = {
 Collapsible.propTypes = {
     title: PropTypes.string.isRequired,
     children: PropTypes.node,
-    isExpanded: PropTypes.bool
+    isExpanded: PropTypes.bool,
+    onToggle: PropTypes.func
 };
 
 export default Collapsible;

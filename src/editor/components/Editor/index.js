@@ -10,33 +10,30 @@ import { addPlugin, selectPlugin, movePlugin } from "./../../actions/plugin";
 import Plugin from "./../../../models/Plugin";
 
 import AddPlugin from "./../AddPlugin";
-
-import Plugins from "./../../../plugins";
+import PluginResolver from "edtrio/common/Components/PluginResolver";
 
 import styles from "./styles.scss";
+
+const SortableList = SortableContainer(({ items }) => (
+    <div className={styles.editor}>
+        {items.map(plugin => {
+            return (
+                !plugin.parent && (
+                    <PluginResolver plugin={plugin.name} key={plugin.id}>
+                        {Module => <Module id={plugin.id} />}
+                    </PluginResolver>
+                )
+            );
+        })}
+    </div>
+));
 
 class Editor extends Component {
     constructor(props) {
         super(props);
 
-        this.pluginMapping = Plugins.filter(
-            ({ info }) => info.name !== "Missing Plugin"
-        );
-
         this.id = 1;
         this._unselectPlugin = this._unselectPlugin.bind(this);
-    }
-
-    /**
-     * Resolves a plugin by type
-     * @param {string} plugin Name of the plugin to be resolved
-     * @returns {plugin} Resolved plugin or `ErrorPlugin` if none was found
-     */
-    _resolvePlugin(plugin) {
-        return (
-            this.pluginMapping.find(({ info }) => info.name === plugin.name) ||
-            MissingPlugin
-        ).Plugin;
     }
 
     /**
@@ -83,22 +80,6 @@ class Editor extends Component {
             (a, b) => a.slot > b.slot
         );
 
-        const SortableList = SortableContainer(({ items }) => {
-            return (
-                <ul>
-                    {items.map(plugin => {
-                        const Module = this._resolvePlugin(plugin);
-
-                        return (
-                            !plugin.parent && (
-                                <Module key={plugin.id} id={plugin.id} />
-                            )
-                        );
-                    })}
-                </ul>
-            );
-        });
-
         return (
             <React.Fragment>
                 <div
@@ -114,10 +95,7 @@ class Editor extends Component {
                     />
                 </div>
 
-                <AddPlugin
-                    allPlugins={this.pluginMapping}
-                    addPlugin={name => this._addPlugin(name)}
-                />
+                <AddPlugin addPlugin={name => this._addPlugin(name)} />
             </React.Fragment>
         );
     }

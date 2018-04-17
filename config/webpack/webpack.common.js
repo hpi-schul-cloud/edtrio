@@ -27,7 +27,14 @@ module.exports = (src = {}) => {
                     new WebpackShellPlugin({ onBuildStart:[`node scripts/generate_plugin_index.js`] }),
                     new CleanWebpackPlugin(path.join("./public"), { root: path.join(__dirname, "../../") }),
                     new HtmlWebpackPlugin({
-                        template: "src/index.html"
+                        chunks: ["edtrio"],               
+                        filename: "edtrio.html",
+                        template: "src/editor/edtrio.html"
+                    }),
+                    new HtmlWebpackPlugin({
+                        chunks: ["viewer"],
+                        filename: "viewer.html",
+                        template: "src/viewer/viewer.html"
                     }),
                     new ScriptExtHtmlWebpackPlugin({
                         defaultAttribute: "defer"

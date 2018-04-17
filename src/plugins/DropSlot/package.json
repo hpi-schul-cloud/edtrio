@@ -1,0 +1,11 @@
+{
+    "name": "DropSlot",
+    "version": "0.1.0",
+    "main": "DropSLot.jsx",
+    "author": "Florian Wirtz, Raoul Baron",
+    "license": "MIT",
+    "x": {
+        "type": "LAYOUT",
+        "displayName": "DropSlot"
+    }
+}
