@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 import Loadable from 'react-loadable';
 
 import {
+    Collapsible,
     Modal,
-    MenuItem
-} from 'x-editor/UI';
+    MenuItem,
+    PluginPreview,
+} from 'edtrio/UI';
 
 import {
     FabButton,
-} from 'x-editor/UI/Button';
+} from 'edtrio/UI/Button';
 
 import styles from './styles.scss';
 
@@ -32,25 +34,50 @@ class AddPlugin extends PureComponent {
 
     render() {
         const { allPlugins } = this.props;
+        const content = [];
+        const layout = [];
 
         return (
             <React.Fragment>
                 <Modal
                     open={this.state.open}
                     onClose={() => this.handleClose()}>
-                    { <div>
-                        { allPlugins.map(({ info }) => {
-                            return (
-                            <MenuItem
-                                key={info.name}
-                                onClick={e => {
-                                    this.handleClose()
-                                    this.props.addPlugin(info)
-                                }} >{info.name} - {info.description}</MenuItem>)
-                            })
-                        }
-                    </div>
-                    }
+                    <React.Fragment>
+                        {allPlugins.map(({ info }) => {
+                            const temp = (
+                                <div key={info.name} className={styles.item}>
+                                    <MenuItem
+                                        key={info.name}
+                                        onClick={e => {
+                                            this.handleClose()
+                                            this.props.addPlugin(info)
+                                        }}>
+                                        <PluginPreview
+                                            name={info.name}
+                                            description={info.description} />
+                                    </MenuItem>
+                                </div>)
+                            
+                            if(info.type === 'CONTENT') {
+                                content.push(temp)
+                            } else {
+                                layout.push(temp)
+                            }
+                        })}
+
+                        <Collapsible
+                            title="Inhaltselemente"
+                            isExpanded={true}>
+                            <div className={styles.container}>
+                                {content}
+                            </div>
+                        </Collapsible>
+                        <Collapsible title="Layout">
+                            <div className={styles.container}>
+                                {layout}
+                            </div>
+                        </Collapsible>
+                    </React.Fragment>
                 </Modal>
                 
                 <FabButton
@@ -58,9 +85,7 @@ class AddPlugin extends PureComponent {
                     onClick={() => this.handleOpen()}>
                     <i className="material-icons">add</i>
                 </FabButton>
-            </React.Fragment>
-        )
-    }
+            </React.Fragment>)}
 
     static propTypes = {
         allPlugins: PropTypes.arrayOf(

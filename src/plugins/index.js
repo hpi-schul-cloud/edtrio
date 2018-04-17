@@ -2,45 +2,36 @@
         /*eslint react/display-name:0*/
         import React from 'react';
         import Loadable from 'react-loadable';
-        import makePlugin from 'x-editor/editor/components/PluginWrapper';
+        import makePlugin from 'edtrio/editor/components/PluginWrapper';
 
         export default [
             
     {
         Plugin: Loadable({
-            loader: () => import('./DummyPlugin/DummyPlugin.jsx').then(object => makePlugin(object.default, {"name":"Dummy Plugin","version":"0.1.0","description":"Empty Plugin for testing purposes","type":"CONTENT"})),
+            loader: () => import('./DummyPlugin/DummyPlugin.jsx').then(object => makePlugin(object.default, {"name":"Dummy","version":"0.1.0","description":"Leeres Plugin zum Testen","type":"CONTENT"})),
             loading: () => (
                 <p>Lädt</p>
             )
         }),
-        info: {"name":"Dummy Plugin","version":"0.1.0","description":"Empty Plugin for testing purposes","type":"CONTENT"},
+        info: {"name":"Dummy","version":"0.1.0","description":"Leeres Plugin zum Testen","type":"CONTENT"},
     },
     {
         Plugin: Loadable({
-            loader: () => import('./Image/Image.jsx').then(object => makePlugin(object.default, {"name":"Image Plugin","version":"0.1.0","description":"Display Images","type":"CONTENT"})),
+            loader: () => import('./LayoutPlugin/LayoutPlugin.jsx').then(object => makePlugin(object.default, {"name":"Zwei Spalten","version":"0.1.0","description":"Jan Peter Rennt","type":"LAYOUT","options":{"size":2,"allowChildRearrangement":false}})),
             loading: () => (
                 <p>Lädt</p>
             )
         }),
-        info: {"name":"Image Plugin","version":"0.1.0","description":"Display Images","type":"CONTENT"},
+        info: {"name":"Zwei Spalten","version":"0.1.0","description":"Jan Peter Rennt","type":"LAYOUT","options":{"size":2,"allowChildRearrangement":false}},
     },
     {
         Plugin: Loadable({
-            loader: () => import('./LayoutPlugin/LayoutPlugin.jsx').then(object => makePlugin(object.default, {"name":"Layout Plugin","version":"0.1.0","description":"Two column layout","type":"LAYOUT","options":{"size":2,"allowChildRearrangement":false}})),
+            loader: () => import('./LinePlugin/LinePlugin.jsx').then(object => makePlugin(object.default, {"name":"Trennlinie","version":"0.1.0","description":"Horizontale Linie zum Abtrennen von Inhalten","type":"CONTENT"})),
             loading: () => (
                 <p>Lädt</p>
             )
         }),
-        info: {"name":"Layout Plugin","version":"0.1.0","description":"Two column layout","type":"LAYOUT","options":{"size":2,"allowChildRearrangement":false}},
-    },
-    {
-        Plugin: Loadable({
-            loader: () => import('./LinePlugin/LinePlugin.jsx').then(object => makePlugin(object.default, {"name":"Horizontal Line Plugin","version":"0.1.0","description":"Thematic brake","type":"CONTENT"})),
-            loading: () => (
-                <p>Lädt</p>
-            )
-        }),
-        info: {"name":"Horizontal Line Plugin","version":"0.1.0","description":"Thematic brake","type":"CONTENT"},
+        info: {"name":"Trennlinie","version":"0.1.0","description":"Horizontale Linie zum Abtrennen von Inhalten","type":"CONTENT"},
     },
     {
         Plugin: Loadable({

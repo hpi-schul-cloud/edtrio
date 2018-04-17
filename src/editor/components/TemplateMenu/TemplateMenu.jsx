@@ -4,7 +4,7 @@ import TemplatePreview from './../TemplatePreview/TemplatePreview';
 
 import styles from './styles.scss'
 
-import blank_img from 'x-editor/images/blank.png';;
+import blank_img from 'edtrio/images/blank.png';;
 
 const templates = [
     {

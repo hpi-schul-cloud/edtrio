@@ -1,12 +1,12 @@
 {
   "name": "Horizontal rule",
   "version": "0.1.0",
-  "description": "Thematic brake",
+  "description": "Horizontale Linie zum Abtrennen von Inhalten",
   "main": "LinePlugin.jsx",
   "author": "Florian Wirtz, Raoul Baron",
   "license": "MIT",
   "x": {
-    "displayName": "Horizontal Line Plugin",
+    "displayName": "Trennlinie",
     "type": "CONTENT"
   }
 }
