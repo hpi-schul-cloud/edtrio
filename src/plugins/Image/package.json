@@ -1,0 +1,12 @@
+{
+    "name": "image",
+    "version": "0.1.0",
+    "description": "Bilder per URL einbinden",
+    "main": "ImagePlugin.jsx",
+    "author": "Florian Wirtz",
+    "license": "MIT",
+    "x": {
+        "displayName": "Bild",
+        "type": "CONTENT"
+    }
+}
