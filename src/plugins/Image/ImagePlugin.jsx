@@ -20,7 +20,7 @@ class ImagePlugin extends Component {
     }
 
     render() {
-        const { isEditable, saveContent } = this.props;
+        const { isEditable } = this.props;
         const { embedURL } = this.state;
 
         return (
