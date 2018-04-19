@@ -13,6 +13,10 @@ export default class Modal extends Component {
         this.node = document.getElementById('modal');
     }
 
+    shouldComponentUpdate({ open }) {
+        return this.props.open !== open
+    }
+
     componentWillUpdate({ open }) {
         if(open) {
             this.wrapper.classList.remove(`${styles.modal_wrapper_inactive}`);

@@ -21,12 +21,11 @@ class ImagePlugin extends Component {
 
     render() {
         const { isEditable, saveContent } = this.props;
+        const { embedURL } = this.state;
 
         return (
             <>
-                <img
-                    src={this.state.embedURL}
-                />
+                <img src={embedURL}/>
                 <input
                     id={styles.imageUrl}
                     autoFocus={true}
