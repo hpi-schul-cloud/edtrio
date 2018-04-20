@@ -16,6 +16,7 @@ const LayoutPlugin = props => {
                         return First ? (
                             <First
                                 id={childs[0].id}
+                                content={childs[0].content}
                                 options={options}
                                 isEditable={false}
                             />
@@ -32,6 +33,7 @@ const LayoutPlugin = props => {
                             <Second
                                 id={childs[1].id}
                                 options={options}
+                                content={childs[1].content}
                                 isEditable={false}
                             />
                         ) : (
