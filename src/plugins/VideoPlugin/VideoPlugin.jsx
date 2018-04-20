@@ -22,12 +22,13 @@ class VideoPlugin extends Component {
 
     render() {
         const { isEditable, saveContent } = this.props;
+        const { embedURL } = this.state;
 
         return (
             <div className={styles.video_wrapper}>
                 <div className={styles.iframe_wrapper}>
                     <iframe
-                        src={this.state.embedURL}
+                        src={embedURL}
                         frameBorder="0"
                         allowFullScreen
                     />
@@ -38,6 +39,7 @@ class VideoPlugin extends Component {
                         autoFocus={true}
                         type="url"
                         name="url"
+                        value={embedURL}
                         onInput={e => this.handleChange(e)}
                         disabled={!isEditable}
                         placeholder="Youtube oder Vimeo URL eingeben"

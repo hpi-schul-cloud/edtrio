@@ -31,6 +31,7 @@ class ImagePlugin extends Component {
                     autoFocus={true}
                     type="url"
                     name="url"
+                    value={embedURL}
                     onInput={e => this.handleChange(e)}
                     disabled={!isEditable}
                     placeholder="Bild URL eingeben"

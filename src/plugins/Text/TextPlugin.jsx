@@ -3,6 +3,9 @@ import ReactQuill from "react-quill";
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
+import styles from "./styles.scss";
+
+
 class TextPlugin extends Component {
     constructor(props) {
         super(props);
@@ -11,6 +14,19 @@ class TextPlugin extends Component {
             text: "",
             visible: false
         };
+
+        this.modules = {
+            toolbar: [
+                [{ 'header': [1, 2, 3, false] }],
+                ['bold', 'italic', 'underline', 'strike'],
+                [{ 'align': [] }],
+                ['blockquote', 'code-block'],
+                [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                [{ 'script': 'sub' }, { 'script': 'super' }],
+                [{ 'color': [] }, { 'background': [] }],
+                ['clean']
+            ]
+        }
     }
 
     componentDidMount() {
@@ -45,13 +61,15 @@ class TextPlugin extends Component {
                 {isEditable &&
                     visible && (
                         <ReactQuill
+                            id={styles.quill_editor}
+                            modules={this.modules}
                             value={this.state.text}
                             onChange={e => this.handleChange(e)}
                         />
                     )}
 
                 {!isEditable && (
-                    <div
+                    <div className="ql-editor"
                         dangerouslySetInnerHTML={{ __html: this.state.text }}
                     />
                 )}

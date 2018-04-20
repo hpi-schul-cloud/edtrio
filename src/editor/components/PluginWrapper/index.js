@@ -215,11 +215,6 @@ export default function makePlugin(WrappedComponent, info) {
                                     </span>
                                 </div>
                                 <div className={styles.inner}>
-                                    {dev && (
-                                        <div>
-                                            <span>id: {id}</span>
-                                        </div>
-                                    )}
                                     <WrappedComponent
                                         id={id}
                                         isEditable={editable}
