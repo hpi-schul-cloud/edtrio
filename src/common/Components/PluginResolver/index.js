@@ -1,14 +1,12 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import Plugins from "edtrio/plugins";
+import EditPlugins from "edtrio/plugins/plugins.edit";
+import ViewPlugins from "edtrio/plugins/plugins.view";
+
 import MissingPlugin from "edtrio/plugins/MissingPlugin";
 
-const hidePlugins = ["Missing Plugin", "DropSlot"];
-
-const allPlugins = Plugins.filter(
-    ({ info }) => !hidePlugins.includes(info.name)
-).reduce(
+const allEditPlugins = EditPlugins.reduce(
     (acc, { info, Plugin }) => ({
         ...acc,
         [info.name]: Plugin
@@ -16,14 +14,30 @@ const allPlugins = Plugins.filter(
     {}
 );
 
+const allViewPlugins = ViewPlugins.reduce(
+    (acc, { info, Plugin }) => ({
+        ...acc,
+        [info.name]: Plugin
+    }),
+    {}
+);
+
+const allPlugins = EditPlugins.reduce((acc, { info }) => [...acc, info], []);
+
 export default class PluginResolver extends Component {
+    constructor(props) {
+        super(props);
+
+        this.allPlugins =
+            props.mode === "view" ? allViewPlugins : allEditPlugins;
+    }
     /**
      * Resolves a plugin by type
      * @param {string} plugin Name of the plugin to be resolved
      * @returns {plugin} Resolved plugin or `ErrorPlugin` if none was found
      */
     resolvePlugin(name) {
-        return allPlugins[name] || MissingPlugin;
+        return this.allPlugins[name] || MissingPlugin;
     }
 
     shouldComponentUpdate(nextProps) {
@@ -46,10 +60,9 @@ export default class PluginResolver extends Component {
 
     static propTypes = {
         children: PropTypes.func.isRequired,
-        plugin: PropTypes.string
+        plugin: PropTypes.string,
+        mode: PropTypes.string.isRequired
     };
 
-    static allPlugins = Plugins.filter(
-        ({ info }) => !hidePlugins.includes(info.name)
-    );
+    static allPlugins = allPlugins;
 }

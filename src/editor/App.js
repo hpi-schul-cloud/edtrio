@@ -9,7 +9,7 @@ import rootReducer from "./rootReducer";
 
 import api from "edtrio/common/api";
 
-import Editor from "./screens/Editor";
+import Editor from "./components/Editor";
 
 import "edtrio/common/base.scss";
 

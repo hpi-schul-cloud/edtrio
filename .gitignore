@@ -22,4 +22,5 @@ yarn-error.log*
 
 /public
 
-/src/plugins/Image
+/src/plugins/plugins.edit.js
+/src/plugins/plugins.view.js

@@ -35,7 +35,7 @@ class AddPlugin extends PureComponent {
                 >
                     {
                         <div>
-                            {PluginResolver.allPlugins.map(({ info }) => {
+                            {PluginResolver.allPlugins.map(info => {
                                 return (
                                     <MenuItem
                                         key={info.name}

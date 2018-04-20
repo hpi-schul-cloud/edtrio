@@ -75,6 +75,7 @@ class Editor extends Component {
                                 <PluginResolver
                                     plugin={plugin.name}
                                     key={plugin.id}
+                                    mode="edit"
                                 >
                                     {Module => <Module id={plugin.id} />}
                                 </PluginResolver>

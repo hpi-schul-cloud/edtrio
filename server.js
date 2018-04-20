@@ -3,7 +3,7 @@ const WebSocket = require("uws").Server;
 const path = require("path");
 const fs = require("fs");
 
-const store = require("./app/common/Store")();
+//const store = require("./app/common/Store")();
 
 const edtrio = fs.readFileSync(path.join(__dirname, `public/edtrio.html`));
 const viewer = fs.readFileSync(path.join(__dirname, `public/viewer.html`));
@@ -17,7 +17,7 @@ wss.on("connection", ws => {
 
     ws.on("message", (msg, flags) => {
         //console.log(JSON.parse(msg));
-        store.saveContent(msg);
+        //store.saveContent(msg);
     });
 
     ws.on("close", (code, msg) => console.log("Connection closed"));
