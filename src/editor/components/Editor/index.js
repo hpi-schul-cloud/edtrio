@@ -9,8 +9,7 @@ import { addPlugin, selectPlugin } from "./../../actions/plugin";
 import Plugin from "./../../../models/Plugin";
 
 import AddPlugin from "./../AddPlugin";
-
-import Plugins from "./../../../plugins";
+import PluginResolver from "edtrio/common/Components/PluginResolver";
 
 import styles from "./styles.scss";
 
@@ -18,24 +17,8 @@ class Editor extends Component {
     constructor(props) {
         super(props);
 
-        this.pluginMapping = Plugins.filter(
-            ({ info }) => info.name !== "Missing Plugin"
-        );
-
         this.id = 1;
         this._unselectPlugin = this._unselectPlugin.bind(this);
-    }
-
-    /**
-     * Resolves a plugin by type
-     * @param {string} plugin Name of the plugin to be resolved
-     * @returns {plugin} Resolved plugin or `ErrorPlugin` if none was found
-     */
-    _resolvePlugin(plugin) {
-        return (
-            this.pluginMapping.find(({ info }) => info.name === plugin.name) ||
-            MissingPlugin
-        ).Plugin;
     }
 
     /**
@@ -87,20 +70,21 @@ class Editor extends Component {
 
                 <div className={styles.editor}>
                     {lookup.map(plugin => {
-                        const Module = this._resolvePlugin(plugin);
-
                         return (
                             !plugin.parent && (
-                                <Module key={plugin.id} id={plugin.id} />
+                                <PluginResolver
+                                    plugin={plugin.name}
+                                    key={plugin.id}
+                                    mode="edit"
+                                >
+                                    {Module => <Module id={plugin.id} />}
+                                </PluginResolver>
                             )
                         );
                     })}
                 </div>
 
-                <AddPlugin
-                    allPlugins={this.pluginMapping}
-                    addPlugin={name => this._addPlugin(name)}
-                />
+                <AddPlugin addPlugin={name => this._addPlugin(name)} />
             </React.Fragment>
         );
     }

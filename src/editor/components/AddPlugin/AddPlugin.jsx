@@ -1,6 +1,6 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import Loadable from 'react-loadable';
+import React, { PureComponent } from "react";
+import PropTypes from "prop-types";
+import Loadable from "react-loadable";
 
 import {
     Collapsible,
@@ -13,27 +13,27 @@ import {
     FabButton,
 } from 'edtrio/UI/Button';
 
-import styles from './styles.scss';
+import PluginResolver from "edtrio/common/Components/PluginResolver";
+import styles from "./styles.scss";
 
 class AddPlugin extends PureComponent {
     constructor(props) {
-        super(props)
+        super(props);
 
         this.state = {
-            open: false,
-        }
+            open: false
+        };
     }
 
     handleOpen() {
-        this.setState({ open: true })
+        this.setState({ open: true });
     }
 
     handleClose() {
-        this.setState({ open: false })
+        this.setState({ open: false });
     }
 
     render() {
-        const { allPlugins } = this.props;
         const content = [];
         const layout = [];
 
@@ -43,7 +43,7 @@ class AddPlugin extends PureComponent {
                     open={this.state.open}
                     onClose={() => this.handleClose()}>
                     <React.Fragment>
-                        {allPlugins.map(({ info }) => {
+                        {PluginResolver.allPlugins.map(( info ) => {
                             const temp = (
                                 <div key={info.name} className={styles.item}>
                                     <MenuItem
@@ -79,25 +79,22 @@ class AddPlugin extends PureComponent {
                         </Collapsible>
                     </React.Fragment>
                 </Modal>
-                
+
                 <FabButton
                     className={styles.floating_button}
-                    onClick={() => this.handleOpen()}>
+                    onClick={() => this.handleOpen()}
+                >
                     <i className="material-icons">add</i>
                 </FabButton>
-            </React.Fragment>)}
+            </React.Fragment>
+        );
+    }
 
     static propTypes = {
-        allPlugins: PropTypes.arrayOf(
-            PropTypes.shape({
-                info: PropTypes.object.isRequired,
-                Plugin: PropTypes.func.isRequired
-            })
-        ).isRequired,
-        addPlugin: PropTypes.func.isRequired,
-    }
+        addPlugin: PropTypes.func.isRequired
+    };
 
     static displayName = "AddPlugin Button";
 }
 
-export default AddPlugin
+export default AddPlugin;

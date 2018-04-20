@@ -26,7 +26,7 @@ module.exports = ({ include, exclude = /node_modules/, options } = {}) => ({
     ]},
     plugins: [
         new MiniCssExtractPlugin({
-            filename: "styles.css"
+            filename: "[name].css",
         }),
     ]
 }); 
