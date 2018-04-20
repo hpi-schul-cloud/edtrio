@@ -1,18 +1,17 @@
-import React, { Component } from 'react';
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import { enableBatching } from 'redux-batched-actions';
-import HTML5Backend from 'react-dnd-html5-backend';
-import { DragDropContext } from 'react-dnd';
+import React, { Component } from "react";
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import { enableBatching } from "redux-batched-actions";
+import HTML5Backend from "react-dnd-html5-backend";
+import { DragDropContext } from "react-dnd";
 
-import rootReducer from './rootReducer';
+import rootReducer from "./rootReducer";
 
-import api from './api';
-import routes from './routes';
+import api from "edtrio/common/api";
 
-import Editor from './screens/Editor';
+import Editor from "./components/Editor";
 
-import './App.scss';
+import "edtrio/common/base.scss";
 
 @DragDropContext(HTML5Backend)
 class App extends Component {
@@ -23,8 +22,9 @@ class App extends Component {
             store: createStore(
                 enableBatching(rootReducer),
                 api.getData(),
-                window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-            ),
+                window.__REDUX_DEVTOOLS_EXTENSION__ &&
+                    window.__REDUX_DEVTOOLS_EXTENSION__()
+            )
         };
 
         this.state.store.subscribe(() => {

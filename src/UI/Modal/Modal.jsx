@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 
 import styles from './styles.scss';
 
-//TODO - remove body class on close
 
 export default class Modal extends Component {
     constructor(props) {

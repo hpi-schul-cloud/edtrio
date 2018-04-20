@@ -21,12 +21,11 @@ class Plugin {
         this.type = type;
         this.slot = id; //incrementing slot
         this.options = {
-            allowChildRearrangement,
+            allowChildRearrangement
         };
     }
 
     static TYPES = {
-        GRID: Symbol("Grid"),
         CONTENT: Symbol("Content"),
         LAYOUT: Symbol("Layout")
     };

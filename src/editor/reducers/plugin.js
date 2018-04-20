@@ -32,15 +32,15 @@ const movePlugin = (plugin, dest, slot) => {
         .sort((a, b) => a.slot - b.slot);
 
     let dest_index = sorted.findIndex(p => p.id === dest);
-    const src_index  = sorted.findIndex(
+    const src_index = sorted.findIndex(
         p => p.id === plugin.lookup[plugin.active].id
     );
 
     //top
-    if(!slot) {
+    if (!slot) {
         //console.log("top");
         //unten nach oben
-        if(src_index > dest_index) {
+        if (src_index > dest_index) {
             //ok
             //console.log("unten nach oben")
         } else {
@@ -48,12 +48,11 @@ const movePlugin = (plugin, dest, slot) => {
             dest_index -= 1;
             //console.log("oben nach unten")
         }
-    } 
-    //bottom
-    else {
+    } else {
+        //bottom
         //unten nach oben
         //console.log("bottom");
-        if(src_index > dest_index) {
+        if (src_index > dest_index) {
             //console.log("unten nach oben")
             dest_index += 1;
         } else {
@@ -64,21 +63,28 @@ const movePlugin = (plugin, dest, slot) => {
 
     arrayMove(sorted, src_index, dest_index);
 
-    if(src_index > dest_index) {
-        for (let i = dest_index; i <= src_index - 1; i+=1) {
+    if (src_index > dest_index) {
+        for (let i = dest_index; i <= src_index - 1; i += 1) {
             //swap slots
-            [sorted[i].slot, sorted[i+1].slot] = [sorted[i+1].slot, sorted[i].slot];
+            [sorted[i].slot, sorted[i + 1].slot] = [
+                sorted[i + 1].slot,
+                sorted[i].slot
+            ];
         }
     } else {
         //TODO
-        for (let i = dest_index; i >= src_index + 1; i-=1) {
+        for (let i = dest_index; i >= src_index + 1; i -= 1) {
             //swap slots
-            [sorted[i].slot, sorted[i-1].slot] = [sorted[i-1].slot, sorted[i].slot];
+            [sorted[i].slot, sorted[i - 1].slot] = [
+                sorted[i - 1].slot,
+                sorted[i].slot
+            ];
         }
     }
 };
 
 const nestPlugin = (plugin, id, slot) => {
+    //fix slot removal
     const dest = plugin.lookup[id];
     const src = plugin.lookup[plugin.active];
     const { parent } = src;
@@ -98,8 +104,8 @@ const deletePlugin = (lookup, key) => {
 
     //delete from parent if exists
     if (start.parent) {
-        lookup[start.parent].childs = lookup[start.parent].childs.filter(
-            childs => childs !== key
+        lookup[start.parent].childs = lookup[start.parent].childs.map(
+            childs => childs
         );
     }
 
