@@ -3,6 +3,13 @@
     border-style: solid;
     border-color: transparent;
 }
+
+.plugin, .selected {
+    &:hover>div.handle {
+        visibility: visible;
+    }
+}
+
 .selected {
     border-left: solid 5px rgb(97, 97, 97);
     border-bottom: 1px solid rgba(204, 204, 204, 0.5);
@@ -17,10 +24,11 @@
     width: 100%;
     cursor: move;
     color: #CCC;
+    visibility: hidden;
 
     & > span {
         color: #ccc;
-
+        font-size: 3rem;
         transition: color 400ms ease;
     }
 
