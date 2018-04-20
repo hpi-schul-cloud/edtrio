@@ -25,7 +25,8 @@ module.exports = (src = {}) => {
             },
             plugins: [
                 new WebpackShellPlugin({
-                    onBuildStart: [`node scripts/generate_plugin_index.js`]
+                    onBuildStart: [`node scripts/generate_plugin_index.js`],
+                    onBuildEnd: [`yarn run server`]
                 }),
                 new CleanWebpackPlugin(path.join("./public"), {
                     root: path.join(__dirname, "../../")

@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 
 import styles from './styles.scss';
 
-//TODO - remove body class on close
 
 export default class Modal extends Component {
     constructor(props) {
@@ -13,7 +12,11 @@ export default class Modal extends Component {
         this.node = document.getElementById('modal');
     }
 
-    componentWillReceiveProps({ open }) {
+    shouldComponentUpdate({ open }) {
+        return this.props.open !== open
+    }
+
+    componentWillUpdate({ open }) {
         if(open) {
             this.wrapper.classList.remove(`${styles.modal_wrapper_inactive}`);
             this.wrapper.classList.add(`${styles.modal_wrapper_active}`);

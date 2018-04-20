@@ -38,7 +38,6 @@
         "babel-loader": "^8.0.0-beta.2",
         "babel-plugin-import": "^1.7.0",
         "clean-webpack-plugin": "^0.1.19",
-        "concurrently": "^3.5.1",
         "cross-env": "^5.1.4",
         "css-loader": "^0.28.11",
         "cssnano": "^3.10.0",
@@ -69,7 +68,7 @@
         "write-file-webpack-plugin": "^4.2.0"
     },
     "scripts": {
-        "start": "concurrently \"yarn run dev\" \"yarn run server\" ",
+        "start": "yarn run dev",
         "dev": "cross-env NODE_ENV=development webpack-dev-server",
         "build": "cross-env NODE_ENV=production webpack",
         "server": "nodemon server.js",
@@ -82,8 +81,5 @@
         "hooks": {
             "pre-commit": "pretty-quick --staged"
         }
-    },
-    "bin": {
-        "edtrio": "bin/index.js"
     }
 }
