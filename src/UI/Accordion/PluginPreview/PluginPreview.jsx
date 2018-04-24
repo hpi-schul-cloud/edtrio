@@ -9,19 +9,10 @@ class PluginPreview extends Component {
         const { name, description } = this.props;
 
         return (
-            <div className={`${styles.wrapper}`}>
-                <div className={`${styles.previewImage}`}>
-
-                </div>
-                <div className={`${styles.content}`}>
-                    <div className={`${styles.title}`}>
-                        {name}
-                    </div>
-                    <div className={`${styles.description}`}>
-                        {description.substr(0, 50)}
-                    </div>
-                </div>
-            </div>
+            <figure>
+                <img src="https://goo.gl/cScsnX"/>
+                <figcaption className={styles.title}>{name}</figcaption>
+            </figure>
         )
     }
 }

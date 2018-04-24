@@ -65,18 +65,15 @@ class AddPlugin extends PureComponent {
                             }
                         })}
 
-                        <Collapsible
-                            title="Inhaltselemente"
-                            isExpanded={true}>
-                            <div className={styles.container}>
-                                {content}
-                            </div>
-                        </Collapsible>
-                        <Collapsible title="Layout">
-                            <div className={styles.container}>
-                                {layout}
-                            </div>
-                        </Collapsible>
+                        <div className={styles.title}>Add element</div>
+                        <div className={styles.title_block}>Content</div>
+                        <div className={styles.container}>
+                            {content}
+                        </div>
+                        <div className={styles.title_block}>Layout</div>
+                        <div className={styles.container}>
+                            {layout}
+                        </div>
                     </React.Fragment>
                 </Modal>
 

@@ -1,26 +1,30 @@
 @import "./../../colors";
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+img {
+    width: 100%;
+    height: auto;
+    max-height: 100px;
+    object-fit: cover;
+    display: block;
+}
+
 .title {
-    font-weight: bold;
-    font-size: 20px;
-    max-width: 180px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    padding-bottom: 5px;
+    font-family: sans-serif;
+    color: #212121;
+    padding: 10px 5px;
+    background-color: #eee;
 }
 
-.description {
-    font-size: 14px;
-}
+figure {
+    transition: filter 300ms ease;
 
-.previewImage {
-    height: 130px;
-    background-color: $primaryColor;
-}
-
-.content {
-    padding: 20px;
-    height: 100px;
-    overflow: hidden;
+    &:hover {
+        filter: brightness(0.9);
+    }
 }
