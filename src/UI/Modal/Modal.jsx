@@ -28,6 +28,13 @@ export default class Modal extends Component {
         document.body.classList.toggle(styles.blur);
     }
 
+    componentDidMount() {
+        if (open) {
+            this.wrapper.classList.remove(`${styles.modal_wrapper_inactive}`);
+            this.wrapper.classList.add(`${styles.modal_wrapper_active}`);
+        }
+    }
+
     render() {
         const { 
             open,

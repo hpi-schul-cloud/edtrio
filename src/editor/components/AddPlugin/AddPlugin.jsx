@@ -20,7 +20,7 @@ class AddPlugin extends PureComponent {
         super(props);
 
         this.state = {
-            open: false
+            open: true
         };
     }
 
