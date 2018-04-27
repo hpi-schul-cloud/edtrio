@@ -53,6 +53,7 @@ class AddPlugin extends PureComponent {
                                         }}>
                                         <PluginPreview
                                             name={info.name}
+                                            image={info.preview_image}
                                             description={info.description} />
                                     </MenuItem>
                                 </div>)

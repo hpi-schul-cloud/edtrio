@@ -9,7 +9,7 @@ module.exports = ({ include, exclude = /node_modules/, options } = {}) => ({
                     loader: "url-loader",
                     options: {
                         limit: 10000,
-                        name: "[name].[ext]",
+                        name: "[hash].[ext]",
                         fallback: "file-loader"
                     }
                 }
