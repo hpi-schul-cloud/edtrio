@@ -4,7 +4,7 @@
     box-sizing: border-box;
 }
 
-img {
+.previewImage {
     width: 100%;
     height: auto;
     max-height: 100px;
@@ -19,7 +19,7 @@ img {
     background-color: #eee;
 }
 
-figure {
+.imageWrapper {
     transition: filter 300ms ease;
 
     &:hover {

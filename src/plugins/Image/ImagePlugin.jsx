@@ -23,21 +23,10 @@ class ImagePlugin extends Component {
         const { isEditable } = this.props;
         const { embedURL } = this.state;
 
-        return (
-            <>
-                <img src={embedURL}/>
-                <input
-                    id={styles.imageUrl}
-                    autoFocus={true}
-                    type="url"
-                    name="url"
-                    value={embedURL}
-                    onInput={e => this.handleChange(e)}
-                    disabled={!isEditable}
-                    placeholder="Bild URL eingeben"
-                />
-            </>
-        );
+        return <>
+                <img src={embedURL} className={styles.imagePlugin} />
+                <input id={styles.imageUrl} autoFocus={true} type="url" name="url" value={embedURL} onInput={e => this.handleChange(e)} disabled={!isEditable} placeholder="Bild URL eingeben" />
+            </>;
     }
 
     handleChange(e) {
