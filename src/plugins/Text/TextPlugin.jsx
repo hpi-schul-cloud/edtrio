@@ -39,7 +39,7 @@ class TextPlugin extends Component {
     }
 
     componentDidUpdate() {
-        this.focusQuill();
+        window.requestAnimationFrame(() => this.focusQuill())
     }
 
     focusQuill = () => {
@@ -53,7 +53,8 @@ class TextPlugin extends Component {
         );
     }
 
-    shouldComponentUpdate() {
+    //TODO
+    shouldComponentUpdate(nextProps) {
         return true;
     }
 
@@ -82,7 +83,7 @@ class TextPlugin extends Component {
                     )}
 
                 {!isEditable && (
-                    <div className="ql-editor"
+                    <div className={`ql-editor ${styles.ql_editor}`}
                         dangerouslySetInnerHTML={{ __html: this.state.text || "<p>Empty text plugin</p>"}}
                     />
                 )}

@@ -20,23 +20,25 @@ class ImagePlugin extends Component {
     }
 
     render() {
-        const { isEditable } = this.props;
+        const { isEditable, isViewMode } = this.props;
         const { embedURL } = this.state;
 
         return (
-            <>
-                <img src={embedURL}/>
-                <input
-                    id={styles.imageUrl}
-                    autoFocus={true}
-                    type="url"
-                    name="url"
-                    value={embedURL}
-                    onInput={e => this.handleChange(e)}
-                    disabled={!isEditable}
-                    placeholder="Bild URL eingeben"
-                />
-            </>
+            <a href={isViewMode ? embedURL : "#"}>
+                <img src={embedURL} className={embedURL ? styles.imagePlugin: ""} />
+                {!isViewMode && (
+                    <input
+                        id={styles.imageUrl}
+                        autoFocus={true}
+                        type="url"
+                        name="url"
+                        value={embedURL}
+                        onInput={e => this.handleChange(e)}
+                        disabled={!isEditable}
+                        placeholder="Bild URL eingeben"
+                    />
+                )}
+            </a>
         );
     }
 
@@ -51,8 +53,9 @@ class ImagePlugin extends Component {
 
     static propTypes = {
         isEditable: PropTypes.bool,
+        isViewMode: PropTypes.bool.isRequired,
         content: PropTypes.object,
-        saveContent: PropTypes.func
+        saveContent: PropTypes.func,
     };
 }
 

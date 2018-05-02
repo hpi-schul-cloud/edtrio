@@ -11,5 +11,7 @@
     min-height: 8rem;
     height: auto;
 
-    margin: .5rem;
+    &:first-child {
+        margin-right: 1rem;
+    }
 }

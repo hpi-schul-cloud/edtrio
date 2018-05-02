@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import isEqual from "lodash.isequal";
 
 import styles from "./styles.scss";
 
@@ -20,20 +21,20 @@ class VideoPlugin extends Component {
         });
     }
 
+    shouldComponentUpdate({ isEditable,isViewMode }, nextState) {
+        return (isEditable || isViewMode) && !isEqual(this.state, nextState);
+    }
+
     render() {
-        const { isEditable, saveContent } = this.props;
+        const { isEditable, isViewMode, saveContent } = this.props;
         const { embedURL } = this.state;
 
         return (
             <div className={styles.video_wrapper}>
                 <div className={styles.iframe_wrapper}>
-                    <iframe
-                        src={embedURL}
-                        frameBorder="0"
-                        allowFullScreen
-                    />
+                    <iframe src={embedURL} frameBorder="0" allowFullScreen />
                 </div>
-                <div>
+                {!isViewMode && (
                     <input
                         className={styles.video_input}
                         autoFocus={true}
@@ -44,7 +45,7 @@ class VideoPlugin extends Component {
                         disabled={!isEditable}
                         placeholder="Youtube oder Vimeo URL eingeben"
                     />
-                </div>
+                )}
             </div>
         );
     }
@@ -70,6 +71,7 @@ class VideoPlugin extends Component {
 
     static propTypes = {
         isEditable: PropTypes.bool,
+        isViewMode: PropTypes.bool.isRequired,
         content: PropTypes.object,
         saveContent: PropTypes.func
     };
