@@ -218,6 +218,7 @@ export default function makePlugin(WrappedComponent, info) {
                                     <WrappedComponent
                                         id={id}
                                         isEditable={editable}
+                                        isViewMode={false}
                                         content={plugin.content}
                                         saveContent={content =>
                                             saveContent(content)
