@@ -83,7 +83,7 @@ class TextPlugin extends Component {
                     )}
 
                 {!isEditable && (
-                    <div className="ql-editor"
+                    <div className={`ql-editor ${styles.ql_editor}`}
                         dangerouslySetInnerHTML={{ __html: this.state.text || "<p>Empty text plugin</p>"}}
                     />
                 )}
