@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import Loadable from "react-loadable";
 
 import {
-    Collapsible,
     Modal,
     MenuItem,
     PluginPreview,
@@ -21,7 +20,7 @@ class AddPlugin extends PureComponent {
         super(props);
 
         this.state = {
-            open: false
+            open: true
         };
     }
 
@@ -54,6 +53,7 @@ class AddPlugin extends PureComponent {
                                         }}>
                                         <PluginPreview
                                             name={info.name}
+                                            image={info.preview_image}
                                             description={info.description} />
                                     </MenuItem>
                                 </div>)
@@ -79,8 +79,7 @@ class AddPlugin extends PureComponent {
 
                 <FabButton
                     className={styles.floating_button}
-                    onClick={() => this.handleOpen()}
-                >
+                    onClick={() => this.handleOpen()}>
                     <i className="material-icons">add</i>
                 </FabButton>
             </React.Fragment>

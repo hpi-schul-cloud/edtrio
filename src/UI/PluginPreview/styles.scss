@@ -1,0 +1,28 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+img {
+    width: 100%;
+    height: auto;
+    max-height: 100px;
+    object-fit: cover;
+    display: block;
+}
+
+.title {
+    font-family: sans-serif;
+    color: #212121;
+    padding: 10px 5px;
+    background-color: #eee;
+}
+
+figure {
+    transition: filter 300ms ease;
+
+    &:hover {
+        filter: brightness(0.9);
+    }
+}

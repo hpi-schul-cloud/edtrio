@@ -10,6 +10,8 @@ class TextPlugin extends Component {
     constructor(props) {
         super(props);
 
+        this.reactQuillRef = null;
+
         this.state = {
             text: "",
             visible: false
@@ -33,6 +35,16 @@ class TextPlugin extends Component {
         this.setState({
             ...this.props.content
         });
+        this.focusQuill();
+    }
+
+    componentDidUpdate() {
+        this.focusQuill();
+    }
+
+    focusQuill = () => {
+        if (!this.reactQuillRef || typeof this.reactQuillRef.getEditor !== 'function') return;
+        this.reactQuillRef.getEditor().focus();
     }
 
     handleChange(value) {
@@ -62,15 +74,16 @@ class TextPlugin extends Component {
                     visible && (
                         <ReactQuill
                             id={styles.quill_editor}
+                            ref={(el) => { this.reactQuillRef = el }}
                             modules={this.modules}
                             value={this.state.text}
-                            onChange={e => this.handleChange(e)}
-                        />
+                            placeholder="Start typing..."
+                            onChange={e => this.handleChange(e)}/>
                     )}
 
                 {!isEditable && (
                     <div className="ql-editor"
-                        dangerouslySetInnerHTML={{ __html: this.state.text }}
+                        dangerouslySetInnerHTML={{ __html: this.state.text || "<p>Empty text plugin</p>"}}
                     />
                 )}
             </>

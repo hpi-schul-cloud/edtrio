@@ -19,15 +19,12 @@ Make your change. Add tests for your change. Make the tests pass:
 yarn test
 ```
 
+## PR Checklist
+Please make sure you check all items before submitting a PR.
+- [ ] Branch name starts with `fix/#` or `feature/#` (e.g. `feature/#3-add-login`)
+- [ ] [Descriptive commit message](https://chris.beams.io/posts/git-commit/) with a short title (first line)
+- [ ] Commit message starts with a [Gitmoji](gitmoji.carloscuesta.me) (e.g. `:tada: Initial commit`)
+- [ ] `yarn test` doesn't throw any errors
+- [ ] References an issue in PR body (Add `Fixes #xx` if applicable)
+
 Then [submit a pull request](https://github.com/schul-cloud/edtrio/compare/).
-
-At this point you're waiting on us. We like to at least comment on pull requests
-within three business days (and, typically, one business day). We may suggest
-some changes or improvements or alternatives.
-
-Some things that will increase the chance that your pull request is accepted:
-
-* Write tests.
-* Make all status checks pass.
-* Write a [good commit message](https://chris.beams.io/posts/git-commit/).
-* Start your commit message with a [Gitmoji](https://gitmoji.carloscuesta.me/).
