@@ -16,7 +16,7 @@ const x_schema = {
     type: "object",
     properties: {
         displayName: { type: "string" },
-        type: { enum: ["CONTENT", "LAYOUT"] },
+        type: { enum: ["CONTENT", "LAYOUT", "INPUT"] },
         options: {
             type: "object",
             properties: {
@@ -40,7 +40,7 @@ const imageRegex = /^preview\.(png|jpe?g)$/;
 const weleleRegex = /(.*"preview_image":)"(image\d)"/;
 
 const pluginScript = function generatePluginScript(main, opts, i) {
-    const info = JSON.stringify({...opts, "preview_image": `image${i}` });
+    const info = JSON.stringify({ ...opts, preview_image: `image${i}` });
     const data = info.replace(weleleRegex, "$1$2");
 
     return `
@@ -89,8 +89,11 @@ const indexScript = async function generateIndexScript(plugin) {
     const imageExists = content.findIndex(el => el.match(imageRegex));
 
     let previewImage = '"./MissingPlugin/preview.png"';
-    if(imageExists > 0) {
-        previewImage = `".${path.join(`${plugin.split("/Plugins")[1]}`, content[imageExists])}"`;
+    if (imageExists > 0) {
+        previewImage = `".${path.join(
+            `${plugin.split("Plugins")[1]}`,
+            content[imageExists]
+        )}"`.replace(/\\/g, "/");
     }
 
     const isAdvanced = ["View", "Edit"].every(el => {
@@ -147,9 +150,11 @@ const fileError = ({ message }) => {
         import Loadable from 'react-loadable';
         import makePlugin from 'edtrio/editor/components/PluginWrapper';
 
-        ${plugin_data.map(({previewImage}, i) => {
-            return `import image${i} from ${previewImage}`;
-        }).join("\n")}
+        ${plugin_data
+            .map(({ previewImage }, i) => {
+                return `import image${i} from ${previewImage}`;
+            })
+            .join("\n")}
 
         export default [
             ${plugin_data.map(({ isAdvanced, base, main, info }, i) => {
