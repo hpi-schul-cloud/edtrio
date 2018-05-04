@@ -5,6 +5,9 @@ import has from "has";
 
 import styles from "./styles.scss";
 
+import { Checkbox } from "rmwc/Checkbox";
+import { TextField } from "rmwc/TextField";
+
 class MultipleChoice extends Component {
     constructor(props) {
         super(props);
@@ -44,7 +47,9 @@ class MultipleChoice extends Component {
     }
 
     nextChoice(e) {
-        e.preventDefault();
+        if (e.keyCode !== 13) {
+            return;
+        }
 
         this.setState({
             active: this.state.active + 1
@@ -83,42 +88,39 @@ class MultipleChoice extends Component {
 
     render() {
         const { choices, active } = this.state;
+        const { isEditable } = this.props;
 
-        return (
-            <>
-                {Object.entries(choices).map(([id, { label }]) => (
-                    <div key={id} className={styles.checkbox_wrapper}>
-                        <input
-                            type="checkbox"
-                            onClick={e => this.toggleChoice(e, +id)}
+        return Object.entries(choices).map(([id, { label }]) => {
+            const howMuchIsTheFish = active === +id && isEditable;
+
+            return (
+                <div
+                    key={id}
+                    className={!howMuchIsTheFish ? styles.checkbox_wrapper : ""}
+                >
+                    <Checkbox onClick={e => this.toggleChoice(e, +id)} />
+                    {howMuchIsTheFish ? (
+                        <TextField
+                            onKeyDown={e => this.nextChoice(e)}
+                            onInput={e => this.setChoice(e.target.value)}
+                            value={label}
+                            label="Choice"
+                            autoFocus
                         />
-                        {active === +id ? (
-                            <form onSubmit={e => this.nextChoice(e)}>
-                                <input
-                                    type="text"
-                                    autoFocus={true}
-                                    value={label}
-                                    placeholder="Choice"
-                                    onInput={e =>
-                                        this.setChoice(e.target.value)
-                                    }
-                                />
-                            </form>
-                        ) : (
-                            <label
-                                onClick={() =>
-                                    this.setState({
-                                        active: +id
-                                    })
-                                }
-                            >
-                                {label || "placeholder"}
-                            </label>
-                        )}
-                    </div>
-                ))}
-            </>
-        );
+                    ) : (
+                        <label
+                            onClick={() =>
+                                this.setState({
+                                    active: +id
+                                })
+                            }
+                        >
+                            {label || "placeholder"}
+                        </label>
+                    )}
+                </div>
+            );
+        });
     }
 
     static propTypes = {
@@ -130,3 +132,17 @@ class MultipleChoice extends Component {
 }
 
 export default MultipleChoice;
+
+//{
+/*
+        <form onSubmit={e => this.nextChoice(e)}>
+            <input
+                type="text"
+                
+                onInput={e =>
+                    this.setChoice(e.target.value)
+                }
+            />
+            </form>
+    */
+//}
