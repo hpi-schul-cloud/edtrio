@@ -7,7 +7,7 @@ import { Paper } from "edtrio/UI";
 
 import styles from "./styles.scss";
 
-const plugin_content = {
+/*const plugin_content = {
     plugin: {
         active: '',
         lookup: {
@@ -102,6 +102,52 @@ const plugin_content = {
     env: 'development',
     doc: {
         title: ''
+    }
+};*/
+const plugin_content = {
+    plugin: {
+        active: "",
+        lookup: {
+            "1": {
+                id: 1,
+                name: "Multiple Choice",
+                content: {
+                    active: 4,
+                    question:
+                        "Spieglein, Spieglein an der Wand, Wer sind die Schönsten im ganzen Land?",
+                    choices: {
+                        "1": {
+                            label: "Jan"
+                        },
+                        "2": {
+                            label: "Das Schaf"
+                        },
+                        "3": {
+                            label: "Raouls Beine"
+                        },
+                        "4": {
+                            label: "Raoul hat keine Beine"
+                        },
+                        "5": {
+                            label: ""
+                        }
+                    },
+                    solution: [2, 4]
+                },
+                childs: [],
+                parent: null,
+                type: "INPUT",
+                slot: 1,
+                options: {
+                    allowChildRearrangement: true
+                }
+            }
+        }
+    },
+    mode: "easy",
+    env: "development",
+    doc: {
+        title: ""
     }
 };
 
