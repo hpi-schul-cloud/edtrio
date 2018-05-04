@@ -5,14 +5,14 @@
 
 .validate_button {
     float: right;
-}
 
-.validate_button.wrong {
-    background-color: #f44336 !important;
-}
+    &.wrong {
+        background-color: #f44336;
+    }
 
-.validate_button.correct {
-    background-color: #4CAF50 !important;
+    &.correct {
+        background-color: #4CAF50;
+    }
 }
 
 .question {

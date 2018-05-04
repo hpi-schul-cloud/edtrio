@@ -31,6 +31,8 @@ class MultipleChoice extends PureComponent {
     }
 
     toggleChoice(id) {
+        this.setState({valid: null}); //reset Validator button
+
         const index = this.state.userChoice.findIndex(e => e === id);
 
         let choices = [...this.state.userChoice];
