@@ -105,6 +105,7 @@ class MultipleChoice extends Component {
                     onKeyDown={e => this.nextChoice(e)}
                     tabIndex={0}
                     onChange={e => this.handleQuestionChange(e.target.value)}
+                    className={styles.question}
                 />
                 {Object.entries(choices).map(([id, { label }]) => {
                     const labelIsEditable = active === +id && isEditable;
