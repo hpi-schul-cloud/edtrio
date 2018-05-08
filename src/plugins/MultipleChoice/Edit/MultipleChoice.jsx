@@ -7,7 +7,7 @@ import styles from "./../styles.scss";
 
 import { Checkbox } from "rmwc/Checkbox";
 import { TextField } from "rmwc/TextField";
-import { Icon } from "rmwc/Icon";
+import { Infobox } from "edtrio/UI";
 
 
 class MultipleChoice extends Component {
@@ -165,13 +165,10 @@ class MultipleChoice extends Component {
                                 }
                             </label>
                         </div>
-                        <div className={styles.infobox}>
-                            <Icon>info_outline</Icon>
-                            <>
-                                Don't forget to check the boxes next to the
-                                correct answer
-                            </>
-                        </div>
+                        <Infobox>
+                            Don&apos;t forget to check the boxes next to the
+                            correct answer
+                        </Infobox>
                     </>
                 ) : null}
             </>
