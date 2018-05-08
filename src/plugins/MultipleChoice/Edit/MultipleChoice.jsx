@@ -7,6 +7,8 @@ import styles from "./../styles.scss";
 
 import { Checkbox } from "rmwc/Checkbox";
 import { TextField } from "rmwc/TextField";
+import { Icon } from "rmwc/Icon";
+
 
 class MultipleChoice extends Component {
     constructor(props) {
@@ -151,6 +153,9 @@ class MultipleChoice extends Component {
                         </div>
                     );
                 })}
+                <div className={styles.infobox}>
+                    <Icon>info_outline</Icon>Check the boxes next to the correct answer
+                </div>
             </>
         );
     }

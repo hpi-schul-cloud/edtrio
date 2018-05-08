@@ -1,3 +1,5 @@
+@import "~edtrio/UI/colors";
+
 .checkbox_wrapper {
     display: flex;
     align-items: center;
@@ -17,4 +19,17 @@
 
 .question {
     margin-bottom: 20px !important;
+}
+
+.infobox {
+    display: flex;
+    align-items: center;
+    background-color: $primaryColor;
+    color: white;
+    padding: 15px 20px;
+    margin-top: 20px;
+
+    &>i {
+        margin-right: 15px;
+    }
 }
