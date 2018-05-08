@@ -31,6 +31,12 @@ class MultipleChoice extends Component {
         return true;
     }
 
+    componentDidMount() {
+        this.setState({
+            ...this.props.content
+        });
+    }
+
     handleQuestionChange(value) {
         this.setState({ question: value });
     }
@@ -54,43 +60,34 @@ class MultipleChoice extends Component {
     }
 
     nextChoice(e) {
-        if (e.keyCode !== 13) {
+        if (e.keyCode && e.keyCode !== 13) {
             return;
         }
 
+        const nextOption = this.state.active + 1;
         this.setState({
-            active: this.state.active + 1
+            active: nextOption,
+            choices: {
+                ...this.state.choices,
+                [nextOption]: {
+                    label: ""
+                }
+            }
         });
     }
 
     setChoice(value) {
-        const next = {
-            ...this.state.choices,
-            [this.state.active]: {
-                label: value
-            }
-        };
-
-        if (!has(this.state.choices, this.state.active + 1)) {
-            next[this.state.active + 1] = {
-                label: ""
-            };
-        }
-
         this.setState(
             {
                 choices: {
-                    ...next
+                    ...this.state.choices,
+                    [this.state.active]: {
+                        label: value
+                    }
                 }
             },
             () => this.props.saveContent(this.state)
         );
-    }
-
-    componentDidMount() {
-        this.setState({
-            ...this.props.content
-        });
     }
 
     render() {
@@ -142,10 +139,12 @@ class MultipleChoice extends Component {
                                         })
                                     }
                                     tabIndex={0}
+                                    style={{ cursor: "text" }}
                                     onFocus={() =>
                                         this.setState({
                                             active: +id
-                                        })}
+                                        })
+                                    }
                                 >
                                     {label || `Option ${id}`}
                                 </label>
@@ -153,9 +152,28 @@ class MultipleChoice extends Component {
                         </div>
                     );
                 })}
-                {isEditable ? (<div className={styles.infobox}>
-                    <Icon>info_outline</Icon><>Don't forget to check the boxes next to the correct answer</>
-                </div>) : null }
+
+                {isEditable ? (
+                    <>
+                        <div className={styles.checkbox_wrapper}>
+                            <Checkbox disabled />
+                            <label onClick={e => this.nextChoice(e)}>
+                                {
+                                    <div className={styles.addOption}>
+                                        Add Option
+                                    </div>
+                                }
+                            </label>
+                        </div>
+                        <div className={styles.infobox}>
+                            <Icon>info_outline</Icon>
+                            <>
+                                Don't forget to check the boxes next to the
+                                correct answer
+                            </>
+                        </div>
+                    </>
+                ) : null}
             </>
         );
     }

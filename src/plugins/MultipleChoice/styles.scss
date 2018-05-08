@@ -31,3 +31,12 @@
         margin-right: 15px;
     }
 }
+
+.addOption {
+    color: rgb(189, 189, 189);
+
+    &:hover {
+        text-decoration: underline;
+        cursor: text;
+    }
+}

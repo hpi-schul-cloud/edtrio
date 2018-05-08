@@ -69,7 +69,6 @@ class MultipleChoice extends PureComponent {
         return <>
                 <p className={styles.question}>{question}</p>
                 {Object.entries(choices)
-                    .filter(([_, { label }]) => label.length > 0)
                     .map(([id, { label }]) => <div key={id}>
                             <Checkbox
                                 onClick={() => this.toggleChoice(+id)}
