@@ -8,6 +8,7 @@ import styles from "./../styles.scss";
 import { Checkbox } from "rmwc/Checkbox";
 import { TextField } from "rmwc/TextField";
 import { Infobox } from "edtrio/UI";
+import { Icon } from "rmwc/Icon";
 
 
 class MultipleChoice extends Component {
@@ -35,6 +36,20 @@ class MultipleChoice extends Component {
         this.setState({
             ...this.props.content
         });
+    }
+
+    deleteChoice(id) {
+        const deleteableChoices = this.state.choices;
+        delete deleteableChoices[id];
+
+        this.setState(
+            {
+                choices: {
+                    ...deleteableChoices
+                }
+            },
+            () => this.props.saveContent(this.state)
+        );
     }
 
     handleQuestionChange(value) {
@@ -113,7 +128,7 @@ class MultipleChoice extends Component {
                         <div
                             key={id}
                             className={
-                                !labelIsEditable ? styles.checkbox_wrapper : ""
+                                !labelIsEditable ? styles.checkbox_wrapper : styles.checkbox_wrapperli
                             }
                         >
                             <Checkbox
@@ -122,6 +137,7 @@ class MultipleChoice extends Component {
                             />
                             {labelIsEditable ? (
                                 <TextField
+                                    rootProps={{style: {width: '100%'}}}
                                     onKeyDown={e => this.nextChoice(e)}
                                     onInput={e =>
                                         this.setChoice(e.target.value)
@@ -139,7 +155,7 @@ class MultipleChoice extends Component {
                                         })
                                     }
                                     tabIndex={0}
-                                    style={{ cursor: "text" }}
+                                    className={styles.checkbox_label}
                                     onFocus={() =>
                                         this.setState({
                                             active: +id
@@ -149,6 +165,7 @@ class MultipleChoice extends Component {
                                     {label || `Option ${id}`}
                                 </label>
                             )}
+                            {isEditable ? <Icon onClick={() => this.deleteChoice(+id)} className={styles.removeButton}>clear</Icon> : null}
                         </div>
                     );
                 })}
