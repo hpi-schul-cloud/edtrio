@@ -1,5 +1,3 @@
-@import "~edtrio/UI/colors";
-
 .checkbox_wrapper {
     display: flex;
     align-items: center;
@@ -24,7 +22,7 @@
 .infobox {
     display: flex;
     align-items: center;
-    background-color: $primaryColor;
+    background-color: #616161;
     color: white;
     padding: 15px 20px;
     margin-top: 20px;

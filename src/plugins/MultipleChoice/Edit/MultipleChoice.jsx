@@ -153,9 +153,9 @@ class MultipleChoice extends Component {
                         </div>
                     );
                 })}
-                <div className={styles.infobox}>
-                    <Icon>info_outline</Icon>Check the boxes next to the correct answer
-                </div>
+                {isEditable ? (<div className={styles.infobox}>
+                    <Icon>info_outline</Icon><>Don't forget to check the boxes next to the correct answer</>
+                </div>) : null }
             </>
         );
     }
