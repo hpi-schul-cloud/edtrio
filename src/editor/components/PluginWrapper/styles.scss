@@ -4,8 +4,9 @@
     border-color: transparent;
 }
 
-.plugin, .selected {
-    &:hover>div.handle {
+.plugin,
+.selected {
+    &:hover > div.handle {
         visibility: visible;
     }
 }
@@ -23,12 +24,11 @@
     text-align: center;
     width: 100%;
     cursor: move;
-    color: #CCC;
+    color: #ccc;
     visibility: hidden;
 
     & > span {
         color: #ccc;
-        font-size: 3rem;
         transition: color 400ms ease;
     }
 
@@ -57,13 +57,14 @@
     cursor: pointer;
 
     transition: color 300ms ease;
-    
+
     &:hover {
         color: #888;
     }
 }
 
-.top_highlight, .bottom_highlight {
+.top_highlight,
+.bottom_highlight {
     position: relative;
 
     &::before {

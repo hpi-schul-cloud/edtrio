@@ -1,0 +1,12 @@
+{
+    "name": "DummyPlugin",
+    "version": "0.1.0",
+    "description": "Leeres Plugin zum Testen",
+    "main": "DummyPlugin.jsx",
+    "author": "Florian Wirtz, Raoul Baron",
+    "license": "MIT",
+    "x": {
+        "displayName": "Dummy",
+        "type": "CONTENT"
+    }
+}

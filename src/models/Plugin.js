@@ -27,7 +27,8 @@ class Plugin {
 
     static TYPES = {
         CONTENT: Symbol("Content"),
-        LAYOUT: Symbol("Layout")
+        LAYOUT: Symbol("Layout"),
+        INPUT: Symbol("Input")
     };
 }
 

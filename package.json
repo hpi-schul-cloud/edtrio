@@ -22,6 +22,7 @@
         "react-redux": "^5.0.7",
         "redux": "^4.0.0",
         "redux-batched-actions": "^0.2.1",
+        "rmwc": "^1.5.6",
         "serve-static": "^1.13.2",
         "uws": "^9.14.0"
     },
@@ -72,14 +73,10 @@
         "dev": "cross-env NODE_ENV=development webpack-dev-server",
         "build": "cross-env NODE_ENV=production webpack",
         "server": "nodemon server.js",
-        "postinstall": "node scripts/symlink_source.js"
+        "postinstall": "node scripts/symlink_source.js",
+        "precommit": "pretty-quick --staged"
     },
     "prettier": {
         "tabWidth": 4
-    },
-    "husky": {
-        "hooks": {
-            "pre-commit": "pretty-quick --staged"
-        }
     }
 }

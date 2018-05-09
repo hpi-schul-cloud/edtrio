@@ -1,0 +1,27 @@
+.checkbox_wrapper:hover > i.removeButton,
+i.removeButton {
+    color: rgb(189, 189, 189);
+    margin-bottom: 10px;
+    &:hover {
+        color: black;
+        cursor: pointer;
+    }
+}
+
+.checkbox_wrapper {
+    display: flex;
+    align-items: center;
+    & > i.removeButton {
+        color: transparent;
+    }
+}
+
+.checkbox_wrapperli {
+    display: flex;
+    align-items: flex-end;
+}
+
+.checkbox_label {
+    cursor: text;
+    width: 100%;
+}

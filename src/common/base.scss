@@ -2,10 +2,6 @@
     box-sizing: border-box;
 }
 
-html {
-    font-size: 10px;
-}
-
 html,
 body {
     height: 100%;
@@ -19,5 +15,9 @@ body {
     background-color: rgb(238, 238, 238);
 
     font-family: "Roboto", sans-serif;
-    font-size: 1.6rem;
+}
+
+:root {
+    --mdc-theme-primary: #b10438;
+    --mdc-theme-secondary: #b10438;
 }

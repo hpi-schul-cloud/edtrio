@@ -1,0 +1,12 @@
+.question {
+    margin-bottom: 20px !important;
+}
+
+.addOption {
+    color: rgb(189, 189, 189);
+
+    &:hover {
+        text-decoration: underline;
+        cursor: text;
+    }
+}
