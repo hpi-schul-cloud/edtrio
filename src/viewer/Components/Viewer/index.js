@@ -106,36 +106,34 @@ import styles from "./styles.scss";
 };*/
 const plugin_content = {
     plugin: {
-        active: '',
+        active: "",
         lookup: {
-            '1': {
+            "1": {
                 id: 1,
-                name: 'Multiple Choice',
+                name: "Multiple Choice",
                 content: {
                     active: 4,
-                    question: 'Spieglein, Spieglein an der Wand, Wer sind die Schönsten im ganzen Land?',
+                    question:
+                        "Spieglein, Spieglein an der Wand, Wer sind die Schönsten im ganzen Land?",
                     choices: {
-                        '1': {
-                            label: 'Raoul'
+                        "1": {
+                            label: "Raoul"
                         },
-                        '2': {
-                            label: 'Jan'
+                        "2": {
+                            label: "Jan"
                         },
-                        '3': {
-                            label: 'Das Schaf'
+                        "3": {
+                            label: "Das Schaf"
                         },
-                        '4': {
-                            label: 'Raoul hat keine Beine'
+                        "4": {
+                            label: "Raoul hat keine Beine"
                         }
                     },
-                    solution: [
-                        4,
-                        3
-                    ]
+                    solution: [4, 3]
                 },
                 childs: [],
                 parent: null,
-                type: 'INPUT',
+                type: "INPUT",
                 slot: 1,
                 options: {
                     allowChildRearrangement: true
@@ -143,10 +141,10 @@ const plugin_content = {
             }
         }
     },
-    mode: 'easy',
-    env: 'development',
+    mode: "easy",
+    env: "development",
     doc: {
-        title: ''
+        title: ""
     }
 };
 

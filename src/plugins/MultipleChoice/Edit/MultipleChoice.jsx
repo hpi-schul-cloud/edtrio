@@ -12,7 +12,6 @@ import { Infobox } from "edtrio/UI";
 
 import CheckboxEntry from "./CheckboxEntry";
 
-
 class MultipleChoice extends Component {
     constructor(props) {
         super(props);
@@ -79,7 +78,7 @@ class MultipleChoice extends Component {
     activateEntry(id) {
         this.setState({
             active: id
-        })
+        });
     }
 
     /**
@@ -149,8 +148,8 @@ class MultipleChoice extends Component {
                         activateEntry={this.activateEntry.bind(this)}
                         label={label}
                         isEditable={isEditable}
-                    />)
-                )}
+                    />
+                ))}
 
                 {isEditable ? (
                     <>

@@ -16,6 +16,6 @@ const Infobox = ({ children }) => {
 
 Infobox.propTypes = {
     children: PropTypes.node.isRequired
-}
+};
 
 export default Infobox;

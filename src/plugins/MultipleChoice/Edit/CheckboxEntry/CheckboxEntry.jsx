@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 import styles from "./styles.scss";
@@ -9,7 +9,17 @@ import { Icon } from "rmwc/Icon";
 
 class CheckboxEntry extends Component {
     render() {
-        const { labelIsEditable, toggleChoice, nextChoice, setChoice, label, id, deleteChoice, isEditable, activateEntry } = this.props;
+        const {
+            labelIsEditable,
+            toggleChoice,
+            nextChoice,
+            setChoice,
+            label,
+            id,
+            deleteChoice,
+            isEditable,
+            activateEntry
+        } = this.props;
 
         return (
             <div
@@ -19,10 +29,7 @@ class CheckboxEntry extends Component {
                         : styles.checkbox_wrapperli
                 }
             >
-                <Checkbox
-                    onClick={e => toggleChoice(e, +id)}
-                    tabIndex={-1}
-                />
+                <Checkbox onClick={e => toggleChoice(e, +id)} tabIndex={-1} />
                 {labelIsEditable ? (
                     <TextField
                         rootProps={{ style: { width: "100%" } }}
@@ -34,15 +41,15 @@ class CheckboxEntry extends Component {
                         autoFocus
                     />
                 ) : (
-                        <label
-                            onClick={() => activateEntry(+id)}
-                            onFocus={() => activateEntry(+id)}
-                            tabIndex={0}
-                            className={styles.checkbox_label}
-                        >
-                            {label || `Option ${id}`}
-                        </label>
-                    )}
+                    <label
+                        onClick={() => activateEntry(+id)}
+                        onFocus={() => activateEntry(+id)}
+                        tabIndex={0}
+                        className={styles.checkbox_label}
+                    >
+                        {label || `Option ${id}`}
+                    </label>
+                )}
                 {isEditable ? (
                     <Icon
                         onClick={() => deleteChoice(+id)}
@@ -52,7 +59,7 @@ class CheckboxEntry extends Component {
                     </Icon>
                 ) : null}
             </div>
-        )
+        );
     }
 }
 
@@ -65,7 +72,7 @@ CheckboxEntry.propTypes = {
     setChoice: PropTypes.func,
     deleteChoice: PropTypes.func,
     label: PropTypes.string,
-    id: PropTypes.number,
+    id: PropTypes.number
 };
 
 export default CheckboxEntry;

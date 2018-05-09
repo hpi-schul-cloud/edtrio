@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 import { connect } from "react-redux";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import isEqual from "lodash.isequal";
 
 /**
@@ -15,28 +15,31 @@ class DummyPlugin extends Component {
 
         this.state = {
             lx: "XXX",
-            ly: "YYY",
+            ly: "YYY"
         };
     }
 
     shouldComponentUpdate({ isEditable }, nextState) {
         return isEditable && !isEqual(this.state, nextState);
     }
-    
+
     componentDidMount() {
         this.setState({
-            ...this.props.content,
+            ...this.props.content
         });
     }
 
     handleChange(e) {
-        this.setState({
-            [e.target.name]: e.target.value,
-        }, () => {
-            this.props.saveContent(this.state);
-        });
+        this.setState(
+            {
+                [e.target.name]: e.target.value
+            },
+            () => {
+                this.props.saveContent(this.state);
+            }
+        );
     }
-    
+
     render() {
         const { isEditable } = this.props;
 
@@ -44,26 +47,28 @@ class DummyPlugin extends Component {
             <React.Fragment>
                 <div>unstyled</div>
                 <h2>Static dummy text plugin</h2>
-                <div>{`Editable: ${ isEditable }`}</div>
+                <div>{`Editable: ${isEditable}`}</div>
                 <input
                     autoFocus={true}
                     type="text"
                     name="lx"
                     value={this.state.lx}
-                    onChange={(e) => this.handleChange(e)} />
+                    onChange={e => this.handleChange(e)}
+                />
                 <input
                     type="text"
                     name="ly"
                     value={this.state.ly}
-                    onChange={(e) => this.handleChange(e)} />
+                    onChange={e => this.handleChange(e)}
+                />
             </React.Fragment>
-        )
+        );
     }
 
     static propTypes = {
         isEditable: PropTypes.bool.isRequired,
-        content : PropTypes.object,
-        saveContent: PropTypes.func.isRequired,
+        content: PropTypes.object,
+        saveContent: PropTypes.func.isRequired
         //isPrint: PropTypes.bool,
         //isViewMode: PropTypes.bool,
     };

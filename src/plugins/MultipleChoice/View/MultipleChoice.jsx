@@ -31,7 +31,7 @@ class MultipleChoice extends PureComponent {
     }
 
     toggleChoice(id) {
-        this.setState({valid: null}); //reset Validator button
+        this.setState({ valid: null }); //reset Validator button
 
         const index = this.state.userChoice.findIndex(e => e === id);
 
@@ -50,19 +50,23 @@ class MultipleChoice extends PureComponent {
     render() {
         const { question, choices, solution } = this.props.content;
 
-        return <>
+        return (
+            <>
                 <p className={styles.question}>{question}</p>
-                {Object.entries(choices)
-                    .map(([id, { label }]) => <div key={id}>
-                            <Checkbox
-                                onClick={() => this.toggleChoice(+id)}
-                            >
-                                {label}
-                            </Checkbox>
-                        </div>)}
-                
-                <ValidatorButton onClick={() => this.validate()} valid={this.state.valid}/>
-            </>;
+                {Object.entries(choices).map(([id, { label }]) => (
+                    <div key={id}>
+                        <Checkbox onClick={() => this.toggleChoice(+id)}>
+                            {label}
+                        </Checkbox>
+                    </div>
+                ))}
+
+                <ValidatorButton
+                    onClick={() => this.validate()}
+                    valid={this.state.valid}
+                />
+            </>
+        );
     }
 
     static propTypes = {
