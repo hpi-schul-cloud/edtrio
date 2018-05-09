@@ -78,10 +78,5 @@
     },
     "prettier": {
         "tabWidth": 4
-    },
-    "husky": {
-        "hooks": {
-            "pre-commit": "pretty-quick --staged"
-        }
     }
 }
