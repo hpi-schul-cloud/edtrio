@@ -1,5 +1,5 @@
 import AppBar from './AppBar';
-import Button from './Button';
+import ValidatorButton from './ValidatorButton';
 import Modal  from './Modal';
 import { MenuItem } from './Menu';
 import Paper from './Paper';
@@ -9,7 +9,7 @@ import Infobox from './Infobox';
 
 export {
     AppBar,
-    Button,
+    ValidatorButton,
     Infobox,
     Modal,
     MenuItem,

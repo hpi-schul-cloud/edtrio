@@ -23,18 +23,6 @@
     
 }
 
-.validate_button {
-    float: right;
-
-    &.wrong {
-        background-color: #f44336;
-    }
-
-    &.correct {
-        background-color: #4CAF50;
-    }
-}
-
 .question {
     margin-bottom: 20px !important;
 }

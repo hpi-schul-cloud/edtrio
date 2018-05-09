@@ -7,7 +7,7 @@ import styles from "./../styles.scss";
 
 import { Checkbox } from "rmwc/Checkbox";
 import { TextField } from "rmwc/TextField";
-import { Button, ButtonIcon } from "rmwc/Button";
+import { ValidatorButton } from "edtrio/UI";
 
 class MultipleChoice extends PureComponent {
     constructor(props) {
@@ -49,22 +49,6 @@ class MultipleChoice extends PureComponent {
 
     render() {
         const { question, choices, solution } = this.props.content;
-        const { valid } = this.state;
-
-        let validatorButtonInnerIcon;
-        let validatorButtonInnerText;
-        let validatorButtonColorClass = '';
-        if(valid === null) {
-            validatorButtonInnerText = "Validate";
-        } else if(valid) {
-            validatorButtonInnerIcon = (<ButtonIcon use="done" />)
-            validatorButtonInnerText = "Correct"
-            validatorButtonColorClass = styles.correct;
-        } else {
-            validatorButtonInnerIcon = (<ButtonIcon use="error" />)
-            validatorButtonInnerText = "Wrong";
-            validatorButtonColorClass = styles.wrong;
-        }
 
         return <>
                 <p className={styles.question}>{question}</p>
@@ -76,10 +60,8 @@ class MultipleChoice extends PureComponent {
                                 {label}
                             </Checkbox>
                         </div>)}
-                <Button className={[styles.validate_button, validatorButtonColorClass].join(' ')} raised onClick={() => this.validate()}>
-                    {validatorButtonInnerIcon}
-                    {validatorButtonInnerText}
-                </Button>
+                
+                <ValidatorButton onClick={() => this.validate()} valid={this.state.valid}/>
             </>;
     }
 
