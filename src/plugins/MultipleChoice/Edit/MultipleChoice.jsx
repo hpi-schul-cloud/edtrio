@@ -4,11 +4,13 @@ import PropTypes from "prop-types";
 import has from "has";
 
 import styles from "./../styles.scss";
+import checkbox_styles from "./CheckboxEntry/styles.scss";
 
-import { Checkbox } from "rmwc/Checkbox";
 import { TextField } from "rmwc/TextField";
+import { Checkbox } from "rmwc/Checkbox";
 import { Infobox } from "edtrio/UI";
-import { Icon } from "rmwc/Icon";
+
+import CheckboxEntry from "./CheckboxEntry";
 
 
 class MultipleChoice extends Component {
@@ -38,20 +40,6 @@ class MultipleChoice extends Component {
         });
     }
 
-    deleteChoice(id) {
-        const deleteableChoices = this.state.choices;
-        delete deleteableChoices[id];
-
-        this.setState(
-            {
-                choices: {
-                    ...deleteableChoices
-                }
-            },
-            () => this.props.saveContent(this.state)
-        );
-    }
-
     handleQuestionChange(value) {
         this.setState({ question: value });
     }
@@ -74,6 +62,48 @@ class MultipleChoice extends Component {
         );
     }
 
+    setChoice(value) {
+        this.setState(
+            {
+                choices: {
+                    ...this.state.choices,
+                    [this.state.active]: {
+                        label: value
+                    }
+                }
+            },
+            () => this.props.saveContent(this.state)
+        );
+    }
+
+    activateEntry(id) {
+        this.setState({
+            active: id
+        })
+    }
+
+    /**
+     * Delete a choice option from the state
+     * @param {*} id which choice
+     */
+    deleteChoice(id) {
+        const deleteableChoices = this.state.choices;
+        delete deleteableChoices[id];
+
+        this.setState(
+            {
+                choices: {
+                    ...deleteableChoices
+                }
+            },
+            () => this.props.saveContent(this.state)
+        );
+    }
+
+    /**
+     * Jump to the next choice option (or append a new one)
+     * @param {*} e event that was fired
+     */
     nextChoice(e) {
         if (e.keyCode && e.keyCode !== 13) {
             return;
@@ -89,20 +119,6 @@ class MultipleChoice extends Component {
                 }
             }
         });
-    }
-
-    setChoice(value) {
-        this.setState(
-            {
-                choices: {
-                    ...this.state.choices,
-                    [this.state.active]: {
-                        label: value
-                    }
-                }
-            },
-            () => this.props.saveContent(this.state)
-        );
     }
 
     render() {
@@ -121,58 +137,24 @@ class MultipleChoice extends Component {
                     onChange={e => this.handleQuestionChange(e.target.value)}
                     className={styles.question}
                 />
-                {Object.entries(choices).map(([id, { label }]) => {
-                    const labelIsEditable = active === +id && isEditable;
-
-                    return (
-                        <div
-                            key={id}
-                            className={
-                                !labelIsEditable ? styles.checkbox_wrapper : styles.checkbox_wrapperli
-                            }
-                        >
-                            <Checkbox
-                                onClick={e => this.toggleChoice(e, +id)}
-                                tabIndex={-1}
-                            />
-                            {labelIsEditable ? (
-                                <TextField
-                                    rootProps={{style: {width: '100%'}}}
-                                    onKeyDown={e => this.nextChoice(e)}
-                                    onInput={e =>
-                                        this.setChoice(e.target.value)
-                                    }
-                                    value={label}
-                                    label={`Option ${id}`}
-                                    tabIndex={0}
-                                    autoFocus
-                                />
-                            ) : (
-                                <label
-                                    onClick={() =>
-                                        this.setState({
-                                            active: +id
-                                        })
-                                    }
-                                    tabIndex={0}
-                                    className={styles.checkbox_label}
-                                    onFocus={() =>
-                                        this.setState({
-                                            active: +id
-                                        })
-                                    }
-                                >
-                                    {label || `Option ${id}`}
-                                </label>
-                            )}
-                            {isEditable ? <Icon onClick={() => this.deleteChoice(+id)} className={styles.removeButton}>clear</Icon> : null}
-                        </div>
-                    );
-                })}
+                {Object.entries(choices).map(([id, { label }]) => (
+                    <CheckboxEntry
+                        key={id}
+                        id={+id}
+                        labelIsEditable={active === +id && isEditable}
+                        toggleChoice={this.toggleChoice.bind(this)}
+                        nextChoice={this.nextChoice.bind(this)}
+                        setChoice={this.setChoice.bind(this)}
+                        deleteChoice={this.deleteChoice.bind(this)}
+                        activateEntry={this.activateEntry.bind(this)}
+                        label={label}
+                        isEditable={isEditable}
+                    />)
+                )}
 
                 {isEditable ? (
                     <>
-                        <div className={styles.checkbox_wrapper}>
+                        <div className={checkbox_styles.checkbox_wrapper}>
                             <Checkbox disabled />
                             <label onClick={e => this.nextChoice(e)}>
                                 {
