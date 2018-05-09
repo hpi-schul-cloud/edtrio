@@ -73,7 +73,8 @@
         "dev": "cross-env NODE_ENV=development webpack-dev-server",
         "build": "cross-env NODE_ENV=production webpack",
         "server": "nodemon server.js",
-        "postinstall": "node scripts/symlink_source.js"
+        "postinstall": "node scripts/symlink_source.js",
+        "precommit": "pretty-quick --staged"
     },
     "prettier": {
         "tabWidth": 4
