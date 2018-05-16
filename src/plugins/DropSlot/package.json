@@ -4,7 +4,7 @@
     "main": "DropSLot.jsx",
     "author": "Florian Wirtz, Raoul Baron",
     "license": "MIT",
-    "x": {
+    "edtrio": {
         "type": "LAYOUT",
         "displayName": "DropSlot"
     }

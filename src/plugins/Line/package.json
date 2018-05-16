@@ -5,7 +5,7 @@
     "main": "LinePlugin.jsx",
     "author": "Florian Wirtz, Raoul Baron",
     "license": "MIT",
-    "x": {
+    "edtrio": {
         "displayName": "Trennlinie",
         "type": "CONTENT"
     }

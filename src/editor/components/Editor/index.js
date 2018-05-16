@@ -9,7 +9,7 @@ import { addPlugin, selectPlugin } from "./../../actions/plugin";
 import Plugin from "./../../../models/Plugin";
 
 import AddPlugin from "./../AddPlugin";
-import PluginResolver from "edtrio/common/Components/PluginResolver";
+import PluginResolver from "edtrio/common/Components/PluginResolver/Editor";
 
 import styles from "./styles.scss";
 
@@ -75,7 +75,6 @@ class Editor extends Component {
                                 <PluginResolver
                                     plugin={plugin.name}
                                     key={plugin.id}
-                                    mode="edit"
                                 >
                                     {Module => <Module id={plugin.id} />}
                                 </PluginResolver>

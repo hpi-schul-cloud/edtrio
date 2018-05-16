@@ -151,14 +151,14 @@ export default function makePlugin(WrappedComponent, info) {
             }
         }
 
-        componentWillReceiveProps({ isOver, canDrop }) {
-            if (this.props.options.allowChildRearrangement) {
-                this.setState({
+        getDerivedStateFromProps({ isOver, canDrop, options }) {
+            if (options.allowChildRearrangement) {
+                return {
                     highlight:
                         isOver && canDrop
                             ? HIGHLIGHT_STYLES[this.state.highlight]
                             : null
-                });
+                };
             }
         }
 

@@ -5,7 +5,7 @@
     "main": "DummyPlugin.jsx",
     "author": "Florian Wirtz, Raoul Baron",
     "license": "MIT",
-    "x": {
+    "edtrio": {
         "displayName": "Dummy",
         "type": "CONTENT"
     }

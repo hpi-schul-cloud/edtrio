@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import PluginResolver from "edtrio/common/Components/PluginResolver";
+import PluginResolver from "edtrio/common/Components/PluginResolver/Viewer";
 
 import { Paper } from "edtrio/UI";
 
@@ -167,7 +167,7 @@ class PluginWrapper extends Component {
             <div className={styles.viewer}>
                 <Paper className={styles.paperPadding}>
                     {view_tree.map(({ name, id, content, childs }) => (
-                        <PluginResolver plugin={name} key={id} mode="view">
+                        <PluginResolver plugin={name} key={id}>
                             {Module => (
                                 <div className={styles.inner}>
                                     <Module

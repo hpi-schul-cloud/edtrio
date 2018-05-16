@@ -1,12 +1,6 @@
-.blur {
-    overflow: hidden;
-}
-
 .modal_wrapper {
     position: fixed;
-    visibility: hidden;
-
-    z-index: 1;
+    opacity: 0;
 
     display: flex;
     justify-content: center;
@@ -17,18 +11,20 @@
     right: 0;
     bottom: 0;
 
-    transition: background-color 500ms ease, visibility 500ms step-start;
+    background-color: rgba(100, 100, 100, 0.65);
 
-    will-change: background-color;
+    transition: opacity 500ms ease;
 }
 
 .modal_wrapper_active {
-    visibility: visible;
+    z-index: 1;
 
-    background-color: rgba(100, 100, 100, 0.65);
+    opacity: 1;
 }
 .modal_wrapper_inactive {
-    transition: background-color 500ms ease, visibility 500ms step-end;
+    z-index: -1;
+
+    transition: opacity 500ms ease;
 }
 
 .modal {

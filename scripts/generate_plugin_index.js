@@ -12,7 +12,7 @@ const fileExists = s => new Promise(r => fs.access(s, fs.F_OK, e => r(!e)));
 
 const { ignore } = require("./../config/plugins/ignore.json");
 
-const x_schema = {
+const EDTRIO_PLUGIN_SCHEMA = {
     type: "object",
     properties: {
         displayName: { type: "string" },
@@ -29,12 +29,23 @@ const x_schema = {
 };
 
 const ajv = new Ajv();
-const validate = ajv.compile(x_schema);
+const validate = ajv.compile(EDTRIO_PLUGIN_SCHEMA);
 
 const errors = [];
 
-const plugins_dir = path.join(__dirname, "../src/Plugins");
-const output_file = path.join(plugins_dir, "index.js");
+const PLUGINS_DIR = path.join(__dirname, "../src/plugins");
+const OUTPUT_FILE = path.join(PLUGINS_DIR, "index.js");
+
+const BASE_IMPORTS = `
+/*eslint-disable */
+import React from 'react';
+import Loadable from 'react-loadable';`;
+
+const EDITOR_HOC = `import makePlugin from 'edtrio/editor/components/PluginWrapper';`;
+const VIEWER_HOC = `import makePlugin from 'edtrio/viewer/components/PluginWrapper';`;
+
+const EDITOR_FILE = path.join(PLUGINS_DIR, "plugins.edit.js");
+const VIEWER_FILE = path.join(PLUGINS_DIR, "plugins.view.js");
 
 const imageRegex = /^preview\.(png|jpe?g)$/;
 const weleleRegex = /(.*"preview_image":)"(image\d)"/;
@@ -55,6 +66,28 @@ const pluginScript = function generatePluginScript(main, opts, i) {
     }`;
 };
 
+const scriptString = (mode, data) => `
+    ${BASE_IMPORTS}
+    ${mode === "Edit" ? EDITOR_HOC : VIEWER_HOC}
+
+    ${
+        mode === "Edit"
+            ? data
+                  .map(({ previewImage }, i) => {
+                      return `import image${i} from ${previewImage}`;
+                  })
+                  .join("\n")
+            : ""
+    }
+
+    export default [
+        ${data.map(({ isAdvanced, base, main, info }) => {
+            const middle = isAdvanced ? `${mode}/` : "";
+            return pluginScript(`./${base}/${middle}${main}`, info);
+        })}
+    ]
+`;
+
 const indexScript = async function generateIndexScript(plugin) {
     const content = await readDir(plugin);
     const index = content.findIndex(el => el === "package.json");
@@ -65,9 +98,9 @@ const indexScript = async function generateIndexScript(plugin) {
 
     const pkg = path.join(plugin, content[index]);
 
-    const { x, version, description, main } = require(pkg);
+    const { edtrio, version, description, main } = require(pkg);
 
-    const valid = validate(x);
+    const valid = validate(edtrio);
     if (!valid) {
         throw new Error(
             `x editor config not valid in ${pkg}. ${validate.errors
@@ -77,11 +110,11 @@ const indexScript = async function generateIndexScript(plugin) {
     }
 
     const info = {
-        name: x.displayName,
+        name: edtrio.displayName,
         version,
         description,
-        type: x.type,
-        options: x.options
+        type: edtrio.type,
+        options: edtrio.options
     };
 
     const { base } = path.parse(plugin);
@@ -89,9 +122,10 @@ const indexScript = async function generateIndexScript(plugin) {
     const imageExists = content.findIndex(el => el.match(imageRegex));
 
     let previewImage = '"./MissingPlugin/preview.png"';
+
     if (imageExists > 0) {
-        previewImage = `".${path.join(
-            `${plugin.split("Plugins")[1]}`,
+        previewImage = `"./${path.join(
+            path.parse(plugin).base,
             content[imageExists]
         )}"`.replace(/\\/g, "/");
     }
@@ -109,19 +143,13 @@ const indexScript = async function generateIndexScript(plugin) {
         return isFolder;
     });
 
-    const plugin_meta = {
+    return {
+        isAdvanced,
         base,
         main,
         info,
         previewImage
     };
-
-    return {
-        isAdvanced,
-        ...plugin_meta
-    };
-
-    //return pluginScript(`./${base}/${main}`, info);
 };
 
 const fileError = ({ message }) => {
@@ -131,12 +159,12 @@ const fileError = ({ message }) => {
 };
 
 (async () => {
-    const plugin_list = await readDir(plugins_dir).catch(fileError);
+    const plugin_list = await readDir(PLUGINS_DIR).catch(fileError);
 
     const plugins = plugin_list
-        .map(fldr => path.join(plugins_dir, fldr))
-        .filter(f => fs.statSync(f).isDirectory())
-        .filter(f => !ignore.some(pl => f.includes(pl)));
+        .map(fldr => path.join(PLUGINS_DIR, fldr))
+        .filter(f => !ignore.some(pl => f.includes(pl)))
+        .filter(f => fs.statSync(f).isDirectory());
 
     const plugin_data = await Promise.all(
         plugins.map(plugin =>
@@ -144,39 +172,8 @@ const fileError = ({ message }) => {
         )
     );
 
-    const edit_script = `
-    /*eslint-disable */
-    import React from 'react';
-        import Loadable from 'react-loadable';
-        import makePlugin from 'edtrio/editor/components/PluginWrapper';
-
-        ${plugin_data
-            .map(({ previewImage }, i) => {
-                return `import image${i} from ${previewImage}`;
-            })
-            .join("\n")}
-
-        export default [
-            ${plugin_data.map(({ isAdvanced, base, main, info }, i) => {
-                const middle = isAdvanced ? "Edit/" : "";
-                return pluginScript(`./${base}/${middle}${main}`, info, i);
-            })}
-        ]
-    `;
-
-    const view_script = `
-    /*eslint react/display-name:0*/
-    import React from 'react';
-        import Loadable from 'react-loadable';
-        import makePlugin from 'edtrio/viewer/components/PluginWrapper';
-
-        export default [
-            ${plugin_data.map(({ isAdvanced, base, main, info }) => {
-                const middle = isAdvanced ? "View/" : "";
-                return pluginScript(`./${base}/${middle}${main}`, info);
-            })}
-        ]
-    `;
+    const edit_script = scriptString("Edit", plugin_data);
+    const view_script = scriptString("View", plugin_data);
 
     if (errors.length > 0) {
         errors.forEach((error, i) => {
@@ -186,14 +183,8 @@ const fileError = ({ message }) => {
         process.exit(1);
     } else {
         await Promise.all([
-            await writeFile(
-                path.join(plugins_dir, "plugins.edit.js"),
-                edit_script
-            ),
-            await writeFile(
-                path.join(plugins_dir, "plugins.view.js"),
-                view_script
-            )
+            writeFile(EDITOR_FILE, edit_script),
+            writeFile(VIEWER_FILE, view_script)
         ]);
 
         console.log("Done.");
