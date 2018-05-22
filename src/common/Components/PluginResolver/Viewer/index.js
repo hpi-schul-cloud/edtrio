@@ -5,7 +5,7 @@ import ViewPlugins from "edtrio/plugins/plugins.view";
 
 import MissingPlugin from "edtrio/plugins/MissingPlugin";
 
-const allViewPlugins = ViewPlugins.reduce(
+const allPlugins = ViewPlugins.reduce(
     (acc, { info, Plugin }) => ({
         ...acc,
         [info.name]: Plugin
@@ -15,7 +15,7 @@ const allViewPlugins = ViewPlugins.reduce(
 
 export default class PluginResolver extends Component {
     resolvePlugin(name) {
-        return this.allPlugins[name] || MissingPlugin;
+        return allPlugins[name] || MissingPlugin;
     }
 
     shouldComponentUpdate() {

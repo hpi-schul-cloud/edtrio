@@ -48,16 +48,32 @@ const EDITOR_FILE = path.join(PLUGINS_DIR, "plugins.edit.js");
 const VIEWER_FILE = path.join(PLUGINS_DIR, "plugins.view.js");
 
 const imageRegex = /^preview\.(png|jpe?g)$/;
-const weleleRegex = /(.*"preview_image":)"(image\d)"/;
+const weleleRegex = /(.*"preview_image":)"(image_.+)"/;
 
-const pluginScript = function generatePluginScript(main, opts, i) {
-    const info = JSON.stringify({ ...opts, preview_image: `image${i}` });
+const viewLoader = (main, { name, previewImage, ...rest }) => `
+{
+    Plugin: Loadable({
+        loader: () => import('${main}').then(object => makePlugin(object.default, ${JSON.stringify(
+    rest
+)})),
+        loading: () => (
+            <p>Lädt</p>
+        )
+    }),
+    info: {name: "${name}"},
+}
+`;
+
+const editLoader = (main, opts, base) => {
+    const info = JSON.stringify({ ...opts, preview_image: `image_${base}` });
     const data = info.replace(weleleRegex, "$1$2");
 
     return `
     {
         Plugin: Loadable({
-            loader: () => import('${main}').then(object => makePlugin(object.default, ${info})),
+            loader: () => import('${main}').then(object => makePlugin(object.default, ${JSON.stringify(
+        opts
+    )})),
             loading: () => (
                 <p>Lädt</p>
             )
@@ -66,24 +82,28 @@ const pluginScript = function generatePluginScript(main, opts, i) {
     }`;
 };
 
-const scriptString = (mode, data) => `
+const scriptString = (mode, data, loader) => `
     ${BASE_IMPORTS}
     ${mode === "Edit" ? EDITOR_HOC : VIEWER_HOC}
 
     ${
         mode === "Edit"
             ? data
-                  .map(({ previewImage }, i) => {
-                      return `import image${i} from ${previewImage}`;
+                  .map(({ previewImage, base }, i) => {
+                      return `import image_${base.toLowerCase()} from ${previewImage}`;
                   })
                   .join("\n")
             : ""
     }
 
     export default [
-        ${data.map(({ isAdvanced, base, main, info }) => {
+        ${data.map(({ isAdvanced, base, main, info }, i) => {
             const middle = isAdvanced ? `${mode}/` : "";
-            return pluginScript(`./${base}/${middle}${main}`, info);
+            return loader(
+                `./${base}/${middle}${main}`,
+                info,
+                base.toLowerCase()
+            );
         })}
     ]
 `;
@@ -172,8 +192,8 @@ const fileError = ({ message }) => {
         )
     );
 
-    const edit_script = scriptString("Edit", plugin_data);
-    const view_script = scriptString("View", plugin_data);
+    const edit_script = scriptString("Edit", plugin_data, editLoader);
+    const view_script = scriptString("View", plugin_data, viewLoader);
 
     if (errors.length > 0) {
         errors.forEach((error, i) => {
