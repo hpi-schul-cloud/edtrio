@@ -1,5 +1,5 @@
 {
-    "name": "GeoGebra",
+    "name": "geogebra",
     "version": "0.1.0",
     "description": "Geogebra Anzeige",
     "main": "GeoGebra.jsx",

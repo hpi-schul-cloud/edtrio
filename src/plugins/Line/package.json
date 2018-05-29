@@ -1,5 +1,5 @@
 {
-    "name": "Horizontal rule",
+    "name": "line",
     "version": "0.1.0",
     "description": "Horizontale Linie zum Abtrennen von Inhalten",
     "main": "LinePlugin.jsx",

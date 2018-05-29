@@ -1,5 +1,5 @@
 {
-    "name": "DummyPlugin",
+    "name": "dummyplugin",
     "version": "0.1.0",
     "description": "Leeres Plugin zum Testen",
     "main": "DummyPlugin.jsx",
