@@ -6,7 +6,8 @@ import { Modal, MenuItem, PluginPreview } from "edtrio/UI";
 
 import { Fab } from "rmwc/Fab";
 
-import PluginResolver from "edtrio/common/Components/PluginResolver";
+import PluginResolver from "edtrio/common/Components/PluginResolver/Editor";
+
 import styles from "./styles.scss";
 
 class AddPlugin extends PureComponent {

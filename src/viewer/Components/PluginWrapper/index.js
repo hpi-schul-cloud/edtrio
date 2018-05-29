@@ -11,8 +11,14 @@ export default function makePlugin(WrappedComponent, info) {
         render() {
             return (
                 <div className={styles.wrapper}>
-                    <WrappedComponent {...this.props} isViewMode={true}/>
-                </div>);
+                    <WrappedComponent
+                        {...this.props}
+                        isViewMode={true}
+                        isEditable={false}
+                        saveContent={() => {}}
+                    />
+                </div>
+            );
         }
     };
 }

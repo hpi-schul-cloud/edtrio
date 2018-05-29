@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 import styles from "./styles.scss";
-
+import print from "./print.scss";
 
 class ImagePlugin extends Component {
     constructor(props) {
@@ -24,21 +24,29 @@ class ImagePlugin extends Component {
         const { embedURL } = this.state;
 
         return (
-            <a href={isViewMode ? embedURL : "#"}>
-                <img src={embedURL} className={embedURL ? styles.imagePlugin: ""} />
-                {!isViewMode && (
-                    <input
-                        id={styles.imageUrl}
-                        autoFocus={true}
-                        type="url"
-                        name="url"
-                        value={embedURL}
-                        onInput={e => this.handleChange(e)}
-                        disabled={!isEditable}
-                        placeholder="Bild URL eingeben"
+            <>
+                <a href={isViewMode ? embedURL : "#"}>
+                    <img
+                        src={embedURL}
+                        className={embedURL ? styles.imagePlugin : ""}
                     />
-                )}
-            </a>
+
+                    {!isViewMode && (
+                        <input
+                            id={styles.imageUrl}
+                            autoFocus={true}
+                            type="url"
+                            name="url"
+                            value={embedURL}
+                            onInput={e => this.handleChange(e)}
+                            disabled={!isEditable}
+                            placeholder="Bild URL eingeben"
+                        />
+                    )}
+                </a>
+
+                <span className={print.link}>{embedURL}</span>
+            </>
         );
     }
 
@@ -55,7 +63,7 @@ class ImagePlugin extends Component {
         isEditable: PropTypes.bool,
         isViewMode: PropTypes.bool.isRequired,
         content: PropTypes.object,
-        saveContent: PropTypes.func,
+        saveContent: PropTypes.func
     };
 }
 

@@ -1,12 +1,12 @@
 {
-    "name": "DummyPlugin",
+    "name": "GeoGebra",
     "version": "0.1.0",
-    "description": "Leeres Plugin zum Testen",
-    "main": "DummyPlugin.jsx",
+    "description": "Geogebra Anzeige",
+    "main": "GeoGebra.jsx",
     "author": "Florian Wirtz, Raoul Baron",
     "license": "MIT",
     "edtrio": {
-        "displayName": "Dummy",
+        "displayName": "GeoGebra",
         "type": "CONTENT"
     }
 }

@@ -1,96 +1,96 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import PluginResolver from "edtrio/common/Components/PluginResolver";
+import PluginResolver from "edtrio/common/Components/PluginResolver/Viewer";
 
 import { Paper } from "edtrio/UI";
 
 import styles from "./styles.scss";
 
-/*const plugin_content = {
+const plugin_content = {
     plugin: {
-        active: '',
+        active: "",
         lookup: {
-            '1': {
+            "1": {
                 id: 1,
-                name: 'Text',
+                name: "Text",
                 content: {
-                    text: '<h1>Arbeitsblatt Numero 1</h1><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p><p><br></p><h2>Impressionen aus dem Bachelorprojekt</h2>'
+                    text:
+                        "<h1>Arbeitsblatt Numero 1</h1><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p><p><br></p><h2>Impressionen aus dem Bachelorprojekt</h2>"
                 },
                 childs: [],
                 parent: null,
-                type: 'CONTENT',
+                type: "CONTENT",
                 slot: 1,
                 options: {
                     allowChildRearrangement: true
                 }
             },
-            '2': {
+            "2": {
                 id: 2,
-                name: 'Bild',
+                name: "Bild",
                 content: {
-                    embedURL: 'http://www.pnn.de/fm/61/thumbnails/heprodimagesfotos97320180127MEINEL_1108_1_20180126154541112.jpg.7566877.jpg'
+                    embedURL:
+                        "http://www.pnn.de/fm/61/thumbnails/heprodimagesfotos97320180127MEINEL_1108_1_20180126154541112.jpg.7566877.jpg"
                 },
                 childs: [],
                 parent: 3,
-                type: 'CONTENT',
+                type: "CONTENT",
                 slot: 0,
                 options: {
                     allowChildRearrangement: true
                 }
             },
-            '3': {
+            "3": {
                 id: 3,
-                name: 'Zwei Spalten',
+                name: "Zwei Spalten",
                 content: null,
-                childs: [
-                    2,
-                    4
-                ],
+                childs: [2, 4],
                 parent: null,
-                type: 'LAYOUT',
+                type: "LAYOUT",
                 slot: 3,
                 options: {
                     allowChildRearrangement: false
                 }
             },
-            '4': {
+            "4": {
                 id: 4,
-                name: 'Bild',
+                name: "Bild",
                 content: {
-                    embedURL: 'https://pbs.twimg.com/profile_images/932957476164722689/1UDelsEf_400x400.jpg'
+                    embedURL:
+                        "https://pbs.twimg.com/profile_images/932957476164722689/1UDelsEf_400x400.jpg"
                 },
                 childs: [],
                 parent: 3,
-                type: 'CONTENT',
+                type: "CONTENT",
                 slot: 1,
                 options: {
                     allowChildRearrangement: true
                 }
             },
-            '5': {
+            "5": {
                 id: 5,
-                name: 'Text',
+                name: "Text",
                 content: {
-                    text: '<br /><h2>Witzige Videos und mehr</h2>'
+                    text: "<br /><h2>Witzige Videos und mehr</h2>"
                 },
                 childs: [],
                 parent: null,
-                type: 'CONTENT',
+                type: "CONTENT",
                 slot: 1,
                 options: {
                     allowChildRearrangement: true
                 }
             },
-            '6': {
+            "6": {
                 id: 6,
-                name: 'Video',
+                name: "Video",
                 content: {
-                    embedURL: 'https://www.youtube.com/embed/KaVN7gs7PFE'
+                    embedURL: "https://www.youtube.com/embed/KaVN7gs7PFE"
                 },
                 childs: [],
                 parent: null,
-                type: 'CONTENT',
+                type: "CONTENT",
                 slot: 1,
                 options: {
                     allowChildRearrangement: true
@@ -98,12 +98,14 @@ import styles from "./styles.scss";
             }
         }
     },
-    mode: 'easy',
-    env: 'development',
+    mode: "easy",
+    env: "development",
     doc: {
-        title: ''
+        title: ""
     }
-};*/
+};
+
+/*
 const plugin_content = {
     plugin: {
         active: "",
@@ -148,6 +150,8 @@ const plugin_content = {
     }
 };
 
+*/
+
 const view_tree = [];
 Object.keys(plugin_content.plugin.lookup).forEach((el, i) => {
     const cur = plugin_content.plugin.lookup[el];
@@ -167,14 +171,13 @@ class PluginWrapper extends Component {
             <div className={styles.viewer}>
                 <Paper className={styles.paperPadding}>
                     {view_tree.map(({ name, id, content, childs }) => (
-                        <PluginResolver plugin={name} key={id} mode="view">
+                        <PluginResolver plugin={name} key={id}>
                             {Module => (
                                 <div className={styles.inner}>
                                     <Module
                                         content={content}
                                         id={id}
                                         childs={childs}
-                                        isEditable={false}
                                     />
                                 </div>
                             )}

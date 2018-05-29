@@ -6,7 +6,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ScriptExtHtmlWebpackPlugin = require("script-ext-html-webpack-plugin");
 const WebpackShellPlugin = require("webpack-shell-plugin");
 
-const script = require("./parts/webpack.script");
 const styles = require("./parts/webpack.style");
 const images = require("./parts/webpack.images");
 
@@ -25,8 +24,7 @@ module.exports = (src = {}) => {
             },
             plugins: [
                 new WebpackShellPlugin({
-                    onBuildStart: [`node scripts/generate_plugin_index.js`],
-                    onBuildEnd: [`yarn run server`]
+                    onBuildStart: [`node scripts/generate_plugin_index.js`]
                 }),
                 new CleanWebpackPlugin(path.join("./public"), {
                     root: path.join(__dirname, "../../")
@@ -48,7 +46,6 @@ module.exports = (src = {}) => {
                 })
             ]
         },
-        script(),
         styles(),
         images()
     );

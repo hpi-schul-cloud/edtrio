@@ -17,7 +17,8 @@ import {
     selectPlugin,
     removePlugin,
     setContent,
-    movePlugin
+    movePlugin,
+    toggleVisible
 } from "edtrio/editor/actions/plugin";
 
 import styles from "./styles.scss";
@@ -151,14 +152,14 @@ export default function makePlugin(WrappedComponent, info) {
             }
         }
 
-        componentWillReceiveProps({ isOver, canDrop }) {
-            if (this.props.options.allowChildRearrangement) {
-                this.setState({
+        getDerivedStateFromProps({ isOver, canDrop, options }) {
+            if (options.allowChildRearrangement) {
+                return {
                     highlight:
                         isOver && canDrop
                             ? HIGHLIGHT_STYLES[this.state.highlight]
                             : null
-                });
+                };
             }
         }
 
@@ -167,8 +168,7 @@ export default function makePlugin(WrappedComponent, info) {
             //console.log(`Plugin: ${nextProps.id} changed slot from ${this.props.plugin.slot} to ${nextProps.plugin.slot}`);
 
             return !(
-                isEqual(this.props.plugin.slot, nextProps.plugin.slot) &&
-                isEqual(this.props.plugin.content, nextProps.plugin.content) &&
+                isEqual(this.props.plugin, nextProps.plugin) &&
                 isEqual(this.state.highlight, nextState.highlight) &&
                 isEqual(this.props.editable, nextProps.editable)
             );
@@ -191,6 +191,7 @@ export default function makePlugin(WrappedComponent, info) {
                 <div
                     ref={node => (this.wrapper = node)}
                     onMouseDown={e => this._handleClick(e)}
+                    className={plugin.visible ? "" : styles.visible_off}
                 >
                     {
                         <div
@@ -245,8 +246,11 @@ export default function makePlugin(WrappedComponent, info) {
                                             className={`material-icons ${
                                                 styles.action_icon
                                             }`}
+                                            onClick={this.props.toggleVisible}
                                         >
-                                            hot_tub
+                                            {plugin.visible
+                                                ? "visibility"
+                                                : "visibility_off"}
                                         </span>
                                         <span
                                             className={`material-icons ${
@@ -268,6 +272,8 @@ export default function makePlugin(WrappedComponent, info) {
             selectPlugin: PropTypes.func.isRequired,
             removePlugin: PropTypes.func.isRequired,
             saveContent: PropTypes.func.isRequired,
+            toggleVisible: PropTypes.func.isRequired,
+
             dev: PropTypes.bool.isRequired,
             editable: PropTypes.bool.isRequired,
             plugin: PropTypes.object,
@@ -309,6 +315,9 @@ export default function makePlugin(WrappedComponent, info) {
         },
         movePlugin: (drop, pos) => {
             dispatch(movePlugin(drop, pos, true));
+        },
+        toggleVisible: () => {
+            dispatch(toggleVisible(id));
         }
     });
 
