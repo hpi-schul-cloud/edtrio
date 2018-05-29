@@ -1,4 +1,4 @@
-# Edtr.io [![Docs](https://img.shields.io/badge/docs-Gitbook.io-lightgrey.svg)](https://edtrio.gitbook.io/docs) 
+# Edtr.io [![Docs](https://img.shields.io/badge/docs-Gitbook.io-lightgrey.svg)](https://edtrio.gitbook.io/docs)
 
 Edtr.io is an open-source project created by [Schul-Cloud](https://github.com/schul-cloud) to enable seamless content creation.
 
@@ -15,6 +15,8 @@ $ git clone git@github.com:schul-cloud/edtrio.git
 $ cd edtrio
 $ yarn install
 ```
+
+> Are you on Windows? Make sure to run your Shell with Administrator privileges!
 
 After the installation is done you can launch the editor via:
 
