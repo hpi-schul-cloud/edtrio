@@ -89,9 +89,10 @@ export default Image;
 
 ## Plugin Types
 Used in `package.json` of each plugin.
+
 | Type    | Description                                                                        |
 |---------|------------------------------------------------------------------------------------|
-| `CONTENT` | Simple content that is being displayed.<br /> (`default`) Suitable for most plugins        |
+| `CONTENT` | Simple content that is being displayed.<br /> (`default`) Suitable for most plugins|
 | `INPUT`   | More complex content that requires user input and optionally verifies it.          |
 | `LAYOUT`  | Meta category for plugins that visually transform other plugins, e.g. `TwoColLayout` |
 
