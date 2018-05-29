@@ -20,6 +20,9 @@ class Plugin {
         this.parent = null;
         this.type = type;
         this.slot = id; //incrementing slot
+
+        this.visible = true;
+
         this.options = {
             allowChildRearrangement
         };

@@ -5,7 +5,7 @@
     "main": "ImagePlugin.jsx",
     "author": "Florian Wirtz",
     "license": "MIT",
-    "x": {
+    "edtrio": {
         "displayName": "Bild",
         "type": "CONTENT"
     }

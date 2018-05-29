@@ -1,16 +1,10 @@
-/* Schema
- * {
- *      active: ${plugin_id},
- *      loaded: [${class Plugin(id, name, content)}]
- * }
- */
-
 import {
     SELECT_PLUGIN,
     LOAD_PLUGIN,
     REMOVE_PLUGIN,
     SET_CONTENT,
-    MOVE_PLUGIN
+    MOVE_PLUGIN,
+    TOGGLE_VISIBLE
 } from "./../actions/plugin";
 
 import Plugin from "edtrio/models/Plugin";
@@ -157,6 +151,13 @@ const plugin = (state = default_state, action) => {
             action.adjust_slots
                 ? movePlugin(next, action.id, action.slot)
                 : nestPlugin(next, action.id, action.slot);
+
+            return next;
+        }
+        case TOGGLE_VISIBLE: {
+            const next = deepclone(state);
+
+            next.lookup[action.id].visible = !next.lookup[action.id].visible;
 
             return next;
         }

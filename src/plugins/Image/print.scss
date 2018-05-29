@@ -1,0 +1,12 @@
+.link {
+    display: none;
+}
+
+@media print {
+    .link {
+        font-size: small;
+        display: block;
+
+        word-wrap: break-word;
+    }
+}

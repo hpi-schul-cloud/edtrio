@@ -2,19 +2,10 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 import EditPlugins from "edtrio/plugins/plugins.edit";
-import ViewPlugins from "edtrio/plugins/plugins.view";
 
 import MissingPlugin from "edtrio/plugins/MissingPlugin";
 
 const allEditPlugins = EditPlugins.reduce(
-    (acc, { info, Plugin }) => ({
-        ...acc,
-        [info.name]: Plugin
-    }),
-    {}
-);
-
-const allViewPlugins = ViewPlugins.reduce(
     (acc, { info, Plugin }) => ({
         ...acc,
         [info.name]: Plugin
@@ -28,8 +19,7 @@ export default class PluginResolver extends Component {
     constructor(props) {
         super(props);
 
-        this.allPlugins =
-            props.mode === "view" ? allViewPlugins : allEditPlugins;
+        this.allPlugins = allEditPlugins;
     }
     /**
      * Resolves a plugin by type
@@ -60,8 +50,7 @@ export default class PluginResolver extends Component {
 
     static propTypes = {
         children: PropTypes.func.isRequired,
-        plugin: PropTypes.string,
-        mode: PropTypes.string.isRequired
+        plugin: PropTypes.string
     };
 
     static allPlugins = allPlugins;

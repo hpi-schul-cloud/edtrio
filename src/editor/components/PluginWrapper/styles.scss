@@ -90,3 +90,11 @@
         border-top: 4px dashed #333;
     }
 }
+
+.visible_off {
+    opacity: 0.6;
+
+    &:hover {
+        opacity: 0.8;
+    }
+}

@@ -5,7 +5,7 @@
     "main": "MultipleChoice.jsx",
     "author": "Raoul Baron, FWirtz",
     "license": "MIT",
-    "x": {
+    "edtrio": {
         "displayName": "Multiple Choice",
         "type": "INPUT"
     }

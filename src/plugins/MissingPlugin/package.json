@@ -1,11 +1,11 @@
 {
-  "name": "MissingPlugin",
-  "version": "0.1.0",
-  "main": "MissingPlugin.jsx",
-  "author": "Florian Wirtz, Raoul Baron",
-  "license": "MIT",
-  "x": {
-    "type": "CONTENT",
-    "displayName": "Missing Plugin"
-  }
+    "name": "MissingPlugin",
+    "version": "0.1.0",
+    "main": "MissingPlugin.jsx",
+    "author": "Florian Wirtz, Raoul Baron",
+    "license": "MIT",
+    "edtrio": {
+        "type": "CONTENT",
+        "displayName": "Missing Plugin"
+    }
 }

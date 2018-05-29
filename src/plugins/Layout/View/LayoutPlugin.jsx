@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import styles from "./../styles.scss";
 
-import PluginResolver from "edtrio/common/Components/PluginResolver";
+import PluginResolver from "edtrio/common/Components/PluginResolver/Viewer";
 
 const LayoutPlugin = props => {
     const { id, childs, options } = props;
@@ -11,7 +11,7 @@ const LayoutPlugin = props => {
     return (
         <div className={styles.layout_wrapper}>
             <div className={styles.placeholder}>
-                <PluginResolver mode="view" plugin={childs[0].name}>
+                <PluginResolver plugin={childs[0].name}>
                     {First => {
                         return First ? (
                             <First
@@ -27,7 +27,7 @@ const LayoutPlugin = props => {
                 </PluginResolver>
             </div>
             <div className={styles.placeholder}>
-                <PluginResolver mode="view" plugin={childs[1].name}>
+                <PluginResolver plugin={childs[1].name}>
                     {Second => {
                         return Second ? (
                             <Second

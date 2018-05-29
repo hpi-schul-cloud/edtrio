@@ -6,7 +6,7 @@ import DropSlot from "edtrio/plugins/DropSlot/DropSlot";
 
 import styles from "./../styles.scss";
 
-import PluginResolver from "edtrio/common/Components/PluginResolver";
+import PluginResolver from "edtrio/common/Components/PluginResolver/Editor";
 
 const LayoutPlugin = props => {
     const { id, childs, options } = props;
@@ -14,7 +14,7 @@ const LayoutPlugin = props => {
     return (
         <div className={styles.layout_wrapper}>
             <div className={styles.placeholder}>
-                <PluginResolver mode="edit" plugin={childs[0].name}>
+                <PluginResolver plugin={childs[0].name}>
                     {First => {
                         return First ? (
                             <First id={childs[0].id} options={options} />
@@ -25,7 +25,7 @@ const LayoutPlugin = props => {
                 </PluginResolver>
             </div>
             <div className={styles.placeholder}>
-                <PluginResolver mode="edit" plugin={childs[1].name}>
+                <PluginResolver plugin={childs[1].name}>
                     {Second => {
                         return Second ? (
                             <Second id={childs[1].id} options={options} />
