@@ -17,7 +17,7 @@ class Editor extends Component {
     constructor(props) {
         super(props);
 
-        this.id = 1;
+        this.id = Math.max(...Object.values(props.plugin).map(pl => pl.id)) + 1;
         this._unselectPlugin = this._unselectPlugin.bind(this);
     }
 

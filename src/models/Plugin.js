@@ -5,7 +5,7 @@ class Plugin {
         {
             id = mandatory("id"),
             name = mandatory("name"),
-            type = madatory("type")
+            type = mandatory("type")
         },
         //options
         { size, allowChildRearrangement } = {
