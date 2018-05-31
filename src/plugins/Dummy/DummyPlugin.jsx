@@ -41,7 +41,7 @@ class DummyPlugin extends Component {
         );
     }
 
-    handleHenlo() {
+    handleSendLRSStatement() {
         LRSConnector.saveProgress('completed');
     }
 
@@ -66,7 +66,7 @@ class DummyPlugin extends Component {
                     value={this.state.ly}
                     onChange={e => this.handleChange(e)}
                 />
-                <button onClick={() => this.handleHenlo()}>Henlo</button>
+                <button onClick={() => this.handleSendLRSStatement()}>Send LRS statement</button>
             </React.Fragment>
         );
     }
