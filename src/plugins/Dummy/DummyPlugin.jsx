@@ -42,7 +42,7 @@ class DummyPlugin extends Component {
     }
 
     handleHenlo() {
-        LRSConnector.saveProgress();
+        LRSConnector.saveProgress('completed');
     }
 
     render() {
