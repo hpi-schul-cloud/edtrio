@@ -1,5 +1,5 @@
 {
-    "name": "MissingPlugin",
+    "name": "missingplugin",
     "version": "0.1.0",
     "main": "MissingPlugin.jsx",
     "author": "Florian Wirtz, Raoul Baron",

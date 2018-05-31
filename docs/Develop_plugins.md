@@ -2,8 +2,6 @@
 description: How to build a plugin for Edtr.io
 ---
 
-`//TODO` Distinguish between CONTENT and LAYOUT plugins
-
 # Getting Started
 Edtr.io plugins are just simple [React Components](https://reactjs.org/docs/components-and-props.html) which are automatically wrapped by the build tools.
 
@@ -16,13 +14,15 @@ The create a plugin you need to follow these 3 steps:
     ```javascript
     //generated parts of package.json...
     //append:
-    "x": {
+    "edtrio": {
         "displayName": "<your_plugin_name>", 
-        "type": "CONTENT" or "GRID"
+        "type": "CONTENT"
     }
     ```
 
 3. Create your `plugin.jsx` file and export a React Component
+
+> Note: Don't want to do that manually? Use our super simple [Yeoman generator](https://www.npmjs.com/package/generator-edtriopg)!
 
 # Simple Content Plugin
 To give you a better understanding we will show you how to build some plugins. A simple and an advanced one.
@@ -80,11 +80,21 @@ export default Image;
 ```
 
 # Advanced Configuration
-`//TODO` interactive, viewer, print
+`//TODO` interactive, viewer
 
-# Existing Plugins Overview
-| Name   | Description                       |
-|--------|-----------------------------------|
-| [Dummy](https://github.com/schul-cloud/edtrio/tree/master/src/plugins/DummyPlugin)  | Empty Plugin for testing purposes |
-| [Layout](https://github.com/schul-cloud/edtrio/tree/master/src/plugins/LayoutPlugin) | Two column layout                 |
-| [Line](https://github.com/schul-cloud/edtrio/tree/master/src/plugins/LinePlugin)   | Thematic brake                    |
+# Further information
+## Validation and forms (Dynamic plugins)
+`UI/ValidatorButton` with a `valid:boolean` and `validate:func` that can be reused
+`plugin/MultipleChoice` that demonstrates how to create dynamic plugins
+
+## Plugin Types
+Used in `package.json` of each plugin.
+
+| Type    | Description                                                                        |
+|---------|------------------------------------------------------------------------------------|
+| `CONTENT` | Simple content that is being displayed.<br /> (`default`) Suitable for most plugins|
+| `INPUT`   | More complex content that requires user input and optionally verifies it.          |
+| `LAYOUT`  | Meta category for plugins that visually transform other plugins, e.g. `TwoColLayout` |
+
+## Print Mode
+If you want to use custom styles for your plugin if it gets printed, simply place a `print.scss` in the plugin root folder.
