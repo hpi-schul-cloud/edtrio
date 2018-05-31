@@ -1,7 +1,7 @@
 {
-    "name": "LayoutPlugin",
+    "name": "twocollayout",
     "version": "0.1.0",
-    "description": "Jan Peter Rennt",
+    "description": "",
     "main": "LayoutPlugin.jsx",
     "license": "MIT",
     "author": "Florian Wirtz, Raoul Baron",

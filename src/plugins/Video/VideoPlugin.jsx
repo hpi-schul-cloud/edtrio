@@ -31,9 +31,11 @@ class VideoPlugin extends Component {
 
         return (
             <div className={styles.video_wrapper}>
-                <div className={styles.iframe_wrapper}>
-                    <iframe src={embedURL} frameBorder="0" allowFullScreen />
-                </div>
+                {embedURL && (
+                    <div className={styles.iframe_wrapper}>
+                        <iframe src={embedURL} frameBorder="0" allowFullScreen />
+                    </div>
+                )}
                 {!isViewMode && (
                     <input
                         className={styles.video_input}
