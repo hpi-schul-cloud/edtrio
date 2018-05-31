@@ -8,7 +8,8 @@ class SocketApi extends Api {
     }
 
     sendData(data) {
-        this.connection.send(JSON.stringify(data));
+        //this.connection.send(JSON.stringify(data));
+        //console.log(data)
     }
 
     getData() {

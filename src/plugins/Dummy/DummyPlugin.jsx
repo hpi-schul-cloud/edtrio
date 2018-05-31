@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import isEqual from "lodash.isequal";
+import { LRSConnector } from "edtrio/utils";
 
 /**
  * Dummy Plugin for testing
@@ -40,6 +41,10 @@ class DummyPlugin extends Component {
         );
     }
 
+    handleHenlo() {
+        LRSConnector.saveProgress();
+    }
+
     render() {
         const { isEditable } = this.props;
 
@@ -61,6 +66,7 @@ class DummyPlugin extends Component {
                     value={this.state.ly}
                     onChange={e => this.handleChange(e)}
                 />
+                <button onClick={() => this.handleHenlo()}>Henlo</button>
             </React.Fragment>
         );
     }
