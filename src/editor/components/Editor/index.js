@@ -40,7 +40,6 @@ class Editor extends Component {
         );
 
         this.id += 1;
-      console.log(this.id);
         this.props.addPlugin(plugin);
     }
 

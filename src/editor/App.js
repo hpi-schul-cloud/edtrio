@@ -55,7 +55,7 @@ class App extends Component {
                     <Editor />
                   </Provider>
                 )
-                : <p>Lädt...</p>
+                : <p>L&auml;dt&hellip;</p>
               }
             </React.StrictMode>
         );
