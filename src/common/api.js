@@ -35,7 +35,7 @@ class HttpApi extends Api {
 
   static encode({doc, plugin}) {
     return {
-      title: doc.title || "test",
+      title: doc.title || "Untitled Document",
       content: Object.values(plugin.lookup)
     }
   }
