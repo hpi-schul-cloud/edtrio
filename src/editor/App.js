@@ -19,25 +19,44 @@ class App extends Component {
         super(props);
 
         this.state = {
-            store: createStore(
-                enableBatching(rootReducer),
-                api.getData(),
-                window.__REDUX_DEVTOOLS_EXTENSION__ &&
-                    window.__REDUX_DEVTOOLS_EXTENSION__()
-            )
-        };
+            store: null
+        }
+    }
 
-        this.state.store.subscribe(() => {
+    componentDidMount() {
+      api.getData().then(data => {
+        this.setState(state => {
+          const store = createStore(
+            enableBatching(rootReducer),
+            data,
+            window.__REDUX_DEVTOOLS_EXTENSION__ &&
+            window.__REDUX_DEVTOOLS_EXTENSION__()
+          )
+
+          store.subscribe(() => {
             api.sendData(this.state.store.getState());
-        });
+          });
+
+          return {
+            store
+          }
+        })
+      })
     }
 
     render() {
+        const { store } = this.state;
+
         return (
             <React.StrictMode>
-                <Provider store={this.state.store}>
+              { store
+                ? (
+                  <Provider store={this.state.store}>
                     <Editor />
-                </Provider>
+                  </Provider>
+                )
+                : <p>L&auml;dt&hellip;</p>
+              }
             </React.StrictMode>
         );
     }

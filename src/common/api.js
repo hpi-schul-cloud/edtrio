@@ -1,27 +1,57 @@
+import axios from 'axios';
 import Api from './../models/Api';
 
-class SocketApi extends Api {
-    constructor(conn) {
-        super();
+class HttpApi extends Api {
+  constructor() {
+    super()
 
-        this.connection = conn;
-    }
+    const dataAttr = document.getElementById("root").dataset;
 
-    sendData(data) {
-        this.connection.send(JSON.stringify(data));
-    }
+    this.api = axios.create({
+      baseURL: dataAttr.api,
+      withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    this.worksheetId = (dataAttr.worksheetId === '' ? null : dataAttr.worksheetId);
+  }
 
-    getData() {
-        return {};
+  sendData(state) {
+      if (this.worksheetId) {
+        return this.api.patch(`/${this.worksheetId}`, HttpApi.encode(state))
+      }
+  }
+
+  getData() {
+      return (
+        this.worksheetId
+          ? this.api.get(`/${this.worksheetId}`).then(result => {
+            return HttpApi.decode(result.data)
+          })
+          : Promise.resolve({})
+      );
+  }
+
+  static encode({doc, plugin}) {
+    return {
+      title: doc.title || "Untitled Document",
+      content: Object.values(plugin.lookup)
     }
+  }
+
+  static decode({title, content}) {
+    console.log(content);
+    return {
+      doc: {
+        title
+      },
+      plugin: {
+        active: null,
+        lookup: content.reduce((acc, plugin) => ({...acc, [plugin.id]: plugin}), {})
+      }
+    }
+  }
 }
 
-const ws = new WebSocket('ws://localhost:3030');
-
-ws.onopen = () => {
-    console.log('Connection started..');
-}
-
-const api = new SocketApi(ws);
-
-export default api;
+export default (new HttpApi());

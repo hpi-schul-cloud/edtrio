@@ -17,7 +17,11 @@ class Editor extends Component {
     constructor(props) {
         super(props);
 
-        this.id = 1;
+        const plugins = Object.values(props.plugin);
+        this.id = plugins.length
+          ? Math.max(...plugins.map(pl => pl.id)) + 1
+          : 1;
+
         this._unselectPlugin = this._unselectPlugin.bind(this);
     }
 
@@ -36,7 +40,6 @@ class Editor extends Component {
         );
 
         this.id += 1;
-
         this.props.addPlugin(plugin);
     }
 
