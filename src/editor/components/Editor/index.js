@@ -3,8 +3,10 @@ import { connect } from "react-redux";
 import { batchActions } from "redux-batched-actions";
 import isEqual from "lodash.isequal";
 import PropTypes from "prop-types";
+import ReactPaginate from "react-paginate";
 
 import { addPlugin, selectPlugin } from "./../../actions/plugin";
+import { set_page } from "./../../actions/document";
 
 import Plugin from "./../../../models/Plugin";
 
@@ -19,8 +21,8 @@ class Editor extends Component {
 
         const plugins = Object.values(props.plugin);
         this.id = plugins.length
-          ? Math.max(...plugins.map(pl => pl.id)) + 1
-          : 1;
+            ? Math.max(...plugins.map(pl => pl.id)) + 1
+            : 1;
 
         this._unselectPlugin = this._unselectPlugin.bind(this);
     }
@@ -34,7 +36,8 @@ class Editor extends Component {
             {
                 name,
                 type,
-                id: this.id
+                id: this.id,
+                page: this.props.document.page.active
             },
             options
         );
@@ -55,17 +58,32 @@ class Editor extends Component {
         this.listener.removeEventListener("mousedown", this._unselectPlugin);
     }
 
-    shouldComponentUpdate({ plugin }) {
-        return !isEqual(this.props.plugin, plugin);
+    shouldComponentUpdate({ plugin, document }) {
+        return (
+            !isEqual(this.props.plugin, plugin) ||
+            !isEqual(this.props.document, document)
+        );
     }
 
     render() {
-        const lookup = Object.values(this.props.plugin).sort(
-            (a, b) => a.slot > b.slot
-        );
+        const { page } = this.props.document;
+
+        const lookup = Object.values(this.props.plugin)
+            .sort((a, b) => a.slot > b.slot)
+            .filter(p => p.page === this.props.document.page.active);
 
         return (
             <React.Fragment>
+                <ReactPaginate
+                    previousLabel="Zurück"
+                    nextLabel="Weiter"
+                    pageRangeDisplayed={3}
+                    pageCount={page.count + 1}
+                    onPageChange={this.props.changePage}
+                    containerClassName={styles.pagination}
+                    activeClassName={styles.paginate_active}
+                />
+
                 <div
                     className={styles.event_background}
                     ref={listener => (this.listener = listener)}
@@ -93,12 +111,17 @@ class Editor extends Component {
 
     static propTypes = {
         plugin: PropTypes.object.isRequired,
+        document: PropTypes.object.isRequired,
         addPlugin: PropTypes.func.isRequired,
+        changePage: PropTypes.func.isRequired,
         unselectPlugin: PropTypes.func.isRequired
     };
 }
 
-const mapStateToProps = ({ plugin }) => ({ plugin: plugin.lookup });
+const mapStateToProps = ({ plugin, document }) => ({
+    plugin: plugin.lookup,
+    document
+});
 
 const mapDispatchToProps = dispatch => ({
     addPlugin: plugin => {
@@ -106,6 +129,9 @@ const mapDispatchToProps = dispatch => ({
     },
     unselectPlugin: () => {
         dispatch(selectPlugin());
+    },
+    changePage: data => {
+        dispatch(set_page(data.selected));
     }
 });
 

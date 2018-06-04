@@ -5,7 +5,8 @@ class Plugin {
         {
             id = mandatory("id"),
             name = mandatory("name"),
-            type = mandatory("type")
+            type = mandatory("type"),
+            page = mandatory("page")
         },
         //options
         { size, allowChildRearrangement } = {
@@ -20,6 +21,7 @@ class Plugin {
         this.parent = null;
         this.type = type;
         this.slot = id; //incrementing slot
+        this.page = page;
 
         this.visible = true;
 
