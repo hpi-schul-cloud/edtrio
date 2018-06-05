@@ -28,9 +28,38 @@ class AddPlugin extends PureComponent {
     }
 
     render() {
-        const content = [];
-        const layout = [];
-        const input = [];
+      const content = [];
+      const layout = [];
+      const input = [];
+
+      const pushPlugin = info => {
+        const temp = (
+          <div key={info.name} className={styles.item}>
+            <MenuItem
+              key={info.name}
+              onClick={e => {
+                this.handleClose();
+                this.props.addPlugin(info);
+              }}
+            >
+              <PluginPreview
+                name={info.name}
+                displayName={info.displayName}
+                image={info.preview_image}
+                description={info.description}
+              />
+            </MenuItem>
+          </div>
+        );
+
+        if (info.type === "CONTENT") {
+          content.push(temp);
+        } else if (info.type === "INPUT") {
+          input.push(temp);
+        } else {
+          layout.push(temp);
+        }
+      }
 
         return (
             <React.Fragment>
@@ -40,30 +69,14 @@ class AddPlugin extends PureComponent {
                 >
                     <React.Fragment>
                         {PluginResolver.allPlugins.map(info => {
-                            const temp = (
-                                <div key={info.name} className={styles.item}>
-                                    <MenuItem
-                                        key={info.name}
-                                        onClick={e => {
-                                            this.handleClose();
-                                            this.props.addPlugin(info);
-                                        }}
-                                    >
-                                        <PluginPreview
-                                            name={info.name}
-                                            image={info.preview_image}
-                                            description={info.description}
-                                        />
-                                    </MenuItem>
-                                </div>
-                            );
-
-                            if (info.type === "CONTENT") {
-                                content.push(temp);
-                            } else if (info.type === "INPUT") {
-                                input.push(temp);
+                            if(info.multi) {
+                              info.multi.map(plugin => {
+                                plugin.preview_image = info.preview_image;
+                                plugin.name = info.name;
+                                pushPlugin(plugin)
+                              });
                             } else {
-                                layout.push(temp);
+                              pushPlugin(info);
                             }
                         })}
 
