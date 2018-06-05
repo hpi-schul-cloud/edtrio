@@ -23,8 +23,6 @@ class Editor extends Component {
         this.id = plugins.length
             ? Math.max(...plugins.map(pl => pl.id)) + 1
             : 1;
-
-        this._unselectPlugin = this._unselectPlugin.bind(this);
     }
 
     /**
@@ -44,18 +42,6 @@ class Editor extends Component {
 
         this.id += 1;
         this.props.addPlugin(plugin);
-    }
-
-    _unselectPlugin() {
-        this.props.unselectPlugin();
-    }
-
-    componentDidMount() {
-        this.listener.addEventListener("mousedown", this._unselectPlugin);
-    }
-
-    componentWillUnmount() {
-        this.listener.removeEventListener("mousedown", this._unselectPlugin);
     }
 
     shouldComponentUpdate({ plugin, document }) {
@@ -84,11 +70,6 @@ class Editor extends Component {
                     activeClassName={styles.paginate_active}
                 />
 
-                <div
-                    className={styles.event_background}
-                    ref={listener => (this.listener = listener)}
-                />
-
                 <div className={styles.editor}>
                     {lookup.map(plugin => {
                         return (
@@ -113,8 +94,7 @@ class Editor extends Component {
         plugin: PropTypes.object.isRequired,
         document: PropTypes.object.isRequired,
         addPlugin: PropTypes.func.isRequired,
-        changePage: PropTypes.func.isRequired,
-        unselectPlugin: PropTypes.func.isRequired
+        changePage: PropTypes.func.isRequired
     };
 }
 
@@ -126,9 +106,6 @@ const mapStateToProps = ({ plugin, document }) => ({
 const mapDispatchToProps = dispatch => ({
     addPlugin: plugin => {
         dispatch(batchActions([addPlugin(plugin), selectPlugin(plugin.id)]));
-    },
-    unselectPlugin: () => {
-        dispatch(selectPlugin());
     },
     changePage: data => {
         dispatch(set_page(data.selected));

@@ -76,7 +76,12 @@ export default function makePlugin(WrappedComponent, info) {
                 highlight: null
             };
 
+            this.handle = React.createRef();
+            this.wrapper = React.createRef();
+            this.plugin = React.createRef();
+
             this.hoverListener = null;
+            this.handleClickOutside = this.handleClickOutside.bind(this);
         }
 
         _handleClick(e) {
@@ -103,9 +108,20 @@ export default function makePlugin(WrappedComponent, info) {
             }
         }
 
+        handleClickOutside(e) {
+            if (!this.wrapper.current.contains(e.target)) {
+                this.props.unselectPlugin();
+            }
+        }
+
         componentWillUnmount() {
+            document.body.removeEventListener("click", this.handleClickOutside);
+
             if (this.props.options.allowChildRearrangement) {
-                this.plugin.removeEventListener("dragover", this.hoverListener);
+                this.plugin.current.removeEventListener(
+                    "dragover",
+                    this.hoverListener
+                );
             }
         }
 
@@ -117,7 +133,7 @@ export default function makePlugin(WrappedComponent, info) {
                 this.getHoverPosition = throttle(
                     this._getHoverPosition.bind(
                         this,
-                        this.plugin.getBoundingClientRect()
+                        this.plugin.current.getBoundingClientRect()
                     ),
                     100
                 );
@@ -125,48 +141,41 @@ export default function makePlugin(WrappedComponent, info) {
         }
 
         componentDidMount() {
-            //preact fix
-            //register listeners after mount
             const {
                 connectDropTarget,
                 connectDragPreview,
                 connectDragSource
             } = this.props;
 
-            flow(connectDropTarget, connectDragPreview)(this.plugin);
+            flow(connectDropTarget, connectDragPreview)(this.plugin.current);
 
-            connectDragSource(this.handle);
+            connectDragSource(this.handle.current);
+
+            this.wrapper.current.addEventListener("click", e =>
+                e.stopPropagation()
+            );
+
+            document.body.addEventListener("click", this.handleClickOutside);
 
             if (this.props.options.allowChildRearrangement) {
                 this.getHoverPosition = throttle(
                     this._getHoverPosition.bind(
                         this,
-                        this.plugin.getBoundingClientRect()
+                        this.plugin.current.getBoundingClientRect()
                     ),
                     100
                 );
 
                 this.hoverListener = e => this.getHoverPosition(e);
 
-                this.plugin.addEventListener("dragover", this.hoverListener);
-            }
-        }
-
-        getDerivedStateFromProps({ isOver, canDrop, options }) {
-            if (options.allowChildRearrangement) {
-                return {
-                    highlight:
-                        isOver && canDrop
-                            ? HIGHLIGHT_STYLES[this.state.highlight]
-                            : null
-                };
+                this.plugin.current.addEventListener(
+                    "dragover",
+                    this.hoverListener
+                );
             }
         }
 
         shouldComponentUpdate(nextProps, nextState) {
-            //if(nextProps.plugin.slot !== this.props.plugin.slot)
-            //console.log(`Plugin: ${nextProps.id} changed slot from ${this.props.plugin.slot} to ${nextProps.plugin.slot}`);
-
             return !(
                 isEqual(this.props.plugin, nextProps.plugin) &&
                 isEqual(this.state.highlight, nextState.highlight) &&
@@ -189,13 +198,13 @@ export default function makePlugin(WrappedComponent, info) {
 
             return (
                 <div
-                    ref={node => (this.wrapper = node)}
+                    ref={this.wrapper}
                     onMouseDown={e => this._handleClick(e)}
                     className={plugin.visible ? "" : styles.visible_off}
                 >
                     {
                         <div
-                            ref={node => (this.plugin = node)}
+                            ref={this.plugin}
                             className={`${
                                 isOver && canDrop
                                     ? HIGHLIGHT_STYLES[this.state.highlight]
@@ -209,7 +218,7 @@ export default function makePlugin(WrappedComponent, info) {
                             >
                                 <div
                                     className={styles.handle}
-                                    ref={handle => (this.handle = handle)}
+                                    ref={this.handle}
                                 >
                                     <span className="material-icons">
                                         drag_handle
@@ -273,6 +282,7 @@ export default function makePlugin(WrappedComponent, info) {
             removePlugin: PropTypes.func.isRequired,
             saveContent: PropTypes.func.isRequired,
             toggleVisible: PropTypes.func.isRequired,
+            unselectPlugin: PropTypes.func.isRequired,
 
             dev: PropTypes.bool.isRequired,
             editable: PropTypes.bool.isRequired,
@@ -318,6 +328,9 @@ export default function makePlugin(WrappedComponent, info) {
         },
         toggleVisible: () => {
             dispatch(toggleVisible(id));
+        },
+        unselectPlugin: () => {
+            dispatch(selectPlugin());
         }
     });
 
