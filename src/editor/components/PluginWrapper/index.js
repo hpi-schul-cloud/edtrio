@@ -182,7 +182,8 @@ export default function makePlugin(WrappedComponent, info) {
                 editable,
                 saveContent,
                 isOver,
-                canDrop
+                canDrop,
+                initialState
             } = this.props;
 
             const { highlight } = this.state;
@@ -220,6 +221,7 @@ export default function makePlugin(WrappedComponent, info) {
                                         id={id}
                                         isEditable={editable}
                                         isViewMode={false}
+                                        initialState={initialState}
                                         content={plugin.content}
                                         saveContent={content =>
                                             saveContent(content)
@@ -285,7 +287,8 @@ export default function makePlugin(WrappedComponent, info) {
             id: PropTypes.number.isRequired,
             options: PropTypes.shape({
                 allowChildRearrangement: PropTypes.bool
-            })
+            }),
+            initialState: PropTypes.object
         };
 
         static defaultProps = {

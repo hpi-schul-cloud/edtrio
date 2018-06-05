@@ -8,9 +8,10 @@ class Plugin {
             type = mandatory("type")
         },
         //options
-        { size, allowChildRearrangement } = {
+        { size, allowChildRearrangement, initialState } = {
             size: 0,
-            allowChildRearrangement: true
+            allowChildRearrangement: true,
+            initialState: {}
         }
     ) {
         this.id = id;
@@ -24,7 +25,8 @@ class Plugin {
         this.visible = true;
 
         this.options = {
-            allowChildRearrangement
+            allowChildRearrangement,
+            initialState
         };
     }
 

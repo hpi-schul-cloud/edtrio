@@ -6,12 +6,12 @@ import styles from './styles.scss';
 
 class PluginPreview extends Component {
     render() {
-        const { name, description, image } = this.props;
+        const { name, displayName, description, image } = this.props;
 
         return (
             <figure className={styles.imageWrapper}>
                 <img src={image} className={styles.previewImage}/>
-                <figcaption className={styles.title}>{name}</figcaption>
+                <figcaption className={styles.title}>{displayName || name}</figcaption>
             </figure>
         )
     }
@@ -19,6 +19,7 @@ class PluginPreview extends Component {
 
 PluginPreview.propTypes = {
     name: PropTypes.string,
+    displayName: PropTypes.string,
     description: PropTypes.string,
     image: PropTypes.any.isRequired,
 }

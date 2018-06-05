@@ -79,14 +79,14 @@ class Editor extends Component {
                                     plugin={plugin.name}
                                     key={plugin.id}
                                 >
-                                    {Module => <Module id={plugin.id} />}
+                                    {Module => <Module id={plugin.id} {...plugin.options} />}
                                 </PluginResolver>
                             )
                         );
                     })}
                 </div>
 
-                <AddPlugin addPlugin={name => this._addPlugin(name)} />
+                <AddPlugin addPlugin={configuration => this._addPlugin(configuration)} />
             </React.Fragment>
         );
     }
