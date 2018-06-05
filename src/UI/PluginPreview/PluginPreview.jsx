@@ -18,7 +18,7 @@ class PluginPreview extends Component {
 }
 
 PluginPreview.propTypes = {
-    name: PropTypes.string,
+    name: PropTypes.string.isRequired,
     displayName: PropTypes.string,
     description: PropTypes.string,
     image: PropTypes.any.isRequired,
