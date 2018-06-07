@@ -23,6 +23,10 @@ class Editor extends Component {
         this.id = plugins.length
             ? Math.max(...plugins.map(pl => pl.id)) + 1
             : 1;
+
+        this.handleClickOutside = this.handleClickOutside.bind(this);
+
+        this.editor = React.createRef();
     }
 
     /**
@@ -44,6 +48,12 @@ class Editor extends Component {
         this.props.addPlugin(plugin);
     }
 
+    handleClickOutside(e) {
+        if (!this.editor.current.contains(e.target)) {
+            this.props.unselectPlugin();
+        }
+    }
+
     shouldComponentUpdate({ plugin, document }) {
         return (
             !isEqual(this.props.plugin, plugin) ||
@@ -51,15 +61,19 @@ class Editor extends Component {
         );
     }
 
+    componentDidMount() {
+        document.body.addEventListener("click", this.handleClickOutside);
+    }
+
+    componentWillUnmount() {
+        document.body.removeEventListener("click", this.handleClickOutside);
+    }
+
     render() {
         const { page } = this.props.document;
 
-        const lookup = Object.values(this.props.plugin)
-            .sort((a, b) => a.slot > b.slot)
-            .filter(p => p.page === this.props.document.page.active);
-
         return (
-            <React.Fragment>
+            <div ref={this.editor}>
                 <ReactPaginate
                     previousLabel="Zurück"
                     nextLabel="Weiter"
@@ -71,35 +85,44 @@ class Editor extends Component {
                 />
 
                 <div className={styles.editor}>
-                    {lookup.map(plugin => {
-                        return (
-                            !plugin.parent && (
-                                <PluginResolver
-                                    plugin={plugin.name}
-                                    key={plugin.id}
-                                >
-                                    {Module => <Module id={plugin.id} {...plugin.options} />}
-                                </PluginResolver>
-                            )
-                        );
-                    })}
+                    {this.props.plugin.map(plugin => (
+                        <div
+                            key={plugin.id}
+                            style={{
+                                order: plugin.slot
+                            }}
+                        >
+                            <PluginResolver plugin={plugin.name}>
+                                {Module => (
+                                    <Module
+                                        id={plugin.id}
+                                        {...plugin.options}
+                                    />
+                                )}
+                            </PluginResolver>
+                        </div>
+                    ))}
                 </div>
-
-                <AddPlugin addPlugin={configuration => this._addPlugin(configuration)} />
-            </React.Fragment>
+                <AddPlugin
+                    addPlugin={configuration => this._addPlugin(configuration)}
+                />
+            </div>
         );
     }
 
     static propTypes = {
-        plugin: PropTypes.object.isRequired,
+        plugin: PropTypes.array.isRequired,
         document: PropTypes.object.isRequired,
         addPlugin: PropTypes.func.isRequired,
-        changePage: PropTypes.func.isRequired
+        changePage: PropTypes.func.isRequired,
+        unselectPlugin: PropTypes.func.isRequired
     };
 }
 
 const mapStateToProps = ({ plugin, document }) => ({
-    plugin: plugin.lookup,
+    plugin: Object.values(plugin.lookup)
+        .filter(p => p.page === document.page.active)
+        .filter(p => !p.parent),
     document
 });
 
@@ -109,7 +132,13 @@ const mapDispatchToProps = dispatch => ({
     },
     changePage: data => {
         dispatch(set_page(data.selected));
+    },
+    unselectPlugin: () => {
+        dispatch(selectPlugin());
     }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Editor);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Editor);

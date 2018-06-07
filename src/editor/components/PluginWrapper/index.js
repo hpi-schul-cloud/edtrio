@@ -81,7 +81,6 @@ export default function makePlugin(WrappedComponent, info) {
             this.plugin = React.createRef();
 
             this.hoverListener = null;
-            this.handleClickOutside = this.handleClickOutside.bind(this);
         }
 
         _handleClick(e) {
@@ -108,15 +107,7 @@ export default function makePlugin(WrappedComponent, info) {
             }
         }
 
-        handleClickOutside(e) {
-            if (!this.wrapper.current.contains(e.target)) {
-                this.props.unselectPlugin();
-            }
-        }
-
         componentWillUnmount() {
-            document.body.removeEventListener("click", this.handleClickOutside);
-
             if (this.props.options.allowChildRearrangement) {
                 this.plugin.current.removeEventListener(
                     "dragover",
@@ -135,7 +126,7 @@ export default function makePlugin(WrappedComponent, info) {
                         this,
                         this.plugin.current.getBoundingClientRect()
                     ),
-                    100
+                    40
                 );
             }
         }
@@ -147,15 +138,12 @@ export default function makePlugin(WrappedComponent, info) {
                 connectDragSource
             } = this.props;
 
-            flow(connectDropTarget, connectDragPreview)(this.plugin.current);
+            flow(
+                connectDropTarget,
+                connectDragPreview
+            )(this.plugin.current);
 
             connectDragSource(this.handle.current);
-
-            this.wrapper.current.addEventListener("click", e =>
-                e.stopPropagation()
-            );
-
-            document.body.addEventListener("click", this.handleClickOutside);
 
             if (this.props.options.allowChildRearrangement) {
                 this.getHoverPosition = throttle(
@@ -163,7 +151,7 @@ export default function makePlugin(WrappedComponent, info) {
                         this,
                         this.plugin.current.getBoundingClientRect()
                     ),
-                    100
+                    40
                 );
 
                 this.hoverListener = e => this.getHoverPosition(e);
@@ -194,8 +182,6 @@ export default function makePlugin(WrappedComponent, info) {
                 canDrop,
                 initialState
             } = this.props;
-
-            const { highlight } = this.state;
 
             return (
                 <div
@@ -284,7 +270,6 @@ export default function makePlugin(WrappedComponent, info) {
             removePlugin: PropTypes.func.isRequired,
             saveContent: PropTypes.func.isRequired,
             toggleVisible: PropTypes.func.isRequired,
-            unselectPlugin: PropTypes.func.isRequired,
 
             dev: PropTypes.bool.isRequired,
             editable: PropTypes.bool.isRequired,
@@ -331,15 +316,15 @@ export default function makePlugin(WrappedComponent, info) {
         },
         toggleVisible: () => {
             dispatch(toggleVisible(id));
-        },
-        unselectPlugin: () => {
-            dispatch(selectPlugin());
         }
     });
 
     return flow(
         DragSource(Plugin.TYPES[info.type], cardSource, collectDrag),
         DropTarget(accepted_types, cardTarget, collectDrop),
-        connect(mapStateToProps, mapDispatchToProps)
+        connect(
+            mapStateToProps,
+            mapDispatchToProps
+        )
     )(Module);
 }
