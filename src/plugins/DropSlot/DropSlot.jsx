@@ -24,14 +24,20 @@ const cardTarget = {
 };
 
 class Slot extends Component {
+    constructor(props) {
+        super(props);
+
+        this.slot = React.createRef();
+    }
+
     componentDidMount() {
         const { connectDropTarget } = this.props;
 
-        connectDropTarget(this.slot);
+        connectDropTarget(this.slot.current);
     }
 
     render() {
-        return <div className={styles.slot} ref={slot => (this.slot = slot)} />;
+        return <div className={styles.slot} ref={this.slot} />;
     }
 
     static propTypes = {
@@ -47,6 +53,7 @@ const mapDispatchToProps = (dispatch, { id }) => ({
     }
 });
 
-export default connect(() => ({}), mapDispatchToProps)(
-    DropTarget(accepted_types, cardTarget, collect_drop)(Slot)
-);
+export default connect(
+    () => ({}),
+    mapDispatchToProps
+)(DropTarget(accepted_types, cardTarget, collect_drop)(Slot));
