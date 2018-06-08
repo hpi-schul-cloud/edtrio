@@ -4,13 +4,38 @@
 
     padding: 2rem;
     margin: 0 auto;
+
+    display: flex;
+    flex-direction: column;
 }
 
-.event_background {
+.pagination {
     position: fixed;
-    top: 0;
+
+    max-width: 400px;
+    margin: 0 auto;
+
+    padding: 16px;
+
+    bottom: 32px;
     left: 0;
     right: 0;
-    bottom: 0;
-    z-index: 0;
+
+    z-index: 1;
+
+    display: flex;
+    justify-content: space-between;
+
+    background-color: #ddd;
+
+    & > li {
+        list-style-type: none;
+
+        cursor: pointer;
+    }
+}
+
+.paginate_active {
+    font-weight: 900;
+    text-decoration: underline;
 }

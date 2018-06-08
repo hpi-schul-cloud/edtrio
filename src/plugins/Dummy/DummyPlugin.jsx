@@ -44,7 +44,7 @@ class DummyPlugin extends Component {
         const { isEditable } = this.props;
 
         return (
-            <React.Fragment>
+            <>
                 <div>unstyled</div>
                 <h2>Static dummy text plugin</h2>
                 <div>{`Editable: ${isEditable}`}</div>
@@ -61,7 +61,7 @@ class DummyPlugin extends Component {
                     value={this.state.ly}
                     onChange={e => this.handleChange(e)}
                 />
-            </React.Fragment>
+            </>
         );
     }
 
