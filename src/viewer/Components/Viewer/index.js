@@ -7,7 +7,7 @@ import { Paper } from "edtrio/UI";
 
 import styles from "./styles.scss";
 
-const plugin_content = {
+const exampleData = {
     plugin: {
         active: "",
         lookup: {
@@ -105,72 +105,34 @@ const plugin_content = {
     }
 };
 
-/*
-const plugin_content = {
-    plugin: {
-        active: "",
-        lookup: {
-            "1": {
-                id: 1,
-                name: "Multiple Choice",
-                content: {
-                    active: 4,
-                    question:
-                        "Spieglein, Spieglein an der Wand, Wer sind die Schönsten im ganzen Land?",
-                    choices: {
-                        "1": {
-                            label: "Raoul"
-                        },
-                        "2": {
-                            label: "Jan"
-                        },
-                        "3": {
-                            label: "Das Schaf"
-                        },
-                        "4": {
-                            label: "Raoul hat keine Beine"
-                        }
-                    },
-                    solution: [4, 3]
-                },
-                childs: [],
-                parent: null,
-                type: "INPUT",
-                slot: 1,
-                options: {
-                    allowChildRearrangement: true
-                }
-            }
-        }
-    },
-    mode: "easy",
-    env: "development",
-    doc: {
-        title: ""
-    }
-};
-
-*/
-
-const view_tree = [];
-Object.keys(plugin_content.plugin.lookup).forEach((el, i) => {
-    const cur = plugin_content.plugin.lookup[el];
-
-    cur.childs = cur.childs.map(
-        child => plugin_content.plugin.lookup[child] || {}
-    );
-
-    if (cur.parent === null) {
-        view_tree.push(cur);
-    }
-});
-
 class PluginWrapper extends Component {
+    constructor (props) {
+        super(props);
+        console.log(this.props.data)
+        this.state = {
+            viewTree: [],
+            data: (this.props.data.plugin ? this.props.data.plugin: exampleData)
+        }
+
+        const { data } = this.state;
+        Object.keys(data.plugin.lookup).forEach((el, i) => {
+            const plugin = data.plugin.lookup[el];
+
+            plugin.childs = plugin.childs.map(
+              child => data.plugin.lookup[child] || {}
+            );
+
+            if (plugin.parent === null) {
+              this.state.viewTree.push(plugin);
+            }
+        });
+    }
+
     render() {
         return (
             <div className={styles.viewer}>
                 <Paper className={styles.paperPadding}>
-                    {view_tree.map(({ name, id, content, childs }) => (
+                    {this.state.viewTree.map(({ name, id, content, childs }) => (
                         <PluginResolver plugin={name} key={id}>
                             {Module => (
                                 <div className={styles.inner}>
@@ -187,6 +149,10 @@ class PluginWrapper extends Component {
             </div>
         );
     }
+
+    static propTypes = {
+        data: PropTypes.object.isRequired
+    };
 }
 
 export default PluginWrapper;
