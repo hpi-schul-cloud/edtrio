@@ -21,11 +21,14 @@ export default class Geogebra extends Component {
     }
 
     renderApplet(id) {
-        this.setState(() => {
-            return {
-                id
-            };
-        });
+        this.setState(
+            () => {
+                return {
+                    id
+                };
+            },
+            () => this.props.saveContent(this.state)
+        );
     }
 
     renderHTML() {
@@ -51,6 +54,12 @@ export default class Geogebra extends Component {
         `;
     }
 
+    componentDidMount() {
+        this.setState({
+            ...this.props.content
+        });
+    }
+
     render() {
         return (
             <div ref={this.applet}>
@@ -58,7 +67,7 @@ export default class Geogebra extends Component {
                     className={styles.id_input}
                     onInput={e => this.renderApplet(e.target.value)}
                     type="text"
-                    placeholder="GeoGebra Id"
+                    placeholder={this.state.id || "GeoGebra Id"}
                 />
 
                 {this.state.id && (
