@@ -30,6 +30,17 @@
                         }
                     }
                 }
+            },
+            {
+                "displayName": "Example App",
+                "type": "CONTENT",
+                "options": {
+                    "initialState": {
+                        "tool": {
+                            "url": "http://localhost:3000"
+                        }
+                    }
+                }
             }
         ]
     }
