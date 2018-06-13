@@ -1,7 +1,7 @@
 import { SET_PAGE, SET_TITLE } from "./../actions/document";
 
 const default_document = {
-    title: "Dokument name",
+    title: "Titel",
     page: {
         count: 1,
         active: 0
