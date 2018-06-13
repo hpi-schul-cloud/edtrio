@@ -5,14 +5,12 @@ import styles from "./styles.scss";
 
 const AppBar = ({ title }) => (
     <header className={styles.app_bar}>
-        <div className={styles.app_bar_content}>
-            <h2>{title}</h2>
-        </div>
+        <div className={styles.app_bar_content}>{title}</div>
     </header>
 );
 
 AppBar.propTypes = {
-    title: PropTypes.string.isRequired
+    title: PropTypes.any.isRequired
 };
 
 export default AppBar;
