@@ -33,18 +33,19 @@ class HttpApi extends Api {
       );
   }
 
-  static encode({doc, plugin}) {
+  static encode({document, plugin}) {
     return {
-      title: doc.title || "Untitled Document",
-      content: Object.values(plugin.lookup)
+      title: document.title || "Untitled Document",
+      content: Object.values(plugin.lookup),
+      page: document.page
     }
   }
 
-  static decode({title, content}) {
-    console.log(content);
+  static decode({title, content, page}) {
     return {
-      doc: {
-        title
+      document: {
+        title,
+        page
       },
       plugin: {
         active: null,
