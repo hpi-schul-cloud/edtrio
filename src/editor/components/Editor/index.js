@@ -12,6 +12,7 @@ import Plugin from "./../../../models/Plugin";
 
 import AddPlugin from "./../AddPlugin";
 import PluginResolver from "edtrio/common/Components/PluginResolver/Editor";
+import TopBar from "./../TopBar";
 
 import styles from "./styles.scss";
 
@@ -74,6 +75,8 @@ class Editor extends Component {
 
         return (
             <div ref={this.editor}>
+                <TopBar />
+
                 <ReactPaginate
                     previousLabel="Zurück"
                     nextLabel="Weiter"
