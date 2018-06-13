@@ -4,27 +4,39 @@ import allowedVerbs from "./allowedVerbs"; // Copied from https://github.com/adl
 
 
 class LRSConnector {
-    static hello() {
-        this.saveProgress();
+    static saveProgressCompleted(props) {
+        this.saveProgress({verb: 'completed', ...props})
     }
 
-    static saveProgress(verb) {
+    static saveProgressFailed(props) {
+        this.saveProgress({verb: 'failed', ...props})
+    }
+
+    static saveProgress({
+            actorId,
+            objectId,
+            objectName,
+            courseId,
+            parentId,
+            verb
+        }) {
         if(this._validateVerb(verb)) {
-            this._makeRequest(verb);
+            this._makeRequest({verb, actorId, objectId, objectName, courseId, parentId});
         }
     }
 
-    static _makeRequest(verb) {
+    static _makeRequest({actorId, objectId, objectName, courseId, verb, parentId}) {
         axios.post('https://bp.schul-cloud.org:3031/lrs', {
-            actorId: "45236905-a4bc-46f9-b11b-3b354fdebea9",
-            objectId: "https://bp.schul-cloud.org/courses/5a79c9fa3c50db0010e0fcd4/topics/5b0d6fd1ad6a0800100c6c19/",
-            objectName: "Winkel",
-            courseId: "https://bp.schul-cloud.org/courses/5a79c9fa3c50db0010e0fcd4",
-            lessonId: "https://bp.schul-cloud.org/courses/5a79c9fa3c50db0010e0fcd4/topics/5b0d6fd1ad6a0800100c6c19/",
-            verb
+            actorId,
+            objectId,
+            objectName,
+            courseId,
+            verb,
+            parentId
         }, {
             headers: {
-                'Authorization': 'XXX TOKEN HERE XXX'
+                'Authorization': 'XXX TOKEN HERE XXX',
+                'Content-Type': 'application/json'
             },
         }).then((response) => {
             console.log('Statement stored in LRS.');

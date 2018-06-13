@@ -42,7 +42,12 @@ class DummyPlugin extends Component {
     }
 
     handleSendLRSStatement() {
-        LRSConnector.saveProgress('completed');
+        LRSConnector.saveProgressFailed({
+            actorId: "d7781057-e3ce-4aa8-8581-72336aa5b73f",
+            objectId: "https://bp.schul-cloud.org/courses/59a3c657a2049554a93fec3a/topics/59a6c215a2049554a93fed79/",
+            objectName: "Das Juliane",
+            courseId: "https://bp.schul-cloud.org/courses/5a79c9fa3c50db0010e0fcd4",
+        });
     }
 
     render() {
