@@ -111,7 +111,7 @@ class PluginWrapper extends Component {
         console.log(this.props.data)
         this.state = {
             viewTree: [],
-            data: (this.props.data.plugin ? this.props.data.plugin: exampleData)
+            data: (this.props.data.plugin ? this.props.data : exampleData)
         }
 
         const { data } = this.state;
