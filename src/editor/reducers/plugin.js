@@ -21,74 +21,62 @@ const movePlugin = (plugin, dest, slot) => {
     //get parent from the drop target el and put above or below
     const { parent } = plugin.lookup[dest];
 
+    //sorted list of plugins above current
     const sorted = Object.values(plugin.lookup)
         .filter(pl => pl.parent === parent)
         .sort((a, b) => a.slot - b.slot);
 
-    let dest_index = sorted.findIndex(p => p.id === dest);
-    const src_index = sorted.findIndex(
-        p => p.id === plugin.lookup[plugin.active].id
-    );
+    const dest_index = sorted.findIndex(p => p.id === dest);
 
-    //top
-    if (!slot) {
-        //console.log("top");
-        //unten nach oben
-        if (src_index > dest_index) {
-            //ok
-            //console.log("unten nach oben")
-        } else {
-            //ok
-            dest_index -= 1;
-            //console.log("oben nach unten")
-        }
-    } else {
-        //bottom
-        //unten nach oben
-        //console.log("bottom");
-        if (src_index > dest_index) {
-            //console.log("unten nach oben")
-            dest_index += 1;
-        } else {
-            //ok
-            //console.log("oben nach unten")
-        }
+    //remove from childs
+    const drag_parent = plugin.lookup[plugin.active].parent;
+    if (drag_parent) {
+        plugin.lookup[drag_parent].childs = plugin.lookup[
+            drag_parent
+        ].childs.map(childs => {
+            return childs === plugin.active ? null : childs;
+        });
     }
 
-    arrayMove(sorted, src_index, dest_index);
+    if (parent !== drag_parent) {
+        sorted.forEach((item, i) => {
+            if (i < dest_index) item.slot -= 1;
+        });
 
-    if (src_index > dest_index) {
-        for (let i = dest_index; i <= src_index - 1; i += 1) {
-            //swap slots
-            [sorted[i].slot, sorted[i + 1].slot] = [
-                sorted[i + 1].slot,
-                sorted[i].slot
-            ];
-        }
+        //set new values
+        plugin.lookup[plugin.active].parent = plugin.lookup[dest].parent;
+        plugin.lookup[plugin.active].slot = plugin.lookup[dest].slot + slot;
+
+        sorted.splice(dest_index + slot, 0, plugin.lookup[plugin.active]);
     } else {
-        //TODO
-        for (let i = dest_index; i >= src_index + 1; i -= 1) {
-            //swap slots
-            [sorted[i].slot, sorted[i - 1].slot] = [
-                sorted[i - 1].slot,
-                sorted[i].slot
-            ];
-        }
+        const src_index = sorted.findIndex(
+            p => p.id === plugin.lookup[plugin.active].id
+        );
+
+        [sorted[src_index].slot, sorted[dest_index].slot] = [
+            sorted[dest_index].slot,
+            sorted[src_index].slot
+        ];
     }
+
+    sorted.sort((a, b) => a.slot - b.slot).forEach((item, i) => {
+        item.slot = i;
+    });
 };
 
-const nestPlugin = (plugin, id, slot) => {
+const nestPlugin = ({ active, lookup }, id, slot) => {
     //fix slot removal
-    const dest = plugin.lookup[id];
-    const src = plugin.lookup[plugin.active];
+    const dest = lookup[id];
+    const src = lookup[active];
     const { parent } = src;
 
     //delete from old slot
-    if (Number.isInteger(parent)) plugin.lookup[parent].childs[src.slot] = null;
+    if (Number.isInteger(parent)) lookup[parent].childs[src.slot] = null;
 
     src.slot = slot;
-    dest.childs[slot] = src.id;
     src.parent = dest.id;
+
+    dest.childs[slot] = src.id;
 };
 
 //delete all plugin references and children
@@ -99,7 +87,9 @@ const deletePlugin = (lookup, key) => {
     //delete from parent if exists
     if (start.parent) {
         lookup[start.parent].childs = lookup[start.parent].childs.map(
-            childs => childs
+            childs => {
+                return childs === key ? null : childs;
+            }
         );
     }
 
@@ -111,6 +101,10 @@ const deletePlugin = (lookup, key) => {
 
         delete lookup[start.id];
     }
+
+    return {
+        lookup
+    };
 };
 
 const plugin = (state = default_state, action) => {
@@ -129,21 +123,17 @@ const plugin = (state = default_state, action) => {
                 }
             };
         case REMOVE_PLUGIN: {
-            const next = deepclone(state);
-
-            deletePlugin(next.lookup, action.id);
-
             return {
                 active: "",
-                lookup: next.lookup
+                ...deletePlugin(state.lookup, action.id)
             };
         }
         case SET_CONTENT: {
-            const next = deepclone(state);
+            state.lookup[action.id].content = action.content;
 
-            next.lookup[action.id].content = action.content;
-
-            return next;
+            return {
+                ...state
+            };
         }
         case MOVE_PLUGIN: {
             const next = deepclone(state);
@@ -155,11 +145,14 @@ const plugin = (state = default_state, action) => {
             return next;
         }
         case TOGGLE_VISIBLE: {
-            const next = deepclone(state);
+            state.lookup[action.id] = {
+                ...state.lookup[action.id],
+                visible: !state.lookup[action.id].visible
+            };
 
-            next.lookup[action.id].visible = !next.lookup[action.id].visible;
-
-            return next;
+            return {
+                ...state
+            };
         }
         default:
             return state;

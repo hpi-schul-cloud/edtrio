@@ -134,7 +134,8 @@ const indexScript = async function generateIndexScript(plugin) {
         version,
         description,
         type: edtrio.type,
-        options: edtrio.options
+        options: edtrio.options,
+        multi: edtrio.multi,
     };
 
     const { base } = path.parse(plugin);
