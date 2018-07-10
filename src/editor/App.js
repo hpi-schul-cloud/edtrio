@@ -13,7 +13,6 @@ import Editor from "./components/Editor";
 
 import "edtrio/common/base.scss";
 
-@DragDropContext(HTML5Backend)
 class App extends Component {
     constructor(props) {
         super(props);
@@ -62,4 +61,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default DragDropContext(HTML5Backend)(App);
