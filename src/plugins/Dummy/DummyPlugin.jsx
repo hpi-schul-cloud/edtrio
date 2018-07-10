@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import isEqual from "lodash.isequal";
+import { LRSConnector } from "edtrio/utils";
 
 /**
  * Dummy Plugin for testing
@@ -40,6 +41,15 @@ class DummyPlugin extends Component {
         );
     }
 
+    handleSendLRSStatement() {
+        LRSConnector.saveProgressFailed({
+            actorId: "d7781057-e3ce-4aa8-8581-72336aa5b73f",
+            objectId: "https://bp.schul-cloud.org/courses/59a3c657a2049554a93fec3a/topics/59a6c215a2049554a93fed79/",
+            objectName: "Das Juliane",
+            courseId: "https://bp.schul-cloud.org/courses/5a79c9fa3c50db0010e0fcd4",
+        });
+    }
+
     render() {
         const { isEditable } = this.props;
 
@@ -61,6 +71,7 @@ class DummyPlugin extends Component {
                     value={this.state.ly}
                     onChange={e => this.handleChange(e)}
                 />
+                <button onClick={() => this.handleSendLRSStatement()}>Send LRS statement</button>
             </>
         );
     }
