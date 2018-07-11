@@ -1,12 +1,15 @@
 {
-    "name": "dummyplugin",
+    "name": "mapsplugin",
     "version": "0.1.0",
-    "description": "Leeres Plugin zum Testen",
-    "main": "DummyPlugin.jsx",
-    "author": "Florian Wirtz, Raoul Baron",
+    "description": "Karten",
+    "main": "MapsPlugin.jsx",
+    "author": "Max Haubold",
     "license": "MIT",
     "edtrio": {
-        "displayName": "Dummy",
+        "displayName": "Maps",
         "type": "CONTENT"
+    },
+    "dependencies": {
+        "react-google-maps": "^9.4.5"
     }
 }

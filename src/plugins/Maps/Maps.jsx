@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
+import {movePlugin, removePlugin, selectPlugin, setContent, toggleVisible} from "../../editor/actions/plugin";
 
 /**
  * Dummy Plugin for testing
@@ -14,7 +14,26 @@ class MapsPlugin extends Component {
         super(props);
 
         this.state = {
+            lat: !props.content ? -34.397 : props.content.lat,
+            lng: !props.content ? 150.644 : props.content.lng
         };
+
+        this.map = React.createRef();
+    }
+
+    saveCenter() {
+        const center = this.map.current.getBounds().getCenter();
+
+        this.setState(() => {
+            const position =  {
+                lat: center.lat(),
+                lng: center.lng()
+            }
+
+            this.props.saveContent(position);
+
+            return position;
+        })
     }
 
     componentDidMount() {
@@ -25,14 +44,17 @@ class MapsPlugin extends Component {
 
     render() {
         const { isEditable } = this.props;
+        const {lat, lng} = this.state;
 
         return (
             <>
                 <GoogleMap
+                    ref={this.map}
+                    onBoundsChanged={() => this.props.isEditable && this.saveCenter()}
                     defaultZoom={8}
-                    defaultCenter={{ lat: -34.397, lng: 150.644 }}
+                    defaultCenter={{ lat, lng }}
                 >
-                    <Marker position={{ lat: -34.397, lng: 150.644 }} />
+                    <Marker position={{ lat, lng }} />
                 </GoogleMap>
             </>
         );
@@ -41,9 +63,9 @@ class MapsPlugin extends Component {
     static propTypes = {
         isEditable: PropTypes.bool.isRequired,
         content: PropTypes.object,
-        saveContent: PropTypes.func.isRequired
+        saveContent: PropTypes.func.isRequired,
         //isPrint: PropTypes.bool,
-        //isViewMode: PropTypes.bool,
+        isViewMode: PropTypes.bool,
     };
 }
 
