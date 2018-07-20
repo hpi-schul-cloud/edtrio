@@ -1,0 +1,16 @@
+{
+    "name": "latexplugin",
+    "version": "0.1.0",
+    "description": "Feines Latex Plugin",
+    "main": "LatexPlugin.jsx",
+    "author": "Dominik Jäkel",
+    "license": "MIT",
+    "edtrio": {
+        "displayName": "LaTex",
+        "type": "CONTENT"
+    },
+    "dependencies": {
+        "hyphenation.de": "^0.2.1",
+        "latex.js": "^0.10.0"
+    }
+}

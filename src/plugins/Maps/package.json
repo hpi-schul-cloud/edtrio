@@ -1,0 +1,15 @@
+{
+    "name": "mapsplugin",
+    "version": "0.1.0",
+    "description": "Karten",
+    "main": "MapsPlugin.jsx",
+    "author": "Max Haubold",
+    "license": "MIT",
+    "edtrio": {
+        "displayName": "Maps",
+        "type": "CONTENT"
+    },
+    "dependencies": {
+        "react-google-maps": "^9.4.5"
+    }
+}
