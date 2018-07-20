@@ -1,0 +1,12 @@
+{
+    "name": "hyphenation.en-us",
+    "description": "Hyphenation language pattern file (en-us) for Hypher", 
+    "version": "0.2.1",
+    "keywords": ["hypher", "hyphenation", "pattern", "language", "ender", "en-us"],
+    "author": "Bram Stein <b.l.stein@gmail.com> (http://www.bramstein.com)",
+    "main": "./lib/en-us.js",
+    "ender": "./lib/ender.js",
+    "dependencies": {
+        "hypher": "*"
+    }
+}
