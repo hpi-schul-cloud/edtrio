@@ -19,28 +19,28 @@ class App extends Component {
 
         this.state = {
             store: null
-        }
+        };
     }
 
     componentDidMount() {
-      api.getData().then(data => {
-        this.setState(state => {
-          const store = createStore(
-            enableBatching(rootReducer),
-            data,
-            window.__REDUX_DEVTOOLS_EXTENSION__ &&
-            window.__REDUX_DEVTOOLS_EXTENSION__()
-          )
+        api.getData().then(data => {
+            this.setState(state => {
+                const store = createStore(
+                    enableBatching(rootReducer),
+                    data,
+                    window.__REDUX_DEVTOOLS_EXTENSION__ &&
+                        window.__REDUX_DEVTOOLS_EXTENSION__()
+                );
 
-          store.subscribe(() => {
-            api.sendData(this.state.store.getState());
-          });
+                store.subscribe(() => {
+                    api.sendData(this.state.store.getState());
+                });
 
-          return {
-            store
-          }
-        })
-      })
+                return {
+                    store
+                };
+            });
+        });
     }
 
     render() {
@@ -48,14 +48,13 @@ class App extends Component {
 
         return (
             <React.StrictMode>
-              { store
-                ? (
-                  <Provider store={this.state.store}>
-                    <Editor />
-                  </Provider>
-                )
-                : <p>L&auml;dt&hellip;</p>
-              }
+                {store ? (
+                    <Provider store={this.state.store}>
+                        <Editor />
+                    </Provider>
+                ) : (
+                    <p>L&auml;dt&hellip;</p>
+                )}
             </React.StrictMode>
         );
     }
