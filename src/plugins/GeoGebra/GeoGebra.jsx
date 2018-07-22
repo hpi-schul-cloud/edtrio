@@ -10,58 +10,74 @@ export default class Geogebra extends Component {
         super(props);
 
         this.state = {
-            id: "",
-            geogebra: null
+            id: ""
         };
 
         this.applet = React.createRef();
     }
 
+    shouldComponentUpdate(nextProps, { id }) {
+        return id !== this.state.id;
+    }
+
     renderApplet(id) {
-        this.setState(state => {
-            const app = new this.state.geogebra(
-                {
-                    material_id: id,
-                    width: this.applet.current.offsetWidth,
-                    height: 500
-                },
-                true
-            );
+        this.setState(
+            () => {
+                return {
+                    id
+                };
+            },
+            () => this.props.saveContent(this.state)
+        );
+    }
 
-            app.inject("ggb-element");
+    renderHTML() {
+        return `<!DOCTYPE>
+        <html>
+        <head>
+            <meta name=viewport content="width=device-width,initial-scale=1">
+            <script src="https://cdn.geogebra.org/apps/deployggb.js"></script>
+        </head>
+        <body>
+            <div id="ggb-element"></div> 
 
-            return {
-                ...state,
-                id
-            };
-        });
+            <script>
+                var ggbApp = new GGBApplet({"appName": "graphing", "material_id": "${
+                    this.state.id
+                }"}, true);
+                window.addEventListener("load", function() { 
+                    ggbApp.inject('ggb-element');
+                });
+            </script>
+        </body>
+        </html>
+        `;
     }
 
     componentDidMount() {
-        import("./gg.js").then(GeoGebra => {
-            this.setState(state => ({
-                ...state,
-                geogebra: GeoGebra.default
-            }));
+        this.setState({
+            ...this.props.content
         });
     }
 
     render() {
-        const { id } = this.state;
-
         return (
-            <>
-                <div id="ggb-element" ref={this.applet} />
+            <div ref={this.applet}>
+                <input
+                    className={styles.id_input}
+                    onInput={e => this.renderApplet(e.target.value)}
+                    type="text"
+                    placeholder={this.state.id || "GeoGebra Id"}
+                />
 
-                <div>
-                    <input
-                        className={styles.id_input}
-                        onInput={e => this.renderApplet(e.target.value)}
-                        type="text"
-                        placeholder="GeoGebra Id"
+                {this.state.id && (
+                    <iframe
+                        height="500px"
+                        width="100%"
+                        srcDoc={this.renderHTML()}
                     />
-                </div>
-            </>
+                )}
+            </div>
         );
     }
 
