@@ -1,9 +1,0 @@
-specification:
-  # title requirements AND body AND template requirements have to match
-  title:
-    # PR title is at least this many characters long
-    minimum-length:
-      enabled: true
-      length: 8
-  body:
-    contains-issue-number: true
