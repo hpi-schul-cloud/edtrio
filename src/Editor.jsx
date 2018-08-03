@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Editor as SlateEditor } from 'slate-react'
 import { Value } from 'slate'
 
+import DocumentViewerPlugin from './plugins/dev-document-viewer'
+
 const initialValue = Value.fromJSON({
     document: {
         nodes: [
@@ -13,7 +15,7 @@ const initialValue = Value.fromJSON({
                     object: 'text',
                     leaves: [
                         {
-                        text: 'A line of text in a paragraph.',
+                        text: 'Start typing...',
                         },
                     ],
                     },
@@ -21,23 +23,30 @@ const initialValue = Value.fromJSON({
             },
         ],
     },
-  })
+})
 
+  class Editor extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            value: initialValue,
+        }
 
-class Editor extends Component {
-    // Set the initial value when the app is first constructed.
-    state = {
-        value: initialValue,
+        this.plugins = [DocumentViewerPlugin]
     }
 
-    // On change, update the app's React state with the new editor value.
     onChange = ({ value }) => {
         this.setState({ value })
     }
 
-    // Render the editor.
     render() {
-        return <SlateEditor value={this.state.value} onChange={this.onChange} />
+        return (
+            <SlateEditor
+                plugins={this.plugins}
+                value={this.state.value}
+                onChange={this.onChange}
+            />
+        )
     }
 }
 
