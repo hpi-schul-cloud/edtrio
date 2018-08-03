@@ -2,7 +2,8 @@
   background-color: #222;
   color: white;
   padding: 5px;
-  overflow: scroll;
+  max-height: 100vh;
+  overflow: auto;
 }
 
 .row {
