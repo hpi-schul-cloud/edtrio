@@ -5,10 +5,12 @@
   "dependencies": {
     "immutable": "^3.8.2",
     "is-hotkey": "^0.1.2",
+    "is-url": "^1.2.4",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-scripts": "1.1.4",
     "slate": "^0.36.1",
+    "slate-instant-replace": "^0.1.7",
     "slate-react": "^0.14.2"
   },
   "scripts": {

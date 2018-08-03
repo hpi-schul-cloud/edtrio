@@ -3,7 +3,9 @@ import { Editor as SlateEditor } from 'slate-react'
 import { Value } from 'slate'
 
 import DocumentViewer from './dev-document-viewer/DocumentViewer'
+
 import CodeBlockPlugin from './plugins/code-block'
+import AutoURL from './plugins/auto-url'
 
 const initialValue = Value.fromJSON({
     document: {
@@ -33,9 +35,9 @@ const initialValue = Value.fromJSON({
             value: initialValue,
         }
 
-        const code = CodeBlockPlugin()
         this.plugins = [
-            ...code.plugins
+            ...CodeBlockPlugin().plugins,
+            ...AutoURL().plugins,
         ]
     }
 
