@@ -33,7 +33,12 @@ const initialValue = Value.fromJSON({
             value: initialValue,
         }
 
-        this.plugins = [ DocumentViewerPlugin, CodeBlockPlugin ]
+        const code = CodeBlockPlugin()
+        console.log(code.plugins)
+        this.plugins = [
+            DocumentViewerPlugin,
+            ...code.plugins
+        ]
     }
 
     onChange = ({ value }) => {
