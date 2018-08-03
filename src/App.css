@@ -13,3 +13,18 @@
 .column {
   flex: 50%;
 }
+
+.toolbar {
+  background-color: grey;
+  padding: 20px;
+  margin-bottom: 10px;
+}
+
+.toolbar > button {
+  padding: 5px;
+  background-color: greenyellow;
+}
+
+.slate-wrapper {
+  padding: 10px;
+}
