@@ -3,6 +3,7 @@ import { Editor as SlateEditor } from 'slate-react'
 import { Value } from 'slate'
 
 import DocumentViewerPlugin from './plugins/dev-document-viewer'
+import CodeBlockPlugin from './plugins/code-block'
 
 const initialValue = Value.fromJSON({
     document: {
@@ -32,7 +33,7 @@ const initialValue = Value.fromJSON({
             value: initialValue,
         }
 
-        this.plugins = [DocumentViewerPlugin]
+        this.plugins = [ DocumentViewerPlugin, CodeBlockPlugin ]
     }
 
     onChange = ({ value }) => {
