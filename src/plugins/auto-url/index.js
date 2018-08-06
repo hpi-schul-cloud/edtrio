@@ -5,16 +5,26 @@ import isUrl from 'is-url'
 
 export default function AutoURL(options) {
     return {
-        changes: {},
+        changes: {
+            wrapLink,
+            unwrapLink,
+        },
         helpers: {},
-        components: {},
+        components: {
+            LinkNode,
+        },
         plugins: [
             InstantReplace(AddURL),
-            RenderLinkNode
+            RenderLinkNode,
         ],
     }
 }
 
+/**
+ * Wraps the supplied change as an inline link type
+ * @param {*} change change to be manipulated
+ * @param {string} href url of the link to be set
+ */
 const wrapLink = (change, href) => {
     change.wrapInline({
         type: 'link',
@@ -23,6 +33,10 @@ const wrapLink = (change, href) => {
     change.collapseToEnd()
 }
 
+/**
+ * Removes any inline link type on the supplied change
+ * @param {*} change change to be manipulated
+ */
 const unwrapLink = (change) => {
     change.unwrapInline('link')
 }
@@ -40,6 +54,10 @@ const AddURL = (change, lastWord) => {
     }
 }
 
+/**
+ * Component to be rendered for every link inline element
+ * @param {*} props not used atm
+ */
 function LinkNode(props) {
     const { attributes, children, node } = props
     const { data } = node
