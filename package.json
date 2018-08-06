@@ -6,12 +6,12 @@
     "immutable": "^3.8.2",
     "is-hotkey": "^0.1.2",
     "is-url": "^1.2.4",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
     "react-scripts": "1.1.4",
-    "slate": "^0.36.1",
-    "slate-instant-replace": "^0.1.7",
-    "slate-react": "^0.14.2"
+    "slate": "^0.37.0",
+    "slate-instant-replace": "^0.1.8",
+    "slate-react": "^0.15.0"
   },
   "scripts": {
     "start": "react-scripts start",
