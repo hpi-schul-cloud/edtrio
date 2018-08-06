@@ -18,7 +18,7 @@ const initialValue = Value.fromJSON({
                     object: 'text',
                     leaves: [
                         {
-                        text: 'Start typing...',
+                        text: 'Start typing... \nMaybe even a URL?\nwith the http:// prefix atm though pls',
                         },
                     ],
                     },
