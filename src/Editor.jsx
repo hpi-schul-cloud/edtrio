@@ -106,52 +106,47 @@ const initialValue = Value.fromJSON(importedValue)
         const HoverMenu = TextMenu().components.HoverMenu
 
         return (
-            <div className="row">
-                <div className="column">
-                    <div className="toolbar">
-                        <Button
-                            reversed
-                            active={false} //TODO: handle this
-                            onMouseDown={this.onClickCodeButton}
-                        >
-                            <Icon>code</Icon>
-                        </Button>
-                        <Button
-                            reversed
-                            active={false} //TODO: handle this
-                            onMouseDown={this.onClickImageButton}
-                        >
-                            <Icon>photo</Icon>
-                        </Button>
-                        <Button
-                            reversed
-                            active={false} //TODO: handle this
-                            onMouseDown={this.onClickGeogebraButton}
-                        >
-                            <Icon>functions</Icon>
-                        </Button>
-                    </div>
-                    <div className="slate-wrapper">
-                        <HoverMenu
-                            ref={menu => (this.menu = menu)}
-                            value={this.state.value}
-                            onChange={this.onChange}
-                        />
-                        <SlateEditor
-                            autoFocus
-                            spellCheck
-                            plugins={this.plugins}
-                            value={this.state.value}
-                            onChange={this.onChange}
-                            renderMark={this.renderMark}
-                            placeholder="You can start typing..."
-                            style={{
-                                height: '100%'
-                            }}
-                        />
-                    </div>
+            <div className="column">
+                <div className="toolbar">
+                    <Button
+                        reversed
+                        active={false} //TODO: handle this
+                        onMouseDown={this.onClickCodeButton}
+                    >
+                        <Icon>code</Icon>
+                    </Button>
+                    <Button
+                        reversed
+                        active={false} //TODO: handle this
+                        onMouseDown={this.onClickImageButton}
+                    >
+                        <Icon>photo</Icon>
+                    </Button>
+                    <Button
+                        reversed
+                        active={false} //TODO: handle this
+                        onMouseDown={this.onClickGeogebraButton}
+                    >
+                        <Icon>functions</Icon>
+                    </Button>
                 </div>
-                <DocumentViewer doc={this.state.value} />
+                <div className="slate-wrapper">
+                    <HoverMenu
+                        ref={menu => (this.menu = menu)}
+                        value={this.state.value}
+                        onChange={this.onChange}
+                    />
+                    <SlateEditor
+                        autoFocus
+                        spellCheck
+                        plugins={this.plugins}
+                        value={this.state.value}
+                        onChange={this.onChange}
+                        renderMark={this.renderMark}
+                        placeholder="You can start typing..."
+                        className="slate-editor"
+                    />
+                </div>
             </div>
         )
     }

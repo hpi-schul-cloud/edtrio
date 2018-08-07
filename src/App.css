@@ -11,8 +11,8 @@
 }
 
 .column {
-  flex: 50%;
-  max-width: 50%;
+  max-width: 75%;
+  margin: 0 auto;
 }
 
 .toolbar {
@@ -26,8 +26,12 @@
 }
 
 .slate-wrapper {
-  padding: 10px;
-  height: 100%;
+  height: calc(100vh - 77px);
+}
+
+.slate-editor {
+  min-height: calc(100% - 50px);
+  margin-bottom: 50px;
 }
 
 .plugin-wrapper {
