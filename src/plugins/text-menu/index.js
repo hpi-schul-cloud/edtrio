@@ -11,6 +11,7 @@ export default function TextMenu(options) {
         },
         plugins: [
             RenderTextMarks,
+            RenderTextBlocks,
         ],
     }
 }
@@ -31,3 +32,33 @@ const RenderTextMarks = {
         }
     }
 }
+
+const RenderTextBlocks = {
+    renderNode(props) {
+        const { attributes, children, node } = props
+
+        switch(node.type) {
+            case 'heading-one':
+                return <h1 {...attributes}>{children}</h1>
+            case 'heading-two':
+                return <h2 {...attributes}>{children}</h2>
+        }
+    }
+}
+
+/*
+const HandleEnter = {
+    onKeyDown(event, change, editor) {
+        if (event.key == 'Enter') {
+            /*for(let activeMark of change.value.activeMarks) {
+                change.removeMark(activeMark.type)
+            }
+
+            change.setBlocks('paragraph')
+            console.log(change)
+            change.focus()
+            
+            editor.onChange(change)
+        }
+    }
+}*/

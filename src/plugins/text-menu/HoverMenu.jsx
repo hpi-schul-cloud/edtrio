@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import './style.css'
 
 // Taken and adapted from https://github.com/ianstormtaylor/slate/tree/master/examples/hovering-menu
-
+const DEFAULT_NODE = 'paragraph'
 
 class HoverMenu extends Component {
     constructor(props) {
@@ -28,6 +28,8 @@ class HoverMenu extends Component {
                 {this.renderMarkButton('italic', 'format_italic')}
                 {this.renderMarkButton('underlined', 'format_underlined')}
                 {this.renderMarkButton('code', 'code')}
+                {this.renderBlockButton('heading-one', 'looks_one')}
+                {this.renderBlockButton('heading-two', 'looks_two')}
             </div>,
             root
         )
@@ -52,6 +54,39 @@ class HoverMenu extends Component {
                 <Icon>{icon}</Icon>
             </Button>
         )
+    }
+
+    /**
+     * Render a block-toggling toolbar button.
+     *
+     * @param {String} type
+     * @param {String} icon
+     * @return {Element}
+     */
+
+    renderBlockButton = (type, icon) => {
+        const isActive = this.hasBlock(type)
+
+        return (
+        <Button
+            active={isActive}
+            onMouseDown={event => this.onClickBlock(event, type)}
+        >
+            <Icon>{icon}</Icon>
+        </Button>
+        )
+    }
+
+    /**
+     * Check if the any of the currently selected blocks are of `type`.
+     *
+     * @param {String} type
+     * @return {Boolean}
+     */
+
+    hasBlock = type => {
+        const { value } = this.props
+        return value.blocks.some(node => node.type == type)
     }
 
     /**
@@ -100,6 +135,24 @@ class HoverMenu extends Component {
         const change = value.change().toggleMark(type)
         onChange(change)
     }
+
+    /**
+   * When a block button is clicked, toggle the block type.
+   *
+   * @param {Event} event
+   * @param {String} type
+   */
+
+  onClickBlock = (event, type) => {
+    const { value, onChange } = this.props
+    event.preventDefault()
+    const change = value.change()
+
+    const isActive = this.hasBlock(type)
+    change.setBlocks(isActive ? DEFAULT_NODE : type)
+
+    onChange(change)
+  }
 }
 
 

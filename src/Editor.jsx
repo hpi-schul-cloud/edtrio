@@ -96,6 +96,8 @@ const initialValue = Value.fromJSON({
                             onChange={this.onChange}
                         />
                         <SlateEditor
+                            autoFocus
+                            spellCheck
                             plugins={this.plugins}
                             value={this.state.value}
                             onChange={this.onChange}
