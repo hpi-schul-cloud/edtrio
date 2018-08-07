@@ -1,5 +1,7 @@
 import React from 'react'
 
+import insertParagraph from '../../helpers/insertParagraph'
+
 
 export default function YoutubeHandler(options) { 
     return {
@@ -26,8 +28,7 @@ const validate = (url) => {
 
 const dealWithIt = (url, change) => {
     const videoId = _regex.exec(url)[1]
-    console.log('videoId is ' + videoId)
-    insertYoutubeVideo(change, videoId)
+    change.call(insertYoutubeVideo, videoId).call(insertParagraph)
     return true
 }
 

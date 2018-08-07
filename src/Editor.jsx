@@ -13,6 +13,7 @@ import URLHandler from './plugins/url-handler'
 
 import Icon from './plugins/helpers/Icon'
 import Button from './plugins/helpers/Button'
+import insertParagraph from './plugins/helpers/insertParagraph'
 
 import importedValue from './value'
 const initialValue = Value.fromJSON(importedValue)
@@ -82,7 +83,7 @@ const initialValue = Value.fromJSON(importedValue)
         const src = window.prompt('Enter the URL of the image:')
         if (!src) return
 
-        const change = this.state.value.change().call(insertImage, src)
+        const change = this.state.value.change().call(insertImage, src).call(insertParagraph)
 
         this.onChange(change)
     }
@@ -94,7 +95,7 @@ const initialValue = Value.fromJSON(importedValue)
         const id = window.prompt('Enter the geogebra id:') || 'RHYH3UQ8'
         if(!id) return
 
-        const change = this.state.value.change().call(insertGeogebraNode, id)
+        const change = this.state.value.change().call(insertGeogebraNode, id).call(insertParagraph)
 
         this.onChange(change)
     }
