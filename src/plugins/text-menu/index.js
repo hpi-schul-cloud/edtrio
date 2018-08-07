@@ -49,20 +49,3 @@ const RenderTextBlocks = {
         }
     }
 }
-
-/*
-const HandleEnter = {
-    onKeyDown(event, change, editor) {
-        if (event.key == 'Enter') {
-            /*for(let activeMark of change.value.activeMarks) {
-                change.removeMark(activeMark.type)
-            }
-
-            change.setBlocks('paragraph')
-            console.log(change)
-            change.focus()
-            
-            editor.onChange(change)
-        }
-    }
-}*/
