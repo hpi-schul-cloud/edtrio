@@ -36,7 +36,7 @@ function ImageNode(props) {
     return (
         <img
             src={src}
-            className={`image ${selected ? 'selected' : ''}`}
+            className={`image plugin-wrapper ${selected ? 'selected' : ''}`}
             alt="Uploaded by user"
             {...attributes}
         />

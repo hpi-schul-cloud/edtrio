@@ -1,4 +1,3 @@
-import React from 'react'
 import { getEventTransfer } from 'slate-react'
 import isUrl from 'is-url'
 

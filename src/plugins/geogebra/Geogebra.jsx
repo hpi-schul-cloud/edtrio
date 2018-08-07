@@ -59,10 +59,12 @@ export default class GeogebraNode extends Component {
     }
 
     render() {
+        // FIXME: props.selected never turn false, even if geogebra
+        // isnt selected anymore
         console.log(this.props.selected)
         return (
             <div 
-                className={`geogebra-wrapper ${this.props.selected ? 'selected' : ''}`}
+                className={`geogebra-wrapper plugin-wrapper ${this.props.selected ? 'selected' : ''}`}
                 ref={this.applet}
             >
                 {this.state.id && (

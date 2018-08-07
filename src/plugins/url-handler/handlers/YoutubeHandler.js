@@ -1,5 +1,6 @@
 import React from 'react'
 
+
 export default function YoutubeHandler(options) { 
     return {
         validate,
@@ -49,7 +50,11 @@ function YoutubeNode(props) {
     const { videoId, selected, ...attributes } = props
 
     return (
-        <div style={{display: 'flex', flexDirection: 'column', minHeight: '500px'}}>
+        <div
+            className={`plugin-wrapper ${selected ? 'selected' : ''}`}
+            style={{display: 'flex', flexDirection: 'column', minHeight: '500px'}}
+            {...attributes}
+        >
             <iframe
                 {...props.attributes}
                 style={{minHeight: '500px'}}
