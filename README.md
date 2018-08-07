@@ -12,6 +12,13 @@ Major revamp of the current Edtr.io, based on [Slate.js](https://github.com/ians
 - Button to add Geogebra applets
 - Youtube integration (paste youtube video link and it'll be auto-converted)
 
+## Setup
+```shell
+yarn install
+yarn start
+# go to localhost:3000 if it doesnt open automatically
+```
+
 
 ---
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
