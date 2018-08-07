@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import { Editor as SlateEditor } from 'slate-react'
 import { Value } from 'slate'
 
-import DocumentViewer from './dev-document-viewer/DocumentViewer'
-
 import CodeBlockPlugin from './plugins/code-block'
 import AutoURL from './plugins/auto-url'
 import TextMenu from './plugins/text-menu'
@@ -142,7 +140,6 @@ const initialValue = Value.fromJSON(importedValue)
                         plugins={this.plugins}
                         value={this.state.value}
                         onChange={this.onChange}
-                        renderMark={this.renderMark}
                         placeholder="You can start typing..."
                         className="slate-editor"
                     />
