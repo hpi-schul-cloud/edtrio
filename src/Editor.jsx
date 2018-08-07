@@ -8,6 +8,7 @@ import CodeBlockPlugin from './plugins/code-block'
 import AutoURL from './plugins/auto-url'
 import TextMenu from './plugins/text-menu'
 import Image from './plugins/image'
+import Geogebra from './plugins/geogebra'
 
 import Icon from './plugins/helpers/Icon'
 import Button from './plugins/helpers/Button'
@@ -27,6 +28,7 @@ const initialValue = Value.fromJSON(importedValue)
             ...TextMenu().plugins,
             ...CodeBlockPlugin().plugins,
             ...Image().plugins,
+            ...Geogebra().plugins,
             ...AutoURL().plugins,
         ]
     }
@@ -83,6 +85,18 @@ const initialValue = Value.fromJSON(importedValue)
         this.onChange(change)
     }
 
+    onClickGeogebraButton = event => {
+        const { insertGeogebraNode } = Geogebra().changes
+
+        event.preventDefault()
+        const id = window.prompt('Enter the geogebra id:') || 'RHYH3UQ8'
+        if(!id) return
+
+        const change = this.state.value.change().call(insertGeogebraNode, id)
+
+        this.onChange(change)
+    }
+
     render() {
         const HoverMenu = TextMenu().components.HoverMenu
 
@@ -103,6 +117,13 @@ const initialValue = Value.fromJSON(importedValue)
                             onMouseDown={this.onClickImageButton}
                         >
                             <Icon>photo</Icon>
+                        </Button>
+                        <Button
+                            reversed
+                            active={false} //TODO: handle this
+                            onMouseDown={this.onClickGeogebraButton}
+                        >
+                            <Icon>functions</Icon>
                         </Button>
                     </div>
                     <div className="slate-wrapper">
