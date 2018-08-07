@@ -1,0 +1,79 @@
+import React from 'react'
+
+export default function YoutubeHandler(options) { 
+    return {
+        validate,
+        dealWithIt,
+        changes: {
+            insertYoutubeVideo
+        },
+        helpers: {},
+        components: {
+            YoutubeNode,
+        },
+        plugins: [
+            RenderYoutubeNode
+        ],
+    }
+}
+
+const _regex = /youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)/i
+
+const validate = (url) => {
+    return !!_regex.exec(url)
+}
+
+const dealWithIt = (url, change) => {
+    const videoId = _regex.exec(url)[1]
+    console.log('videoId is ' + videoId)
+    insertYoutubeVideo(change, videoId)
+    return true
+}
+
+
+function insertYoutubeVideo(change, videoId, target) {
+    //TODO: what does this do?
+    /*
+    if(target) {
+        change.select(target)
+    }*/
+
+    change.insertBlock({
+        type: 'youtube',
+        isVoid: true,
+        data: { videoId },
+    })
+}
+
+function YoutubeNode(props) {
+    const { videoId, selected, ...attributes } = props
+
+    return (
+        <div style={{display: 'flex', flexDirection: 'column', minHeight: '500px'}}>
+            <iframe
+                {...props.attributes}
+                style={{minHeight: '500px'}}
+                src={`https://www.youtube-nocookie.com/embed/${videoId}`}
+                frameBorder="0"
+                allowFullScreen
+            />
+        </div>
+    )
+}
+
+const RenderYoutubeNode = {
+    renderNode(props) {
+        const { attributes, node, isFocused } = props
+
+        if(node.type === 'youtube') {
+            const videoId = node.data.get('videoId')
+            return (
+                <YoutubeNode
+                    videoId={videoId}
+                    selected={isFocused}
+                    {...attributes}
+                />
+            )
+        }
+    }
+}
