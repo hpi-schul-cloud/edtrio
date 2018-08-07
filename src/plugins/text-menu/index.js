@@ -1,6 +1,7 @@
 import './style.css'
 
-import React from 'react'
+import React, { Component } from 'react'
+import Value from 'slate'
 
 
 export default function TextMenu(options) {
@@ -12,16 +13,14 @@ export default function TextMenu(options) {
     }
 }
 
-const renderMarkButton = (type, icon) => {
-    // const { value } = this.props
-}
+// ================================================
 
-function Menu(props) {
-    // lalalala
+class HoveringMenu extends Component {
+    constructor(props) {
+        super(props)
 
-    return (
-        <div className="text-menu">
-            { props.children }
-        </div>
-    )
+        this.state = {
+            value: Value.fromJSON(initialValue)
+        }
+    }
 }

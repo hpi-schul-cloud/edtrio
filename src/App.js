@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import '../node_modules/material-icons/iconfont/material-icons.css'
 import './App.css';
 
 import Editor from './Editor';

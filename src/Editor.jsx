@@ -7,6 +7,8 @@ import DocumentViewer from './dev-document-viewer/DocumentViewer'
 import CodeBlockPlugin from './plugins/code-block'
 import AutoURL from './plugins/auto-url'
 
+import HoverMenu from './plugins/text-menu/HoverMenu'
+
 const initialValue = Value.fromJSON({
     document: {
         nodes: [
@@ -41,8 +43,35 @@ const initialValue = Value.fromJSON({
         ]
     }
 
+    componentDidMount = () => {
+        const { value } = this.state
+        console.log(`blur: ${value.isBlurred} empty: ${value.isEmpty}`)
+        this.menu.update({resetMenu: value.isBlurred || value.isEmpty})
+    }
+
+    componentDidUpdate = () => {
+        const { value } = this.state
+        console.log(`blur: ${value.isBlurred} empty: ${value.isEmpty}`)
+        this.menu.update({resetMenu: value.isBlurred || value.isEmpty})
+    }
+
     onChange = ({ value }) => {
         this.setState({ value })
+    }
+
+    renderMark = props => {
+        const { children, mark, attributes } = props
+    
+        switch (mark.type) {
+            case 'bold':
+                return <strong {...attributes}>{children}</strong>
+            case 'code':
+                return <code {...attributes}>{children}</code>
+            case 'italic':
+                return <em {...attributes}>{children}</em>
+            case 'underlined':
+                return <u {...attributes}>{children}</u>
+        }
     }
 
     onClickCodeButton = (event) => {
@@ -65,10 +94,16 @@ const initialValue = Value.fromJSON({
                         <button onClick={this.onClickCodeButton}>Click me for a codeblock</button>
                     </div>
                     <div className="slate-wrapper">
+                        <HoverMenu
+                            ref={menu => (this.menu = menu)}
+                            value={this.state.value}
+                            onChange={this.onChange}
+                        />
                         <SlateEditor
                             plugins={this.plugins}
                             value={this.state.value}
                             onChange={this.onChange}
+                            renderMark={this.renderMark}
                         />
                     </div>
                 </div>

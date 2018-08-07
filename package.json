@@ -6,6 +6,7 @@
     "immutable": "^3.8.2",
     "is-hotkey": "^0.1.2",
     "is-url": "^1.2.4",
+    "material-icons": "^0.2.3",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-scripts": "1.1.4",
