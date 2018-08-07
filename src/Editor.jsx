@@ -10,6 +10,7 @@ import TextMenu from './plugins/text-menu'
 import Image from './plugins/image'
 import Geogebra from './plugins/geogebra'
 import URLHandler from './plugins/url-handler'
+import MarkdownShortcuts from './plugins/markdown-shortcuts'
 
 import Icon from './plugins/helpers/Icon'
 import Button from './plugins/helpers/Button'
@@ -28,6 +29,7 @@ const initialValue = Value.fromJSON(importedValue)
 
         this.plugins = [
             ...TextMenu().plugins,
+            ...MarkdownShortcuts().plugins,
             ...URLHandler().plugins,
             ...CodeBlockPlugin().plugins,
             ...Image().plugins,
