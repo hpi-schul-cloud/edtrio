@@ -72,7 +72,7 @@ const initialValue = Value.fromJSON({
 
     /**
      * handles clicks on the codeblock button and
-     * forwards it accordingly to plugins/code-block
+     * forwards them accordingly to plugins/code-block
      */
     onClickCodeButton = event => {
         event.preventDefault()
@@ -86,6 +86,10 @@ const initialValue = Value.fromJSON({
         this.onChange(change)
     }
 
+    /**
+     * handles clicks on the imageblock button and
+     * forwards them accordingly to plugins/image
+     */
     onClickImageButton = event => {
         const { insertImage } = Image().changes
 
