@@ -44,7 +44,7 @@ class HoverMenu extends Component {
      */
     renderMarkButton(type, icon) {
         const { value } = this.props
-        const isActive = value.activeMarks.some(mark => mark.type == type)
+        const isActive = value.activeMarks.some(mark => mark.type === type)
         return (
             <Button
                 reversed
@@ -86,7 +86,7 @@ class HoverMenu extends Component {
 
     hasBlock = type => {
         const { value } = this.props
-        return value.blocks.some(node => node.type == type)
+        return value.blocks.some(node => node.type === type)
     }
 
     /**

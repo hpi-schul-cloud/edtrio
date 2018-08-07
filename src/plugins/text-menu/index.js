@@ -29,6 +29,8 @@ const RenderTextMarks = {
                 return <em {...attributes}>{children}</em>
             case 'underlined':
                 return <u {...attributes}>{children}</u>
+            default:
+                return
         }
     }
 }
@@ -42,6 +44,8 @@ const RenderTextBlocks = {
                 return <h1 {...attributes}>{children}</h1>
             case 'heading-two':
                 return <h2 {...attributes}>{children}</h2>
+            default:
+                return
         }
     }
 }
