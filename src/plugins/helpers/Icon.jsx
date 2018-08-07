@@ -2,9 +2,14 @@ import React from 'react'
 
 
 const Icon = ({ className, children, ...rest }) => (
-    <span className={`material-icons ${className}`} {...rest}>
+    <i
+        style={{
+            verticalAlign: 'middle',
+            paddingBottom: '3px'
+        }}
+        className={`material-icons ${className}`} {...rest}>
         { children }
-    </span>
+    </i>
 )
 
 export default Icon

@@ -12,28 +12,9 @@ import Image from './plugins/image'
 import Icon from './plugins/helpers/Icon'
 import Button from './plugins/helpers/Button'
 
+import importedValue from './value'
+const initialValue = Value.fromJSON(importedValue)
 
-
-const initialValue = Value.fromJSON({
-    document: {
-        nodes: [
-            {
-                object: 'block',
-                type: 'paragraph',
-                nodes: [
-                    {
-                    object: 'text',
-                    leaves: [
-                        {
-                        text: 'Start typing... \nMaybe even a URL?\nwith the http:// prefix atm though pls',
-                        },
-                    ],
-                    },
-                ],
-            },
-        ],
-    },
-})
 
   class Editor extends Component {
     constructor(props) {
@@ -137,6 +118,10 @@ const initialValue = Value.fromJSON({
                             value={this.state.value}
                             onChange={this.onChange}
                             renderMark={this.renderMark}
+                            placeholder="You can start typing..."
+                            style={{
+                                height: '100%'
+                            }}
                         />
                     </div>
                 </div>
