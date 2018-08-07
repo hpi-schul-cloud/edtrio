@@ -1,8 +1,4 @@
-.text-menu {
-    color: red;
-}
-
-.flobo {
+.hover-menu {
     padding: 8px 7px 6px;
     position: absolute;
     z-index: 1;

@@ -6,8 +6,8 @@ import DocumentViewer from './dev-document-viewer/DocumentViewer'
 
 import CodeBlockPlugin from './plugins/code-block'
 import AutoURL from './plugins/auto-url'
+import TextMenu from './plugins/text-menu'
 
-import HoverMenu from './plugins/text-menu/HoverMenu'
 
 const initialValue = Value.fromJSON({
     document: {
@@ -38,40 +38,27 @@ const initialValue = Value.fromJSON({
         }
 
         this.plugins = [
+            ...TextMenu().plugins,
             ...CodeBlockPlugin().plugins,
             ...AutoURL().plugins,
         ]
     }
 
     componentDidMount = () => {
-        const { value } = this.state
-        console.log(`blur: ${value.isBlurred} empty: ${value.isEmpty}`)
-        this.menu.update({resetMenu: value.isBlurred || value.isEmpty})
+        this.updateMenu()
     }
 
     componentDidUpdate = () => {
+        this.updateMenu()
+    }
+
+    updateMenu = () => {
         const { value } = this.state
-        console.log(`blur: ${value.isBlurred} empty: ${value.isEmpty}`)
         this.menu.update({resetMenu: value.isBlurred || value.isEmpty})
     }
 
     onChange = ({ value }) => {
         this.setState({ value })
-    }
-
-    renderMark = props => {
-        const { children, mark, attributes } = props
-    
-        switch (mark.type) {
-            case 'bold':
-                return <strong {...attributes}>{children}</strong>
-            case 'code':
-                return <code {...attributes}>{children}</code>
-            case 'italic':
-                return <em {...attributes}>{children}</em>
-            case 'underlined':
-                return <u {...attributes}>{children}</u>
-        }
     }
 
     onClickCodeButton = (event) => {
@@ -87,6 +74,8 @@ const initialValue = Value.fromJSON({
     }
 
     render() {
+        const HoverMenu = TextMenu().components.HoverMenu
+
         return (
             <div className="row">
                 <div className="column">

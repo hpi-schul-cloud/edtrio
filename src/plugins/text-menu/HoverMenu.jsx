@@ -2,14 +2,10 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import './style.css'
 
+// Taken and adapted from https://github.com/ianstormtaylor/slate/tree/master/examples/hovering-menu
+
 
 class HoverMenu extends Component {
-    /**
-     * Render.
-     *
-     * @return {Element}
-     */
-
     constructor(props) {
         super(props)
 
@@ -24,7 +20,7 @@ class HoverMenu extends Component {
     
         return ReactDOM.createPortal(
             <div
-                className={`flobo ${className}`}
+                className={`hover-menu ${className}`}
                 style={this.state.style}
                 ref={wrapper => (this.menuWrapper = wrapper)}
             >
@@ -44,7 +40,6 @@ class HoverMenu extends Component {
      * @param {String} icon
      * @return {Element}
      */
-  
     renderMarkButton(type, icon) {
         const { value } = this.props
         const isActive = value.activeMarks.some(mark => mark.type == type)
@@ -59,14 +54,15 @@ class HoverMenu extends Component {
         )
     }
 
-    update = ({resetMenu = false}) => {
-
+    /**
+     * Update the menu's absolute position
+     */
+    update = ({ resetMenu = false }) => {
         if(!this.menuWrapper) {
             return
         }
 
         if (resetMenu) {
-            console.log('resettin')
             this.setState({
                 style: {}
             })
@@ -98,9 +94,7 @@ class HoverMenu extends Component {
      * @param {Event} event
      * @param {String} type
      */
-  
     onClickMark(event, type) {
-        console.log('CALL ME BABY')
         const { value, onChange } = this.props
         event.preventDefault()
         const change = value.change().toggleMark(type)
@@ -109,14 +103,19 @@ class HoverMenu extends Component {
 }
 
 
-
-
+/**
+ * Component for rendering an Icon inside the HoverMenu
+ */
 const Icon = ({ className, children, ...rest }) => (
     <span className={`material-icons ${className}`} {...rest}>
         { children }
     </span>
 )
 
+
+/**
+ * Component for rendering a simple button inside the HoverMenu
+ */
 const Button = (props) => (
     <span
         style={
