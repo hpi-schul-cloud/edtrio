@@ -3,8 +3,14 @@ img.image {
     max-width: 100%;
     max-height: 20em;
     margin: 20px 0;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-img.image.selected {
-    box-shadow: 0 0 0 2px blue;
+img.image:hover {
+    box-shadow: 0 0 0 4px rgba(175, 4, 55, 0.5);
+}
+
+img.image.selected, img.image.selected:hover {
+    box-shadow: 0 0 0 4px rgba(175, 4, 55, 1);
 }
