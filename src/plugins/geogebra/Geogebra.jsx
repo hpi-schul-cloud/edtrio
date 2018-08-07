@@ -67,6 +67,7 @@ export default class GeogebraNode extends Component {
             >
                 {this.state.id && (
                     <iframe
+                        title={`Geogebra applet #${this.state.id}`}
                         className="geogebra"
                         srcDoc={this.renderHTML()}
                     />
