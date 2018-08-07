@@ -51,16 +51,23 @@ const initialValue = Value.fromJSON({
     componentDidUpdate = () => {
         this.updateMenu()
     }
-
+    
+    onChange = ({ value }) => {
+        this.setState({ value })
+    }
+    
+    /**
+     * handles UI updates regarding the plugin/text-menu
+     */
     updateMenu = () => {
         const { value } = this.state
         this.menu.update({resetMenu: value.isBlurred || value.isEmpty})
     }
 
-    onChange = ({ value }) => {
-        this.setState({ value })
-    }
-
+    /**
+     * handles clicks on the codeblock button and
+     * forwards it accordingly to plugins/code-block
+     */
     onClickCodeButton = (event) => {
         event.preventDefault()
 
