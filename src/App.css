@@ -20,9 +20,8 @@
   margin-bottom: 10px;
 }
 
-.toolbar > button {
+.toolbar > span {
   padding: 5px;
-  background-color: greenyellow;
 }
 
 .slate-wrapper {

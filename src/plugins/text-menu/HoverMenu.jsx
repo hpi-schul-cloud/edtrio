@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import './style.css'
 
+import Icon from '../helpers/Icon'
+import Button from '../helpers/Button'
+
 // Taken and adapted from https://github.com/ianstormtaylor/slate/tree/master/examples/hovering-menu
 const DEFAULT_NODE = 'paragraph'
 
@@ -69,6 +72,7 @@ class HoverMenu extends Component {
 
         return (
         <Button
+            reversed
             active={isActive}
             onMouseDown={event => this.onClickBlock(event, type)}
         >
@@ -155,35 +159,5 @@ class HoverMenu extends Component {
   }
 }
 
-
-/**
- * Component for rendering an Icon inside the HoverMenu
- */
-const Icon = ({ className, children, ...rest }) => (
-    <span className={`material-icons ${className}`} {...rest}>
-        { children }
-    </span>
-)
-
-
-/**
- * Component for rendering a simple button inside the HoverMenu
- */
-const Button = (props) => (
-    <span
-        style={
-            props.active ? {
-                color: 'white',
-                cursor: 'pointer'
-            } : {
-                color: '#aaa',
-                cursor: 'pointer'
-            }
-        }
-        onMouseDown={props.onMouseDown}
-    >
-        { props.children }
-    </span>
-)
 
 export default HoverMenu

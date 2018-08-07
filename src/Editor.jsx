@@ -7,6 +7,11 @@ import DocumentViewer from './dev-document-viewer/DocumentViewer'
 import CodeBlockPlugin from './plugins/code-block'
 import AutoURL from './plugins/auto-url'
 import TextMenu from './plugins/text-menu'
+import Image from './plugins/image'
+
+import Icon from './plugins/helpers/Icon'
+import Button from './plugins/helpers/Button'
+
 
 
 const initialValue = Value.fromJSON({
@@ -40,6 +45,7 @@ const initialValue = Value.fromJSON({
         this.plugins = [
             ...TextMenu().plugins,
             ...CodeBlockPlugin().plugins,
+            ...Image().plugins,
             ...AutoURL().plugins,
         ]
     }
@@ -68,7 +74,7 @@ const initialValue = Value.fromJSON({
      * handles clicks on the codeblock button and
      * forwards it accordingly to plugins/code-block
      */
-    onClickCodeButton = (event) => {
+    onClickCodeButton = event => {
         event.preventDefault()
 
         const { value } = this.state
@@ -80,6 +86,18 @@ const initialValue = Value.fromJSON({
         this.onChange(change)
     }
 
+    onClickImageButton = event => {
+        const { insertImage } = Image().changes
+
+        event.preventDefault()
+        const src = window.prompt('Enter the URL of the image:')
+        if (!src) return
+
+        const change = this.state.value.change().call(insertImage, src)
+
+        this.onChange(change)
+    }
+
     render() {
         const HoverMenu = TextMenu().components.HoverMenu
 
@@ -87,7 +105,20 @@ const initialValue = Value.fromJSON({
             <div className="row">
                 <div className="column">
                     <div className="toolbar">
-                        <button onClick={this.onClickCodeButton}>Click me for a codeblock</button>
+                        <Button
+                            reversed
+                            active={false} //TODO: handle this
+                            onMouseDown={this.onClickCodeButton}
+                        >
+                            <Icon>code</Icon>
+                        </Button>
+                        <Button
+                            reversed
+                            active={false} //TODO: handle this
+                            onMouseDown={this.onClickImageButton}
+                        >
+                            <Icon>photo</Icon>
+                        </Button>
                     </div>
                     <div className="slate-wrapper">
                         <HoverMenu

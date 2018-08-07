@@ -1,0 +1,24 @@
+.button {
+    color: #ccc;
+    cursor: pointer;
+}
+
+.button:hover {
+    color: #aaa;
+}
+
+.active, .active:hover {
+    color: black;
+}
+
+.button.reversed {
+    color: #aaa;
+}
+
+.button.reversed:hover {
+    color: #ccc;
+}
+
+.reversed.active, .reversed.active:hover {
+    color: white;
+}
