@@ -47,13 +47,13 @@ const onSpace = (event, change) => {
     const type = _getType(chars)
 
     if (!type) return
-    if (type == 'list-item' && startBlock.type == 'list-item') return
+    if (type == 'li' && startBlock.type == 'li') return
     event.preventDefault()
 
     change.setBlocks(type)
 
-    if (type == 'list-item') {
-        change.wrapBlock('bulleted-list')
+    if (type == 'li') {
+        change.wrapBlock('ul')
     }
 
     change.moveFocusToStartOf(startBlock).delete()
@@ -75,13 +75,13 @@ const onBackspace = (event, change) => {
     if (selection.start.offset != 0) return
 
     const { startBlock } = value
-    if (startBlock.type == 'paragraph') return
+    if (startBlock.type == 'p') return
 
     event.preventDefault()
-    change.setBlocks('paragraph')
+    change.setBlocks('p')
 
-    if (startBlock.type == 'list-item') {
-        change.unwrapBlock('bulleted-list')
+    if (startBlock.type == 'li') {
+        change.unwrapBlock('ul')
     }
 
     return true
@@ -108,19 +108,18 @@ const onEnter = (event, change) => {
     if (end.offset != startBlock.text.length) return
 
     if (
-        startBlock.type != 'heading-one' &&
-        startBlock.type != 'heading-two' &&
-        startBlock.type != 'heading-three' &&
-        startBlock.type != 'heading-four' &&
-        startBlock.type != 'heading-five' &&
-        startBlock.type != 'heading-six' &&
-        startBlock.type != 'block-quote'
+        startBlock.type != 'h1' &&
+        startBlock.type != 'h2' &&
+        startBlock.type != 'h3' &&
+        startBlock.type != 'h4' &&
+        startBlock.type != 'h5' &&
+        startBlock.type != 'blockquote'
     ) {
         return
     }
 
     event.preventDefault()
-    change.splitBlock().setBlocks('paragraph')
+    change.splitBlock().setBlocks('p')
     return true
 }
 
@@ -136,21 +135,19 @@ const _getType = chars => {
         case '*':
         case '-':
         case '+':
-            return 'list-item'
+            return 'li'
         case '>':
-            return 'block-quote'
+            return 'blockquote'
         case '#':
-            return 'heading-one'
+            return 'h1'
         case '##':
-            return 'heading-two'
+            return 'h2'
         case '###':
-            return 'heading-three'
+            return 'h3'
         case '####':
-            return 'heading-four'
+            return 'h4'
         case '#####':
-            return 'heading-five'
-        case '######':
-            return 'heading-six'
+            return 'h5'
         default:
             return null
     }
@@ -162,20 +159,18 @@ const RenderMoreTextBlocks = {
         const { attributes, children, node } = props
 
         switch(node.type) {
-            case 'block-quote':
+            case 'blockquote':
                 return <blockquote {...attributes}>{children}</blockquote>
-            case 'bulleted-list':
+            case 'ul':
                 return <ul {...attributes}>{children}</ul>
-            case 'list-item':
+            case 'li':
                 return <li {...attributes}>{children}</li>
             // h1 and h2 are in plugins/text-menu
-            case 'heading-three':
-                return <h3 {...attributes}>{children}</h3>
-            case 'heading-four':
+            case 'h3':
                 return <h4 {...attributes}>{children}</h4>
-            case 'heading-five':
+            case 'h4':
                 return <h5 {...attributes}>{children}</h5>
-            case 'heading-six':
+            case 'h5':
                 return <h6 {...attributes}>{children}</h6>
         }
     }

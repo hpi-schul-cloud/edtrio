@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Editor as SlateEditor } from 'slate-react'
 import { Value } from 'slate'
+import schema from './schema'
 
 import CodeBlockPlugin from './plugins/code-block'
 import AutoURL from './plugins/auto-url'
@@ -69,7 +70,7 @@ const initialValue = Value.fromJSON(importedValue)
         const change = value.change()
 
         const isCode = change.value.blocks.some(block => block.type === 'code')
-        change.setBlocks(isCode ? 'paragraph' : 'code')
+        change.setBlocks(isCode ? 'p' : 'code')
 
         this.onChange(change)
     }
@@ -139,6 +140,7 @@ const initialValue = Value.fromJSON(importedValue)
                     <SlateEditor
                         autoFocus
                         spellCheck
+                        schema={schema}
                         plugins={this.plugins}
                         value={this.state.value}
                         onChange={this.onChange}

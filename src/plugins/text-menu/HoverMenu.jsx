@@ -6,7 +6,7 @@ import Icon from '../helpers/Icon'
 import Button from '../helpers/Button'
 
 // Taken and adapted from https://github.com/ianstormtaylor/slate/tree/master/examples/hovering-menu
-const DEFAULT_NODE = 'paragraph'
+const DEFAULT_NODE = 'p'
 
 class HoverMenu extends Component {
     constructor(props) {
@@ -31,8 +31,8 @@ class HoverMenu extends Component {
                 {this.renderMarkButton('italic', 'format_italic')}
                 {this.renderMarkButton('underlined', 'format_underlined')}
                 {this.renderMarkButton('code', 'code')}
-                {this.renderBlockButton('heading-one', 'looks_one')}
-                {this.renderBlockButton('heading-two', 'looks_two')}
+                {this.renderBlockButton('h1', 'looks_one')}
+                {this.renderBlockButton('h2', 'looks_two')}
             </div>,
             root
         )

@@ -41,7 +41,7 @@ function insertYoutubeVideo(change, videoId, target) {
     }*/
 
     change.insertBlock({
-        type: 'youtube',
+        type: 'video',
         isVoid: true,
         data: { videoId },
     })
@@ -71,7 +71,7 @@ const RenderYoutubeNode = {
     renderNode(props) {
         const { attributes, node, isFocused } = props
 
-        if(node.type === 'youtube') {
+        if(node.type === 'video') {
             const videoId = node.data.get('videoId')
             return (
                 <YoutubeNode

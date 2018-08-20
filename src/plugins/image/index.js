@@ -24,7 +24,7 @@ function insertImage(change, src, target) {
     }
 
     change.insertBlock({
-        type: 'image',
+        type: 'img',
         isVoid: true,
         data: { src },
     })
@@ -47,7 +47,7 @@ const RenderImageNode = {
     renderNode(props) {
         const { attributes, node, isFocused } = props
 
-        if (node.type === 'image') {
+        if (node.type === 'img') {
             const src = node.data.get('src')
             return (
                 <ImageNode

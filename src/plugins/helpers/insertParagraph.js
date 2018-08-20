@@ -1,6 +1,6 @@
 /**
- * Inserts an empty paragraph block
+ * Inserts an empty p block
  */
 export default function insertParagraph(change) {
-    change.insertBlock('paragraph')
+    change.insertBlock('p')
 }

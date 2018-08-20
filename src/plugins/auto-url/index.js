@@ -27,7 +27,7 @@ export default function AutoURL(options) {
  */
 const wrapLink = (change, href) => {
     change.wrapInline({
-        type: 'link',
+        type: 'a',
         data: { href }
     })
     change.collapseToEnd()
@@ -38,7 +38,7 @@ const wrapLink = (change, href) => {
  * @param {*} change change to be manipulated
  */
 const unwrapLink = (change) => {
-    change.unwrapInline('link')
+    change.unwrapInline('a')
 }
 
 const AddURL = (change, lastWord) => {
@@ -72,6 +72,6 @@ function LinkNode(props) {
 
 const RenderLinkNode = {
     renderNode(props) {
-        return props.node.type === 'link' ? <LinkNode {...props} /> : null
+        return props.node.type === 'a' ? <LinkNode {...props} /> : null
     }
 }

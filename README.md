@@ -10,7 +10,7 @@ Major revamp of the current Edtr.io, based on [Slate.js](https://github.com/ians
 - Button to add Code Blocks
 - Button to add Images
 - Button to add Geogebra applets
-- Youtube integration (paste youtube video link and it'll be auto-converted)
+- Video integration (paste youtube video link and it'll be auto-converted)
 
 ## Setup
 ```shell

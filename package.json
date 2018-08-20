@@ -12,7 +12,8 @@
     "react-scripts": "1.1.4",
     "slate": "^0.37.0",
     "slate-instant-replace": "^0.1.8",
-    "slate-react": "^0.15.0"
+    "slate-react": "^0.15.0",
+    "slate-schema-violations": "^0.1.32"
   },
   "scripts": {
     "start": "react-scripts start",
