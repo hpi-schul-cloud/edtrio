@@ -14,6 +14,8 @@ import Icon from './plugins/helpers/Icon'
 import Button from './plugins/helpers/Button'
 import insertParagraph from './plugins/helpers/insertParagraph'
 
+import DocumentViewer from './dev-document-viewer/DocumentViewer'
+
 import importedValue from './value'
 const initialValue = Value.fromJSON(importedValue)
 
@@ -144,6 +146,11 @@ const initialValue = Value.fromJSON(importedValue)
                         className="slate-editor"
                     />
                 </div>
+                {
+                    process.env.NODE_ENV === 'development' ? (
+                        <DocumentViewer doc={this.state.value} />
+                    ) : null
+                }
             </div>
         )
     }
