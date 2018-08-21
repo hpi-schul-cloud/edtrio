@@ -11,6 +11,7 @@ import Geogebra from './plugins/geogebra'
 import URLHandler from './plugins/url-handler'
 import MarkdownShortcuts from './plugins/markdown-shortcuts'
 import Title from './plugins/title'
+import Iframe from './plugins/iframe'
 
 import Icon from './plugins/helpers/Icon'
 import Button from './plugins/helpers/Button'
@@ -33,6 +34,7 @@ const initialValue = Value.fromJSON(importedValue)
             ...Title().plugins,
             ...TextMenu().plugins,
             ...MarkdownShortcuts().plugins,
+            ...Iframe().plugins,
             ...URLHandler().plugins,
             ...CodeBlockPlugin().plugins,
             ...Image().plugins,
@@ -93,6 +95,18 @@ const initialValue = Value.fromJSON(importedValue)
         this.onChange(change)
     }
 
+    onClickIframeButton = event => {
+        const { insertIframe } = Iframe().changes
+
+        event.preventDefault()
+        const src = window.prompt('Enter the URL of the iframe:')
+        if (!src) return
+
+        const change = this.state.value.change().call(insertIframe, src).call(insertParagraph)
+
+        this.onChange(change)
+    }
+
     onClickGeogebraButton = event => {
         const { insertGeogebraNode } = Geogebra().changes
 
@@ -124,6 +138,13 @@ const initialValue = Value.fromJSON(importedValue)
                         onMouseDown={this.onClickImageButton}
                     >
                         <Icon>photo</Icon>
+                    </Button>
+                    <Button
+                        reversed
+                        active={false} //TODO: handle this
+                        onMouseDown={this.onClickIframeButton}
+                    >
+                        <Icon>picture_in_picture</Icon>
                     </Button>
                     <Button
                         reversed

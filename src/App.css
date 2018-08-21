@@ -59,3 +59,8 @@ blockquote {
   background-color: red;
   border: 1px solid green;
 }
+
+.iframe {
+  width: 100%;
+  height: 500px;
+}
