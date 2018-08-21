@@ -13,6 +13,9 @@ import MarkdownShortcuts from './plugins/markdown-shortcuts'
 import Title from './plugins/title'
 import Iframe from './plugins/iframe'
 
+
+import Uploader from './plugins/file/Uploader'
+
 import Icon from './plugins/helpers/Icon'
 import Button from './plugins/helpers/Button'
 import insertParagraph from './plugins/helpers/insertParagraph'
@@ -124,6 +127,7 @@ const initialValue = Value.fromJSON(importedValue)
 
         return (
             <div className="column">
+                <Uploader />
                 <div className="toolbar">
                     <Button
                         reversed
