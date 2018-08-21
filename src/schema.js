@@ -5,9 +5,18 @@ import isUrl from 'is-url'
 export default {
     document: {
         nodes: [
+            {
+                match: [{ type: 'title' }],
+                min: 1,
+                max: 1,
+            },
+            {
+                match: [{ type: 'section' }],
+                min: 1,
+            },
+            // add normalization rule for title
+            /*
             { match: [
-                { type: 'title' },
-                { type: 'section' },
                 { type: 'code' },
                 { type: 'blockquote' },
                 { type: 'h1' },
@@ -22,7 +31,7 @@ export default {
                 { type: 'p' },
                 { type: 'video' },
                 { type: 'geogebra' },
-            ]}
+            ]}*/
         ],
         blocks: {
             img: {
@@ -32,20 +41,20 @@ export default {
                 }
             }
         },
-        /*
         normalize: (change, { code, node, child, index }) => {
             switch(code) {
                 case CHILD_TYPE_INVALID: {
-                    console.log(`index: ${index}, child: ${child}`)
-                    // const type = index === 0 ? 'title' : 'p'
-                    // return change.setNodeByKey(child.key, type)
-                    return true
+                    console.log(change)
+                    console.log(`CHILD TYPE INVALID ${index} ${child.type}`)
+                    const type = index === 0 ? 'title' : 'section'
+                    return change.setNodeByKey(child.key, type)
                 }
                 case CHILD_REQUIRED: {
-                    const block = Block.create(index === 0 ? 'title' : 'p')
+                    console.log(`CHILD REQUIREDD ${index}`)
+                    const block = Block.create(index === 0 ? 'title' : 'section')
                     return change.insertNodeByKey(node.key, index, block)
                 }
             }
-        }*/
+        }
     }
 }

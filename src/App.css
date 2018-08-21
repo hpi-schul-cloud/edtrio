@@ -54,3 +54,8 @@ blockquote {
   color: #aaa;
   font-style: italic;
 }
+
+.section {
+  background-color: red;
+  border: 1px solid green;
+}
