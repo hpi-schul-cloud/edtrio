@@ -64,3 +64,23 @@ blockquote {
   width: 100%;
   height: 500px;
 }
+
+a.download {
+  background-color: grey;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+a.download:hover {
+  background-color: darkgrey;
+}
+
+a.download > i {
+  margin-right: 10px;
+}

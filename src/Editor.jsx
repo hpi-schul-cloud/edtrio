@@ -15,6 +15,8 @@ import Iframe from './plugins/iframe'
 
 
 import Uploader from './plugins/file/Uploader'
+import DownloadButton from './plugins/file/DownloadButton'
+
 
 import Icon from './plugins/helpers/Icon'
 import Button from './plugins/helpers/Button'
@@ -128,6 +130,9 @@ const initialValue = Value.fromJSON(importedValue)
         return (
             <div className="column">
                 <Uploader />
+                <DownloadButton
+                    fileURL="https://master.tus.io/files/515e2d621d1a85ad9ee3837d036806ba"
+                />
                 <div className="toolbar">
                     <Button
                         reversed
