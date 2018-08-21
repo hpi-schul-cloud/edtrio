@@ -5,13 +5,14 @@ import Icon from '../helpers/Icon'
 
 class DownloadButton extends Component {
     render() {
-        const { fileURL } = this.props
+        const { src, ...attributes } = this.props
 
         return (
             <a
                 className="download"
-                href={fileURL}
+                href={src}
                 target="_blank"
+                {...attributes}
             >
                 <Icon>cloud_download</Icon>
                 Download

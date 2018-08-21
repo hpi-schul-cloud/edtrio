@@ -3,19 +3,17 @@ import { Editor as SlateEditor } from 'slate-react'
 import { Value } from 'slate'
 import schema from './schema'
 
-import CodeBlockPlugin from './plugins/code-block'
-import AutoURL from './plugins/auto-url'
 import TextMenu from './plugins/text-menu'
+import PlusMenuPlugin from './plugins/plus-menu'
+import CodeBlockPlugin from './plugins/code-block'
+import FilePlugin from './plugins/file'
+import AutoURL from './plugins/auto-url'
 import Image from './plugins/image'
 import Geogebra from './plugins/geogebra'
 import URLHandler from './plugins/url-handler'
 import MarkdownShortcuts from './plugins/markdown-shortcuts'
 import Title from './plugins/title'
 import Iframe from './plugins/iframe'
-
-
-import Uploader from './plugins/file/Uploader'
-import DownloadButton from './plugins/file/DownloadButton'
 
 
 import Icon from './plugins/helpers/Icon'
@@ -26,7 +24,6 @@ import DocumentViewer from './dev-document-viewer/DocumentViewer'
 
 import importedValue from './value'
 const initialValue = Value.fromJSON(importedValue)
-
 
   class Editor extends Component {
     constructor(props) {
@@ -126,13 +123,10 @@ const initialValue = Value.fromJSON(importedValue)
 
     render() {
         const HoverMenu = TextMenu().components.HoverMenu
+        const PlusMenu = PlusMenuPlugin().components.PlusMenu
 
         return (
             <div className="column">
-                <Uploader />
-                <DownloadButton
-                    fileURL="https://master.tus.io/files/515e2d621d1a85ad9ee3837d036806ba"
-                />
                 <div className="toolbar">
                     <Button
                         reversed
@@ -166,6 +160,10 @@ const initialValue = Value.fromJSON(importedValue)
                 <div className="slate-wrapper">
                     <HoverMenu
                         ref={menu => (this.menu = menu)}
+                        value={this.state.value}
+                        onChange={this.onChange}
+                    />
+                    <PlusMenu
                         value={this.state.value}
                         onChange={this.onChange}
                     />

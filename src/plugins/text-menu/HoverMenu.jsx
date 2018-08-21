@@ -31,8 +31,8 @@ class HoverMenu extends Component {
                 {this.renderMarkButton('italic', 'format_italic')}
                 {this.renderMarkButton('underlined', 'format_underlined')}
                 {this.renderMarkButton('code', 'code')}
-                {this.renderBlockButton('h1', 'looks_one')}
-                {this.renderBlockButton('h2', 'looks_two')}
+                {this.renderBlockButton('h1', 'looks_one', this.onClickBlock)}
+                {this.renderBlockButton('h2', 'looks_two', this.onClickBlock)}
             </div>,
             root
         )
@@ -67,17 +67,17 @@ class HoverMenu extends Component {
      * @return {Element}
      */
 
-    renderBlockButton = (type, icon) => {
+    renderBlockButton = (type, icon, onClickBlock) => {
         const isActive = this.hasBlock(type)
 
         return (
-        <Button
-            reversed
-            active={isActive}
-            onMouseDown={event => this.onClickBlock(event, type)}
-        >
-            <Icon>{icon}</Icon>
-        </Button>
+            <Button
+                reversed
+                active={isActive}
+                onMouseDown={event => onClickBlock(event, type)}
+            >
+                <Icon>{icon}</Icon>
+            </Button>
         )
     }
 
