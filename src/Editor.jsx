@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Editor as SlateEditor } from 'slate-react'
-import { Value } from 'slate'
+import { Value, Block } from 'slate'
 import schema from './schema'
 
 import TextMenu from './plugins/text-menu'
@@ -122,6 +122,41 @@ const initialValue = Value.fromJSON(importedValue)
         this.onChange(change)
     }
 
+    onClickNewSectionButton = event => {
+        //const { insertGeogebraNode } = Geogebra().changes
+
+        /*
+            function insertGeogebraNode(change, id, target) {
+                if(target) {
+                    change.select(target)
+                }
+
+                change.insertBlock({
+                    type: 'geogebra',
+                    isVoid: true,
+                    data: { id }
+                })
+            }
+        */
+
+        event.preventDefault()
+
+        const change = this.state.value.change().collapseToEnd().splitBlock()
+        
+        /*insertBlock({
+            type: 'section'
+        })
+        /*
+        
+        const newSection = Block.create({
+            type: 'section'
+        })
+        const parentDoc = this.state.value.change().value.anchorBlock
+        
+        const change = this.state.value.change().insertNodeByKey(parentDoc.key, parentDoc.nodes.size, newSection)*/
+        this.onChange(change)
+    }
+
     render() {
         const HoverMenu = TextMenu().components.HoverMenu
         const PlusMenu = PlusMenuPlugin().components.PlusMenu
@@ -131,31 +166,38 @@ const initialValue = Value.fromJSON(importedValue)
                 <div className="toolbar">
                     <Button
                         reversed
-                        active={false} //TODO: handle this
+                        active={false}
                         onMouseDown={this.onClickCodeButton}
                     >
                         <Icon>code</Icon>
                     </Button>
                     <Button
                         reversed
-                        active={false} //TODO: handle this
+                        active={false}
                         onMouseDown={this.onClickImageButton}
                     >
                         <Icon>photo</Icon>
                     </Button>
                     <Button
                         reversed
-                        active={false} //TODO: handle this
+                        active={false}
                         onMouseDown={this.onClickIframeButton}
                     >
                         <Icon>picture_in_picture</Icon>
                     </Button>
                     <Button
                         reversed
-                        active={false} //TODO: handle this
+                        active={false}
                         onMouseDown={this.onClickGeogebraButton}
                     >
                         <Icon>functions</Icon>
+                    </Button>
+                    <Button
+                        reversed
+                        active={false}
+                        onMouseDown={this.onClickNewSectionButton}
+                    >
+                        <Icon>error</Icon>
                     </Button>
                 </div>
                 <div className="slate-wrapper">
@@ -172,7 +214,7 @@ const initialValue = Value.fromJSON(importedValue)
                     <SlateEditor
                         autoFocus
                         spellCheck
-                        // schema={schema}
+                        schema={schema}
                         plugins={this.plugins}
                         value={this.state.value}
                         onChange={this.onChange}

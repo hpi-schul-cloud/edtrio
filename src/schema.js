@@ -12,6 +12,9 @@ export default {
             },
             {
                 match: [{ type: 'section' }],
+                nodes: [{
+                    match: { type: 'p'}
+                }],
                 min: 1,
             },
             // add normalization rule for title
@@ -39,15 +42,37 @@ export default {
                 data: {
                     src: v => v && isUrl(v),
                 }
+            },
+            section: {
+                nodes: [{
+                    match: { type: 'p'},
+                    max: 1,
+                }]
             }
         },
         normalize: (change, { code, node, child, index }) => {
             switch(code) {
                 case CHILD_TYPE_INVALID: {
-                    console.log(change)
-                    console.log(`CHILD TYPE INVALID ${index} ${child.type}`)
+                    /*if(child.type === 'img') {
+                        alert('oi')
+
+                        // 1. find parent section
+                        const nearestSection = change.value.anchorBlock
+                        console.error(nearestSection)
+                        
+                        // 2. move this node to the parent section node's end
+                        return change.moveNodeByKey(child.key, nearestSection.key, nearestSection.nodes.size + 1)
+                    }*/
+
+
+                    //console.log(change.value.anchorBlock.key)
+                    //console.log(`CHILD TYPE INVALID ${index} ${child.type}`)
                     const type = index === 0 ? 'title' : 'section'
                     return change.setNodeByKey(child.key, type)
+                    // ------------------------------------------
+                    // if index === 0 -> make it a title node
+
+
                 }
                 case CHILD_REQUIRED: {
                     console.log(`CHILD REQUIREDD ${index}`)

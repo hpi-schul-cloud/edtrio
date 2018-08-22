@@ -3,13 +3,33 @@
         "nodes": [
             {
                 "object": "block",
-                "type": "p",
+                "type": "title",
                 "nodes": [
                     {
                         "object": "text",
                         "leaves": [
                             {
-                                "text": ""
+                                "text": "This ma title dude"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "object": "block",
+                "type": "section",
+                "nodes": [
+                    {
+                        "object": "block",
+                        "type": "p",
+                        "nodes": [
+                            {
+                                "object": "text",
+                                "leaves": [
+                                    {
+                                        "text": "Here some text"
+                                    }
+                                ]
                             }
                         ]
                     }
