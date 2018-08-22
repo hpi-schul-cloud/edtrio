@@ -75,6 +75,7 @@ a.download {
   display: inline-block;
   font-size: 16px;
   cursor: pointer;
+  margin: 10px 0;
 }
 
 a.download:hover {

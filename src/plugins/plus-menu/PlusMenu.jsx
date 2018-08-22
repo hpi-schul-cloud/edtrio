@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 
-import { findDOMNode } from 'slate-react'
-
 import Button from '../helpers/Button'
 import Icon from '../helpers/Icon'
+import insertParagraph from '../helpers/insertParagraph'
+import DownloadFile from '../download-file'
 
 import './style.css'
 
@@ -46,52 +46,16 @@ class PlusMenu extends Component {
     dealWithMaFileClick = (event, type) => {
         console.log(`CLICK ${event} ${type}`)
 
+        const { insertFile } = DownloadFile().changes
+
         const { value, onChange } = this.props
         event.preventDefault()
-        const change = value.change()
+        const src = window.prompt('Enter file url thxxx')
+        if(!src) return
 
-        change.setBlocks(type)
+        const change = value.change().call(insertFile, src).call(insertParagraph)
 
         onChange(change)
-    }
-
-    update = ({ resetMenu = false }) => {
-        //yeah this part is pretty much broken atm
-        /*
-        
-        console.log('oi')
-        if(!this.menuWrapper) {
-            console.log('uh')
-            return
-        }
-
-        if(resetMenu) {
-            this.setState({
-                style: {}
-            })
-            console.log('ah')
-            return
-        }
-
-        const { value } = this.props
-        console.log(value.selection.focus)
-        //console.log(findDOMNode(value.selection))
-
-        const selection = window.getSelection()
-        return
-        const range = selection.getRangeAt(0)
-        const rect = range.getBoundingClientRect()
-
-        let newStyle = {}
-        newStyle.opacity = 1
-        newStyle.top = `${rect.top + window.pageYOffset - this.menuWrapper.offsetHeight}px`
-
-        console.log(`placing at top: ${rect.top + window.pageYOffset - this.menuWrapper.offsetHeight}px`)
-
-        this.setState({
-            style: newStyle
-        })
-        */
     }
 }
 

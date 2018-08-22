@@ -64,8 +64,6 @@ const initialValue = Value.fromJSON(importedValue)
     updateMenu = () => {
         const { value } = this.state
         this.hoverMenu.update({resetMenu: value.isBlurred || value.isEmpty})
-        
-        // this.plusMenu.update({resetMenu: value.isBlurred || value.isEmpty})
     }
 
     /**

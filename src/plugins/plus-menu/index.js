@@ -18,7 +18,5 @@ export default function PlusMenuPlugin(options) {
  * TODO:
  * - complete plusmenu (pbbly with positional rendering as well - see HoverMenu)
  * - add file to plusmenu:
- *      - add file button clicked
  *      - select file from popup
- *      - display file (download)
  */

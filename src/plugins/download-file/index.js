@@ -4,7 +4,9 @@ import DownloadButton from './DownloadButton'
 
 export default function DownloadFile(options) {
     return {
-        changes: {},
+        changes: {
+            insertFile,
+        },
         helpers: {},
         components: {
             DownloadButton,
@@ -13,6 +15,18 @@ export default function DownloadFile(options) {
             RenderFileNode,
         ],
     }
+}
+
+function insertFile(change, src, target) {
+    if(target) {
+        change.select(target)
+    }
+
+    change.insertBlock({
+        type: 'file',
+        isVoid: true,
+        data: { src },
+    })
 }
 
 const RenderFileNode = {

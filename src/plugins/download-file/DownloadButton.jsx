@@ -5,19 +5,17 @@ import Icon from '../helpers/Icon'
 
 class DownloadButton extends Component {
     render() {
-        const { src, children, ...attributes } = this.props
+        const { src, selected, ...attributes } = this.props
 
-        //TODO: the children shouldnt be in here but crashes otherwise
         return (
             <a
-                className="download"
+                className={`download plugin-wrapper ${selected ? 'selected' : ''}`}
                 href={src}
                 target="_blank"
                 {...attributes}
             >
                 <Icon>cloud_download</Icon>
                 Download
-                {children}
             </a>
         )
     }
