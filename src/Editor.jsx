@@ -6,7 +6,6 @@ import schema from './schema'
 import TextMenu from './plugins/text-menu'
 import PlusMenuPlugin from './plugins/plus-menu'
 import CodeBlockPlugin from './plugins/code-block'
-import FilePlugin from './plugins/file'
 import AutoURL from './plugins/auto-url'
 import Image from './plugins/image'
 import Geogebra from './plugins/geogebra'
@@ -14,6 +13,7 @@ import URLHandler from './plugins/url-handler'
 import MarkdownShortcuts from './plugins/markdown-shortcuts'
 import Title from './plugins/title'
 import Iframe from './plugins/iframe'
+import DownloadFile from './plugins/download-file'
 
 
 import Icon from './plugins/helpers/Icon'
@@ -37,6 +37,7 @@ const initialValue = Value.fromJSON(importedValue)
             ...TextMenu().plugins,
             ...MarkdownShortcuts().plugins,
             ...Iframe().plugins,
+            ...DownloadFile().plugins,
             ...URLHandler().plugins,
             ...CodeBlockPlugin().plugins,
             ...Image().plugins,
@@ -62,7 +63,9 @@ const initialValue = Value.fromJSON(importedValue)
      */
     updateMenu = () => {
         const { value } = this.state
-        this.menu.update({resetMenu: value.isBlurred || value.isEmpty})
+        this.hoverMenu.update({resetMenu: value.isBlurred || value.isEmpty})
+        
+        // this.plusMenu.update({resetMenu: value.isBlurred || value.isEmpty})
     }
 
     /**
@@ -159,11 +162,12 @@ const initialValue = Value.fromJSON(importedValue)
                 </div>
                 <div className="slate-wrapper">
                     <HoverMenu
-                        ref={menu => (this.menu = menu)}
+                        ref={menu => (this.hoverMenu = menu)}
                         value={this.state.value}
                         onChange={this.onChange}
                     />
                     <PlusMenu
+                        ref={menu => (this.plusMenu = menu)}
                         value={this.state.value}
                         onChange={this.onChange}
                     />

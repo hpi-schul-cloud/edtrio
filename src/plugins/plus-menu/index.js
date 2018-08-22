@@ -16,7 +16,6 @@ export default function PlusMenuPlugin(options) {
 
 /**
  * TODO:
- * - fix rendering file plugin
  * - complete plusmenu (pbbly with positional rendering as well - see HoverMenu)
  * - add file to plusmenu:
  *      - add file button clicked

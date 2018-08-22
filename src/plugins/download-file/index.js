@@ -2,39 +2,30 @@ import React from 'react'
 import DownloadButton from './DownloadButton'
 
 
-export default function FilePlugin(options) {
+export default function DownloadFile(options) {
     return {
         changes: {},
         helpers: {},
         components: {
             DownloadButton,
         },
-        plugins: {
-            RenderTextBlocks,
-        },
+        plugins: [
+            RenderFileNode,
+        ],
     }
 }
-
-const RenderTextBlocks = {
-    renderNode(props) {
-        console.log('XXXXX')
-        return
-    }
-}
-
-// TODO: fix this not being rendered for some reason... <.<
 
 const RenderFileNode = {
     renderNode(props) {
-        console.log('poiop')
-        const { attributes, node } = props
+        const { attributes, node, isFocused, children } = props
 
-        if(node.type === 'file') {
-            console.log('yeah yeah yeah')
+        if (node.type === 'file') {
             const src = node.data.get('src')
             return (
                 <DownloadButton
                     src={src}
+                    selected={isFocused}
+                    children={children}
                     {...attributes}
                 />
             )

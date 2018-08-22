@@ -26,7 +26,7 @@
 }
 
 .slate-wrapper {
-  height: calc(100vh - 77px);
+  height: calc(30vh - 77px); /* originally 100vh */
 }
 
 .slate-editor {
@@ -83,8 +83,4 @@ a.download:hover {
 
 a.download > i {
   margin-right: 10px;
-}
-
-.plus-menu {
-  background-color: red;
 }

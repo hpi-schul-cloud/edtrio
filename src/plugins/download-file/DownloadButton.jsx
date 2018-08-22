@@ -5,8 +5,9 @@ import Icon from '../helpers/Icon'
 
 class DownloadButton extends Component {
     render() {
-        const { src, ...attributes } = this.props
+        const { src, children, ...attributes } = this.props
 
+        //TODO: the children shouldnt be in here but crashes otherwise
         return (
             <a
                 className="download"
@@ -16,6 +17,7 @@ class DownloadButton extends Component {
             >
                 <Icon>cloud_download</Icon>
                 Download
+                {children}
             </a>
         )
     }
