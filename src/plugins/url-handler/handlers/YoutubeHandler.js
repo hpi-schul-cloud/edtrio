@@ -58,11 +58,12 @@ function YoutubeNode(props) {
         >
             <iframe
                 {...props.attributes}
-                style={{minHeight: '500px'}}
+                style={{minHeight: '30rem'}}
                 src={`https://www.youtube-nocookie.com/embed/${videoId}`}
                 frameBorder="0"
                 allowFullScreen
             />
+            {/*<div className="subtitle is-6 has-text-centered">Add a caption</div>*/}
         </div>
     )
 }

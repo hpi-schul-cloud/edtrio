@@ -6,9 +6,9 @@ class DocumentViewer extends Component {
         const { doc } = this.props
 
         return (
-            <aside className="column documentViewer-wrapper">
-                <h2>Internal document state</h2>
+            <aside className="">
                 <hr />
+                <h2 className="title is-5">Internal document state</h2>
                 <pre>
                     <code>
                         { JSON.stringify(doc, null, 4) }

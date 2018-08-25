@@ -45,7 +45,7 @@ const RenderTitleNode = {
 
         if(node.type === 'title') {
             return (
-                <h1 {...attributes}>
+                <h1 className="title is-1" {...attributes}>
                     TITLE: {children}
                 </h1>)
         }
@@ -58,9 +58,15 @@ const RenderSectionNode = {
 
         if(node.type === 'section') {
             return (
-                <div className="section" {...attributes}>
+                <section className="section content has-background-light" {...attributes}>
                     { children }
-                </div>
+                </section>
+            )
+        } else if(node.type === 'p') {
+            return (
+                <p {...attributes}>
+                    { children }
+                </p>
             )
         }
     }

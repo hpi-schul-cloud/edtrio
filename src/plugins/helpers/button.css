@@ -1,9 +1,9 @@
-.button {
+.edtrio-button {
     color: #ccc;
     cursor: pointer;
 }
 
-.button:hover {
+.edtrio-button:hover {
     color: #aaa;
 }
 
@@ -11,11 +11,11 @@
     color: black;
 }
 
-.button.reversed {
+.edtrio-button.reversed {
     color: #aaa;
 }
 
-.button.reversed:hover {
+.edtrio-button.reversed:hover {
     color: #ccc;
 }
 

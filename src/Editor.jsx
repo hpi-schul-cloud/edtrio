@@ -166,9 +166,9 @@ const initialValue = Value.fromJSON(importedValue)
         const PlusMenu = PlusMenuPlugin().components.PlusMenu
 
         return (
-            <div className="column">
+            <div className="container">
                 <Uploader />
-                <div className="toolbar">
+                <div className="">
                     <Button
                         reversed
                         active={false}
@@ -205,17 +205,17 @@ const initialValue = Value.fromJSON(importedValue)
                         <Icon>error</Icon>
                     </Button>
                 </div>
-                <div className="slate-wrapper">
+                <div className="">
                     <HoverMenu
                         ref={menu => (this.hoverMenu = menu)}
                         value={this.state.value}
                         onChange={this.onChange}
                     />
-                    <PlusMenu
+                    {/*<PlusMenu
                         ref={menu => (this.plusMenu = menu)}
                         value={this.state.value}
                         onChange={this.onChange}
-                    />
+                    />*/}
                     <SlateEditor
                         autoFocus
                         spellCheck

@@ -34,12 +34,17 @@ function ImageNode(props) {
     const { src, selected, ...attributes} = props
 
     return (
-        <img
-            src={src}
-            className={`image plugin-wrapper ${selected ? 'selected' : ''}`}
-            alt="Uploaded by user"
-            {...attributes}
-        />
+        <figure>
+            <img
+                src={src}
+                className={`image plugin-wrapper ${selected ? 'selected' : ''}`}
+                alt="Uploaded by user"
+                {...attributes}
+            />
+            {/*<figcaption>
+            Figure 1: Some beautiful placeholders
+            </figcaption>*/}
+        </figure>
     )
 }
 

@@ -34,7 +34,10 @@ class Uploader extends Component {
         return (
             <div>
                 <link href="https://transloadit.edgly.net/releases/uppy/v0.27.1/dist/uppy.min.css" rel="stylesheet"></link>
-                <button onClick={this.handleModalClick}>
+                <button
+                    className="button"
+                    onClick={this.handleModalClick}
+                >
                     {this.state.open ? 'Close dashboard' : 'Upload files'}
                 </button>
                 <DashboardModal

@@ -6,6 +6,7 @@
     "@uppy/core": "^0.27.0",
     "@uppy/react": "^0.27.1",
     "@uppy/tus": "^0.27.1",
+    "bulma": "^0.7.1",
     "immutable": "^3.8.2",
     "is-hotkey": "^0.1.2",
     "is-url": "^1.2.4",
