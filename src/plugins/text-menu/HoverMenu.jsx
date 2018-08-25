@@ -29,7 +29,6 @@ class HoverMenu extends Component {
             >
                 {this.renderMarkButton('bold', 'format_bold')}
                 {this.renderMarkButton('italic', 'format_italic')}
-                {this.renderMarkButton('underlined', 'format_underlined')}
                 {this.renderMarkButton('code', 'code')}
                 {this.renderBlockButton('h1', 'looks_one', this.onClickBlock)}
                 {this.renderBlockButton('h2', 'looks_two', this.onClickBlock)}

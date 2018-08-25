@@ -27,8 +27,6 @@ const RenderTextMarks = {
                 return <code {...attributes}>{children}</code>
             case 'italic':
                 return <em {...attributes}>{children}</em>
-            case 'underlined':
-                return <u {...attributes}>{children}</u>
             default:
                 return
         }
