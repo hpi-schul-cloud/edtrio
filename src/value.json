@@ -9,7 +9,7 @@
                         "object": "text",
                         "leaves": [
                             {
-                                "text": "This ma title dude"
+                                "text": ""
                             }
                         ]
                     }
@@ -27,7 +27,7 @@
                                 "object": "text",
                                 "leaves": [
                                     {
-                                        "text": "Here some text"
+                                        "text": "Lorem ipsum"
                                     }
                                 ]
                             }

@@ -16,6 +16,10 @@ import Iframe from './plugins/iframe'
 import DownloadFile from './plugins/download-file'
 
 
+//TODO: remove
+import Uploader from './plugins/download-file/Uploader'
+
+
 import Icon from './plugins/helpers/Icon'
 import Button from './plugins/helpers/Button'
 import insertParagraph from './plugins/helpers/insertParagraph'
@@ -163,6 +167,7 @@ const initialValue = Value.fromJSON(importedValue)
 
         return (
             <div className="column">
+                <Uploader />
                 <div className="toolbar">
                     <Button
                         reversed
