@@ -127,38 +127,11 @@ const initialValue = Value.fromJSON(importedValue)
     }
 
     onClickNewSectionButton = event => {
-        //const { insertGeogebraNode } = Geogebra().changes
-
         /*
-            function insertGeogebraNode(change, id, target) {
-                if(target) {
-                    change.select(target)
-                }
-
-                change.insertBlock({
-                    type: 'geogebra',
-                    isVoid: true,
-                    data: { id }
-                })
-            }
-        */
-
         event.preventDefault()
-
-        const change = this.state.value.change().collapseToEnd().splitBlock()
-        
-        /*insertBlock({
-            type: 'section'
-        })
-        /*
-        
-        const newSection = Block.create({
-            type: 'section'
-        })
-        const parentDoc = this.state.value.change().value.anchorBlock
-        
-        const change = this.state.value.change().insertNodeByKey(parentDoc.key, parentDoc.nodes.size, newSection)*/
+        const change = this.state.value.change().yadada
         this.onChange(change)
+        */
     }
 
     render() {
@@ -197,13 +170,6 @@ const initialValue = Value.fromJSON(importedValue)
                     >
                         <Icon>functions</Icon>
                     </Button>
-                    <Button
-                        reversed
-                        active={false}
-                        onMouseDown={this.onClickNewSectionButton}
-                    >
-                        <Icon>error</Icon>
-                    </Button>
                 </div>
                 <div className="">
                     <HoverMenu
@@ -226,6 +192,15 @@ const initialValue = Value.fromJSON(importedValue)
                         placeholder="You can start typing..."
                         className="slate-editor"
                     />
+                    <button
+                        className="button"
+                        onMouseDown={this.onClickNewSectionButton}
+                    >
+                        <span className="icon">
+                            <i className="fas fa-plus"></i>
+                        </span>
+                        <span>Add section</span>
+                    </button>
                 </div>
                 {
                     process.env.NODE_ENV === 'development' ? (
