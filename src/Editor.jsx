@@ -210,15 +210,20 @@ const initialValue = Value.fromJSON(importedValue)
                         placeholder="You can start typing..."
                         className="slate-editor"
                     />
-                    <button
-                        className="button"
-                        onMouseDown={this.onClickNewSectionButton}
-                    >
-                        <span className="icon">
-                            <i className="fas fa-plus"></i>
-                        </span>
-                        <span>Add section</span>
-                    </button>
+                    <div className="level">
+                        <button
+                            className="level-item button is-white"
+                            style={{
+                                margin: '1rem 0'
+                            }}
+                            onMouseDown={this.onClickNewSectionButton}
+                        >
+                            <span className="icon">
+                                <i className="fas fa-plus"></i>
+                            </span>
+                            <span>Add section</span>
+                        </button>
+                    </div>
                 </div>
                 {
                     process.env.NODE_ENV === 'development' ? (
