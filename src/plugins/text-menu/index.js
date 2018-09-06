@@ -21,11 +21,11 @@ const RenderTextMarks = {
         const { children, mark, attributes } = props
     
         switch (mark.type) {
-            case 'bold':
+            case 'strong':
                 return <strong {...attributes}>{children}</strong>
             case 'code':
                 return <code {...attributes}>{children}</code>
-            case 'italic':
+            case 'em':
                 return <em {...attributes}>{children}</em>
             default:
                 return

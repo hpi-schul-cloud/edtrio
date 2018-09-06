@@ -27,8 +27,8 @@ class HoverMenu extends Component {
                 style={this.state.style}
                 ref={wrapper => (this.menuWrapper = wrapper)}
             >
-                {this.renderMarkButton('bold', 'format_bold')}
-                {this.renderMarkButton('italic', 'format_italic')}
+                {this.renderMarkButton('strong', 'format_bold')}
+                {this.renderMarkButton('em', 'format_italic')}
                 {this.renderMarkButton('code', 'code')}
                 {this.renderBlockButton('h1', 'looks_one', this.onClickBlock)}
                 {this.renderBlockButton('h2', 'looks_two', this.onClickBlock)}
