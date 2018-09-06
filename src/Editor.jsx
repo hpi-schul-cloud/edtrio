@@ -157,79 +157,87 @@ const initialValue = Value.fromJSON(importedValue)
         const PlusMenu = PlusMenuPlugin().components.PlusMenu
 
         return (
-            <div className="container">
-                {/*<Uploader />*/}
-                <div className="">
-                    <Button
-                        reversed
-                        active={false}
-                        onMouseDown={this.onClickCodeButton}
-                    >
-                        <Icon>code</Icon>
-                    </Button>
-                    <Button
-                        reversed
-                        active={false}
-                        onMouseDown={this.onClickImageButton}
-                    >
-                        <Icon>photo</Icon>
-                    </Button>
-                    <Button
-                        reversed
-                        active={false}
-                        onMouseDown={this.onClickIframeButton}
-                    >
-                        <Icon>picture_in_picture</Icon>
-                    </Button>
-                    <Button
-                        reversed
-                        active={false}
-                        onMouseDown={this.onClickGeogebraButton}
-                    >
-                        <Icon>functions</Icon>
-                    </Button>
-                </div>
-                <div className="">
-                    <HoverMenu
-                        ref={menu => (this.hoverMenu = menu)}
-                        value={this.state.value}
-                        onChange={this.onChange}
-                    />
-                    {/*<PlusMenu
-                        ref={menu => (this.plusMenu = menu)}
-                        value={this.state.value}
-                        onChange={this.onChange}
-                    />*/}
-                    <SlateEditor
-                        autoFocus
-                        spellCheck
-                        schema={schema}
-                        plugins={this.plugins}
-                        value={this.state.value}
-                        onChange={this.onChange}
-                        placeholder="You can start typing..."
-                        className="slate-editor"
-                    />
-                    <div className="level">
-                        <button
-                            className="level-item button is-white"
-                            style={{
-                                margin: '1rem 0'
-                            }}
-                            onMouseDown={this.onClickNewSectionButton}
+            <div class="columns">
+                <div class="column" />
+                <div className="column is-three-quarters">
+                    {/*<Uploader />*/}
+                    <div className="">
+                        <Button
+                            reversed
+                            active={false}
+                            onMouseDown={this.onClickCodeButton}
                         >
-                            <span className="icon">
-                                <i className="fas fa-plus"></i>
-                            </span>
-                            <span>Add section</span>
-                        </button>
+                            <Icon>code</Icon>
+                        </Button>
+                        <Button
+                            reversed
+                            active={false}
+                            onMouseDown={this.onClickImageButton}
+                        >
+                            <Icon>photo</Icon>
+                        </Button>
+                        <Button
+                            reversed
+                            active={false}
+                            onMouseDown={this.onClickIframeButton}
+                        >
+                            <Icon>picture_in_picture</Icon>
+                        </Button>
+                        <Button
+                            reversed
+                            active={false}
+                            onMouseDown={this.onClickGeogebraButton}
+                        >
+                            <Icon>functions</Icon>
+                        </Button>
                     </div>
+                    <div className="">
+                        <HoverMenu
+                            ref={menu => (this.hoverMenu = menu)}
+                            value={this.state.value}
+                            onChange={this.onChange}
+                        />
+                        {/*<PlusMenu
+                            ref={menu => (this.plusMenu = menu)}
+                            value={this.state.value}
+                            onChange={this.onChange}
+                        />*/}
+                        <SlateEditor
+                            autoFocus
+                            spellCheck
+                            schema={schema}
+                            plugins={this.plugins}
+                            value={this.state.value}
+                            onChange={this.onChange}
+                            placeholder="You can start typing..."
+                            className="slate-editor"
+                        />
+                        <div className="level">
+                            <button
+                                className="level-item button is-white"
+                                style={{
+                                    margin: '1rem 0'
+                                }}
+                                onMouseDown={this.onClickNewSectionButton}
+                            >
+                                <span className="icon">
+                                    <i className="fas fa-plus"></i>
+                                </span>
+                                <span>Add section</span>
+                            </button>
+                        </div>
+                    </div>
+                    {
+                        process.env.NODE_ENV === 'development' ? (
+                            <React.Fragment>
+                                {/*TODO: remove ugly spacer <3*/}
+                                <div style={{height: '500px'}} />
+                                <DocumentViewer doc={this.state.value} />
+                            </React.Fragment>
+                        ) : null
+                    }
                 </div>
-                {
-                    process.env.NODE_ENV === 'development' ? (
-                        <DocumentViewer doc={this.state.value} />
-                    ) : null
-                }
+                <div class="column" />
             </div>
         )
     }
