@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Editor as SlateEditor } from 'slate-react'
-import { Value, Block } from 'slate'
+import { Text, Value, Block } from 'slate'
 import schema from './schema'
 
 import TextMenu from './plugins/text-menu'
@@ -127,11 +127,24 @@ const initialValue = Value.fromJSON(importedValue)
     }
 
     onClickNewSectionButton = event => {
-        /*
         event.preventDefault()
-        const change = this.state.value.change().yadada
-        this.onChange(change)
-        */
+
+        const newSection = Block.create({
+            type: 'section',
+            nodes: [Text.create()]
+        })
+
+        const change = this.state.value.change()
+        const document = change.value.document
+        const lastIndex = document.nodes.count()
+        
+        const appendSectionChange = change.insertNodeByKey(
+            document.key,
+            lastIndex,
+            newSection
+        )
+        
+        this.onChange(appendSectionChange)
     }
 
     render() {

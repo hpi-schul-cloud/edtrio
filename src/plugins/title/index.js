@@ -59,7 +59,7 @@ const RenderSectionNode = {
         if(node.type === 'section') {
             return (
                 <section className="section content has-background-light" {...attributes}>
-                    SECTION { children }
+                    { children }
                 </section>
             )
         } else if(node.type === 'p') {
