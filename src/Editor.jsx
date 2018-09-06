@@ -140,7 +140,7 @@ const initialValue = Value.fromJSON(importedValue)
 
         return (
             <div className="container">
-                <Uploader />
+                {/*<Uploader />*/}
                 <div className="">
                     <Button
                         reversed
