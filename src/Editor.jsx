@@ -131,7 +131,12 @@ const initialValue = Value.fromJSON(importedValue)
 
         const newSection = Block.create({
             type: 'section',
-            nodes: [Text.create()]
+            nodes: [
+                Block.create({
+                    type: 'p',
+                    nodes: [Text.create()]
+                })
+            ]
         })
 
         const change = this.state.value.change()
