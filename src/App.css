@@ -1,38 +1,11 @@
-.documentViewer-wrapper {
+/*.documentViewer-wrapper {
   background-color: #222;
   color: white;
   padding: 5px;
   max-height: 100vh;
   overflow: auto;
 }
-
-.row {
-  display: flex;
-}
-
-.column {
-  max-width: 75%;
-  margin: 0 auto;
-}
-
-.toolbar {
-  background-color: grey;
-  padding: 20px;
-  margin-bottom: 10px;
-}
-
-.toolbar > span {
-  padding: 5px;
-}
-
-.slate-wrapper {
-  height: calc(100vh - 77px); /* originally 100vh */
-}
-
-.slate-editor {
-  min-height: calc(100% - 50px);
-  margin-bottom: 50px;
-}
+*/
 
 .plugin-wrapper {
   margin: 20px 0;
@@ -46,20 +19,7 @@
   box-shadow: 0 0 0 4px rgba(175, 4, 55, 1);
 }
 
-blockquote {
-  border-left: 2px solid #ddd;
-  margin-left: 0;
-  margin-right: 0;
-  padding-left: 10px;
-  color: #aaa;
-  font-style: italic;
-}
-
-.section {
-  background-color: lightgray;
-  padding: 20px;
-  /*border: 1px solid green;*/
-}
+/*
 
 .iframe {
   width: 100%;
@@ -86,3 +46,4 @@ a.download:hover {
 a.download > i {
   margin-right: 10px;
 }
+*/

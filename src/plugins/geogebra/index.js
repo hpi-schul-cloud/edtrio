@@ -47,3 +47,17 @@ const RenderGeogebraNode = {
         }
     }
 }
+
+/**
+ * onClickGeogebraButton = event => {
+        const { insertGeogebraNode } = Geogebra().changes
+
+        event.preventDefault()
+        const id = window.prompt('Enter the geogebra id:') || 'RHYH3UQ8'
+        if(!id) return
+
+        const change = this.state.value.change().call(insertGeogebraNode, id).call(insertParagraph)
+
+        this.onChange(change)
+    }
+ */

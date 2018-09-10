@@ -3,6 +3,12 @@ import ReactDOM from 'react-dom'
 import { findDOMNode } from 'slate-react'
 import './style.css'
 
+import {
+    onClickImageButton,
+    onClickCodeButton,
+    onClickIframeButton,
+} from './actions'
+
 
 class PlusMenu extends Component {
     constructor(props) {
@@ -23,18 +29,18 @@ class PlusMenu extends Component {
                 style={this.state.style}
                 ref={wrapper => (this.menuWrapper = wrapper)}
             >
-                {this.renderBlockButton('img', 'fa-image', 'Image')}
-                {this.renderBlockButton('code', 'fa-code', 'Code Block')}
-                {this.renderBlockButton('iframe', 'fa-external-link-square-alt', 'Iframe')}
+                {this.renderBlockButton('img', 'fa-image', 'Image', onClickImageButton)}
+                {this.renderBlockButton('code', 'fa-code', 'Code Block', onClickCodeButton)}
+                {this.renderBlockButton('iframe', 'fa-external-link-square-alt', 'Iframe', onClickIframeButton)}
             </div>,
             root
         )
     }
 
-    renderBlockButton = (type, icon, helperText=null, onClickBlock= () => {}) => (
+    renderBlockButton = (type, icon, helperText=null, onClickBlock) => (
         <a
             title={helperText}
-            onMouseDown={event => onClickBlock(event, type)}
+            onMouseDown={event => onClickBlock(event, this.props.value.change(), this.props.onChange)}
         >
             <span className="icon is-medium has-text-grey-lighter">
                 <i className={`fas ${icon} fa-lg`}></i>

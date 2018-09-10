@@ -15,15 +15,6 @@ import Title from './plugins/title'
 import Iframe from './plugins/iframe'
 import DownloadFile from './plugins/download-file'
 
-
-//TODO: remove
-import Uploader from './plugins/download-file/Uploader'
-
-
-import Icon from './plugins/helpers/Icon'
-import Button from './plugins/helpers/Button'
-import insertParagraph from './plugins/helpers/insertParagraph'
-
 import DocumentViewer from './dev-document-viewer/DocumentViewer'
 
 import importedValue from './value'
@@ -71,62 +62,6 @@ const initialValue = Value.fromJSON(importedValue)
         this.plusMenu.update({resetMenu: value.isBlurred || !value.blocks.some(node => node.type === 'p')})
     }
 
-    /**
-     * handles clicks on the codeblock button and
-     * forwards them accordingly to plugins/code-block
-     */
-    onClickCodeButton = event => {
-        event.preventDefault()
-
-        const { value } = this.state
-        const change = value.change()
-
-        const isCode = change.value.blocks.some(block => block.type === 'code')
-        change.setBlocks(isCode ? 'p' : 'code')
-
-        this.onChange(change)
-    }
-
-    /**
-     * handles clicks on the imageblock button and
-     * forwards them accordingly to plugins/image
-     */
-    onClickImageButton = event => {
-        const { insertImage } = Image().changes
-
-        event.preventDefault()
-        const src = window.prompt('Enter the URL of the image:')
-        if (!src) return
-
-        const change = this.state.value.change().call(insertImage, src).call(insertParagraph)
-
-        this.onChange(change)
-    }
-
-    onClickIframeButton = event => {
-        const { insertIframe } = Iframe().changes
-
-        event.preventDefault()
-        const src = window.prompt('Enter the URL of the iframe:')
-        if (!src) return
-
-        const change = this.state.value.change().call(insertIframe, src).call(insertParagraph)
-
-        this.onChange(change)
-    }
-
-    onClickGeogebraButton = event => {
-        const { insertGeogebraNode } = Geogebra().changes
-
-        event.preventDefault()
-        const id = window.prompt('Enter the geogebra id:') || 'RHYH3UQ8'
-        if(!id) return
-
-        const change = this.state.value.change().call(insertGeogebraNode, id).call(insertParagraph)
-
-        this.onChange(change)
-    }
-
     onClickNewSectionButton = event => {
         event.preventDefault()
 
@@ -162,36 +97,6 @@ const initialValue = Value.fromJSON(importedValue)
                 <div className="column" />
                 <div className="column is-three-quarters">
                     {/*<Uploader />*/}
-                    <div className="">
-                        <Button
-                            reversed
-                            active={false}
-                            onMouseDown={this.onClickCodeButton}
-                        >
-                            <Icon>code</Icon>
-                        </Button>
-                        <Button
-                            reversed
-                            active={false}
-                            onMouseDown={this.onClickImageButton}
-                        >
-                            <Icon>photo</Icon>
-                        </Button>
-                        <Button
-                            reversed
-                            active={false}
-                            onMouseDown={this.onClickIframeButton}
-                        >
-                            <Icon>picture_in_picture</Icon>
-                        </Button>
-                        <Button
-                            reversed
-                            active={false}
-                            onMouseDown={this.onClickGeogebraButton}
-                        >
-                            <Icon>functions</Icon>
-                        </Button>
-                    </div>
                     <div className="">
                         <HoverMenu
                             ref={menu => (this.hoverMenu = menu)}
