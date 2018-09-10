@@ -157,8 +157,8 @@ const initialValue = Value.fromJSON(importedValue)
         const PlusMenu = PlusMenuPlugin().components.PlusMenu
 
         return (
-            <div class="columns">
-                <div class="column" />
+            <div className="columns">
+                <div className="column" />
                 <div className="column is-three-quarters">
                     {/*<Uploader />*/}
                     <div className="">
@@ -237,7 +237,7 @@ const initialValue = Value.fromJSON(importedValue)
                         ) : null
                     }
                 </div>
-                <div class="column" />
+                <div className="column" />
             </div>
         )
     }
