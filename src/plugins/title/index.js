@@ -36,23 +36,14 @@ const RenderTitleNode = {
     renderNode(props) {
         const { attributes, children, node } = props
 
-        /**
-         * TODO:
-         * - refactor a lil prettier
-         * - make text greyish when placeholder
-         * - pbbly move caret to beginning of row / text unselectable
-         */
-
         const leavesOfFirstChild = children[0].props.block.get('nodes').toJSON()[0].leaves
-        const noText = leavesOfFirstChild ? leavesOfFirstChild[0].text.length : 'LOL'
-        console.log(noText)
-
+        const containsText = leavesOfFirstChild ? Boolean(leavesOfFirstChild[0].text.length) : true
 
         if(node.type === 'title') {
             return (
                 <h1 className="title is-1" {...attributes}>
                     {children}
-                    {noText === 0 ? 'Give me a name' : null}
+                    {!containsText ? <span className="has-text-grey-light">Give me a name</span> : null}
                 </h1>)
         }
     }
