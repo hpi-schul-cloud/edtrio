@@ -9,7 +9,15 @@
                         "object": "text",
                         "leaves": [
                             {
-                                "text": ""
+                                "object": "leaf",
+                                "text": "This should break the schema",
+                                "marks": [
+                                    {
+                                        "object": "mark",
+                                        "type": "em",
+                                        "data": {}
+                                    }
+                                ]
                             }
                         ]
                     }
