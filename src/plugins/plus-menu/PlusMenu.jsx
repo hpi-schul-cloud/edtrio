@@ -1,11 +1,6 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-
-import Button from '../helpers/Button'
-import Icon from '../helpers/Icon'
-import insertParagraph from '../helpers/insertParagraph'
-import DownloadFile from '../download-file'
-
+import { findDOMNode } from 'slate-react'
 import './style.css'
 
 
@@ -17,45 +12,50 @@ class PlusMenu extends Component {
             style: {}
         }
     }
-    
+  
     render() {
+        const { className } = this.props
         const root = window.document.getElementById('root')
-
+    
         return ReactDOM.createPortal(
             <div
-                className="plus-menu"
+                className={`plus-menu ${className}`}
                 style={this.state.style}
                 ref={wrapper => (this.menuWrapper = wrapper)}
             >
-                {this.renderPlusMenuButton('file', 'attach_file', this.dealWithMaFileClick)}
+                <button>Hey Dude</button>
             </div>,
             root
         )
     }
 
-    renderPlusMenuButton = (type, icon, onClickButton) => {
-        return (
-            <Button onMouseDown={event => {
-                onClickButton(event, type)
-            }}>
-                <Icon>{icon}</Icon>
-            </Button>
-        )
-    }
+    /**
+     * Update the menu's absolute position
+     */
+    update = ({ resetMenu = false }) => {
+        if(!this.menuWrapper) {
+            return
+        }
 
-    dealWithMaFileClick = (event, type) => {
-        console.log(`CLICK ${event} ${type}`)
+        if(resetMenu) {
+            this.setState({
+                style: {}
+            })
+            return
+        }
 
-        const { insertFile } = DownloadFile().changes
+        const nodeEl = findDOMNode(this.props.value.startBlock)
+        const nodeElBBox = nodeEl.getBoundingClientRect()
+        const top = nodeElBBox.top + window.pageYOffset
 
-        const { value, onChange } = this.props
-        event.preventDefault()
-        const src = window.prompt('Enter file url thxxx')
-        if(!src) return
+        const right = window.innerWidth - (nodeElBBox.width + nodeElBBox.x)
 
-        const change = value.change().call(insertFile, src).call(insertParagraph)
-
-        onChange(change)
+        this.setState({
+            style: {
+                top: `${top}px`,
+                right: `${right}px`
+            }
+        })
     }
 }
 

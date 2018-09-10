@@ -68,6 +68,7 @@ const initialValue = Value.fromJSON(importedValue)
     updateMenu = () => {
         const { value } = this.state
         this.hoverMenu.update({resetMenu: value.isBlurred || value.isEmpty})
+        this.plusMenu.update({resetMenu: value.isBlurred || !value.blocks.some(node => node.type === 'p')})
     }
 
     /**
@@ -197,11 +198,11 @@ const initialValue = Value.fromJSON(importedValue)
                             value={this.state.value}
                             onChange={this.onChange}
                         />
-                        {/*<PlusMenu
+                        <PlusMenu
                             ref={menu => (this.plusMenu = menu)}
                             value={this.state.value}
                             onChange={this.onChange}
-                        />*/}
+                        />
                         <SlateEditor
                             autoFocus
                             spellCheck

@@ -61,7 +61,7 @@ const RenderSectionNode = {
             )
         } else if(node.type === 'p') {
             return (
-                <p {...attributes}>
+                <p {...attributes} style={{border: '1px solid red'}}>
                     { children }
                 </p>
             )
