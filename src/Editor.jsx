@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Editor as SlateEditor } from 'slate-react'
 import { Value } from 'slate'
-import schema from './schema'
 
 import TextMenu from './plugins/text-menu'
 import PlusMenuPlugin from './plugins/plus-menu'
@@ -88,7 +87,6 @@ const initialValue = Value.fromJSON(importedValue)
                         <SlateEditor
                             autoFocus
                             spellCheck
-                            schema={schema}
                             plugins={this.plugins}
                             value={this.state.value}
                             onChange={this.onChange}
