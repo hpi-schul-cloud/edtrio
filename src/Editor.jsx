@@ -209,7 +209,6 @@ const initialValue = Value.fromJSON(importedValue)
                             plugins={this.plugins}
                             value={this.state.value}
                             onChange={this.onChange}
-                            placeholder="You can start typing..."
                             className="slate-editor"
                         />
                         <div className="level">

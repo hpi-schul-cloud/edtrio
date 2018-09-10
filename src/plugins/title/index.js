@@ -36,10 +36,10 @@ const RenderTitleNode = {
     renderNode(props) {
         const { attributes, children, node } = props
 
-        const leavesOfFirstChild = children[0].props.block.get('nodes').toJSON()[0].leaves
-        const containsText = leavesOfFirstChild ? Boolean(leavesOfFirstChild[0].text.length) : true
-
         if(node.type === 'title') {
+            const leavesOfFirstChild = children[0].props.block.get('nodes').toJSON()[0].leaves
+            const containsText = leavesOfFirstChild ? Boolean(leavesOfFirstChild[0].text.length) : true
+
             return (
                 <h1 className="title is-1" {...attributes}>
                     {children}
