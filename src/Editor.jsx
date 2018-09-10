@@ -212,9 +212,10 @@ const initialValue = Value.fromJSON(importedValue)
                             onChange={this.onChange}
                             className="slate-editor"
                         />
+                        {/* TODO: Move button to own component and add hover styles */}
                         <div className="level">
                             <button
-                                className="level-item button is-white"
+                                className="level-item button is-white has-text-grey"
                                 style={{
                                     margin: '1rem 0'
                                 }}

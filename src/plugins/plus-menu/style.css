@@ -1,9 +1,17 @@
 .plus-menu {
-    padding: 8px 7px 6px;
+    padding: 0 10px 15px 15px;
     position: absolute;
     top: -10000px;
-    opacity: 0.5;
-    background-color: red;
+    opacity: 1;
     border-radius: 4px;
     z-index: 1000;
 }
+
+.plus-menu:hover .icon * {
+    color: hsl(0, 0%, 48%)
+}
+
+.plus-menu .icon:hover * {
+    color: hsl(0, 0%, 4%)
+}
+
