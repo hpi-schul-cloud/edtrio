@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Editor as SlateEditor } from 'slate-react'
-import { Text, Value, Block } from 'slate'
+import { Value } from 'slate'
 import schema from './schema'
 
 import TextMenu from './plugins/text-menu'
@@ -16,9 +16,11 @@ import Iframe from './plugins/iframe'
 import DownloadFile from './plugins/download-file'
 
 import DocumentViewer from './dev-document-viewer/DocumentViewer'
+import AddSection from './plugins/add-section'
 
 import importedValue from './value'
 const initialValue = Value.fromJSON(importedValue)
+
 
   class Editor extends Component {
     constructor(props) {
@@ -62,42 +64,17 @@ const initialValue = Value.fromJSON(importedValue)
         this.plusMenu.update({resetMenu: value.isBlurred || !value.blocks.some(node => node.type === 'p')})
     }
 
-    onClickNewSectionButton = event => {
-        event.preventDefault()
-
-        const newSection = Block.create({
-            type: 'section',
-            nodes: [
-                Block.create({
-                    type: 'p',
-                    nodes: [Text.create()]
-                })
-            ]
-        })
-
-        const change = this.state.value.change()
-        const document = change.value.document
-        const lastIndex = document.nodes.count()
-        
-        const appendSectionChange = change.insertNodeByKey(
-            document.key,
-            lastIndex,
-            newSection
-        )
-        
-        this.onChange(appendSectionChange)
-    }
-
     render() {
         const HoverMenu = TextMenu().components.HoverMenu
         const PlusMenu = PlusMenuPlugin().components.PlusMenu
+        const AddSectionButton = AddSection().components.AddSectionButton
 
         return (
             <div className="columns">
                 <div className="column" />
                 <div className="column is-three-quarters">
                     {/*<Uploader />*/}
-                    <div className="">
+                    <div style={{marginTop: '100px'}}>
                         <HoverMenu
                             ref={menu => (this.hoverMenu = menu)}
                             value={this.state.value}
@@ -117,21 +94,10 @@ const initialValue = Value.fromJSON(importedValue)
                             onChange={this.onChange}
                             className="slate-editor"
                         />
-                        {/* TODO: Move button to own component and add hover styles */}
-                        <div className="level">
-                            <button
-                                className="level-item button is-white has-text-grey"
-                                style={{
-                                    margin: '1rem 0'
-                                }}
-                                onMouseDown={this.onClickNewSectionButton}
-                            >
-                                <span className="icon">
-                                    <i className="fas fa-plus"></i>
-                                </span>
-                                <span>Add section</span>
-                            </button>
-                        </div>
+                        <AddSectionButton
+                            value={this.state.value}
+                            onChange={this.onChange}
+                        />
                     </div>
                     {
                         process.env.NODE_ENV === 'development' ? (
