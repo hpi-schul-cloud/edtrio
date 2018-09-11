@@ -63,7 +63,11 @@ const RenderSectionNode = {
                                     }   
                                 }>
                                     <span className="icon is-small">
-                                    <i className={`fas ${isVisible ? 'fa-eye' : 'fa-eye-slash'}`}></i>
+                                    {
+                                        
+                                        console.log(`isVisible is ${isVisible} therefore ${!!isVisible ? 'fa-eye' : 'fa-eye-slash'}`)
+                                    }
+                                    <i className={`fas ${!!isVisible ? 'fa-eye' : 'fa-eye-slash'}`}></i>
                                     </span>
                                 </a>
                             </aside>
