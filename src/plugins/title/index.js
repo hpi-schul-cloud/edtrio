@@ -10,7 +10,7 @@ export default function Title(options) {
             RenderTitleNode,
             RenderSectionNode,
             HandleKeyDown,
-            schema,
+            { schema }
         ],
     }
 }
@@ -18,10 +18,7 @@ export default function Title(options) {
 const schema = {
     blocks: {
         title: {
-            marks: [],
-            normalize(change, violation, context) {
-                console.error(violation)
-            }
+            marks: []
         }
     }
 }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Editor as SlateEditor } from 'slate-react'
-import { Value } from 'slate'
+import { Value, Block } from 'slate'
 
 import TextMenu from './plugins/text-menu'
 import PlusMenuPlugin from './plugins/plus-menu'
@@ -19,6 +19,33 @@ import AddSection from './plugins/add-section'
 
 import importedValue from './value'
 const initialValue = Value.fromJSON(importedValue)
+
+const schema = {
+    document: {
+        nodes: [
+            { match: [{ type: 'title' }], min: 1, max: 1 },
+            { match: [{ type: 'section' }], min: 1 }
+        ],
+        normalize: (change, { code, node, child, index }) => {
+            if(index !== 0) {
+                return
+            }
+
+            // only deal with title nodes here
+            switch(code) {
+                case 'child_type_invalid': {
+
+                    return change.setNodeByKey(child.key, 'title')
+                }
+                case 'child_required': {
+                    console.log('mhm')
+                    const block = Block.create(index === 0 ? 'title' : 'paragraph')
+                    //return change.insertNodeByKey(node.key, index, block)
+                }
+            }
+        }
+    }
+}
 
 
   class Editor extends Component {
@@ -87,6 +114,7 @@ const initialValue = Value.fromJSON(importedValue)
                         <SlateEditor
                             autoFocus
                             spellCheck
+                            schema={schema}
                             plugins={this.plugins}
                             value={this.state.value}
                             onChange={this.onChange}

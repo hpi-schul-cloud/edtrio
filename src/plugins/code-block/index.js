@@ -14,8 +14,17 @@ export default function Code(options) {
         },
         plugins: [
             Hotkey('Control+c', toggleCodeBlock),
-            RenderCodeNode
+            RenderCodeNode,
+            { schema }
         ]
+    }
+}
+
+const schema = {
+    blocks: {
+        code: {
+            marks: []
+        }
     }
 }
 
