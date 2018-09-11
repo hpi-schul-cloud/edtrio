@@ -11,6 +11,7 @@ import Geogebra from './plugins/geogebra'
 import URLHandler from './plugins/url-handler'
 import MarkdownShortcuts from './plugins/markdown-shortcuts'
 import Title from './plugins/title'
+import Section from './plugins/section'
 import Iframe from './plugins/iframe'
 import DownloadFile from './plugins/download-file'
 
@@ -34,13 +35,16 @@ const schema = {
             // only deal with title nodes here
             switch(code) {
                 case 'child_type_invalid': {
-
+                    console.log('uh')
                     return change.setNodeByKey(child.key, 'title')
                 }
                 case 'child_required': {
                     console.log('mhm')
                     const block = Block.create(index === 0 ? 'title' : 'paragraph')
                     return change.insertNodeByKey(node.key, index, block)
+                }
+                default: {
+                    console.log('some error')
                 }
             }
         }
@@ -57,6 +61,7 @@ const schema = {
 
         this.plugins = [
             ...Title().plugins,
+            ...Section().plugins,
             ...TextMenu().plugins,
             ...MarkdownShortcuts().plugins,
             ...Iframe().plugins,

@@ -18,6 +18,9 @@
             {
                 "object": "block",
                 "type": "section",
+                "data": {
+                    "isVisible": false
+                },
                 "nodes": [
                     {
                         "object": "block",

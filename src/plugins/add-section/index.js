@@ -37,6 +37,9 @@ const onClickNewSectionButton = (event, change, onChange) => {
 
     const newSection = Block.create({
         type: 'section',
+        data: {
+            isVisible: true
+        },
         nodes: [
             Block.create({
                 type: 'p',
