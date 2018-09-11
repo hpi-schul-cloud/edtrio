@@ -1,0 +1,23 @@
+section.section {
+    position: relative;
+    min-height: 200px;
+}
+
+aside.section-controls {
+    padding: 10px;
+
+    position: absolute;
+    bottom: 0;
+    left: -56px;
+
+    display: inline-flex;
+    flex-direction: column;
+}
+
+aside.section-controls a.button {
+    margin-right: 0 !important;
+}
+
+aside.section-controls a.button:last-child {
+    margin-bottom: 0;
+}

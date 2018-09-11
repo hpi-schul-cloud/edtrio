@@ -1,4 +1,5 @@
 import React from 'react'
+import './style.css'
 
 export default function Section(options) {
     return {
@@ -24,15 +25,60 @@ const schema = {
     }
 }
 
+const handleToggleVisibility = (change, onChange) => {
+    const c = change.setValue({
+        data: {
+            isVisible: true
+        }
+    })
+    console.log(c)
+    onChange(c)
+    
+    //console.log(onChange)
+    /*const { insertImage } = Image().changes
+
+    event.preventDefault()
+    const src = window.prompt('Enter the URL of the image:')
+    if (!src) return
+
+    change.call(insertImage, src).call(insertParagraph)
+
+    onChange(change)*/
+}
+
 const RenderSectionNode = {
-    renderNode(props) {
-        const { attributes, children, node } = props
+    renderNode({ attributes, editor, children, node, isFocused }) {
         
         if(node.type === 'section') {
-            console.log(node.data.get('isVisible'))
             return (
                 <section className="section content has-background-light" {...attributes}>
                     { children }
+                    {
+                        isFocused ? (
+                            <aside className="buttons section-controls">
+                                <a className="button is-white">
+                                    <span className="icon is-small">
+                                    <i className="fas fa-chevron-up"></i>
+                                    </span>
+                                </a>
+                                <a className="button is-white">
+                                    <span className="icon is-small">
+                                    <i className="fas fa-chevron-down"></i>
+                                    </span>
+                                </a>
+                                <a className="button is-white" onMouseDown={
+                                    e => {
+                                        e.preventDefault()
+                                        handleToggleVisibility(editor.value.change(), editor.props.onChange)
+                                    }   
+                                }>
+                                    <span className="icon is-small">
+                                    <i className={`fas ${node.data.get('isVisible') ? 'fa-eye' : 'fa-eye-slash'}`}></i>
+                                    </span>
+                                </a>
+                            </aside>
+                        ) : null
+                    }
                 </section>
             )
         } else if(node.type === 'p') {
