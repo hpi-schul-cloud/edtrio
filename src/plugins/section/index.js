@@ -25,31 +25,21 @@ const schema = {
     }
 }
 
-const handleToggleVisibility = (change, onChange) => {
-    const c = change.setValue({
+const handleToggleVisibility = (change, onChange, isVisible) => {
+    const parent = change.value.document.getParent(change.value.anchorBlock.key)
+    const c = change.setNodeByKey(parent.key, {
         data: {
-            isVisible: true
+            isVisible: !isVisible
         }
     })
-    console.log(c)
     onChange(c)
-    
-    //console.log(onChange)
-    /*const { insertImage } = Image().changes
-
-    event.preventDefault()
-    const src = window.prompt('Enter the URL of the image:')
-    if (!src) return
-
-    change.call(insertImage, src).call(insertParagraph)
-
-    onChange(change)*/
 }
 
 const RenderSectionNode = {
     renderNode({ attributes, editor, children, node, isFocused }) {
         
         if(node.type === 'section') {
+            const isVisible = node.data.get('isVisible')
             return (
                 <section className="section content has-background-light" {...attributes}>
                     { children }
@@ -69,11 +59,11 @@ const RenderSectionNode = {
                                 <a className="button is-white" onMouseDown={
                                     e => {
                                         e.preventDefault()
-                                        handleToggleVisibility(editor.value.change(), editor.props.onChange)
+                                        handleToggleVisibility(editor.value.change(), editor.props.onChange, isVisible)
                                     }   
                                 }>
                                     <span className="icon is-small">
-                                    <i className={`fas ${node.data.get('isVisible') ? 'fa-eye' : 'fa-eye-slash'}`}></i>
+                                    <i className={`fas ${isVisible ? 'fa-eye' : 'fa-eye-slash'}`}></i>
                                     </span>
                                 </a>
                             </aside>
