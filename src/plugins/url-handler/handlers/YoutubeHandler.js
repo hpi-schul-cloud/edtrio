@@ -58,6 +58,7 @@ function YoutubeNode(props) {
         >
             <iframe
                 {...props.attributes}
+                title="YouTube Video"
                 style={{minHeight: '30rem'}}
                 src={`https://www.youtube-nocookie.com/embed/${videoId}`}
                 frameBorder="0"

@@ -24,6 +24,8 @@ const HandleKeyDown = {
                 return onBackspace(event, change)
             case 'Enter':
                 return onEnter(event, change)
+            default:
+                //pass
         }
     }
 }
@@ -47,12 +49,12 @@ const onSpace = (event, change) => {
     const type = _getType(chars)
 
     if (!type) return
-    if (type == 'li' && startBlock.type == 'li') return
+    if (type === 'li' && startBlock.type === 'li') return
     event.preventDefault()
 
     change.setBlocks(type)
 
-    if (type == 'li') {
+    if (type === 'li') {
         change.wrapBlock('ul')
     }
 
@@ -72,15 +74,15 @@ const onBackspace = (event, change) => {
     const { value } = change
     const { selection } = value
     if (selection.isExpanded) return
-    if (selection.start.offset != 0) return
+    if (selection.start.offset !== 0) return
 
     const { startBlock } = value
-    if (startBlock.type == 'p') return
+    if (startBlock.type === 'p') return
 
     event.preventDefault()
     change.setBlocks('p')
 
-    if (startBlock.type == 'li') {
+    if (startBlock.type === 'li') {
         change.unwrapBlock('ul')
     }
 
@@ -103,17 +105,17 @@ const onEnter = (event, change) => {
     if (isExpanded) return
 
     const { startBlock } = value
-    if (start.offset == 0 && startBlock.text.length == 0)
+    if (start.offset === 0 && startBlock.text.length === 0)
         return onBackspace(event, change)
-    if (end.offset != startBlock.text.length) return
+    if (end.offset !== startBlock.text.length) return
 
     if (
-        startBlock.type != 'h1' &&
-        startBlock.type != 'h2' &&
-        startBlock.type != 'h3' &&
-        startBlock.type != 'h4' &&
-        startBlock.type != 'h5' &&
-        startBlock.type != 'blockquote'
+        startBlock.type !== 'h1' &&
+        startBlock.type !== 'h2' &&
+        startBlock.type !== 'h3' &&
+        startBlock.type !== 'h4' &&
+        startBlock.type !== 'h5' &&
+        startBlock.type !== 'blockquote'
     ) {
         return
     }
@@ -172,6 +174,8 @@ const RenderMoreTextBlocks = {
                 return <h5 {...attributes}>{children}</h5>
             case 'h5':
                 return <h6 {...attributes}>{children}</h6>
+            default:
+                //pass
         }
     }
 }

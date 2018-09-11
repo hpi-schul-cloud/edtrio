@@ -19,7 +19,7 @@ export default function URLHandler(options) {
 const HandlePaste = {
     onPaste(event, change, editor) {
         const transfer = getEventTransfer(event)
-        const { type, text, files } = transfer
+        const { type, text } = transfer
 
         if(type === 'text') {
             console.log('yeah text')

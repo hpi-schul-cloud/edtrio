@@ -34,6 +34,7 @@ function IframeNode(props) {
     return (
         <iframe
             src={src}
+            title="Iframe"
             frameBorder="0"
             className={`iframe plugin-wrapper ${selected ? 'selected' : ''}`}
             {...attributes}
