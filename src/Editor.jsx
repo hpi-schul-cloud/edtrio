@@ -40,7 +40,7 @@ const schema = {
                 case 'child_required': {
                     console.log('mhm')
                     const block = Block.create(index === 0 ? 'title' : 'paragraph')
-                    //return change.insertNodeByKey(node.key, index, block)
+                    return change.insertNodeByKey(node.key, index, block)
                 }
             }
         }

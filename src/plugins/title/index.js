@@ -10,7 +10,9 @@ export default function Title(options) {
             RenderTitleNode,
             RenderSectionNode,
             HandleKeyDown,
-            { schema }
+            { schema },
+            RenderPlaceholder,
+            RenderPlaceholderP,
         ],
     }
 }
@@ -27,14 +29,14 @@ const HandleKeyDown = {
     onKeyDown(event, change) {
 
         if(event.key === 'Enter') {
-            console.log('pressed the enter')
-
             if(change.value.startBlock.type !== 'title') {
                 return
             }
 
-            event.preventDefault()
-            change.splitBlock().setBlocks('p')
+            
+            //event.preventDefault()
+            //const parent = change.value.document.getParent(change.value.nextBlock.key)
+            //change.moveToRangeOf(parent)
         }
 
         return
@@ -46,15 +48,48 @@ const RenderTitleNode = {
         const { attributes, children, node } = props
 
         if(node.type === 'title') {
-            const leavesOfFirstChild = children[0].props.block.get('nodes').toJSON()[0].leaves
-            const containsText = leavesOfFirstChild ? Boolean(leavesOfFirstChild[0].text.length) : true
-
             return (
                 <h1 className="title is-1" {...attributes}>
                     {children}
-                    {!containsText ? <span className="has-text-grey-light">Give me a name</span> : null}
-                </h1>)
+                </h1>
+            )
         }
+    }
+}
+
+const RenderPlaceholder = {
+    renderPlaceholder({ node }) {
+        if(node.object !== 'block') return
+        if(node.type !== 'title') return
+        if(node.text !== '') return
+
+        return (
+            <span
+                contentEditable={false}
+                style={{ display: 'inline-block', width: '0', whiteSpace: 'nowrap' }}
+                className="has-text-grey-light"
+                >
+                Give me a name
+            </span>
+        )
+    }
+}
+
+const RenderPlaceholderP = {
+    renderPlaceholder({ node }) {
+        if(node.object !== 'block') return
+        if(node.type !== 'p') return
+        if(node.text !== '') return
+
+        return (
+            <span
+                contentEditable={false}
+                style={{ display: 'inline-block', width: '0', whiteSpace: 'nowrap' }}
+                className="has-text-grey"
+                >
+                Now start typing something
+            </span>
+        )
     }
 }
 
