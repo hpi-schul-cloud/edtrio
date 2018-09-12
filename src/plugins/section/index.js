@@ -29,7 +29,16 @@ const schema = {
 }
 
 const handleToggleVisibility = (change, onChange, isVisible) => {
-    const parent = change.value.document.getParent(change.value.anchorBlock.key)
+    let parent = change.value.anchorBlock
+    do {
+        parent = change.value.document.getParent(parent.key)
+        
+        if(!parent) {
+            console.error('Couldn\'t find parent.')
+            return
+        }
+    } while (parent.type !== 'section')
+    
     const c = change.setNodeByKey(parent.key, {
         data: {
             isVisible: !isVisible
