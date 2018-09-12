@@ -61,7 +61,7 @@ const schema = {
         }
 
         this.plugins = [
-            SoftBreak(),
+            //SoftBreak(),
             ...Title().plugins,
             ...Section().plugins,
             ...TextMenu().plugins,
