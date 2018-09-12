@@ -53,7 +53,7 @@ const RenderTitleNode = {
 }
 
 const RenderPlaceholder = {
-    renderPlaceholder({ node }) {
+    renderPlaceholder({ editor, node }) {
         if(node.object !== 'block') return
         if(node.type !== 'title') return
         if(node.text !== '') return
@@ -63,6 +63,14 @@ const RenderPlaceholder = {
                 contentEditable={false}
                 style={{ display: 'inline-block', width: '0', whiteSpace: 'nowrap' }}
                 className="has-text-grey-light"
+                onMouseDown={
+                    e => {
+                        const change = editor.value.change()
+                        const onChange = editor.props.onChange
+                        onChange(change.moveToEndOfNode(node).focus())
+                        return true
+                    }
+                }
                 >
                 Give me a name
             </span>

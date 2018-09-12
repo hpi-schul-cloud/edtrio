@@ -85,7 +85,7 @@ const RenderSectionNode = {
 }
 
 const RenderPlaceholderP = {
-    renderPlaceholder({ node }) {
+    renderPlaceholder({ node, editor }) {
         if(node.object !== 'block') return
         if(node.type !== 'p') return
         if(node.text !== '') return
@@ -95,6 +95,14 @@ const RenderPlaceholderP = {
                 contentEditable={false}
                 style={{ display: 'inline-block', width: '0', whiteSpace: 'nowrap' }}
                 className="has-text-grey"
+                onMouseDown={
+                    e => {
+                        const change = editor.value.change()
+                        const onChange = editor.props.onChange
+                        onChange(change.moveToStartOfNode(node).focus())
+                        return true
+                    }
+                }
                 >
                 Now start typing something
             </span>
