@@ -1,6 +1,9 @@
 import React from 'react'
 import './style.css'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye, faEyeSlash, faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons'
+
 export default function Section(options) {
     return {
         changes: {},
@@ -48,12 +51,12 @@ const RenderSectionNode = {
                             <aside className="buttons section-controls">
                                 <a className="button is-white">
                                     <span className="icon is-small">
-                                    <i className="fas fa-chevron-up"></i>
+                                    <FontAwesomeIcon icon={faChevronUp} />
                                     </span>
                                 </a>
                                 <a className="button is-white">
                                     <span className="icon is-small">
-                                    <i className="fas fa-chevron-down"></i>
+                                    <FontAwesomeIcon icon={faChevronDown} />
                                     </span>
                                 </a>
                                 <a className="button is-white" onMouseDown={
@@ -63,11 +66,7 @@ const RenderSectionNode = {
                                     }   
                                 }>
                                     <span className="icon is-small">
-                                    {
-                                        
-                                        console.log(`isVisible is ${isVisible} therefore ${!!isVisible ? 'fa-eye' : 'fa-eye-slash'}`)
-                                    }
-                                    <i className={`fas ${!!isVisible ? 'fa-eye' : 'fa-eye-slash'}`}></i>
+                                    <FontAwesomeIcon icon={!!isVisible ? faEye : faEyeSlash} />
                                     </span>
                                 </a>
                             </aside>

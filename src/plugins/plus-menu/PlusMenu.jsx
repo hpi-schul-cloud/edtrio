@@ -8,6 +8,8 @@ import {
     onClickCodeButton,
     onClickIframeButton,
 } from './actions'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faImage, faCode, faExternalLinkSquareAlt } from '@fortawesome/free-solid-svg-icons';
 
 
 class PlusMenu extends Component {
@@ -29,9 +31,9 @@ class PlusMenu extends Component {
                 style={this.state.style}
                 ref={wrapper => (this.menuWrapper = wrapper)}
             >
-                {this.renderBlockButton('img', 'fa-image', 'Image', onClickImageButton)}
-                {this.renderBlockButton('code', 'fa-code', 'Code Block', onClickCodeButton)}
-                {this.renderBlockButton('iframe', 'fa-external-link-square-alt', 'Iframe', onClickIframeButton)}
+                {this.renderBlockButton('img', faImage, 'Image', onClickImageButton)}
+                {this.renderBlockButton('code', faCode, 'Code Block', onClickCodeButton)}
+                {this.renderBlockButton('iframe', faExternalLinkSquareAlt, 'Iframe', onClickIframeButton)}
             </div>,
             root
         )
@@ -43,7 +45,7 @@ class PlusMenu extends Component {
             onMouseDown={event => onClickBlock(event, this.props.value.change(), this.props.onChange)}
         >
             <span className="icon is-medium has-text-grey-lighter">
-                <i className={`fas ${icon} fa-lg`}></i>
+                <FontAwesomeIcon icon={icon} size="lg" />
             </span>
         </a>
     )

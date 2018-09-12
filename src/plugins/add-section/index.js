@@ -1,5 +1,7 @@
 import React from 'react'
 import { Block, Text } from 'slate'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 
 export default function AddSection(options) {
@@ -24,7 +26,7 @@ function AddSectionButton(props) {
                 onMouseDown={event => onClickNewSectionButton(event, props.value.change(), props.onChange)}
             >
                 <span className="icon">
-                    <i className="fas fa-plus"></i>
+                    <FontAwesomeIcon icon={faPlus} />
                 </span>
                 <span>Add section</span>
             </button>
