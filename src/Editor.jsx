@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Editor as SlateEditor } from 'slate-react'
 import { Value, Block } from 'slate'
 
+import SoftBreak from './plugins/soft-break'
 import TextMenu from './plugins/text-menu'
 import PlusMenuPlugin from './plugins/plus-menu'
 import CodeBlockPlugin from './plugins/code-block'
@@ -60,6 +61,7 @@ const schema = {
         }
 
         this.plugins = [
+            SoftBreak(),
             ...Title().plugins,
             ...Section().plugins,
             ...TextMenu().plugins,
