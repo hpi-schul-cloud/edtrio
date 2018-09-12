@@ -57,7 +57,7 @@ const onClickNewSectionButton = (event, change, onChange) => {
         document.key,
         lastIndex,
         newSection
-    )
+    ).moveToEndOfNode(newSection)
     
     onChange(appendSectionChange)
 }
