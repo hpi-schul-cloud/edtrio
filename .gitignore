@@ -19,10 +19,3 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-.idea/
-
-/public
-
-/src/plugins/plugins.edit.js
-/src/plugins/plugins.view.js

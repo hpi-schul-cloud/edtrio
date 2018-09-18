@@ -1,23 +1,21 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component } from 'react'
 
-import styles from "./styles.scss";
+import './style.css'
+//RHYH3UQ8
 
-//jaz8F8hZ
-
-export default class Geogebra extends Component {
+export default class GeogebraNode extends Component {
     constructor(props) {
-        super(props);
+        super(props)
 
         this.state = {
-            id: ""
-        };
+            id: props.resourceId || 'jaz8F8hZ'
+        }
 
-        this.applet = React.createRef();
+        this.applet = React.createRef()
     }
 
     shouldComponentUpdate(nextProps, { id }) {
-        return id !== this.state.id;
+        return id !== this.state.id
     }
 
     renderApplet(id) {
@@ -25,10 +23,10 @@ export default class Geogebra extends Component {
             () => {
                 return {
                     id
-                };
+                }
             },
             () => this.props.saveContent(this.state)
-        );
+        )
     }
 
     renderHTML() {
@@ -39,51 +37,44 @@ export default class Geogebra extends Component {
             <script src="https://cdn.geogebra.org/apps/deployggb.js"></script>
         </head>
         <body>
-            <div id="ggb-element"></div> 
+            <div id="ggb-element" style="margin: 0 auto"></div> 
 
             <script>
-                var ggbApp = new GGBApplet({"appName": "graphing", "material_id": "${
+                var ggbApp = new GGBApplet({'appName': 'graphing', 'material_id': '${
                     this.state.id
-                }"}, true);
-                window.addEventListener("load", function() { 
-                    ggbApp.inject('ggb-element');
-                });
+                }'}, true)
+                window.addEventListener('load', function() { 
+                    ggbApp.inject('ggb-element')
+                })
             </script>
         </body>
         </html>
-        `;
+        `
     }
 
     componentDidMount() {
         this.setState({
             ...this.props.content
-        });
+        })
     }
 
     render() {
+        // FIXME: props.selected never turn false, even if geogebra
+        // isnt selected anymore
+        console.log(this.props.selected)
         return (
-            <div ref={this.applet}>
-                <input
-                    className={styles.id_input}
-                    onInput={e => this.renderApplet(e.target.value)}
-                    type="text"
-                    placeholder={this.state.id || "GeoGebra Id"}
-                />
-
+            <div 
+                className={`geogebra-wrapper plugin-wrapper ${this.props.selected ? 'selected' : ''}`}
+                ref={this.applet}
+            >
                 {this.state.id && (
                     <iframe
-                        height="500px"
-                        width="100%"
+                        title={`Geogebra applet #${this.state.id}`}
+                        className="geogebra"
                         srcDoc={this.renderHTML()}
                     />
                 )}
             </div>
-        );
+        )
     }
-
-    static propTypes = {
-        isEditable: PropTypes.bool.isRequired,
-        content: PropTypes.object,
-        saveContent: PropTypes.func.isRequired
-    };
 }
