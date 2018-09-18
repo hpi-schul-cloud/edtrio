@@ -28,7 +28,7 @@ function AddSectionButton(props) {
                 <span className="icon">
                     <FontAwesomeIcon icon={faPlus} />
                 </span>
-                <span>Add section</span>
+                <span>Abschnitt hinzuf&uuml;gen</span>
             </button>
         </div>
     )

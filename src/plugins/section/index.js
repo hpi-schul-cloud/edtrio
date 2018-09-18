@@ -113,7 +113,7 @@ const RenderPlaceholderP = {
                     }
                 }
                 >
-                Now start typing something
+                Schreib etwas Spannendes...
             </span>
         )
     }

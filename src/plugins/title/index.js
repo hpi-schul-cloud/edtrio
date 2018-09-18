@@ -72,7 +72,7 @@ const RenderPlaceholder = {
                     }
                 }
                 >
-                Give me a name
+                Gib mir einen Namen
             </span>
         )
     }

@@ -31,7 +31,7 @@ class PlusMenu extends Component {
                 style={this.state.style}
                 ref={wrapper => (this.menuWrapper = wrapper)}
             >
-                {this.renderBlockButton('img', faImage, 'Image', onClickImageButton)}
+                {this.renderBlockButton('img', faImage, 'Bild', onClickImageButton)}
                 {this.renderBlockButton('code', faCode, 'Code Block', onClickCodeButton)}
                 {this.renderBlockButton('iframe', faExternalLinkSquareAlt, 'Iframe', onClickIframeButton)}
             </div>,
