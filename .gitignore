@@ -3,6 +3,9 @@
 # dependencies
 /node_modules
 
+# docs
+/.docz/cache
+
 # testing
 /coverage
 
