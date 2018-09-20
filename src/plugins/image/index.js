@@ -18,6 +18,9 @@ export default function Image(options) {
     }
 }
 
+/**
+ * Change that inserts an image block displaying the src image
+ */
 function insertImage(change, src, target) {
     if(target) {
         change.select(target)
@@ -30,6 +33,9 @@ function insertImage(change, src, target) {
     })
 }
 
+/**
+ * React Component that displays an actual image from props.src url
+ */
 function ImageNode(props) {
     const { src, selected, ...attributes} = props
 
@@ -48,6 +54,10 @@ function ImageNode(props) {
     )
 }
 
+/**
+ * Overwrites Slates Editor.renderNode(props) to actually render
+ * ImageNode for `img` tags
+ */
 const RenderImageNode = {
     renderNode(props) {
         const { attributes, node, isFocused } = props
