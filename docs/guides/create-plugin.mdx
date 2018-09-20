@@ -1,0 +1,126 @@
+---
+name: Create a simple plugin
+route: /guides/create-plugin
+menu: 2. Guides
+order: 10
+---
+
+# Create a simple plugin
+
+Creating a plugin is actually super simple. In this guide you will create a simple image plugin. The result can be found [here](https://github.com/schul-cloud/edtrio/tree/master/src/plugins/image). Edtr.io plugins are basically just Slate.js plugins. If you already read the [Slate.js Plugin Guide](https://docs.slatejs.org/guides/plugins) - which we **highly** recommend - most things should sound pretty familiar to you.
+
+## 1. Create a folder
+To get started the first thing you need to do is create a folder for the plugin you want to create. All Edtr.io plugins are located at `src/plugins`. We create a folder called `image` inside there.
+
+## 2. Main file
+As this plugin is fairly small, all code will be inside one file `src/plugins/image/index.js`. Create that file now and put the basic code skeleton below (also see [1. Structure -> Plugin Structure](/structure/plugin) for reference) inside it:
+
+```jsx
+// plugins/image/index.js
+
+export default function Image(options) {
+    return {
+        changes: {
+            insertImage,
+        },
+        helpers: {},
+        components: {
+            ImageNode,
+        },
+        plugins: [
+            RenderImageNode,
+        ],
+    }
+}
+
+/**
+ * Change that inserts an image block displaying the src image
+ */
+function insertImage(change, src, target) {...}
+
+/**
+ * React Component that displays an actual image from props.src url
+ */
+function ImageNode(props) {...}
+
+/**
+ * Overwrites Slates Editor.renderNode(props) to actually render
+ * ImageNode for `img` tags
+ */
+const RenderImageNode = {...}
+```
+
+We are going to implement the code blocks in ll. 39-50 in the following sections.
+
+## 3. Create displaying component
+To actually display anything in Slate, we need to create a react component. We'll call our component `<ImageNode ... />` and will implement it as such (in ll. 26f.):
+
+```jsx
+function ImageNode(props) {
+    const { src, ...attributes} = props
+
+    return (
+        <figure>
+            <img
+                src={src}
+                {...attributes}
+            />
+        </figure>
+    )
+}
+```
+Our `<ImageNode ... />` component basically just takes a `src` as a prop which then replaces the `src` of the enclosed `img` tag and wraps all that inside a `figure` to make it more semantic.
+
+> ⚠️  It is very important to set the `...attributes` to your component as Slate relies on that for internal state management and **will crash** if you don't insert them!
+
+## 4. Inserting an element
+To change the underlying document in any way we need to define a [`Change`](https://docs.slatejs.org/guides/changes). This `Change` can then later be called by e.g. a button or similar.
+
+```jsx
+function insertImage(change, src, target) {
+    if(target) {
+        change.select(target)
+    }
+
+    change.insertBlock({
+        type: 'img',
+        isVoid: true,
+        data: { src },
+    })
+}
+```
+This snippet simply inserts a block that we named `img` into the document. It also sets the `data.src` attribute of that block to the supplied `src`.
+
+## 5. Rendering custom block
+To actually tell the editor what to do when encountering an `img` block, namely to render our `<ImageNode ... />` created in step 3., we need to override the `renderNode()` function supplied by Slate as such:
+
+```jsx
+const RenderImageNode = {
+    renderNode(props) {
+        const { attributes, node } = props
+
+        if (node.type === 'img') {
+            const src = node.data.get('src')
+            return (
+                <ImageNode
+                    src={src}
+                    {...attributes}
+                />
+            )
+        }
+    }
+}
+```
+
+Our `RenderImageNode` is called whenever a node should be rendered. It checks if the type of the node to be rendered is an `img` and if so renders our custom `<ImageNode ... />`.
+
+If that is not the case nothing is returned, thus allowing other plugins that override `renderNode()` to render the current node.
+
+## 6. Done
+That's it! All it takes to create a custom plugin that renders images is to
+
+1. Create a custom image component
+2. Define a change to insert that image
+3. Override renderNode
+
+> **Note**: Our custom change is called inside `plugins/plus-menu/actions.js:onClickImageButton` which is an EventListener on the "Add image" button.

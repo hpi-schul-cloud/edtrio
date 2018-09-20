@@ -1,0 +1,63 @@
+---
+name: Plugin Structure
+route: /structure/plugin
+menu: 1. Structure
+order: 50
+---
+
+# Plugin Structure
+Plugins are structured in close accordance to the [Slate.js Plugin Design Guide](https://docs.slatejs.org/guides/plugins#feature-plugins). They are usually devided into `changes`, `components`, `helpers` and `plugins`. Here is a shortened version of the [`image` plugin](https://github.com/schul-cloud/edtrio/tree/master/src/plugins/image) as an example:
+
+```jsx
+export default function Image(options) {
+    return {
+        changes: {
+            insertImage,
+        },
+        helpers: {},
+        components: {
+            ImageNode,
+        },
+        plugins: [
+            RenderImageNode,
+        ],
+    }
+}
+
+function insertImage(change, src, target) {...}
+
+function ImageNode(props) {
+    const { src, selected, ...attributes} = props
+
+    return (
+        <figure>
+            ...
+        </figure>
+    )
+}
+
+const RenderImageNode = {
+    renderNode(props) {
+        const { attributes, node, isFocused } = props
+
+        if (node.type === 'img') {
+            const src = node.data.get('src')
+            return (
+                <ImageNode />
+            )
+        }
+    }
+}
+```
+
+## Requiring plugins
+All plugins are located in the `plugins/` folder and manually required in `Editor.jsx`.
+
+```jsx
+this.plugins = [
+    ...Title().plugins,
+    ...Section().plugins,
+    ...TextMenu().plugins,
+    // ...
+]
+```
