@@ -1,6 +1,9 @@
 section.section {
     position: relative;
+    padding: 1rem;
     min-height: 200px;
+    border: 2px solid whitesmoke;
+    border-radius: 4px;
 }
 
 aside.section-controls {
