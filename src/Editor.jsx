@@ -75,7 +75,7 @@ const initialValue = Value.fromJSON(importedValue)
             <div className="columns">
                 <div className="column" />
                 <div className="column is-three-quarters">
-                    <div style={{marginTop: '100px'}}>
+                    <div style={{marginTop: '2rem'}}>
                         <HoverMenu
                             ref={menu => (this.hoverMenu = menu)}
                             value={this.state.value}

@@ -53,7 +53,7 @@ const RenderSectionNode = {
         if(node.type === 'section') {
             const isVisible = node.data.get('isVisible')
             return (
-                <section className="section content has-background-light" {...attributes}>
+                <section className="section content " {...attributes}>
                     { children }
                     {
                         isFocused ? (

@@ -40,7 +40,7 @@ function ImageNode(props) {
     const { src, selected, ...attributes} = props
 
     return (
-        <figure className={`plugin-wrapper ${selected ? 'selected' : ''}`}>
+        <div className={`plugin-wrapper ${selected ? 'selected' : ''}`}>
             <img
                 src={src}
                 className="image"
@@ -50,7 +50,7 @@ function ImageNode(props) {
             {/*<figcaption>
             Figure 1: Some beautiful placeholders
             </figcaption>*/}
-        </figure>
+        </div>
     )
 }
 
