@@ -1,0 +1,31 @@
+---
+name: Overview
+route: /structure/
+menu: 1. Structure
+order: 200
+---
+
+# Structure Overview
+Edtr.io is heavily based on [Slate.js](https://github.com/ianstormtaylor/slate) and makes great use of its abstractions. Every piece functionality is inside a plugin.
+
+The editor is just one `<Editor />` component inside `Editor.jsx` which itself is made up of many plugins. Plugins can be found inside the [`plugins/` folder](https://github.com/schul-cloud/edtrio/tree/master/src/plugins). More information on the structure of plugins can be found [here](/structure/plugin).
+
+Using Edtr.io one creates documents. Every content created with the editor is a `Document`. A `Document` is simply just a JSON object with a little more rules so that it coheres to a common schema. More information on the Document Schema can be found [here](/structure/document).
+
+Displaying the editor can be easily achieved as such:
+
+```jsx
+import Editor from './Editor'
+
+
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <Editor />
+      </div>
+    )
+  }
+}
+```
+
