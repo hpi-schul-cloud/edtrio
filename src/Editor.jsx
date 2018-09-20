@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { Editor as SlateEditor } from 'slate-react'
-import { Value, Block } from 'slate'
+import { Value } from 'slate'
 
-import SoftBreak from './plugins/soft-break'
 import TextMenu from './plugins/text-menu'
 import PlusMenuPlugin from './plugins/plus-menu'
 import CodeBlockPlugin from './plugins/code-block'
@@ -18,39 +17,10 @@ import DownloadFile from './plugins/download-file'
 
 import DocumentViewer from './dev-document-viewer/DocumentViewer'
 import AddSection from './plugins/add-section'
+import schema from './schema'
 
 import importedValue from './value'
 const initialValue = Value.fromJSON(importedValue)
-
-const schema = {
-    document: {
-        nodes: [
-            { match: [{ type: 'title' }], min: 1, max: 1 },
-            { match: [{ type: 'section' }], min: 1 }
-        ],
-        normalize: (change, { code, node, child, index }) => {
-            if(index !== 0) {
-                return
-            }
-
-            // only deal with title nodes here
-            switch(code) {
-                case 'child_type_invalid': {
-                    console.log('uh')
-                    return change.setNodeByKey(child.key, 'title')
-                }
-                case 'child_required': {
-                    console.log('mhm')
-                    const block = Block.create(index === 0 ? 'title' : 'paragraph')
-                    return change.insertNodeByKey(node.key, index, block)
-                }
-                default: {
-                    console.log('some error')
-                }
-            }
-        }
-    }
-}
 
 
   class Editor extends Component {
@@ -61,7 +31,6 @@ const schema = {
         }
 
         this.plugins = [
-            //SoftBreak(),
             ...Title().plugins,
             ...Section().plugins,
             ...TextMenu().plugins,
@@ -106,7 +75,6 @@ const schema = {
             <div className="columns">
                 <div className="column" />
                 <div className="column is-three-quarters">
-                    {/*<Uploader />*/}
                     <div style={{marginTop: '2rem'}}>
                         <HoverMenu
                             ref={menu => (this.hoverMenu = menu)}
