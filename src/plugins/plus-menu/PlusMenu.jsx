@@ -31,20 +31,23 @@ class PlusMenu extends Component {
                 style={this.state.style}
                 ref={wrapper => (this.menuWrapper = wrapper)}
             >
-                {this.renderBlockButton('img', faImage, 'Bild', onClickImageButton)}
-                {this.renderBlockButton('code', faCode, 'Code Block', onClickCodeButton)}
-                {this.renderBlockButton('iframe', faExternalLinkSquareAlt, 'Iframe', onClickIframeButton)}
+                {this.renderBlockButton(faImage, 'Bild einfügen', onClickImageButton)}
+                {this.renderBlockButton(faCode, 'Code Block einfügen', onClickCodeButton)}
+                {this.renderBlockButton(faExternalLinkSquareAlt, 'Iframe einfügen', onClickIframeButton)}
             </div>,
             root
         )
     }
 
-    renderBlockButton = (type, icon, helperText=null, onClickBlock) => (
+    renderBlockButton = (icon, tooltip=null, onClickBlock) => (
         <a
-            title={helperText}
+            title={tooltip}
             onMouseDown={event => onClickBlock(event, this.props.value.change(), this.props.onChange)}
         >
-            <span className="icon is-medium has-text-grey-lighter">
+            <span
+                className="icon is-medium has-text-grey-lighter tooltip"
+                data-tooltip={tooltip}
+            >
                 <FontAwesomeIcon icon={icon} size="lg" />
             </span>
         </a>

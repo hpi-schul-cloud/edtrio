@@ -139,22 +139,29 @@ const RenderSectionNode = {
                                     <FontAwesomeIcon icon={faChevronUp} />
                                     </span>
                                 </a>
-                                <a className="button is-white" onMouseDown={
-                                    e => {
-                                        e.preventDefault()
-                                        moveSection(editor.value.change(), editor.props.onChange, 'DOWN')
-                                    }   
-                                }>
+                                <a
+                                    className="button is-white"
+                                    onMouseDown={
+                                        e => {
+                                            e.preventDefault()
+                                            moveSection(editor.value.change(), editor.props.onChange, 'DOWN')
+                                        }   
+                                    }
+                                >
                                     <span className="icon is-small">
                                     <FontAwesomeIcon icon={faChevronDown} />
                                     </span>
                                 </a>
-                                <a className="button is-white" onMouseDown={
-                                    e => {
-                                        e.preventDefault()
-                                        toggleVisibilityOfSection(editor.value.change(), editor.props.onChange, isVisible)
-                                    }   
-                                }>
+                                <a
+                                    className={`button is-white tooltip ${!isVisible ? 'is-tooltip-active' : ''}`}
+                                    data-tooltip={isVisible ? 'Abschnitt ausblenden' : 'Abschnitt ausgeblendet'}
+                                    onMouseDown={
+                                        e => {
+                                            e.preventDefault()
+                                            toggleVisibilityOfSection(editor.value.change(), editor.props.onChange, isVisible)
+                                        }   
+                                    }
+                                >
                                     <span className="icon is-small">
                                     <FontAwesomeIcon icon={!!isVisible ? faEye : faEyeSlash} />
                                     </span>

@@ -10,6 +10,7 @@
     "@uppy/react": "^0.27.1",
     "@uppy/tus": "^0.27.1",
     "bulma": "^0.7.1",
+    "bulma-tooltip": "^2.0.2",
     "immutable": "^3.8.2",
     "is-hotkey": "^0.1.2",
     "is-url": "^1.2.4",
