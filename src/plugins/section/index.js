@@ -7,8 +7,9 @@ import { faEye, faEyeSlash, faChevronDown, faChevronUp, faTrashAlt } from '@fort
 export default function Section(options) {
     return {
         changes: {
-            handleToggleVisibility,
-            handleDelete,
+            toggleVisibilityOfSection,
+            deleteSection,
+            moveSection,
         },
         helpers: {
             getParentSection,
@@ -36,7 +37,7 @@ const schema = {
 /**
  * Hides/unhides the current section
  */
-const handleToggleVisibility = (change, onChange, isVisible) => {
+const toggleVisibilityOfSection = (change, onChange, isVisible) => {
     const parentSection = getParentSection(change)
     
     const c = change.setNodeByKey(parentSection.key, {
@@ -50,10 +51,43 @@ const handleToggleVisibility = (change, onChange, isVisible) => {
 /**
  * Delete the current section
  */
-const handleDelete = (change, onChange) => {
+const deleteSection = (change, onChange) => {
     const parentSection = getParentSection(change)
 
     const c = change.removeNodeByKey(parentSection.key)
+    onChange(c)
+}
+
+/**
+ * Move the current section up or down
+ * @param {string} direction `UP` or `DOWN`
+ */
+const moveSection = (change, onChange, direction) => {
+    const currentSection = getParentSection(change)
+    const { document } = change.value
+
+    let moveToSection
+    if(direction === 'UP') {
+        moveToSection = document.getPreviousSibling(currentSection.key)
+    } else if(direction === 'DOWN') {
+        moveToSection = document.getNextSibling(currentSection.key)
+    } else {
+        console.error('ONLY "UP" OR "DOWN" ARE ALLOWED FOR PARAMETER direction')
+        return
+    }
+
+    if(!moveToSection || moveToSection.type !== 'section') {
+        return
+    }
+
+    const moveToIndex = document.nodes.findIndex(node => {
+        if(node.key === moveToSection.key) {
+            return true
+        }
+        return false
+    })
+
+    const c = change.moveNodeByKey(currentSection.key, document.key, moveToIndex)
     onChange(c)
 }
 
@@ -88,19 +122,29 @@ const RenderSectionNode = {
                                 <a className="button is-white" onMouseDown={
                                     e => {
                                         e.preventDefault()
-                                        handleDelete(editor.value.change(), editor.props.onChange)
+                                        deleteSection(editor.value.change(), editor.props.onChange)
                                     }   
                                 }>
                                     <span className="icon is-small">
                                     <FontAwesomeIcon icon={faTrashAlt} />
                                     </span>
                                 </a>
-                                <a className="button is-white">
+                                <a className="button is-white" onMouseDown={
+                                    e => {
+                                        e.preventDefault()
+                                        moveSection(editor.value.change(), editor.props.onChange, 'UP')
+                                    }   
+                                }>
                                     <span className="icon is-small">
                                     <FontAwesomeIcon icon={faChevronUp} />
                                     </span>
                                 </a>
-                                <a className="button is-white">
+                                <a className="button is-white" onMouseDown={
+                                    e => {
+                                        e.preventDefault()
+                                        moveSection(editor.value.change(), editor.props.onChange, 'DOWN')
+                                    }   
+                                }>
                                     <span className="icon is-small">
                                     <FontAwesomeIcon icon={faChevronDown} />
                                     </span>
@@ -108,7 +152,7 @@ const RenderSectionNode = {
                                 <a className="button is-white" onMouseDown={
                                     e => {
                                         e.preventDefault()
-                                        handleToggleVisibility(editor.value.change(), editor.props.onChange, isVisible)
+                                        toggleVisibilityOfSection(editor.value.change(), editor.props.onChange, isVisible)
                                     }   
                                 }>
                                     <span className="icon is-small">
