@@ -19,8 +19,7 @@ yarn start
 - Video integration (paste youtube video link and it'll be auto-converted)
 
 ## Documentation
-> TODO: add link to docs
-The docs can be found [here](#).
+The docs can be found [here](https://edtrio-docs.netlify.com/).
 
 ## Contribute
 We very much welcome any kinds of contributions! Have a look at our [issue tracker](https://github.com/schul-cloud/edtrio/issues) or [project board roadmap](https://github.com/schul-cloud/edtrio/projects/1) for inspiration.
