@@ -53,7 +53,10 @@ const RenderSectionNode = {
         if(node.type === 'section') {
             const isVisible = node.data.get('isVisible')
             return (
-                <section className="section content " {...attributes}>
+                <section
+                    className={`section content ${!isVisible ? 'hidden' : ''}`}
+                    {...attributes}
+                >
                     { children }
                     {
                         isFocused ? (
