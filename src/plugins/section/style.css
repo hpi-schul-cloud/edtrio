@@ -1,31 +1,31 @@
 section.section {
-    position: relative;
-    padding: 1rem;
-    min-height: 250px;
-    border: 2px solid hsl(0, 0%, 86%);
-    border-radius: 4px;
+  position: relative;
+  padding: 1rem;
+  min-height: 250px;
+  border: 2px solid hsl(0, 0%, 86%);
+  border-radius: 4px;
 }
 
 section.section.hidden {
-    opacity: 0.5;
-    border: 2px dashed hsl(0, 0%, 71%);
+  opacity: 0.5;
+  border: 2px dashed hsl(0, 0%, 71%);
 }
 
 aside.section-controls {
-    padding: 10px;
+  padding: 10px;
 
-    position: absolute;
-    bottom: 0;
-    left: -56px;
+  position: absolute;
+  bottom: 0;
+  left: -56px;
 
-    display: inline-flex;
-    flex-direction: column;
+  display: inline-flex;
+  flex-direction: column;
 }
 
 aside.section-controls a.button {
-    margin-right: 0 !important;
+  margin-right: 0 !important;
 }
 
 aside.section-controls a.button:last-child {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }

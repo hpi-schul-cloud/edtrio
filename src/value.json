@@ -1,43 +1,43 @@
 {
-    "document": {
+  "document": {
+    "nodes": [
+      {
+        "object": "block",
+        "type": "title",
         "nodes": [
-            {
-                "object": "block",
-                "type": "title",
-                "nodes": [
-                    {
-                        "object": "text",
-                        "leaves": [
-                            {
-                                "text": ""
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                "object": "block",
-                "type": "section",
-                "data": {
-                    "isVisible": true
-                },
-                "nodes": [
-                    {
-                        "object": "block",
-                        "type": "p",
-                        "nodes": [
-                            {
-                                "object": "text",
-                                "leaves": [
-                                    {
-                                        "text": ""
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                ]
-            }
+          {
+            "object": "text",
+            "leaves": [
+              {
+                "text": ""
+              }
+            ]
+          }
         ]
-    }
+      },
+      {
+        "object": "block",
+        "type": "section",
+        "data": {
+          "isVisible": true
+        },
+        "nodes": [
+          {
+            "object": "block",
+            "type": "p",
+            "nodes": [
+              {
+                "object": "text",
+                "leaves": [
+                  {
+                    "text": ""
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 }

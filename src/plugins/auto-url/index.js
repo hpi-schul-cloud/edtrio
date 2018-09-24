@@ -4,20 +4,17 @@ import InstantReplace from 'slate-instant-replace'
 import isUrl from 'is-url'
 
 export default function AutoURL(options) {
-    return {
-        changes: {
-            wrapLink,
-            unwrapLink,
-        },
-        helpers: {},
-        components: {
-            LinkNode,
-        },
-        plugins: [
-            InstantReplace(AddURL),
-            RenderLinkNode,
-        ],
-    }
+  return {
+    changes: {
+      wrapLink,
+      unwrapLink
+    },
+    helpers: {},
+    components: {
+      LinkNode
+    },
+    plugins: [InstantReplace(AddURL), RenderLinkNode]
+  }
 }
 
 /**
@@ -26,32 +23,32 @@ export default function AutoURL(options) {
  * @param {string} href url of the link to be set
  */
 const wrapLink = (change, href) => {
-    change.wrapInline({
-        type: 'a',
-        data: { href }
-    })
-    change.collapseToEnd()
+  change.wrapInline({
+    type: 'a',
+    data: { href }
+  })
+  change.collapseToEnd()
 }
 
 /**
  * Removes any inline link type on the supplied change
  * @param {*} change change to be manipulated
  */
-const unwrapLink = (change) => {
-    change.unwrapInline('a')
+const unwrapLink = change => {
+  change.unwrapInline('a')
 }
 
 const AddURL = (change, lastWord) => {
-    if(isUrl(lastWord)) {
-        change.extend(-lastWord.length)
-        change.focus()
-        
-        change.call(unwrapLink)
-        
-		const href = lastWord.startsWith('http') ? lastWord : `https://${lastWord}`;
-        
-        change.call(wrapLink, href)
-    }
+  if (isUrl(lastWord)) {
+    change.extend(-lastWord.length)
+    change.focus()
+
+    change.call(unwrapLink)
+
+    const href = lastWord.startsWith('http') ? lastWord : `https://${lastWord}`
+
+    change.call(wrapLink, href)
+  }
 }
 
 /**
@@ -59,19 +56,19 @@ const AddURL = (change, lastWord) => {
  * @param {*} props not used atm
  */
 function LinkNode(props) {
-    const { attributes, children, node } = props
-    const { data } = node
-    const href = data.get('href')
-    
-    return (
-        <a { ...attributes } href={href}>
-            { children }
-        </a>
-    )
+  const { attributes, children, node } = props
+  const { data } = node
+  const href = data.get('href')
+
+  return (
+    <a {...attributes} href={href}>
+      {children}
+    </a>
+  )
 }
 
 const RenderLinkNode = {
-    renderNode(props) {
-        return props.node.type === 'a' ? <LinkNode {...props} /> : null
-    }
+  renderNode(props) {
+    return props.node.type === 'a' ? <LinkNode {...props} /> : null
+  }
 }

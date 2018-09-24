@@ -3,22 +3,20 @@ import Iframe from '../iframe'
 import insertParagraph from '../helpers/insertParagraph'
 import { Text, Block } from 'slate'
 
-
-
 /**
  * handles clicks on the imageblock button and
  * forwards them accordingly to plugins/image
  */
 export const onClickImageButton = (event, change, onChange) => {
-    const { insertImage } = Image().changes
+  const { insertImage } = Image().changes
 
-    event.preventDefault()
-    const src = window.prompt('Enter the URL of the image:')
-    if (!src) return
+  event.preventDefault()
+  const src = window.prompt('Enter the URL of the image:')
+  if (!src) return
 
-    change.call(insertImage, src).call(insertParagraph)
+  change.call(insertImage, src).call(insertParagraph)
 
-    onChange(change)
+  onChange(change)
 }
 
 /**
@@ -26,34 +24,34 @@ export const onClickImageButton = (event, change, onChange) => {
  * forwards them accordingly to plugins/code-block
  */
 export const onClickCodeButton = (event, change, onChange) => {
-    event.preventDefault()
+  event.preventDefault()
 
-    change.call(_insertCodeBlock)
+  change.call(_insertCodeBlock)
 
-    onChange(change)
+  onChange(change)
 }
 
 export const onClickIframeButton = (event, change, onChange) => {
-    const { insertIframe } = Iframe().changes
+  const { insertIframe } = Iframe().changes
 
-    event.preventDefault()
-    const src = window.prompt('Enter the URL of the iframe:')
-    if (!src) return
+  event.preventDefault()
+  const src = window.prompt('Enter the URL of the iframe:')
+  if (!src) return
 
-    change.call(insertIframe, src).call(insertParagraph)
+  change.call(insertIframe, src).call(insertParagraph)
 
-    onChange(change)
+  onChange(change)
 }
 
 function _insertCodeBlock(change, target) {
-    if(target) {
-        change.select(target)
-    }
+  if (target) {
+    change.select(target)
+  }
 
-    change.insertBlock(
-        Block.create({
-            type: 'code',
-            nodes: [Text.create()]
-        })
-    )
+  change.insertBlock(
+    Block.create({
+      type: 'code',
+      nodes: [Text.create()]
+    })
+  )
 }
