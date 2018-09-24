@@ -2,12 +2,17 @@ import React from 'react'
 import './style.css'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEye, faEyeSlash, faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons'
+import { faEye, faEyeSlash, faChevronDown, faChevronUp, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 
 export default function Section(options) {
     return {
-        changes: {},
-        helpers: {},
+        changes: {
+            handleToggleVisibility,
+            handleDelete,
+        },
+        helpers: {
+            getParentSection,
+        },
         components: {},
         plugins: [
             RenderSectionNode,
@@ -28,7 +33,31 @@ const schema = {
     }
 }
 
+/**
+ * Hides/unhides the current section
+ */
 const handleToggleVisibility = (change, onChange, isVisible) => {
+    const parentSection = getParentSection(change)
+    
+    const c = change.setNodeByKey(parentSection.key, {
+        data: {
+            isVisible: !isVisible
+        }
+    })
+    onChange(c)
+}
+
+/**
+ * Delete the current section
+ */
+const handleDelete = (change, onChange) => {
+    const parentSection = getParentSection(change)
+
+    const c = change.removeNodeByKey(parentSection.key)
+    onChange(c)
+}
+
+const getParentSection = change => {
     let parent = change.value.anchorBlock
     do {
         parent = change.value.document.getParent(parent.key)
@@ -38,13 +67,8 @@ const handleToggleVisibility = (change, onChange, isVisible) => {
             return
         }
     } while (parent.type !== 'section')
-    
-    const c = change.setNodeByKey(parent.key, {
-        data: {
-            isVisible: !isVisible
-        }
-    })
-    onChange(c)
+
+    return parent
 }
 
 const RenderSectionNode = {
@@ -61,6 +85,16 @@ const RenderSectionNode = {
                     {
                         isFocused ? (
                             <aside className="buttons section-controls">
+                                <a className="button is-white" onMouseDown={
+                                    e => {
+                                        e.preventDefault()
+                                        handleDelete(editor.value.change(), editor.props.onChange)
+                                    }   
+                                }>
+                                    <span className="icon is-small">
+                                    <FontAwesomeIcon icon={faTrashAlt} />
+                                    </span>
+                                </a>
                                 <a className="button is-white">
                                     <span className="icon is-small">
                                     <FontAwesomeIcon icon={faChevronUp} />
