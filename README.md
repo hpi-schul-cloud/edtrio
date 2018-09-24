@@ -1,4 +1,5 @@
-# Edtr.io  ![Version](https://img.shields.io/badge/version-1.0.0-black.svg) ![[Gitmoji](https://gitmoji.carloscuesta.me)](https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg?style=flat-square) 
+# Edtr.io  [![Version](https://img.shields.io/badge/version-2.1.0-black.svg?style=flat-square)](https://github.com/schul-cloud/edtrio/releases) [![Gitmoji](https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg?style=flat-square)](https://gitmoji.carloscuesta.me)
+
 
 A rich text editor for easily creating content in schools based on [Slate.js](https://github.com/ianstormtaylor/slate).
 
