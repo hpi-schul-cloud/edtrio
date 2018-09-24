@@ -15,7 +15,8 @@
   box-shadow: 0 0 0 4px rgba(175, 4, 55, 0.5);
 }
 
-.plugin-wrapper.selected, .plugin-wrapper.selected:hover {
+.plugin-wrapper.selected,
+.plugin-wrapper.selected:hover {
   box-shadow: 0 0 0 4px rgba(175, 4, 55, 1);
 }
 

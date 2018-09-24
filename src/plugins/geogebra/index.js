@@ -2,50 +2,43 @@ import React from 'react'
 
 import GeogebraNode from './Geogebra'
 
-
 export default function Geogebra(options) {
-    return {
-        changes: {
-            insertGeogebraNode,
-        },
-        helpers: {},
-        components: {
-            GeogebraNode,
-        },
-        plugins: [
-            RenderGeogebraNode,
-        ]
-    }
+  return {
+    changes: {
+      insertGeogebraNode
+    },
+    helpers: {},
+    components: {
+      GeogebraNode
+    },
+    plugins: [RenderGeogebraNode]
+  }
 }
 
 function insertGeogebraNode(change, id, target) {
-    if(target) {
-        change.select(target)
-    }
+  if (target) {
+    change.select(target)
+  }
 
-    change.insertBlock({
-        type: 'geogebra',
-        isVoid: true,
-        data: { id }
-    })
+  change.insertBlock({
+    type: 'geogebra',
+    isVoid: true,
+    data: { id }
+  })
 }
 
 const RenderGeogebraNode = {
-    renderNode(props) {
-        const { attributes, node, isFocused } = props
+  renderNode(props) {
+    const { attributes, node, isFocused } = props
 
-        if(node.type === 'geogebra') {
-            const id = node.data.get('id')
+    if (node.type === 'geogebra') {
+      const id = node.data.get('id')
 
-            return (
-                <GeogebraNode
-                    selected={isFocused}
-                    resourceId={id}
-                    {...attributes}
-                />
-            )
-        }
+      return (
+        <GeogebraNode selected={isFocused} resourceId={id} {...attributes} />
+      )
     }
+  }
 }
 
 /**

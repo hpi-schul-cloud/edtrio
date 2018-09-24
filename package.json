@@ -29,10 +29,20 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "docz:dev": "docz dev",
-    "docz:build": "docz build"
+    "docz:build": "docz build",
+    "precommit": "lint-staged"
   },
   "devDependencies": {
     "docz": "^0.11.2",
-    "docz-theme-default": "^0.11.2"
+    "docz-theme-default": "^0.11.2",
+    "husky": "^1.0.0-rc.15",
+    "lint-staged": "^7.3.0",
+    "prettier": "^1.14.3"
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,json,css}": [
+      "prettier --single-quote --no-semi --write",
+      "git add"
+    ]
   }
 }

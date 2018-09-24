@@ -22,98 +22,98 @@ import schema from './schema'
 import importedValue from './value'
 const initialValue = Value.fromJSON(importedValue)
 
-
-  class Editor extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            value: initialValue,
-        }
-
-        this.plugins = [
-            ...Title().plugins,
-            ...Section().plugins,
-            ...TextMenu().plugins,
-            ...MarkdownShortcuts().plugins,
-            ...Iframe().plugins,
-            ...DownloadFile().plugins,
-            ...URLHandler().plugins,
-            ...CodeBlockPlugin().plugins,
-            ...Image().plugins,
-            ...Geogebra().plugins,
-            ...AutoURL().plugins,
-        ]
+class Editor extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      value: initialValue
     }
 
-    componentDidMount = () => {
-        this.updateMenu()
-    }
+    this.plugins = [
+      ...Title().plugins,
+      ...Section().plugins,
+      ...TextMenu().plugins,
+      ...MarkdownShortcuts().plugins,
+      ...Iframe().plugins,
+      ...DownloadFile().plugins,
+      ...URLHandler().plugins,
+      ...CodeBlockPlugin().plugins,
+      ...Image().plugins,
+      ...Geogebra().plugins,
+      ...AutoURL().plugins
+    ]
+  }
 
-    componentDidUpdate = () => {
-        this.updateMenu()
-    }
-    
-    onChange = ({ value }) => {
-        this.setState({ value })
-    }
-    
-    /**
-     * handles UI updates regarding the plugin/text-menu
-     */
-    updateMenu = () => {
-        const { value } = this.state
-        this.hoverMenu.update({resetMenu: value.isBlurred || value.isEmpty})
-        this.plusMenu.update({resetMenu: value.isBlurred || !value.blocks.some(node => node.type === 'p')})
-    }
+  componentDidMount = () => {
+    this.updateMenu()
+  }
 
-    render() {
-        const HoverMenu = TextMenu().components.HoverMenu
-        const PlusMenu = PlusMenuPlugin().components.PlusMenu
-        const AddSectionButton = AddSection().components.AddSectionButton
+  componentDidUpdate = () => {
+    this.updateMenu()
+  }
 
-        return (
-            <div className="columns">
-                <div className="column" />
-                <div className="column is-three-quarters">
-                    <div style={{marginTop: '2rem'}}>
-                        <HoverMenu
-                            ref={menu => (this.hoverMenu = menu)}
-                            value={this.state.value}
-                            onChange={this.onChange}
-                        />
-                        <PlusMenu
-                            ref={menu => (this.plusMenu = menu)}
-                            value={this.state.value}
-                            onChange={this.onChange}
-                        />
-                        <SlateEditor
-                            autoFocus
-                            spellCheck
-                            schema={schema}
-                            plugins={this.plugins}
-                            value={this.state.value}
-                            onChange={this.onChange}
-                            className="slate-editor"
-                        />
-                        <AddSectionButton
-                            value={this.state.value}
-                            onChange={this.onChange}
-                        />
-                    </div>
-                    {
-                        process.env.NODE_ENV === 'development' ? (
-                            <React.Fragment>
-                                {/*TODO: remove ugly spacer <3*/}
-                                <div style={{height: '500px'}} />
-                                <DocumentViewer doc={this.state.value} />
-                            </React.Fragment>
-                        ) : null
-                    }
-                </div>
-                <div className="column" />
-            </div>
-        )
-    }
+  onChange = ({ value }) => {
+    this.setState({ value })
+  }
+
+  /**
+   * handles UI updates regarding the plugin/text-menu
+   */
+  updateMenu = () => {
+    const { value } = this.state
+    this.hoverMenu.update({ resetMenu: value.isBlurred || value.isEmpty })
+    this.plusMenu.update({
+      resetMenu:
+        value.isBlurred || !value.blocks.some(node => node.type === 'p')
+    })
+  }
+
+  render() {
+    const HoverMenu = TextMenu().components.HoverMenu
+    const PlusMenu = PlusMenuPlugin().components.PlusMenu
+    const AddSectionButton = AddSection().components.AddSectionButton
+
+    return (
+      <div className="columns">
+        <div className="column" />
+        <div className="column is-three-quarters">
+          <div style={{ marginTop: '2rem' }}>
+            <HoverMenu
+              ref={menu => (this.hoverMenu = menu)}
+              value={this.state.value}
+              onChange={this.onChange}
+            />
+            <PlusMenu
+              ref={menu => (this.plusMenu = menu)}
+              value={this.state.value}
+              onChange={this.onChange}
+            />
+            <SlateEditor
+              autoFocus
+              spellCheck
+              schema={schema}
+              plugins={this.plugins}
+              value={this.state.value}
+              onChange={this.onChange}
+              className="slate-editor"
+            />
+            <AddSectionButton
+              value={this.state.value}
+              onChange={this.onChange}
+            />
+          </div>
+          {process.env.NODE_ENV === 'development' ? (
+            <React.Fragment>
+              {/*TODO: remove ugly spacer <3*/}
+              <div style={{ height: '500px' }} />
+              <DocumentViewer doc={this.state.value} />
+            </React.Fragment>
+          ) : null}
+        </div>
+        <div className="column" />
+      </div>
+    )
+  }
 }
 
 export default Editor
