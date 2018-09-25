@@ -20,6 +20,7 @@ import AddSection from './plugins/add-section'
 import schema from './schema'
 
 import importedValue from './value'
+import Headlines from './plugins/headlines'
 const initialValue = Value.fromJSON(importedValue)
 
 class Editor extends Component {
@@ -33,6 +34,7 @@ class Editor extends Component {
       ...Title().plugins,
       ...Section().plugins,
       ...TextMenu().plugins,
+      ...Headlines().plugins,
       ...MarkdownShortcuts().plugins,
       ...Iframe().plugins,
       ...DownloadFile().plugins,
