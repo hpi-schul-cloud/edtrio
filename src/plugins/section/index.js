@@ -3,12 +3,20 @@ import './style.css'
 
 import Controls from './Controls'
 
+import { Block, Text } from 'slate'
+
 export default function Section(options) {
   return {
     changes: {},
     helpers: {},
     components: {},
-    plugins: [RenderSectionNode, RenderPNode, RenderPlaceholderP, { schema }]
+    plugins: [
+      RenderSectionNode,
+      RenderPNode,
+      RenderPlaceholderP,
+      { schema },
+      dealWithDeletedSection
+    ]
   }
 }
 
@@ -71,5 +79,39 @@ const RenderPlaceholderP = {
         Schreib etwas Spannendes...
       </span>
     )
+  }
+}
+
+const dealWithDeletedSection = {
+  normalizeNode(node) {
+    const { nodes } = node
+    if (node.object !== 'document') return
+    if (nodes.size >= 2) return
+    if (nodes.first().type !== 'title') return
+    if (nodes.last().type === 'section') return
+
+    console.log('Kay, we f*ed up the sections')
+
+    const newSection = Block.create({
+      type: 'section',
+      data: {
+        isVisible: true
+      },
+      nodes: [
+        Block.create({
+          type: 'p',
+          nodes: [Text.create()]
+        })
+      ]
+    })
+
+    return change => change.insertNodeByKey(node.key, nodes.count(), newSection)
+    /*
+    const document = change.value.document
+    const lastIndex = document.nodes.count()
+  
+    return change
+      .insertNodeByKey(document.key, lastIndex, newSection)
+      .moveToEndOfNode(newSection)*/
   }
 }

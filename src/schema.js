@@ -5,8 +5,8 @@ export default {
     nodes: [
       { match: [{ type: 'title' }], min: 1, max: 1 },
       { match: [{ type: 'section' }], min: 1 }
-    ],
-    normalize: (change, { code, node, child, index }) => {
+    ]
+    /*normalize: (change, { code, node, child, index }) => {
       if (index !== 0) {
         return
       }
@@ -26,6 +26,6 @@ export default {
           console.log('some error')
         }
       }
-    }
+    }*/
   }
 }
