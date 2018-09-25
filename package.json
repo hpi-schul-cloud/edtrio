@@ -18,10 +18,9 @@
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-scripts": "1.1.4",
-    "slate": "^0.37.0",
+    "slate": "^0.41.1",
     "slate-instant-replace": "^0.1.8",
-    "slate-react": "^0.15.0",
-    "slate-schema-violations": "^0.1.32"
+    "slate-react": "^0.18.9"
   },
   "scripts": {
     "start": "react-scripts start",
