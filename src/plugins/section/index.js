@@ -13,7 +13,6 @@ export default function Section(options) {
     plugins: [
       RenderSectionNode,
       RenderPNode,
-      RenderPlaceholderP,
       { schema },
       ensureAlwaysMinOneSection
     ]
@@ -54,30 +53,6 @@ const RenderPNode = {
     if (node.type === 'p') {
       return <p {...attributes}>{children}</p>
     }
-  }
-}
-
-const RenderPlaceholderP = {
-  renderPlaceholder({ node, editor }) {
-    if (node.object !== 'block') return
-    if (node.type !== 'p') return
-    if (node.text !== '') return
-
-    return (
-      <span
-        contentEditable={false}
-        style={{ display: 'inline-block', width: '0', whiteSpace: 'nowrap' }}
-        className="has-text-grey"
-        onMouseDown={e => {
-          const change = editor.value.change()
-          const onChange = editor.props.onChange
-          onChange(change.moveToStartOfNode(node).focus())
-          return true
-        }}
-      >
-        Schreib etwas Spannendes...
-      </span>
-    )
   }
 }
 
