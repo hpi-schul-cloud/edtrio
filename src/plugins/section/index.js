@@ -25,7 +25,8 @@ const schema = {
     section: {
       data: {
         isVisible: v => typeof v === 'boolean'
-      }
+      },
+      parent: { object: 'document' }
     }
   }
 }
