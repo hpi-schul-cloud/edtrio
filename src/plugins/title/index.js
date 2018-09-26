@@ -32,7 +32,7 @@ const HandleKeyDown = {
       }
 
       event.preventDefault()
-      change.moveToRangeOf(change.value.nextBlock)
+      change.moveToRangeOfNode(change.value.nextBlock)
       return true
     }
     return
