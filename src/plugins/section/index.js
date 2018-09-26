@@ -14,7 +14,8 @@ export default function Section(options) {
       RenderSectionNode,
       RenderPNode,
       { schema },
-      ensureAlwaysMinOneSection
+      ensureAlwaysMinOneSection,
+      ensureLastNodeInSectionIsP
     ]
   }
 }
@@ -58,8 +59,8 @@ const RenderPNode = {
 
 const ensureAlwaysMinOneSection = {
   normalizeNode(node) {
-    const { nodes } = node
     if (node.object !== 'document') return
+    const { nodes } = node
     if (nodes.size <= 0 || nodes.size >= 2) return
     if (nodes.first().type !== 'title') return
     if (nodes.last().type === 'section') return
@@ -78,5 +79,21 @@ const ensureAlwaysMinOneSection = {
     })
 
     return change => change.insertNodeByKey(node.key, nodes.count(), newSection)
+  }
+}
+
+const ensureLastNodeInSectionIsP = {
+  normalizeNode(node) {
+    if (node.type !== 'section') return
+    const { nodes } = node
+    if (nodes.count() > 0 && nodes.last().type === 'p') return
+
+    const newParagraph = Block.create({
+      type: 'p',
+      nodes: [Text.create()]
+    })
+
+    return change =>
+      change.insertNodeByKey(node.key, nodes.count(), newParagraph)
   }
 }
