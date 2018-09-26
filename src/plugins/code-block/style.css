@@ -1,0 +1,7 @@
+pre.code-block {
+  border: 2px solid transparent;
+}
+
+pre.code-block.selected {
+  border: 2px solid hsl(0, 0%, 86%);
+}

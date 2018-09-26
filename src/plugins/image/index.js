@@ -11,7 +11,15 @@ export default function Image(options) {
     components: {
       ImageNode
     },
-    plugins: [RenderImageNode]
+    plugins: [RenderImageNode, { schema }]
+  }
+}
+
+const schema = {
+  blocks: {
+    img: {
+      isVoid: true
+    }
   }
 }
 
@@ -25,7 +33,6 @@ function insertImage(change, src, target) {
 
   change.insertBlock({
     type: 'img',
-    isVoid: true,
     data: { src }
   })
 }
@@ -37,12 +44,12 @@ function ImageNode(props) {
   const { src, selected, ...attributes } = props
 
   return (
-    <div className={`plugin-wrapper ${selected ? 'selected' : ''}`}>
-      <img src={src} className="image" alt="Uploaded by user" {...attributes} />
-      {/*<figcaption>
-            Figure 1: Some beautiful placeholders
-            </figcaption>*/}
-    </div>
+    <img
+      src={src}
+      className={`plugin-wrapper image ${selected ? 'selected' : ''}`}
+      alt="Uploaded by user"
+      {...attributes}
+    />
   )
 }
 
