@@ -1,11 +1,18 @@
 import React from 'react'
+import { Block, Text } from 'slate'
 
 export default function Title(options) {
   return {
     changes: {},
     helpers: {},
     components: {},
-    plugins: [RenderTitleNode, HandleKeyDown, { schema }, RenderPlaceholder]
+    plugins: [
+      RenderTitleNode,
+      HandleKeyDown,
+      { schema },
+      RenderPlaceholder,
+      ensureAlwaysMinOneTitle
+    ]
   }
 }
 
@@ -67,5 +74,24 @@ const RenderPlaceholder = {
         Gib mir einen Namen
       </span>
     )
+  }
+}
+
+const ensureAlwaysMinOneTitle = {
+  normalizeNode(node) {
+    const { nodes } = node
+    if (node.object !== 'document') return
+    if (nodes.size > 1) return
+    if (nodes.size > 0 && nodes.first().type === 'title') return
+
+    const newTitle = Block.create({
+      type: 'title',
+      data: {
+        isVisible: true
+      },
+      nodes: [Text.create()]
+    })
+
+    return change => change.insertNodeByKey(node.key, 0, newTitle)
   }
 }
