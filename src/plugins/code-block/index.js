@@ -31,10 +31,7 @@ function toggleCodeBlock(change) {
 
 function CodeNode(props) {
   return (
-    <pre
-      {...props.attributes}
-      className={`plugin-wrapper ${props.isFocused ? 'selected' : ''}`}
-    >
+    <pre {...props.attributes}>
       <code>{props.children}</code>
     </pre>
   )
