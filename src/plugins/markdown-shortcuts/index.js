@@ -54,7 +54,7 @@ const onSpace = (event, change) => {
     change.wrapBlock('ul')
   }
 
-  change.moveFocusToStartOf(startBlock).delete()
+  change.moveFocusToStartOfNode(startBlock).delete()
   return true
 }
 
