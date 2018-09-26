@@ -86,7 +86,6 @@ const ensureAlwaysMinOneSection = {
     const { nodes } = node
     if (node.object !== 'document') return
     if (nodes.size <= 0 || nodes.size >= 2) return
-    console.log(nodes.size)
     if (nodes.first().type !== 'title') return
     if (nodes.last().type === 'section') return
 
