@@ -95,20 +95,23 @@ class HoverMenu extends Component {
   /**
    * Update the menu's absolute position
    */
-  update = ({ resetMenu = false }) => {
+  update = () => {
     if (!this.menuWrapper) {
       return
     }
 
-    if (resetMenu) {
+    const { value } = this.props
+    const { fragment, selection } = value
+
+    if (selection.isBlurred || selection.isCollapsed || fragment.text === '') {
       this.setState({
         style: {}
       })
       return
     }
 
-    const selection = window.getSelection()
-    const range = selection.getRangeAt(0)
+    const nativeSelection = window.getSelection()
+    const range = nativeSelection.getRangeAt(0)
     const rect = range.getBoundingClientRect()
 
     let newStyle = {}
