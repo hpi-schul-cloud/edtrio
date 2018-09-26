@@ -2,6 +2,8 @@ import React from 'react'
 
 import Hotkey from '../helpers/Hotkey'
 
+import './style.css'
+
 export default function Code(options) {
   return {
     changes: {},
@@ -31,7 +33,10 @@ function toggleCodeBlock(change) {
 
 function CodeNode(props) {
   return (
-    <pre {...props.attributes}>
+    <pre
+      className={`code-block ${props.selected ? 'selected' : ''}`}
+      {...props.attributes}
+    >
       <code>{props.children}</code>
     </pre>
   )
@@ -39,6 +44,8 @@ function CodeNode(props) {
 
 const RenderCodeNode = {
   renderNode(props) {
-    return props.node.type === 'code' ? <CodeNode {...props} /> : null
+    return props.node.type === 'code' ? (
+      <CodeNode selected={props.isFocused} {...props} />
+    ) : null
   }
 }
