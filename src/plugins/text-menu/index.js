@@ -8,7 +8,7 @@ export default function TextMenu(options) {
     components: {
       HoverMenu
     },
-    plugins: [RenderTextMarks, RenderTextBlocks]
+    plugins: [RenderTextMarks]
   }
 }
 
@@ -23,21 +23,6 @@ const RenderTextMarks = {
         return <code {...attributes}>{children}</code>
       case 'em':
         return <em {...attributes}>{children}</em>
-      default:
-        return
-    }
-  }
-}
-
-const RenderTextBlocks = {
-  renderNode(props) {
-    const { attributes, children, node } = props
-
-    switch (node.type) {
-      case 'h1':
-        return <h2 {...attributes}>{children}</h2>
-      case 'h2':
-        return <h3 {...attributes}>{children}</h3>
       default:
         return
     }

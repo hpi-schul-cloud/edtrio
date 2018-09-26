@@ -54,7 +54,7 @@ const onSpace = (event, change) => {
     change.wrapBlock('ul')
   }
 
-  change.moveFocusToStartOf(startBlock).delete()
+  change.moveFocusToStartOfNode(startBlock).delete()
   return true
 }
 
@@ -162,13 +162,6 @@ const RenderMoreTextBlocks = {
         return <ul {...attributes}>{children}</ul>
       case 'li':
         return <li {...attributes}>{children}</li>
-      // h1 and h2 are in plugins/text-menu
-      case 'h3':
-        return <h4 {...attributes}>{children}</h4>
-      case 'h4':
-        return <h5 {...attributes}>{children}</h5>
-      case 'h5':
-        return <h6 {...attributes}>{children}</h6>
       default:
       //pass
     }

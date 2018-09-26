@@ -5,7 +5,7 @@ import { Value } from 'slate'
 import TextMenu from './plugins/text-menu'
 import PlusMenuPlugin from './plugins/plus-menu'
 import CodeBlockPlugin from './plugins/code-block'
-import AutoURL from './plugins/auto-url'
+// import AutoURL from './plugins/auto-url'
 import Image from './plugins/image'
 import Geogebra from './plugins/geogebra'
 import URLHandler from './plugins/url-handler'
@@ -20,6 +20,7 @@ import AddSection from './plugins/add-section'
 import schema from './schema'
 
 import importedValue from './value'
+import Headlines from './plugins/headlines'
 const initialValue = Value.fromJSON(importedValue)
 
 class Editor extends Component {
@@ -33,14 +34,15 @@ class Editor extends Component {
       ...Title().plugins,
       ...Section().plugins,
       ...TextMenu().plugins,
+      ...Headlines().plugins,
       ...MarkdownShortcuts().plugins,
       ...Iframe().plugins,
       ...DownloadFile().plugins,
       ...URLHandler().plugins,
       ...CodeBlockPlugin().plugins,
       ...Image().plugins,
-      ...Geogebra().plugins,
-      ...AutoURL().plugins
+      ...Geogebra().plugins
+      // ...AutoURL().plugins
     ]
   }
 

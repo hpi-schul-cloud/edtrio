@@ -5,7 +5,9 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 export default function AddSection(options) {
   return {
-    changes: {},
+    changes: {
+      appendNewSection
+    },
     helpers: {},
     components: {
       AddSectionButton
@@ -38,6 +40,10 @@ function AddSectionButton(props) {
 const onClickNewSectionButton = (event, change, onChange) => {
   event.preventDefault()
 
+  onChange(change.call(appendNewSection))
+}
+
+const appendNewSection = change => {
   const newSection = Block.create({
     type: 'section',
     data: {
@@ -54,9 +60,7 @@ const onClickNewSectionButton = (event, change, onChange) => {
   const document = change.value.document
   const lastIndex = document.nodes.count()
 
-  const appendSectionChange = change
+  return change
     .insertNodeByKey(document.key, lastIndex, newSection)
     .moveToEndOfNode(newSection)
-
-  onChange(appendSectionChange)
 }

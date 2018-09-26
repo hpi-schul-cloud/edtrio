@@ -1,6 +1,5 @@
 import Image from '../image'
 import Iframe from '../iframe'
-import insertParagraph from '../helpers/insertParagraph'
 import { Text, Block } from 'slate'
 
 /**
@@ -14,7 +13,7 @@ export const onClickImageButton = (event, change, onChange) => {
   const src = window.prompt('Enter the URL of the image:')
   if (!src) return
 
-  change.call(insertImage, src).call(insertParagraph)
+  change.call(insertImage, src)
 
   onChange(change)
 }
@@ -38,7 +37,7 @@ export const onClickIframeButton = (event, change, onChange) => {
   const src = window.prompt('Enter the URL of the iframe:')
   if (!src) return
 
-  change.call(insertIframe, src).call(insertParagraph)
+  change.call(insertIframe, src)
 
   onChange(change)
 }
