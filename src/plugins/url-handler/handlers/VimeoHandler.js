@@ -1,43 +1,44 @@
 import React from 'react'
 
-export default function YoutubeHandler(options) {
+export default function VimeoHandler(options) {
   return {
     validate,
     dealWithIt,
     changes: {
-      insertYoutubeVideo
+      insertVimeoVideo
     },
     helpers: {},
     components: {
-      YoutubeNode
+      VimeoNode
     },
     plugins: []
   }
 }
 
-const _regex = /youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-_]*)/i
+// eslint-disable-next-line
+const _regex = /vimeo.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|)(\d+)(?:|\/\?)/i
 
 const validate = url => {
   return !!_regex.exec(url)
 }
 
 const dealWithIt = (url, change) => {
-  const videoId = _regex.exec(url)[1]
-  change.call(insertYoutubeVideo, videoId)
+  const videoId = _regex.exec(url)[2]
+  change.call(insertVimeoVideo, videoId)
   return true
 }
 
-function insertYoutubeVideo(change, videoId, target) {
+function insertVimeoVideo(change, videoId) {
   change.insertBlock({
     type: 'video',
     data: {
       videoId,
-      provider: 'youtube'
+      provider: 'vimeo'
     }
   })
 }
 
-function YoutubeNode(props) {
+function VimeoNode(props) {
   const { videoId, selected, ...attributes } = props
 
   return (
@@ -47,12 +48,13 @@ function YoutubeNode(props) {
       {...attributes}
     >
       <iframe
-        title="YouTube Video"
+        title="Vimeo Video"
         style={{ minHeight: '25rem' }}
-        src={`https://www.youtube-nocookie.com/embed/${videoId}`}
+        src={`https://player.vimeo.com/video/${videoId}`}
         frameBorder="0"
         allowFullScreen
       />
+      <script src="https://player.vimeo.com/api/player.js" />
     </div>
   )
 }
