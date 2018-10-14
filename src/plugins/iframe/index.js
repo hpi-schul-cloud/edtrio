@@ -9,7 +9,15 @@ export default function Iframe(options) {
     components: {
       IframeNode
     },
-    plugins: [RenderIframeNode]
+    plugins: [RenderIframeNode, { schema }]
+  }
+}
+
+const schema = {
+  blocks: {
+    iframe: {
+      isVoid: true
+    }
   }
 }
 
@@ -20,7 +28,6 @@ function insertIframe(change, src, target) {
 
   change.insertBlock({
     type: 'iframe',
-    isVoid: true,
     data: { src }
   })
 }
