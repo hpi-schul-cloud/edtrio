@@ -21,13 +21,12 @@ import schema from './schema'
 
 import importedValue from './value'
 import Headlines from './plugins/headlines'
-const initialValue = Value.fromJSON(importedValue)
 
 class Editor extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      value: initialValue
+      value: this.handleLoad()
     }
 
     this.plugins = [
@@ -44,6 +43,8 @@ class Editor extends Component {
       ...Geogebra().plugins
       // ...AutoURL().plugins
     ]
+
+    this.debounce = null
   }
 
   componentDidMount = () => {
@@ -54,7 +55,42 @@ class Editor extends Component {
     this.updateMenu()
   }
 
+  /**
+   * handles persisting the document (e.g. in localStorage or
+   * backend)
+   */
+  handleSave = value => {
+    // Save the value to Local Storage.
+    console.log('saving...')
+    const document = JSON.stringify(value.toJSON())
+    localStorage.setItem('document', document)
+  }
+
+  /**
+   * handles retrieving the current document or loads a default
+   * document instead
+   */
+  handleLoad = () => {
+    const existingValue = JSON.parse(localStorage.getItem('document'))
+    return Value.fromJSON(existingValue || importedValue)
+  }
+
+  /**
+   * deals with state changes of the slate document
+   */
   onChange = ({ value }) => {
+    // Check to see if the document has changed before saving.
+    if (value.document != this.state.value.document) {
+      clearTimeout(this.debounce)
+      this.debounce = setTimeout(() => this.handleSave(value), 750)
+    }
+
+    // TODO: set lastSaved timestamp and update frontend accordingly
+    console.log(value.data)
+    /*change.withoutSaving(() => {
+      change.setValue({ decorations })
+    })*/
+
     this.setState({ value })
   }
 
