@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Editor as SlateEditor } from 'slate-react'
 import { Value } from 'slate'
+import moment from 'moment'
+import 'moment/locale/de'
 
 import TextMenu from './plugins/text-menu'
 import PlusMenuPlugin from './plugins/plus-menu'
@@ -21,6 +23,8 @@ import schema from './schema'
 
 import importedValue from './value'
 import Headlines from './plugins/headlines'
+
+moment.locale('de')
 
 class Editor extends Component {
   constructor(props) {
@@ -62,8 +66,32 @@ class Editor extends Component {
   handleSave = value => {
     // Save the value to Local Storage.
     console.log('saving...')
-    const document = JSON.stringify(value.toJSON())
+
+    const timestamp = moment(new Date())
+    const document = JSON.stringify(
+      this._addHeaderInformationToDocument(value, timestamp)
+    )
     localStorage.setItem('document', document)
+
+    // When succeeded, update the frontend UI as well
+    // (yes, using window is SO against React principles,
+    //  but I honestly have no idea rn how to do it in a
+    //  better way... PLEASE HELP!)
+    window.updateLastSaved(timestamp)
+  }
+
+  /**
+   * adds some header information to the document pre-saving
+   * e.g. authorid, lastSaved timestamp, ...
+   */
+  _addHeaderInformationToDocument = (value, newSavedTimestamp) => {
+    let valueJSON = value.toJSON()
+    valueJSON.document.data = {
+      ...valueJSON.document.data,
+      lastSaved: newSavedTimestamp
+    }
+
+    return valueJSON
   }
 
   /**
@@ -80,16 +108,10 @@ class Editor extends Component {
    */
   onChange = ({ value }) => {
     // Check to see if the document has changed before saving.
-    if (value.document != this.state.value.document) {
+    if (value.document !== this.state.value.document) {
       clearTimeout(this.debounce)
       this.debounce = setTimeout(() => this.handleSave(value), 750)
     }
-
-    // TODO: set lastSaved timestamp and update frontend accordingly
-    console.log(value.data)
-    /*change.withoutSaving(() => {
-      change.setValue({ decorations })
-    })*/
 
     this.setState({ value })
   }

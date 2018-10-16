@@ -43,7 +43,7 @@ const HandleKeyDown = {
 
 const RenderTitleNode = {
   renderNode(props) {
-    const { attributes, children, editor, node } = props
+    const { attributes, children, editor, node, parent } = props
 
     if (node.type === 'title') {
       return (
@@ -51,7 +51,7 @@ const RenderTitleNode = {
           <h1 className="title is-1" {...attributes}>
             {children}
           </h1>
-          <SaveBar editor={editor} />
+          <SaveBar editor={editor} lastSaved={parent.data.get('lastSaved')} />
         </React.Fragment>
       )
     }

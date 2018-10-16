@@ -1,14 +1,20 @@
 import React, { Component } from 'react'
 import styles from './SaveBar.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faUndo,
-  faRedo,
-  faQuestion,
-  faSave
-} from '@fortawesome/free-solid-svg-icons'
+import { faUndo, faRedo, faQuestion } from '@fortawesome/free-solid-svg-icons'
+import moment from 'moment'
 
 class SaveBar extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      lastSaved: this.props.lastSaved || null
+    }
+
+    window.updateLastSaved = this.updateLastSaved
+  }
+
   handleUndo = event => {
     event.preventDefault()
     this.props.editor.change(change => change.undo())
@@ -17,6 +23,10 @@ class SaveBar extends Component {
   handleRedo = event => {
     event.preventDefault()
     this.props.editor.change(change => change.redo())
+  }
+
+  updateLastSaved = newTimestamp => {
+    this.setState({ lastSaved: newTimestamp })
   }
 
   render() {
@@ -38,10 +48,9 @@ class SaveBar extends Component {
             >
               <FontAwesomeIcon icon={faQuestion} />
             </a>
-            <span className={styles.button}>
-              <FontAwesomeIcon icon={faSave} />
-            </span>
-            <div className={styles.saveText}>jetzt aktualisiert</div>
+            <div className={styles.saveText}>
+              {`${moment(this.state.lastSaved).fromNow()} aktualisiert`}
+            </div>
           </div>
         </div>
       </nav>
