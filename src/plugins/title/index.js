@@ -1,6 +1,8 @@
 import React from 'react'
 import { Block, Text } from 'slate'
 
+import SaveBar from './SaveBar'
+
 export default function Title(options) {
   return {
     changes: {},
@@ -41,13 +43,16 @@ const HandleKeyDown = {
 
 const RenderTitleNode = {
   renderNode(props) {
-    const { attributes, children, node } = props
+    const { attributes, children, editor, node, parent } = props
 
     if (node.type === 'title') {
       return (
-        <h1 className="title is-1" {...attributes}>
-          {children}
-        </h1>
+        <React.Fragment>
+          <h1 className="title is-1" {...attributes}>
+            {children}
+          </h1>
+          <SaveBar editor={editor} lastSaved={parent.data.get('lastSaved')} />
+        </React.Fragment>
       )
     }
   }
