@@ -30,8 +30,7 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "docz:dev": "docz dev",
-    "docz:build": "docz build",
-    "precommit": "lint-staged"
+    "docz:build": "docz build"
   },
   "devDependencies": {
     "docz": "^0.11.2",
@@ -40,12 +39,17 @@
     "lint-staged": "^7.3.0",
     "prettier": "^1.14.3"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "lint-staged": {
     "src/**/*.{js,jsx,json,css}": [
       "prettier --single-quote --no-semi --write",
       "git add"
     ]
-  },
+},
   "browserslist": [
     ">0.2%",
     "not dead",
