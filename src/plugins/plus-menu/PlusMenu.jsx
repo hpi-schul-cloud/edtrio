@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom'
 import { findDOMNode } from 'slate-react'
 import './style.css'
 
+import Uppy from '@uppy/core'
+import { DashboardModal } from '@uppy/react'
+
 import {
   onClickImageButton,
   onClickCodeButton,
@@ -20,8 +23,18 @@ class PlusMenu extends Component {
     super(props)
 
     this.state = {
-      style: {}
+      style: {},
+      uppyOpen: false
     }
+
+    this.uppy = Uppy({
+      restrictions: { allowedFileTypes: ['image/*'] },
+      autoProceed: true
+    })
+  }
+
+  handleCloseUppyModal = () => {
+    this.setState({ uppyOpen: false })
   }
 
   render() {
@@ -34,7 +47,10 @@ class PlusMenu extends Component {
         style={this.state.style}
         ref={wrapper => (this.menuWrapper = wrapper)}
       >
-        {this.renderBlockButton(faImage, 'Bild einfügen', onClickImageButton)}
+        {this.renderBlockButton(faImage, 'Bild einfügen', (...props) => {
+          this.setState({ uppyOpen: true })
+          onClickImageButton(...props, this.uppy)
+        })}
         {this.renderBlockButton(
           faCode,
           'Code Block einfügen',
@@ -45,6 +61,13 @@ class PlusMenu extends Component {
           'Iframe einfügen',
           onClickIframeButton
         )}
+        <DashboardModal
+          uppy={this.uppy}
+          closeModalOnClickOutside
+          note="Images and video only, 2–3 files, up to 1 MB"
+          open={this.state.uppyOpen}
+          onRequestClose={this.handleCloseUppyModal}
+        />
       </div>,
       root
     )
