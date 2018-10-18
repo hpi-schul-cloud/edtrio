@@ -6,20 +6,31 @@ import { Text, Block } from 'slate'
  * handles clicks on the imageblock button and
  * forwards them accordingly to plugins/image
  */
-export const onClickImageButton = (event, change, onChange, uppy) => {
+export const onClickImageButton = (
+  event,
+  change,
+  onChange,
+  uppy,
+  closeUppyWindow
+) => {
   const { insertImage } = Image().changes
 
   event.preventDefault()
 
   uppy.on('complete', result => {
-    console.log(result)
+    console.log(result.successful[0].data)
+    closeUppyWindow()
+
+    result.successful.forEach(image => {
+      const fr = new FileReader()
+      fr.onload = () => {
+        change.call(insertImage, fr.result)
+        onChange(change)
+      }
+
+      fr.readAsDataURL(image.data)
+    })
   })
-  // const src = window.prompt('Enter the URL of the image:')
-  // if (!src) return
-
-  // change.call(insertImage, src)
-
-  // onChange(change)
 }
 
 /**
