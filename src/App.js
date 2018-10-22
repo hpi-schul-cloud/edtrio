@@ -3,6 +3,8 @@ import '../node_modules/material-icons/iconfont/material-icons.css'
 import './App.css'
 import 'bulma/css/bulma.css'
 import 'bulma-tooltip/dist/css/bulma-tooltip.min.css'
+import '@uppy/core/dist/style.min.css'
+import '@uppy/dashboard/dist/style.min.css'
 
 import Editor from './Editor'
 

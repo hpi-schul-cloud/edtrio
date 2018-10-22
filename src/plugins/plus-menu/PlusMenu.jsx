@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom'
 import { findDOMNode } from 'slate-react'
 import './style.css'
 
+import Uppy from '@uppy/core'
+import { DashboardModal } from '@uppy/react'
+
 import {
   onClickImageButton,
   onClickCodeButton,
@@ -20,8 +23,21 @@ class PlusMenu extends Component {
     super(props)
 
     this.state = {
-      style: {}
+      style: {},
+      uppyOpen: false
     }
+
+    this.uppy = Uppy({
+      restrictions: {
+        maxFileSize: 1000000, // 1MB
+        allowedFileTypes: ['image/*']
+      },
+      autoProceed: true
+    })
+  }
+
+  handleCloseUppyModal = () => {
+    this.setState({ uppyOpen: false })
   }
 
   render() {
@@ -34,7 +50,10 @@ class PlusMenu extends Component {
         style={this.state.style}
         ref={wrapper => (this.menuWrapper = wrapper)}
       >
-        {this.renderBlockButton(faImage, 'Bild einfügen', onClickImageButton)}
+        {this.renderBlockButton(faImage, 'Bild einfügen', (...props) => {
+          this.setState({ uppyOpen: true })
+          onClickImageButton(...props, this.uppy, this.handleCloseUppyModal)
+        })}
         {this.renderBlockButton(
           faCode,
           'Code Block einfügen',
@@ -45,6 +64,75 @@ class PlusMenu extends Component {
           'Iframe einfügen',
           onClickIframeButton
         )}
+        <DashboardModal
+          uppy={this.uppy}
+          locale={{
+            strings: {
+              addMoreFiles: 'Weitere Dateien hinzufügen',
+              closeModal: 'Fenster schließen',
+              importFrom: 'Von %{name} importieren',
+              dashboardWindowTitle:
+                'Uppy Dashboard Fenster (ESC zum schließen)',
+              dashboardTitle: 'Uppy Dashboard',
+              copyLinkToClipboardSuccess: 'Link in Zwischenablage kopiert.',
+              copyLinkToClipboardFallback: 'Kopiere den Link unten',
+              copyLink: 'Link kopieren',
+              fileSource: 'Quelle: %{name}',
+              done: 'Fertig',
+              removeFile: 'Datei entfernen',
+              editFile: 'Datei bearbeiten',
+              editing: '%{file} wird bearbeitet',
+              edit: 'Bearbeiten',
+              finishEditingFile: 'Bearbeiten abschließen',
+              myDevice: 'Mein Gerät',
+              dropPasteImport:
+                'Ziehe Dateien hierhin, füge sie ein, %{browse} oder importiere sie von',
+              dropPaste: '%{browse} deine Bilder oder lege sie hier ab',
+              browse: 'Durchsuche',
+              uploadComplete: 'Hochladen fertig',
+              resumeUpload: 'Hochladen fortsetzen',
+              pauseUpload: 'Hochladen pausieren',
+              retryUpload: 'Hochladen erneut versuchen',
+              xFilesSelected: {
+                0: '%{smart_count} Datei ausgewählt',
+                1: '%{smart_count} Dateien ausgewählt'
+              },
+
+              // @uppy/status-bar strings:
+              uploading: 'Lädt hoch',
+              complete: 'Fertig',
+              uploadFailed: 'Hochladen fehlgeschlagen',
+              pleasePressRetry:
+                'Bitte klicke Erneut versuchen um es noch einmal zu versuchen',
+              paused: 'Pausiert',
+              error: 'Fehler',
+              retry: 'Erneut versuchen',
+              cancel: 'Abbrechen',
+              retryUpload: 'Hochladen erneut versuchen',
+              pauseUpload: 'Hochladen pausieren',
+              resumeUpload: 'Hochladen fortsetzen',
+              cancelUpload: 'Hochladen abbrechen',
+              filesUploadedOfTotal: {
+                0: '%{complete} von %{smart_count} Datei hochgeladen',
+                1: '%{complete} von %{smart_count} Dateien hochgeladen'
+              },
+              dataUploadedOfTotal: '%{complete} von %{total}',
+              xTimeLeft: '%{time} verbleibend',
+              uploadXFiles: {
+                0: '%{smart_count} Datei hochladen',
+                1: '%{smart_count} Dateien hochladen'
+              },
+              uploadXNewFiles: {
+                0: '+%{smart_count} Datei hochladen',
+                1: '+%{smart_count} Dateien hochladen'
+              }
+            }
+          }}
+          closeModalOnClickOutside
+          note="Bilder, maximal 1 MB"
+          open={this.state.uppyOpen}
+          onRequestClose={this.handleCloseUppyModal}
+        />
       </div>,
       root
     )
