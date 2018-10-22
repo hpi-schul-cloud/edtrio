@@ -22,6 +22,9 @@ export const onClickImageButton = (
     closeUppyWindow()
 
     result.successful.forEach(image => {
+      uppy.reset()
+
+      // TODO: replace with proper file upload (e.g. to S3)
       const fr = new FileReader()
       fr.onload = () => {
         change.call(insertImage, fr.result)
