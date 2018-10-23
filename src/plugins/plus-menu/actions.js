@@ -1,5 +1,4 @@
 import Image from '../image'
-import Iframe from '../iframe'
 import { Text, Block } from 'slate'
 
 /**

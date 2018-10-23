@@ -3,7 +3,7 @@ import React from 'react'
 import Hotkey from '../helpers/Hotkey'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faImage, faCode, faVideo } from '@fortawesome/free-solid-svg-icons'
+import { faVideo } from '@fortawesome/free-solid-svg-icons'
 
 export default function Embed(options) {
   return {

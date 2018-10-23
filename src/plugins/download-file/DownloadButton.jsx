@@ -11,6 +11,7 @@ class DownloadButton extends Component {
         className={`download plugin-wrapper ${selected ? 'selected' : ''}`}
         href={src}
         target="_blank"
+        rel="noopener noreferrer"
         {...attributes}
       >
         <Icon>cloud_download</Icon>
