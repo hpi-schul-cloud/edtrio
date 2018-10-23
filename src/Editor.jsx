@@ -67,7 +67,6 @@ class Editor extends Component {
    */
   handleSave = value => {
     // Save the value to Local Storage.
-    console.log('saving...')
 
     const timestamp = moment(new Date())
     const document = JSON.stringify(
