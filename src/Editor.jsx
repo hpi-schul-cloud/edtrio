@@ -7,6 +7,7 @@ import 'moment/locale/de'
 import TextMenu from './plugins/text-menu'
 import PlusMenuPlugin from './plugins/plus-menu'
 import CodeBlockPlugin from './plugins/code-block'
+import Embed from './plugins/embed'
 // import AutoURL from './plugins/auto-url'
 import Image from './plugins/image'
 import Geogebra from './plugins/geogebra'
@@ -43,6 +44,7 @@ class Editor extends Component {
       ...DownloadFile().plugins,
       ...URLHandler().plugins,
       ...CodeBlockPlugin().plugins,
+      ...Embed().plugins,
       ...Image().plugins,
       ...Geogebra().plugins
       // ...AutoURL().plugins

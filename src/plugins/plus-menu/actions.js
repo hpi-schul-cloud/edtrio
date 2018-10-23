@@ -49,13 +49,9 @@ export const onClickCodeButton = (event, change, onChange) => {
 }
 
 export const onClickIframeButton = (event, change, onChange) => {
-  const { insertIframe } = Iframe().changes
-
   event.preventDefault()
-  const src = window.prompt('Enter the URL of the iframe:')
-  if (!src) return
 
-  change.call(insertIframe, src)
+  change.call(_insertEmbedBlock)
 
   onChange(change)
 }
@@ -68,6 +64,19 @@ function _insertCodeBlock(change, target) {
   change.insertBlock(
     Block.create({
       type: 'code',
+      nodes: [Text.create()]
+    })
+  )
+}
+
+function _insertEmbedBlock(change, target) {
+  if (target) {
+    change.select(target)
+  }
+
+  change.insertBlock(
+    Block.create({
+      type: 'embed',
       nodes: [Text.create()]
     })
   )
