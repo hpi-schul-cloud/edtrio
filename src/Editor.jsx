@@ -11,7 +11,6 @@ import Embed from './plugins/embed'
 // import AutoURL from './plugins/auto-url'
 import Image from './plugins/image'
 import Geogebra from './plugins/geogebra'
-import URLHandler from './plugins/url-handler'
 import MarkdownShortcuts from './plugins/markdown-shortcuts'
 import Title from './plugins/title'
 import Section from './plugins/section'
@@ -42,7 +41,6 @@ class Editor extends Component {
       ...MarkdownShortcuts().plugins,
       ...Iframe().plugins,
       ...DownloadFile().plugins,
-      ...URLHandler().plugins,
       ...CodeBlockPlugin().plugins,
       ...Embed().plugins,
       ...Image().plugins,
