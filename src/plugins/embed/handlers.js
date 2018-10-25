@@ -9,6 +9,7 @@ export default function handleUrl(url) {
     },
     {
       provider: 'vimeo',
+      //eslint-disable-next-line
       regex: /vimeo.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|)(\d+)(?:|\/\?)/i,
       mapUrl: regexMatch => {
         return `https://player.vimeo.com/video/${regexMatch[2]}`
