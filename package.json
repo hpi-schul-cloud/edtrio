@@ -30,11 +30,15 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "docz:dev": "docz dev",
-    "docz:build": "docz build"
+    "docz:build": "docz build",
+    "lint": "eslint ./"
   },
   "devDependencies": {
     "docz": "^0.11.2",
     "docz-theme-default": "^0.11.2",
+    "eslint-config-prettier": "^3.1.0",
+    "eslint-plugin-babel": "^5.2.1",
+    "eslint-plugin-prettier": "^3.0.0",
     "husky": "^1.0.0-rc.15",
     "lint-staged": "^7.3.0",
     "prettier": "^1.14.3"
@@ -46,10 +50,11 @@
   },
   "lint-staged": {
     "src/**/*.{js,jsx,json,css}": [
-      "prettier --single-quote --no-semi --write",
+      "eslint",
+      "prettier",
       "git add"
     ]
-},
+  },
   "browserslist": [
     ">0.2%",
     "not dead",
