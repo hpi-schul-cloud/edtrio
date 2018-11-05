@@ -21,7 +21,8 @@ class Uploader extends Component {
     this.uppy.use(Tus, { endpoint: "https://master.tus.io/files/" });
 
     this.uppy.on("complete", result => {
-      const url = result.successful[0].uploadURL;
+      // const url = result.successful[0].uploadURL;
+      // TODO: show success?
     });
   }
 

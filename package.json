@@ -39,13 +39,14 @@
     "eslint-config-prettier": "^3.1.0",
     "eslint-plugin-babel": "^5.2.1",
     "eslint-plugin-prettier": "^3.0.0",
+    "flow-bin": "^0.85.0",
     "husky": "^1.0.0-rc.15",
     "lint-staged": "^7.3.0",
     "prettier": "^1.14.3"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "flow check && lint-staged"
     }
   },
   "lint-staged": {

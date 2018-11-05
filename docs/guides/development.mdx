@@ -1,0 +1,22 @@
+---
+name: Development
+route: /guides/development
+menu: 2. Guides
+order: 15
+---
+
+# Development
+
+The main purpose of this page is to document specific development workflows and tools and to help you set up these tools.
+
+## Eslint and Prettier
+
+There are two config files (.eslintrc and .prettierrc) that contain our code-style config. Ideally, you should use these settings during development as well.
+Most code editors nowadays have plugins/extensions for eslint and prettier that help you format your code. They should work out of the box with the given config files.
+
+## Flow
+
+Flow is a static typechecker. Why typechecking? Because it can help you catch bugs early on and generally leads to much cleaner code. Yes, it is an overhead if you're just getting started, but trust us it's worth it in the long run. 
+You can find more detailed information about how flow works [here](https://flow.org/en/docs/).
+With our configuration, flow only checks a file if you write `// @flow` in the first line of the file. You might encounter many files without flow, so please feel free to add it wherever it is missing (including your own new code ;) ).
+Once again, most code editors offer flow plugins to show live errors / typechecking.
