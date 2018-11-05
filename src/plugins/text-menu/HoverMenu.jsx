@@ -1,25 +1,25 @@
-import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
-import './style.css'
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
+import "./style.css";
 
-import Icon from '../helpers/Icon'
-import Button from '../helpers/Button'
+import Icon from "../helpers/Icon";
+import Button from "../helpers/Button";
 
 // Taken and adapted from https://github.com/ianstormtaylor/slate/tree/master/examples/hovering-menu
-const DEFAULT_NODE = 'p'
+const DEFAULT_NODE = "p";
 
 class HoverMenu extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
-      style: {}
-    }
+      style: {},
+    };
   }
 
   render() {
-    const { className } = this.props
-    const root = window.document.getElementById('root')
+    const { className } = this.props;
+    const root = window.document.getElementById("root");
 
     return ReactDOM.createPortal(
       <div
@@ -27,14 +27,14 @@ class HoverMenu extends Component {
         style={this.state.style}
         ref={wrapper => (this.menuWrapper = wrapper)}
       >
-        {this.renderMarkButton('strong', 'format_bold')}
-        {this.renderMarkButton('em', 'format_italic')}
-        {this.renderMarkButton('code', 'code')}
-        {this.renderBlockButton('h1', 'looks_one', this.onClickBlock)}
-        {this.renderBlockButton('h2', 'looks_two', this.onClickBlock)}
+        {this.renderMarkButton("strong", "format_bold")}
+        {this.renderMarkButton("em", "format_italic")}
+        {this.renderMarkButton("code", "code")}
+        {this.renderBlockButton("h1", "looks_one", this.onClickBlock)}
+        {this.renderBlockButton("h2", "looks_two", this.onClickBlock)}
       </div>,
-      root
-    )
+      root,
+    );
   }
 
   /**
@@ -45,8 +45,8 @@ class HoverMenu extends Component {
    * @return {Element}
    */
   renderMarkButton(type, icon) {
-    const { value } = this.props
-    const isActive = value.activeMarks.some(mark => mark.type === type)
+    const { value } = this.props;
+    const isActive = value.activeMarks.some(mark => mark.type === type);
     return (
       <Button
         reversed
@@ -55,7 +55,7 @@ class HoverMenu extends Component {
       >
         <Icon>{icon}</Icon>
       </Button>
-    )
+    );
   }
 
   /**
@@ -67,7 +67,7 @@ class HoverMenu extends Component {
    */
 
   renderBlockButton = (type, icon, onClickBlock) => {
-    const isActive = this.hasBlock(type)
+    const isActive = this.hasBlock(type);
 
     return (
       <Button
@@ -77,8 +77,8 @@ class HoverMenu extends Component {
       >
         <Icon>{icon}</Icon>
       </Button>
-    )
-  }
+    );
+  };
 
   /**
    * Check if the any of the currently selected blocks are of `type`.
@@ -88,47 +88,47 @@ class HoverMenu extends Component {
    */
 
   hasBlock = type => {
-    const { value } = this.props
-    return value.blocks.some(node => node.type === type)
-  }
+    const { value } = this.props;
+    return value.blocks.some(node => node.type === type);
+  };
 
   /**
    * Update the menu's absolute position
    */
   update = () => {
     if (!this.menuWrapper) {
-      return
+      return;
     }
 
-    const { value } = this.props
-    const { fragment, selection } = value
+    const { value } = this.props;
+    const { fragment, selection } = value;
 
-    if (selection.isBlurred || selection.isCollapsed || fragment.text === '') {
+    if (selection.isBlurred || selection.isCollapsed || fragment.text === "") {
       this.setState({
-        style: {}
-      })
-      return
+        style: {},
+      });
+      return;
     }
 
-    const nativeSelection = window.getSelection()
-    const range = nativeSelection.getRangeAt(0)
-    const rect = range.getBoundingClientRect()
+    const nativeSelection = window.getSelection();
+    const range = nativeSelection.getRangeAt(0);
+    const rect = range.getBoundingClientRect();
 
-    let newStyle = {}
-    newStyle.opacity = 1
+    let newStyle = {};
+    newStyle.opacity = 1;
     newStyle.top = `${rect.top +
       window.pageYOffset -
-      this.menuWrapper.offsetHeight}px`
+      this.menuWrapper.offsetHeight}px`;
 
     newStyle.left = `${rect.left +
       window.pageXOffset -
       this.menuWrapper.offsetWidth / 2 +
-      rect.width / 2}px`
+      rect.width / 2}px`;
 
     this.setState({
-      style: newStyle
-    })
-  }
+      style: newStyle,
+    });
+  };
 
   /**
    * When a mark button is clicked, toggle the current mark.
@@ -137,10 +137,10 @@ class HoverMenu extends Component {
    * @param {String} type
    */
   onClickMark(event, type) {
-    const { value, onChange } = this.props
-    event.preventDefault()
-    const change = value.change().toggleMark(type)
-    onChange(change)
+    const { value, onChange } = this.props;
+    event.preventDefault();
+    const change = value.change().toggleMark(type);
+    onChange(change);
   }
 
   /**
@@ -151,15 +151,15 @@ class HoverMenu extends Component {
    */
 
   onClickBlock = (event, type) => {
-    const { value, onChange } = this.props
-    event.preventDefault()
-    const change = value.change()
+    const { value, onChange } = this.props;
+    event.preventDefault();
+    const change = value.change();
 
-    const isActive = this.hasBlock(type)
-    change.setBlocks(isActive ? DEFAULT_NODE : type)
+    const isActive = this.hasBlock(type);
+    change.setBlocks(isActive ? DEFAULT_NODE : type);
 
-    onChange(change)
-  }
+    onChange(change);
+  };
 }
 
-export default HoverMenu
+export default HoverMenu;
