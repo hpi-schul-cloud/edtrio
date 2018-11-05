@@ -1,6 +1,6 @@
-import Image from '../image'
-import Iframe from '../iframe'
-import { Text, Block } from 'slate'
+import Image from "../image";
+import Iframe from "../iframe";
+import { Text, Block } from "slate";
 
 /**
  * handles clicks on the imageblock button and
@@ -11,64 +11,63 @@ export const onClickImageButton = (
   change,
   onChange,
   uppy,
-  closeUppyWindow
+  closeUppyWindow,
 ) => {
-  const { insertImage } = Image().changes
+  const { insertImage } = Image().changes;
 
-  event.preventDefault()
+  event.preventDefault();
 
-  uppy.on('complete', result => {
-    console.log(result.successful[0].data)
-    closeUppyWindow()
+  uppy.on("complete", result => {
+    closeUppyWindow();
 
     result.successful.forEach(image => {
-      uppy.reset()
+      uppy.reset();
 
       // TODO: replace with proper file upload (e.g. to S3)
-      const fr = new FileReader()
+      const fr = new FileReader();
       fr.onload = () => {
-        change.call(insertImage, fr.result)
-        onChange(change)
-      }
+        change.call(insertImage, fr.result);
+        onChange(change);
+      };
 
-      fr.readAsDataURL(image.data)
-    })
-  })
-}
+      fr.readAsDataURL(image.data);
+    });
+  });
+};
 
 /**
  * handles clicks on the codeblock button and
  * forwards them accordingly to plugins/code-block
  */
 export const onClickCodeButton = (event, change, onChange) => {
-  event.preventDefault()
+  event.preventDefault();
 
-  change.call(_insertCodeBlock)
+  change.call(_insertCodeBlock);
 
-  onChange(change)
-}
+  onChange(change);
+};
 
 export const onClickIframeButton = (event, change, onChange) => {
-  const { insertIframe } = Iframe().changes
+  const { insertIframe } = Iframe().changes;
 
-  event.preventDefault()
-  const src = window.prompt('Enter the URL of the iframe:')
-  if (!src) return
+  event.preventDefault();
+  const src = window.prompt("Enter the URL of the iframe:");
+  if (!src) return;
 
-  change.call(insertIframe, src)
+  change.call(insertIframe, src);
 
-  onChange(change)
-}
+  onChange(change);
+};
 
 function _insertCodeBlock(change, target) {
   if (target) {
-    change.select(target)
+    change.select(target);
   }
 
   change.insertBlock(
     Block.create({
-      type: 'code',
-      nodes: [Text.create()]
-    })
-  )
+      type: "code",
+      nodes: [Text.create()],
+    }),
+  );
 }

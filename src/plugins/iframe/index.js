@@ -1,59 +1,59 @@
-import React from 'react'
+import React from "react";
 
 export default function Iframe(options) {
   return {
     changes: {
-      insertIframe
+      insertIframe,
     },
     helpers: {},
     components: {
-      IframeNode
+      IframeNode,
     },
-    plugins: [RenderIframeNode, { schema }]
-  }
+    plugins: [RenderIframeNode, { schema }],
+  };
 }
 
 const schema = {
   blocks: {
     iframe: {
-      isVoid: true
-    }
-  }
-}
+      isVoid: true,
+    },
+  },
+};
 
 function insertIframe(change, src, target) {
   if (target) {
-    change.select(target)
+    change.select(target);
   }
 
   change.insertBlock({
-    type: 'iframe',
-    data: { src }
-  })
+    type: "iframe",
+    data: { src },
+  });
 }
 
 function IframeNode(props) {
-  const { src, selected, ...attributes } = props
+  const { src, selected, ...attributes } = props;
 
   return (
     <iframe
       src={src}
       title="Iframe"
       frameBorder="0"
-      className={`iframe plugin-wrapper ${selected ? 'selected' : ''}`}
+      className={`iframe plugin-wrapper ${selected ? "selected" : ""}`}
       {...attributes}
     />
-  )
+  );
 }
 
 const RenderIframeNode = {
   renderNode(props) {
-    const { attributes, node, isFocused } = props
+    const { attributes, node, isFocused } = props;
 
-    if (node.type === 'iframe') {
-      const src = node.data.get('src')
+    if (node.type === "iframe") {
+      const src = node.data.get("src");
 
-      return <IframeNode src={src} selected={isFocused} {...attributes} />
+      return <IframeNode src={src} selected={isFocused} {...attributes} />;
     }
-  }
-}
+  },
+};

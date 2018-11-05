@@ -1,51 +1,51 @@
-import React from 'react'
+import React from "react";
 
-import Hotkey from '../helpers/Hotkey'
+import Hotkey from "../helpers/Hotkey";
 
-import './style.css'
+import "./style.css";
 
 export default function Code(options) {
   return {
     changes: {},
     helpers: {
-      toggleCodeBlock
+      toggleCodeBlock,
     },
     components: {
-      CodeNode
+      CodeNode,
     },
-    plugins: [Hotkey('Control+c', toggleCodeBlock), RenderCodeNode, { schema }]
-  }
+    plugins: [Hotkey("Control+c", toggleCodeBlock), RenderCodeNode, { schema }],
+  };
 }
 
 const schema = {
   blocks: {
     code: {
-      marks: []
-    }
-  }
-}
+      marks: [],
+    },
+  },
+};
 
 function toggleCodeBlock(change) {
-  const isCode = change.value.blocks.some(block => block.type === 'code')
-  change.setBlocks(isCode ? 'p' : 'code')
-  return true
+  const isCode = change.value.blocks.some(block => block.type === "code");
+  change.setBlocks(isCode ? "p" : "code");
+  return true;
 }
 
 function CodeNode(props) {
   return (
     <pre
-      className={`code-block ${props.selected ? 'selected' : ''}`}
+      className={`code-block ${props.selected ? "selected" : ""}`}
       {...props.attributes}
     >
       <code>{props.children}</code>
     </pre>
-  )
+  );
 }
 
 const RenderCodeNode = {
   renderNode(props) {
-    return props.node.type === 'code' ? (
+    return props.node.type === "code" ? (
       <CodeNode selected={props.isFocused} {...props} />
-    ) : null
-  }
-}
+    ) : null;
+  },
+};
