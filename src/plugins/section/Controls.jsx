@@ -1,99 +1,100 @@
-import React, { Component } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React, { Component } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEye,
   faEyeSlash,
   faChevronDown,
   faChevronUp,
-  faTrashAlt
-} from '@fortawesome/free-solid-svg-icons'
+  faTrashAlt,
+} from "@fortawesome/free-solid-svg-icons";
 
 class Controls extends Component {
   /**
    * Hides/unhides the current section
    */
   toggleVisibilityOfSection = (change, onChange, isVisible) => {
-    const parentSection = this.getParentSection(change)
+    const parentSection = this.getParentSection(change);
 
     const c = change.setNodeByKey(parentSection.key, {
       data: {
-        isVisible: !isVisible
-      }
-    })
-    onChange(c)
-  }
+        isVisible: !isVisible,
+      },
+    });
+    onChange(c);
+  };
 
   /**
    * Delete the current section
    */
   deleteSection = (change, onChange) => {
-    const parentSection = this.getParentSection(change)
+    const parentSection = this.getParentSection(change);
 
-    const c = change.removeNodeByKey(parentSection.key)
-    onChange(c)
-  }
+    const c = change.removeNodeByKey(parentSection.key);
+    onChange(c);
+  };
 
   /**
    * Move the current section up or down
    * @param {string} direction `UP` or `DOWN`
    */
   moveSection = (change, onChange, direction) => {
-    const currentSection = this.getParentSection(change)
-    const { document } = change.value
+    const currentSection = this.getParentSection(change);
+    const { document } = change.value;
 
-    let moveToSection
-    if (direction === 'UP') {
-      moveToSection = document.getPreviousSibling(currentSection.key)
-    } else if (direction === 'DOWN') {
-      moveToSection = document.getNextSibling(currentSection.key)
+    let moveToSection;
+    if (direction === "UP") {
+      moveToSection = document.getPreviousSibling(currentSection.key);
+    } else if (direction === "DOWN") {
+      moveToSection = document.getNextSibling(currentSection.key);
     } else {
-      console.error('ONLY "UP" OR "DOWN" ARE ALLOWED FOR PARAMETER direction')
-      return
+      // ONLY "UP" OR "DOWN" ARE ALLOWED FOR PARAMETER direction'
+      return;
     }
 
-    if (!moveToSection || moveToSection.type !== 'section') {
-      return
+    if (!moveToSection || moveToSection.type !== "section") {
+      return;
     }
 
     const moveToIndex = document.nodes.findIndex(node => {
       if (node.key === moveToSection.key) {
-        return true
+        return true;
       }
-      return false
-    })
+      return false;
+    });
 
     const c = change.moveNodeByKey(
       currentSection.key,
       document.key,
-      moveToIndex
-    )
-    onChange(c)
-  }
+      moveToIndex,
+    );
+    onChange(c);
+  };
 
   getParentSection = change => {
-    let parent = change.value.anchorBlock
+    let parent = change.value.anchorBlock;
     do {
-      parent = change.value.document.getParent(parent.key)
+      parent = change.value.document.getParent(parent.key);
 
       if (!parent) {
-        console.error("Couldn't find parent.")
-        return
+        //Couldn't find parent.
+        return;
       }
-    } while (parent.type !== 'section')
+    } while (parent.type !== "section");
 
-    return parent
-  }
+    return parent;
+  };
 
   render() {
-    const { editor, isVisible } = this.props
+    const { editor, isVisible } = this.props;
 
     return (
       <aside className="buttons section-controls">
+        {/* TODO: This should probably be a button */}
         <a
           className="button is-white"
           onMouseDown={e => {
-            e.preventDefault()
-            this.deleteSection(editor.value.change(), editor.props.onChange)
+            e.preventDefault();
+            this.deleteSection(editor.value.change(), editor.props.onChange);
           }}
         >
           <span className="icon is-small">
@@ -103,8 +104,12 @@ class Controls extends Component {
         <a
           className="button is-white"
           onMouseDown={e => {
-            e.preventDefault()
-            this.moveSection(editor.value.change(), editor.props.onChange, 'UP')
+            e.preventDefault();
+            this.moveSection(
+              editor.value.change(),
+              editor.props.onChange,
+              "UP",
+            );
           }}
         >
           <span className="icon is-small">
@@ -114,12 +119,12 @@ class Controls extends Component {
         <a
           className="button is-white"
           onMouseDown={e => {
-            e.preventDefault()
+            e.preventDefault();
             this.moveSection(
               editor.value.change(),
               editor.props.onChange,
-              'DOWN'
-            )
+              "DOWN",
+            );
           }}
         >
           <span className="icon is-small">
@@ -128,27 +133,27 @@ class Controls extends Component {
         </a>
         <a
           className={`button is-white tooltip ${
-            !isVisible ? 'is-tooltip-active' : ''
+            !isVisible ? "is-tooltip-active" : ""
           }`}
           data-tooltip={
-            isVisible ? 'Abschnitt ausblenden' : 'Abschnitt ausgeblendet'
+            isVisible ? "Abschnitt ausblenden" : "Abschnitt ausgeblendet"
           }
           onMouseDown={e => {
-            e.preventDefault()
+            e.preventDefault();
             this.toggleVisibilityOfSection(
               editor.value.change(),
               editor.props.onChange,
-              isVisible
-            )
+              isVisible,
+            );
           }}
         >
           <span className="icon is-small">
-            <FontAwesomeIcon icon={!!isVisible ? faEye : faEyeSlash} />
+            <FontAwesomeIcon icon={isVisible ? faEye : faEyeSlash} />
           </span>
         </a>
       </aside>
-    )
+    );
   }
 }
 
-export default Controls
+export default Controls;

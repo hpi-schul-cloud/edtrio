@@ -1,33 +1,33 @@
-import React, { Component } from 'react'
-import styles from './SaveBar.module.scss'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUndo, faRedo, faQuestion } from '@fortawesome/free-solid-svg-icons'
-import moment from 'moment'
+import React, { Component } from "react";
+import styles from "./SaveBar.module.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUndo, faRedo, faQuestion } from "@fortawesome/free-solid-svg-icons";
+import moment from "moment";
 
 class SaveBar extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
-      lastSaved: this.props.lastSaved || null
-    }
+      lastSaved: this.props.lastSaved || null,
+    };
 
-    window.updateLastSaved = this.updateLastSaved
+    window.updateLastSaved = this.updateLastSaved;
   }
 
   handleUndo = event => {
-    event.preventDefault()
-    this.props.editor.change(change => change.undo())
-  }
+    event.preventDefault();
+    this.props.editor.change(change => change.undo());
+  };
 
   handleRedo = event => {
-    event.preventDefault()
-    this.props.editor.change(change => change.redo())
-  }
+    event.preventDefault();
+    this.props.editor.change(change => change.redo());
+  };
 
   updateLastSaved = newTimestamp => {
-    this.setState({ lastSaved: newTimestamp })
-  }
+    this.setState({ lastSaved: newTimestamp });
+  };
 
   render() {
     return (
@@ -54,8 +54,8 @@ class SaveBar extends Component {
           </div>
         </div>
       </nav>
-    )
+    );
   }
 }
 
-export default SaveBar
+export default SaveBar;

@@ -1,29 +1,28 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 
-import Uppy from '@uppy/core'
-import Tus from '@uppy/tus'
-import { DashboardModal } from '@uppy/react'
+import Uppy from "@uppy/core";
+import Tus from "@uppy/tus";
+import { DashboardModal } from "@uppy/react";
 
 class Uploader extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
-      open: false
-    }
+      open: false,
+    };
 
     this.uppy = Uppy({
-      meta: { type: 'avatar' },
+      meta: { type: "avatar" },
       restrictions: { maxNumberOfFiles: 1 },
-      autoProceed: true
-    })
+      autoProceed: true,
+    });
 
-    this.uppy.use(Tus, { endpoint: 'https://master.tus.io/files/' })
+    this.uppy.use(Tus, { endpoint: "https://master.tus.io/files/" });
 
-    this.uppy.on('complete', result => {
-      const url = result.successful[0].uploadURL
-      console.log(`WE DONE! ${url}`)
-    })
+    this.uppy.on("complete", result => {
+      const url = result.successful[0].uploadURL;
+    });
   }
 
   render() {
@@ -34,7 +33,7 @@ class Uploader extends Component {
           rel="stylesheet"
         />
         <button className="button" onClick={this.handleModalClick}>
-          {this.state.open ? 'Close dashboard' : 'Upload files'}
+          {this.state.open ? "Close dashboard" : "Upload files"}
         </button>
         <DashboardModal
           uppy={this.uppy}
@@ -43,14 +42,14 @@ class Uploader extends Component {
           onRequestClose={() => this.setState({ open: false })}
         />
       </div>
-    )
+    );
   }
 
   handleModalClick = () => {
     this.setState({
-      open: !this.state.open
-    })
-  }
+      open: !this.state.open,
+    });
+  };
 }
 
-export default Uploader
+export default Uploader;
