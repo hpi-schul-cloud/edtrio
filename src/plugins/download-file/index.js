@@ -1,37 +1,37 @@
-import React from 'react'
-import DownloadButton from './DownloadButton'
+import React from "react";
+import DownloadButton from "./DownloadButton";
 
 export default function DownloadFile(options) {
   return {
     changes: {
-      insertFile
+      insertFile,
     },
     helpers: {},
     components: {
-      DownloadButton
+      DownloadButton,
     },
-    plugins: [RenderFileNode]
-  }
+    plugins: [RenderFileNode],
+  };
 }
 
 function insertFile(change, src, target) {
   if (target) {
-    change.select(target)
+    change.select(target);
   }
 
   change.insertBlock({
-    type: 'file',
+    type: "file",
     isVoid: true,
-    data: { src }
-  })
+    data: { src },
+  });
 }
 
 const RenderFileNode = {
   renderNode(props) {
-    const { attributes, node, isFocused, children } = props
+    const { attributes, node, isFocused, children } = props;
 
-    if (node.type === 'file') {
-      const src = node.data.get('src')
+    if (node.type === "file") {
+      const src = node.data.get("src");
       return (
         <DownloadButton
           src={src}
@@ -39,7 +39,7 @@ const RenderFileNode = {
           children={children}
           {...attributes}
         />
-      )
+      );
     }
-  }
-}
+  },
+};

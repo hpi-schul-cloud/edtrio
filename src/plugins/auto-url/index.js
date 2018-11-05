@@ -1,20 +1,20 @@
-import React from 'react'
+import React from "react";
 
-import InstantReplace from 'slate-instant-replace'
-import isUrl from 'is-url'
+import InstantReplace from "slate-instant-replace";
+import isUrl from "is-url";
 
 export default function AutoURL(options) {
   return {
     changes: {
       wrapLink,
-      unwrapLink
+      unwrapLink,
     },
     helpers: {},
     components: {
-      LinkNode
+      LinkNode,
     },
-    plugins: [InstantReplace(AddURL), RenderLinkNode]
-  }
+    plugins: [InstantReplace(AddURL), RenderLinkNode],
+  };
 }
 
 /**
@@ -24,51 +24,51 @@ export default function AutoURL(options) {
  */
 const wrapLink = (change, href) => {
   change.wrapInline({
-    type: 'a',
-    data: { href }
-  })
-  change.collapseToEnd()
-}
+    type: "a",
+    data: { href },
+  });
+  change.collapseToEnd();
+};
 
 /**
  * Removes any inline link type on the supplied change
  * @param {*} change change to be manipulated
  */
 const unwrapLink = change => {
-  change.unwrapInline('a')
-}
+  change.unwrapInline("a");
+};
 
 const AddURL = (change, lastWord) => {
   if (isUrl(lastWord)) {
-    change.extend(-lastWord.length)
-    change.focus()
+    change.extend(-lastWord.length);
+    change.focus();
 
-    change.call(unwrapLink)
+    change.call(unwrapLink);
 
-    const href = lastWord.startsWith('http') ? lastWord : `https://${lastWord}`
+    const href = lastWord.startsWith("http") ? lastWord : `https://${lastWord}`;
 
-    change.call(wrapLink, href)
+    change.call(wrapLink, href);
   }
-}
+};
 
 /**
  * Component to be rendered for every link inline element
  * @param {*} props not used atm
  */
 function LinkNode(props) {
-  const { attributes, children, node } = props
-  const { data } = node
-  const href = data.get('href')
+  const { attributes, children, node } = props;
+  const { data } = node;
+  const href = data.get("href");
 
   return (
     <a {...attributes} href={href}>
       {children}
     </a>
-  )
+  );
 }
 
 const RenderLinkNode = {
   renderNode(props) {
-    return props.node.type === 'a' ? <LinkNode {...props} /> : null
-  }
-}
+    return props.node.type === "a" ? <LinkNode {...props} /> : null;
+  },
+};
