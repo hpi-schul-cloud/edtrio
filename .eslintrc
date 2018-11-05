@@ -1,0 +1,23 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "extends": ["eslint:recommended", "react-app", "prettier"],
+  "parserOptions": {
+    "ecmaVersion": 9,
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "sourceType": "module"
+  },
+  "plugins": ["react", "prettier", "babel"],
+  "rules": {
+    "prettier/prettier": "error",
+    "linebreak-style": [2, "unix"],
+    "semi": [2, "always"],
+    "no-unused-vars": [0],
+    "unicode-bom": ["error", "never"]
+  }
+}
