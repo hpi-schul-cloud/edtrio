@@ -6,14 +6,13 @@
     "esModuleInterop": true,
     "allowJs": false,
     "declarationDir": "./lib/types",
-    "module": "commonjs",
+    "module": "esnext",
     "target": "es5",
-    "jsx": "react",
+    "jsx": "preserve",
     "types": ["node"],
     "moduleResolution": "node",
     "lib": ["es2017", "dom"],
     "rootDirs": ["src"],
-    "baseUrl": "src",
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
@@ -25,7 +24,10 @@
     "strictNullChecks": true,
     "removeComments": true,
     "experimentalDecorators": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "skipLibCheck": false,
+    "isolatedModules": true,
+    "noEmit": true
   },
   "include": ["src/**/*"]
 }
