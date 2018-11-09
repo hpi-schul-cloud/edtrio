@@ -17,7 +17,7 @@ export default function YoutubeHandler(options) {
   }
 }
 
-const _regex = /youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)/i
+const _regex = /youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-_]*)/i
 
 const validate = url => {
   return !!_regex.exec(url)
@@ -71,9 +71,11 @@ const RenderYoutubeNode = {
 
     if (node.type === 'video') {
       const videoId = node.data.get('videoId')
-      return (
-        <YoutubeNode videoId={videoId} selected={isFocused} {...attributes} />
-      )
+      if (videoId) {
+        return (
+          <YoutubeNode videoId={videoId} selected={isFocused} {...attributes} />
+        )
+      }
     }
   }
 }

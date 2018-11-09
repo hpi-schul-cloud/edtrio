@@ -2,13 +2,18 @@ import { getEventTransfer } from 'slate-react'
 import isUrl from 'is-url'
 
 import YoutubeHandler from './handlers/YoutubeHandler'
+import VideoHandler from './handlers/VideoHandler'
 
 export default function URLHandler(options) {
   return {
     changes: {},
     helpers: {},
     components: {},
-    plugins: [HandlePaste, ...YoutubeHandler().plugins]
+    plugins: [
+      HandlePaste,
+      ...YoutubeHandler().plugins,
+      ...VideoHandler().plugins
+    ]
   }
 }
 
@@ -27,7 +32,13 @@ const HandlePaste = {
       console.log('indeed a url')
 
       if (YoutubeHandler().validate(text)) {
+        console.log('for Youtube')
         return YoutubeHandler().dealWithIt(text, change)
+      }
+
+      if (VideoHandler().validate(text)) {
+        console.log('for a Video')
+        return VideoHandler().dealWithIt(text, change)
       }
 
       return
