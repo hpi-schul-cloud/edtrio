@@ -54,7 +54,7 @@ function VideoNode(props) {
       className={`plugin-wrapper ${selected ? 'selected' : ''}`}
       {...attributes}
     >
-      <video className="video" controls alt="Uploaded by user">
+      <video className="video" controls preload="none">
         <source src={src} type={mimeType} />
         Your browser does not support the video tag.
       </video>
