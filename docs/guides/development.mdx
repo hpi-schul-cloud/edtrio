@@ -1,0 +1,31 @@
+---
+name: Create a simple plugin
+route: /guides/create-plugin
+menu: 2. Guides
+order: 10
+---
+
+# Development tips and tricks
+
+Here are some explanations and tips for development.
+
+## Tooling
+
+### Styled-Components
+For styling we recommend using [styled-components](https://www.styled-components.com/). This means no more css files you have to import, every styled component becomes easily exportable and automatically ships with its own styles. Moreover, it more easily allows for adding variables to your styling. Check it out, you won't regret it.
+
+### Jest 
+Our testing framework of choice is [jest](https://jestjs.io/). It is pretty fast, allows for snapshot tests, has built-in coverage reports and is automatically supported by react-scripts.
+
+### Typescript
+Javascript is dynamically typed by default. However, static typing has a lot of advantages! (And disadvantages, of course, mostly it means more work, but if you're interested in a summary of up- and downsides, look [here](https://medium.freecodecamp.org/why-use-static-types-in-javascript-part-2-part-3-be699ee7be60)).
+tl;dr: Static typing taks more time, but creates much safer and more maintainable software. Since the editor should be used for a long time without us wanting to rewrite everything every year, we decided to go with [Typescript](https://www.typescriptlang.org/).
+
+### Eslint, Tslint and prettier
+Minds can collide over how to best structure code. Architecturally, that may still be the case, but it doesn't have to be that way on a small scale. Eslint and Tslint declare some code styling rules we commited to and want to follow (for .js and .ts respectively) and those rules are defined in the .eslintrc and tslint.json. There are many extensions for you favorite code editor that will read these files automatically and show you the warnings/errors while coding. 
+Prettier, on the other hand, takes some of the most menial tasks and performs them automatically. Spacing, import order etc. are pretty easy to arrange for a machine, so that's what it does. Again, there are a lot of prettier plugins. It might save you a lot of time to enable pretter to run on file-save so you never save a badly formatted file. 
+
+## Before you pull request:
+Please make sure that you have no linting and typing errors left in your code and explain the hard parts with comments. 
+
+We hope this section helped you a little bit. Happy developing!
