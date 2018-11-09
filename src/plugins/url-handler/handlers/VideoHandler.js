@@ -4,7 +4,7 @@ import insertParagraph from '../../helpers/insertParagraph'
 
 import mimeLookup from 'browser-media-mime-type'
 
-export default function YoutubeHandler(options) {
+export default function VideoHandler(options) {
   return {
     validate,
     dealWithIt,
