@@ -3,6 +3,7 @@ import isUrl from 'is-url'
 
 import YoutubeHandler from './handlers/YoutubeHandler'
 import VideoHandler from './handlers/VideoHandler'
+import AudioHandler from './handlers/AudioHandler'
 
 export default function URLHandler(options) {
   return {
@@ -12,7 +13,8 @@ export default function URLHandler(options) {
     plugins: [
       HandlePaste,
       ...YoutubeHandler().plugins,
-      ...VideoHandler().plugins
+      ...VideoHandler().plugins,
+      ...AudioHandler().plugins
     ]
   }
 }
@@ -39,6 +41,11 @@ const HandlePaste = {
       if (VideoHandler().validate(text)) {
         console.log('for a Video')
         return VideoHandler().dealWithIt(text, change)
+      }
+
+      if (AudioHandler().validate(text)) {
+        console.log('for an audio stream')
+        return AudioHandler().dealWithIt(text, change)
       }
 
       return
