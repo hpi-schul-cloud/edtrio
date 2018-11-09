@@ -22,7 +22,7 @@ export default function YoutubeHandler(options) {
 const validate = url => {
   const fileExtension = url.substr(url.lastIndexOf('.') + 1)
   const mimeType = mimeLookup(fileExtension)
-  return mimeType.includes('video')
+  return (mimeType || '').includes('video')
 }
 
 const dealWithIt = (url, change) => {
@@ -69,7 +69,7 @@ const RenderVideoNode = {
     if (node.type === 'video') {
       const src = node.data.get('src')
       const mimeType = node.data.get('mimeType')
-      if (mimeType.includes('video')) {
+      if ((mimeType || '').includes('video')) {
         return (
           <VideoNode
             src={src}
