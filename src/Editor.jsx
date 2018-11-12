@@ -8,13 +8,11 @@ import TextMenu from './plugins/text-menu'
 import PlusMenuPlugin from './plugins/plus-menu'
 import CodeBlockPlugin from './plugins/code-block'
 import Embed from './plugins/embed'
-// import AutoURL from './plugins/auto-url'
 import Image from './plugins/image'
 import Geogebra from './plugins/geogebra'
 import MarkdownShortcuts from './plugins/markdown-shortcuts'
 import Title from './plugins/title'
 import Section from './plugins/section'
-import Iframe from './plugins/iframe'
 import DownloadFile from './plugins/download-file'
 
 import DocumentViewer from './dev-document-viewer/DocumentViewer'
@@ -39,13 +37,11 @@ class Editor extends Component {
       ...TextMenu().plugins,
       ...Headlines().plugins,
       ...MarkdownShortcuts().plugins,
-      ...Iframe().plugins,
       ...DownloadFile().plugins,
       ...CodeBlockPlugin().plugins,
       ...Embed().plugins,
       ...Image().plugins,
       ...Geogebra().plugins
-      // ...AutoURL().plugins
     ]
 
     this.debounce = null
