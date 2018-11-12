@@ -1,8 +1,6 @@
 // @ts-ignore:
 import CodeBlockPlugin from "./code-block/index";
 // @ts-ignore:
-import DownloadFile from "./download-file/index";
-// @ts-ignore:
 import Geogebra from "./geogebra/index";
 // @ts-ignore:
 import Headlines from "./headlines/index";
@@ -27,7 +25,6 @@ export const plugins = [
   ...TextMenu().plugins,
   ...Headlines().plugins,
   ...MarkdownShortcuts().plugins,
-  ...DownloadFile().plugins,
   ...Embed().plugins,
   ...CodeBlockPlugin().plugins,
   ...Image().plugins,

@@ -1,6 +1,18 @@
 {
   "name": "edtrio",
   "version": "2.1.0",
+  "author": {
+    "name": "Florian Wirtz",
+    "email": "florian.wirtz@student.hpi.de",
+    "url": "https://github.com/FWirtz"
+  },
+  "contributors": [
+    {
+      "name": "Paul Arndt",
+      "email": "paul.arndt@student.hpi.de",
+      "url": "https://github.com/Atyanar"
+    }
+  ],
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.6",
