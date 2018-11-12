@@ -1,4 +1,6 @@
 // @ts-ignore:
+import Audio from "./audio/index";
+// @ts-ignore:
 import CodeBlockPlugin from "./code-block/index";
 // @ts-ignore:
 import Embed from "./embed/index";
@@ -20,6 +22,8 @@ import Section from "./section/index";
 import TextMenu from "./text-menu/index";
 // @ts-ignore:
 import Title from "./title/index";
+// @ts-ignore:
+import Video from "./video/index";
 
 export const plugins = [
   ...Title().plugins,
@@ -28,6 +32,8 @@ export const plugins = [
   ...Headlines().plugins,
   ...MarkdownShortcuts().plugins,
   ...Embed().plugins,
+  ...Video().plugins,
+  ...Audio().plugins,
   ...PasteURLHandler().plugins,
   ...CodeBlockPlugin().plugins,
   ...Image().plugins,
