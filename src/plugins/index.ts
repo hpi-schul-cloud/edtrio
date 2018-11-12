@@ -11,6 +11,8 @@ import Image from "./image/index";
 // @ts-ignore:
 import MarkdownShortcuts from "./markdown-shortcuts/index";
 // @ts-ignore:
+import PasteURLHandler from "./paste-url-handler/index";
+// @ts-ignore:
 import PlusMenuPlugin from "./plus-menu/index";
 // @ts-ignore:
 import Section from "./section/index";
@@ -26,6 +28,7 @@ export const plugins = [
   ...Headlines().plugins,
   ...MarkdownShortcuts().plugins,
   ...Embed().plugins,
+  ...PasteURLHandler().plugins,
   ...CodeBlockPlugin().plugins,
   ...Image().plugins,
   ...Geogebra().plugins,
