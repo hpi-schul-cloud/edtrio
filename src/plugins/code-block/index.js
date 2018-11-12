@@ -13,7 +13,12 @@ export default function Code(options) {
     components: {
       CodeNode,
     },
-    plugins: [Hotkey("Control+c", toggleCodeBlock), RenderCodeNode, { schema }],
+    plugins: [
+      Hotkey("Control+c", toggleCodeBlock),
+      RenderCodeNode,
+      HandleEnterKey,
+      { schema },
+    ],
   };
 }
 
@@ -41,6 +46,22 @@ function CodeNode(props) {
     </pre>
   );
 }
+
+const HandleEnterKey = {
+  onKeyDown(event, change) {
+    if (change.value.startBlock.type !== "code") return;
+
+    switch (event.key) {
+      case "Enter":
+        return change.insertText("\n");
+      case "Tab":
+        event.preventDefault();
+        return change.insertText("  ");
+      default:
+      // pass
+    }
+  },
+};
 
 const RenderCodeNode = {
   renderNode(props) {
