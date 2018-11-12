@@ -1,12 +1,10 @@
 import React from 'react'
 
 import isUrl from 'is-url'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faExternalLinkSquareAlt } from '@fortawesome/free-solid-svg-icons'
-import { faYoutube, faVimeo } from '@fortawesome/free-brands-svg-icons'
 
 import Hotkey from '../helpers/Hotkey'
 import handleUrl from './handlers'
+import ServiceTypeIcon from './ServiceTypeIcon'
 
 export default function Embed(options) {
   return {
@@ -20,6 +18,7 @@ export default function Embed(options) {
     plugins: [
       Hotkey('Control+e', toggleEmbedBlock),
       RenderEmbedNode,
+      RenderEmbedPlaceholder,
       { schema }
     ]
   }
@@ -32,13 +31,6 @@ const schema = {
     }
   }
 }
-
-/**
- * TODO:
- *  - placeholder url
- *  - refactor this to files
- *  - add button to plus-menu
- */
 
 function toggleEmbedBlock(change) {
   const isCode = change.value.blocks.some(block => block.type === 'embed')
@@ -56,6 +48,33 @@ const RenderEmbedNode = {
         {...props}
       />
     ) : null
+  }
+}
+
+const RenderEmbedPlaceholder = {
+  renderPlaceholder({ editor, node, parent }) {
+    if (node.object !== 'block') return
+    if (node.type !== 'embed') return
+    if (node.text !== '') return
+
+    // if there is a url, don't render the placeholder :-)
+    if (node.data.get('url')) return
+
+    return (
+      <span
+        contentEditable={false}
+        style={{ display: 'inline-block', width: '0', whiteSpace: 'nowrap' }}
+        className="has-text-grey-light"
+        onMouseDown={e => {
+          const change = editor.value.change()
+          const onChange = editor.props.onChange
+          onChange(change.moveToEndOfNode(node).focus())
+          return true
+        }}
+      >
+        z. Bsp. https://www.youtube.com/watch?v=nS4a_bTv5_Y
+      </span>
+    )
   }
 }
 
@@ -145,27 +164,5 @@ class EmbedNode extends React.Component {
         </div>
       </React.Fragment>
     )
-  }
-}
-
-class ServiceTypeIcon extends React.Component {
-  render() {
-    const { type } = this.props
-
-    let icon, color
-    switch (type) {
-      case 'youtube':
-        icon = faYoutube
-        color = '#ff0000'
-        break
-      case 'vimeo':
-        icon = faVimeo
-        color = '#00acf2'
-        break
-      default:
-        icon = faExternalLinkSquareAlt
-    }
-
-    return <FontAwesomeIcon icon={icon} style={{ color: color }} size="lg" />
   }
 }
