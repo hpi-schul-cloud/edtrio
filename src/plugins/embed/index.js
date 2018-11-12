@@ -2,7 +2,7 @@ import React from 'react'
 
 import isUrl from 'is-url'
 
-import Hotkey from '../helpers/Hotkey'
+import Hotkey from '../../helpers/Hotkey'
 import handleUrl from './handlers'
 import ServiceTypeIcon from './ServiceTypeIcon'
 

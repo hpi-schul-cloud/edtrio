@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import "./style.css";
 
-import Icon from "../helpers/Icon";
-import Button from "../helpers/Button";
+import Icon from "../../helpers/Icon";
+import Button from "../../helpers/Button";
 
 // Taken and adapted from https://github.com/ianstormtaylor/slate/tree/master/examples/hovering-menu
 const DEFAULT_NODE = "p";

@@ -1,6 +1,6 @@
 import React from "react";
 
-import Hotkey from "../helpers/Hotkey";
+import Hotkey from "../../helpers/Hotkey";
 
 import "./style.css";
 
