@@ -3,7 +3,7 @@
   "version": "2.1.0",
   "author": {
     "name": "Florian Wirtz",
-    "email": "florian.wirtz@student.hpi.de",
+    "email": "florian.wirtz@hpi-alumni.de",
     "url": "https://github.com/FWirtz"
   },
   "contributors": [
@@ -11,6 +11,11 @@
       "name": "Paul Arndt",
       "email": "paul.arndt@student.hpi.de",
       "url": "https://github.com/Atyanar"
+    },
+    {
+      "name": "Adrian Jost",
+      "email": "adrian.jost@student.hpi.de",
+      "url": "https://github.com/adrianjost"
     }
   ],
   "private": true,
@@ -29,6 +34,7 @@
     "@uppy/core": "^0.27.0",
     "@uppy/react": "^0.27.1",
     "@uppy/tus": "^0.27.1",
+    "browser-media-mime-type": "^1.0.0",
     "bulma": "^0.7.1",
     "bulma-tooltip": "^2.0.2",
     "immutable": "^3.8.2",
