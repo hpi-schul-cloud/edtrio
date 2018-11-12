@@ -7,9 +7,6 @@ import Geogebra from "./geogebra/index";
 // @ts-ignore:
 import Headlines from "./headlines/index";
 // @ts-ignore:
-import Iframe from "./iframe/index";
-// import AutoURL from './auto-url'
-// @ts-ignore:
 import Image from "./image/index";
 // @ts-ignore:
 import MarkdownShortcuts from "./markdown-shortcuts/index";
@@ -22,7 +19,7 @@ import TextMenu from "./text-menu/index";
 // @ts-ignore:
 import Title from "./title/index";
 // @ts-ignore:
-import URLHandler from "./url-handler/index";
+import Embed from "./embed/index";
 
 export const plugins = [
   ...Title().plugins,
@@ -30,11 +27,9 @@ export const plugins = [
   ...TextMenu().plugins,
   ...Headlines().plugins,
   ...MarkdownShortcuts().plugins,
-  ...Iframe().plugins,
   ...DownloadFile().plugins,
-  ...URLHandler().plugins,
+  ...Embed().plugins,
   ...CodeBlockPlugin().plugins,
   ...Image().plugins,
   ...Geogebra().plugins,
-  // ...AutoURL().plugins
 ];
