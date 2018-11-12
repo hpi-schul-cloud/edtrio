@@ -6957,15 +6957,15 @@ is-hexadecimal@^1.0.0:
   resolved "https://registry.yarnpkg.com/is-hexadecimal/-/is-hexadecimal-1.0.2.tgz#b6e710d7d07bb66b98cb8cece5c9b4921deeb835"
   integrity sha512-but/G3sapV3MNyqiDBLrOi4x8uCIw0RY3o/Vb5GT0sMFHrVV7731wFSVy41T5FO1og7G0gXLJh0MkgPRouko/A==
 
-is-hotkey@0.1.4:
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/is-hotkey/-/is-hotkey-0.1.4.tgz#c34d2c85d6ec8d09a871dcf71931c8067a824c7d"
-  integrity sha512-Py+aW4r5mBBY18TGzGz286/gKS+fCQ0Hee3qkaiSmEPiD0PqFpe0wuA3l7rTOUKyeXl8Mxf3XzJxIoTlSv+kxA==
-
 is-hotkey@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/is-hotkey/-/is-hotkey-0.1.2.tgz#aeda5e4f542284700ae18b46980fb0637c021198"
   integrity sha512-H05t1Tc+uCWLOjHtF1bZH3b/i7+RkjlhwFWDsroTwC0acCjXOVyjJ63yTnRGdNhV5bnKIcYnijgLAJtM0/Xqsw==
+
+is-hotkey@^0.1.3:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/is-hotkey/-/is-hotkey-0.1.4.tgz#c34d2c85d6ec8d09a871dcf71931c8067a824c7d"
+  integrity sha512-Py+aW4r5mBBY18TGzGz286/gKS+fCQ0Hee3qkaiSmEPiD0PqFpe0wuA3l7rTOUKyeXl8Mxf3XzJxIoTlSv+kxA==
 
 is-in-browser@^1.1.3:
   version "1.1.3"
@@ -12251,10 +12251,10 @@ slash@^2.0.0:
   resolved "https://registry.yarnpkg.com/slash/-/slash-2.0.0.tgz#de552851a1759df3a8f206535442f5ec4ddeab44"
   integrity sha512-ZYKh3Wh2z1PpEXWr0MpSBZ0V6mZHAQfYevttO11c51CaWjGTaadiKZ+wVt1PbMlDV5qhMFslpZCemhwOK7C89A==
 
-slate-base64-serializer@^0.2.69:
-  version "0.2.84"
-  resolved "https://registry.yarnpkg.com/slate-base64-serializer/-/slate-base64-serializer-0.2.84.tgz#130322dabd055abcf1e7c58d9ae2b3a4fc260a58"
-  integrity sha512-wgp8OCvsyKx6u0TrmvW9hVEJ4p4Yirda+Twuw9dxtI/Q97cBAGRNFXI5slpE/zGhlyPDBiOT6vtRPqziZ5xtPA==
+slate-base64-serializer@^0.2.67:
+  version "0.2.90"
+  resolved "https://registry.yarnpkg.com/slate-base64-serializer/-/slate-base64-serializer-0.2.90.tgz#080bd5ec776905aca9bb56794aba821886bfb803"
+  integrity sha512-Fm5jHASvLTwUvsn3jpAn1k2rjL7/xIvkov5nY+Vnsz9YDt7abVMHbob0zFB+r2N7TX/MGU2/zC8CE/jaKo1HgQ==
   dependencies:
     isomorphic-base64 "^1.0.2"
 
@@ -12283,12 +12283,12 @@ slate-instant-replace@^0.1.8:
   resolved "https://registry.yarnpkg.com/slate-instant-replace/-/slate-instant-replace-0.1.8.tgz#d0afd1ab4da8ccf8f2ba49178b2363e644953fc3"
   integrity sha512-KqQ6ONQi8izRBRxKQVp6uPeNqI2Sw7rMoZeMqipfgzSiNDQ7YnWsrzPBzJTOCWmurFCNaSCLU0eUBxQzAcOvjg==
 
-slate-plain-serializer@^0.6.8:
-  version "0.6.23"
-  resolved "https://registry.yarnpkg.com/slate-plain-serializer/-/slate-plain-serializer-0.6.23.tgz#3edf0a2888eab77ecacec6e77f29ab19adef7016"
-  integrity sha512-mXSwPqeyQZDvCIBdE6kIOOkuWjTmR8JQzsX35nCAjez0qngLWkx5CfuEdmxpQs3EM9x8hjjiss9D8KhW2PzrLA==
+slate-plain-serializer@^0.6.6:
+  version "0.6.29"
+  resolved "https://registry.yarnpkg.com/slate-plain-serializer/-/slate-plain-serializer-0.6.29.tgz#e6deed0414b5de64e2945c8ce43d801e891864df"
+  integrity sha512-XwYv6Hx+X7RPk1+zrz4a/UCropDlYMWpSR3wuKnfr9xLsP9fWxX87e36y3OeZgy0u00FhOR1wF+0MMNgooj9fw==
 
-slate-prop-types@^0.4.67:
+slate-prop-types@^0.4.65:
   version "0.4.67"
   resolved "https://registry.yarnpkg.com/slate-prop-types/-/slate-prop-types-0.4.67.tgz#c6aa74195466546a44fcb85d1c7b15fefe36ce6b"
   integrity sha512-FmdwitAw1Y69JHm326dfwP6Zd6R99jz1Im8jvKcnG2hytk72I1vIv6ct2CkNGwc3sg90+OIO/Rf18frYxxoTzw==
