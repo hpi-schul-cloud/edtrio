@@ -33,6 +33,10 @@ We very much welcome any kinds of contributions! Have a look at our [issue track
 
 For some tooling explanations and guidelines, please head on over to the [docs](https://edtrio-docs.netlify.com/).
 
+## Deploying
+The editor is deployed on https://schul-cloud.github.io/edtrio/.\\
+To deploy a new version simply run `yarn run deploy`.
+
 ## License
 
 The project is licensed under the [MIT License](LICENSE).
