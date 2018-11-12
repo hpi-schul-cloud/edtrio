@@ -1,5 +1,6 @@
 import Image from '../image'
 import Iframe from '../iframe'
+import Poll from '../poll'
 import insertParagraph from '../helpers/insertParagraph'
 import { Text, Block } from 'slate'
 
@@ -39,6 +40,16 @@ export const onClickIframeButton = (event, change, onChange) => {
   if (!src) return
 
   change.call(insertIframe, src).call(insertParagraph)
+
+  onChange(change)
+}
+
+export const onClickPollButton = (event, change, onChange) => {
+  const { insertPoll } = Poll().changes
+
+  event.preventDefault()
+
+  change.call(insertPoll).call(insertParagraph)
 
   onChange(change)
 }

@@ -14,6 +14,7 @@ import Title from './plugins/title'
 import Section from './plugins/section'
 import Iframe from './plugins/iframe'
 import DownloadFile from './plugins/download-file'
+import Poll from './plugins/poll'
 
 import DocumentViewer from './dev-document-viewer/DocumentViewer'
 import AddSection from './plugins/add-section'
@@ -40,7 +41,8 @@ class Editor extends Component {
       ...CodeBlockPlugin().plugins,
       ...Image().plugins,
       ...Geogebra().plugins,
-      ...AutoURL().plugins
+      ...AutoURL().plugins,
+      ...Poll().plugins
     ]
   }
 

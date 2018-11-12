@@ -6,13 +6,15 @@ import './style.css'
 import {
   onClickImageButton,
   onClickCodeButton,
-  onClickIframeButton
+  onClickIframeButton,
+  onClickPollButton
 } from './actions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faImage,
   faCode,
-  faExternalLinkSquareAlt
+  faExternalLinkSquareAlt,
+  faPoll
 } from '@fortawesome/free-solid-svg-icons'
 
 class PlusMenu extends Component {
@@ -45,6 +47,7 @@ class PlusMenu extends Component {
           'Iframe einfügen',
           onClickIframeButton
         )}
+        {this.renderBlockButton(faPoll, 'Umfrage einfügen', onClickPollButton)}
       </div>,
       root
     )
