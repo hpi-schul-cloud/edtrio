@@ -1,6 +1,8 @@
 // @ts-ignore:
 import CodeBlockPlugin from "./code-block/index";
 // @ts-ignore:
+import Embed from "./embed/index";
+// @ts-ignore:
 import Geogebra from "./geogebra/index";
 // @ts-ignore:
 import Headlines from "./headlines/index";
@@ -16,8 +18,6 @@ import Section from "./section/index";
 import TextMenu from "./text-menu/index";
 // @ts-ignore:
 import Title from "./title/index";
-// @ts-ignore:
-import Embed from "./embed/index";
 
 export const plugins = [
   ...Title().plugins,
