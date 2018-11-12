@@ -90,9 +90,6 @@ class PlusMenu extends Component {
               dropPaste: "%{browse} deine Bilder oder lege sie hier ab",
               browse: "Durchsuche",
               uploadComplete: "Hochladen fertig",
-              resumeUpload: "Hochladen fortsetzen",
-              pauseUpload: "Hochladen pausieren",
-              retryUpload: "Hochladen erneut versuchen",
               xFilesSelected: {
                 0: "%{smart_count} Datei ausgewählt",
                 1: "%{smart_count} Dateien ausgewählt",
@@ -139,6 +136,7 @@ class PlusMenu extends Component {
   }
 
   renderBlockButton = (icon, tooltip = null, onClickBlock) => (
+    // eslint-disable-next-line jsx-a11y/anchor-is-valid
     <a
       title={tooltip}
       onMouseDown={event =>

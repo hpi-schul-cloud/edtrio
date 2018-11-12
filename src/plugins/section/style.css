@@ -22,10 +22,10 @@ aside.section-controls {
   flex-direction: column;
 }
 
-aside.section-controls a.button {
+aside.section-controls button.button {
   margin-right: 0 !important;
 }
 
-aside.section-controls a.button:last-child {
+aside.section-controls button.button:last-child {
   margin-bottom: 0;
 }

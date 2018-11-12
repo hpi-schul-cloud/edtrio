@@ -1,6 +1,5 @@
-import Image from "../image";
-import Iframe from "../iframe";
-import { Text, Block } from "slate";
+import Image from '../image'
+import { Text, Block } from 'slate'
 
 /**
  * handles clicks on the imageblock button and
@@ -48,13 +47,9 @@ export const onClickCodeButton = (event, change, onChange) => {
 };
 
 export const onClickIframeButton = (event, change, onChange) => {
-  const { insertIframe } = Iframe().changes;
+  event.preventDefault()
 
-  event.preventDefault();
-  const src = window.prompt("Enter the URL of the iframe:");
-  if (!src) return;
-
-  change.call(insertIframe, src);
+  change.call(_insertEmbedBlock)
 
   onChange(change);
 };
@@ -70,4 +65,17 @@ function _insertCodeBlock(change, target) {
       nodes: [Text.create()],
     }),
   );
+}
+
+function _insertEmbedBlock(change, target) {
+  if (target) {
+    change.select(target)
+  }
+
+  change.insertBlock(
+    Block.create({
+      type: 'embed',
+      nodes: [Text.create()]
+    })
+  )
 }

@@ -89,8 +89,7 @@ class Controls extends Component {
 
     return (
       <aside className="buttons section-controls">
-        {/* TODO: This should probably be a button */}
-        <a
+        <button
           className="button is-white"
           onMouseDown={e => {
             e.preventDefault();
@@ -100,8 +99,8 @@ class Controls extends Component {
           <span className="icon is-small">
             <FontAwesomeIcon icon={faTrashAlt} />
           </span>
-        </a>
-        <a
+        </button>
+        <button
           className="button is-white"
           onMouseDown={e => {
             e.preventDefault();
@@ -115,8 +114,8 @@ class Controls extends Component {
           <span className="icon is-small">
             <FontAwesomeIcon icon={faChevronUp} />
           </span>
-        </a>
-        <a
+        </button>
+        <button
           className="button is-white"
           onMouseDown={e => {
             e.preventDefault();
@@ -130,8 +129,8 @@ class Controls extends Component {
           <span className="icon is-small">
             <FontAwesomeIcon icon={faChevronDown} />
           </span>
-        </a>
-        <a
+        </button>
+        <button
           className={`button is-white tooltip ${
             !isVisible ? "is-tooltip-active" : ""
           }`}
@@ -150,7 +149,7 @@ class Controls extends Component {
           <span className="icon is-small">
             <FontAwesomeIcon icon={isVisible ? faEye : faEyeSlash} />
           </span>
-        </a>
+        </button>
       </aside>
     );
   }
