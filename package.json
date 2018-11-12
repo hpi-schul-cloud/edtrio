@@ -43,8 +43,7 @@
     "slate": "^0.41.1",
     "slate-instant-replace": "^0.1.8",
     "slate-react": "^0.18.9",
-    "styled-components": "^4.0.3",
-    "typescript": "^3.1.6"
+    "styled-components": "^4.0.3"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -68,7 +67,8 @@
     "react-test-renderer": "^16.6.1",
     "tslint": "^5.11.0",
     "tslint-config-prettier": "^1.15.0",
-    "tslint-react": "^3.6.0"
+    "tslint-react": "^3.6.0",
+    "typescript": "^3.1.6"
   },
   "husky": {
     "hooks": {
@@ -78,7 +78,7 @@
   "lint-staged": {
     "src/**/*.{js,jsx,json,css}": [
       "./node_modules/.bin/eslint --ext .jsx ./",
-      "/node_modules/.bin/tslint -c tslint.json --project './'",
+      "./node_modules/.bin/tslint -c tslint.json --project './'",
       "prettier",
       "git add"
     ]
