@@ -20,22 +20,22 @@ import PlusMenuPlugin from "./plus-menu/index";
 import Section from "./section/index";
 // @ts-ignore:
 import TextMenu from "./text-menu/index";
-// @ts-ignore:
+
 import Title from "./title/index";
 // @ts-ignore:
 import Video from "./video/index";
 
 export const plugins = [
   ...Title().plugins,
-  ...Section().plugins,
-  ...TextMenu().plugins,
-  ...Headlines().plugins,
-  ...MarkdownShortcuts().plugins,
-  ...Embed().plugins,
-  ...Video().plugins,
-  ...Audio().plugins,
-  ...PasteURLHandler().plugins,
-  ...CodeBlockPlugin().plugins,
-  ...Image().plugins,
-  ...Geogebra().plugins,
+  // ...Section().plugins,
+  // ...TextMenu().plugins,
+  // ...Headlines().plugins,
+  // ...MarkdownShortcuts().plugins,
+  // ...Embed().plugins,
+  // ...Video().plugins,
+  // ...Audio().plugins,
+  // ...PasteURLHandler().plugins,
+  // ...CodeBlockPlugin().plugins,
+  // ...Image().plugins,
+  // ...Geogebra().plugins,
 ];

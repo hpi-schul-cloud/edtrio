@@ -22,18 +22,20 @@ import importedValue from "./value.json";
 moment.locale("de");
 
 // TODO: add proper types
-interface IStateProps {
-  value: any;
-  debounce: any;
+interface IEditorState {
+  value: Value;
   hoverMenu: any;
   plusMenu: any;
 }
 
-class Editor extends Component<{}, IStateProps> {
-  constructor(props: {}) {
+interface IEditorProps {
+  updateLastSaved: (newTimestamp: moment.Moment) => void;
+}
+
+class Editor extends Component<IEditorProps, IEditorState> {
+  constructor(props: IEditorProps) {
     super(props);
     this.state = {
-      debounce: null,
       hoverMenu: null,
       plusMenu: null,
       value: this.handleLoad(),
@@ -42,6 +44,8 @@ class Editor extends Component<{}, IStateProps> {
 
   public componentDidMount = () => {
     this.updateMenu();
+    // load last updated from document
+    this.props.updateLastSaved(this.state.value.document.data.toJS().lastSaved);
   };
 
   public componentDidUpdate = () => {
@@ -69,7 +73,9 @@ class Editor extends Component<{}, IStateProps> {
             />
             <PlusMenu
               ref={(menu: any) => {
-                if (!this.state.plusMenu) { this.setState({ plusMenu: menu }); }
+                if (!this.state.plusMenu) {
+                  this.setState({ plusMenu: menu });
+                }
               }}
               value={this.state.value}
               onChange={this.onChange}
@@ -105,7 +111,7 @@ class Editor extends Component<{}, IStateProps> {
    * handles persisting the document (e.g. in localStorage or
    * backend)
    */
-  private handleSave = (value: any) => {
+  private handleSave = (value: Value) => {
     // Save the value to Local Storage.
 
     const timestamp = moment(new Date());
@@ -114,13 +120,7 @@ class Editor extends Component<{}, IStateProps> {
     );
     localStorage.setItem("document", document);
 
-    // When succeeded, update the frontend UI as well
-    // (yes, using window is SO against React principles,
-    //  but I honestly have no idea rn how to do it in a
-    //  better way... PLEASE HELP!)
-    // TODO: do this in a better way
-    // @ts-ignore:
-    window.updateLastSaved(timestamp);
+    this.props.updateLastSaved(timestamp);
   };
 
   /**
@@ -128,14 +128,16 @@ class Editor extends Component<{}, IStateProps> {
    * e.g. authorid, lastSaved timestamp, ...
    */
   private _addHeaderInformationToDocument = (
-    value: any,
-    newSavedTimestamp: any,
+    value: Value,
+    newSavedTimestamp: moment.Moment,
   ) => {
     const valueJSON = value.toJSON();
-    valueJSON.document.data = {
-      ...valueJSON.document.data,
-      lastSaved: newSavedTimestamp,
-    };
+    if (valueJSON.document) {
+      valueJSON.document.data = {
+        ...valueJSON.document.data,
+        lastSaved: newSavedTimestamp,
+      };
+    }
 
     return valueJSON;
   };
@@ -158,15 +160,10 @@ class Editor extends Component<{}, IStateProps> {
   /**
    * deals with state changes of the slate document
    */
-  private onChange = ({ value }: { value: any }) => {
+  private onChange = ({ value }: { value: Value }) => {
     // Check to see if the document has changed before saving.
     if (value.document !== this.state.value.document) {
-      if (this.state.debounce) {
-        clearTimeout(this.state.debounce);
-      }
-      this.setState({
-        debounce: setTimeout(() => this.handleSave(value), 750),
-      });
+      this.handleSave(value);
     }
 
     this.setState({ value });
@@ -179,13 +176,13 @@ class Editor extends Component<{}, IStateProps> {
     const { value, hoverMenu, plusMenu } = this.state;
     if (hoverMenu) {
       hoverMenu.update({
-        resetMenu: value.isBlurred || value.isEmpty,
+        resetMenu: value.selection.isBlurred || value.isEmpty,
       });
     }
     if (plusMenu) {
       plusMenu.update({
         resetMenu:
-          value.isBlurred ||
+          value.selection.isBlurred ||
           !value.blocks.some((node: any) => node.type === "p"),
       });
     }

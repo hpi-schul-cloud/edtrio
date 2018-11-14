@@ -9,7 +9,10 @@ import "bulma-tooltip/dist/css/bulma-tooltip.min.css";
 import "bulma/css/bulma.css";
 import "../node_modules/material-icons/iconfont/material-icons.css";
 import "./App.css";
-
+import {
+  LastSavedProvider,
+  LastSavedContext,
+} from "./context/lastSavedContext";
 import Editor from "./Editor";
 
 const AppWrapper = styled.div`
@@ -22,11 +25,17 @@ class App extends Component {
   public render() {
     return (
       <ThemeProvider theme={theme}>
-        <AppWrapper>
-          <div className="App">
-            <Editor />
-          </div>
-        </AppWrapper>
+        <LastSavedProvider>
+          <AppWrapper>
+            <div className="App">
+              <LastSavedContext.Consumer>
+                {({ updateLastSaved }) => (
+                  <Editor updateLastSaved={updateLastSaved} />
+                )}
+              </LastSavedContext.Consumer>
+            </div>
+          </AppWrapper>
+        </LastSavedProvider>
       </ThemeProvider>
     );
   }

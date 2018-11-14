@@ -9,10 +9,17 @@
     "module": "esnext",
     "target": "es5",
     "jsx": "preserve",
-    "types": ["node"],
+    "types": [
+      "node"
+    ],
     "moduleResolution": "node",
-    "lib": ["es2017", "dom"],
-    "rootDirs": ["src"],
+    "lib": [
+      "es2017",
+      "dom"
+    ],
+    "rootDirs": [
+      "src"
+    ],
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
@@ -29,5 +36,7 @@
     "isolatedModules": true,
     "noEmit": true
   },
-  "include": ["src/**/*"]
+  "include": [
+    "src/**/*"
+  ]
 }

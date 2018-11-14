@@ -47,10 +47,12 @@
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-scripts": "2.1.1",
-    "slate": "^0.41.1",
+    "slate": "^0.44.5",
     "slate-instant-replace": "^0.1.8",
-    "slate-react": "^0.18.9",
-    "styled-components": "^4.0.3"
+    "slate-react": "^0.21.11",
+    "slate-react-placeholder": "^0.1.8",
+    "styled-components": "^4.0.3",
+    "typescript": "^3.1.6"
   },
   "scripts": {
     "start": "react-scripts start",
