@@ -3,8 +3,9 @@ import "moment/locale/de";
 import React, { Component } from "react";
 import { Value } from "slate";
 import { Editor as SlateEditor } from "slate-react";
+import styled from "styled-components";
 
-import schema from "./schema";
+// import schema from "./schema";
 
 // @ts-ignore:
 import DocumentViewer from "./dev-document-viewer/DocumentViewer";
@@ -20,6 +21,10 @@ import TextMenu from "./plugins/text-menu/index";
 import importedValue from "./value.json";
 
 moment.locale("de");
+
+const StyledDocumentViewer = styled(DocumentViewer)`
+  margin-top: 500px;
+`;
 
 // TODO: add proper types
 interface IEditorState {
@@ -55,7 +60,6 @@ class Editor extends Component<IEditorProps, IEditorState> {
   public render() {
     const HoverMenu = TextMenu().components.HoverMenu;
     const PlusMenu = PlusMenuPlugin().components.PlusMenu;
-    const AddSectionButton = AddSection().components.AddSectionButton;
 
     return (
       <div className="columns">
@@ -83,23 +87,14 @@ class Editor extends Component<IEditorProps, IEditorState> {
             <SlateEditor
               autoFocus={true}
               spellCheck={true}
-              schema={schema}
               plugins={plugins}
               value={this.state.value}
               onChange={this.onChange}
               className="slate-editor"
             />
-            <AddSectionButton
-              value={this.state.value}
-              onChange={this.onChange}
-            />
           </div>
           {process.env.NODE_ENV === "development" ? (
-            <React.Fragment>
-              {/*TODO: remove ugly spacer <3*/}
-              <div style={{ height: "500px" }} />
-              <DocumentViewer doc={this.state.value} />
-            </React.Fragment>
+            <StyledDocumentViewer doc={this.state.value} />
           ) : null}
         </div>
         <div className="column" />

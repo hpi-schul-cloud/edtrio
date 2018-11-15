@@ -1,9 +1,9 @@
 import { faQuestion, faRedo, faUndo } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import styled from "styled-components";
 import moment from "moment";
 import React, { Component } from "react";
 import { Editor } from "slate";
+import styled from "styled-components";
 
 const StyledButton = styled.span`
   padding: 0.25rem 0.5rem;
@@ -50,7 +50,7 @@ class SaveBar extends Component<ISaveBarProps, ISaveBarState> {
     };
   }
 
-  componentWillUnmount() {
+  public componentWillUnmount() {
     clearInterval(this.state.interval);
   }
 

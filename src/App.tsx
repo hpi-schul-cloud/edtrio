@@ -10,8 +10,8 @@ import "bulma/css/bulma.css";
 import "../node_modules/material-icons/iconfont/material-icons.css";
 import "./App.css";
 import {
-  LastSavedProvider,
   LastSavedContext,
+  LastSavedProvider,
 } from "./context/lastSavedContext";
 import Editor from "./Editor";
 

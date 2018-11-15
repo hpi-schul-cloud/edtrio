@@ -51,8 +51,7 @@
     "slate-instant-replace": "^0.1.8",
     "slate-react": "^0.21.11",
     "slate-react-placeholder": "^0.1.8",
-    "styled-components": "^4.0.3",
-    "typescript": "^3.1.6"
+    "styled-components": "^4.0.3"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -88,9 +87,13 @@
     }
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,json,css}": [
+    "src/**/*.{js,jsx,css}": [
       "./node_modules/.bin/eslint --ext .jsx ./",
-      "./node_modules/.bin/tslint -c tslint.json --project './'",
+      "prettier",
+      "git add"
+    ],
+    "src/**/*.{ts,tsx}": [
+      "./node_modules/.bin/tslint -c tslint.json --project tsconfig.json",
       "prettier",
       "git add"
     ]

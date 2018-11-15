@@ -1,5 +1,5 @@
-import React, { Component, createContext } from "react";
 import moment from "moment";
+import React, { Component, createContext } from "react";
 
 export const LastSavedContext = createContext<ILastSavedProviderState>({
   lastSaved: null,
@@ -25,7 +25,7 @@ export class LastSavedProvider extends Component<any, ILastSavedProviderState> {
     this.setState({ lastSaved: newTimestamp });
   };
 
-  render() {
+  public render() {
     return (
       <LastSavedContext.Provider value={this.state}>
         {this.props.children}

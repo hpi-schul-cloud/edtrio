@@ -25,9 +25,12 @@ import Title from "./title/index";
 // @ts-ignore:
 import Video from "./video/index";
 
+import AddSection from "./add-section";
+
 export const plugins = [
   ...Title().plugins,
-  // ...Section().plugins,
+  ...Section().plugins,
+  ...AddSection().plugins,
   // ...TextMenu().plugins,
   // ...Headlines().plugins,
   // ...MarkdownShortcuts().plugins,

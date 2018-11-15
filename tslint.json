@@ -1,14 +1,13 @@
 {
   "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
-  "jsRules": {},
   "rules": {
     "variable-name": false,
     "object-literal-sort-keys": false,
-    "jsx-no-lambda": false
+    "jsx-no-lambda": false,
+    "no-empty": false
   },
-  "rulesDirectory": [],
   "linterOptions": {
     "exclude": ["*.json", "**/*.json"]
   },
-  "defaultSeverity": "off"
+  "defaultSeverity": "error"
 }

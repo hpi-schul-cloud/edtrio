@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
+import { Editor, Node } from "slate";
 import styled from "styled-components";
-import { Editor } from "slate";
+
 // @ts-ignore
 import SlateReactPlaceholder from "slate-react-placeholder";
 
@@ -9,14 +10,7 @@ import SaveBar from "./SaveBar";
 
 export default function Title() {
   return {
-    plugins: [
-      HandleKeyDown,
-      RenderTitleNode,
-      SlateReactPlaceholder({
-        placeholder: "Gib mir einen Namen",
-        when: (editor: Editor) => editor.value.startText.text === "",
-      }),
-    ],
+    plugins: [HandleKeyDown, RenderTitleNode],
   };
 }
 
@@ -44,10 +38,18 @@ const StyledTitleBar = styled.h1`
   word-break: break-word;
 `;
 
-const RenderTitleNode = {
-  renderNode(props: any) {
-    const { attributes, children, editor, node } = props;
+const StyledPlaceholder = styled.span`
+  pointer-events: none;
+  display: inline-block;
+  width: 0;
+  maxwidth: 100%;
+  white-space: nowrap;
+  opacity: 0.333;
+`;
 
+const RenderTitleNode = {
+  renderNode(props: any, editor: Editor, next: () => void) {
+    const { attributes, children, node } = props;
     return node.type === "title" ? (
       <Fragment>
         <StyledTitleBar {...attributes}>{children}</StyledTitleBar>
@@ -55,6 +57,47 @@ const RenderTitleNode = {
           {({ lastSaved }) => <SaveBar editor={editor} lastSaved={lastSaved} />}
         </LastSavedContext.Consumer>
       </Fragment>
-    ) : null;
+    ) : (
+      next()
+    );
+  },
+  decorateNode(node: Node, editor: Editor, next: () => void) {
+    if (!("type" in node)) { return next(); }
+    if (node.type !== "title") { return next(); }
+    if (node.text !== "") { return next(); }
+
+    const others = next();
+    const first = node.getFirstText();
+    const last = node.getLastText();
+    if (!first || !last) { return next(); }
+    const decoration = {
+      anchor: { key: first.key, offset: 0 },
+      focus: { key: last.key, offset: last.text.length },
+      mark: {
+        type: "placeholder",
+        data: { placeholder: "Gib mir einen Namen" },
+      },
+    };
+
+    // @ts-ignore
+    return [...others, decoration];
+  },
+  renderMark(props: any, editor: Editor, next: () => void) {
+    const { children, mark } = props;
+
+    if (mark.type === "placeholder") {
+      const content = mark.data.get("placeholder");
+
+      return (
+        <Fragment>
+          <StyledPlaceholder contentEditable={false}>
+            {content}
+          </StyledPlaceholder>
+          {children}
+        </Fragment>
+      );
+    }
+
+    return next();
   },
 };

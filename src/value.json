@@ -37,6 +37,29 @@
             ]
           }
         ]
+      },
+      {
+        "object": "block",
+        "type": "section",
+        "data": {
+          "isVisible": true
+        },
+        "nodes": [
+          {
+            "object": "block",
+            "type": "p",
+            "nodes": [
+              {
+                "object": "text",
+                "leaves": [
+                  {
+                    "text": ""
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       }
     ]
   }

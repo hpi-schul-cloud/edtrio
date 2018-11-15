@@ -5,7 +5,7 @@ class DocumentViewer extends Component {
     const { doc } = this.props;
 
     return (
-      <aside className="">
+      <aside className={this.props.className}>
         <hr />
         <h2 className="title is-5">Internal document state</h2>
         <pre>
