@@ -1,17 +1,19 @@
-import React from 'react'
-import { Block, Text } from 'slate'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import React from "react";
+import { Block, Text } from "slate";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 export default function AddSection(options) {
   return {
-    changes: {},
+    changes: {
+      appendNewSection,
+    },
     helpers: {},
     components: {
-      AddSectionButton
+      AddSectionButton,
     },
-    plugins: []
-  }
+    plugins: [],
+  };
 }
 
 function AddSectionButton(props) {
@@ -20,7 +22,7 @@ function AddSectionButton(props) {
       <button
         className="level-item button is-white has-text-grey"
         style={{
-          margin: '1rem 0'
+          margin: "1rem 0",
         }}
         onMouseDown={event =>
           onClickNewSectionButton(event, props.value.change(), props.onChange)
@@ -32,31 +34,33 @@ function AddSectionButton(props) {
         <span>Abschnitt hinzuf&uuml;gen</span>
       </button>
     </div>
-  )
+  );
 }
 
 const onClickNewSectionButton = (event, change, onChange) => {
-  event.preventDefault()
+  event.preventDefault();
 
+  onChange(change.call(appendNewSection));
+};
+
+const appendNewSection = change => {
   const newSection = Block.create({
-    type: 'section',
+    type: "section",
     data: {
-      isVisible: true
+      isVisible: true,
     },
     nodes: [
       Block.create({
-        type: 'p',
-        nodes: [Text.create()]
-      })
-    ]
-  })
+        type: "p",
+        nodes: [Text.create()],
+      }),
+    ],
+  });
 
-  const document = change.value.document
-  const lastIndex = document.nodes.count()
+  const document = change.value.document;
+  const lastIndex = document.nodes.count();
 
-  const appendSectionChange = change
+  return change
     .insertNodeByKey(document.key, lastIndex, newSection)
-    .moveToEndOfNode(newSection)
-
-  onChange(appendSectionChange)
-}
+    .moveToEndOfNode(newSection);
+};

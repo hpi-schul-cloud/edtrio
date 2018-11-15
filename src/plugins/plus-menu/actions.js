@@ -1,68 +1,93 @@
-import Image from '../image'
-import Iframe from '../iframe'
-import Poll from '../poll'
-import insertParagraph from '../helpers/insertParagraph'
-import { Text, Block } from 'slate'
+import Image from "../image";
+import Poll from "../poll";
+import insertParagraph from "../helpers/insertParagraph";
+import { Text, Block } from "slate";
 
 /**
  * handles clicks on the imageblock button and
  * forwards them accordingly to plugins/image
  */
-export const onClickImageButton = (event, change, onChange) => {
-  const { insertImage } = Image().changes
+export const onClickImageButton = (
+  event,
+  change,
+  onChange,
+  uppy,
+  closeUppyWindow,
+) => {
+  const { insertImage } = Image().changes;
 
-  event.preventDefault()
-  const src = window.prompt('Enter the URL of the image:')
-  if (!src) return
+  event.preventDefault();
 
-  change.call(insertImage, src).call(insertParagraph)
+  uppy.on("complete", result => {
+    closeUppyWindow();
 
-  onChange(change)
-}
+    result.successful.forEach(image => {
+      uppy.reset();
+
+      // TODO: replace with proper file upload (e.g. to S3)
+      const fr = new FileReader();
+      fr.onload = () => {
+        change.call(insertImage, fr.result);
+        onChange(change);
+      };
+
+      fr.readAsDataURL(image.data);
+    });
+  });
+};
 
 /**
  * handles clicks on the codeblock button and
  * forwards them accordingly to plugins/code-block
  */
 export const onClickCodeButton = (event, change, onChange) => {
-  event.preventDefault()
+  event.preventDefault();
 
-  change.call(_insertCodeBlock)
+  change.call(_insertCodeBlock);
 
-  onChange(change)
-}
+  onChange(change);
+};
 
 export const onClickIframeButton = (event, change, onChange) => {
-  const { insertIframe } = Iframe().changes
+  event.preventDefault();
 
-  event.preventDefault()
-  const src = window.prompt('Enter the URL of the iframe:')
-  if (!src) return
+  change.call(_insertEmbedBlock);
 
-  change.call(insertIframe, src).call(insertParagraph)
-
-  onChange(change)
-}
-
-export const onClickPollButton = (event, change, onChange) => {
-  const { insertPoll } = Poll().changes
-
-  event.preventDefault()
-
-  change.call(insertPoll).call(insertParagraph)
-
-  onChange(change)
-}
+  onChange(change);
+};
 
 function _insertCodeBlock(change, target) {
   if (target) {
-    change.select(target)
+    change.select(target);
   }
 
   change.insertBlock(
     Block.create({
-      type: 'code',
-      nodes: [Text.create()]
-    })
-  )
+      type: "code",
+      nodes: [Text.create()],
+    }),
+  );
+}
+
+export const onClickPollButton = (event, change, onChange) => {
+  const { insertPoll } = Poll().changes;
+
+  event.preventDefault();
+
+  change.call(insertPoll).call(insertParagraph);
+
+  onChange(change);
+};
+
+function _insertEmbedBlock(change, target) {
+  if (target) {
+    change.select(target);
+  }
+
+  change.insertBlock(
+    Block.create({
+      type: "embed",
+      nodes: [Text.create()],
+    }),
+  );
 }

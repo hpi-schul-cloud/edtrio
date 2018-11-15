@@ -1,18 +1,18 @@
-import React from 'react'
+import React from "react";
 
-import { Text, Block } from 'slate'
+import { Text, Block } from "slate";
 
 export default function Poll(options) {
   return {
     changes: {
-      insertPoll
+      insertPoll,
     },
     helpers: {},
     components: {
-      PollNode
+      PollNode,
     },
-    plugins: [RenderPollNode]
-  }
+    plugins: [RenderPollNode],
+  };
 }
 
 /**
@@ -20,28 +20,40 @@ export default function Poll(options) {
  */
 function insertPoll(change, target) {
   if (target) {
-    change.select(target)
+    change.select(target);
   }
 
   change.insertBlock(
     Block.create({
-      type: 'poll',
-      nodes: [Text.create()]
-    })
-  )
+      type: "poll",
+      nodes: [
+        Block.create({
+          type: "poll_question",
+          nodes: [Text.create("Test Question")],
+        }),
+        Block.create({
+          type: "poll_answer",
+          nodes: [Text.create("Test Answer")],
+        }),
+      ],
+    }),
+  );
 }
 
 /**
  * React Component that displays an actual image from props.src url
  */
 function PollNode(props) {
-  const { children, ...attributes } = props
-  console.log('POLL', attributes)
+  const { children, ...attributes } = props;
+
   return (
-    <h1 className="title is-1" {...attributes}>
-      {children}
-    </h1>
-  )
+    <div>
+      <h1 className="title is-1" {...attributes}>
+        {children}
+      </h1>
+      <button>Test</button>
+    </div>
+  );
 }
 
 /**
@@ -49,11 +61,23 @@ function PollNode(props) {
  * ImageNode for `img` tags
  */
 const RenderPollNode = {
-  renderNode(props) {
-    const { attributes, node, isFocused } = props
-
-    if (node.type === 'poll') {
-      return <PollNode selected={isFocused} {...attributes} />
+  renderNode(props, next) {
+    // append to parent, see add-section
+    const { children, attributes, node, isFocused } = props;
+    // console.log(props);
+    if (node.type === "poll") {
+      return (
+        <PollNode selected={isFocused} {...attributes} next={next}>
+          {children}
+        </PollNode>
+      );
     }
-  }
-}
+    if (node.type === "poll_question") {
+      return (
+        <div style={{ color: "red" }} {...attributes}>
+          {children}
+        </div>
+      );
+    }
+  },
+};

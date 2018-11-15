@@ -1,32 +1,32 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 
-import './style.css'
+import "./style.css";
 //RHYH3UQ8
 
 export default class GeogebraNode extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
-      id: props.resourceId || 'jaz8F8hZ'
-    }
+      id: props.resourceId || "jaz8F8hZ",
+    };
 
-    this.applet = React.createRef()
+    this.applet = React.createRef();
   }
 
   shouldComponentUpdate(nextProps, { id }) {
-    return id !== this.state.id
+    return id !== this.state.id;
   }
 
   renderApplet(id) {
     this.setState(
       () => {
         return {
-          id
-        }
+          id,
+        };
       },
-      () => this.props.saveContent(this.state)
-    )
+      () => this.props.saveContent(this.state),
+    );
   }
 
   renderHTML() {
@@ -49,23 +49,22 @@ export default class GeogebraNode extends Component {
             </script>
         </body>
         </html>
-        `
+        `;
   }
 
   componentDidMount() {
     this.setState({
-      ...this.props.content
-    })
+      ...this.props.content,
+    });
   }
 
   render() {
     // FIXME: props.selected never turn false, even if geogebra
     // isnt selected anymore
-    console.log(this.props.selected)
     return (
       <div
         className={`geogebra-wrapper plugin-wrapper ${
-          this.props.selected ? 'selected' : ''
+          this.props.selected ? "selected" : ""
         }`}
         ref={this.applet}
       >
@@ -77,6 +76,6 @@ export default class GeogebraNode extends Component {
           />
         )}
       </div>
-    )
+    );
   }
 }

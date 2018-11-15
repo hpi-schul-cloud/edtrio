@@ -1,0 +1,17 @@
+.button {
+    padding: .25rem .5rem;
+    margin-right: .25rem;
+    cursor: pointer;
+    color: inherit;
+
+    &:hover {
+        background-color: #eee;
+    }
+
+    
+}
+
+.saveText {
+    margin-left: .5rem;
+    user-select: none;
+}

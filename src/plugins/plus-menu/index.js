@@ -1,12 +1,12 @@
-import PlusMenu from './PlusMenu'
+import PlusMenu from "./PlusMenu";
 
 export default function PlusMenuPlugin(options) {
   return {
     changes: {},
     helpers: {},
     components: {
-      PlusMenu
+      PlusMenu,
     },
-    plugins: []
-  }
+    plugins: [],
+  };
 }
