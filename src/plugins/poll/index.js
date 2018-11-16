@@ -1,6 +1,9 @@
 import React from "react";
 
 import { Text, Block } from "slate";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import "./style.css";
 
 export default function Poll(options) {
   return {
@@ -35,6 +38,10 @@ function insertPoll(change, target) {
           type: "poll_answer",
           nodes: [Text.create("Test Answer")],
         }),
+        Block.create({
+          type: "poll_answer",
+          nodes: [Text.create("Test Answer 2")],
+        }),
       ],
     }),
   );
@@ -48,9 +55,9 @@ function PollNode(props) {
 
   return (
     <div>
-      <h1 className="title is-1" {...attributes}>
+      <div className="title is-1" {...attributes}>
         {children}
-      </h1>
+      </div>
       <button>Test</button>
     </div>
   );
@@ -75,7 +82,21 @@ const RenderPollNode = {
     if (node.type === "poll_question") {
       return (
         <div style={{ color: "red" }} {...attributes}>
-          {children}
+          <h2>{children}</h2>
+        </div>
+      );
+    }
+    if (node.type === "poll_answer") {
+      return (
+        <div style={{ color: "red" }} {...attributes}>
+          <span>{children}</span>
+          <span className="align-right">
+            <button>
+              <span className="icon is-small">
+                <FontAwesomeIcon icon={faTrashAlt} />
+              </span>
+            </button>
+          </span>
         </div>
       );
     }

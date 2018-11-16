@@ -1,0 +1,11 @@
+section.section {
+  position: relative;
+  padding: 1rem;
+  min-height: 250px;
+  border: 2px solid hsl(0, 0%, 86%);
+  border-radius: 4px;
+}
+
+.align-right {
+  text-align: right;
+}

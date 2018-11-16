@@ -10,12 +10,14 @@ import {
   onClickImageButton,
   onClickCodeButton,
   onClickIframeButton,
+  onClickPollButton,
 } from "./actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faImage,
   faCode,
   faExternalLinkSquareAlt,
+  faPoll,
 } from "@fortawesome/free-solid-svg-icons";
 
 class PlusMenu extends Component {
@@ -64,7 +66,7 @@ class PlusMenu extends Component {
           "Iframe einfügen",
           onClickIframeButton,
         )}
-        {/* {this.renderBlockButton(faPoll, "Umfrage einfügen", onClickPollButton)} */}
+        {this.renderBlockButton(faPoll, "Umfrage einfügen", onClickPollButton)}
         <DashboardModal
           uppy={this.uppy}
           locale={{

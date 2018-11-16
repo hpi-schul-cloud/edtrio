@@ -1,6 +1,5 @@
 import Image from "../image";
 import Poll from "../poll";
-import insertParagraph from "../helpers/insertParagraph";
 import { Text, Block } from "slate";
 
 /**
@@ -74,7 +73,7 @@ export const onClickPollButton = (event, change, onChange) => {
 
   event.preventDefault();
 
-  change.call(insertPoll).call(insertParagraph);
+  change.call(insertPoll);
 
   onChange(change);
 };
