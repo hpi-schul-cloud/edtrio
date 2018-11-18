@@ -14,11 +14,10 @@ yarn start
 
 - Hovering menu (**bold**, _italic_, <u>underline</u>, `code`, h1, h2)
 - Markdown shortcuts (h1-h5 `#`, ul `-`, blockquotes `>`)
-- Auto-detecting urls (need `http(s)://` prefix atm)
 - Button to add Code Blocks
 - Button to add Images
-- Button to add Geogebra applets
-- Video integration (paste youtube video link and it'll be auto-converted)
+- Automatic audio/video link embed (Try pasting e.g. a [link to an mp3](http://www.jplayer.org/audio/mp3/TSP-01-Cro_magnon_man.mp3))
+- Video integration (paste youtube/vimeo video link and it'll be auto-converted)
 
 ## Documentation
 
@@ -34,7 +33,7 @@ We very much welcome any kinds of contributions! Have a look at our [issue track
 For some tooling explanations and guidelines, please head on over to the [docs](https://edtrio-docs.netlify.com/).
 
 ## Deploying
-The editor is deployed on https://schul-cloud.github.io/edtrio/.\\
+The editor is deployed on https://schul-cloud.github.io/edtrio/.<br />
 To deploy a new version simply run `yarn run deploy`.
 
 ## License
