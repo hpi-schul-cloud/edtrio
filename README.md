@@ -2,6 +2,8 @@
 
 A rich text editor for easily creating content in schools based on [Slate.js](https://github.com/ianstormtaylor/slate).
 
+![Screenshot of Edtr.io in action](screenshot.png "Edtr.io in action")
+
 ## Getting started
 
 ```shell
