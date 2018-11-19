@@ -6,7 +6,6 @@ import CodeBlockPlugin from "./code-block/index";
 import Embed from "./embed/index";
 // @ts-ignore:
 import Geogebra from "./geogebra/index";
-// @ts-ignore:
 import Headlines from "./headlines/index";
 // @ts-ignore:
 import Image from "./image/index";
@@ -15,7 +14,7 @@ import MarkdownShortcuts from "./markdown-shortcuts/index";
 // @ts-ignore:
 import PasteURLHandler from "./paste-url-handler/index";
 // @ts-ignore:
-import PlusMenuPlugin from "./plus-menu/index";
+import PlusMenu from "./plus-menu/index";
 // @ts-ignore:
 import Section from "./section/index";
 
@@ -31,7 +30,8 @@ export const plugins = [
   ...Section().plugins,
   ...AddSection().plugins,
   ...TextMenu().plugins,
-  // ...Headlines().plugins,
+  ...PlusMenu().plugins,
+  ...Headlines().plugins,
   // ...MarkdownShortcuts().plugins,
   // ...Embed().plugins,
   // ...Video().plugins,

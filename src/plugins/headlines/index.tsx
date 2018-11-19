@@ -1,37 +1,20 @@
 import React from "react";
+import { Editor } from "slate";
 
-export default function Headlines(options) {
+export default function Headlines() {
   return {
     changes: {},
     helpers: {},
     components: {},
-    plugins: [{ schema }, RenderHeadlines],
+    plugins: [RenderHeadlines],
   };
 }
 
-const schema = {
-  blocks: {
-    h1: {
-      marks: [],
-    },
-    h2: {
-      marks: [],
-    },
-    h3: {
-      marks: [],
-    },
-    h4: {
-      marks: [],
-    },
-    h5: {
-      marks: [],
-    },
-  },
-};
-
 const RenderHeadlines = {
-  renderNode(props) {
-    const { attributes, children, node } = props;
+  renderNode(props: any, editor: Editor, next: any) {
+    const { attributes, node } = props;
+
+    const children = next();
 
     switch (node.type) {
       case "h1":
@@ -45,7 +28,7 @@ const RenderHeadlines = {
       case "h5":
         return <h6 {...attributes}>{children}</h6>;
       default:
-        return;
+        return children;
     }
   },
 };

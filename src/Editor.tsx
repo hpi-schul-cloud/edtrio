@@ -24,10 +24,8 @@ const StyledDocumentViewer = styled(DocumentViewer)`
   margin-top: 500px;
 `;
 
-// TODO: remove PlusMenu
 interface IEditorState {
   value: Value;
-  plusMenu: any;
 }
 
 interface IEditorProps {
@@ -38,38 +36,21 @@ class Editor extends Component<IEditorProps, IEditorState> {
   constructor(props: IEditorProps) {
     super(props);
     this.state = {
-      plusMenu: null,
       value: this.handleLoad(),
     };
   }
 
   public componentDidMount = () => {
-    this.updateMenu();
     // load last updated from document
     this.props.updateLastSaved(this.state.value.document.data.toJS().lastSaved);
   };
 
-  public componentDidUpdate = () => {
-    this.updateMenu();
-  };
-
   public render() {
-    const PlusMenu = PlusMenuPlugin().components.PlusMenu;
-
     return (
       <div className="columns">
         <div className="column" />
         <div className="column is-three-quarters">
           <div style={{ marginTop: "2rem" }}>
-            <PlusMenu
-              ref={(menu: any) => {
-                if (!this.state.plusMenu) {
-                  this.setState({ plusMenu: menu });
-                }
-              }}
-              value={this.state.value}
-              onChange={this.onChange}
-            />
             <SlateEditor
               autoFocus={true}
               spellCheck={true}
@@ -148,21 +129,6 @@ class Editor extends Component<IEditorProps, IEditorState> {
     }
 
     this.setState({ value });
-  };
-
-  /**
-   * handles UI updates regarding the plugin/text-menu
-   */
-  private updateMenu = () => {
-    const { value, plusMenu } = this.state;
-
-    if (plusMenu) {
-      plusMenu.update({
-        resetMenu:
-          value.selection.isBlurred ||
-          !value.blocks.some((node: any) => node.type === "p"),
-      });
-    }
   };
 }
 

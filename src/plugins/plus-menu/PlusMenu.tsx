@@ -1,25 +1,54 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
+import { Editor } from "slate";
 import { findDOMNode } from "slate-react";
-import "./style.css";
+import styled from "styled-components";
 
 import Uppy from "@uppy/core";
+// @ts-ignore
 import { DashboardModal } from "@uppy/react";
 
 import {
-  onClickImageButton,
-  onClickCodeButton,
-  onClickIframeButton,
-} from "./actions";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faImage,
   faCode,
   faExternalLinkSquareAlt,
+  faImage,
 } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  onClickCodeButton,
+  onClickIframeButton,
+  onClickImageButton,
+} from "./actions";
 
-class PlusMenu extends Component {
-  constructor(props) {
+interface IPlusMenuProps {
+  className?: string;
+  editor: Editor;
+}
+interface IPlusMenuState {
+  style: object;
+  uppyOpen: boolean;
+}
+
+const StyledPlusMenu = styled.div`
+  padding: 0 10px 15px 15px;
+  position: absolute;
+  top: -10000px;
+  opacity: 1;
+  border-radius: 4px;
+  z-index: 1000;
+
+  &:hover .icon * {
+    color: hsl(0, 0%, 48%);
+  }
+
+  .icon:hover * {
+    color: hsl(0, 0%, 4%);
+  }
+`;
+
+class PlusMenu extends Component<IPlusMenuProps, IPlusMenuState> {
+  private uppy: any = null;
+
+  constructor(props: IPlusMenuProps) {
     super(props);
 
     this.state = {
@@ -31,28 +60,50 @@ class PlusMenu extends Component {
       restrictions: {
         maxFileSize: 1000000, // 1MB
         allowedFileTypes: ["image/*"],
+        maxNumberOfFiles: 100,
+        minNumberOfFiles: 1,
       },
       autoProceed: true,
     });
   }
 
-  handleCloseUppyModal = () => {
+  public handleCloseUppyModal = () => {
     this.setState({ uppyOpen: false });
   };
 
-  render() {
+  public render() {
     const { className } = this.props;
-    const root = window.document.getElementById("root");
 
-    return ReactDOM.createPortal(
-      <div
-        className={`plus-menu ${className}`}
-        style={this.state.style}
-        ref={wrapper => (this.menuWrapper = wrapper)}
-      >
-        {this.renderBlockButton(faImage, "Bild einfügen", (...props) => {
+    /*
+    resetMenu:
+          value.selection.isBlurred ||
+          !value.blocks.some((node: any) => node.type === "p"),
+    */
+    let style = {};
+
+    try {
+      const nodeEl = findDOMNode(this.props.editor.value.startBlock);
+      const nodeElBBox = nodeEl.getBoundingClientRect();
+      const top = nodeElBBox.top + window.pageYOffset;
+
+      const right = window.innerWidth - (nodeElBBox.width + nodeElBBox.left);
+
+      style = {
+        top: `${top}px`,
+        right: `${right}px`,
+      };
+    } catch (error) {}
+    // TODO: add hover styles from style.css
+    return (
+      <StyledPlusMenu className={className} style={style}>
+        {this.renderBlockButton(faImage, "Bild einfügen", (event: any) => {
           this.setState({ uppyOpen: true });
-          onClickImageButton(...props, this.uppy, this.handleCloseUppyModal);
+          onClickImageButton(
+            event,
+            this.uppy,
+            this.handleCloseUppyModal,
+            this.props.editor,
+          );
         })}
         {this.renderBlockButton(
           faCode,
@@ -125,23 +176,24 @@ class PlusMenu extends Component {
               },
             },
           }}
-          closeModalOnClickOutside
+          closeModalOnClickOutside={true}
           note="Bilder, maximal 1 MB"
           open={this.state.uppyOpen}
           onRequestClose={this.handleCloseUppyModal}
         />
-      </div>,
-      root,
+      </StyledPlusMenu>
     );
   }
 
-  renderBlockButton = (icon, tooltip = null, onClickBlock) => (
+  public renderBlockButton = (
+    icon: any,
+    tooltip: string = "",
+    onClickBlock: (event: any, editor: Editor) => void,
+  ) => (
     // eslint-disable-next-line jsx-a11y/anchor-is-valid
     <a
       title={tooltip}
-      onMouseDown={event =>
-        onClickBlock(event, this.props.value.change(), this.props.onChange)
-      }
+      onMouseDown={event => onClickBlock(event, this.props.editor)}
     >
       <span
         className="icon is-medium has-text-grey-lighter tooltip"
@@ -151,35 +203,6 @@ class PlusMenu extends Component {
       </span>
     </a>
   );
-
-  /**
-   * Update the menu's absolute position
-   */
-  update = ({ resetMenu = false }) => {
-    if (!this.menuWrapper) {
-      return;
-    }
-
-    if (resetMenu) {
-      this.setState({
-        style: {},
-      });
-      return;
-    }
-
-    const nodeEl = findDOMNode(this.props.value.startBlock);
-    const nodeElBBox = nodeEl.getBoundingClientRect();
-    const top = nodeElBBox.top + window.pageYOffset;
-
-    const right = window.innerWidth - (nodeElBBox.width + nodeElBBox.x);
-
-    this.setState({
-      style: {
-        top: `${top}px`,
-        right: `${right}px`,
-      },
-    });
-  };
 }
 
 export default PlusMenu;
