@@ -15,8 +15,6 @@ import { plugins } from "./plugins";
 import AddSection from "./plugins/add-section";
 // @ts-ignore:
 import PlusMenuPlugin from "./plugins/plus-menu/index";
-// @ts-ignore:
-import TextMenu from "./plugins/text-menu/index";
 
 import importedValue from "./value.json";
 
@@ -26,10 +24,9 @@ const StyledDocumentViewer = styled(DocumentViewer)`
   margin-top: 500px;
 `;
 
-// TODO: add proper types
+// TODO: remove PlusMenu
 interface IEditorState {
   value: Value;
-  hoverMenu: any;
   plusMenu: any;
 }
 
@@ -41,7 +38,6 @@ class Editor extends Component<IEditorProps, IEditorState> {
   constructor(props: IEditorProps) {
     super(props);
     this.state = {
-      hoverMenu: null,
       plusMenu: null,
       value: this.handleLoad(),
     };
@@ -58,7 +54,6 @@ class Editor extends Component<IEditorProps, IEditorState> {
   };
 
   public render() {
-    const HoverMenu = TextMenu().components.HoverMenu;
     const PlusMenu = PlusMenuPlugin().components.PlusMenu;
 
     return (
@@ -66,15 +61,6 @@ class Editor extends Component<IEditorProps, IEditorState> {
         <div className="column" />
         <div className="column is-three-quarters">
           <div style={{ marginTop: "2rem" }}>
-            <HoverMenu
-              ref={(menu: any) => {
-                if (!this.state.hoverMenu) {
-                  this.setState({ hoverMenu: menu });
-                }
-              }}
-              value={this.state.value}
-              onChange={this.onChange}
-            />
             <PlusMenu
               ref={(menu: any) => {
                 if (!this.state.plusMenu) {
@@ -168,12 +154,8 @@ class Editor extends Component<IEditorProps, IEditorState> {
    * handles UI updates regarding the plugin/text-menu
    */
   private updateMenu = () => {
-    const { value, hoverMenu, plusMenu } = this.state;
-    if (hoverMenu) {
-      hoverMenu.update({
-        resetMenu: value.selection.isBlurred || value.isEmpty,
-      });
-    }
+    const { value, plusMenu } = this.state;
+
     if (plusMenu) {
       plusMenu.update({
         resetMenu:

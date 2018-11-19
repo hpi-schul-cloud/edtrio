@@ -18,9 +18,8 @@ import PasteURLHandler from "./paste-url-handler/index";
 import PlusMenuPlugin from "./plus-menu/index";
 // @ts-ignore:
 import Section from "./section/index";
-// @ts-ignore:
-import TextMenu from "./text-menu/index";
 
+import TextMenu from "./text-menu/index";
 import Title from "./title/index";
 // @ts-ignore:
 import Video from "./video/index";
@@ -31,7 +30,7 @@ export const plugins = [
   ...Title().plugins,
   ...Section().plugins,
   ...AddSection().plugins,
-  // ...TextMenu().plugins,
+  ...TextMenu().plugins,
   // ...Headlines().plugins,
   // ...MarkdownShortcuts().plugins,
   // ...Embed().plugins,

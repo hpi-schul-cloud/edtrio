@@ -1,149 +1,149 @@
-import React from 'react'
+import React from "react";
 
-import isUrl from 'is-url'
+import isUrl from "is-url";
 
-import Hotkey from '../../helpers/Hotkey'
-import handleUrl from './handlers'
-import ServiceTypeIcon from './ServiceTypeIcon'
+import Hotkey from "../../helpers/Hotkey";
+import handleUrl from "./handlers";
+import ServiceTypeIcon from "./ServiceTypeIcon";
 
 export default function Embed(options) {
   return {
     changes: {},
     helpers: {
-      toggleEmbedBlock
+      toggleEmbedBlock,
     },
     components: {
-      EmbedNode
+      EmbedNode,
     },
     plugins: [
-      Hotkey('Control+e', toggleEmbedBlock),
+      Hotkey("Control+e", toggleEmbedBlock),
       RenderEmbedNode,
       RenderEmbedPlaceholder,
-      { schema }
-    ]
-  }
+      { schema },
+    ],
+  };
 }
 
 const schema = {
   blocks: {
     embed: {
-      marks: []
-    }
-  }
-}
+      marks: [],
+    },
+  },
+};
 
 function toggleEmbedBlock(change) {
-  const isCode = change.value.blocks.some(block => block.type === 'embed')
-  change.setBlocks(isCode ? 'p' : 'embed')
-  return true
+  const isCode = change.value.blocks.some(block => block.type === "embed");
+  change.setBlocks(isCode ? "p" : "embed");
+  return true;
 }
 
 const RenderEmbedNode = {
   renderNode(props) {
-    return props.node.type === 'embed' ? (
+    return props.node.type === "embed" ? (
       <EmbedNode
         selected={props.isFocused}
         editor={props.editor}
         node={props.node}
         {...props}
       />
-    ) : null
-  }
-}
+    ) : null;
+  },
+};
 
 const RenderEmbedPlaceholder = {
   renderPlaceholder({ editor, node, parent }) {
-    if (node.object !== 'block') return
-    if (node.type !== 'embed') return
-    if (node.text !== '') return
+    if (node.object !== "block") return;
+    if (node.type !== "embed") return;
+    if (node.text !== "") return;
 
     // if there is a url, don't render the placeholder :-)
-    if (node.data.get('url')) return
+    if (node.data.get("url")) return;
 
     return (
       <span
         contentEditable={false}
-        style={{ display: 'inline-block', width: '0', whiteSpace: 'nowrap' }}
+        style={{ display: "inline-block", width: "0", whiteSpace: "nowrap" }}
         className="has-text-grey-light"
         onMouseDown={e => {
-          const change = editor.value.change()
-          const onChange = editor.props.onChange
-          onChange(change.moveToEndOfNode(node).focus())
-          return true
+          const change = editor.value.change();
+          const onChange = editor.props.onChange;
+          onChange(change.moveToEndOfNode(node).focus());
+          return true;
         }}
       >
         z. Bsp. https://www.youtube.com/watch?v=nS4a_bTv5_Y
       </span>
-    )
-  }
-}
+    );
+  },
+};
 
 class EmbedNode extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
-      provider: props.node.data.get('provider') || '',
-      url: props.node.data.get('url') || ''
-    }
+      provider: props.node.data.get("provider") || "",
+      url: props.node.data.get("url") || "",
+    };
   }
 
   _setDataAttribute = (url, provider) => {
-    const { editor, node } = this.props
-    const change = editor.value.change()
-    const onChange = editor.props.onChange
+    const { editor, node } = this.props;
+    const change = editor.value.change();
+    const onChange = editor.props.onChange;
 
     const c = change.setNodeByKey(node.key, {
       data: {
         provider: provider,
-        url: url
-      }
-    })
-    onChange(c)
-  }
+        url: url,
+      },
+    });
+    onChange(c);
+  };
 
   handlePasteUrl = e => {
-    e.preventDefault()
+    e.preventDefault();
 
     // Get pasted data via clipboard API
-    const clipboardData = e.clipboardData || window.clipboardData
-    const pastedData = clipboardData.getData('Text')
+    const clipboardData = e.clipboardData || window.clipboardData;
+    const pastedData = clipboardData.getData("Text");
 
     if (!isUrl(pastedData)) {
-      return
+      return;
     }
 
-    const { provider, url } = handleUrl(pastedData)
+    const { provider, url } = handleUrl(pastedData);
 
-    e.stopPropagation()
-    this._setDataAttribute(url, provider)
+    e.stopPropagation();
+    this._setDataAttribute(url, provider);
     this.setState({
       url: url,
-      provider: provider
-    })
-  }
+      provider: provider,
+    });
+  };
 
   render() {
-    const { selected, attributes, children } = this.props
-    const { url, provider } = this.state
+    const { selected, attributes, children } = this.props;
+    const { url, provider } = this.state;
 
     return (
       <React.Fragment>
         {url && (
           <div
             className={`plugin-wrapper embed-container ${
-              selected ? 'selected' : ''
+              selected ? "selected" : ""
             }`}
             style={{
-              display: 'flex',
-              flexDirection: 'column',
-              marginBottom: 5
+              display: "flex",
+              flexDirection: "column",
+              marginBottom: 5,
             }}
             {...attributes}
           >
             <iframe
               title="Video"
-              style={{ minHeight: '22rem' }}
+              style={{ minHeight: "22rem" }}
               src={url}
               frameBorder="0"
               allowFullScreen
@@ -152,7 +152,7 @@ class EmbedNode extends React.Component {
         )}
         <div className="control has-icons-left" {...attributes} style={{}}>
           <p
-            className={`input ${selected && !url ? 'is-focused' : ''}`}
+            className={`input ${selected && !url ? "is-focused" : ""}`}
             onPaste={this.handlePasteUrl}
           >
             {children}
@@ -163,6 +163,6 @@ class EmbedNode extends React.Component {
           </span>
         </div>
       </React.Fragment>
-    )
+    );
   }
 }
