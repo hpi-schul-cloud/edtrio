@@ -46,8 +46,7 @@ function insertPoll(change, target) {
 
 const onClickNewAnswerButton = (event, change, onChange, node) => {
   event.preventDefault();
-  change.call(appendNewAnswer, node);
-  onChange(change);
+  onChange(change.call(appendNewAnswer, node));
 };
 
 const appendNewAnswer = (change, node) => {
@@ -60,6 +59,15 @@ const appendNewAnswer = (change, node) => {
   return change
     .insertNodeByKey(node.key, lastIndex, newAnswer)
     .moveToEndOfNode(newAnswer);
+};
+
+const onClickDeleteAnswerButton = (event, change, onChange, node) => {
+  event.preventDefault();
+  onChange(change.call(deleteAnswer, node));
+};
+
+const deleteAnswer = (change, node) => {
+  return change.removeNodeByKey(node.key);
 };
 
 function PollNode(props) {
@@ -94,13 +102,22 @@ function PollQuestionNode(props) {
 }
 
 function PollAnswerNode(props) {
-  const { children, ...attributes } = props;
+  const { children, node, editor, ...attributes } = props;
 
   return (
     <div {...attributes}>
       <span>{children}</span>
       <span className="align-right">
-        <button>
+        <button
+          onClick={event =>
+            onClickDeleteAnswerButton(
+              event,
+              editor.value.change(),
+              editor.props.onChange,
+              node,
+            )
+          }
+        >
           <span className="icon is-small">
             <FontAwesomeIcon icon={faTrashAlt} />
           </span>
@@ -136,7 +153,11 @@ const RenderPollNode = {
       return <PollQuestionNode {...attributes}>{children}</PollQuestionNode>;
     }
     if (node.type === "poll_answer") {
-      return <PollAnswerNode {...attributes}>{children}</PollAnswerNode>;
+      return (
+        <PollAnswerNode node={node} editor={editor} {...attributes}>
+          {children}
+        </PollAnswerNode>
+      );
     }
   },
 };
