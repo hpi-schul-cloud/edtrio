@@ -2,8 +2,10 @@ import React from "react";
 
 import { Text, Block } from "slate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faTrashAlt, faPlus } from "@fortawesome/free-solid-svg-icons";
 import "./style.css";
+import "materialize-css/dist/css/materialize.min.css";
+import "materialize-css/dist/js/materialize.min.js";
 
 export default function Poll(options) {
   return {
@@ -75,8 +77,11 @@ function PollNode(props) {
 
   return (
     <div>
-      <div {...attributes}>{children}</div>
+      <ul className="collection with-header" {...attributes}>
+        {children}
+      </ul>
       <button
+        className="waves-effect waves-light btn"
         onClick={event =>
           onClickNewAnswerButton(
             event,
@@ -86,7 +91,8 @@ function PollNode(props) {
           )
         }
       >
-        Test
+        <FontAwesomeIcon icon={faPlus} />
+        Antwort hinzufügen
       </button>
     </div>
   );
@@ -95,9 +101,9 @@ function PollNode(props) {
 function PollQuestionNode(props) {
   const { children, ...attributes } = props;
   return (
-    <div {...attributes}>
+    <li className="collection-header" {...attributes}>
       <h2>{children}</h2>
-    </div>
+    </li>
   );
 }
 
@@ -105,7 +111,8 @@ function PollAnswerNode(props) {
   const { children, node, editor, ...attributes } = props;
 
   return (
-    <div {...attributes}>
+    <li className="collection-item" {...attributes}>
+      <input type="radio" name="answergroup" />
       <span>{children}</span>
       <span className="align-right">
         <button
@@ -123,7 +130,7 @@ function PollAnswerNode(props) {
           </span>
         </button>
       </span>
-    </div>
+    </li>
   );
 }
 

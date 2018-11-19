@@ -42,6 +42,7 @@
     "is-hotkey": "^0.1.2",
     "is-url": "^1.2.4",
     "material-icons": "^0.2.3",
+    "materialize-css": "^1.0.0-rc.2",
     "moment": "^2.22.2",
     "node-sass": "^4.9.3",
     "react": "^16.4.2",

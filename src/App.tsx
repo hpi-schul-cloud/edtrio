@@ -9,7 +9,6 @@ import "bulma-tooltip/dist/css/bulma-tooltip.min.css";
 import "bulma/css/bulma.css";
 import "../node_modules/material-icons/iconfont/material-icons.css";
 import "./App.css";
-
 import Editor from "./Editor";
 
 const AppWrapper = styled.div`
