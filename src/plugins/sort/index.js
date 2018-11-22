@@ -1,4 +1,5 @@
 import React from "react";
+import SortNode from "./SortNode";
 
 export default function Sort(options) {
   return {
@@ -23,10 +24,6 @@ function insertSort(change, src, target) {
     isVoid: true,
     data: { src },
   });
-}
-
-function SortNode(props) {
-  return <div {...props}>Sort</div>;
 }
 
 const RenderSortNode = {
