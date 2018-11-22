@@ -15,7 +15,7 @@
   "plugins": ["react", "prettier", "babel"],
   "rules": {
     "prettier/prettier": "error",
-    "linebreak-style": [2, "windows"],
+    "linebreak-style": [2, "unix"],
     "semi": [2, "always"],
     "no-unused-vars": [0],
     "unicode-bom": ["error", "never"]
