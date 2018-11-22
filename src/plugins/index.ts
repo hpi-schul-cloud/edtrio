@@ -19,6 +19,8 @@ import PlusMenuPlugin from "./plus-menu/index";
 // @ts-ignore:
 import Section from "./section/index";
 // @ts-ignore:
+import Sort from "./sort/index";
+// @ts-ignore:
 import TextMenu from "./text-menu/index";
 // @ts-ignore:
 import Title from "./title/index";
@@ -38,4 +40,5 @@ export const plugins = [
   ...CodeBlockPlugin().plugins,
   ...Image().plugins,
   ...Geogebra().plugins,
+  ...Sort().plugins,
 ];
