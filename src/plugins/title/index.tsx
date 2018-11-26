@@ -51,12 +51,12 @@ const RenderTitleNode = {
   renderNode(props: any, editor: Editor, next: () => void) {
     const { attributes, children, node } = props;
     return node.type === "title" ? (
-      <Fragment>
-        <StyledTitleBar {...attributes}>{children}</StyledTitleBar>
+      <div {...attributes}>
+        <StyledTitleBar>{children}</StyledTitleBar>
         <LastSavedContext.Consumer>
           {({ lastSaved }) => <SaveBar editor={editor} lastSaved={lastSaved} />}
         </LastSavedContext.Consumer>
-      </Fragment>
+      </div>
     ) : (
       next()
     );

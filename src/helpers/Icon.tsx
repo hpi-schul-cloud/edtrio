@@ -1,6 +1,6 @@
 import React from "react";
 
-const Icon = ({ className, children, ...rest }) => (
+const Icon = ({ className, children, ...rest }: any) => (
   <i
     style={{
       verticalAlign: "middle",

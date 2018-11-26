@@ -14,6 +14,8 @@ export default function MarkdownShortcuts() {
   };
 }
 
+// does not seem to work correctly
+
 const HandleKeyDown = {
   onKeyDown(event: any, editor: Editor, next: any) {
     switch (event.key) {

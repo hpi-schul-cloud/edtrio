@@ -1,4 +1,6 @@
-export default function VimeoHandler(options) {
+import { Editor } from "slate";
+
+export default function VimeoHandler() {
   return {
     validate,
     dealWithIt,
@@ -11,23 +13,26 @@ export default function VimeoHandler(options) {
   };
 }
 
-//eslint-disable-next-line
+// eslint-disable-next-line
 const _regex = /vimeo.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|)(\d+)(?:|\/\?)/i;
 
-const validate = url => {
+const validate = (url: string) => {
   return !!_regex.exec(url);
 };
 
-const dealWithIt = (url, change) => {
-  const videoId = _regex.exec(url)[2];
-  change.call(insertYoutubeVideo, videoId);
+const dealWithIt = (url: string, editor: Editor) => {
+  const regexUrl = _regex.exec(url);
+  if (regexUrl) {
+    const videoId = regexUrl[2];
+    insertYoutubeVideo(editor, videoId);
+  }
+
   return true;
 };
 
-function insertYoutubeVideo(change, videoId) {
-  change.insertBlock({
+function insertYoutubeVideo(editor: Editor, videoId: string) {
+  editor.insertBlock({
     type: "embed",
-    isVoid: true,
     data: {
       provider: "vimeo",
       url: `https://player.vimeo.com/video/${videoId}`,

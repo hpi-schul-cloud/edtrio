@@ -1,8 +1,9 @@
 import React from "react";
+import { Editor } from "slate";
 
 import GeogebraNode from "./Geogebra";
 
-export default function Geogebra(options) {
+export default function Geogebra() {
   return {
     changes: {
       insertGeogebraNode,
@@ -15,20 +16,19 @@ export default function Geogebra(options) {
   };
 }
 
-function insertGeogebraNode(change, id, target) {
+function insertGeogebraNode(editor: Editor, id: any, target: any) {
   if (target) {
-    change.select(target);
+    editor.select(target);
   }
 
-  change.insertBlock({
+  editor.insertBlock({
     type: "geogebra",
-    isVoid: true,
     data: { id },
   });
 }
 
 const RenderGeogebraNode = {
-  renderNode(props) {
+  renderNode(props: any, editor: Editor, next: () => void) {
     const { attributes, node, isFocused } = props;
 
     if (node.type === "geogebra") {
@@ -38,10 +38,11 @@ const RenderGeogebraNode = {
         <GeogebraNode selected={isFocused} resourceId={id} {...attributes} />
       );
     }
+    return next();
   },
 };
 
-/**
+/*
  * onClickGeogebraButton = event => {
         const { insertGeogebraNode } = Geogebra().changes
 

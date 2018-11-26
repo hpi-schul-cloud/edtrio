@@ -2,7 +2,7 @@ import React from "react";
 
 import "./button.css";
 
-const Button = props => (
+const Button = (props: any) => (
   <span
     className={`edtrio-button ${props.active ? "active" : ""} ${
       props.reversed ? "reversed" : ""

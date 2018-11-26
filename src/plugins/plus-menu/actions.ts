@@ -56,7 +56,7 @@ export const onClickIframeButton = (event: any, editor: Editor) => {
 
   editor.insertBlock(
     Block.create({
-      type: "code",
+      type: "embed",
       nodes: List([Text.create({})]),
     }),
   );

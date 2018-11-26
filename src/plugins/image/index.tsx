@@ -40,7 +40,6 @@ function insertImage(editor: Editor, src: string | ArrayBuffer, target: any) {
  * Overwrites Slates Editor.renderNode(props) to actually render
  * ImageNode for `img` tags
  */
-// TODO: not working - doesn't render image
 const RenderImageNode = {
   renderNode(props: any, editor: Editor, next: any) {
     const { attributes, node, children, isFocused } = props;

@@ -1,11 +1,13 @@
+// @ts-ignore
 import mimeLookup from "browser-media-mime-type";
+import { Editor } from "slate";
 
-export default function VideoHandler(options) {
+export default function AudioHandler() {
   return {
     validate,
     dealWithIt,
     changes: {
-      insertVideo,
+      insertAudio,
     },
     helpers: {},
     components: {},
@@ -13,22 +15,22 @@ export default function VideoHandler(options) {
   };
 }
 
-const validate = url => {
+const validate = (url: string) => {
   const fileExtension = url.substr(url.lastIndexOf(".") + 1);
   const mimeType = mimeLookup(fileExtension);
-  return (mimeType || "").includes("video");
+  return (mimeType || "").includes("audio");
 };
 
-const dealWithIt = (url, change) => {
+const dealWithIt = (url: string, editor: Editor) => {
   const fileExtension = url.substr(url.lastIndexOf(".") + 1);
   const mimeType = mimeLookup(fileExtension);
-  change.call(insertVideo, url, mimeType);
+  insertAudio(editor, url, mimeType);
   return true;
 };
 
-function insertVideo(change, src, mimeType) {
-  change.insertBlock({
-    type: "video",
-    data: { src, mimeType },
+function insertAudio(editor: Editor, url: string, mimeType: any) {
+  editor.insertBlock({
+    type: "audio",
+    data: { src: url, mimeType },
   });
 }

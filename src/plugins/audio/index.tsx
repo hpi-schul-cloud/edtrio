@@ -1,23 +1,16 @@
 import React from "react";
+import { Editor } from "slate";
 
-export default function Audio(options) {
+export default function Audio() {
   return {
     changes: {},
     helpers: {},
     components: { AudioNode },
-    plugins: [RenderAudioNode, { schema }],
+    plugins: [RenderAudioNode],
   };
 }
 
-const schema = {
-  blocks: {
-    audio: {
-      isVoid: true,
-    },
-  },
-};
-
-function AudioNode(props) {
+function AudioNode(props: any) {
   const { src, mimeType, selected, ...attributes } = props;
 
   return (
@@ -27,7 +20,7 @@ function AudioNode(props) {
     >
       <audio
         className="audio"
-        controls
+        controls={true}
         preload="metadata"
         style={{ width: "100%", minHeight: "54px" }}
       >
@@ -39,7 +32,7 @@ function AudioNode(props) {
 }
 
 const RenderAudioNode = {
-  renderNode(props) {
+  renderNode(props: any, editor: Editor, next: () => void) {
     const { attributes, node, isFocused } = props;
 
     if (node.type === "audio") {
@@ -56,5 +49,6 @@ const RenderAudioNode = {
         );
       }
     }
+    return next();
   },
 };

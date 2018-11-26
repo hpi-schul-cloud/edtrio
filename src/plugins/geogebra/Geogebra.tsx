@@ -1,10 +1,26 @@
 import React, { Component } from "react";
 
 import "./style.css";
-//RHYH3UQ8
+// RHYH3UQ8
 
-export default class GeogebraNode extends Component {
-  constructor(props) {
+interface IGeogebraNodeProps {
+  resourceId: string;
+  saveContent: (state: IGeogebraNodeState) => void;
+  content: IGeogebraNodeState;
+  selected: boolean;
+}
+
+interface IGeogebraNodeState {
+  id: string;
+}
+
+export default class GeogebraNode extends Component<
+  IGeogebraNodeProps,
+  IGeogebraNodeState
+> {
+  private applet: any;
+
+  constructor(props: IGeogebraNodeProps) {
     super(props);
 
     this.state = {
@@ -14,11 +30,14 @@ export default class GeogebraNode extends Component {
     this.applet = React.createRef();
   }
 
-  shouldComponentUpdate(nextProps, { id }) {
+  public shouldComponentUpdate(
+    nextProps: IGeogebraNodeProps,
+    { id }: IGeogebraNodeState,
+  ) {
     return id !== this.state.id;
   }
 
-  renderApplet(id) {
+  public renderApplet(id: string) {
     this.setState(
       () => {
         return {
@@ -29,7 +48,7 @@ export default class GeogebraNode extends Component {
     );
   }
 
-  renderHTML() {
+  public renderHTML() {
     return `<!DOCTYPE>
         <html>
         <head>
@@ -52,13 +71,13 @@ export default class GeogebraNode extends Component {
         `;
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     this.setState({
       ...this.props.content,
     });
   }
 
-  render() {
+  public render() {
     // FIXME: props.selected never turn false, even if geogebra
     // isnt selected anymore
     return (

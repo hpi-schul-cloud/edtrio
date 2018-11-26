@@ -1,14 +1,19 @@
 import React, { Component } from "react";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faVimeo, faYoutube } from "@fortawesome/free-brands-svg-icons";
 import { faExternalLinkSquareAlt } from "@fortawesome/free-solid-svg-icons";
-import { faYoutube, faVimeo } from "@fortawesome/free-brands-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-class ServiceTypeIcon extends Component {
-  render() {
+interface IServiceTypeIconProps {
+  type: string;
+}
+
+class ServiceTypeIcon extends Component<IServiceTypeIconProps> {
+  public render() {
     const { type } = this.props;
 
-    let icon, color;
+    let icon;
+    let color;
     switch (type) {
       case "youtube":
         icon = faYoutube;
@@ -22,7 +27,7 @@ class ServiceTypeIcon extends Component {
         icon = faExternalLinkSquareAlt;
     }
 
-    return <FontAwesomeIcon icon={icon} style={{ color: color }} size="lg" />;
+    return <FontAwesomeIcon icon={icon} style={{ color }} size="lg" />;
   }
 }
 

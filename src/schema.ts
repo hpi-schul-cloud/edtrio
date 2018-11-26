@@ -25,5 +25,14 @@ export default {
         },
       ],
     },
+    code: {
+      marks: [],
+    },
+    embed: {
+      marks: [],
+    },
+    audio: {
+      isVoid: true,
+    },
   },
 };

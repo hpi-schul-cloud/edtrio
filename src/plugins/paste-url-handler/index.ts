@@ -1,12 +1,13 @@
-import { getEventTransfer } from "slate-react";
 import isUrl from "is-url";
+import { getEventTransfer } from "slate-react";
 
-import YoutubeHandler from "./handlers/YoutubeHandler";
-import VimeoHandler from "./handlers/VimeoHandler";
-import VideoHandler from "./handlers/VideoHandler";
+import { Editor } from "slate";
 import AudioHandler from "./handlers/AudioHandler";
+import VideoHandler from "./handlers/VideoHandler";
+import VimeoHandler from "./handlers/VimeoHandler";
+import YoutubeHandler from "./handlers/YoutubeHandler";
 
-export default function PasteURLHandler(options) {
+export default function PasteURLHandler() {
   return {
     changes: {},
     helpers: {},
@@ -22,8 +23,9 @@ export default function PasteURLHandler(options) {
 }
 
 const HandlePaste = {
-  onPaste(event, change, editor) {
+  onPaste(event: any, editor: Editor, next: () => void) {
     const transfer = getEventTransfer(event);
+    // @ts-ignore, text is in there
     const { type, text } = transfer;
 
     if (type === "text") {
@@ -32,22 +34,21 @@ const HandlePaste = {
       }
 
       if (YoutubeHandler().validate(text)) {
-        return YoutubeHandler().dealWithIt(text, change);
+        return YoutubeHandler().dealWithIt(text, editor);
       }
 
       if (VimeoHandler().validate(text)) {
-        return VimeoHandler().dealWithIt(text, change);
+        return VimeoHandler().dealWithIt(text, editor);
       }
 
       if (VideoHandler().validate(text)) {
-        return VideoHandler().dealWithIt(text, change);
+        return VideoHandler().dealWithIt(text, editor);
       }
 
       if (AudioHandler().validate(text)) {
-        return AudioHandler().dealWithIt(text, change);
+        return AudioHandler().dealWithIt(text, editor);
       }
-
-      return;
     }
+    return next();
   },
 };
