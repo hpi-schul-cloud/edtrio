@@ -127,7 +127,6 @@ class Editor extends Component<IEditorProps, IEditorState> {
     if (value.document !== this.state.value.document) {
       this.handleSave(value);
     }
-
     this.setState({ value });
   };
 }

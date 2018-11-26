@@ -7,9 +7,7 @@ import Embed from "./embed/index";
 // @ts-ignore:
 import Geogebra from "./geogebra/index";
 import Headlines from "./headlines/index";
-// @ts-ignore:
 import Image from "./image/index";
-// @ts-ignore:
 import MarkdownShortcuts from "./markdown-shortcuts/index";
 // @ts-ignore:
 import PasteURLHandler from "./paste-url-handler/index";
@@ -20,7 +18,6 @@ import Section from "./section/index";
 
 import TextMenu from "./text-menu/index";
 import Title from "./title/index";
-// @ts-ignore:
 import Video from "./video/index";
 
 import AddSection from "./add-section";
@@ -32,12 +29,12 @@ export const plugins = [
   ...TextMenu().plugins,
   ...PlusMenu().plugins,
   ...Headlines().plugins,
-  // ...MarkdownShortcuts().plugins,
+  ...MarkdownShortcuts().plugins,
   // ...Embed().plugins,
-  // ...Video().plugins,
+  ...Video().plugins,
   // ...Audio().plugins,
   // ...PasteURLHandler().plugins,
   // ...CodeBlockPlugin().plugins,
-  // ...Image().plugins,
+  ...Image().plugins,
   // ...Geogebra().plugins,
 ];

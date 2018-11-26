@@ -24,7 +24,6 @@ interface IPlusMenuProps {
   editor: Editor;
 }
 interface IPlusMenuState {
-  style: object;
   uppyOpen: boolean;
 }
 
@@ -52,7 +51,6 @@ class PlusMenu extends Component<IPlusMenuProps, IPlusMenuState> {
     super(props);
 
     this.state = {
-      style: {},
       uppyOpen: false,
     };
 
@@ -92,8 +90,9 @@ class PlusMenu extends Component<IPlusMenuProps, IPlusMenuState> {
         top: `${top}px`,
         right: `${right}px`,
       };
-    } catch (error) {}
-    // TODO: add hover styles from style.css
+    } catch (error) {
+      // this can happen when a new block is created that does not yet have a representation in the dom
+    }
     return (
       <StyledPlusMenu className={className} style={style}>
         {this.renderBlockButton(faImage, "Bild einfügen", (event: any) => {
@@ -180,6 +179,7 @@ class PlusMenu extends Component<IPlusMenuProps, IPlusMenuState> {
           note="Bilder, maximal 1 MB"
           open={this.state.uppyOpen}
           onRequestClose={this.handleCloseUppyModal}
+          disableThumbnailGenerator={true}
         />
       </StyledPlusMenu>
     );

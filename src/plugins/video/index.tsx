@@ -1,23 +1,16 @@
 import React from "react";
+import { Editor } from "slate";
 
-export default function Video(options) {
+export default function Video() {
   return {
     changes: {},
     helpers: {},
     components: { VideoNode },
-    plugins: [RenderVideoNode, { schema }],
+    plugins: [RenderVideoNode],
   };
 }
 
-const schema = {
-  blocks: {
-    video: {
-      isVoid: true,
-    },
-  },
-};
-
-function VideoNode(props) {
+function VideoNode(props: any) {
   const { src, mimeType, selected, ...attributes } = props;
 
   return (
@@ -25,7 +18,7 @@ function VideoNode(props) {
       className={`plugin-wrapper ${selected ? "selected" : ""}`}
       {...attributes}
     >
-      <video className="video" controls preload="metadata">
+      <video className="video" controls={true} preload="metadata">
         <source src={src} type={mimeType} />
         Your browser does not support the video tag.
       </video>
@@ -34,7 +27,7 @@ function VideoNode(props) {
 }
 
 const RenderVideoNode = {
-  renderNode(props) {
+  renderNode(props: any, editor: Editor, next: any) {
     const { attributes, node, isFocused } = props;
 
     if (node.type === "video") {
@@ -51,5 +44,6 @@ const RenderVideoNode = {
         );
       }
     }
+    return next();
   },
 };

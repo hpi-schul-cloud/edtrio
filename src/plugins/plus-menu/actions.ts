@@ -26,10 +26,10 @@ export const onClickImageButton = (
       // TODO: replace with proper file upload (e.g. to S3)
       const fr = new FileReader();
       fr.onload = () => {
-        insertImage(fr.result);
+        if (fr.result) {
+          insertImage(editor, fr.result, null);
+        }
       };
-
-      // TODO: Do something with editor?
 
       fr.readAsDataURL(image.data);
     });

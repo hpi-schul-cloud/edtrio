@@ -23,10 +23,10 @@ export default function AddSection() {
 
 const addSectionButtonAfterEditor = {
   renderEditor(props: any, editor: Editor, next: any) {
-    const children = next();
+    const restOfEditor = next();
     return (
       <Fragment>
-        {children}
+        {restOfEditor}
         <AddSectionButton editor={editor} />
       </Fragment>
     );

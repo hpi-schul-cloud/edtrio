@@ -12,9 +12,7 @@ export default function Headlines() {
 
 const RenderHeadlines = {
   renderNode(props: any, editor: Editor, next: any) {
-    const { attributes, node } = props;
-
-    const children = next();
+    const { attributes, children, node } = props;
 
     switch (node.type) {
       case "h1":
@@ -28,7 +26,7 @@ const RenderHeadlines = {
       case "h5":
         return <h6 {...attributes}>{children}</h6>;
       default:
-        return children;
+        return next();
     }
   },
 };

@@ -15,11 +15,11 @@ export default function PlusMenuPlugin() {
 
 const addPlusMenuBesideEditor = {
   renderEditor(props: any, editor: Editor, next: any) {
-    const children = next();
+    const restOfEditor = next();
     return (
       <Fragment>
         <PlusMenu editor={editor} />
-        {children}
+        {restOfEditor}
       </Fragment>
     );
   },

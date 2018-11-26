@@ -1,8 +1,11 @@
 import React from "react";
+import { Editor } from "slate";
 
 // Taken and adapted from https://github.com/ianstormtaylor/slate/blob/master/examples/markdown-shortcuts/index.js
 
-export default function MarkdownShortcuts(options) {
+// TODO: does not seem to work, revisit when done
+
+export default function MarkdownShortcuts() {
   return {
     changes: {},
     helpers: {},
@@ -12,17 +15,17 @@ export default function MarkdownShortcuts(options) {
 }
 
 const HandleKeyDown = {
-  onKeyDown(event, change) {
+  onKeyDown(event: any, editor: Editor, next: any) {
     switch (event.key) {
       case " ":
-        return onSpace(event, change);
+        onSpace(event, editor);
       case "Backspace":
-        return onBackspace(event, change);
+        onBackspace(event, editor);
       case "Enter":
-        return onEnter(event, change);
+        onEnter(event, editor);
       default:
-      //pass
     }
+    return next();
   },
 };
 
@@ -32,29 +35,35 @@ const HandleKeyDown = {
  * corresponding type.
  *
  * @param {Event} event
- * @param {Change} change
+ * @param {Editor} editor
  */
-const onSpace = (event, change) => {
-  const { value } = change;
+const onSpace = (event: any, editor: Editor) => {
+  const { value } = editor;
   const { selection } = value;
-  if (selection.isExpanded) return;
+  if (selection.isExpanded) {
+    return;
+  }
 
   const { startBlock } = value;
   const { start } = selection;
   const chars = startBlock.text.slice(0, start.offset).replace(/\s*/g, "");
   const type = _getType(chars);
 
-  if (!type) return;
-  if (type === "li" && startBlock.type === "li") return;
+  if (!type) {
+    return;
+  }
+  if (type === "li" && startBlock.type === "li") {
+    return;
+  }
   event.preventDefault();
 
-  change.setBlocks(type);
+  editor.setBlocks(type);
 
   if (type === "li") {
-    change.wrapBlock("ul");
+    editor.wrapBlock("ul");
   }
 
-  change.moveFocusToStartOfNode(startBlock).delete();
+  editor.moveFocusToStartOfNode(startBlock).delete();
   return true;
 };
 
@@ -63,23 +72,29 @@ const onSpace = (event, change) => {
  * convert it back into a paragraph node.
  *
  * @param {Event} event
- * @param {Change} change
+ * @param {Editor} editor
  */
 
-const onBackspace = (event, change) => {
-  const { value } = change;
+const onBackspace = (event: any, editor: Editor) => {
+  const { value } = editor;
   const { selection } = value;
-  if (selection.isExpanded) return;
-  if (selection.start.offset !== 0) return;
+  if (selection.isExpanded) {
+    return;
+  }
+  if (selection.start.offset !== 0) {
+    return;
+  }
 
   const { startBlock } = value;
-  if (startBlock.type === "p") return;
+  if (startBlock.type === "p") {
+    return;
+  }
 
   event.preventDefault();
-  change.setBlocks("p");
+  editor.setBlocks("p");
 
   if (startBlock.type === "li") {
-    change.unwrapBlock("ul");
+    editor.unwrapBlock("ul");
   }
 
   return true;
@@ -91,19 +106,24 @@ const onBackspace = (event, change) => {
  * below it.
  *
  * @param {Event} event
- * @param {Change} change
+ * @param {Editor} editor
  */
 
-const onEnter = (event, change) => {
-  const { value } = change;
+const onEnter = (event: any, editor: Editor) => {
+  const { value } = editor;
   const { selection } = value;
   const { start, end, isExpanded } = selection;
-  if (isExpanded) return;
+  if (isExpanded) {
+    return;
+  }
 
   const { startBlock } = value;
-  if (start.offset === 0 && startBlock.text.length === 0)
-    return onBackspace(event, change);
-  if (end.offset !== startBlock.text.length) return;
+  if (start.offset === 0 && startBlock.text.length === 0) {
+    return onBackspace(event, editor);
+  }
+  if (end.offset !== startBlock.text.length) {
+    return;
+  }
 
   if (
     startBlock.type !== "h1" &&
@@ -117,7 +137,7 @@ const onEnter = (event, change) => {
   }
 
   event.preventDefault();
-  change.splitBlock().setBlocks("p");
+  editor.splitBlock(1).setBlocks("p");
   return true;
 };
 
@@ -128,7 +148,7 @@ const onEnter = (event, change) => {
  * @return {String} block
  */
 
-const _getType = chars => {
+const _getType = (chars: string) => {
   switch (chars) {
     case "*":
     case "-":
@@ -152,7 +172,7 @@ const _getType = chars => {
 };
 
 const RenderMoreTextBlocks = {
-  renderNode(props) {
+  renderNode(props: any, editor: Editor, next: any) {
     const { attributes, children, node } = props;
 
     switch (node.type) {
@@ -163,7 +183,7 @@ const RenderMoreTextBlocks = {
       case "li":
         return <li {...attributes}>{children}</li>;
       default:
-      //pass
+        return next();
     }
   },
 };

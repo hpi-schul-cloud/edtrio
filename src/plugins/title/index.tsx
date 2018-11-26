@@ -62,14 +62,23 @@ const RenderTitleNode = {
     );
   },
   decorateNode(node: Node, editor: Editor, next: () => void) {
-    if (!("type" in node)) { return next(); }
-    if (node.type !== "title") { return next(); }
-    if (node.text !== "") { return next(); }
+    if (!("type" in node)) {
+      return next();
+    }
+    if (node.type !== "title") {
+      return next();
+    }
+    if (node.text !== "") {
+      return next();
+    }
 
-    const others = next();
     const first = node.getFirstText();
     const last = node.getLastText();
-    if (!first || !last) { return next(); }
+    if (!first || !last) {
+      return next();
+    }
+    const others = next();
+
     const decoration = {
       anchor: { key: first.key, offset: 0 },
       focus: { key: last.key, offset: last.text.length },
