@@ -16,7 +16,7 @@ export default function Poll(options) {
     components: {
       PollNode,
     },
-    plugins: [RenderPollNode],
+    plugins: [RenderPollNode, RenderPlaceholder],
   };
 }
 
@@ -31,15 +31,15 @@ function insertPoll(change, target) {
       nodes: [
         Block.create({
           type: "poll_question",
-          nodes: [Text.create("Test Question")],
+          nodes: [Text.create("")],
         }),
         Block.create({
           type: "poll_answer",
-          nodes: [Text.create("Test Answer")],
+          nodes: [Text.create("")],
         }),
         Block.create({
           type: "poll_answer",
-          nodes: [Text.create("Test Answer 2")],
+          nodes: [Text.create("")],
         }),
       ],
     }),
@@ -54,7 +54,7 @@ const onClickNewAnswerButton = (event, change, onChange, node) => {
 const appendNewAnswer = (change, node) => {
   const newAnswer = Block.create({
     type: "poll_answer",
-    nodes: [Text.create("ABC")],
+    nodes: [Text.create("Hier Antwortmöglichkeit eingeben...")],
   });
   const lastIndex = node.nodes.count();
 
@@ -80,20 +80,22 @@ function PollNode(props) {
       <ul className="collection with-header" {...attributes}>
         {children}
       </ul>
-      <button
-        className="waves-effect waves-light btn"
-        onClick={event =>
-          onClickNewAnswerButton(
-            event,
-            editor.value.change(),
-            editor.props.onChange,
-            node,
-          )
-        }
-      >
-        <FontAwesomeIcon icon={faPlus} />
-        Antwort hinzufügen
-      </button>
+      <div className="right-align">
+        <button
+          className="btn-flat"
+          onClick={event =>
+            onClickNewAnswerButton(
+              event,
+              editor.value.change(),
+              editor.props.onChange,
+              node,
+            )
+          }
+        >
+          <i className="material-icons left">add</i>
+          Antwort hinzufügen
+        </button>
+      </div>
     </div>
   );
 }
@@ -108,14 +110,21 @@ function PollQuestionNode(props) {
 }
 
 function PollAnswerNode(props) {
-  const { children, node, editor, ...attributes } = props;
+  const { children, node, editor, parentKey, ...attributes } = props;
 
   return (
-    <li className="collection-item" {...attributes}>
-      <input type="radio" name="answergroup" />
-      <span>{children}</span>
-      <span className="align-right">
+    <li className="collection-item row" {...attributes}>
+      <label className="col s11">
+        <input
+          type="radio"
+          name={"answergroup" + parentKey}
+          className="with-gap"
+        />
+        <span>{children}</span>
+      </label>
+      <div className="col s1 right-align">
         <button
+          className="btn-flat"
           onClick={event =>
             onClickDeleteAnswerButton(
               event,
@@ -125,11 +134,9 @@ function PollAnswerNode(props) {
             )
           }
         >
-          <span className="icon is-small">
-            <FontAwesomeIcon icon={faTrashAlt} />
-          </span>
+          <i className="material-icons right">delete</i>
         </button>
-      </span>
+      </div>
     </li>
   );
 }
@@ -141,7 +148,7 @@ function PollAnswerNode(props) {
 const RenderPollNode = {
   renderNode(props, next) {
     // append to parent, see add-section
-    const { children, attributes, node, isFocused, editor } = props;
+    const { children, attributes, node, isFocused, editor, parent } = props;
     // console.log(props);
     if (node.type === "poll") {
       return (
@@ -161,10 +168,43 @@ const RenderPollNode = {
     }
     if (node.type === "poll_answer") {
       return (
-        <PollAnswerNode node={node} editor={editor} {...attributes}>
+        <PollAnswerNode
+          node={node}
+          parentKey={parent.key}
+          editor={editor}
+          {...attributes}
+        >
           {children}
         </PollAnswerNode>
       );
     }
+  },
+};
+
+const RenderPlaceholder = {
+  renderPlaceholder({ editor, node }) {
+    if (node.object !== "block") return;
+    if (!(node.type === "poll_question" || node.type === "poll_answer")) return;
+    if (node.text !== "") return;
+
+    const placeholderText =
+      node.type === "poll_question"
+        ? "Hier Frage eingeben..."
+        : "Hier Antwort eingeben...";
+    return (
+      <span
+        contentEditable={false}
+        style={{ display: "inline-block", width: "0", whiteSpace: "nowrap" }}
+        className="has-text-grey-light"
+        onMouseDown={e => {
+          const change = editor.value.change();
+          const onChange = editor.props.onChange;
+          onChange(change.moveToEndOfNode(node).focus());
+          return true;
+        }}
+      >
+        {placeholderText}
+      </span>
+    );
   },
 };
