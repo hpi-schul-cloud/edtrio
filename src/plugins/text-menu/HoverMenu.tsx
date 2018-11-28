@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { Editor, Mark, Node, Selection } from "slate";
 import styled from "styled-components";
 // @ts-ignore
@@ -28,7 +28,7 @@ interface IHoverMenuProps {
   fragment: any;
 }
 
-class HoverMenu extends Component<IHoverMenuProps> {
+class HoverMenu extends PureComponent<IHoverMenuProps> {
   public menuWrapper: any;
 
   public render() {

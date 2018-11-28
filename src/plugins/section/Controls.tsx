@@ -6,7 +6,7 @@ import {
   faTrashAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { Editor, Node } from "slate";
 
 interface IControlsProps {
@@ -14,7 +14,7 @@ interface IControlsProps {
   isVisible: boolean;
 }
 
-class Controls extends Component<IControlsProps> {
+class Controls extends PureComponent<IControlsProps> {
   /**
    * Hides/unhides the current section
    */

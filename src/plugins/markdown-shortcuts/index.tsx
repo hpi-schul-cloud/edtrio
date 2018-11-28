@@ -3,8 +3,6 @@ import { Editor } from "slate";
 
 // Taken and adapted from https://github.com/ianstormtaylor/slate/blob/master/examples/markdown-shortcuts/index.js
 
-// TODO: does not seem to work, revisit when done
-
 export default function MarkdownShortcuts() {
   return {
     changes: {},
@@ -14,17 +12,15 @@ export default function MarkdownShortcuts() {
   };
 }
 
-// does not seem to work correctly
-
 const HandleKeyDown = {
   onKeyDown(event: any, editor: Editor, next: any) {
     switch (event.key) {
       case " ":
-        onSpace(event, editor);
+        return onSpace(event, editor, next);
       case "Backspace":
-        onBackspace(event, editor);
+        return onBackspace(event, editor, next);
       case "Enter":
-        onEnter(event, editor);
+        return onEnter(event, editor, next);
       default:
     }
     return next();
@@ -39,11 +35,11 @@ const HandleKeyDown = {
  * @param {Event} event
  * @param {Editor} editor
  */
-const onSpace = (event: any, editor: Editor) => {
+const onSpace = (event: any, editor: Editor, next: () => void) => {
   const { value } = editor;
   const { selection } = value;
   if (selection.isExpanded) {
-    return;
+    return next();
   }
 
   const { startBlock } = value;
@@ -52,10 +48,10 @@ const onSpace = (event: any, editor: Editor) => {
   const type = _getType(chars);
 
   if (!type) {
-    return;
+    return next();
   }
   if (type === "li" && startBlock.type === "li") {
-    return;
+    return next();
   }
   event.preventDefault();
 
@@ -64,8 +60,9 @@ const onSpace = (event: any, editor: Editor) => {
   if (type === "li") {
     editor.wrapBlock("ul");
   }
-
-  editor.moveFocusToStartOfNode(startBlock).delete();
+  editor.deleteBackward(chars.length);
+  editor.insertText(" ");
+  editor.moveFocusToStartOfNode(startBlock);
   return true;
 };
 
@@ -77,19 +74,19 @@ const onSpace = (event: any, editor: Editor) => {
  * @param {Editor} editor
  */
 
-const onBackspace = (event: any, editor: Editor) => {
+const onBackspace = (event: any, editor: Editor, next: () => void) => {
   const { value } = editor;
   const { selection } = value;
   if (selection.isExpanded) {
-    return;
+    return next();
   }
   if (selection.start.offset !== 0) {
-    return;
+    return next();
   }
 
   const { startBlock } = value;
   if (startBlock.type === "p") {
-    return;
+    return next();
   }
 
   event.preventDefault();
@@ -111,20 +108,20 @@ const onBackspace = (event: any, editor: Editor) => {
  * @param {Editor} editor
  */
 
-const onEnter = (event: any, editor: Editor) => {
+const onEnter = (event: any, editor: Editor, next: () => void) => {
   const { value } = editor;
   const { selection } = value;
   const { start, end, isExpanded } = selection;
   if (isExpanded) {
-    return;
+    return next();
   }
 
   const { startBlock } = value;
   if (start.offset === 0 && startBlock.text.length === 0) {
-    return onBackspace(event, editor);
+    return onBackspace(event, editor, next);
   }
   if (end.offset !== startBlock.text.length) {
-    return;
+    return next();
   }
 
   if (
@@ -135,7 +132,7 @@ const onEnter = (event: any, editor: Editor) => {
     startBlock.type !== "h5" &&
     startBlock.type !== "blockquote"
   ) {
-    return;
+    return next();
   }
 
   event.preventDefault();

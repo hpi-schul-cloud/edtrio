@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 
 import { faVimeo, faYoutube } from "@fortawesome/free-brands-svg-icons";
 import { faExternalLinkSquareAlt } from "@fortawesome/free-solid-svg-icons";
@@ -8,7 +8,7 @@ interface IServiceTypeIconProps {
   type: string;
 }
 
-class ServiceTypeIcon extends Component<IServiceTypeIconProps> {
+class ServiceTypeIcon extends PureComponent<IServiceTypeIconProps> {
   public render() {
     const { type } = this.props;
 

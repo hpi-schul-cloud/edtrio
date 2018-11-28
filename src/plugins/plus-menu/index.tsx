@@ -18,7 +18,7 @@ const addPlusMenuBesideEditor = {
     const restOfEditor = next();
     return (
       <Fragment>
-        <PlusMenu editor={editor} />
+        <PlusMenu editor={editor} startBlock={editor.value.startBlock} />
         {restOfEditor}
       </Fragment>
     );

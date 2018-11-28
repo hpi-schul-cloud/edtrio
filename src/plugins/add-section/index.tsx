@@ -1,7 +1,7 @@
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { List } from "immutable";
-import React, { Fragment } from "react";
+import React, { Fragment, PureComponent } from "react";
 import { Block, Editor, Text } from "slate";
 
 interface ISectionButtonProps {
@@ -33,23 +33,25 @@ const addSectionButtonAfterEditor = {
   },
 };
 
-function AddSectionButton(props: ISectionButtonProps) {
-  return (
-    <div className="level">
-      <button
-        className="level-item button is-white has-text-grey"
-        style={{
-          margin: "1rem 0",
-        }}
-        onMouseDown={event => appendNewSection(event, props.editor)}
-      >
-        <span className="icon">
-          <FontAwesomeIcon icon={faPlus} />
-        </span>
-        <span>Abschnitt hinzuf&uuml;gen</span>
-      </button>
-    </div>
-  );
+class AddSectionButton extends PureComponent<ISectionButtonProps> {
+  public render() {
+    return (
+      <div className="level">
+        <button
+          className="level-item button is-white has-text-grey"
+          style={{
+            margin: "1rem 0",
+          }}
+          onMouseDown={event => appendNewSection(event, this.props.editor)}
+        >
+          <span className="icon">
+            <FontAwesomeIcon icon={faPlus} />
+          </span>
+          <span>Abschnitt hinzuf&uuml;gen</span>
+        </button>
+      </div>
+    );
+  }
 }
 
 const appendNewSection = (event: any, editor: Editor) => {

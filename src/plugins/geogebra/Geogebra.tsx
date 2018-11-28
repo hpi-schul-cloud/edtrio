@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 
 import "./style.css";
 // RHYH3UQ8
@@ -14,7 +14,7 @@ interface IGeogebraNodeState {
   id: string;
 }
 
-export default class GeogebraNode extends Component<
+export default class GeogebraNode extends PureComponent<
   IGeogebraNodeProps,
   IGeogebraNodeState
 > {

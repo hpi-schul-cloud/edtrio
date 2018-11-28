@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import styled, { ThemeProvider } from "styled-components";
 
 import { theme } from "./config/theme";
@@ -21,24 +21,20 @@ const AppWrapper = styled.div`
   font-family: sans-serif;
 `;
 
-class App extends Component {
-  public render() {
-    return (
-      <ThemeProvider theme={theme}>
-        <LastSavedProvider>
-          <AppWrapper>
-            <div className="App">
-              <LastSavedContext.Consumer>
-                {({ updateLastSaved }) => (
-                  <Editor updateLastSaved={updateLastSaved} />
-                )}
-              </LastSavedContext.Consumer>
-            </div>
-          </AppWrapper>
-        </LastSavedProvider>
-      </ThemeProvider>
-    );
-  }
+export default function App() {
+  return (
+    <ThemeProvider theme={theme}>
+      <LastSavedProvider>
+        <AppWrapper>
+          <div className="App">
+            <LastSavedContext.Consumer>
+              {({ updateLastSaved }) => (
+                <Editor updateLastSaved={updateLastSaved} />
+              )}
+            </LastSavedContext.Consumer>
+          </div>
+        </AppWrapper>
+      </LastSavedProvider>
+    </ThemeProvider>
+  );
 }
-
-export default App;

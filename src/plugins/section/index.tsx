@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { PureComponent, ReactNode } from "react";
 import "./style.css";
 
 import { Editor, Node } from "slate";
@@ -9,25 +9,9 @@ export default function Section() {
     changes: {},
     helpers: {},
     components: {},
-    plugins: [
-      RenderSectionNode,
-      RenderPNode,
-      // ensureAlwaysMinOneSection,
-      // ensureLastNodeInSectionIsP,
-    ],
+    plugins: [RenderSectionNode, RenderPNode],
   };
 }
-
-// const schema = {
-//   blocks: {
-//     section: {
-//       data: {
-//         isVisible: (v: any) => typeof v === "boolean",
-//       },
-//       parent: { object: "document" },
-//     },
-//   },
-// };
 
 const RenderSectionNode = {
   renderNode(
@@ -46,22 +30,45 @@ const RenderSectionNode = {
     next: () => void,
   ) {
     if ("type" in node && node.type === "section") {
-      const isVisible = node.data.get("isVisible");
       return (
-        <section
-          className={`section content ${!isVisible ? "hidden" : ""}`}
-          {...attributes}
+        <SectionNode
+          node={node}
+          attributes={attributes}
+          editor={editor}
+          isFocused={isFocused}
         >
           {children}
-          {isFocused ? (
-            <Controls editor={editor} isVisible={isVisible} />
-          ) : null}
-        </section>
+        </SectionNode>
       );
     }
     return next();
   },
 };
+
+interface ISectionNodeProps {
+  node: Node;
+  attributes: object;
+  isFocused: boolean;
+  children: any;
+  editor: Editor;
+}
+
+class SectionNode extends PureComponent<ISectionNodeProps> {
+  public render() {
+    const { node, children, isFocused, attributes, editor } = this.props;
+    // @ts-ignore only invoked on section type blocks
+    const isVisible = node.data.get("isVisible");
+    return (
+      <section
+        className={`section content ${!isVisible ? "hidden" : ""}`}
+        {...attributes}
+      >
+        {children}
+        {isFocused ? <Controls editor={editor} isVisible={isVisible} /> : null}
+      </section>
+    );
+  }
+}
 
 const RenderPNode = {
   renderNode(
@@ -83,51 +90,3 @@ const RenderPNode = {
     return next();
   },
 };
-
-// TODO: what to do with this?
-// const ensureAlwaysMinOneSection = {
-//   normalizeNode(node: Node, editor: Editor) {
-//     if (node.object !== "document") return;
-//     const { nodes } = node;
-//     if (nodes.size <= 0) return;
-//     if (nodes.first().type !== "title") return;
-//     if (nodes.last().type === "section") return;
-
-//     const newSection = Block.create({
-//       type: "section",
-//       data: {
-//         isVisible: true,
-//       },
-//       nodes: List([
-//         Block.create({
-//           type: "p",
-//           nodes: List([Text.create({})]),
-//         }),
-//       ]),
-//       key: "minSection",
-//     });
-
-//     return (editor: Editor) =>
-//       editor.insertNodeByKey(node.key, nodes.count(), newSection);
-//   },
-// };
-
-// const ensureLastNodeInSectionIsP = {
-//   normalizeNode(node: Node, editor: Editor) {
-//     if ("type" in node && node.type !== "section") {
-//       const { nodes } = node;
-
-//       const lastNode = nodes.last();
-//       if (nodes.count() > 0 && "type" in lastNode && lastNode.type === "p")
-//         return;
-
-//       const newParagraph = Block.create({
-//         type: "p",
-//         nodes: List([Text.create({})]),
-//       });
-//       editor.insertNodeByKey(node.key, nodes.count(), newParagraph);
-//     }
-
-//     return;
-//   },
-// };

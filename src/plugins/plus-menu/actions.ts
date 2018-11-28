@@ -20,19 +20,19 @@ export const onClickImageButton = (
   uppy.on("complete", (result: any) => {
     closeUppyWindow();
 
-    result.successful.forEach((image: any) => {
-      uppy.reset();
+    const image = result.successful.slice(-1)[0];
+    uppy.reset();
 
-      // TODO: replace with proper file upload (e.g. to S3)
-      const fr = new FileReader();
-      fr.onload = () => {
-        if (fr.result) {
-          insertImage(editor, fr.result, null);
-        }
-      };
+    // TODO: replace with proper file upload (e.g. to S3)
+    const fr = new FileReader();
+    fr.onload = () => {
+      if (fr.result) {
+        insertImage(editor, fr.result, null);
+      }
+    };
 
-      fr.readAsDataURL(image.data);
-    });
+    fr.readAsDataURL(image.data);
+    uppy.cancelAll();
   });
 };
 

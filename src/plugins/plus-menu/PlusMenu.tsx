@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { Editor } from "slate";
+import React, { PureComponent } from "react";
+import { Editor, Node } from "slate";
 import { findDOMNode } from "slate-react";
 import styled from "styled-components";
 
@@ -22,6 +22,7 @@ import {
 interface IPlusMenuProps {
   className?: string;
   editor: Editor;
+  startBlock: Node;
 }
 interface IPlusMenuState {
   uppyOpen: boolean;
@@ -44,7 +45,7 @@ const StyledPlusMenu = styled.div`
   }
 `;
 
-class PlusMenu extends Component<IPlusMenuProps, IPlusMenuState> {
+class PlusMenu extends PureComponent<IPlusMenuProps, IPlusMenuState> {
   private uppy: any = null;
 
   constructor(props: IPlusMenuProps) {
@@ -70,8 +71,7 @@ class PlusMenu extends Component<IPlusMenuProps, IPlusMenuState> {
   };
 
   public render() {
-    const { className } = this.props;
-
+    const { className, startBlock } = this.props;
     /*
     resetMenu:
           value.selection.isBlurred ||
@@ -80,16 +80,19 @@ class PlusMenu extends Component<IPlusMenuProps, IPlusMenuState> {
     let style = {};
 
     try {
-      const nodeEl = findDOMNode(this.props.editor.value.startBlock);
+      const nodeEl = findDOMNode(startBlock);
       const nodeElBBox = nodeEl.getBoundingClientRect();
-      const top = nodeElBBox.top + window.pageYOffset;
+      // don't render the menu in the title
+      if ("type" in startBlock && startBlock.type !== "title") {
+        const top = nodeElBBox.top + window.pageYOffset;
 
-      const right = window.innerWidth - (nodeElBBox.width + nodeElBBox.left);
+        const right = window.innerWidth - (nodeElBBox.width + nodeElBBox.left);
 
-      style = {
-        top: `${top}px`,
-        right: `${right}px`,
-      };
+        style = {
+          top: `${top}px`,
+          right: `${right}px`,
+        };
+      }
     } catch (error) {
       // this can happen when a new block is created that does not yet have a representation in the dom
     }

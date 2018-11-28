@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 
-class DocumentViewer extends Component {
+class DocumentViewer extends PureComponent {
   render() {
     const { doc } = this.props;
 

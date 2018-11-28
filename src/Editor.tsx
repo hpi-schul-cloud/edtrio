@@ -1,11 +1,11 @@
 import moment from "moment";
 import "moment/locale/de";
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { Value } from "slate";
 import { Editor as SlateEditor } from "slate-react";
 import styled from "styled-components";
 
-// import schema from "./schema";
+import schema from "./schema";
 
 // @ts-ignore:
 import DocumentViewer from "./dev-document-viewer/DocumentViewer";
@@ -26,17 +26,22 @@ const StyledDocumentViewer = styled(DocumentViewer)`
 
 interface IEditorState {
   value: Value;
+  updateDebounce: number;
+  // just so we can delay updating the document viewer, so it makes dev experience a lot smoother
+  docValue: Value;
 }
 
 interface IEditorProps {
   updateLastSaved: (newTimestamp: moment.Moment) => void;
 }
 
-class Editor extends Component<IEditorProps, IEditorState> {
+class Editor extends PureComponent<IEditorProps, IEditorState> {
   constructor(props: IEditorProps) {
     super(props);
     this.state = {
       value: this.handleLoad(),
+      updateDebounce: 0,
+      docValue: this.handleLoad(),
     };
   }
 
@@ -58,10 +63,11 @@ class Editor extends Component<IEditorProps, IEditorState> {
               value={this.state.value}
               onChange={this.onChange}
               className="slate-editor"
+              schema={schema}
             />
           </div>
           {process.env.NODE_ENV === "development" ? (
-            <StyledDocumentViewer doc={this.state.value} />
+            <StyledDocumentViewer doc={this.state.docValue} />
           ) : null}
         </div>
         <div className="column" />
@@ -122,12 +128,20 @@ class Editor extends Component<IEditorProps, IEditorState> {
   /**
    * deals with state changes of the slate document
    */
-  private onChange = ({ value }: { value: Value }) => {
-    // Check to see if the document has changed before saving.
-    if (value.document !== this.state.value.document) {
-      this.handleSave(value);
+  private onChange = (change: any) => {
+    this.setState({ value: change.value });
+
+    // Especially if images are in the document, saving takes ages. Delay this until there is no user
+    // interaction for one second
+    if (this.state.updateDebounce) {
+      clearTimeout(this.state.updateDebounce);
     }
-    this.setState({ value });
+    this.setState({
+      updateDebounce: window.setTimeout(() => {
+        this.handleSave(change.value);
+        this.setState({ docValue: change.value });
+      }, 1000),
+    });
   };
 }
 
