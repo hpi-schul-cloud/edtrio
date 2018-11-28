@@ -114,7 +114,7 @@ const RenderImageNode = {
 
 Our `RenderImageNode` is called whenever a node should be rendered. It checks if the type of the node to be rendered is an `img` and if so renders our custom `<ImageNode ... />`.
 
-If that is not the case next() is returned, thus allowing other plugins that override `renderNode()` to render the current node.
+If that is not the case `next()` is returned, thus allowing other plugins that override `renderNode()` to render the current node.
 
 ## 6. Done
 
@@ -124,4 +124,4 @@ That's it! All it takes to create a custom plugin that renders images is to
 2. Override renderNode
 3. Insert a block with the image type somewhere and see slate work it's magic
 
-> **Note**: Our custom insertImage function is called inside `plugins/plus-menu/actions.js:onClickImageButton` which is an EventListener on the "Add image" button.
+> **Note**: Our custom `insertImage` function is called inside `plugins/plus-menu/actions.js:onClickImageButton` which is an EventListener on the "Add image" button.
