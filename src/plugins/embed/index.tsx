@@ -43,7 +43,9 @@ const RenderEmbedNode = {
     );
   },
 };
-// TODO:
+// TODO: renderPlaceholder has been removed, and its replacement slate-react-placeholder is
+// buggy. It can currently only render one global placeholder for the whole editor.
+
 // const RenderEmbedPlaceholder = {
 //   renderPlaceholder({ editor, node, parent }) {
 //     if (node.object !== "block") {
@@ -104,22 +106,6 @@ class EmbedNode extends React.Component<any, IEmbedNodeState> {
       },
     });
   };
-
-  // public handleConvert = (event: any, url: string) => {
-  //   event.preventDefault();
-  //   event.stopPropagation();
-  //   if (isUrl(url)) {
-  //     const urlAnalysis = handleUrl(url);
-  //     if (urlAnalysis) {
-  //       const { provider, url: AnalysisUrl } = urlAnalysis;
-  //       this._setDataAttribute(AnalysisUrl, provider);
-  //       this.setState({
-  //         url: AnalysisUrl,
-  //         provider,
-  //       });
-  //     }
-  //   }
-  // };
 
   public handlePasteUrl = (e: any) => {
     e.preventDefault();
