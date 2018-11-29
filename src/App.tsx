@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import styled, { ThemeProvider } from "styled-components";
 
 import { theme } from "./config/theme";
@@ -9,7 +9,10 @@ import "bulma-tooltip/dist/css/bulma-tooltip.min.css";
 import "bulma/css/bulma.css";
 import "../node_modules/material-icons/iconfont/material-icons.css";
 import "./App.css";
-
+import {
+  LastSavedContext,
+  LastSavedProvider,
+} from "./context/lastSavedContext";
 import Editor from "./Editor";
 
 const AppWrapper = styled.div`
@@ -18,18 +21,20 @@ const AppWrapper = styled.div`
   font-family: sans-serif;
 `;
 
-class App extends Component {
-  public render() {
-    return (
-      <ThemeProvider theme={theme}>
+export default function App() {
+  return (
+    <ThemeProvider theme={theme}>
+      <LastSavedProvider>
         <AppWrapper>
           <div className="App">
-            <Editor />
+            <LastSavedContext.Consumer>
+              {({ updateLastSaved }) => (
+                <Editor updateLastSaved={updateLastSaved} />
+              )}
+            </LastSavedContext.Consumer>
           </div>
         </AppWrapper>
-      </ThemeProvider>
-    );
-  }
+      </LastSavedProvider>
+    </ThemeProvider>
+  );
 }
-
-export default App;
