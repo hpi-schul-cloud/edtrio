@@ -15,7 +15,7 @@ import Video from "./video/index";
 
 import AddSection from "./add-section";
 
-export const plugins = [
+export const plugins: object[] = [
   ...Title().plugins,
   ...Section().plugins,
   ...AddSection().plugins,

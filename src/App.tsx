@@ -10,6 +10,10 @@ import "bulma/css/bulma.css";
 import "../node_modules/material-icons/iconfont/material-icons.css";
 import "./App.css";
 import {
+  IsEditableContext,
+  IsEditableProvider,
+} from "./context/isEditableContext";
+import {
   LastSavedContext,
   LastSavedProvider,
 } from "./context/lastSavedContext";
@@ -25,15 +29,25 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <LastSavedProvider>
-        <AppWrapper>
-          <div className="App">
-            <LastSavedContext.Consumer>
-              {({ updateLastSaved }) => (
-                <Editor updateLastSaved={updateLastSaved} />
-              )}
-            </LastSavedContext.Consumer>
-          </div>
-        </AppWrapper>
+        <IsEditableProvider>
+          <AppWrapper>
+            <div className="App">
+              <IsEditableContext.Consumer>
+                {({ updateIsEditable, isEditable }) => (
+                  <LastSavedContext.Consumer>
+                    {({ updateLastSaved }) => (
+                      <Editor
+                        updateLastSaved={updateLastSaved}
+                        isEditable={isEditable}
+                        updateIsEditable={updateIsEditable}
+                      />
+                    )}
+                  </LastSavedContext.Consumer>
+                )}
+              </IsEditableContext.Consumer>
+            </div>
+          </AppWrapper>
+        </IsEditableProvider>
       </LastSavedProvider>
     </ThemeProvider>
   );
