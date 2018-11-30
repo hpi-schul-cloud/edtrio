@@ -24,6 +24,11 @@ const StyledDocumentViewer = styled(DocumentViewer)`
   margin-top: 500px;
 `;
 
+const StyledEditButton = styled.button`
+  float: right;
+  padding: 8px;
+`;
+
 interface IEditorState {
   value: Value;
   updateDebounce: number;
@@ -33,6 +38,8 @@ interface IEditorState {
 
 interface IEditorProps {
   updateLastSaved: (newTimestamp: moment.Moment) => void;
+  isEditable: boolean;
+  updateIsEditable: (isEditable: boolean) => void;
 }
 
 class Editor extends PureComponent<IEditorProps, IEditorState> {
@@ -56,6 +63,15 @@ class Editor extends PureComponent<IEditorProps, IEditorState> {
         <div className="column" />
         <div className="column is-three-quarters">
           <div style={{ marginTop: "2rem" }}>
+            {process.env.NODE_ENV === "development" ? (
+              <StyledEditButton
+                onClick={() =>
+                  this.props.updateIsEditable(!this.props.isEditable)
+                }
+              >
+                {this.props.isEditable ? "Preview" : "Editieren"}
+              </StyledEditButton>
+            ) : null}
             <SlateEditor
               autoFocus={true}
               spellCheck={true}
@@ -64,6 +80,7 @@ class Editor extends PureComponent<IEditorProps, IEditorState> {
               onChange={this.onChange}
               className="slate-editor"
               schema={schema}
+              readOnly={!this.props.isEditable}
             />
           </div>
           {process.env.NODE_ENV === "development" ? (
