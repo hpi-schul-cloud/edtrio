@@ -8,7 +8,8 @@ import styled from "styled-components";
 import schema from "./schema";
 
 // @ts-ignore:
-import DocumentViewer from "./dev-document-viewer/DocumentViewer";
+import DocumentViewer from "./dev-helpers/DocumentViewer";
+import { StateController } from "./dev-helpers/StateController";
 
 import { plugins } from "./plugins";
 // @ts-ignore:
@@ -16,17 +17,13 @@ import AddSection from "./plugins/add-section";
 // @ts-ignore:
 import PlusMenuPlugin from "./plugins/plus-menu/index";
 
+import { IUserType } from "./types";
 import importedValue from "./value.json";
 
 moment.locale("de");
 
 const StyledDocumentViewer = styled(DocumentViewer)`
   margin-top: 500px;
-`;
-
-const StyledEditButton = styled.button`
-  float: right;
-  padding: 8px;
 `;
 
 interface IEditorState {
@@ -40,6 +37,9 @@ interface IEditorProps {
   updateLastSaved: (newTimestamp: moment.Moment) => void;
   isEditable: boolean;
   updateIsEditable: (isEditable: boolean) => void;
+  users: IUserType[];
+  currentUser: IUserType;
+  updateCurrentUser: (newUser: IUserType) => void;
 }
 
 class Editor extends PureComponent<IEditorProps, IEditorState> {
@@ -50,6 +50,9 @@ class Editor extends PureComponent<IEditorProps, IEditorState> {
       updateDebounce: 0,
       docValue: this.handleLoad(),
     };
+    if (!this.props.currentUser.teacher && this.props.isEditable) {
+      this.props.updateIsEditable(false);
+    }
   }
 
   public componentDidMount = () => {
@@ -64,13 +67,13 @@ class Editor extends PureComponent<IEditorProps, IEditorState> {
         <div className="column is-three-quarters">
           <div style={{ marginTop: "2rem" }}>
             {process.env.NODE_ENV === "development" ? (
-              <StyledEditButton
-                onClick={() =>
-                  this.props.updateIsEditable(!this.props.isEditable)
-                }
-              >
-                {this.props.isEditable ? "Preview" : "Editieren"}
-              </StyledEditButton>
+              <StateController
+                isEditable={this.props.isEditable}
+                updateIsEditable={this.props.updateIsEditable}
+                users={this.props.users}
+                currentUser={this.props.currentUser}
+                updateCurrentUser={this.props.updateCurrentUser}
+              />
             ) : null}
             <SlateEditor
               autoFocus={true}
@@ -79,7 +82,11 @@ class Editor extends PureComponent<IEditorProps, IEditorState> {
               value={this.state.value}
               onChange={this.onChange}
               className="slate-editor"
+<<<<<<< HEAD
               // @ts-ignore: slate/types 43 is not current... - this works perfectly fine
+=======
+              // @ts-ignore: this works perfectly fine, thank you typescript
+>>>>>>> WIP 2
               schema={schema}
               readOnly={!this.props.isEditable}
             />

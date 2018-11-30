@@ -10,14 +10,16 @@ import "bulma/css/bulma.css";
 import "../node_modules/material-icons/iconfont/material-icons.css";
 import "./App.css";
 import {
-  IsEditableContext,
-  IsEditableProvider,
-} from "./context/isEditableContext";
+  EditorStateContext,
+  EditorStateProvider,
+} from "./context/EditorStateContext";
 import {
   LastSavedContext,
   LastSavedProvider,
 } from "./context/lastSavedContext";
 import Editor from "./Editor";
+
+import { testUsers } from "./dev-helpers/StateController";
 
 const AppWrapper = styled.div`
   margin: 0;
@@ -29,25 +31,37 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <LastSavedProvider>
-        <IsEditableProvider>
+        <EditorStateProvider
+          initialUserList={testUsers.users}
+          initialUser={testUsers.currentUser}
+        >
           <AppWrapper>
             <div className="App">
-              <IsEditableContext.Consumer>
-                {({ updateIsEditable, isEditable }) => (
+              <EditorStateContext.Consumer>
+                {({
+                  updateIsEditable,
+                  isEditable,
+                  updateCurrentUser,
+                  currentUser,
+                  users,
+                }) => (
                   <LastSavedContext.Consumer>
                     {({ updateLastSaved }) => (
                       <Editor
                         updateLastSaved={updateLastSaved}
                         isEditable={isEditable}
                         updateIsEditable={updateIsEditable}
+                        users={users}
+                        currentUser={currentUser}
+                        updateCurrentUser={updateCurrentUser}
                       />
                     )}
                   </LastSavedContext.Consumer>
                 )}
-              </IsEditableContext.Consumer>
+              </EditorStateContext.Consumer>
             </div>
           </AppWrapper>
-        </IsEditableProvider>
+        </EditorStateProvider>
       </LastSavedProvider>
     </ThemeProvider>
   );
