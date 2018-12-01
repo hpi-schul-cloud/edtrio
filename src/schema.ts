@@ -1,6 +1,6 @@
 import { Block, Editor } from "slate";
 
-export default {
+const schema: object = {
   document: {
     nodes: [
       { match: [{ type: "title" }], min: 1, max: 1 },
@@ -21,9 +21,7 @@ export default {
     },
   },
   blocks: {
-    title: {
-      marks: [],
-    },
+    title: {},
     userImage: {
       isVoid: true,
     },
@@ -52,14 +50,12 @@ export default {
         },
       ],
     },
-    code: {
-      marks: [],
-    },
-    embed: {
-      marks: [],
-    },
+    code: {},
+    embed: {},
     audio: {
       isVoid: true,
     },
   },
 };
+
+export default schema;
