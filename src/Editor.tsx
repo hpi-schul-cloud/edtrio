@@ -79,6 +79,7 @@ class Editor extends PureComponent<IEditorProps, IEditorState> {
               value={this.state.value}
               onChange={this.onChange}
               className="slate-editor"
+              // @ts-ignore: slate/types 43 is not current... - this works perfectly fine
               schema={schema}
               readOnly={!this.props.isEditable}
             />
