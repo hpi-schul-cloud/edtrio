@@ -11,12 +11,14 @@ import {
   faCode,
   faExternalLinkSquareAlt,
   faImage,
+  faPoll,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   onClickCodeButton,
   onClickIframeButton,
   onClickImageButton,
+  onClickPollButton,
 } from "./actions";
 
 interface IPlusMenuProps {
@@ -117,6 +119,7 @@ class PlusMenu extends PureComponent<IPlusMenuProps, IPlusMenuState> {
           "Iframe einfügen",
           onClickIframeButton,
         )}
+        {this.renderBlockButton(faPoll, "Umfrage einfügen", onClickPollButton)}
         <DashboardModal
           uppy={this.uppy}
           locale={{

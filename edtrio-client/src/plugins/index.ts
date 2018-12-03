@@ -7,6 +7,7 @@ import Image from "./image/index";
 import MarkdownShortcuts from "./markdown-shortcuts/index";
 import PasteURLHandler from "./paste-url-handler/index";
 import PlusMenu from "./plus-menu/index";
+import Poll from "./poll/index";
 import Section from "./section/index";
 
 import TextMenu from "./text-menu/index";
@@ -30,4 +31,5 @@ export const plugins: object[] = [
   ...CodeBlockPlugin().plugins,
   ...Image().plugins,
   ...Geogebra().plugins,
+  ...Poll().plugins,
 ];
