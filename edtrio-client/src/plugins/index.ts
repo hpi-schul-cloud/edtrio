@@ -8,6 +8,7 @@ import Image from "./image/index";
 import MultipleChoice from "./multiple-choice";
 import PasteURLHandler from "./paste-url-handler/index";
 import PlusMenu from "./plus-menu/index";
+import Poll from "./poll/index";
 import Section from "./section/index";
 import TextMenu from "./text-menu/index";
 import Title from "./title/index";
@@ -31,4 +32,5 @@ export const plugins: object[] = [
   ...Image().plugins,
   ...Geogebra().plugins,
   ...MultipleChoice().plugins,
+  ...Poll().plugins,
 ];

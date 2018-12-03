@@ -11,6 +11,7 @@ import {
   faCode,
   faExternalLinkSquareAlt,
   faImage,
+  faPoll,
   faQuestionCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -19,6 +20,7 @@ import {
   onClickIframeButton,
   onClickImageButton,
   onClickMultipleChoiceButton,
+  onClickPollButton,
 } from "./actions";
 
 interface IPlusMenuProps {
@@ -85,7 +87,12 @@ class PlusMenu extends PureComponent<IPlusMenuProps, IPlusMenuState> {
       const nodeEl = findDOMNode(startBlock);
       const nodeElBBox = nodeEl.getBoundingClientRect();
       // don't render the menu in the title
-      if ("type" in startBlock && startBlock.type !== "title" && startBlock.type !== "multiple-choice-question" && startBlock.type !== "multiple-choice-answer") {
+      if (
+        "type" in startBlock &&
+        startBlock.type !== "title" &&
+        startBlock.type !== "multiple-choice-question" &&
+        startBlock.type !== "multiple-choice-answer"
+      ) {
         const top = nodeElBBox.top + window.pageYOffset;
 
         const right = window.innerWidth - (nodeElBBox.width + nodeElBBox.left);
@@ -124,6 +131,7 @@ class PlusMenu extends PureComponent<IPlusMenuProps, IPlusMenuState> {
           "Iframe einfügen",
           onClickIframeButton,
         )}
+        {this.renderBlockButton(faPoll, "Umfrage einfügen", onClickPollButton)}
         <DashboardModal
           uppy={this.uppy}
           locale={{
