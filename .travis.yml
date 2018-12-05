@@ -14,6 +14,6 @@ script:
 
 after_success:
   - docker build -t schulcloud/edtrio:latest -t schulcloud/edtrio:$GIT_SHA .
-  - echo "$MY_DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - echo "$DOCKER_PASS" | docker login -u "$DOCKER_ID" --password-stdin
   - docker push schulcloud/edtrio:latest
   - docker push schulcloud/edtrio:$GIT_SHA
