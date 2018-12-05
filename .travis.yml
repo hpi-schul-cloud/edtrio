@@ -9,7 +9,7 @@ before_install:
   - docker run -d -p 3000:3000 -t schulcloud/edtrio-test
 
 script:
-  - curl -s http://localhost:3000/ | grep title
+  - sleep 30 ; curl -s http://localhost:3000/ | grep title
   - docker stop $( docker ps -aq )
 
 after_success:
