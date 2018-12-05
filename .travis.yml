@@ -1,0 +1,18 @@
+sudo: require
+services:
+  - docker
+env:
+  global:
+    - GIT_SHA=$(git rev-parse HEAD)
+before_install:
+  - docker build -t schulcloud/edtrio-test -f Dockerfile.dev .
+
+script:
+  - docker run -p 3000:3000 -t schulcloud/edtrio-test
+  - curl -s http://172.18.0.2:3000/ | grep title
+
+after_success:
+  - docker build -t schulcloud/edtrio:latest -t schulcloud/edtrio:$GIT_SHA .
+  - echo "$MY_DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push schulcloud/edtrio:latest
+  - docker push schulcloud/edtrio:$GIT_SHA
