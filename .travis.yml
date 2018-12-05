@@ -6,9 +6,9 @@ env:
     - GIT_SHA=$(git rev-parse HEAD)
 before_install:
   - docker build -t schulcloud/edtrio-test -f Dockerfile.dev .
+  - docker run -p 3000:3000 -t schulcloud/edtrio-test
 
 script:
-  - docker run -p 3000:3000 -t schulcloud/edtrio-test
   - curl -s http://172.18.0.2:3000/ | grep title
 
 after_success:
