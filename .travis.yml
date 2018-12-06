@@ -18,7 +18,7 @@ after_success:
   - docker push schulcloud/edtrio:latest
   - docker push schulcloud/edtrio:$GIT_SHA
 # für OTC
-  - echo "$OTC_DOCKER_PASS" | docker login -u "$OTC_DOCKER_ID" --password-stdin
+  - echo "$OTC_DOCKER_PASS" | docker login -u "$OTC_DOCKER_ID" --password-stdin 80.158.24.86
   - docker push 80.158.24.86/schulcloud/edtrio:latest
   - docker push 80.158.24.86/schulcloud/edtrio:$GIT_SHA
    
