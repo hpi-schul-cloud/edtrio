@@ -107,7 +107,7 @@ function SortingTaskQuestionTermNode(props) {
   return (readOnly ?
     (
       <p {...attributes} >
-        {children}
+        Frage: {children}
       </p>
     ) : (
       <td {...attributes}>
@@ -122,7 +122,7 @@ function SortingTaskQuestionSolutionNode(props) {
   return (readOnly ?
     (
       <p {...attributes} >
-        {children}
+        Musterlösung: {children}
       </p>
     ) : (
       <td {...attributes}>
