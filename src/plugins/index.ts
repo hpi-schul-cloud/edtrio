@@ -8,7 +8,7 @@ import MarkdownShortcuts from "./markdown-shortcuts/index";
 import PasteURLHandler from "./paste-url-handler/index";
 import PlusMenu from "./plus-menu/index";
 import Section from "./section/index";
-
+import Sort from "./sort/index";
 import TextMenu from "./text-menu/index";
 import Title from "./title/index";
 import Video from "./video/index";
@@ -30,4 +30,5 @@ export const plugins: object[] = [
   ...CodeBlockPlugin().plugins,
   ...Image().plugins,
   ...Geogebra().plugins,
+  ...Sort().plugins,
 ];
