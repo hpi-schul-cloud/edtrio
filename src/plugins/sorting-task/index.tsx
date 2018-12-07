@@ -3,6 +3,7 @@ import { Editor } from "slate";
 
 import { List } from "immutable";
 import { Block, Text } from "slate";
+import "./styles.css";
 
 export default function Poll() {
   return {
@@ -16,9 +17,9 @@ export default function Poll() {
   };
 }
 
-const onClickNewQuestionButton = (event, change, onChange, node) => {
+const onClickNewQuestionButton = (event, editor, node) => {
   event.preventDefault();
-  onChange(change.call(appendNewAnswer, node));
+  editor.command(appendNewAnswer, node)
 };
 
 const appendNewAnswer = (change, node) => {
@@ -42,17 +43,64 @@ const appendNewAnswer = (change, node) => {
   const lastIndex = node.nodes.count();
 
   return change
-    .insertNodeByKey(node.key, lastIndex, newAnswer)
-    .moveToEndOfNode(newTerm);
+  .insertNodeByKey(node.key, lastIndex, newAnswer)
+  .moveToEndOfNode(newTerm);
+};
+
+const onClickNextQuestionButton = (event, editor, node) => {
+  event.preventDefault();
+  const prevValue = node.data.get("viewItem") || 0;
+  editor.setNodeByKey(node.key, { data: { viewItem: prevValue + 1 } })
+};
+
+const onClickResetQuizButton = (event, editor, node) => {
+  event.preventDefault();
+  editor.setNodeByKey(node.key, { data: { viewItem: 0 } })
+  node.nodes.forEach(childNode => {
+    editor.setNodeByKey(childNode.key, { data: { viewState: false } })
+  });
+};
+
+const onClickToggleQuestionButton = (event, editor, node) => {
+  event.preventDefault();
+  const currentState = node.data.get("viewState") || false;
+  editor.setNodeByKey(node.key, { data: { viewState: !currentState } })
 };
 
 function SortingTaskNode(props) {
   const { children, node, editor, readOnly, ...attributes} = props;
+  const currentChild = children[node.data.get("viewItem") || 0];
   return (readOnly ?
     (
       <div>
         <b>Sortieraufgabe (Schüleransicht)</b>
-        {children}
+        {currentChild}
+        <button
+          type="button"
+          onClick={event => {
+              onClickNextQuestionButton(
+                event,
+                editor,
+                node,
+              )
+            }
+          }
+        >
+          Weiter
+        </button>
+        <button
+          type="button"
+          onClick={event => {
+              onClickResetQuizButton(
+                event,
+                editor,
+                node,
+              )
+            }
+          }
+        >
+          Reset
+        </button>
       </div>
     ) : (
       <div>
@@ -67,15 +115,13 @@ function SortingTaskNode(props) {
         <div className="right-align">
           <button
             className="btn-flat"
-            onClick={event =>
-              editor.change(change => {
+            onClick={event => {
                 onClickNewQuestionButton(
                   event,
-                  change,
-                  editor.props.onChange,
+                  editor,
                   node,
                 )
-              })
+              }
             }
           >
             <i className="material-icons left">add</i>
@@ -88,11 +134,23 @@ function SortingTaskNode(props) {
 }
 
 function SortingTaskQuestionNode(props) {
-  const { children, readOnly, ...attributes } = props;
+  const { children, node, editor, readOnly, ...attributes } = props;
+  const currentChild = children[node.data.get("viewState")?1:0];
   return (readOnly ?
     (
-      <div {...attributes} >
-        {children}
+      <div class="question-card"
+        onClick={event =>
+          editor.change(change => {
+            onClickToggleQuestionButton(
+              event,
+              editor,
+              node,
+            )
+          })
+        }
+        {...attributes}
+      >
+        {currentChild}
       </div>
     ) : (
       <tr {...attributes}>
@@ -106,7 +164,7 @@ function SortingTaskQuestionTermNode(props) {
   const { children, readOnly, ...attributes } = props;
   return (readOnly ?
     (
-      <p {...attributes} >
+      <p {...attributes}>
         Frage: {children}
       </p>
     ) : (
