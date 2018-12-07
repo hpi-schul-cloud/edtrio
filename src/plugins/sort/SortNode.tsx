@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 class SortNode extends Component {
-  render() {
+  public render() {
     return <div>Sort</div>;
   }
 }

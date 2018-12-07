@@ -1,7 +1,8 @@
 import React from "react";
+import { Editor } from "slate";
 import SortNode from "./SortNode";
 
-export default function Sort(options) {
+export default function Sort() {
   return {
     changes: {
       insertSort,
@@ -14,7 +15,7 @@ export default function Sort(options) {
   };
 }
 
-function insertSort(change, src, target) {
+function insertSort(change: any, src: any, target: any) {
   if (target) {
     change.select(target);
   }
@@ -27,11 +28,12 @@ function insertSort(change, src, target) {
 }
 
 const RenderSortNode = {
-  renderNode(props) {
+  renderNode(props: any, editor: Editor, next: () => void) {
     const { attributes, node } = props;
 
     if (node.type === "div") {
       return <SortNode {...attributes} />;
     }
+    return next();
   },
 };
