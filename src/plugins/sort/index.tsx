@@ -21,19 +21,17 @@ function insertSort(change: any, src: any, target: any) {
   }
 
   change.insertBlock({
-    type: "div",
+    type: "quiz",
     isVoid: true,
-    data: { src },
   });
 }
 
 const RenderSortNode = {
   renderNode(props: any, editor: Editor, next: () => void) {
-    const { attributes, node } = props;
-
-    if (node.type === "div") {
-      return <SortNode {...attributes} />;
-    }
-    return next();
+    return props.node.type === "quiz" ? (
+      <SortNode {...props} />
+    ) : (
+      next()
+    );
   },
 };

@@ -1,8 +1,11 @@
-import React, { Component } from "react";
+import React from "react";
 
-class SortNode extends Component {
+
+class SortNode extends React.Component {
   public render() {
-    return <div>Sort</div>;
+    return (
+      <div>Sortieraufgabe #6</div>
+    );
   }
 }
 

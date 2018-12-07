@@ -52,6 +52,9 @@ const schema: object = {
     },
     code: {},
     embed: {},
+    quiz: {
+      isVoid: true, // TODO: needs to be removed, currently it's crashing without
+    },
     audio: {
       isVoid: true,
     },
