@@ -12,7 +12,7 @@ export default function Poll() {
     components: {
       SortingTaskNode
     },
-  plugins: [RenderSortingTaskNode/*, RenderPlaceholder */],
+  plugins: [RenderSortingTaskNode],
   };
 }
 
@@ -47,71 +47,95 @@ const appendNewAnswer = (change, node) => {
 };
 
 function SortingTaskNode(props) {
-  const { children, node, editor, ...attributes } = props;
-
-  return (
-    <div>
-      <b>Sortieraufgabe</b>
-      <table {...attributes}>
-        <tr>
-          <td>Begriff</td>
-          <td>Musterlösung</td>
-        </tr>
+  const { children, node, editor, readOnly, ...attributes} = props;
+  return (readOnly ?
+    (
+      <div>
+        <b>Sortieraufgabe (Schüleransicht)</b>
         {children}
-      </table>
-      <div className="right-align">
-        <button
-          className="btn-flat"
-          onClick={event =>
-            editor.change(change => {
-              onClickNewQuestionButton(
-                event,
-                change,
-                editor.props.onChange,
-                node,
-              )
-            })
-          }
-        >
-          <i className="material-icons left">add</i>
-          Frage hinzufügen
-        </button>
       </div>
-    </div>
+    ) : (
+      <div>
+        <b>Sortieraufgabe (Lehreransicht)</b>
+        <table {...attributes}>
+          <tr>
+            <th>Begriff</th>
+            <th>Musterlösung</th>
+          </tr>
+          {children}
+        </table>
+        <div className="right-align">
+          <button
+            className="btn-flat"
+            onClick={event =>
+              editor.change(change => {
+                onClickNewQuestionButton(
+                  event,
+                  change,
+                  editor.props.onChange,
+                  node,
+                )
+              })
+            }
+          >
+            <i className="material-icons left">add</i>
+            Frage hinzufügen
+          </button>
+        </div>
+      </div>
+    )
   );
 }
 
 function SortingTaskQuestionNode(props) {
-  const { children, ...attributes } = props;
-  return (
-    <tr {...attributes}>
-      {children}
-    </tr>
+  const { children, readOnly, ...attributes } = props;
+  return (readOnly ?
+    (
+      <div {...attributes} >
+        {children}
+      </div>
+    ) : (
+      <tr {...attributes}>
+        {children}
+      </tr>
+    )
   );
 }
 
 function SortingTaskQuestionTermNode(props) {
-  const { children, ...attributes } = props;
-  return (
-    <td {...attributes}>
-      {children}
-    </td>
+  const { children, readOnly, ...attributes } = props;
+  return (readOnly ?
+    (
+      <p {...attributes} >
+        {children}
+      </p>
+    ) : (
+      <td {...attributes}>
+        {children}
+      </td>
+    )
   );
 }
 
 function SortingTaskQuestionSolutionNode(props) {
-  const { children, ...attributes } = props;
-  return (
-    <td {...attributes}>
-      {children}
-    </td>
+  const { children, readOnly, ...attributes } = props;
+  return (readOnly ?
+    (
+      <p {...attributes} >
+        {children}
+      </p>
+    ) : (
+      <td {...attributes}>
+        {children}
+      </td>
+    )
   );
 }
 
 const RenderSortingTaskNode = {
   renderNode(props: any, editor: Editor, next: () => void) {
     // append to parent, see add-section
-    const { children, attributes, node, isFocused
+    const { children, attributes, node, readOnly, isFocused
       , parent } = props;
     // console.log(props);
     if (node.type === "sorting-task") {
@@ -119,6 +143,7 @@ const RenderSortingTaskNode = {
         <SortingTaskNode
           node={node}
           selected={isFocused}
+          readOnly={readOnly}
           editor={editor}
           {...attributes}
           next={next}
@@ -132,6 +157,7 @@ const RenderSortingTaskNode = {
         <SortingTaskQuestionNode
           node={node}
           selected={isFocused}
+          readOnly={readOnly}
           editor={editor}
           {...attributes}
           next={next}
@@ -144,6 +170,7 @@ const RenderSortingTaskNode = {
       return (
         <SortingTaskQuestionTermNode
           node={node}
+          readOnly={readOnly}
           parentKey={parent.key}
           editor={editor}
           {...attributes}
@@ -156,6 +183,7 @@ const RenderSortingTaskNode = {
       return (
         <SortingTaskQuestionSolutionNode
           node={node}
+          readOnly={readOnly}
           parentKey={parent.key}
           editor={editor}
           {...attributes}
