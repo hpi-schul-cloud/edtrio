@@ -61,3 +61,13 @@ export const onClickIframeButton = (event: any, editor: Editor) => {
     }),
   );
 };
+
+export const onClickSortButton = (event: any, editor: Editor) => {
+  event.preventDefault();
+
+  editor.insertBlock(
+    Block.create({
+      type: "quiz"
+    }),
+  );
+};
