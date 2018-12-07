@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 
-class DocumentViewer extends Component {
+class DocumentViewer extends PureComponent {
   render() {
     const { doc } = this.props;
 
     return (
-      <aside className="">
+      <aside className={this.props.className}>
         <hr />
         <h2 className="title is-5">Internal document state</h2>
         <pre>

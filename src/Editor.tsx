@@ -1,8 +1,9 @@
 import moment from "moment";
 import "moment/locale/de";
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { Value } from "slate";
 import { Editor as SlateEditor } from "slate-react";
+import styled from "styled-components";
 
 import schema from "./schema";
 
@@ -14,86 +15,77 @@ import { plugins } from "./plugins";
 import AddSection from "./plugins/add-section";
 // @ts-ignore:
 import PlusMenuPlugin from "./plugins/plus-menu/index";
-// @ts-ignore:
-import TextMenu from "./plugins/text-menu/index";
 
 import importedValue from "./value.json";
 
 moment.locale("de");
 
-// TODO: add proper types
-interface IStateProps {
-  value: any;
-  debounce: any;
-  hoverMenu: any;
-  plusMenu: any;
+const StyledDocumentViewer = styled(DocumentViewer)`
+  margin-top: 500px;
+`;
+
+const StyledEditButton = styled.button`
+  float: right;
+  padding: 8px;
+`;
+
+interface IEditorState {
+  value: Value;
+  updateDebounce: number;
+  // just so we can delay updating the document viewer, so it makes dev experience a lot smoother
+  docValue: Value;
 }
 
-class Editor extends Component<{}, IStateProps> {
-  constructor(props: {}) {
+interface IEditorProps {
+  updateLastSaved: (newTimestamp: moment.Moment) => void;
+  isEditable: boolean;
+  updateIsEditable: (isEditable: boolean) => void;
+}
+
+class Editor extends PureComponent<IEditorProps, IEditorState> {
+  constructor(props: IEditorProps) {
     super(props);
     this.state = {
-      debounce: null,
-      hoverMenu: null,
-      plusMenu: null,
       value: this.handleLoad(),
+      updateDebounce: 0,
+      docValue: this.handleLoad(),
     };
   }
 
   public componentDidMount = () => {
-    this.updateMenu();
-  };
-
-  public componentDidUpdate = () => {
-    this.updateMenu();
+    // load last updated from document
+    this.props.updateLastSaved(this.state.value.document.data.toJS().lastSaved);
   };
 
   public render() {
-    const HoverMenu = TextMenu().components.HoverMenu;
-    const PlusMenu = PlusMenuPlugin().components.PlusMenu;
-    const AddSectionButton = AddSection().components.AddSectionButton;
-
     return (
       <div className="columns">
         <div className="column" />
         <div className="column is-three-quarters">
           <div style={{ marginTop: "2rem" }}>
-            <HoverMenu
-              ref={(menu: any) => {
-                if (!this.state.hoverMenu) {
-                  this.setState({ hoverMenu: menu });
+            {process.env.NODE_ENV === "development" ? (
+              <StyledEditButton
+                onClick={() =>
+                  this.props.updateIsEditable(!this.props.isEditable)
                 }
-              }}
-              value={this.state.value}
-              onChange={this.onChange}
-            />
-            <PlusMenu
-              ref={(menu: any) => {
-                if (!this.state.plusMenu) { this.setState({ plusMenu: menu }); }
-              }}
-              value={this.state.value}
-              onChange={this.onChange}
-            />
+              >
+                {this.props.isEditable ? "Preview" : "Editieren"}
+              </StyledEditButton>
+            ) : null}
             <SlateEditor
               autoFocus={true}
               spellCheck={true}
-              schema={schema}
               plugins={plugins}
               value={this.state.value}
               onChange={this.onChange}
               className="slate-editor"
-            />
-            <AddSectionButton
-              value={this.state.value}
-              onChange={this.onChange}
+              // @ts-ignore: slate/types 43 is not current... - this works perfectly fine
+              schema={schema}
+              readOnly={!this.props.isEditable}
             />
           </div>
           {process.env.NODE_ENV === "development" ? (
-            <React.Fragment>
-              {/*TODO: remove ugly spacer <3*/}
-              <div style={{ height: "500px" }} />
-              <DocumentViewer doc={this.state.value} />
-            </React.Fragment>
+            <StyledDocumentViewer doc={this.state.docValue} />
           ) : null}
         </div>
         <div className="column" />
@@ -105,7 +97,7 @@ class Editor extends Component<{}, IStateProps> {
    * handles persisting the document (e.g. in localStorage or
    * backend)
    */
-  private handleSave = (value: any) => {
+  private handleSave = (value: Value) => {
     // Save the value to Local Storage.
 
     const timestamp = moment(new Date());
@@ -114,13 +106,7 @@ class Editor extends Component<{}, IStateProps> {
     );
     localStorage.setItem("document", document);
 
-    // When succeeded, update the frontend UI as well
-    // (yes, using window is SO against React principles,
-    //  but I honestly have no idea rn how to do it in a
-    //  better way... PLEASE HELP!)
-    // TODO: do this in a better way
-    // @ts-ignore:
-    window.updateLastSaved(timestamp);
+    this.props.updateLastSaved(timestamp);
   };
 
   /**
@@ -128,14 +114,16 @@ class Editor extends Component<{}, IStateProps> {
    * e.g. authorid, lastSaved timestamp, ...
    */
   private _addHeaderInformationToDocument = (
-    value: any,
-    newSavedTimestamp: any,
+    value: Value,
+    newSavedTimestamp: moment.Moment,
   ) => {
     const valueJSON = value.toJSON();
-    valueJSON.document.data = {
-      ...valueJSON.document.data,
-      lastSaved: newSavedTimestamp,
-    };
+    if (valueJSON.document) {
+      valueJSON.document.data = {
+        ...valueJSON.document.data,
+        lastSaved: newSavedTimestamp,
+      };
+    }
 
     return valueJSON;
   };
@@ -158,37 +146,20 @@ class Editor extends Component<{}, IStateProps> {
   /**
    * deals with state changes of the slate document
    */
-  private onChange = ({ value }: { value: any }) => {
-    // Check to see if the document has changed before saving.
-    if (value.document !== this.state.value.document) {
-      if (this.state.debounce) {
-        clearTimeout(this.state.debounce);
-      }
-      this.setState({
-        debounce: setTimeout(() => this.handleSave(value), 750),
-      });
-    }
+  private onChange = (change: any) => {
+    this.setState({ value: change.value });
 
-    this.setState({ value });
-  };
-
-  /**
-   * handles UI updates regarding the plugin/text-menu
-   */
-  private updateMenu = () => {
-    const { value, hoverMenu, plusMenu } = this.state;
-    if (hoverMenu) {
-      hoverMenu.update({
-        resetMenu: value.isBlurred || value.isEmpty,
-      });
+    // Especially if images are in the document, saving takes ages. Delay this until there is no user
+    // interaction for one second
+    if (this.state.updateDebounce) {
+      clearTimeout(this.state.updateDebounce);
     }
-    if (plusMenu) {
-      plusMenu.update({
-        resetMenu:
-          value.isBlurred ||
-          !value.blocks.some((node: any) => node.type === "p"),
-      });
-    }
+    this.setState({
+      updateDebounce: window.setTimeout(() => {
+        this.handleSave(change.value);
+        this.setState({ docValue: change.value });
+      }, 1000),
+    });
   };
 }
 

@@ -1,36 +1,26 @@
-// @ts-ignore:
 import Audio from "./audio/index";
-// @ts-ignore:
 import CodeBlockPlugin from "./code-block/index";
-// @ts-ignore:
 import Embed from "./embed/index";
-// @ts-ignore:
 import Geogebra from "./geogebra/index";
-// @ts-ignore:
 import Headlines from "./headlines/index";
-// @ts-ignore:
 import Image from "./image/index";
-// @ts-ignore:
 import MarkdownShortcuts from "./markdown-shortcuts/index";
-// @ts-ignore:
 import PasteURLHandler from "./paste-url-handler/index";
-// @ts-ignore:
-import PlusMenuPlugin from "./plus-menu/index";
-// @ts-ignore:
+import PlusMenu from "./plus-menu/index";
 import Section from "./section/index";
-// @ts-ignore:
 import Sort from "./sort/index";
-// @ts-ignore:
 import TextMenu from "./text-menu/index";
-// @ts-ignore:
 import Title from "./title/index";
-// @ts-ignore:
 import Video from "./video/index";
 
-export const plugins = [
+import AddSection from "./add-section";
+
+export const plugins: object[] = [
   ...Title().plugins,
   ...Section().plugins,
+  ...AddSection().plugins,
   ...TextMenu().plugins,
+  ...PlusMenu().plugins,
   ...Headlines().plugins,
   ...MarkdownShortcuts().plugins,
   ...Embed().plugins,
