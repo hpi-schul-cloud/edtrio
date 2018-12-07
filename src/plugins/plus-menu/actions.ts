@@ -67,7 +67,22 @@ export const onClickSortButton = (event: any, editor: Editor) => {
 
   editor.insertBlock(
     Block.create({
-      type: "quiz"
+      type: "sorting-task",
+      nodes: List([
+        Block.create({
+          type: "sorting-task_question",
+          nodes: List([
+            Block.create({
+              type: "sorting-task_term",
+              nodes: List([Text.create("")]),
+            }),
+            Block.create({
+              type: "sorting-task_solution",
+              nodes: List([Text.create("")]),
+            }),
+          ]),
+        })
+      ]),
     }),
   );
 };
