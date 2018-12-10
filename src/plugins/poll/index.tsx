@@ -1,144 +1,98 @@
-import React from "react";
-
 import { List } from "immutable";
 import "materialize-css/dist/css/materialize.min.css";
 import "materialize-css/dist/js/materialize.min.js";
+import React, { Fragment } from "react";
+import { Editor, Node } from "slate";
 import { Block, Text } from "slate";
+import styled from "styled-components";
+import PollAnswerNode from "./Answer";
+import PollQuestionNode from "./Question";
 import "./style.css";
 
 export default function Poll() {
   return {
-    changes: {
-    },
+    changes: {},
     helpers: {},
     components: {
       PollNode,
     },
-    plugins: [RenderPollNode, RenderPlaceholder],
+    plugins: [RenderPollNode],
   };
 }
 
-const onClickNewAnswerButton = (event, change, onChange, node) => {
+// TODO: Node should be used instead of any for 'node'
+const onClickNewAnswerButton = (event: any, editor: Editor, node: any) => {
   event.preventDefault();
-  onChange(change.call(appendNewAnswer, node));
+  appendNewAnswer(editor, node);
 };
 
-const appendNewAnswer = (change, node) => {
+const appendNewAnswer = (editor: Editor, node: any) => {
   const newAnswer = Block.create({
     type: "poll_answer",
     nodes: List([Text.create("")]),
   });
-  const lastIndex = node.nodes.count();
+  const lastIndex = node.nodes.size;
 
-  return change
+  return editor
     .insertNodeByKey(node.key, lastIndex, newAnswer)
     .moveToEndOfNode(newAnswer);
 };
 
-const onClickDeleteAnswerButton = (event, change, onChange, node) => {
-  event.preventDefault();
-  onChange(change.call(deleteNode, node));
+const answerButton = (editor: Editor, node: any, readOnly: boolean) => {
+  return readOnly ? (
+    <button
+      className="btn-flat"
+      onClick={event => onClickNewAnswerButton(event, editor, node)}
+    >
+      <i className="material-icons left">send</i>
+      Antworten
+    </button>
+  ) : (
+    <button
+      className="btn-flat"
+      onClick={event => onClickNewAnswerButton(event, editor, node)}
+    >
+      <i className="material-icons left">add</i>
+      Antwort hinzufügen
+    </button>
+  );
 };
 
-const onClickDeleteQuestionButton = (event, change, onChange, node) => {
-  event.preventDefault();
-  onChange(change.call(deleteNode, node));
-};
-
-const deleteNode = (change, node) => {
-  return change.removeNodeByKey(node.key);
-};
-
-function PollNode(props) {
-  const { children, node, editor, ...attributes } = props;
+function PollNode(props: any) {
+  const { children, node, editor, readOnly, ...attributes } = props;
 
   return (
     <div>
       <ul className="collection with-header" {...attributes}>
         {children}
       </ul>
-      <div className="right-align">
-        <button
-          className="btn-flat"
-          onClick={event =>
-            onClickDeleteQuestionButton(
-              event,
-              editor.value.change(),
-              editor.props.onChange,
-              node,
-            )
-          }
-        >
-          <i className="material-icons left">delete</i>
-          Frage löschen
-        </button>
-        <button
-          className="btn-flat"
-          onClick={event =>
-            onClickNewAnswerButton(
-              event,
-              editor.value.change(),
-              editor.props.onChange,
-              node,
-            )
-          }
-        >
-          <i className="material-icons left">add</i>
-          Antwort hinzufügen
-        </button>
-      </div>
+      <div className="right-align">{answerButton(editor, node, readOnly)}</div>
     </div>
   );
 }
 
-function PollQuestionNode(props) {
-  const { children, ...attributes } = props;
-  return (
-    <li className="collection-header" {...attributes}>
-      <div>
-        <h2>{children}</h2>
-      </div>
-    </li>
-  );
-}
+const StyledPlaceholder = styled.span`
+  pointer-events: none;
+  display: inline-block;
+  width: 0;
+  maxwidth: 100%;
+  white-space: nowrap;
+  opacity: 0.333;
+`;
 
-function PollAnswerNode(props) {
-  const { children, node, editor, parentKey, ...attributes } = props;
-
-  return (
-    <li className="collection-item row" {...attributes}>
-      <div className="col s11">
-        <input type="radio" name={"answergroup" + parentKey} />
-        <span>{children}</span>
-      </div>
-      <div className="col s1 right-align">
-        <button
-          className="btn-flat"
-          onClick={event =>
-            onClickDeleteAnswerButton(
-              event,
-              editor.value.change(),
-              editor.props.onChange,
-              node,
-            )
-          }
-        >
-          <i className="material-icons right">delete</i>
-        </button>
-      </div>
-    </li>
-  );
-}
-
-/**
- * Overwrites Slates Editor.renderNode(props) to actually render
- * ImageNode for `img` tags
- */
 const RenderPollNode = {
-  renderNode(props, next) {
+  renderNode(props: any, next: any) {
     // append to parent, see add-section
-    const { children, attributes, node, isFocused, editor, parent } = props;
-    // console.log(props);
+    const {
+      children,
+      attributes,
+      node,
+      isFocused,
+      editor,
+      parent,
+      readOnly,
+    } = props;
+
     if (node.type === "poll") {
       return (
         <PollNode
@@ -147,13 +101,18 @@ const RenderPollNode = {
           editor={editor}
           {...attributes}
           next={next}
+          readOnly={readOnly}
         >
           {children}
         </PollNode>
       );
     }
     if (node.type === "poll_question") {
-      return <PollQuestionNode {...attributes}>{children}</PollQuestionNode>;
+      return (
+        <PollQuestionNode parent={parent} editor={editor} {...attributes}>
+          {children}
+        </PollQuestionNode>
+      );
     }
     if (node.type === "poll_answer") {
       return (
@@ -161,40 +120,62 @@ const RenderPollNode = {
           node={node}
           parentKey={parent.key}
           editor={editor}
+          readOnly={readOnly}
           {...attributes}
         >
           {children}
         </PollAnswerNode>
       );
     }
-    return
+    return;
   },
-};
 
-const RenderPlaceholder = {
-  renderPlaceholder({ editor, node }) {
-    if (node.object !== "block") { return; }
-    if (!(node.type === "poll_question" || node.type === "poll_answer")) { return; }
-    if (node.text !== "") { return; }
+  decorateNode(node: Node, editor: Editor, next: () => void) {
+    if (!("type" in node)) {
+      return next();
+    }
+    if (node.type !== "poll_answer" && node.type !== "poll_question") {
+      return next();
+    }
+    if (node.text !== "") {
+      return next();
+    }
 
-    const placeholderText =
-      node.type === "poll_question"
-        ? "Hier Frage eingeben..."
-        : "Hier Antwort eingeben...";
-    return (
-      <span
-        contentEditable={false}
-        style={{ display: "inline-block", width: "0", whiteSpace: "nowrap" }}
-        className="has-text-grey-light"
-        onMouseDown={e => {
-          const change = editor.value.change();
-          const onChange = editor.props.onChange;
-          onChange(change.moveToEndOfNode(node).focus());
-          return true;
-        }}
-      >
-        {placeholderText}
-      </span>
-    );
+    const first = node.getFirstText();
+    const last = node.getLastText();
+    if (!first || !last) {
+      return next();
+    }
+    const others = next();
+
+    const decoration = {
+      anchor: { key: first.key, offset: 0 },
+      focus: { key: last.key, offset: last.text.length },
+      mark: {
+        type: "placeholder",
+        data: { placeholder: "Text eingeben..." },
+      },
+    };
+
+    // @ts-ignore
+    return [...others, decoration];
+  },
+  renderMark(props: any, editor: Editor, next: () => void) {
+    const { children, mark } = props;
+
+    if (mark.type === "placeholder") {
+      const content = mark.data.get("placeholder");
+
+      return (
+        <Fragment>
+          <StyledPlaceholder contentEditable={false}>
+            {content}
+          </StyledPlaceholder>
+          {children}
+        </Fragment>
+      );
+    }
+
+    return next();
   },
 };
