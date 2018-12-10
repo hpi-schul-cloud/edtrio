@@ -5,7 +5,7 @@ import { List } from "immutable";
 import { Block, Text } from "slate";
 import "./styles.css";
 
-export default function Poll() {
+export default function SortingTask() {
   return {
     changes: {
     },
@@ -13,16 +13,16 @@ export default function Poll() {
     components: {
       SortingTaskNode
     },
-  plugins: [RenderSortingTaskNode],
+    plugins: [RenderSortingTaskNode],
   };
 }
 
-const onClickNewQuestionButton = (event: any, editor: any, node: any) => {
+const onClickNewQuestionButton = (event: any, editor: Editor, node: Node) => {
   event.preventDefault();
-  editor.command(appendNewAnswer, node)
+  appendNewAnswer(editor, node);
 };
 
-const appendNewAnswer = (change: any, node: any) => {
+const appendNewAnswer = (editor: any, node: any) => {
   const newTerm = Block.create({
     type: "sorting-task_term",
     nodes: List([Text.create("")]),
@@ -41,8 +41,7 @@ const appendNewAnswer = (change: any, node: any) => {
   });
 
   const lastIndex = node.nodes.count();
-
-  return change
+  return editor
   .insertNodeByKey(node.key, lastIndex, newAnswer)
   .moveToEndOfNode(newTerm);
 };
