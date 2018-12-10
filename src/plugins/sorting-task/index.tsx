@@ -17,12 +17,12 @@ export default function Poll() {
   };
 }
 
-const onClickNewQuestionButton = (event, editor, node) => {
+const onClickNewQuestionButton = (event: any, editor: any, node: any) => {
   event.preventDefault();
   editor.command(appendNewAnswer, node)
 };
 
-const appendNewAnswer = (change, node) => {
+const appendNewAnswer = (change: any, node: any) => {
   const newTerm = Block.create({
     type: "sorting-task_term",
     nodes: List([Text.create("")]),
@@ -47,27 +47,27 @@ const appendNewAnswer = (change, node) => {
   .moveToEndOfNode(newTerm);
 };
 
-const onClickNextQuestionButton = (event, editor, node) => {
+const onClickNextQuestionButton = (event: any, editor: any, node: any) => {
   event.preventDefault();
   const prevValue = node.data.get("viewItem") || 0;
   editor.setNodeByKey(node.key, { data: { viewItem: prevValue + 1 } })
 };
 
-const onClickResetQuizButton = (event, editor, node) => {
+const onClickResetQuizButton = (event: any, editor: any, node: any) => {
   event.preventDefault();
   editor.setNodeByKey(node.key, { data: { viewItem: 0 } })
-  node.nodes.forEach(childNode => {
+  node.nodes.forEach((childNode: any) => {
     editor.setNodeByKey(childNode.key, { data: { viewState: false } })
   });
 };
 
-const onClickToggleQuestionButton = (event, editor, node) => {
+const onClickToggleQuestionButton = (event: any, editor: any, node: any) => {
   event.preventDefault();
   const currentState = node.data.get("viewState") || false;
   editor.setNodeByKey(node.key, { data: { viewState: !currentState } })
 };
 
-function SortingTaskNode(props) {
+function SortingTaskNode(props: any) {
   const { children, node, editor, readOnly, ...attributes} = props;
   const currentChild = children[node.data.get("viewItem") || 0];
   return (readOnly ?
@@ -133,14 +133,14 @@ function SortingTaskNode(props) {
   );
 }
 
-function SortingTaskQuestionNode(props) {
+function SortingTaskQuestionNode(props: any) {
   const { children, node, editor, readOnly, ...attributes } = props;
   const currentChild = children[node.data.get("viewState")?1:0];
   return (readOnly ?
     (
       <div class="question-card"
         onClick={event =>
-          editor.change(change => {
+          editor.change(() => {
             onClickToggleQuestionButton(
               event,
               editor,
@@ -160,7 +160,7 @@ function SortingTaskQuestionNode(props) {
   );
 }
 
-function SortingTaskQuestionTermNode(props) {
+function SortingTaskQuestionTermNode(props: any) {
   const { children, readOnly, ...attributes } = props;
   return (readOnly ?
     (
@@ -175,7 +175,7 @@ function SortingTaskQuestionTermNode(props) {
   );
 }
 
-function SortingTaskQuestionSolutionNode(props) {
+function SortingTaskQuestionSolutionNode(props: any) {
   const { children, readOnly, ...attributes } = props;
   return (readOnly ?
     (
