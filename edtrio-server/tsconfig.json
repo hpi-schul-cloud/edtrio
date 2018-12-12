@@ -25,5 +25,5 @@
     "skipLibCheck": false
   },
   "include": ["src/**/*"],
-  "exclude": ["src/**/node_modules/*"]
+  "exclude": ["src/**/node_modules/*", "generated"]
 }
