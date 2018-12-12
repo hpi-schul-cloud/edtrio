@@ -60,12 +60,12 @@ export class StateController extends PureComponent<IStateControllerProps> {
 }
 
 const teacherUser: IUserType = {
-  name: "Egon Editor",
+  name: "Teacher",
   isTeacher: true,
 };
 
 const pupilUser: IUserType = {
-  name: "Peter Pupil",
+  name: "Pupil",
   isTeacher: false,
 };
 
