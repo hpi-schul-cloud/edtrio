@@ -1,7 +1,7 @@
 import { faQuestion, faRedo, faUndo } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import moment from "moment";
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 import { Editor } from "slate";
 import styled from "styled-components";
 
@@ -40,7 +40,7 @@ interface ISaveBarState {
   interval: number;
 }
 
-class SaveBar extends PureComponent<ISaveBarProps, ISaveBarState> {
+class SaveBar extends Component<ISaveBarProps, ISaveBarState> {
   constructor(props: ISaveBarProps) {
     super(props);
 

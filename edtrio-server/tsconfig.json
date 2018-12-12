@@ -1,15 +1,14 @@
 {
   "compilerOptions": {
-    "outDir": "./lib",
-    "allowSyntheticDefaultImports": true,
+    "outDir": "./build",
     "esModuleInterop": true,
-    "allowJs": false,
-    "module": "esnext",
+    "allowJs": true,
+    "module": "commonjs",
     "target": "es5",
     "jsx": "preserve",
     "types": ["node"],
     "moduleResolution": "node",
-    "lib": ["es2017", "dom"],
+    "lib": ["es2017", "dom", "esnext"],
     "rootDirs": ["src"],
     "strict": true,
     "forceConsistentCasingInFileNames": true,
@@ -23,9 +22,8 @@
     "removeComments": true,
     "experimentalDecorators": true,
     "resolveJsonModule": true,
-    "skipLibCheck": false,
-    "isolatedModules": true,
-    "noEmit": true
+    "skipLibCheck": false
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
+  "exclude": ["src/**/node_modules/*"]
 }

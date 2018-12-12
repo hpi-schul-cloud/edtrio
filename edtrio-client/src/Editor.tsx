@@ -1,3 +1,5 @@
+import ApolloClient from "apollo-boost";
+import gql from "graphql-tag";
 import moment from "moment";
 import "moment/locale/de";
 import React, { PureComponent } from "react";
@@ -22,6 +24,7 @@ import importedValue from "./value.json";
 
 moment.locale("de");
 
+
 const StyledDocumentViewer = styled(DocumentViewer)`
   margin-top: 500px;
 `;
@@ -40,15 +43,18 @@ interface IEditorProps {
   users: IUserType[];
   currentUser: IUserType;
   updateCurrentUser: (newUser: IUserType) => void;
+  apolloClient: ApolloClient<{}>;
+  initialValue?: Value;
 }
 
 class Editor extends PureComponent<IEditorProps, IEditorState> {
   constructor(props: IEditorProps) {
     super(props);
+    const value = props.initialValue || this.handleLoad();
     this.state = {
-      value: this.handleLoad(),
+      value,
       updateDebounce: 0,
-      docValue: this.handleLoad(),
+      docValue: value,
     };
     if (!this.props.currentUser.teacher && this.props.isEditable) {
       this.props.updateIsEditable(false);
@@ -112,6 +118,30 @@ class Editor extends PureComponent<IEditorProps, IEditorState> {
       this._addHeaderInformationToDocument(value, timestamp),
     );
     localStorage.setItem("document", document);
+    const mutation = gql`
+      mutation updateDocument(
+        $documentId: String!
+        $value: String!
+        $userIds: [String!]!
+      ) {
+        updateDocument(
+          value: $value
+          documentId: $documentId
+          userIds: $userIds
+        ) {
+          id
+          value
+        }
+      }
+    `;
+    this.props.apolloClient.mutate({
+      mutation,
+      variables: {
+        userIds: ["cjpcyqzsr00230798e5nwrwy5"],
+        value: document,
+        documentId: "cjpcys08y002607989geb9ttk",
+      },
+    });
 
     this.props.updateLastSaved(timestamp);
   };
