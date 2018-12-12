@@ -1,16 +1,17 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
 # dependencies
+**/*/node_modules
 /node_modules
 
 # docs
+**/*/.docz
 /.docz
-
 # testing
-/coverage
+**/*/coverage
 
 # production
-/build
+**/*/build
 
 # misc
 .DS_Store
@@ -23,8 +24,5 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-<<<<<<< HEAD
 /.vscode
-=======
-/.vscode/
->>>>>>> WIP 2
+**/.vscode/*

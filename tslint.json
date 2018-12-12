@@ -7,7 +7,7 @@
     "no-empty": false
   },
   "linterOptions": {
-    "exclude": ["*.json", "**/*.json"]
+    "exclude": ["*.json", "**/*.json", "**/node_modules/*"]
   },
   "defaultSeverity": "error"
 }

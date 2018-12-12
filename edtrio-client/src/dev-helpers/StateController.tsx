@@ -44,8 +44,8 @@ export class StateController extends PureComponent<IStateControllerProps> {
           Currently logged in : <strong>{currentUser.name}</strong>
         </StyledLoggedInUser>
         Change your current user:
-        {users.map(user => (
-          <StyledUserButton onClick={() => updateCurrentUser(user)}>
+        {users.map((user, index) => (
+          <StyledUserButton onClick={() => updateCurrentUser(user)} key={index}>
             {user.name}
           </StyledUserButton>
         ))}
