@@ -1,4 +1,4 @@
-import ApolloClient from "apollo-boost";
+import ApolloClient from "apollo-client";
 import gql from "graphql-tag";
 import moment from "moment";
 import "moment/locale/de";
@@ -24,39 +24,62 @@ import importedValue from "./value.json";
 
 moment.locale("de");
 
-
 const StyledDocumentViewer = styled(DocumentViewer)`
   margin-top: 500px;
 `;
 
+const AppWrapper = styled.div`
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+`;
+
+const UPDATE_DOCUMENT = gql`
+  mutation updateDocument(
+    $documentId: String!
+    $value: String!
+    $userIds: [String!]!
+  ) {
+    updateDocument(value: $value, documentId: $documentId, userIds: $userIds) {
+      id
+      value
+    }
+  }
+`;
+
 interface IEditorState {
   value: Value;
-  updateDebounce: number;
-  // just so we can delay updating the document viewer, so it makes dev experience a lot smoother
+  updateDebounce: number; // just so we can delay updating the document viewer, so it makes dev experience a lot smoother
   docValue: Value;
 }
 
-interface IEditorProps {
+export interface IEditorUserProps {
   updateLastSaved: (newTimestamp: moment.Moment) => void;
   isEditable: boolean;
   updateIsEditable: (isEditable: boolean) => void;
   users: IUserType[];
   currentUser: IUserType;
   updateCurrentUser: (newUser: IUserType) => void;
-  apolloClient: ApolloClient<{}>;
+}
+
+interface IEditorProps extends IEditorUserProps {
+  apolloClient?: ApolloClient<{}>;
   initialValue?: Value;
+  value?: Value;
 }
 
 class Editor extends PureComponent<IEditorProps, IEditorState> {
   constructor(props: IEditorProps) {
     super(props);
+    // if an initialValue is provided by the graphql server, use that
+    // if not, read a value from Local Storage
     const value = props.initialValue || this.handleLoad();
     this.state = {
       value,
       updateDebounce: 0,
       docValue: value,
     };
-    if (!this.props.currentUser.teacher && this.props.isEditable) {
+    if (!this.props.currentUser.isTeacher && this.props.isEditable) {
       this.props.updateIsEditable(false);
     }
   }
@@ -67,42 +90,44 @@ class Editor extends PureComponent<IEditorProps, IEditorState> {
   };
 
   public render() {
+    // TODO: it is highly unlikely we actually need 5 separate divs here...
     return (
-      <div className="columns">
-        <div className="column" />
-        <div className="column is-three-quarters">
-          <div style={{ marginTop: "2rem" }}>
-            {process.env.NODE_ENV === "development" ? (
-              <StateController
-                isEditable={this.props.isEditable}
-                updateIsEditable={this.props.updateIsEditable}
-                users={this.props.users}
-                currentUser={this.props.currentUser}
-                updateCurrentUser={this.props.updateCurrentUser}
-              />
-            ) : null}
-            <SlateEditor
-              autoFocus={true}
-              spellCheck={true}
-              plugins={plugins}
-              value={this.state.value}
-              onChange={this.onChange}
-              className="slate-editor"
-<<<<<<< HEAD
-              // @ts-ignore: slate/types 43 is not current... - this works perfectly fine
-=======
-              // @ts-ignore: this works perfectly fine, thank you typescript
->>>>>>> WIP 2
-              schema={schema}
-              readOnly={!this.props.isEditable}
-            />
+      <AppWrapper>
+        <div className="App">
+          <div className="columns">
+            <div className="column" />
+            <div className="column is-three-quarters">
+              <div style={{ marginTop: "2rem" }}>
+                {process.env.NODE_ENV === "development" ? (
+                  <StateController
+                    isEditable={this.props.isEditable}
+                    updateIsEditable={this.props.updateIsEditable}
+                    users={this.props.users}
+                    currentUser={this.props.currentUser}
+                    updateCurrentUser={this.props.updateCurrentUser}
+                  />
+                ) : null}
+                <SlateEditor
+                  autoFocus={true}
+                  spellCheck={true}
+                  plugins={plugins}
+                  // if value is handled by the backend (and passed as props), it has priority over our state
+                  value={this.props.value || this.state.value}
+                  onChange={this.onChange}
+                  className="slate-editor"
+                  // @ts-ignore: slate/types 43 is not current... - this works perfectly fine
+                  schema={schema}
+                  readOnly={!this.props.isEditable}
+                />
+              </div>
+              {process.env.NODE_ENV === "development" ? (
+                <StyledDocumentViewer doc={this.state.docValue} />
+              ) : null}
+            </div>
+            <div className="column" />
           </div>
-          {process.env.NODE_ENV === "development" ? (
-            <StyledDocumentViewer doc={this.state.docValue} />
-          ) : null}
         </div>
-        <div className="column" />
-      </div>
+      </AppWrapper>
     );
   }
 
@@ -118,30 +143,18 @@ class Editor extends PureComponent<IEditorProps, IEditorState> {
       this._addHeaderInformationToDocument(value, timestamp),
     );
     localStorage.setItem("document", document);
-    const mutation = gql`
-      mutation updateDocument(
-        $documentId: String!
-        $value: String!
-        $userIds: [String!]!
-      ) {
-        updateDocument(
-          value: $value
-          documentId: $documentId
-          userIds: $userIds
-        ) {
-          id
-          value
-        }
-      }
-    `;
-    this.props.apolloClient.mutate({
-      mutation,
-      variables: {
-        userIds: ["cjpcyqzsr00230798e5nwrwy5"],
-        value: document,
-        documentId: "cjpcys08y002607989geb9ttk",
-      },
-    });
+
+    // If a graphql server is available, update the document there
+    if (this.props.apolloClient) {
+      this.props.apolloClient.mutate({
+        mutation: UPDATE_DOCUMENT,
+        variables: {
+          userIds: ["cjpcyqzsr00230798e5nwrwy5"],
+          value: document,
+          documentId: "cjpcys08y002607989geb9ttk",
+        },
+      });
+    }
 
     this.props.updateLastSaved(timestamp);
   };

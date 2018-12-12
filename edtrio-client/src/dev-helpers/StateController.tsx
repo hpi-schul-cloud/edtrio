@@ -49,7 +49,7 @@ export class StateController extends PureComponent<IStateControllerProps> {
             {user.name}
           </StyledUserButton>
         ))}
-        {currentUser.teacher && (
+        {currentUser.isTeacher && (
           <StyledEditButton onClick={() => updateIsEditable(!isEditable)}>
             {isEditable ? "Preview" : "Editieren"}
           </StyledEditButton>
@@ -61,12 +61,12 @@ export class StateController extends PureComponent<IStateControllerProps> {
 
 const teacherUser: IUserType = {
   name: "Egon Editor",
-  teacher: true,
+  isTeacher: true,
 };
 
 const pupilUser: IUserType = {
   name: "Peter Pupil",
-  teacher: false,
+  isTeacher: false,
 };
 
 const allUsers: IUserType[] = [teacherUser, pupilUser];
