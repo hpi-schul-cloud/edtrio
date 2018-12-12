@@ -2,7 +2,7 @@ import React, { Component, createContext } from "react";
 
 import { IUserType } from "../types";
 
-const seedUser = { name: "Test Test", teacher: false };
+const seedUser = { name: "Test Test", isTeacher: false };
 
 export const EditorStateContext = createContext<IEditorStateProviderState>({
   isEditable: true,
@@ -49,7 +49,7 @@ export class EditorStateProvider extends Component<
   };
 
   public updateCurrentUser = (newUser: IUserType) => {
-    this.setState({ currentUser: newUser, isEditable: newUser.teacher });
+    this.setState({ currentUser: newUser, isEditable: newUser.isTeacher });
   };
 
   public updateUserList = (users: IUserType[]) => {
