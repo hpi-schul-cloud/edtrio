@@ -781,8 +781,7 @@ export type String = string;
 /**
  * Model Metadata
  */
-
- //@ts-ignore
+// @ts-ignore
 export const models = [
   {
     name: "Document",

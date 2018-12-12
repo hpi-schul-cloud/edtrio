@@ -49,25 +49,30 @@
     }
   },
   "lint-staged": {
-    "edtrio-client/src/**/*.{js,jsx}": [
-      "./node_modules/.bin/eslint --ext .jsx --ext .js ./",
-      "prettier",
-      "git add"
-    ],
-    "edtrio-client/src/**/*.{ts,tsx}": [
-      "./node_modules/.bin/tslint -c tslint.json --project edtrio-client/tsconfig.json",
-      "prettier",
-      "git add"
-    ],
-    "edtrio-server/src/**/*.{js,jsx}": [
-      "./node_modules/.bin/eslint --ext .jsx --ext .js ./",
-      "prettier",
-      "git add"
-    ],
-    "edtrio-server/src/**/*.{ts,tsx}": [
-      "./node_modules/.bin/tslint -c tslint.json --project edtrio-client/tsconfig.json",
-      "prettier",
-      "git add"
+    "linters": {
+      "edtrio-client/src/**/*.{js,jsx}": [
+        "./node_modules/.bin/eslint --ext .jsx --ext .js ./",
+        "prettier",
+        "git add"
+      ],
+      "edtrio-client/src/**/*.{ts,tsx}": [
+        "./node_modules/.bin/tslint -c tslint.json --project edtrio-client/tsconfig.json",
+        "prettier",
+        "git add"
+      ],
+      "edtrio-server/src/**/*.{js,jsx}": [
+        "./node_modules/.bin/eslint --ext .jsx --ext .js ./",
+        "prettier",
+        "git add"
+      ],
+      "edtrio-server/src/**/*{ts,tsx}": [
+        "./node_modules/.bin/tslint -c tslint.json --project edtrio-server/tsconfig.json",
+        "prettier",
+        "git add"
+      ]
+    },
+    "ignore": [
+      "**/generated/**/*.{ts,tsx}"
     ]
   },
   "browserslist": [
