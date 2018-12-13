@@ -11,12 +11,14 @@ import {
   faCode,
   faExternalLinkSquareAlt,
   faImage,
+  faSort,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   onClickCodeButton,
   onClickIframeButton,
   onClickImageButton,
+  onClickSortButton,
 } from "./actions";
 
 interface IPlusMenuProps {
@@ -116,6 +118,11 @@ class PlusMenu extends PureComponent<IPlusMenuProps, IPlusMenuState> {
           faExternalLinkSquareAlt,
           "Iframe einfügen",
           onClickIframeButton,
+        )}
+        {this.renderBlockButton(
+          faSort,
+          "Sortieraufgabe einfügen",
+          onClickSortButton,
         )}
         <DashboardModal
           uppy={this.uppy}
