@@ -88,10 +88,13 @@ class PlusMenu extends PureComponent<IPlusMenuProps, IPlusMenuState> {
       const nodeElBBox = nodeEl.getBoundingClientRect();
       // don't render the menu in the title
       if (
-        "type" in startBlock &&
-        startBlock.type !== "title" &&
-        startBlock.type !== "multiple-choice-question" &&
-        startBlock.type !== "multiple-choice-answer"
+        ("type" in startBlock &&
+          startBlock.type !== "title" &&
+          startBlock.type !== "multiple-choice-question" &&
+          startBlock.type !== "multiple-choice-answer") ||
+        ("type" in startBlock &&
+          startBlock.type !== "title" &&
+          !startBlock.type.startsWith("poll"))
       ) {
         const top = nodeElBBox.top + window.pageYOffset;
 
