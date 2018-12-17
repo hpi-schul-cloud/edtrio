@@ -1,6 +1,6 @@
 import { List } from "immutable";
-import "materialize-css/dist/css/materialize.min.css";
-import "materialize-css/dist/js/materialize.min.js";
+/* import "materialize-css/dist/css/materialize.min.css";
+import "materialize-css/dist/js/materialize.min.js"; */
 import React, { Fragment } from "react";
 import { Editor, Node } from "slate";
 import { Block, Text } from "slate";
