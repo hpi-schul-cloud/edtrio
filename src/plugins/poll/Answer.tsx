@@ -35,6 +35,7 @@ export default function PollAnswerNode(props: any) {
   } else {
     return (
       <ListItem divider={true}>
+        <Radio name="ok" disabled={true} />
         {children}
         <ListItemSecondaryAction>
           <IconButton

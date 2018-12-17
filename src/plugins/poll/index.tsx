@@ -47,7 +47,7 @@ const answerButton = (editor: Editor, node: any, readOnly: boolean) => {
       onClick={event => onClickNewAnswerButton(event, editor, node)}
     >
       <SendIcon />
-      Antwort senden
+      &nbsp;Antwort senden
     </Button>
   ) : (
     <Button
@@ -56,7 +56,7 @@ const answerButton = (editor: Editor, node: any, readOnly: boolean) => {
       onClick={event => onClickNewAnswerButton(event, editor, node)}
     >
       <AddIcon />
-      Antwort hinzufügen
+      &nbsp;Antwort hinzufügen
     </Button>
   );
 };

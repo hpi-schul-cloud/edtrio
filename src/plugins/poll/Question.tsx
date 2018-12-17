@@ -55,7 +55,7 @@ export default class PollQuestionNode extends React.Component<{
           <h2>{this.props.children}</h2>
           <ListItemSecondaryAction>
             <IconButton onClick={this.openModal} className="btn-flat">
-              <CloseIcon fontSize="small"/>
+              <CloseIcon fontSize="small" />
             </IconButton>
           </ListItemSecondaryAction>
 
