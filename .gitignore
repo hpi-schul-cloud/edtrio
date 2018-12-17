@@ -5,7 +5,6 @@
 /node_modules
 
 # docs
-**/*/.docz
 /.docz
 # testing
 **/*/coverage
@@ -25,4 +24,3 @@ yarn-debug.log*
 yarn-error.log*
 
 /.vscode
-**/.vscode/*
