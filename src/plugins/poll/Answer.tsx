@@ -23,20 +23,19 @@ const onClickDeleteAnswerButton = (event: any, editor: Editor, node: any) => {
 
 export default function PollAnswerNode(props: any) {
   const { children, node, editor, parentKey, readOnly, ...attributes } = props;
-
+  
   if (readOnly) {
     return (
-      <ListItem>
+      <ListItem button={true} divider={true}>
         <Radio  name = "ok"/>
         <ListItemText primary={node.text} />
       </ListItem>
     )
   } else {
     return (
-      <ListItem {...attributes}>
-        <Radio  name = "ok"/>
-        {children}
-        <ListItemSecondaryAction>
+      <ListItem divider={true}>
+       {children}
+       <ListItemSecondaryAction>
           <IconButton onClick={event => onClickDeleteAnswerButton(event, editor, node)}>
             <DeleteIcon/>
           </IconButton>
@@ -45,5 +44,7 @@ export default function PollAnswerNode(props: any) {
     );
   }
 
-  
 }
+
+  
+
