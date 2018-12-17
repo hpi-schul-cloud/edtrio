@@ -38,11 +38,11 @@ For styling we therefore recommend using [styled-components](https://www.styled-
 
 ## edtrio-server
 
-### getting started
+### Getting started
 
 This is a GraphQl Server built with [graphql-yoga](https://github.com/prisma/graphql-yoga). You can imagine yoga being the create-react-app for graphql servers. If you have no clue what graphql is, head on over to [this awesome tutorial](https://www.howtographql.com/).
 In order to get the server up and running, install [Docker](https://store.docker.com/editions/community/) and [prisma](https://www.prisma.io/) (preferably installed globally via npm or yarn).
-You can then run the `yarn run startFreshDB` script in the edtrio-server package. This will hop over to the src/database folder, start the docker image for the database, generate the [prisma client](https://www.prisma.io/docs/prisma-client/) code, reset the content of the database and seed it. If you ever need to give more detailed commands to the prisma instance, manually head over to src/datbase with a terminal and use the prisma cli.
-After this, you just need to run `yarn start` and the server will start. IF it doesn't open automatically, you can head on over to http://localhost:4000 and play around with the server using the [GraphQl playground](https://github.com/prisma/graphql-playground).
+You can then run the `yarn run startFreshDB` script in the edtrio-server package. This will hop over to the `src/database` folder, start the docker image for the database, generate the [prisma client](https://www.prisma.io/docs/prisma-client/) code, reset the content of the database and seed it. If you ever need to give more detailed commands to the prisma instance, manually head over to `src/database` with a terminal and use the prisma cli.
+After this, you just need to run `yarn start` and the server will start. If it doesn't open automatically, you can head on over to http://localhost:4000 and play around with the server using the [GraphQl playground](https://github.com/prisma/graphql-playground).
 
 We hope this section helped you a little bit. Happy developing!
