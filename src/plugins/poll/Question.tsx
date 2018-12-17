@@ -47,6 +47,8 @@ export default class PollQuestionNode extends React.Component {
   }
 
   public render() {
+
+    // this.state.readOnly doesnt work... why??
     if (this.state.readOnly) {
       return (
         <ListItem divider={true} {...this.state.attributes}>
