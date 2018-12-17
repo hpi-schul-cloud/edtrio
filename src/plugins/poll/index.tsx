@@ -10,7 +10,6 @@ import PollAnswerNode from "./Answer";
 import PollQuestionNode from "./Question";
 import "./style.css";
 
-
 export default function Poll() {
   return {
     changes: {},
@@ -40,18 +39,22 @@ const appendNewAnswer = (editor: Editor, node: any) => {
     .moveToEndOfNode(newAnswer);
 };
 
-
-
 const answerButton = (editor: Editor, node: any, readOnly: boolean) => {
   return readOnly ? (
-    <Button variant="outlined" onClick={event => onClickNewAnswerButton(event, editor, node)}>
-      <SendIcon/>
-         Antwort senden
+    <Button
+      variant="outlined"
+      onClick={event => onClickNewAnswerButton(event, editor, node)}
+    >
+      <SendIcon />
+      Antwort senden
     </Button>
   ) : (
-    <Button variant="outlined" onClick={event => onClickNewAnswerButton(event, editor, node)}>
-      <AddIcon/>
-         Antwort hinzufügen
+    <Button
+      variant="outlined"
+      onClick={event => onClickNewAnswerButton(event, editor, node)}
+    >
+      <AddIcon />
+      Antwort hinzufügen
     </Button>
   );
 };
@@ -61,9 +64,7 @@ function PollNode(props: any) {
 
   return (
     <div>
-      <ListEle {...attributes}>
-        {children}
-      </ListEle>
+      <ListEle {...attributes}>{children}</ListEle>
       <div className="right-align">{answerButton(editor, node, readOnly)}</div>
     </div>
   );
@@ -107,7 +108,12 @@ const RenderPollNode = {
     }
     if (node.type === "poll_question") {
       return (
-        <PollQuestionNode parent={parent} editor={editor} {...attributes}>
+        <PollQuestionNode
+          parent={parent}
+          editor={editor}
+          readOnly={readOnly}
+          {...attributes}
+        >
           {children}
         </PollQuestionNode>
       );
