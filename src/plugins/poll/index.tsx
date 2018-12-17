@@ -1,15 +1,16 @@
+import { IconButton, List as ListEle } from "@material-ui/core";
+import AddIcon from "@material-ui/icons/Add";
+import SendIcon from "@material-ui/icons/Send";
 import { List } from "immutable";
-
-import {List as ListEle} from "@material-ui/core"
 /* import "materialize-css/dist/css/materialize.min.css";
 import "materialize-css/dist/js/materialize.min.js"; */
 import React, { Fragment } from "react";
-import { Editor, Node } from "slate";
-import { Block, Text } from "slate";
+import { Block, Editor, Node, Text } from "slate";
 import styled from "styled-components";
 import PollAnswerNode from "./Answer";
 import PollQuestionNode from "./Question";
 import "./style.css";
+
 
 export default function Poll() {
   return {
@@ -42,21 +43,15 @@ const appendNewAnswer = (editor: Editor, node: any) => {
 
 const answerButton = (editor: Editor, node: any, readOnly: boolean) => {
   return readOnly ? (
-    <button
-      className="btn-flat"
-      onClick={event => onClickNewAnswerButton(event, editor, node)}
-    >
-      <i className="material-icons left">send</i>
+    <IconButton onClick={event => onClickNewAnswerButton(event, editor, node)}>
+      <SendIcon/>
       Antworten
-    </button>
+    </IconButton>
   ) : (
-    <button
-      className="btn-flat"
-      onClick={event => onClickNewAnswerButton(event, editor, node)}
-    >
-      <i className="material-icons left">add</i>
+    <IconButton onClick={event => onClickNewAnswerButton(event, editor, node)}>
+      <AddIcon/>
       Antwort hinzufügen
-    </button>
+    </IconButton>
   );
 };
 

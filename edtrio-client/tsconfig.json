@@ -16,7 +16,7 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "suppressImplicitAnyIndexErrors": true,
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "sourceMap": true,
     "noImplicitAny": false,
     "strictNullChecks": true,
