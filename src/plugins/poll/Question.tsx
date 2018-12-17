@@ -8,7 +8,6 @@ import IconButton from "@material-ui/core/IconButton";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import CloseIcon from "@material-ui/icons/Close";
-import { type } from "os";
 import React from "react";
 
 const onClickDeletePollButton = (event: any, editor: any, node: any) => {
