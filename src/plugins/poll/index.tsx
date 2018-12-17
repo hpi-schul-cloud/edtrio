@@ -42,16 +42,18 @@ const appendNewAnswer = (editor: Editor, node: any) => {
     .moveToEndOfNode(newAnswer);
 };
 
+
+
 const answerButton = (editor: Editor, node: any, readOnly: boolean) => {
   return readOnly ? (
     <Button variant="outlined" onClick={event => onClickNewAnswerButton(event, editor, node)}>
       <SendIcon/>
-      Antworten
+         Antwort senden
     </Button>
   ) : (
     <Button variant="outlined" onClick={event => onClickNewAnswerButton(event, editor, node)}>
       <AddIcon/>
-      Antwort hinzufügen
+         Antwort hinzufügen
     </Button>
   );
 };

@@ -29,52 +29,63 @@ export default class PollQuestionNode extends React.Component {
     children: null,
     editor: null,
     parent: null,
+    readOnly: null,
     attributes: null,
   };
 
   constructor(props) {
     super(props);
-    const { children, editor, parent, ...attributes } = props;
+    const { children, editor, parent, readOnly, ...attributes } = props;
     this.state = {
       open: false,
       children,
       editor,
       parent,
+      readOnly,
       ...attributes,
     };
   }
 
   public render() {
-    return (
-      <ListItem divider={true} {...this.state.attributes}>
-        <h2>{this.props.children}</h2>
-        <ListItemSecondaryAction>
-          <IconButton onClick={this.openModal} className="btn-flat">
-            <CloseIcon/>
-          </IconButton>
-        </ListItemSecondaryAction>
-        
-        <Dialog open={this.state.open}>
-          <DialogTitle id="alert-dialog-title">Umfrage löschen</DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              Bist du sicher, dass du die Umfrage löschen möchtest?
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
-              Abbrechen
-            </Button>
-            <Button
-              onClick={event => this.deletePoll(event)}
-              autoFocus={true}
-            >
-              Ok
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </ListItem>
-    );
+    if (this.state.readOnly) {
+      return (
+        <ListItem divider={true} {...this.state.attributes}>
+          <h2>{this.props.children}</h2>
+        </ListItem>
+      );
+    } else {
+      return (
+        <ListItem divider={true} {...this.state.attributes}>
+          <h2>{this.props.children}</h2>
+          <ListItemSecondaryAction>
+            <IconButton onClick={this.openModal} className="btn-flat">
+              <CloseIcon/>
+            </IconButton>
+          </ListItemSecondaryAction>
+          
+          <Dialog open={this.state.open}>
+            <DialogTitle id="alert-dialog-title">Umfrage löschen</DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                Bist du sicher, dass du die Umfrage löschen möchtest?
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={this.handleClose} color="primary">
+                Abbrechen
+              </Button>
+              <Button
+                onClick={event => this.deletePoll(event)}
+                autoFocus={true}
+              >
+                Ok
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </ListItem>
+      );
+    }
+    
   }
 
   private openModal = () => this.setState({ open: true });
