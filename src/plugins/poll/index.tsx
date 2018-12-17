@@ -1,4 +1,6 @@
 import { List } from "immutable";
+
+import {List as ListEle} from "@material-ui/core"
 /* import "materialize-css/dist/css/materialize.min.css";
 import "materialize-css/dist/js/materialize.min.js"; */
 import React, { Fragment } from "react";
@@ -63,9 +65,9 @@ function PollNode(props: any) {
 
   return (
     <div>
-      <ul className="collection with-header" {...attributes}>
+      <ListEle {...attributes}>
         {children}
-      </ul>
+      </ListEle>
       <div className="right-align">{answerButton(editor, node, readOnly)}</div>
     </div>
   );
