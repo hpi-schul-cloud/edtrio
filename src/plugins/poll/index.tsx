@@ -3,8 +3,6 @@ import ListEle from "@material-ui/core/List";
 import AddIcon from "@material-ui/icons/Add";
 import SendIcon from "@material-ui/icons/Send";
 import { List } from "immutable";
-/* import "materialize-css/dist/css/materialize.min.css";
-import "materialize-css/dist/js/materialize.min.js"; */
 import React, { Fragment } from "react";
 import { Block, Editor, Node, Text } from "slate";
 import styled from "styled-components";
