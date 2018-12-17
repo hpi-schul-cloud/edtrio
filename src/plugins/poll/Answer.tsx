@@ -20,10 +20,14 @@ const onClickDeleteAnswerButton = (event: any, editor: Editor, node: any) => {
 
 export default function PollAnswerNode(props: any) {
   const { children, node, editor, parentKey, readOnly, ...attributes } = props;
+  const percentage = Math.floor(Math.random() * 100);
+  const color = "#007A9E";
+  const background = `linear-gradient(to right, ${color} ${0}%, ${color} ${percentage}%, white ${percentage}%, white ${100 -
+    percentage}%)`;
 
   if (readOnly) {
     return (
-      <ListItem button={true} divider={true}>
+      <ListItem style={{ background }} button={true} divider={true}>
         <Radio name="ok" />
         <ListItemText primary={node.text} />
       </ListItem>

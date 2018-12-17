@@ -42,6 +42,7 @@ const appendNewAnswer = (editor: Editor, node: any) => {
 const answerButton = (editor: Editor, node: any, readOnly: boolean) => {
   return readOnly ? (
     <Button
+      style={{ float: "right" }}
       variant="outlined"
       onClick={event => onClickNewAnswerButton(event, editor, node)}
     >
@@ -50,6 +51,7 @@ const answerButton = (editor: Editor, node: any, readOnly: boolean) => {
     </Button>
   ) : (
     <Button
+      style={{ float: "right" }}
       variant="outlined"
       onClick={event => onClickNewAnswerButton(event, editor, node)}
     >
