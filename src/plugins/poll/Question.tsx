@@ -8,11 +8,8 @@ import IconButton from "@material-ui/core/IconButton";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import CloseIcon from "@material-ui/icons/Close";
+import { type } from "os";
 import React from "react";
-
-
-
-// import { Editor } from "slate";
 
 const onClickDeletePollButton = (event: any, editor: any, node: any) => {
   event.preventDefault();
@@ -23,13 +20,14 @@ const deleteNode = (editor: any, node: any) => {
   return editor.removeNodeByKey(node.key);
 };
 
-export default class PollQuestionNode extends React.Component {
+export default class PollQuestionNode extends React.Component<{
+  readOnly: boolean;
+}> {
   public state = {
     open: false,
     children: null,
     editor: null,
     parent: null,
-    readOnly: null,
     attributes: null,
   };
 
@@ -41,15 +39,12 @@ export default class PollQuestionNode extends React.Component {
       children,
       editor,
       parent,
-      readOnly,
       ...attributes,
     };
   }
 
   public render() {
-
-    // this.state.readOnly doesnt work... why??
-    if (this.state.readOnly) {
+    if (this.props.readOnly) {
       return (
         <ListItem divider={true} {...this.state.attributes}>
           <h2>{this.props.children}</h2>
@@ -61,10 +56,10 @@ export default class PollQuestionNode extends React.Component {
           <h2>{this.props.children}</h2>
           <ListItemSecondaryAction>
             <IconButton onClick={this.openModal} className="btn-flat">
-              <CloseIcon/>
+              <CloseIcon />
             </IconButton>
           </ListItemSecondaryAction>
-          
+
           <Dialog open={this.state.open}>
             <DialogTitle id="alert-dialog-title">Umfrage löschen</DialogTitle>
             <DialogContent>
@@ -87,7 +82,6 @@ export default class PollQuestionNode extends React.Component {
         </ListItem>
       );
     }
-    
   }
 
   private openModal = () => this.setState({ open: true });
