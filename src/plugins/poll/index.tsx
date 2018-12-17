@@ -1,4 +1,5 @@
-import { IconButton, List as ListEle } from "@material-ui/core";
+import Button from "@material-ui/core/Button";
+import ListEle from "@material-ui/core/List";
 import AddIcon from "@material-ui/icons/Add";
 import SendIcon from "@material-ui/icons/Send";
 import { List } from "immutable";
@@ -43,15 +44,15 @@ const appendNewAnswer = (editor: Editor, node: any) => {
 
 const answerButton = (editor: Editor, node: any, readOnly: boolean) => {
   return readOnly ? (
-    <IconButton onClick={event => onClickNewAnswerButton(event, editor, node)}>
+    <Button variant="outlined" onClick={event => onClickNewAnswerButton(event, editor, node)}>
       <SendIcon/>
       Antworten
-    </IconButton>
+    </Button>
   ) : (
-    <IconButton onClick={event => onClickNewAnswerButton(event, editor, node)}>
+    <Button variant="outlined" onClick={event => onClickNewAnswerButton(event, editor, node)}>
       <AddIcon/>
       Antwort hinzufügen
-    </IconButton>
+    </Button>
   );
 };
 
