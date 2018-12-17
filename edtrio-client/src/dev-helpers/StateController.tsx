@@ -51,7 +51,7 @@ export class StateController extends PureComponent<IStateControllerProps> {
         ))}
         {currentUser.isTeacher && (
           <StyledEditButton onClick={() => updateIsEditable(!isEditable)}>
-            {isEditable ? "Preview" : "Editieren"}
+            {isEditable ? "Vorschau" : "Editieren"}
           </StyledEditButton>
         )}
       </StyledStateController>
