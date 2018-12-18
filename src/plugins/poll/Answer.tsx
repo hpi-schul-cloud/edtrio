@@ -4,8 +4,11 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
 import Radio from "@material-ui/core/Radio";
 import DeleteIcon from "@material-ui/icons/Delete";
+import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
+import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 import React from "react";
 import { Editor } from "slate";
+
 
 // 0 122 158
 
@@ -28,22 +31,28 @@ export default function PollAnswerNode(props: any) {
   if (readOnly) {
     return (
       <ListItem style={{ background }} button={true} divider={true}>
-        <Radio name="ok" />
+        <Radio 
+          name="ok"
+          icon={<RadioButtonUncheckedIcon fontSize="small" />}
+          checkedIcon={<RadioButtonCheckedIcon fontSize="small" />} 
+        />
         <ListItemText primary={node.text} />
       </ListItem>
     );
   } else {
     return (
       <ListItem divider={true}>
-        <Radio name="ok" disabled={true} />
-        {children}
         <ListItemSecondaryAction>
-          <IconButton
-            onClick={event => onClickDeleteAnswerButton(event, editor, node)}
-          >
+          <IconButton onClick={event => onClickDeleteAnswerButton(event, editor, node)}>
             <DeleteIcon fontSize="small" />
           </IconButton>
         </ListItemSecondaryAction>
+        <Radio 
+          name="ok" disabled={true} 
+          icon={<RadioButtonUncheckedIcon fontSize="small" />}
+          checkedIcon={<RadioButtonCheckedIcon fontSize="small" />} 
+        />
+        {children}
       </ListItem>
     );
   }
