@@ -44,7 +44,7 @@ const answerButton = (editor: Editor, node: any, readOnly: boolean) => {
     <Button
       style={{ float: "right" }}
       variant="outlined"
-      onClick={event => onClickNewAnswerButton(event, editor, node)}
+      onClick={event => null}
     >
       <SendIcon />
       &nbsp;Antwort senden
