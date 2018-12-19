@@ -17,9 +17,24 @@
 
 ```shell
 yarn install
-yarn start
-# go to localhost:3000 if it doesnt open automatically
 ```
+
+This is a yarn workspaces repository, meaning that we have two subrepositories edtrio-client and edtrio-server. In order to start the client, just navigate to `edtrio-client` and do the following:
+
+```shell
+yarn start
+# go to localhost:3000 if it doesn't open automatically
+```
+
+The server is not absolutely necessary at the moment, but if you want persistence of your documents or communication between clients you should start this as well. Navigate to `edtrio-server` and run
+
+```shell
+yarn run startFreshDB
+yarn run start
+# go to localhost:4000 if it doesn't open automatically
+```
+
+If you want to know more about this and the underlying technology, please visit the [docs](https://edtrio-docs.netlify.com/).
 
 ## Features
 
@@ -44,8 +59,9 @@ We very much welcome any kinds of contributions! Have a look at our [issue track
 For some tooling explanations and guidelines, please head on over to the [docs](https://edtrio-docs.netlify.com/).
 
 ## Deploying
-The editor is deployed on https://schul-cloud.github.io/edtrio/.<br />
-To deploy a new version simply run `yarn run deploy`.
+
+The editor client is deployed on https://schul-cloud.github.io/edtrio/.<br />
+To deploy a new version simply run `yarn run deploy` in `edtrio-client`.
 
 ## License
 
