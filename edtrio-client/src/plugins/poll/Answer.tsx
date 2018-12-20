@@ -33,7 +33,7 @@ export default class PollAnswerNode extends React.Component<{
     return (
       <ListItem style={{ background }} button={true} divider={true}>
         <Radio
-          name="ok"
+          name="ok" color = "default"
           icon={<RadioButtonUncheckedIcon fontSize="small" />}
           checkedIcon={<RadioButtonCheckedIcon fontSize="small" />}
         />
