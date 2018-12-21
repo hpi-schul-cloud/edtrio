@@ -7,7 +7,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import IconButton from "@material-ui/core/IconButton";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
-import CloseIcon from "@material-ui/icons/Close";
+import DeleteIcon from "@material-ui/icons/Delete";
 import React from "react";
 
 export default class PollQuestionNode extends React.Component<{
@@ -55,7 +55,7 @@ export default class PollQuestionNode extends React.Component<{
         <h2>{this.props.children}</h2>
         <ListItemSecondaryAction>
           <IconButton onClick={this.openDialog} className="btn-flat">
-            <CloseIcon fontSize="small" />
+            <DeleteIcon fontSize="small" />
           </IconButton>
         </ListItemSecondaryAction>
 
