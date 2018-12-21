@@ -1,10 +1,11 @@
-# import Document, User, DocumentSubscriptionPayload from "./database/generated/prisma.graphql"
+# import Document, User, MultipleChoiceAnswer, DocumentSubscriptionPayload from "./database/generated/prisma.graphql"
 
 type Query {
   document(documentId: String!): Document
   documents: [Document]
   user(userId: String!): User
   users: [User]
+  multipleChoiceAnswer(answerId: String!): MultipleChoiceAnswer
 }
 
 type Mutation {
@@ -15,6 +16,11 @@ type Mutation {
     value: String!
     userIds: [String!]!
   ): Document
+  createMultipleChoiceAnswer(isCorrect: Boolean!): MultipleChoiceAnswer
+  updateMultipleChoiceAnswer(
+    answerId: String!
+    isCorrect: Boolean!
+  ): MultipleChoiceAnswer
 }
 
 type Subscription {

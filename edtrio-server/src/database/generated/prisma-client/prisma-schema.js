@@ -3,6 +3,10 @@ module.exports = {
   count: Int!
 }
 
+type AggregateMultipleChoiceAnswer {
+  count: Int!
+}
+
 type AggregateUser {
   count: Int!
 }
@@ -141,6 +145,114 @@ input DocumentWhereUniqueInput {
 
 scalar Long
 
+type MultipleChoiceAnswer {
+  id: ID!
+  isCorrect: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type MultipleChoiceAnswerConnection {
+  pageInfo: PageInfo!
+  edges: [MultipleChoiceAnswerEdge]!
+  aggregate: AggregateMultipleChoiceAnswer!
+}
+
+input MultipleChoiceAnswerCreateInput {
+  isCorrect: Boolean!
+}
+
+type MultipleChoiceAnswerEdge {
+  node: MultipleChoiceAnswer!
+  cursor: String!
+}
+
+enum MultipleChoiceAnswerOrderByInput {
+  id_ASC
+  id_DESC
+  isCorrect_ASC
+  isCorrect_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type MultipleChoiceAnswerPreviousValues {
+  id: ID!
+  isCorrect: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type MultipleChoiceAnswerSubscriptionPayload {
+  mutation: MutationType!
+  node: MultipleChoiceAnswer
+  updatedFields: [String!]
+  previousValues: MultipleChoiceAnswerPreviousValues
+}
+
+input MultipleChoiceAnswerSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: MultipleChoiceAnswerWhereInput
+  AND: [MultipleChoiceAnswerSubscriptionWhereInput!]
+  OR: [MultipleChoiceAnswerSubscriptionWhereInput!]
+  NOT: [MultipleChoiceAnswerSubscriptionWhereInput!]
+}
+
+input MultipleChoiceAnswerUpdateInput {
+  isCorrect: Boolean
+}
+
+input MultipleChoiceAnswerUpdateManyMutationInput {
+  isCorrect: Boolean
+}
+
+input MultipleChoiceAnswerWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  isCorrect: Boolean
+  isCorrect_not: Boolean
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [MultipleChoiceAnswerWhereInput!]
+  OR: [MultipleChoiceAnswerWhereInput!]
+  NOT: [MultipleChoiceAnswerWhereInput!]
+}
+
+input MultipleChoiceAnswerWhereUniqueInput {
+  id: ID
+}
+
 type Mutation {
   createDocument(data: DocumentCreateInput!): Document!
   updateDocument(data: DocumentUpdateInput!, where: DocumentWhereUniqueInput!): Document
@@ -148,6 +260,12 @@ type Mutation {
   upsertDocument(where: DocumentWhereUniqueInput!, create: DocumentCreateInput!, update: DocumentUpdateInput!): Document!
   deleteDocument(where: DocumentWhereUniqueInput!): Document
   deleteManyDocuments(where: DocumentWhereInput): BatchPayload!
+  createMultipleChoiceAnswer(data: MultipleChoiceAnswerCreateInput!): MultipleChoiceAnswer!
+  updateMultipleChoiceAnswer(data: MultipleChoiceAnswerUpdateInput!, where: MultipleChoiceAnswerWhereUniqueInput!): MultipleChoiceAnswer
+  updateManyMultipleChoiceAnswers(data: MultipleChoiceAnswerUpdateManyMutationInput!, where: MultipleChoiceAnswerWhereInput): BatchPayload!
+  upsertMultipleChoiceAnswer(where: MultipleChoiceAnswerWhereUniqueInput!, create: MultipleChoiceAnswerCreateInput!, update: MultipleChoiceAnswerUpdateInput!): MultipleChoiceAnswer!
+  deleteMultipleChoiceAnswer(where: MultipleChoiceAnswerWhereUniqueInput!): MultipleChoiceAnswer
+  deleteManyMultipleChoiceAnswers(where: MultipleChoiceAnswerWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -177,6 +295,9 @@ type Query {
   document(where: DocumentWhereUniqueInput!): Document
   documents(where: DocumentWhereInput, orderBy: DocumentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Document]!
   documentsConnection(where: DocumentWhereInput, orderBy: DocumentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DocumentConnection!
+  multipleChoiceAnswer(where: MultipleChoiceAnswerWhereUniqueInput!): MultipleChoiceAnswer
+  multipleChoiceAnswers(where: MultipleChoiceAnswerWhereInput, orderBy: MultipleChoiceAnswerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MultipleChoiceAnswer]!
+  multipleChoiceAnswersConnection(where: MultipleChoiceAnswerWhereInput, orderBy: MultipleChoiceAnswerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MultipleChoiceAnswerConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
@@ -185,6 +306,7 @@ type Query {
 
 type Subscription {
   document(where: DocumentSubscriptionWhereInput): DocumentSubscriptionPayload
+  multipleChoiceAnswer(where: MultipleChoiceAnswerSubscriptionWhereInput): MultipleChoiceAnswerSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 

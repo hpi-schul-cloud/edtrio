@@ -55,6 +55,32 @@ const schema: object = {
     code: {
       marks: [],
     },
+    "multiple-choice": {
+      nodes: [
+        { match: [{ type: "multiple-choice-question" }], min: 1, max: 1 },
+        { match: [{ type: "multiple-choice-answer" }], min: 1 },
+      ],
+      normalize: (editor: Editor, { code, node, child, index }: any) => {
+        switch (code) {
+          case "child_type_invalid": {
+            const type =
+              index === 0
+                ? "multiple-choice-question"
+                : "multiple-choice-answer";
+            return editor.setNodeByKey(child.key, type);
+          }
+          case "child_min_invalid": {
+            if (index === 0) {
+              return editor.removeNodeByKey(node.key);
+            } else {
+              const block = Block.create("multiple-choice-answer");
+              return editor.insertNodeByKey(node.key, index, block);
+            }
+          }
+        }
+        return;
+      },
+    },
     embed: { marks: [] },
     audio: {
       isVoid: true,

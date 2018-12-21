@@ -13,3 +13,10 @@ type Document {
   createdAt: DateTime!
   updatedAt: DateTime!
 }
+
+type MultipleChoiceAnswer {
+  id: ID! @unique
+  isCorrect: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
