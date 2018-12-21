@@ -104,7 +104,7 @@
       "git add"
     ],
     "src/**/*.{ts,tsx}": [
-      "./node_modules/.bin/tslint -c tslint.json --project tsconfig.json",
+      "./node_modules/.bin/tslint -c ../tslint.json --project tsconfig.json",
       "prettier",
       "git add"
     ]

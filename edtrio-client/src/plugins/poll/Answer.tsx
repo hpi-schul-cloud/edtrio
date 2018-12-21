@@ -3,7 +3,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
 import Radio from "@material-ui/core/Radio";
-import DeleteIcon from "@material-ui/icons/Delete";
+import CloseIcon from "@material-ui/icons/Close";
 import RadioButtonCheckedIcon from "@material-ui/icons/RadioButtonChecked";
 import RadioButtonUncheckedIcon from "@material-ui/icons/RadioButtonUnchecked";
 import React from "react";
@@ -33,7 +33,8 @@ export default class PollAnswerNode extends React.Component<{
     return (
       <ListItem style={{ background }} button={true} divider={true}>
         <Radio
-          name="ok" color = "default"
+          name="ok"
+          color="default"
           icon={<RadioButtonUncheckedIcon fontSize="small" />}
           checkedIcon={<RadioButtonCheckedIcon fontSize="small" />}
         />
@@ -51,7 +52,7 @@ export default class PollAnswerNode extends React.Component<{
               this.onClickDeleteAnswerButton(event, editor, node)
             }
           >
-            <DeleteIcon fontSize="small" />
+            <CloseIcon fontSize="small" />
           </IconButton>
         </ListItemSecondaryAction>
         <Radio
