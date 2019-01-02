@@ -1,12 +1,8 @@
-import Button from "@material-ui/core/Button";
-import ListEle from "@material-ui/core/List";
-import AddIcon from "@material-ui/icons/Add";
-import SendIcon from "@material-ui/icons/Send";
-import { List } from "immutable";
 import React, { Fragment } from "react";
-import { Block, Editor, Node, Text } from "slate";
+import { Editor, Node } from "slate";
 import styled from "styled-components";
 import PollAnswerNode from "./Answer";
+import PollNode from "./Poll";
 import PollQuestionNode from "./Question";
 import "./style.css";
 
@@ -19,57 +15,6 @@ export default function Poll() {
     },
     plugins: [RenderPollNode],
   };
-}
-
-// TODO: Node should be used instead of any for 'node'
-const onClickNewAnswerButton = (event: any, editor: Editor, node: any) => {
-  event.preventDefault();
-  appendNewAnswer(editor, node);
-};
-
-const appendNewAnswer = (editor: Editor, node: any) => {
-  const newAnswer = Block.create({
-    type: "poll_answer",
-    nodes: List([Text.create("")]),
-  });
-  const lastIndex = node.nodes.size;
-
-  return editor
-    .insertNodeByKey(node.key, lastIndex, newAnswer)
-    .moveToEndOfNode(newAnswer);
-};
-
-const answerButton = (editor: Editor, node: any, readOnly: boolean) => {
-  return readOnly ? (
-    <Button
-      style={{ float: "right" }}
-      variant="outlined"
-      onClick={event => null}
-    >
-      <SendIcon />
-      &nbsp;Antwort senden
-    </Button>
-  ) : (
-    <Button
-      style={{ float: "right" }}
-      variant="outlined"
-      onClick={event => onClickNewAnswerButton(event, editor, node)}
-    >
-      <AddIcon />
-      &nbsp;Antwort hinzufügen
-    </Button>
-  );
-};
-
-function PollNode(props: any) {
-  const { children, node, editor, readOnly, ...attributes } = props;
-
-  return (
-    <div>
-      <ListEle {...attributes}>{children}</ListEle>
-      <div className="right-align">{answerButton(editor, node, readOnly)}</div>
-    </div>
-  );
 }
 
 const StyledPlaceholder = styled.span`
