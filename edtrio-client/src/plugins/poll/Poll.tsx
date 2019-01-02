@@ -24,6 +24,64 @@ export default class PollNode extends React.Component<{
     );
   }
 
+  private mainActionButton(editor: Editor, node: any, readOnly: boolean) {
+    return readOnly
+      ? this.sendAnswerButton()
+      : this.addAnswerButton(editor, node);
+  }
+
+  private addAnswerButton(editor: Editor, node: any) {
+    return (
+      <Button
+        style={{ float: "right" }}
+        variant="outlined"
+        onClick={event => this.onClickAddAnswerButton(event, editor, node)}
+      >
+        <AddIcon />
+        &nbsp;Antwort hinzufügen
+      </Button>
+    );
+  }
+
+  private sendAnswerButton() {
+    return (
+      <Button
+        style={{ float: "right" }}
+        variant="outlined"
+        onClick={event => this.onClickSendAnswerButton()}
+      >
+        <SendIcon />
+        &nbsp;Antwort senden
+      </Button>
+    );
+  }
+
+  private startPollButton() {
+    return (
+      <Button
+        style={{ float: "right" }}
+        variant="outlined"
+        onClick={event => this.onClickStartPollButton()}
+      >
+        <SendIcon />
+        &nbsp;Umfrage starten
+      </Button>
+    );
+  }
+
+  private showPollResultButton() {
+    return (
+      <Button
+        style={{ float: "right" }}
+        variant="outlined"
+        onClick={event => this.onClickShowPollResultButton()}
+      >
+        <SendIcon />
+        &nbsp;Ergebnisse freischalten
+      </Button>
+    );
+  }
+
   // TODO: Node should be used instead of any for 'node'
   private onClickAddAnswerButton(event: any, editor: Editor, node: any) {
     event.preventDefault();
@@ -42,35 +100,15 @@ export default class PollNode extends React.Component<{
       .moveToEndOfNode(newAnswer);
   }
 
-  private mainActionButton(editor: Editor, node: any, readOnly: boolean) {
-    return readOnly
-      ? this.sendAnswerButton()
-      : this.addAnswerButton(editor, node);
+  private onClickSendAnswerButton() {
+    // console.log("onClickSendAnswerButton");
   }
 
-  private sendAnswerButton() {
-    return (
-      <Button
-        style={{ float: "right" }}
-        variant="outlined"
-        onClick={event => null}
-      >
-        <SendIcon />
-        &nbsp;Antwort senden
-      </Button>
-    );
+  private onClickStartPollButton() {
+    // console.log("onClickStartPollButton");
   }
 
-  private addAnswerButton(editor: Editor, node: any) {
-    return (
-      <Button
-        style={{ float: "right" }}
-        variant="outlined"
-        onClick={event => this.onClickAddAnswerButton(event, editor, node)}
-      >
-        <AddIcon />
-        &nbsp;Antwort hinzufügen
-      </Button>
-    );
+  private onClickShowPollResultButton() {
+    // console.log("onClickShowPollResultButton");
   }
 }
