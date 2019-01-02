@@ -37,6 +37,7 @@ const RenderPollNode = {
       editor,
       parent,
       readOnly,
+      currentUser,
     } = props;
 
     if (node.type === "poll") {
@@ -48,6 +49,7 @@ const RenderPollNode = {
           {...attributes}
           next={next}
           readOnly={readOnly}
+          currentUser={currentUser}
         >
           {children}
         </PollNode>
