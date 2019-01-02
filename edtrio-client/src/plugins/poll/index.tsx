@@ -29,6 +29,11 @@ const StyledPlaceholder = styled.span`
 const RenderPollNode = {
   renderNode(props: any, next: any) {
     // append to parent, see add-section
+    // TODO: Get current user from props
+    const currentUser = {
+      isTeacher: true,
+    };
+
     const {
       children,
       attributes,
@@ -37,7 +42,6 @@ const RenderPollNode = {
       editor,
       parent,
       readOnly,
-      currentUser,
     } = props;
 
     if (node.type === "poll") {

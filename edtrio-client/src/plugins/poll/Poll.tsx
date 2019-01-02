@@ -28,6 +28,7 @@ export default class PollNode extends React.Component<{
         <div className="right-align">
           {this.mainActionButton(editor, node, readOnly, currentUser)}
         </div>
+        <br />
       </div>
     );
   }
@@ -40,8 +41,8 @@ export default class PollNode extends React.Component<{
   ) {
     return readOnly
       ? currentUser.isTeacher
-        ? this.sendAnswerButton()
-        : this.startPollButton()
+        ? this.startPollButton()
+        : this.sendAnswerButton()
       : this.addAnswerButton(editor, node);
   }
 
