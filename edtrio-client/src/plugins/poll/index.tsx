@@ -1,14 +1,16 @@
+import { List } from "immutable";
 import React, { Fragment } from "react";
-import { Editor, Node } from "slate";
+import { Block, Editor, Node, Text } from "slate";
 import styled from "styled-components";
 import PollAnswerNode from "./Answer";
+import { createNewAnswer } from "./Poll";
 import PollNode from "./Poll";
 import PollQuestionNode from "./Question";
 import "./style.css";
 
 export default function Poll() {
   return {
-    changes: {},
+    changes: { onClickPollButton },
     helpers: {},
     components: {
       PollNode,
@@ -16,6 +18,24 @@ export default function Poll() {
     plugins: [RenderPollNode],
   };
 }
+
+const onClickPollButton = (event: any, editor: Editor) => {
+  event.preventDefault();
+
+  editor.insertBlock(
+    Block.create({
+      type: "poll",
+      nodes: List([
+        Block.create({
+          type: "poll_question",
+          nodes: List([Text.create("")]),
+        }),
+        createNewAnswer(),
+        createNewAnswer(),
+      ]),
+    }),
+  );
+};
 
 const StyledPlaceholder = styled.span`
   pointer-events: none;

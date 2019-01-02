@@ -7,11 +7,11 @@ import CloseIcon from "@material-ui/icons/Close";
 import RadioButtonCheckedIcon from "@material-ui/icons/RadioButtonChecked";
 import RadioButtonUncheckedIcon from "@material-ui/icons/RadioButtonUnchecked";
 import React from "react";
-import { Editor, Node } from "slate";
+import { Block, Editor } from "slate";
 
 export default class PollAnswerNode extends React.Component<{
   readOnly: boolean;
-  node: Node;
+  node: Block;
   editor: Editor;
   parentKey: number;
 }> {
@@ -32,7 +32,7 @@ export default class PollAnswerNode extends React.Component<{
     }
   }
 
-  private renderReadOnlyMode(node: Node, parentKey: number, attributes: any) {
+  private renderReadOnlyMode(node: Block, parentKey: number, attributes: any) {
     const percentage = Math.floor(Math.random() * 100);
     const color = "#007A9E";
     const background = `linear-gradient(to right, ${color} ${0}%, ${color} ${percentage}%, white ${percentage}%, white ${100 -
@@ -59,7 +59,7 @@ export default class PollAnswerNode extends React.Component<{
 
   private renderEditMode(
     children: any,
-    node: Node,
+    node: Block,
     editor: Editor,
     attributes: any,
   ) {
@@ -85,11 +85,11 @@ export default class PollAnswerNode extends React.Component<{
     );
   }
 
-  private deleteNode(editor: Editor, node: Node) {
+  private deleteNode(editor: Editor, node: Block) {
     return editor.removeNodeByKey(node.key);
   }
 
-  private onClickDeleteAnswerButton(event: any, editor: Editor, node: Node) {
+  private onClickDeleteAnswerButton(event: any, editor: Editor, node: Block) {
     event.preventDefault();
     this.deleteNode(editor, node);
   }
