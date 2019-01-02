@@ -2,6 +2,7 @@ import { List } from "immutable";
 import { Block, Editor, Text } from "slate";
 // @ts-ignore
 import Image from "../image";
+import Poll from "../poll";
 
 /**
  * handles clicks on the imageblock button and
@@ -36,8 +37,6 @@ export const onClickImageButton = (
   });
 };
 
-
-
 /**
  * handles clicks on the codeblock button and
  * forwards them accordingly to plugins/code-block
@@ -64,26 +63,4 @@ export const onClickIframeButton = (event: any, editor: Editor) => {
   );
 };
 
-export const onClickPollButton = (event: any, editor: Editor) => {
-  event.preventDefault();
-
-  editor.insertBlock(
-    Block.create({
-      type: "poll",
-      nodes: List([
-        Block.create({
-          type: "poll_question",
-          nodes: List([Text.create("")]),
-        }),
-        Block.create({
-          type: "poll_answer",
-          nodes: List([Text.create("")]),
-        }),
-        Block.create({
-          type: "poll_answer",
-          nodes: List([Text.create("")]),
-        }),
-      ]),
-    }),
-  );
-};
+export const onClickPollButton = Poll().changes.onClickPollButton;

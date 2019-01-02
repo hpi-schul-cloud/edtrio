@@ -1,10 +1,18 @@
 import Button from "@material-ui/core/Button";
 import ListEle from "@material-ui/core/List";
+import RadioGroup from "@material-ui/core/RadioGroup";
 import AddIcon from "@material-ui/icons/Add";
 import SendIcon from "@material-ui/icons/Send";
 import { List } from "immutable";
 import React from "react";
 import { Block, Editor, Node, Text } from "slate";
+
+export function createNewAnswer() {
+  return Block.create({
+    type: "poll_answer",
+    nodes: List([Text.create("")]),
+  });
+}
 
 export default class PollNode extends React.Component<{
   readOnly: boolean;
@@ -24,7 +32,9 @@ export default class PollNode extends React.Component<{
 
     return (
       <div>
-        <ListEle {...attributes}>{children}</ListEle>
+        <ListEle {...attributes}>
+          <RadioGroup>{children}</RadioGroup>
+        </ListEle>
         <div className="right-align">
           {this.mainActionButton(editor, node, readOnly, currentUser)}
         </div>
@@ -105,10 +115,7 @@ export default class PollNode extends React.Component<{
   }
 
   private appendNewAnswer(editor: Editor, node: any) {
-    const newAnswer = Block.create({
-      type: "poll_answer",
-      nodes: List([Text.create("")]),
-    });
+    const newAnswer = createNewAnswer();
     const lastIndex = node.nodes.size;
 
     return editor
