@@ -10,23 +10,38 @@ export default class PollNode extends React.Component<{
   readOnly: boolean;
   node: any;
   editor: any;
+  currentUser: any;
 }> {
   public render() {
-    const { children, node, editor, readOnly, ...attributes } = this.props;
+    const {
+      children,
+      node,
+      editor,
+      readOnly,
+      currentUser,
+      ...attributes
+    } = this.props;
 
     return (
       <div>
         <ListEle {...attributes}>{children}</ListEle>
         <div className="right-align">
-          {this.mainActionButton(editor, node, readOnly)}
+          {this.mainActionButton(editor, node, readOnly, currentUser)}
         </div>
       </div>
     );
   }
 
-  private mainActionButton(editor: Editor, node: any, readOnly: boolean) {
+  private mainActionButton(
+    editor: Editor,
+    node: any,
+    readOnly: boolean,
+    currentUser: any,
+  ) {
     return readOnly
-      ? this.sendAnswerButton()
+      ? currentUser.isTeacher
+        ? this.sendAnswerButton()
+        : this.startPollButton()
       : this.addAnswerButton(editor, node);
   }
 
