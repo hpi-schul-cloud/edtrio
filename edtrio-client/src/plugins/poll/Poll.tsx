@@ -25,7 +25,7 @@ export default class PollNode extends React.Component<{
   }
 
   // TODO: Node should be used instead of any for 'node'
-  private onClickNewAnswerButton(event: any, editor: Editor, node: any) {
+  private onClickAddAnswerButton(event: any, editor: Editor, node: any) {
     event.preventDefault();
     this.appendNewAnswer(editor, node);
   }
@@ -43,7 +43,13 @@ export default class PollNode extends React.Component<{
   }
 
   private mainActionButton(editor: Editor, node: any, readOnly: boolean) {
-    return readOnly ? (
+    return readOnly
+      ? this.sendAnswerButton()
+      : this.addAnswerButton(editor, node);
+  }
+
+  private sendAnswerButton() {
+    return (
       <Button
         style={{ float: "right" }}
         variant="outlined"
@@ -52,11 +58,15 @@ export default class PollNode extends React.Component<{
         <SendIcon />
         &nbsp;Antwort senden
       </Button>
-    ) : (
+    );
+  }
+
+  private addAnswerButton(editor: Editor, node: any) {
+    return (
       <Button
         style={{ float: "right" }}
         variant="outlined"
-        onClick={event => this.onClickNewAnswerButton(event, editor, node)}
+        onClick={event => this.onClickAddAnswerButton(event, editor, node)}
       >
         <AddIcon />
         &nbsp;Antwort hinzufügen
