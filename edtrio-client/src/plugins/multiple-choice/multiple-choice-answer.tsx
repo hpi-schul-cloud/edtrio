@@ -57,6 +57,37 @@ const MULTIPLE_CHOICE_SUBMISSION = gql`
   }
 `;
 
+const CREATE_MULTIPLE_CHOICE_SUBMISSION = gql`
+  mutation createMultipleChoiceSubmission(
+    $isChecked: Boolean!
+    $answerId: String!
+    $userId: String!
+  ) {
+    createMultipleChoiceSubmission(
+      isChecked: $isChecked
+      answerId: $answerId
+      userId: $userId
+    ) {
+      id
+    }
+  }
+`;
+
+const UPDATE_MULTIPLE_CHOICE_SUBMISSION = gql`
+  mutation updateMultipleChoiceSubmission(
+    $submissionId: String!
+    $isChecked: Boolean!
+  ) {
+    updateMultipleChoiceSubmission(
+      submissionId: $answerId
+      isChecked: $isChecked
+    ) {
+      id
+      isChecked
+    }
+  }
+`;
+
 interface IMultipleChoiceAnswerNodeProps {
   node: Node;
   attributes: object;
@@ -69,6 +100,13 @@ interface IMultipleChoiceAnswerNodeProps {
 export class MultipleChoiceAnswerNode extends PureComponent<
   IMultipleChoiceAnswerNodeProps
 > {
+  public id: string;
+  constructor(props: IMultipleChoiceAnswerNodeProps) {
+    super(props);
+
+    this.id = "";
+  }
+
   public async testValidity(props: IMultipleChoiceAnswerNodeProps) {
     // Test for having no id
     // @ts-ignore
@@ -123,9 +161,29 @@ export class MultipleChoiceAnswerNode extends PureComponent<
     });
   }
 
-  public submitAnswer(event: any, id: string, multipleChoiceSubmission?: any) {
-    console.log(event.target.checked);
-    console.log(multipleChoiceSubmission);
+  public async submitAnswer(
+    event: any,
+    id: string,
+    userId: string,
+    multipleChoiceSubmission?: any,
+  ) {
+    if (multipleChoiceSubmission || this.id) {
+      apolloClient.mutate({
+        mutation: UPDATE_MULTIPLE_CHOICE_SUBMISSION,
+        variables: {
+          submissionId: multipleChoiceSubmission.id || this.id,
+          isChecked: event.target.checked,
+        },
+      });
+    } else {
+      const answer = await apolloClient.mutate({
+        mutation: CREATE_MULTIPLE_CHOICE_SUBMISSION,
+        variables: { answerId: id, isChecked: event.target.checked, userId },
+      });
+      if (answer.data && answer.data.multipleChoiceSubmission) {
+        this.id = answer.data.multipleChoiceSubmission.id;
+      }
+    }
   }
 
   public render() {
@@ -150,16 +208,17 @@ export class MultipleChoiceAnswerNode extends PureComponent<
                       if (error) {
                         return <p>Error fetching data</p>;
                       }
-                      if (data && data.multipleChoiceSubmission) {
+                      if (data && data.submissionByUser) {
                         return (
                           <input
                             type="checkbox"
-                            checked={data.multipleChoiceSubmission.isChecked}
+                            checked={data.submissionByUser.isChecked}
                             onChange={event =>
                               this.submitAnswer(
                                 event,
                                 id,
-                                data.multipleChoiceSubmission,
+                                currentUser.id,
+                                data.submissionByUser,
                               )
                             }
                           />
@@ -168,7 +227,9 @@ export class MultipleChoiceAnswerNode extends PureComponent<
                         return (
                           <input
                             type="checkbox"
-                            onChange={event => this.submitAnswer(event, id)}
+                            onChange={event =>
+                              this.submitAnswer(event, id, currentUser.id)
+                            }
                           />
                         );
                       }

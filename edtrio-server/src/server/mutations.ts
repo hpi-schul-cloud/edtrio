@@ -63,10 +63,10 @@ export const mutations = {
       return context.prisma.createMultipleChoiceSubmission({
         isChecked: args.isChecked,
         author: {
-          connect: args.userId,
+          connect: {id: args.userId},
         },
         answer: {
-          connect: args.answerId,
+          connect: {id: args.answerId},
         },
       });
     },

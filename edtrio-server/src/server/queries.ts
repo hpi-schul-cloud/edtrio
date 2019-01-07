@@ -34,13 +34,10 @@ export const queries = {
             author: user,
           },
         });
-      if (
-        Object.keys(submissions).length === 0 &&
-        submissions.constructor === Object
-      ) {
+      if (submissions.length === 0) {
         return null;
       }
-      return submissions;
+      return submissions[0];
     },
   },
 };
