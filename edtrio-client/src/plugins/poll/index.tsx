@@ -3,6 +3,7 @@ import React, { Fragment } from "react";
 import { Block, Editor, Node, Text } from "slate";
 import styled from "styled-components";
 import PollAnswerNode from "./Answer";
+import PollAnswerGroupNode from "./AnswerGroup";
 import { createNewAnswer } from "./Poll";
 import PollNode from "./Poll";
 import PollQuestionNode from "./Question";
@@ -30,8 +31,11 @@ const onClickPollButton = (event: any, editor: Editor) => {
           type: "poll_question",
           nodes: List([Text.create("")]),
         }),
-        createNewAnswer(),
-        createNewAnswer(),
+        Block.create({
+          type: "poll_answergroup",
+          data: { selected_answer: -1 },
+          nodes: List([createNewAnswer(), createNewAnswer()]),
+        }),
       ]),
     }),
   );
@@ -91,11 +95,16 @@ const RenderPollNode = {
         </PollQuestionNode>
       );
     }
+    if (node.type === "poll_answergroup") {
+      return (
+        <PollAnswerGroupNode {...attributes}>{children}</PollAnswerGroupNode>
+      );
+    }
     if (node.type === "poll_answer") {
       return (
         <PollAnswerNode
           node={node}
-          parentKey={parent.key}
+          parent={parent}
           editor={editor}
           readOnly={readOnly}
           {...attributes}
