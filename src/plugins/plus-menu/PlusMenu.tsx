@@ -18,7 +18,7 @@ import {
   onClickCodeButton,
   onClickIframeButton,
   onClickImageButton,
-  onClickSortButton,
+  onClickSortingTaskButton,
 } from "./actions";
 
 interface IPlusMenuProps {
@@ -84,17 +84,13 @@ class PlusMenu extends PureComponent<IPlusMenuProps, IPlusMenuState> {
     try {
       const nodeEl = findDOMNode(startBlock);
       const nodeElBBox = nodeEl.getBoundingClientRect();
-      // don't render the menu in the title
-      if ("type" in startBlock && startBlock.type !== "title") {
-        const top = nodeElBBox.top + window.pageYOffset;
+      const top = nodeElBBox.top + window.pageYOffset;
+      const right = window.innerWidth - (nodeElBBox.width + nodeElBBox.left);
 
-        const right = window.innerWidth - (nodeElBBox.width + nodeElBBox.left);
-
-        style = {
-          top: `${top}px`,
-          right: `${right}px`,
-        };
-      }
+      style = {
+        top: `${top}px`,
+        right: `${right}px`,
+      };
     } catch (error) {
       // this can happen when a new block is created that does not yet have a representation in the dom
     }
@@ -122,7 +118,7 @@ class PlusMenu extends PureComponent<IPlusMenuProps, IPlusMenuState> {
         {this.renderBlockButton(
           faSort,
           "Sortieraufgabe einfügen",
-          onClickSortButton,
+          onClickSortingTaskButton,
         )}
         <DashboardModal
           uppy={this.uppy}

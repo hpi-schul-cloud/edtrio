@@ -62,27 +62,12 @@ export const onClickIframeButton = (event: any, editor: Editor) => {
   );
 };
 
-export const onClickSortButton = (event: any, editor: Editor) => {
+export const onClickSortingTaskButton = (event: any, editor: Editor) => {
   event.preventDefault();
 
   editor.insertBlock(
     Block.create({
-      type: "sorting-task",
-      nodes: List([
-        Block.create({
-          type: "sorting-task_question",
-          nodes: List([
-            Block.create({
-              type: "sorting-task_term",
-              nodes: List([Text.create("")]),
-            }),
-            Block.create({
-              type: "sorting-task_solution",
-              nodes: List([Text.create("")]),
-            }),
-          ]),
-        })
-      ]),
+      type: "sortingTask",
     }),
   );
 };

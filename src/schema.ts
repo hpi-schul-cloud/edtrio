@@ -55,6 +55,9 @@ const schema: object = {
     audio: {
       isVoid: true,
     },
+    sortingTask: {
+      isVoid: true,
+    },
   },
 };
 
