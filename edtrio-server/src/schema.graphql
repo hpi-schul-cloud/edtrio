@@ -1,4 +1,5 @@
-# import Document, User, MultipleChoiceAnswer, DocumentSubscriptionPayload from "./database/generated/prisma.graphql"
+# import Document, User, MultipleChoiceAnswer, MultipleChoiceSubmission, DocumentSubscriptionPayload from "./database/generated/prisma.graphql"
+scalar Json
 
 type Query {
   document(documentId: String!): Document
@@ -6,21 +7,31 @@ type Query {
   user(userId: String!): User
   users: [User]
   multipleChoiceAnswer(answerId: String!): MultipleChoiceAnswer
+  submissions(answerId: String!): [MultipleChoiceSubmission]
+  submission(submissionId: String!): MultipleChoiceSubmission
+  submissionByUser(answerId: String!, userId: String!): MultipleChoiceSubmission
 }
 
 type Mutation {
   createUser(name: String!, isTeacher: Boolean!): User
-  createDocument(value: String!, userIds: [String!]!): Document
-  updateDocument(
-    documentId: String!
-    value: String!
-    userIds: [String!]!
-  ): Document
+  createDocument(value: Json!, userIds: [String!]!): Document
+  updateDocument(documentId: String!, value: Json, userIds: [String!]): Document
   createMultipleChoiceAnswer(isCorrect: Boolean!): MultipleChoiceAnswer
   updateMultipleChoiceAnswer(
     answerId: String!
     isCorrect: Boolean!
   ): MultipleChoiceAnswer
+  createMultipleChoiceSubmission(
+    isChecked: Boolean!
+    userId: String!
+    answerId: String!
+  ): MultipleChoiceSubmission
+  updateMultipleChoiceSubmission(
+    submissionId: String!
+    isChecked: Boolean!
+  ): MultipleChoiceSubmission
+  deleteMultipleChoiceAnswer(answerId: String!): MultipleChoiceAnswer
+  deleteMultipleChoiceSubmission(submissionId: String): MultipleChoiceSubmission
 }
 
 type Subscription {

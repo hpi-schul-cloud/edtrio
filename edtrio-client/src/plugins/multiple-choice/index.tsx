@@ -37,11 +37,13 @@ const RenderMultipleChoiceNode = {
       children,
       node,
       isFocused,
+      readOnly,
     }: {
       attributes: object;
       children: ReactNode;
       node: Node;
       isFocused: boolean;
+      readOnly: boolean;
     },
     editor: Editor,
     next: () => void,
@@ -53,6 +55,7 @@ const RenderMultipleChoiceNode = {
           attributes={attributes}
           editor={editor}
           isFocused={isFocused}
+          readOnly={readOnly}
         >
           {children}
         </MultipleChoiceNode>
@@ -69,11 +72,13 @@ const RenderMultipleChoiceQuestionNode = {
       children,
       node,
       isFocused,
+      readOnly,
     }: {
       attributes: object;
       children: ReactNode;
       node: Node;
       isFocused: boolean;
+      readOnly: boolean;
     },
     editor: Editor,
     next: () => void,
@@ -85,6 +90,7 @@ const RenderMultipleChoiceQuestionNode = {
           attributes={attributes}
           editor={editor}
           isFocused={isFocused}
+          readOnly={readOnly}
         >
           {children}
         </MultipleChoiceQuestionNode>
@@ -131,11 +137,13 @@ const RenderMultipleChoiceAnswerNode = {
       children,
       node,
       isFocused,
+      readOnly,
     }: {
       attributes: object;
       children: ReactNode;
       node: Node;
       isFocused: boolean;
+      readOnly: boolean;
     },
     editor: Editor,
     next: () => void,
@@ -147,6 +155,7 @@ const RenderMultipleChoiceAnswerNode = {
           attributes={attributes}
           editor={editor}
           isFocused={isFocused}
+          readOnly={readOnly}
         >
           {children}
         </MultipleChoiceAnswerNode>

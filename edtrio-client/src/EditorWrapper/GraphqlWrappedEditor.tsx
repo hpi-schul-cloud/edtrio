@@ -5,10 +5,13 @@ import { Value } from "slate";
 import { ApolloProvider, Query, Subscription } from "react-apollo";
 
 import Editor, { IEditorUserProps } from "../Editor";
+import { IUserType } from "../types";
 import { apolloClient } from "./apolloClient";
 
 interface IGraphqlWrappedEditorProps extends IEditorUserProps {
   documentId: string;
+  updateCurrentUser: (newUser: IUserType) => void;
+  updateUserList: (users: IUserType[]) => void;
 }
 
 // get to document value
@@ -16,6 +19,11 @@ const DOCUMENT_QUERY = gql`
   query document($documentId: String!) {
     document(documentId: $documentId) {
       value
+      users {
+        id
+        name
+        isTeacher
+      }
     }
   }
 `;
@@ -39,59 +47,46 @@ export default function GraphqlWrappedEditor(
         variables={{ documentId: props.documentId }}
       >
         {({ loading, error, data }) => {
-          if (props.currentUser.isTeacher) {
-            return data && data.document ? (
-              // if the user is a teacher and the grapqhl-server is in reach
-              // load initial data from the server and let the editor handle it's own state
-              <Editor
-                initialValue={Value.fromJSON(JSON.parse(data.document.value))}
-                {...props}
-                apolloClient={apolloClient}
-              />
-            ) : (
-              // if the user is a teacher but the grapqhl-server is not reachable
-              // show a local editor working with localStorage
-              <Editor {...props} />
-            );
-          } else {
-            return data && data.document ? (
+          // load initial data from the server
+          if (data && data.document) {
+            // update userlist, if necessary
+            if (props.users !== data.document.users) {
+              props.updateUserList(data.document.users);
+              props.updateCurrentUser(data.document.users[0]);
+            }
+            return (
               <Subscription
                 subscription={VALUE_SUBSCRIPTION}
                 variables={{ documentId: props.documentId }}
               >
                 {({ data: subscriptionData }) => {
-                  return data && data.document ? (
-                    // if the user is a pupil and the grapql-server is in reach
-                    // show an editor in readOnly mode where the value is provided by the graphql
-                    // subscription
-                    <Editor
-                      // TODO: there should be a way to save this as json instead of a string
-                      initialValue={Value.fromJSON(
-                        JSON.parse(data.document.value),
-                      )}
-                      {...props}
-                      apolloClient={apolloClient}
-                      value={
-                        subscriptionData && subscriptionData.valueChanged
-                          ? Value.fromJSON(
-                              JSON.parse(subscriptionData.valueChanged.value),
-                            )
-                          : Value.fromJSON(JSON.parse(data.document.value))
-                      }
-                    />
-                  ) : (
-                    // if the user is a pupil but the grapqhl-server is not reachable
-                    // show a local editor working with localStorage
-                    <Editor {...props} />
-                  );
+                  // get the latest changes
+                  if (data && data.document) {
+                    const value =
+                      subscriptionData && subscriptionData.valueChanged
+                        ? Value.fromJSON(subscriptionData.valueChanged.value)
+                        : Value.fromJSON(data.document.value);
+
+                    let controlledProps;
+                    if (!props.currentUser.isTeacher) {
+                      // if the user is a pupil, that means the editor value is controlled by the server
+                      controlledProps = { value };
+                    }
+                    return (
+                      <Editor
+                        initialValue={value}
+                        {...props}
+                        apolloClient={apolloClient}
+                        {...controlledProps}
+                      />
+                    );
+                  }
+                  return null;
                 }}
               </Subscription>
-            ) : (
-              // if the user is a pupil but the grapqhl-server is not reachable
-              // show a local editor working with localStorage
-              <Editor {...props} />
             );
           }
+          return null;
         }}
       </Query>
     </ApolloProvider>

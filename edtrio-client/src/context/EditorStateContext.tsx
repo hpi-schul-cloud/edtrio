@@ -2,7 +2,7 @@ import React, { Component, createContext } from "react";
 
 import { IUserType } from "../types";
 
-const seedUser = { name: "Test Test", isTeacher: false };
+const seedUser = { name: "Test Test", isTeacher: false, id: "1234" };
 
 export const EditorStateContext = createContext<IEditorStateProviderState>({
   isEditable: true,

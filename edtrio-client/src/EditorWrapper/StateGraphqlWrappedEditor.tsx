@@ -12,12 +12,13 @@ export default function StateGraphqlWrappedEditor(
   props: IStateGraphqlWrappedEditorProps,
 ) {
   return (
-    // TODO: take users out of backend
+    // TODO: get users from backend
     <EditorStateContext.Consumer>
       {({
         updateIsEditable,
         isEditable,
         updateCurrentUser,
+        updateUserList,
         currentUser,
         users,
       }) => (
@@ -31,6 +32,7 @@ export default function StateGraphqlWrappedEditor(
               users={users}
               currentUser={currentUser}
               updateCurrentUser={updateCurrentUser}
+              updateUserList={updateUserList}
             />
           )}
         </LastSavedContext.Consumer>

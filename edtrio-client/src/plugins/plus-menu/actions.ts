@@ -1,6 +1,5 @@
-import { List, Map } from "immutable";
+import { List } from "immutable";
 import { Block, Editor, Text } from "slate";
-import uuid from "uuid/v4";
 
 // @ts-ignore
 import Image from "../image";
@@ -67,12 +66,10 @@ export const onClickMultipleChoiceButton = (event: any, editor: Editor) => {
         Block.create({
           type: "multiple-choice-question",
           nodes: List([Text.create({})]),
-          data: Map({ id: uuid() }),
         }),
         Block.create({
           type: "multiple-choice-answer",
           nodes: List([Text.create({})]),
-          data: Map({ id: uuid() }),
         }),
       ]),
     }),

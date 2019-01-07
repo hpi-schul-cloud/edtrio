@@ -8,6 +8,7 @@ interface IMultipleChoiceQuestionNodeProps {
   isFocused: boolean;
   children: any;
   editor: Editor;
+  readOnly: boolean;
 }
 
 export class MultipleChoiceQuestionNode extends PureComponent<

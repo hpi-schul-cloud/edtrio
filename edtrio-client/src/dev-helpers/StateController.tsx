@@ -62,11 +62,13 @@ export class StateController extends PureComponent<IStateControllerProps> {
 const teacherUser: IUserType = {
   name: "Teacher",
   isTeacher: true,
+  id: "teacher",
 };
 
 const pupilUser: IUserType = {
   name: "Pupil",
   isTeacher: false,
+  id: "puipl",
 };
 
 const allUsers: IUserType[] = [teacherUser, pupilUser];

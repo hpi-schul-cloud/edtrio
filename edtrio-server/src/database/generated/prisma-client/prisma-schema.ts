@@ -1,9 +1,12 @@
-module.exports = {
-        typeDefs: /* GraphQL */ `type AggregateDocument {
+export const typeDefs = /* GraphQL */ `type AggregateDocument {
   count: Int!
 }
 
 type AggregateMultipleChoiceAnswer {
+  count: Int!
+}
+
+type AggregateMultipleChoiceSubmission {
   count: Int!
 }
 
@@ -19,10 +22,11 @@ scalar DateTime
 
 type Document {
   id: ID!
-  value: String!
+  value: Json!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   createdAt: DateTime!
   updatedAt: DateTime!
+  answers(where: MultipleChoiceAnswerWhereInput, orderBy: MultipleChoiceAnswerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MultipleChoiceAnswer!]
 }
 
 type DocumentConnection {
@@ -32,8 +36,9 @@ type DocumentConnection {
 }
 
 input DocumentCreateInput {
-  value: String!
+  value: Json!
   users: UserCreateManyInput
+  answers: MultipleChoiceAnswerCreateManyInput
 }
 
 type DocumentEdge {
@@ -54,7 +59,7 @@ enum DocumentOrderByInput {
 
 type DocumentPreviousValues {
   id: ID!
-  value: String!
+  value: Json!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -78,12 +83,13 @@ input DocumentSubscriptionWhereInput {
 }
 
 input DocumentUpdateInput {
-  value: String
+  value: Json
   users: UserUpdateManyInput
+  answers: MultipleChoiceAnswerUpdateManyInput
 }
 
 input DocumentUpdateManyMutationInput {
-  value: String
+  value: Json
 }
 
 input DocumentWhereInput {
@@ -101,20 +107,6 @@ input DocumentWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  value: String
-  value_not: String
-  value_in: [String!]
-  value_not_in: [String!]
-  value_lt: String
-  value_lte: String
-  value_gt: String
-  value_gte: String
-  value_contains: String
-  value_not_contains: String
-  value_starts_with: String
-  value_not_starts_with: String
-  value_ends_with: String
-  value_not_ends_with: String
   users_every: UserWhereInput
   users_some: UserWhereInput
   users_none: UserWhereInput
@@ -134,6 +126,9 @@ input DocumentWhereInput {
   updatedAt_lte: DateTime
   updatedAt_gt: DateTime
   updatedAt_gte: DateTime
+  answers_every: MultipleChoiceAnswerWhereInput
+  answers_some: MultipleChoiceAnswerWhereInput
+  answers_none: MultipleChoiceAnswerWhereInput
   AND: [DocumentWhereInput!]
   OR: [DocumentWhereInput!]
   NOT: [DocumentWhereInput!]
@@ -143,6 +138,8 @@ input DocumentWhereUniqueInput {
   id: ID
 }
 
+scalar Json
+
 scalar Long
 
 type MultipleChoiceAnswer {
@@ -150,6 +147,7 @@ type MultipleChoiceAnswer {
   isCorrect: Boolean!
   createdAt: DateTime!
   updatedAt: DateTime!
+  submissions(where: MultipleChoiceSubmissionWhereInput, orderBy: MultipleChoiceSubmissionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MultipleChoiceSubmission!]
 }
 
 type MultipleChoiceAnswerConnection {
@@ -159,6 +157,21 @@ type MultipleChoiceAnswerConnection {
 }
 
 input MultipleChoiceAnswerCreateInput {
+  isCorrect: Boolean!
+  submissions: MultipleChoiceSubmissionCreateManyWithoutAnswerInput
+}
+
+input MultipleChoiceAnswerCreateManyInput {
+  create: [MultipleChoiceAnswerCreateInput!]
+  connect: [MultipleChoiceAnswerWhereUniqueInput!]
+}
+
+input MultipleChoiceAnswerCreateOneWithoutSubmissionsInput {
+  create: MultipleChoiceAnswerCreateWithoutSubmissionsInput
+  connect: MultipleChoiceAnswerWhereUniqueInput
+}
+
+input MultipleChoiceAnswerCreateWithoutSubmissionsInput {
   isCorrect: Boolean!
 }
 
@@ -185,6 +198,44 @@ type MultipleChoiceAnswerPreviousValues {
   updatedAt: DateTime!
 }
 
+input MultipleChoiceAnswerScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  isCorrect: Boolean
+  isCorrect_not: Boolean
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [MultipleChoiceAnswerScalarWhereInput!]
+  OR: [MultipleChoiceAnswerScalarWhereInput!]
+  NOT: [MultipleChoiceAnswerScalarWhereInput!]
+}
+
 type MultipleChoiceAnswerSubscriptionPayload {
   mutation: MutationType!
   node: MultipleChoiceAnswer
@@ -203,12 +254,65 @@ input MultipleChoiceAnswerSubscriptionWhereInput {
   NOT: [MultipleChoiceAnswerSubscriptionWhereInput!]
 }
 
+input MultipleChoiceAnswerUpdateDataInput {
+  isCorrect: Boolean
+  submissions: MultipleChoiceSubmissionUpdateManyWithoutAnswerInput
+}
+
 input MultipleChoiceAnswerUpdateInput {
   isCorrect: Boolean
+  submissions: MultipleChoiceSubmissionUpdateManyWithoutAnswerInput
+}
+
+input MultipleChoiceAnswerUpdateManyDataInput {
+  isCorrect: Boolean
+}
+
+input MultipleChoiceAnswerUpdateManyInput {
+  create: [MultipleChoiceAnswerCreateInput!]
+  update: [MultipleChoiceAnswerUpdateWithWhereUniqueNestedInput!]
+  upsert: [MultipleChoiceAnswerUpsertWithWhereUniqueNestedInput!]
+  delete: [MultipleChoiceAnswerWhereUniqueInput!]
+  connect: [MultipleChoiceAnswerWhereUniqueInput!]
+  disconnect: [MultipleChoiceAnswerWhereUniqueInput!]
+  deleteMany: [MultipleChoiceAnswerScalarWhereInput!]
+  updateMany: [MultipleChoiceAnswerUpdateManyWithWhereNestedInput!]
 }
 
 input MultipleChoiceAnswerUpdateManyMutationInput {
   isCorrect: Boolean
+}
+
+input MultipleChoiceAnswerUpdateManyWithWhereNestedInput {
+  where: MultipleChoiceAnswerScalarWhereInput!
+  data: MultipleChoiceAnswerUpdateManyDataInput!
+}
+
+input MultipleChoiceAnswerUpdateOneRequiredWithoutSubmissionsInput {
+  create: MultipleChoiceAnswerCreateWithoutSubmissionsInput
+  update: MultipleChoiceAnswerUpdateWithoutSubmissionsDataInput
+  upsert: MultipleChoiceAnswerUpsertWithoutSubmissionsInput
+  connect: MultipleChoiceAnswerWhereUniqueInput
+}
+
+input MultipleChoiceAnswerUpdateWithoutSubmissionsDataInput {
+  isCorrect: Boolean
+}
+
+input MultipleChoiceAnswerUpdateWithWhereUniqueNestedInput {
+  where: MultipleChoiceAnswerWhereUniqueInput!
+  data: MultipleChoiceAnswerUpdateDataInput!
+}
+
+input MultipleChoiceAnswerUpsertWithoutSubmissionsInput {
+  update: MultipleChoiceAnswerUpdateWithoutSubmissionsDataInput!
+  create: MultipleChoiceAnswerCreateWithoutSubmissionsInput!
+}
+
+input MultipleChoiceAnswerUpsertWithWhereUniqueNestedInput {
+  where: MultipleChoiceAnswerWhereUniqueInput!
+  update: MultipleChoiceAnswerUpdateDataInput!
+  create: MultipleChoiceAnswerCreateInput!
 }
 
 input MultipleChoiceAnswerWhereInput {
@@ -244,12 +348,215 @@ input MultipleChoiceAnswerWhereInput {
   updatedAt_lte: DateTime
   updatedAt_gt: DateTime
   updatedAt_gte: DateTime
+  submissions_every: MultipleChoiceSubmissionWhereInput
+  submissions_some: MultipleChoiceSubmissionWhereInput
+  submissions_none: MultipleChoiceSubmissionWhereInput
   AND: [MultipleChoiceAnswerWhereInput!]
   OR: [MultipleChoiceAnswerWhereInput!]
   NOT: [MultipleChoiceAnswerWhereInput!]
 }
 
 input MultipleChoiceAnswerWhereUniqueInput {
+  id: ID
+}
+
+type MultipleChoiceSubmission {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  author: User!
+  isChecked: Boolean!
+  answer: MultipleChoiceAnswer!
+}
+
+type MultipleChoiceSubmissionConnection {
+  pageInfo: PageInfo!
+  edges: [MultipleChoiceSubmissionEdge]!
+  aggregate: AggregateMultipleChoiceSubmission!
+}
+
+input MultipleChoiceSubmissionCreateInput {
+  author: UserCreateOneInput!
+  isChecked: Boolean!
+  answer: MultipleChoiceAnswerCreateOneWithoutSubmissionsInput!
+}
+
+input MultipleChoiceSubmissionCreateManyWithoutAnswerInput {
+  create: [MultipleChoiceSubmissionCreateWithoutAnswerInput!]
+  connect: [MultipleChoiceSubmissionWhereUniqueInput!]
+}
+
+input MultipleChoiceSubmissionCreateWithoutAnswerInput {
+  author: UserCreateOneInput!
+  isChecked: Boolean!
+}
+
+type MultipleChoiceSubmissionEdge {
+  node: MultipleChoiceSubmission!
+  cursor: String!
+}
+
+enum MultipleChoiceSubmissionOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  isChecked_ASC
+  isChecked_DESC
+}
+
+type MultipleChoiceSubmissionPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  isChecked: Boolean!
+}
+
+input MultipleChoiceSubmissionScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  isChecked: Boolean
+  isChecked_not: Boolean
+  AND: [MultipleChoiceSubmissionScalarWhereInput!]
+  OR: [MultipleChoiceSubmissionScalarWhereInput!]
+  NOT: [MultipleChoiceSubmissionScalarWhereInput!]
+}
+
+type MultipleChoiceSubmissionSubscriptionPayload {
+  mutation: MutationType!
+  node: MultipleChoiceSubmission
+  updatedFields: [String!]
+  previousValues: MultipleChoiceSubmissionPreviousValues
+}
+
+input MultipleChoiceSubmissionSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: MultipleChoiceSubmissionWhereInput
+  AND: [MultipleChoiceSubmissionSubscriptionWhereInput!]
+  OR: [MultipleChoiceSubmissionSubscriptionWhereInput!]
+  NOT: [MultipleChoiceSubmissionSubscriptionWhereInput!]
+}
+
+input MultipleChoiceSubmissionUpdateInput {
+  author: UserUpdateOneRequiredInput
+  isChecked: Boolean
+  answer: MultipleChoiceAnswerUpdateOneRequiredWithoutSubmissionsInput
+}
+
+input MultipleChoiceSubmissionUpdateManyDataInput {
+  isChecked: Boolean
+}
+
+input MultipleChoiceSubmissionUpdateManyMutationInput {
+  isChecked: Boolean
+}
+
+input MultipleChoiceSubmissionUpdateManyWithoutAnswerInput {
+  create: [MultipleChoiceSubmissionCreateWithoutAnswerInput!]
+  delete: [MultipleChoiceSubmissionWhereUniqueInput!]
+  connect: [MultipleChoiceSubmissionWhereUniqueInput!]
+  disconnect: [MultipleChoiceSubmissionWhereUniqueInput!]
+  update: [MultipleChoiceSubmissionUpdateWithWhereUniqueWithoutAnswerInput!]
+  upsert: [MultipleChoiceSubmissionUpsertWithWhereUniqueWithoutAnswerInput!]
+  deleteMany: [MultipleChoiceSubmissionScalarWhereInput!]
+  updateMany: [MultipleChoiceSubmissionUpdateManyWithWhereNestedInput!]
+}
+
+input MultipleChoiceSubmissionUpdateManyWithWhereNestedInput {
+  where: MultipleChoiceSubmissionScalarWhereInput!
+  data: MultipleChoiceSubmissionUpdateManyDataInput!
+}
+
+input MultipleChoiceSubmissionUpdateWithoutAnswerDataInput {
+  author: UserUpdateOneRequiredInput
+  isChecked: Boolean
+}
+
+input MultipleChoiceSubmissionUpdateWithWhereUniqueWithoutAnswerInput {
+  where: MultipleChoiceSubmissionWhereUniqueInput!
+  data: MultipleChoiceSubmissionUpdateWithoutAnswerDataInput!
+}
+
+input MultipleChoiceSubmissionUpsertWithWhereUniqueWithoutAnswerInput {
+  where: MultipleChoiceSubmissionWhereUniqueInput!
+  update: MultipleChoiceSubmissionUpdateWithoutAnswerDataInput!
+  create: MultipleChoiceSubmissionCreateWithoutAnswerInput!
+}
+
+input MultipleChoiceSubmissionWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  author: UserWhereInput
+  isChecked: Boolean
+  isChecked_not: Boolean
+  answer: MultipleChoiceAnswerWhereInput
+  AND: [MultipleChoiceSubmissionWhereInput!]
+  OR: [MultipleChoiceSubmissionWhereInput!]
+  NOT: [MultipleChoiceSubmissionWhereInput!]
+}
+
+input MultipleChoiceSubmissionWhereUniqueInput {
   id: ID
 }
 
@@ -266,6 +573,12 @@ type Mutation {
   upsertMultipleChoiceAnswer(where: MultipleChoiceAnswerWhereUniqueInput!, create: MultipleChoiceAnswerCreateInput!, update: MultipleChoiceAnswerUpdateInput!): MultipleChoiceAnswer!
   deleteMultipleChoiceAnswer(where: MultipleChoiceAnswerWhereUniqueInput!): MultipleChoiceAnswer
   deleteManyMultipleChoiceAnswers(where: MultipleChoiceAnswerWhereInput): BatchPayload!
+  createMultipleChoiceSubmission(data: MultipleChoiceSubmissionCreateInput!): MultipleChoiceSubmission!
+  updateMultipleChoiceSubmission(data: MultipleChoiceSubmissionUpdateInput!, where: MultipleChoiceSubmissionWhereUniqueInput!): MultipleChoiceSubmission
+  updateManyMultipleChoiceSubmissions(data: MultipleChoiceSubmissionUpdateManyMutationInput!, where: MultipleChoiceSubmissionWhereInput): BatchPayload!
+  upsertMultipleChoiceSubmission(where: MultipleChoiceSubmissionWhereUniqueInput!, create: MultipleChoiceSubmissionCreateInput!, update: MultipleChoiceSubmissionUpdateInput!): MultipleChoiceSubmission!
+  deleteMultipleChoiceSubmission(where: MultipleChoiceSubmissionWhereUniqueInput!): MultipleChoiceSubmission
+  deleteManyMultipleChoiceSubmissions(where: MultipleChoiceSubmissionWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -298,6 +611,9 @@ type Query {
   multipleChoiceAnswer(where: MultipleChoiceAnswerWhereUniqueInput!): MultipleChoiceAnswer
   multipleChoiceAnswers(where: MultipleChoiceAnswerWhereInput, orderBy: MultipleChoiceAnswerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MultipleChoiceAnswer]!
   multipleChoiceAnswersConnection(where: MultipleChoiceAnswerWhereInput, orderBy: MultipleChoiceAnswerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MultipleChoiceAnswerConnection!
+  multipleChoiceSubmission(where: MultipleChoiceSubmissionWhereUniqueInput!): MultipleChoiceSubmission
+  multipleChoiceSubmissions(where: MultipleChoiceSubmissionWhereInput, orderBy: MultipleChoiceSubmissionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MultipleChoiceSubmission]!
+  multipleChoiceSubmissionsConnection(where: MultipleChoiceSubmissionWhereInput, orderBy: MultipleChoiceSubmissionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MultipleChoiceSubmissionConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
@@ -307,6 +623,7 @@ type Query {
 type Subscription {
   document(where: DocumentSubscriptionWhereInput): DocumentSubscriptionPayload
   multipleChoiceAnswer(where: MultipleChoiceAnswerSubscriptionWhereInput): MultipleChoiceAnswerSubscriptionPayload
+  multipleChoiceSubmission(where: MultipleChoiceSubmissionSubscriptionWhereInput): MultipleChoiceSubmissionSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
@@ -332,6 +649,11 @@ input UserCreateInput {
 input UserCreateManyInput {
   create: [UserCreateInput!]
   connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
 }
 
 type UserEdge {
@@ -466,9 +788,21 @@ input UserUpdateManyWithWhereNestedInput {
   data: UserUpdateManyDataInput!
 }
 
+input UserUpdateOneRequiredInput {
+  create: UserCreateInput
+  update: UserUpdateDataInput
+  upsert: UserUpsertNestedInput
+  connect: UserWhereUniqueInput
+}
+
 input UserUpdateWithWhereUniqueNestedInput {
   where: UserWhereUniqueInput!
   data: UserUpdateDataInput!
+}
+
+input UserUpsertNestedInput {
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
 }
 
 input UserUpsertWithWhereUniqueNestedInput {
@@ -533,5 +867,3 @@ input UserWhereUniqueInput {
   id: ID
 }
 `
-      }
-    

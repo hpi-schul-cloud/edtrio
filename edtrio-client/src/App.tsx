@@ -26,7 +26,7 @@ export default function App() {
         >
           <EditorWrapper
             // TODO: get this from the props (when included in schul-cloud client)
-            documentId={"cjpcys08y002607989geb9ttk"}
+            documentId={"cjqm7lirq00sh0740clb48905"}
           />
         </EditorStateProvider>
       </LastSavedProvider>

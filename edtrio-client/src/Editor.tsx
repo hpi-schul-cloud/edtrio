@@ -35,12 +35,8 @@ const AppWrapper = styled.div`
 `;
 
 const UPDATE_DOCUMENT = gql`
-  mutation updateDocument(
-    $documentId: String!
-    $value: String!
-    $userIds: [String!]!
-  ) {
-    updateDocument(value: $value, documentId: $documentId, userIds: $userIds) {
+  mutation updateDocument($documentId: String!, $value: Json!) {
+    updateDocument(value: $value, documentId: $documentId) {
       id
       value
     }
@@ -137,21 +133,21 @@ class Editor extends PureComponent<IEditorProps, IEditorState> {
    */
   private handleSave = (value: Value) => {
     // Save the value to Local Storage.
-
+    if (!this.props.currentUser.isTeacher) {
+      return;
+    }
     const timestamp = moment(new Date());
-    const document = JSON.stringify(
-      this._addHeaderInformationToDocument(value, timestamp),
-    );
-    localStorage.setItem("document", document);
+    const document = this._addHeaderInformationToDocument(value, timestamp);
+
+    localStorage.setItem("document", JSON.stringify(document));
 
     // If a graphql server is available, update the document there
     if (this.props.apolloClient) {
       this.props.apolloClient.mutate({
         mutation: UPDATE_DOCUMENT,
         variables: {
-          userIds: ["cjpcyqzsr00230798e5nwrwy5"],
           value: document,
-          documentId: "cjpcys08y002607989geb9ttk",
+          documentId: "cjqm7lirq00sh0740clb48905",
         },
       });
     }
