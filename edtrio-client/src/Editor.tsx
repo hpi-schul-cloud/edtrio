@@ -118,6 +118,7 @@ class Editor extends PureComponent<IEditorProps, IEditorState> {
                   // @ts-ignore: slate/types 43 is not current... - this works perfectly fine
                   schema={schema}
                   readOnly={!this.props.isEditable}
+                  currentUser={this.props.currentUser}
                 />
               </div>
               {process.env.NODE_ENV === "development" ? (
