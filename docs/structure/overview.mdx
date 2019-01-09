@@ -6,22 +6,26 @@ order: 200
 ---
 
 # Structure Overview
+Edtr.io is heavily based on [Slate.js](https://github.com/ianstormtaylor/slate) and makes great use of its abstractions. Every piece functionality is inside a plugin.
 
-Currently, there reside two packages in the edtrio repository: the edtrio-client and the edtrio-server. While the client does work without the server,
-it is highly recommended to start the server in order to benefit from persistent storage and real-time communication.
-
-## The Edtrio-client
-
-The Edtr.io client is heavily based on [Slate.js](https://github.com/ianstormtaylor/slate) and makes great use of its abstractions. Every piece functionality is inside a plugin.
-
-The slate editor is just one `<Editor />` component inside `Editor.jsx`. This makes use of many plugins, which can be found inside the [`plugins/` folder](https://github.com/schul-cloud/edtrio/tree/master/src/plugins). More information on the structure of plugins can be found [here](/structure/plugin).
+The editor is just one `<Editor />` component inside `Editor.jsx` which itself is made up of many plugins. Plugins can be found inside the [`plugins/` folder](https://github.com/schul-cloud/edtrio/tree/master/src/plugins). More information on the structure of plugins can be found [here](/structure/plugin).
 
 Using Edtr.io one creates documents. Every content created with the editor is a `Document`. A `Document` is simply just a JSON object with a little more rules so that it coheres to a common schema. More information on the Document Schema can be found [here](/structure/document).
 
-Under the hood, the editor client makes heavy use of react, react context and the apollo client for connecting with the edtrio-server.
+Displaying the editor can be easily achieved as such:
 
-## The Edtrio-server
+```jsx
+import Editor from './Editor'
 
-This server is a [GraphQl](https://graphql.org/learn/) instance that allows for persistent datastorage in a connected database and real-time communication between clients.
 
-It is built with [graphql-yoga](https://github.com/prisma/graphql-yoga) (which is like create-react-app for an apollo server) and a [prisma](https://www.prisma.io/)-mysql database. In order to start it, you need [Docker](https://store.docker.com/editions/community/) and Prisma (preferably installed globally via npm or yarn) installed.
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <Editor />
+      </div>
+    )
+  }
+}
+```
+
