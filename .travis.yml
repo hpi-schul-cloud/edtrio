@@ -1,0 +1,30 @@
+udo: required
+services:
+  - docker
+
+env:
+  global:
+    - GIT_SHA=$(git rev-parse HEAD)
+
+jobs:
+  include:
+    - stage: edtrio-client
+      script:
+        - docker build -t schulcloud/edtrio-client-dev -f Dockerfile.client.dev .
+        - docker run -d -p 3000:3000 -t schulcloud/edtrio-client-dev
+        - sleep 30 ; curl -s http://localhost:3000/ | grep title
+        - docker stop $( docker ps -aq )
+    - stage: edtrio-server
+      script:
+        - docker build -t schulcloud/edtrio-server-dev -f Dockerfile.server.dev .
+        - docker run -d -p 4000:4000 -t schulcloud/edtrio-server-dev
+
+# spaeter in Stages stopfen ... und deploy-stage
+after_success:
+  - docker build -t schulcloud/edtrio-client:latest -t schulcloud/edtrio-client:$GIT_SHA .
+  - docker build -t schulcloud/edtrio-server:latest -t schulcloud/edtrio-server:$GIT_SHA .
+  - echo "$DOCKER_PASS" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push schulcloud/edtrio-client:latest
+  - docker push schulcloud/edtrio-client:$GIT_SHA
+  - docker push schulcloud/edtrio-server:latest
+  - docker push schulcloud/edtrio-server:$GIT_SHA
