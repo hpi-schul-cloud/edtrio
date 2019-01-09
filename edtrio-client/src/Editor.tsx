@@ -1,5 +1,4 @@
 import ApolloClient from "apollo-client";
-import gql from "graphql-tag";
 import moment from "moment";
 import "moment/locale/de";
 import React, { PureComponent } from "react";
@@ -22,6 +21,12 @@ import PlusMenuPlugin from "./plugins/plus-menu/index";
 import { IUserType } from "./types";
 import importedValue from "./value.json";
 
+import {
+  updateDocument,
+  updateDocumentVariables,
+} from "./graphqlOperations/generated-types/updateDocument";
+import { UPDATE_DOCUMENT } from "./graphqlOperations/operations";
+
 moment.locale("de");
 
 const StyledDocumentViewer = styled(DocumentViewer)`
@@ -32,15 +37,6 @@ const AppWrapper = styled.div`
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-`;
-
-const UPDATE_DOCUMENT = gql`
-  mutation updateDocument($documentId: String!, $value: Json!) {
-    updateDocument(value: $value, documentId: $documentId) {
-      id
-      value
-    }
-  }
 `;
 
 interface IEditorState {
@@ -143,7 +139,7 @@ class Editor extends PureComponent<IEditorProps, IEditorState> {
 
     // If a graphql server is available, update the document there
     if (this.props.apolloClient) {
-      this.props.apolloClient.mutate({
+      this.props.apolloClient.mutate<updateDocument, updateDocumentVariables>({
         mutation: UPDATE_DOCUMENT,
         variables: {
           value: document,

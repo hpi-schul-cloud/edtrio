@@ -12,7 +12,6 @@ export default function StateGraphqlWrappedEditor(
   props: IStateGraphqlWrappedEditorProps,
 ) {
   return (
-    // TODO: get users from backend
     <EditorStateContext.Consumer>
       {({
         updateIsEditable,

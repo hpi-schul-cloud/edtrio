@@ -1,4 +1,3 @@
-import gql from "graphql-tag";
 import React, { PureComponent } from "react";
 import { Query } from "react-apollo";
 import { Editor, Node } from "slate";
@@ -6,86 +5,27 @@ import { Editor, Node } from "slate";
 import styled from "styled-components";
 import { EditorStateContext } from "../../context/EditorStateContext";
 import { apolloClient } from "../../EditorWrapper/apolloClient";
+import {
+  createMultipleChoiceAnswer,
+  createMultipleChoiceAnswerVariables,
+} from "../../graphqlOperations/generated-types/createMultipleChoiceAnswer";
+import {
+  createMultipleChoiceSubmission,
+  createMultipleChoiceSubmissionVariables,
+} from "../../graphqlOperations/generated-types/createMultipleChoiceSubmission";
+
+import {
+  CREATE_MULTIPLE_CHOICE_ANSWER,
+  CREATE_MULTIPLE_CHOICE_SUBMISSION,
+  DELETE_MULTIPLE_CHOICE_ANSWER,
+  MULTIPLE_CHOICE_ANSWER,
+  MULTIPLE_CHOICE_SUBMISSION,
+  UPDATE_MULTIPLE_CHOICE_ANSWER,
+  UPDATE_MULTIPLE_CHOICE_SUBMISSION,
+} from "../../graphqlOperations/operations";
 
 const StyledCheckboxWrapper = styled.span`
   margin-right: 8px;
-`;
-
-const CREATE_MULTIPLE_CHOICE_ANSWER = gql`
-  mutation createMultipleChoiceAnswer($isCorrect: Boolean!) {
-    createMultipleChoiceAnswer(isCorrect: $isCorrect) {
-      id
-    }
-  }
-`;
-
-const UPDATE_MULTIPLE_CHOICE_ANSWER = gql`
-  mutation updateMultipleChoiceAnswer(
-    $answerId: String!
-    $isCorrect: Boolean!
-  ) {
-    updateMultipleChoiceAnswer(answerId: $answerId, isCorrect: $isCorrect) {
-      id
-      isCorrect
-    }
-  }
-`;
-
-const DELETE_MULTIPLE_CHOICE_ANSWER = gql`
-  mutation deleteMultipleChoiceAnswer($answerId: String!) {
-    deleteMultipleChoiceAnswer(answerId: $answerId) {
-      id
-    }
-  }
-`;
-
-const MULTIPLE_CHOICE_ANSWER = gql`
-  query multipleChoiceAnswer($answerId: String!) {
-    multipleChoiceAnswer(answerId: $answerId) {
-      id
-      isCorrect
-    }
-  }
-`;
-
-const MULTIPLE_CHOICE_SUBMISSION = gql`
-  query submissionByUser($answerId: String!, $userId: String!) {
-    submissionByUser(answerId: $answerId, userId: $userId) {
-      id
-      isChecked
-    }
-  }
-`;
-
-const CREATE_MULTIPLE_CHOICE_SUBMISSION = gql`
-  mutation createMultipleChoiceSubmission(
-    $isChecked: Boolean!
-    $answerId: String!
-    $userId: String!
-  ) {
-    createMultipleChoiceSubmission(
-      isChecked: $isChecked
-      answerId: $answerId
-      userId: $userId
-    ) {
-      id
-    }
-  }
-`;
-
-const UPDATE_MULTIPLE_CHOICE_SUBMISSION = gql`
-  mutation updateMultipleChoiceSubmission(
-    $submissionId: String!
-    $isChecked: Boolean!
-  ) {
-    updateMultipleChoiceSubmission(
-      submissionId: $answerId
-      isChecked: $isChecked
-    ) {
-      id
-      isChecked
-    }
-  }
 `;
 
 interface IMultipleChoiceAnswerNodeProps {
@@ -127,27 +67,21 @@ export class MultipleChoiceAnswerNode extends PureComponent<
       (Object.keys(id).length === 0 && id.constructor === Object)
     ) {
       // node needs to be created on backend-side
-      const answer = await apolloClient.mutate({
+      const answer = await apolloClient.mutate<
+        createMultipleChoiceAnswer,
+        createMultipleChoiceAnswerVariables
+      >({
         mutation: CREATE_MULTIPLE_CHOICE_ANSWER,
         variables: { isCorrect: false },
       });
-      if (answer && answer.data && answer.data.createMultipleChoiceAnswer.id) {
+      if (answer && answer.data && answer.data.createMultipleChoiceAnswer) {
         props.editor.setNodeByKey(props.node.key, {
           data: { id: answer.data.createMultipleChoiceAnswer.id },
           type: "multiple-choice-answer",
         });
       }
     } else {
-      const answer = await apolloClient.query({
-        query: MULTIPLE_CHOICE_ANSWER,
-        variables: { answerId: id },
-      });
-      // @ts-ignore
-      if (answer && answer.data && answer.data.multipleChoiceAnswer) {
-        // @ts-ignore
-        console.log(answer.data.multipleChoiceAnswer);
-        // TODO: why this?
-      }
+      // ??
     }
   }
   public componentDidMount() {
@@ -176,12 +110,15 @@ export class MultipleChoiceAnswerNode extends PureComponent<
         },
       });
     } else {
-      const answer = await apolloClient.mutate({
+      const answer = await apolloClient.mutate<
+        createMultipleChoiceSubmission,
+        createMultipleChoiceSubmissionVariables
+      >({
         mutation: CREATE_MULTIPLE_CHOICE_SUBMISSION,
         variables: { answerId: id, isChecked: event.target.checked, userId },
       });
-      if (answer.data && answer.data.multipleChoiceSubmission) {
-        this.id = answer.data.multipleChoiceSubmission.id;
+      if (answer.data && answer.data.createMultipleChoiceSubmission) {
+        this.id = answer.data.createMultipleChoiceSubmission.id;
       }
     }
   }

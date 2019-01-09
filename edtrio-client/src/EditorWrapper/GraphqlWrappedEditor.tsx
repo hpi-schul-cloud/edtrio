@@ -1,10 +1,15 @@
-import gql from "graphql-tag";
 import React from "react";
 import { Value } from "slate";
 
-import { ApolloProvider, Query, Subscription } from "react-apollo";
+import { ApolloProvider } from "react-apollo";
 
 import Editor, { IEditorUserProps } from "../Editor";
+import {
+  DOCUMENT_QUERY,
+  DocumentQuery,
+  VALUE_SUBSCRIPTION,
+  ValueSubscription,
+} from "../graphqlOperations";
 import { IUserType } from "../types";
 import { apolloClient } from "./apolloClient";
 
@@ -14,35 +19,12 @@ interface IGraphqlWrappedEditorProps extends IEditorUserProps {
   updateUserList: (users: IUserType[]) => void;
 }
 
-// get to document value
-const DOCUMENT_QUERY = gql`
-  query document($documentId: String!) {
-    document(documentId: $documentId) {
-      value
-      users {
-        id
-        name
-        isTeacher
-      }
-    }
-  }
-`;
-
-// establish a subscription to get the document value
-const VALUE_SUBSCRIPTION = gql`
-  subscription valueChanged($documentId: String!) {
-    valueChanged(documentId: $documentId) {
-      value
-    }
-  }
-`;
-
 export default function GraphqlWrappedEditor(
   props: IGraphqlWrappedEditorProps,
 ) {
   return (
     <ApolloProvider client={apolloClient}>
-      <Query
+      <DocumentQuery
         query={DOCUMENT_QUERY}
         variables={{ documentId: props.documentId }}
       >
@@ -50,12 +32,13 @@ export default function GraphqlWrappedEditor(
           // load initial data from the server
           if (data && data.document) {
             // update userlist, if necessary
-            if (props.users !== data.document.users) {
+            if (data.document.users && props.users !== data.document.users) {
+              // TODO: move somewhere else. This creates a warning because the render is not pure
               props.updateUserList(data.document.users);
               props.updateCurrentUser(data.document.users[0]);
             }
             return (
-              <Subscription
+              <ValueSubscription
                 subscription={VALUE_SUBSCRIPTION}
                 variables={{ documentId: props.documentId }}
               >
@@ -83,12 +66,12 @@ export default function GraphqlWrappedEditor(
                   }
                   return null;
                 }}
-              </Subscription>
+              </ValueSubscription>
             );
           }
           return null;
         }}
-      </Query>
+      </DocumentQuery>
     </ApolloProvider>
   );
 }
