@@ -4,6 +4,7 @@ type User {
   isTeacher: Boolean!
   createdAt: DateTime!
   updatedAt: DateTime!
+  schulCloudId: String
 }
 
 type Document {

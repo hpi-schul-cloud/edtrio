@@ -13,7 +13,7 @@ import { EditorStateProvider } from "./context/EditorStateContext";
 import { LastSavedProvider } from "./context/lastSavedContext";
 import EditorWrapper from "./EditorWrapper";
 
-import { testUsers } from "./dev-helpers/StateController";
+// TODO: Remove: import { testUsers } from "./dev-helpers/StateController";
 
 export default function App() {
   return (
@@ -21,14 +21,15 @@ export default function App() {
       <LastSavedProvider>
         <EditorStateProvider
           // TODO: Load this from the Backend as well
-          initialUserList={testUsers.users}
-          initialUser={testUsers.currentUser}
+          initialUserList={null}
+          initialUser={null}
         >
           <EditorWrapper
             // TODO: get this from the props (when included in schul-cloud client)
             documentId={"cjqm7lirq00sh0740clb48905"}
           />
         </EditorStateProvider>
+        ); }}
       </LastSavedProvider>
     </ThemeProvider>
   );

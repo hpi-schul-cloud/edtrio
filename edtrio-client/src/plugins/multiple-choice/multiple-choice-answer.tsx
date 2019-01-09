@@ -101,11 +101,15 @@ export class MultipleChoiceAnswerNode extends PureComponent<
     userId: string,
     multipleChoiceSubmission?: any,
   ) {
+    // TODO: do this in componentDidMount: Create a submission so it always has to just be updated
     if (multipleChoiceSubmission || this.id) {
+      const submissionId = multipleChoiceSubmission
+        ? multipleChoiceSubmission.id
+        : this.id;
       apolloClient.mutate({
         mutation: UPDATE_MULTIPLE_CHOICE_SUBMISSION,
         variables: {
-          submissionId: multipleChoiceSubmission.id || this.id,
+          submissionId,
           isChecked: event.target.checked,
         },
       });
@@ -133,7 +137,7 @@ export class MultipleChoiceAnswerNode extends PureComponent<
           <StyledCheckboxWrapper contentEditable={false}>
             <EditorStateContext.Consumer>
               {({ currentUser }) => {
-                return (
+                return currentUser ? (
                   <Query
                     query={MULTIPLE_CHOICE_SUBMISSION}
                     variables={{ answerId: id, userId: currentUser.id }}
@@ -172,7 +176,7 @@ export class MultipleChoiceAnswerNode extends PureComponent<
                       }
                     }}
                   </Query>
-                );
+                ) : null;
               }}
             </EditorStateContext.Consumer>
           </StyledCheckboxWrapper>

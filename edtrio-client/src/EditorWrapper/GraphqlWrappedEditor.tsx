@@ -33,9 +33,6 @@ export default function GraphqlWrappedEditor(
           if (data && data.document) {
             // update userlist, if necessary
             if (data.document.users && props.users !== data.document.users) {
-              // TODO: move somewhere else. This creates a warning because the render is not pure
-              props.updateUserList(data.document.users);
-              props.updateCurrentUser(data.document.users[0]);
             }
             return (
               <ValueSubscription

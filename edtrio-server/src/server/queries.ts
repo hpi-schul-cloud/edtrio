@@ -8,14 +8,28 @@ export const queries = {
     user(root: any, args: any, context: IContextType) {
       return context.prisma.user({ id: args.userId });
     },
+    async userBySchulCloudId(root: any, args: any, context: IContextType) {
+      const user = await context.prisma.users({
+        where: { schulCloudId: args.schulCloudId },
+      });
+      return user[0];
+    },
     document(root: any, args: any, context: IContextType) {
       return context.prisma.document({ id: args.documentId });
     },
     users(root: any, args: any, context: IContextType) {
       return context.prisma.users();
     },
-    multipleChoiceAnswer(root: any, args: any, context: IContextType) {
-      return context.prisma.multipleChoiceAnswer({ id: args.answerId });
+    async multipleChoiceAnswer(root: any, args: any, context: IContextType) {
+      const submissions = await context.prisma
+        .multipleChoiceAnswer({ id: args.answerId })
+        .submissions();
+
+      const answer = await context.prisma.multipleChoiceAnswer({
+        id: args.answerId,
+      });
+      // TODO: investigate. This extra submission handling should not be necessary
+      return { ...answer, submissions };
     },
     submissions(root: any, args: any, context: IContextType) {
       return context.prisma

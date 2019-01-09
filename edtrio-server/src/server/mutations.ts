@@ -6,6 +6,7 @@ export const mutations = {
       return context.prisma.createUser({
         name: args.name,
         isTeacher: args.isTeacher,
+        schulCloudId: args.s,
       });
     },
     createDocument(root: any, args: any, context: IContextType) {
@@ -55,20 +56,39 @@ export const mutations = {
         },
       });
     },
-    createMultipleChoiceSubmission(
+    async createMultipleChoiceSubmission(
       root: any,
       args: any,
       context: IContextType,
     ) {
-      return context.prisma.createMultipleChoiceSubmission({
-        isChecked: args.isChecked,
-        author: {
-          connect: {id: args.userId},
+      const newSubmission = await context.prisma.createMultipleChoiceSubmission(
+        {
+          isChecked: args.isChecked,
+          author: {
+            connect: { id: args.userId },
+          },
+          answer: {
+            connect: { id: args.answerId },
+          },
         },
-        answer: {
-          connect: {id: args.answerId},
+      );
+      const submissions = await context.prisma
+        .multipleChoiceAnswer({ id: args.answerId })
+        .submissions();
+      submissions.push(newSubmission);
+      console.log(submissions);
+      await context.prisma.updateMultipleChoiceAnswer({
+        where: { id: args.answerId },
+        data: {
+          submissions: {
+            connect: submissions.map(submission => {
+              return { id: submission.id };
+            }),
+          },
         },
       });
+
+      return newSubmission;
     },
     updateMultipleChoiceSubmission(
       root: any,
@@ -98,9 +118,9 @@ export const mutations = {
     ) {
       // find and delete all related submissions
       // TODO: not sure if this is what we want here - maybe we want to store them for a while before deleting them
-      const submissions = await context.prisma.multipleChoiceSubmissions({
-        where: { id: args.answerId },
-      });
+      const submissions = await context.prisma
+        .multipleChoiceAnswer({ id: args.answerId })
+        .submissions();
       submissions.forEach(submission =>
         context.prisma.deleteManyMultipleChoiceSubmissions({
           id: submission.id,

@@ -5,6 +5,7 @@ type Query {
   document(documentId: String!): Document
   documents: [Document]
   user(userId: String!): User
+  userBySchulCloudId(schulCloudId: String!): User
   users: [User]
   multipleChoiceAnswer(answerId: String!): MultipleChoiceAnswer
   submissions(answerId: String!): [MultipleChoiceSubmission]
@@ -13,13 +14,17 @@ type Query {
 }
 
 type Mutation {
-  createUser(name: String!, isTeacher: Boolean!): User
+  createUser(name: String!, isTeacher: Boolean!, schulCloudId: String): User
   createDocument(value: Json!, userIds: [String!]!): Document
   updateDocument(documentId: String!, value: Json, userIds: [String!]): Document
   createMultipleChoiceAnswer(isCorrect: Boolean!): MultipleChoiceAnswer
   updateMultipleChoiceAnswer(
     answerId: String!
     isCorrect: Boolean!
+  ): MultipleChoiceAnswer
+  addMultipleChoiceSubmissionToAnswer(
+    answerId: String!
+    submissionId: String!
   ): MultipleChoiceAnswer
   createMultipleChoiceSubmission(
     isChecked: Boolean!

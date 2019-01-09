@@ -14,14 +14,14 @@ export const EditorStateContext = createContext<IEditorStateProviderState>({
 });
 
 interface IEditorStateProviderProps {
-  initialUserList: IUserType[];
-  initialUser: IUserType;
+  initialUserList: IUserType[] | null;
+  initialUser: IUserType | null;
 }
 
 interface IEditorStateProviderState {
   isEditable: boolean;
   updateIsEditable: (isEditable: boolean) => void;
-  currentUser: IUserType;
+  currentUser: IUserType | null;
   updateCurrentUser: (newUser: IUserType) => void;
   users: IUserType[];
   updateUserList: (users: IUserType[]) => void;

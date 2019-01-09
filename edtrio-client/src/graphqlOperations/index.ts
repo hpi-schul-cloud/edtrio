@@ -11,6 +11,7 @@ export {
   DOCUMENT_QUERY,
   VALUE_SUBSCRIPTION,
   UPDATE_DOCUMENT,
+  CREATE_USER,
 } from "./operations";
 
 export class DocumentQuery extends Query<document, documentVariables> {}

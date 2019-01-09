@@ -274,7 +274,9 @@ export type UserOrderByInput =
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
-  | "updatedAt_DESC";
+  | "updatedAt_DESC"
+  | "schulCloudId_ASC"
+  | "schulCloudId_DESC";
 
 export type MultipleChoiceAnswerOrderByInput =
   | "id_ASC"
@@ -336,11 +338,13 @@ export interface UserCreateManyInput {
 export interface UserUpdateManyDataInput {
   name?: String;
   isTeacher?: Boolean;
+  schulCloudId?: String;
 }
 
 export interface UserCreateInput {
   name: String;
   isTeacher: Boolean;
+  schulCloudId?: String;
 }
 
 export interface MultipleChoiceSubmissionSubscriptionWhereInput {
@@ -441,6 +445,7 @@ export interface MultipleChoiceSubmissionCreateManyWithoutAnswerInput {
 export interface UserUpdateManyMutationInput {
   name?: String;
   isTeacher?: Boolean;
+  schulCloudId?: String;
 }
 
 export interface MultipleChoiceSubmissionCreateWithoutAnswerInput {
@@ -451,6 +456,7 @@ export interface MultipleChoiceSubmissionCreateWithoutAnswerInput {
 export interface UserUpdateInput {
   name?: String;
   isTeacher?: Boolean;
+  schulCloudId?: String;
 }
 
 export interface UserCreateOneInput {
@@ -512,6 +518,7 @@ export interface MultipleChoiceAnswerCreateOneWithoutSubmissionsInput {
 export interface UserUpdateDataInput {
   name?: String;
   isTeacher?: Boolean;
+  schulCloudId?: String;
 }
 
 export interface MultipleChoiceSubmissionCreateInput {
@@ -616,6 +623,20 @@ export interface UserScalarWhereInput {
   updatedAt_lte?: DateTimeInput;
   updatedAt_gt?: DateTimeInput;
   updatedAt_gte?: DateTimeInput;
+  schulCloudId?: String;
+  schulCloudId_not?: String;
+  schulCloudId_in?: String[] | String;
+  schulCloudId_not_in?: String[] | String;
+  schulCloudId_lt?: String;
+  schulCloudId_lte?: String;
+  schulCloudId_gt?: String;
+  schulCloudId_gte?: String;
+  schulCloudId_contains?: String;
+  schulCloudId_not_contains?: String;
+  schulCloudId_starts_with?: String;
+  schulCloudId_not_starts_with?: String;
+  schulCloudId_ends_with?: String;
+  schulCloudId_not_ends_with?: String;
   AND?: UserScalarWhereInput[] | UserScalarWhereInput;
   OR?: UserScalarWhereInput[] | UserScalarWhereInput;
   NOT?: UserScalarWhereInput[] | UserScalarWhereInput;
@@ -962,6 +983,20 @@ export interface UserWhereInput {
   updatedAt_lte?: DateTimeInput;
   updatedAt_gt?: DateTimeInput;
   updatedAt_gte?: DateTimeInput;
+  schulCloudId?: String;
+  schulCloudId_not?: String;
+  schulCloudId_in?: String[] | String;
+  schulCloudId_not_in?: String[] | String;
+  schulCloudId_lt?: String;
+  schulCloudId_lte?: String;
+  schulCloudId_gt?: String;
+  schulCloudId_gte?: String;
+  schulCloudId_contains?: String;
+  schulCloudId_not_contains?: String;
+  schulCloudId_starts_with?: String;
+  schulCloudId_not_starts_with?: String;
+  schulCloudId_ends_with?: String;
+  schulCloudId_not_ends_with?: String;
   AND?: UserWhereInput[] | UserWhereInput;
   OR?: UserWhereInput[] | UserWhereInput;
   NOT?: UserWhereInput[] | UserWhereInput;
@@ -985,6 +1020,7 @@ export interface UserPreviousValues {
   isTeacher: Boolean;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
+  schulCloudId?: String;
 }
 
 export interface UserPreviousValuesPromise
@@ -995,6 +1031,7 @@ export interface UserPreviousValuesPromise
   isTeacher: () => Promise<Boolean>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
+  schulCloudId: () => Promise<String>;
 }
 
 export interface UserPreviousValuesSubscription
@@ -1005,6 +1042,7 @@ export interface UserPreviousValuesSubscription
   isTeacher: () => Promise<AsyncIterator<Boolean>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  schulCloudId: () => Promise<AsyncIterator<String>>;
 }
 
 export interface AggregateDocument {
@@ -1471,6 +1509,7 @@ export interface User {
   isTeacher: Boolean;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
+  schulCloudId?: String;
 }
 
 export interface UserPromise extends Promise<User>, Fragmentable {
@@ -1479,6 +1518,7 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   isTeacher: () => Promise<Boolean>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
+  schulCloudId: () => Promise<String>;
 }
 
 export interface UserSubscription
@@ -1489,6 +1529,7 @@ export interface UserSubscription
   isTeacher: () => Promise<AsyncIterator<Boolean>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  schulCloudId: () => Promise<AsyncIterator<String>>;
 }
 
 export interface DocumentPreviousValues {

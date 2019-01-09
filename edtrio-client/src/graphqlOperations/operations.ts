@@ -8,6 +8,36 @@ export const CREATE_MULTIPLE_CHOICE_ANSWER = gql`
   }
 `;
 
+export const CREATE_USER = gql`
+  mutation createUser(
+    $name: String!
+    $isTeacher: Boolean!
+    $schulCloudId: String
+  ) {
+    createUser(
+      name: $name
+      isTeacher: $isTeacher
+      schulCloudId: $schulCloudId
+    ) {
+      id
+      isTeacher
+      name
+      schulCloudId
+    }
+  }
+`;
+
+export const USER_BY_SCHULCLOUDID = gql`
+  query userBySchulCloudId($schulCloudId: String!) {
+    userBySchulCloudId(schulCloudId: $schulCloudId) {
+      id
+      name
+      isTeacher
+      schulCloudId
+    }
+  }
+`;
+
 export const UPDATE_MULTIPLE_CHOICE_ANSWER = gql`
   mutation updateMultipleChoiceAnswer(
     $answerId: String!
