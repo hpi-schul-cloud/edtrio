@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "outDir": "./build",
+    "esModuleInterop": true,
+    "allowJs": true,
+    "module": "commonjs",
+    "target": "es5",
+    "jsx": "preserve",
+    "types": ["node"],
+    "moduleResolution": "node",
+    "lib": ["es2017", "dom", "esnext"],
+    "rootDirs": ["src"],
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "noUnusedLocals": true,
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "removeComments": true,
+    "experimentalDecorators": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": false
+  },
+  "include": ["src/**/*"],
+  "exclude": ["src/**/node_modules/*", "generated"]
+}
