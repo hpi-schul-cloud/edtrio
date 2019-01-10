@@ -18,8 +18,8 @@ jobs:
     - stage: edtrio-server test
       script:
         - sudo /etc/init.d/mysql stop
-        - docker run -p 3306:3306 --env MYSQL_ROOT_PASSWORD=prisma -v mysql:/var/lib/mysql mysql:5.7
-        - docker run -p 4466:4466 --env PRISMA_CONFIG_PATH=./edtrio-server/src/database/prisma_config -v $(PWD)/PRISMA_CONFIG:./edtrio-server/src/database/prisma_config prismagraphql/prisma:1.22
+        - docker run -d -p 3306:3306 --env MYSQL_ROOT_PASSWORD=prisma -v mysql:/var/lib/mysql mysql:5.7
+        - docker run -d -p 4466:4466 --env PRISMA_CONFIG_PATH=./edtrio-server/src/database/prisma_config -v $(PWD)/PRISMA_CONFIG:./edtrio-server/src/database/prisma_config prismagraphql/prisma:1.22
         - docker build -t schulcloud/edtrio-server -f ./edtrio-server/Dockerfile.server ./edtrio-server
         - docker run -d -p 4000:4000 -t schulcloud/edtrio-server-dev
         - sleep 30 ; curl -s http://localhost:4000/ | grep title
