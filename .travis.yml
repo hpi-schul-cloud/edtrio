@@ -1,4 +1,5 @@
-udo: required
+sudo: required
+language: minimal
 services:
   - docker
 
@@ -26,7 +27,7 @@ jobs:
         - docker stop $( docker ps -aq )
     - stage: push up
       script:
-        - docker build -t schulcloud/edtrio-client:latest -t schulcloud/edtrio-client:$GIT_SHA -f ./edtrio-client/Dockerfile.client ./edtrio-client.
+        - docker build -t schulcloud/edtrio-client:latest -t schulcloud/edtrio-client:$GIT_SHA -f ./edtrio-client/Dockerfile.client ./edtrio-client
         - docker build -t schulcloud/edtrio-server:latest -t schulcloud/edtrio-server:$GIT_SHA -f ./edtrio-server/Dockerfile.server ./edtrio-server
         - echo "$DOCKER_PASS" | docker login -u "$DOCKER_ID" --password-stdin
         - docker push schulcloud/edtrio-client:latest
