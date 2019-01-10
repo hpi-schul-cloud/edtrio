@@ -33,4 +33,9 @@ jobs:
         - docker push schulcloud/edtrio-client:$GIT_SHA
         - docker push schulcloud/edtrio-server:latest
         - docker push schulcloud/edtrio-server:$GIT_SHA
+    - stage: deploy staging
+      script:
+        - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl && chmod +x kubectl && sudo mv kubectl /usr/local/bin/
+        - $( pwd )/deploy.sh
+      if: branch IN (dockerisierung, development)
 
