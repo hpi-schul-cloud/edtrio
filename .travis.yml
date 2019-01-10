@@ -45,5 +45,5 @@ jobs:
       deploy: 
         provider: script
         script: ./deploy.sh
-      if: branch IN (dockerisierung, development)
+        #      if: branch IN (dockerisierung, development)
 
