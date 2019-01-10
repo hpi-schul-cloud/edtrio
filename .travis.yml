@@ -11,13 +11,13 @@ jobs:
     - stage: edtrio-client
       script:
         - export PDW=$( pwd )
-        - docker build -t schulcloud/edtrio-client-dev -f $PWD/docker/Dockerfile.client.dev $PWD/edtrio-client
+        - docker build -t schulcloud/edtrio-client-dev -f ./edtrio-client/Dockerfile.client.dev ./edtrio-client
         - docker run -d -p 3000:3000 -t schulcloud/edtrio-client-dev
         - sleep 30 ; curl -s http://localhost:3000/ | grep title
         - docker stop $( docker ps -aq )
     - stage: edtrio-server
       script:
-        - docker build -t schulcloud/edtrio-server-dev -f ./docker/Dockerfile.server.dev ./edtrio-server
+        - docker build -t schulcloud/edtrio-server-dev -f ./edtrio-server/Dockerfile.server.dev ./edtrio-server
         - docker run -d -p 4000:4000 -t schulcloud/edtrio-server-dev
         - sleep 30 ; curl -s http://localhost:4000/ | grep title
         - docker stop $( docker ps -aq )
