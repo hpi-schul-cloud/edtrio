@@ -14,8 +14,10 @@
     "lint": "./node_modules/.bin/eslint --ext .jsx --ext .js ./",
     "tslint": "./node_modules/.bin/tslint -c tslint.json --project './'",
     "startDB": ". ./src/database/scripts/initialize.sh",
+    "deployDB": ". ./src/database/scripts/deploy.sh",
     "resetDB": ". ./src/database/scripts/reset.sh",
-    "startFreshDB": "yarn run startDB && yarn run resetDB"
+    "startFreshDBold": "yarn run startDB && yarn run resetDB"
+    "startFreshDB": "yarn run deployDB && yarn run resetDB"
   },
   "dependencies": {
     "@types/aws-lambda": "^8.10.15",

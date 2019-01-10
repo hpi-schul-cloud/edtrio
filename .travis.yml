@@ -8,16 +8,19 @@ env:
 
 jobs:
   include:
-    - stage: edtrio-client
+    - stage: edtrio-client test
       script:
         - export PDW=$( pwd )
         - docker build -t schulcloud/edtrio-client-dev -f ./edtrio-client/Dockerfile.client.dev ./edtrio-client
         - docker run -d -p 3000:3000 -t schulcloud/edtrio-client-dev
         - sleep 30 ; curl -s http://localhost:3000/ | grep title
         - docker stop $( docker ps -aq )
-    - stage: edtrio-server
+    - stage: edtrio-server test
       script:
-        - docker build -t schulcloud/edtrio-server-dev -f ./edtrio-server/Dockerfile.server.dev ./edtrio-server
+        - sudo /etc/init.d/mysql stop
+        - docker run -p 3306:3306 -env MYSQL_ROOT_PASSWORD=prisma -v mysql:/var/lib/mysql mysql:5.7
+        - docker run -p 4466:4466 -env PRISMA_CONFIG_PATH=./edtrio-server/src/database/prisma_config -v $(PWD)/PRISMA_CONFIG:./edtrio-server/src/database/prisma_config prismagraphql/prisma:1.22
+        - docker build -t schulcloud/edtrio-server -f ./edtrio-server/Dockerfile.server ./edtrio-server
         - docker run -d -p 4000:4000 -t schulcloud/edtrio-server-dev
         - sleep 30 ; curl -s http://localhost:4000/ | grep title
         - docker stop $( docker ps -aq )

@@ -1,0 +1,9 @@
+port: 4466
+databases:
+  default:
+    connector: mysql
+    host: mysql
+    port: 3306
+    user: root
+    password: prisma
+    migrations: true
