@@ -10,14 +10,16 @@ jobs:
   include:
     - stage: edtrio-client
       script:
-        - docker build -t schulcloud/edtrio-client-dev -f Dockerfile.client.dev .
+        - docker build -t schulcloud/edtrio-client-dev -f ./docker/Dockerfile.client.dev ./edtrio-client
         - docker run -d -p 3000:3000 -t schulcloud/edtrio-client-dev
         - sleep 30 ; curl -s http://localhost:3000/ | grep title
         - docker stop $( docker ps -aq )
     - stage: edtrio-server
       script:
-        - docker build -t schulcloud/edtrio-server-dev -f Dockerfile.server.dev .
+        - docker build -t schulcloud/edtrio-server-dev -f ./docker/Dockerfile.server.dev ./edtrio-server
         - docker run -d -p 4000:4000 -t schulcloud/edtrio-server-dev
+        - sleep 30 ; curl -s http://localhost:4000/ | grep title
+        - docker stop $( docker ps -aq )
 
 # spaeter in Stages stopfen ... und deploy-stage
 after_success:
