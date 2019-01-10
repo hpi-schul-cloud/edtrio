@@ -7,39 +7,10 @@ env:
     - GIT_SHA=$(git rev-parse HEAD)
 
 stages:
-        #  - edtrio-client test
-        #  - edtrio-server test
-        #  - push up
   - deploy staging
-    #    if: branch IN (dockerisierung, development)    
 
 jobs:
   include:
-    - stage: edtrio-client test
-      script:
-        - export PDW=$( pwd )
-        - docker build -t schulcloud/edtrio-client-dev -f ./edtrio-client/Dockerfile.client.dev ./edtrio-client
-        - docker run -d -p 3000:3000 -t schulcloud/edtrio-client-dev
-        - sleep 30 ; curl -s http://localhost:3000/ | grep title
-        - docker stop $( docker ps -aq )
-    - stage: edtrio-server test
-      script:
-        - sudo /etc/init.d/mysql stop
-        - docker run -d -p 3306:3306 --env MYSQL_ROOT_PASSWORD=prisma -v mysql:/var/lib/mysql mysql:5.7
-        - docker run -d -p 4466:4466 --env PRISMA_CONFIG_PATH=./edtrio-server/src/database/prisma_config -v $(PWD)/PRISMA_CONFIG:$( pwd )/edtrio-server/src/database/prisma_config prismagraphql/prisma:1.22
-        - docker build -t schulcloud/edtrio-server -f ./edtrio-server/Dockerfile.server ./edtrio-server
-        - docker run -d -p 4000:4000 -t schulcloud/edtrio-server
-        - sleep 30 ; curl -s http://localhost:4000/ | grep title
-        - docker stop $( docker ps -aq )
-    - stage: push up
-      script:
-        - docker build -t schulcloud/edtrio-client:latest -t schulcloud/edtrio-client:$GIT_SHA -f ./edtrio-client/Dockerfile.client ./edtrio-client
-        - docker build -t schulcloud/edtrio-server:latest -t schulcloud/edtrio-server:$GIT_SHA -f ./edtrio-server/Dockerfile.server ./edtrio-server
-        - echo "$DOCKER_PASS" | docker login -u "$DOCKER_ID" --password-stdin
-        - docker push schulcloud/edtrio-client:latest
-        - docker push schulcloud/edtrio-client:$GIT_SHA
-        - docker push schulcloud/edtrio-server:latest
-        - docker push schulcloud/edtrio-server:$GIT_SHA
     - stage: deploy staging
       script: curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl && chmod +x kubectl && sudo mv kubectl /usr/local/bin/
       deploy: 
