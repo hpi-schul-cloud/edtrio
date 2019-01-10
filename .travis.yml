@@ -16,4 +16,7 @@ jobs:
       deploy: 
         provider: script
         script: ./deploy.sh
+        on:
+          all_branches: true
+          condition: $TRAVIS_BRANCH =~ ^dockerisierung|development$
 
