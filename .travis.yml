@@ -6,6 +6,13 @@ env:
   global:
     - GIT_SHA=$(git rev-parse HEAD)
 
+stages:
+  - edtrio-client test
+  - edtrio-server test
+  - push up
+  - name: deploy staging
+    if: branch IN (dockerisierung, development)    
+
 jobs:
   include:
     - stage: edtrio-client test
@@ -34,8 +41,9 @@ jobs:
         - docker push schulcloud/edtrio-server:latest
         - docker push schulcloud/edtrio-server:$GIT_SHA
     - stage: deploy staging
-      script:
-        - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl && chmod +x kubectl && sudo mv kubectl /usr/local/bin/
-        - $( pwd )/deploy.sh
+      script: curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl && chmod +x kubectl && sudo mv kubectl /usr/local/bin/
+      deploy: 
+        provider: script
+        script: ./deploy.sh
       if: branch IN (dockerisierung, development)
 
