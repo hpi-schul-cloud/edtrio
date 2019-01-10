@@ -10,7 +10,8 @@ jobs:
   include:
     - stage: edtrio-client
       script:
-        - docker build -t schulcloud/edtrio-client-dev -f ./docker/Dockerfile.client.dev ./edtrio-client
+        - export PDW=$( pwd )
+        - docker build -t schulcloud/edtrio-client-dev -f $PWD/docker/Dockerfile.client.dev $PWD/edtrio-client
         - docker run -d -p 3000:3000 -t schulcloud/edtrio-client-dev
         - sleep 30 ; curl -s http://localhost:3000/ | grep title
         - docker stop $( docker ps -aq )
