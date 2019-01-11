@@ -8,6 +8,7 @@ import RadioButtonCheckedIcon from "@material-ui/icons/RadioButtonChecked";
 import RadioButtonUncheckedIcon from "@material-ui/icons/RadioButtonUnchecked";
 import React from "react";
 import { Block, Editor } from "slate";
+import { PollSelectedAnswerContext } from "../../context/PollSelectedAnswerContext";
 
 export default class PollAnswerNode extends React.Component<{
   readOnly: boolean;
@@ -40,22 +41,26 @@ export default class PollAnswerNode extends React.Component<{
     const name = `answer-radio-button-${parent.key}`;
 
     return (
-      <ListItem
-        style={{ background }}
-        button={true}
-        divider={true}
-        {...attributes}
-      >
-        <Radio
-          name={name}
-          checked={this.isSelected(parent, node)}
-          onChange={() => this.onChange(parent, node)}
-          color="default"
-          icon={<RadioButtonUncheckedIcon fontSize="small" />}
-          checkedIcon={<RadioButtonCheckedIcon fontSize="small" />}
-        />
-        <ListItemText primary={node.text} />
-      </ListItem>
+      <PollSelectedAnswerContext.Consumer>
+        {({ selectedAnswer, updateSelectedAnswer }) => (
+          <ListItem
+            style={{ background }}
+            button={true}
+            divider={true}
+            {...attributes}
+          >
+            <Radio
+              name={name}
+              checked={selectedAnswer === node.key}
+              onChange={() => updateSelectedAnswer(node.key)}
+              color="default"
+              icon={<RadioButtonUncheckedIcon fontSize="small" />}
+              checkedIcon={<RadioButtonCheckedIcon fontSize="small" />}
+            />
+            <ListItemText primary={node.text} />
+          </ListItem>
+        )}
+      </PollSelectedAnswerContext.Consumer>
     );
   }
 
@@ -87,14 +92,6 @@ export default class PollAnswerNode extends React.Component<{
     );
   }
 
-  private onChange(parent: Block, node: Block) {
-    const x = parent.data.set("selected_answer", node.key);
-    parent.data = x;
-  }
-
-  private isSelected(parent: Block, node: Block) {
-    return parent.data.get("selected_answer") === node.key;
-  }
   private deleteNode(editor: Editor, node: Block) {
     return editor.removeNodeByKey(node.key);
   }

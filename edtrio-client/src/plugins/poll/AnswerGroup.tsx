@@ -1,9 +1,9 @@
 import React from "react";
-import { Block, Editor } from "slate";
+import { PollSelectedAnswerProvider } from "../../context/PollSelectedAnswerContext";
 
 export default class PollAnswerGroupNode extends React.Component<{}> {
   public render() {
     const { children } = this.props;
-    return <div>{children}</div>;
+    return <PollSelectedAnswerProvider>{children}</PollSelectedAnswerProvider>;
   }
 }
