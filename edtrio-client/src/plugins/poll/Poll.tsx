@@ -7,7 +7,7 @@ import SendIcon from "@material-ui/icons/Send";
 import { List } from "immutable";
 import React from "react";
 import { Block, Editor, Node, Text } from "slate";
-
+import { PollStateContext } from "../../context/PollStateContext";
 export function createNewAnswer() {
   return Block.create({
     type: "poll_answer",
@@ -32,13 +32,25 @@ export default class PollNode extends React.Component<{
     } = this.props;
 
     return (
-      <div>
-        <ListEle {...attributes}>{children}</ListEle>
-        <div className="right-align">
-          {this.mainActionButton(editor, node, readOnly, currentUser)}
-        </div>
-        <br />
-      </div>
+      <PollStateContext.Consumer>
+        {({ locked, updateLocked, updateShowResults }) => (
+          <div>
+            <ListEle {...attributes}>{children}</ListEle>
+            <div className="right-align">
+              {this.mainActionButton(
+                editor,
+                node,
+                readOnly,
+                currentUser,
+                locked,
+                updateLocked,
+                updateShowResults,
+              )}
+            </div>
+            <br />
+          </div>
+        )}
+      </PollStateContext.Consumer>
     );
   }
 
@@ -47,11 +59,16 @@ export default class PollNode extends React.Component<{
     node: any,
     readOnly: boolean,
     currentUser: any,
+    locked: boolean,
+    updateLocked: Function,
+    updateShowResults: Function,
   ) {
     return readOnly
       ? currentUser.isTeacher
-        ? this.startPollButton()
-        : this.sendAnswerButton()
+        ? locked
+          ? this.startPollButton(updateLocked)
+          : this.showPollResultButton(updateShowResults)
+        : this.sendAnswerButton(locked)
       : this.addAnswerButton(editor, node);
   }
 
@@ -68,11 +85,12 @@ export default class PollNode extends React.Component<{
     );
   }
 
-  private sendAnswerButton() {
+  private sendAnswerButton(locked: boolean) {
     return (
       <Button
         style={{ float: "right" }}
         variant="outlined"
+        disabled={locked}
         onClick={event => this.onClickSendAnswerButton()}
       >
         <SendIcon />
@@ -81,12 +99,12 @@ export default class PollNode extends React.Component<{
     );
   }
 
-  private startPollButton() {
+  private startPollButton(updateLocked: Function) {
     return (
       <Button
         style={{ float: "right" }}
         variant="outlined"
-        onClick={event => this.onClickStartPollButton()}
+        onClick={event => updateLocked(false)}
       >
         <PollIcon />
         &nbsp;Umfrage starten
@@ -94,12 +112,12 @@ export default class PollNode extends React.Component<{
     );
   }
 
-  private showPollResultButton() {
+  private showPollResultButton(updateShowResults) {
     return (
       <Button
         style={{ float: "right" }}
         variant="outlined"
-        onClick={event => this.onClickShowPollResultButton()}
+        onClick={event => updateShowResults(true)}
       >
         <SendIcon />
         &nbsp;Ergebnisse freischalten

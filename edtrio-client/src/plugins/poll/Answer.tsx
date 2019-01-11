@@ -8,7 +8,7 @@ import RadioButtonCheckedIcon from "@material-ui/icons/RadioButtonChecked";
 import RadioButtonUncheckedIcon from "@material-ui/icons/RadioButtonUnchecked";
 import React from "react";
 import { Block, Editor } from "slate";
-import { PollSelectedAnswerContext } from "../../context/PollSelectedAnswerContext";
+import { PollStateContext } from "../../context/PollStateContext";
 
 export default class PollAnswerNode extends React.Component<{
   readOnly: boolean;
@@ -34,17 +34,12 @@ export default class PollAnswerNode extends React.Component<{
   }
 
   private renderReadOnlyMode(node: Block, parent: Block, attributes: any) {
-    const percentage = Math.floor(Math.random() * 100);
-    const color = "#007A9E";
-    const background = `linear-gradient(to right, ${color} ${0}%, ${color} ${percentage}%, white ${percentage}%, white ${100 -
-      percentage}%)`;
     const name = `answer-radio-button-${parent.key}`;
-
     return (
-      <PollSelectedAnswerContext.Consumer>
-        {({ selectedAnswer, updateSelectedAnswer }) => (
+      <PollStateContext.Consumer>
+        {({ selectedAnswer, updateSelectedAnswer, showResults }) => (
           <ListItem
-            style={{ background }}
+            style={this.calculateBackground(showResults)}
             button={true}
             divider={true}
             onClick={() => updateSelectedAnswer(node.key)}
@@ -60,10 +55,17 @@ export default class PollAnswerNode extends React.Component<{
             <ListItemText primary={node.text} />
           </ListItem>
         )}
-      </PollSelectedAnswerContext.Consumer>
+      </PollStateContext.Consumer>
     );
   }
-
+  private calculateBackground(showResults) {
+    if (!showResults) return null;
+    const percentage = Math.floor(Math.random() * 100);
+    const color = "#007A9E";
+    const background = `linear-gradient(to right, ${color} ${0}%, ${color} ${percentage}%, white ${percentage}%, white ${100 -
+      percentage}%)`;
+    return { background };
+  }
   private renderEditMode(
     children: any,
     node: Block,

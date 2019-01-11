@@ -3,10 +3,10 @@ import React, { Fragment } from "react";
 import { Block, Editor, Node, Text } from "slate";
 import styled from "styled-components";
 import { EditorStateContext } from "../../context/EditorStateContext";
+import { PollStateProvider } from "../../context/PollStateContext";
 import PollAnswerNode from "./Answer";
 import PollAnswerGroupNode from "./AnswerGroup";
-import { createNewAnswer } from "./Poll";
-import PollNode from "./Poll";
+import PollNode, { createNewAnswer } from "./Poll";
 import PollQuestionNode from "./Question";
 import "./style.css";
 
@@ -70,17 +70,19 @@ const RenderPollNode = {
       return (
         <EditorStateContext.Consumer>
           {({ currentUser }) => (
-            <PollNode
-              node={node}
-              selected={isFocused}
-              editor={editor}
-              {...attributes}
-              next={next}
-              readOnly={readOnly}
-              currentUser={currentUser}
-            >
-              {children}
-            </PollNode>
+            <PollStateProvider>
+              <PollNode
+                node={node}
+                selected={isFocused}
+                editor={editor}
+                {...attributes}
+                next={next}
+                readOnly={readOnly}
+                currentUser={currentUser}
+              >
+                {children}
+              </PollNode>
+            </PollStateProvider>
           )}
         </EditorStateContext.Consumer>
       );
