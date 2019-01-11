@@ -2,6 +2,7 @@ import Button from "@material-ui/core/Button";
 import ListEle from "@material-ui/core/List";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import AddIcon from "@material-ui/icons/Add";
+import PollIcon from "@material-ui/icons/Poll";
 import SendIcon from "@material-ui/icons/Send";
 import { List } from "immutable";
 import React from "react";
@@ -87,7 +88,7 @@ export default class PollNode extends React.Component<{
         variant="outlined"
         onClick={event => this.onClickStartPollButton()}
       >
-        <SendIcon />
+        <PollIcon />
         &nbsp;Umfrage starten
       </Button>
     );
