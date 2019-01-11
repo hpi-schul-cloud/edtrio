@@ -59,9 +59,11 @@ export default class PollAnswerNode extends React.Component<{
     );
   }
   private calculateBackground(showResults) {
-    if (!showResults) return null;
+    if (!showResults) {
+      return null;
+    }
     const percentage = Math.floor(Math.random() * 100);
-    const color = "#007A9E";
+    const color = "rgba(0,122,158,0.5)";
     const background = `linear-gradient(to right, ${color} ${0}%, ${color} ${percentage}%, white ${percentage}%, white ${100 -
       percentage}%)`;
     return { background };
