@@ -32,9 +32,7 @@ export default class PollNode extends React.Component<{
 
     return (
       <div>
-        <ListEle {...attributes}>
-          <RadioGroup>{children}</RadioGroup>
-        </ListEle>
+        <ListEle {...attributes}>{children}</ListEle>
         <div className="right-align">
           {this.mainActionButton(editor, node, readOnly, currentUser)}
         </div>
@@ -109,18 +107,15 @@ export default class PollNode extends React.Component<{
   }
 
   // TODO: Node should be used instead of any for 'node'
-  private onClickAddAnswerButton(event: any, editor: Editor, node: any) {
+  private onClickAddAnswerButton(event: any, editor: Editor, node: Block) {
     event.preventDefault();
     this.appendNewAnswer(editor, node);
   }
 
-  private appendNewAnswer(editor: Editor, node: any) {
+  private appendNewAnswer(editor: Editor, node: Block) {
     const newAnswer = createNewAnswer();
-    const lastIndex = node.nodes.size;
-
-    return editor
-      .insertNodeByKey(node.key, lastIndex, newAnswer)
-      .moveToEndOfNode(newAnswer);
+    const answerGroup: any = node.nodes.get(1);
+    editor.insertNodeByKey(answerGroup.key, answerGroup.nodes.size, newAnswer);
   }
 
   private onClickSendAnswerButton() {
