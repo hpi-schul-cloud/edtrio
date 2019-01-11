@@ -2,6 +2,7 @@ import { List } from "immutable";
 import React, { Fragment } from "react";
 import { Block, Editor, Node, Text } from "slate";
 import styled from "styled-components";
+import { EditorStateContext } from "../../context/EditorStateContext";
 import PollAnswerNode from "./Answer";
 import PollAnswerGroupNode from "./AnswerGroup";
 import { createNewAnswer } from "./Poll";
@@ -54,9 +55,6 @@ const RenderPollNode = {
   renderNode(props: any, next: any) {
     // append to parent, see add-section
     // TODO: Get current user from props
-    const currentUser = {
-      isTeacher: true,
-    };
 
     const {
       children,
@@ -70,17 +68,21 @@ const RenderPollNode = {
 
     if (node.type === "poll") {
       return (
-        <PollNode
-          node={node}
-          selected={isFocused}
-          editor={editor}
-          {...attributes}
-          next={next}
-          readOnly={readOnly}
-          currentUser={currentUser}
-        >
-          {children}
-        </PollNode>
+        <EditorStateContext.Consumer>
+          {({ currentUser }) => (
+            <PollNode
+              node={node}
+              selected={isFocused}
+              editor={editor}
+              {...attributes}
+              next={next}
+              readOnly={readOnly}
+              currentUser={currentUser}
+            >
+              {children}
+            </PollNode>
+          )}
+        </EditorStateContext.Consumer>
       );
     }
     if (node.type === "poll_question") {
