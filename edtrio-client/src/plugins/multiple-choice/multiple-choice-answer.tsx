@@ -28,6 +28,19 @@ const StyledCheckboxWrapper = styled.span`
   margin-right: 8px;
 `;
 
+const StyledAnswerWrapper = styled.div`
+  min-width: 40%;
+  margin: 6px;
+  margin-left: 18px;
+  display: flex;
+  align-items: center;
+`;
+
+// red: #b10438
+// orange: #dd6108
+// yellow: #f6a800
+// blue (germna: "petrol"): #007a9e
+
 interface IMultipleChoiceAnswerNodeProps {
   node: Node;
   attributes: object;
@@ -133,7 +146,7 @@ export class MultipleChoiceAnswerNode extends PureComponent<
     const id = node.data.get("id");
     if (readOnly) {
       return (
-        <div {...attributes}>
+        <StyledAnswerWrapper {...attributes}>
           <StyledCheckboxWrapper contentEditable={false}>
             <EditorStateContext.Consumer>
               {({ currentUser }) => {
@@ -181,11 +194,11 @@ export class MultipleChoiceAnswerNode extends PureComponent<
             </EditorStateContext.Consumer>
           </StyledCheckboxWrapper>
           {children}
-        </div>
+        </StyledAnswerWrapper>
       );
     }
     return (
-      <div {...attributes}>
+      <StyledAnswerWrapper {...attributes}>
         <StyledCheckboxWrapper contentEditable={false}>
           {!id ||
           (Object.keys(id).length === 0 && id.constructor === Object) ? (
@@ -217,7 +230,7 @@ export class MultipleChoiceAnswerNode extends PureComponent<
           )}
         </StyledCheckboxWrapper>
         {children}
-      </div>
+      </StyledAnswerWrapper>
     );
   }
 

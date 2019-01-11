@@ -5,7 +5,7 @@ type Query {
   document(documentId: String!): Document
   documents: [Document]
   user(userId: String!): User
-  userBySchulCloudId(schulCloudId: String!): User
+  userByOpenHpiEmail(openHpiEmail: String!): User
   users: [User]
   multipleChoiceAnswer(answerId: String!): MultipleChoiceAnswer
   submissions(answerId: String!): [MultipleChoiceSubmission]
@@ -14,7 +14,7 @@ type Query {
 }
 
 type Mutation {
-  createUser(name: String!, isTeacher: Boolean!, schulCloudId: String): User
+  createUser(name: String!, isTeacher: Boolean!, openHpiEmail: String): User
   createDocument(value: Json!, userIds: [String!]!): Document
   updateDocument(documentId: String!, value: Json, userIds: [String!]): Document
   createMultipleChoiceAnswer(isCorrect: Boolean!): MultipleChoiceAnswer

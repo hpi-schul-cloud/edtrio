@@ -633,7 +633,7 @@ type User {
   isTeacher: Boolean!
   createdAt: DateTime!
   updatedAt: DateTime!
-  schulCloudId: String
+  openHpiEmail: String
 }
 
 type UserConnection {
@@ -645,7 +645,7 @@ type UserConnection {
 input UserCreateInput {
   name: String!
   isTeacher: Boolean!
-  schulCloudId: String
+  openHpiEmail: String
 }
 
 input UserCreateManyInput {
@@ -674,8 +674,8 @@ enum UserOrderByInput {
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
-  schulCloudId_ASC
-  schulCloudId_DESC
+  openHpiEmail_ASC
+  openHpiEmail_DESC
 }
 
 type UserPreviousValues {
@@ -684,7 +684,7 @@ type UserPreviousValues {
   isTeacher: Boolean!
   createdAt: DateTime!
   updatedAt: DateTime!
-  schulCloudId: String
+  openHpiEmail: String
 }
 
 input UserScalarWhereInput {
@@ -734,20 +734,20 @@ input UserScalarWhereInput {
   updatedAt_lte: DateTime
   updatedAt_gt: DateTime
   updatedAt_gte: DateTime
-  schulCloudId: String
-  schulCloudId_not: String
-  schulCloudId_in: [String!]
-  schulCloudId_not_in: [String!]
-  schulCloudId_lt: String
-  schulCloudId_lte: String
-  schulCloudId_gt: String
-  schulCloudId_gte: String
-  schulCloudId_contains: String
-  schulCloudId_not_contains: String
-  schulCloudId_starts_with: String
-  schulCloudId_not_starts_with: String
-  schulCloudId_ends_with: String
-  schulCloudId_not_ends_with: String
+  openHpiEmail: String
+  openHpiEmail_not: String
+  openHpiEmail_in: [String!]
+  openHpiEmail_not_in: [String!]
+  openHpiEmail_lt: String
+  openHpiEmail_lte: String
+  openHpiEmail_gt: String
+  openHpiEmail_gte: String
+  openHpiEmail_contains: String
+  openHpiEmail_not_contains: String
+  openHpiEmail_starts_with: String
+  openHpiEmail_not_starts_with: String
+  openHpiEmail_ends_with: String
+  openHpiEmail_not_ends_with: String
   AND: [UserScalarWhereInput!]
   OR: [UserScalarWhereInput!]
   NOT: [UserScalarWhereInput!]
@@ -774,19 +774,19 @@ input UserSubscriptionWhereInput {
 input UserUpdateDataInput {
   name: String
   isTeacher: Boolean
-  schulCloudId: String
+  openHpiEmail: String
 }
 
 input UserUpdateInput {
   name: String
   isTeacher: Boolean
-  schulCloudId: String
+  openHpiEmail: String
 }
 
 input UserUpdateManyDataInput {
   name: String
   isTeacher: Boolean
-  schulCloudId: String
+  openHpiEmail: String
 }
 
 input UserUpdateManyInput {
@@ -803,7 +803,7 @@ input UserUpdateManyInput {
 input UserUpdateManyMutationInput {
   name: String
   isTeacher: Boolean
-  schulCloudId: String
+  openHpiEmail: String
 }
 
 input UserUpdateManyWithWhereNestedInput {
@@ -881,20 +881,20 @@ input UserWhereInput {
   updatedAt_lte: DateTime
   updatedAt_gt: DateTime
   updatedAt_gte: DateTime
-  schulCloudId: String
-  schulCloudId_not: String
-  schulCloudId_in: [String!]
-  schulCloudId_not_in: [String!]
-  schulCloudId_lt: String
-  schulCloudId_lte: String
-  schulCloudId_gt: String
-  schulCloudId_gte: String
-  schulCloudId_contains: String
-  schulCloudId_not_contains: String
-  schulCloudId_starts_with: String
-  schulCloudId_not_starts_with: String
-  schulCloudId_ends_with: String
-  schulCloudId_not_ends_with: String
+  openHpiEmail: String
+  openHpiEmail_not: String
+  openHpiEmail_in: [String!]
+  openHpiEmail_not_in: [String!]
+  openHpiEmail_lt: String
+  openHpiEmail_lte: String
+  openHpiEmail_gt: String
+  openHpiEmail_gte: String
+  openHpiEmail_contains: String
+  openHpiEmail_not_contains: String
+  openHpiEmail_starts_with: String
+  openHpiEmail_not_starts_with: String
+  openHpiEmail_ends_with: String
+  openHpiEmail_not_ends_with: String
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

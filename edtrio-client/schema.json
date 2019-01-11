@@ -86,11 +86,11 @@
             "deprecationReason": null
           },
           {
-            "name": "userBySchulCloudId",
+            "name": "userByOpenHpiEmail",
             "description": "",
             "args": [
               {
-                "name": "schulCloudId",
+                "name": "openHpiEmail",
                 "description": "",
                 "type": {
                   "kind": "NON_NULL",
@@ -1078,7 +1078,7 @@
             "defaultValue": null
           },
           {
-            "name": "schulCloudId",
+            "name": "openHpiEmail",
             "description": "",
             "type": {
               "kind": "SCALAR",
@@ -1088,7 +1088,7 @@
             "defaultValue": null
           },
           {
-            "name": "schulCloudId_not",
+            "name": "openHpiEmail_not",
             "description": "",
             "type": {
               "kind": "SCALAR",
@@ -1098,7 +1098,7 @@
             "defaultValue": null
           },
           {
-            "name": "schulCloudId_in",
+            "name": "openHpiEmail_in",
             "description": "",
             "type": {
               "kind": "LIST",
@@ -1116,7 +1116,7 @@
             "defaultValue": null
           },
           {
-            "name": "schulCloudId_not_in",
+            "name": "openHpiEmail_not_in",
             "description": "",
             "type": {
               "kind": "LIST",
@@ -1134,7 +1134,7 @@
             "defaultValue": null
           },
           {
-            "name": "schulCloudId_lt",
+            "name": "openHpiEmail_lt",
             "description": "",
             "type": {
               "kind": "SCALAR",
@@ -1144,7 +1144,7 @@
             "defaultValue": null
           },
           {
-            "name": "schulCloudId_lte",
+            "name": "openHpiEmail_lte",
             "description": "",
             "type": {
               "kind": "SCALAR",
@@ -1154,7 +1154,7 @@
             "defaultValue": null
           },
           {
-            "name": "schulCloudId_gt",
+            "name": "openHpiEmail_gt",
             "description": "",
             "type": {
               "kind": "SCALAR",
@@ -1164,7 +1164,7 @@
             "defaultValue": null
           },
           {
-            "name": "schulCloudId_gte",
+            "name": "openHpiEmail_gte",
             "description": "",
             "type": {
               "kind": "SCALAR",
@@ -1174,7 +1174,7 @@
             "defaultValue": null
           },
           {
-            "name": "schulCloudId_contains",
+            "name": "openHpiEmail_contains",
             "description": "",
             "type": {
               "kind": "SCALAR",
@@ -1184,7 +1184,7 @@
             "defaultValue": null
           },
           {
-            "name": "schulCloudId_not_contains",
+            "name": "openHpiEmail_not_contains",
             "description": "",
             "type": {
               "kind": "SCALAR",
@@ -1194,7 +1194,7 @@
             "defaultValue": null
           },
           {
-            "name": "schulCloudId_starts_with",
+            "name": "openHpiEmail_starts_with",
             "description": "",
             "type": {
               "kind": "SCALAR",
@@ -1204,7 +1204,7 @@
             "defaultValue": null
           },
           {
-            "name": "schulCloudId_not_starts_with",
+            "name": "openHpiEmail_not_starts_with",
             "description": "",
             "type": {
               "kind": "SCALAR",
@@ -1214,7 +1214,7 @@
             "defaultValue": null
           },
           {
-            "name": "schulCloudId_ends_with",
+            "name": "openHpiEmail_ends_with",
             "description": "",
             "type": {
               "kind": "SCALAR",
@@ -1224,7 +1224,7 @@
             "defaultValue": null
           },
           {
-            "name": "schulCloudId_not_ends_with",
+            "name": "openHpiEmail_not_ends_with",
             "description": "",
             "type": {
               "kind": "SCALAR",
@@ -1381,13 +1381,13 @@
             "deprecationReason": null
           },
           {
-            "name": "schulCloudId_ASC",
+            "name": "openHpiEmail_ASC",
             "description": "",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "schulCloudId_DESC",
+            "name": "openHpiEmail_DESC",
             "description": "",
             "isDeprecated": false,
             "deprecationReason": null
@@ -1491,7 +1491,7 @@
             "deprecationReason": null
           },
           {
-            "name": "schulCloudId",
+            "name": "openHpiEmail",
             "description": "",
             "args": [],
             "type": {
@@ -2853,7 +2853,7 @@
                 "defaultValue": null
               },
               {
-                "name": "schulCloudId",
+                "name": "openHpiEmail",
                 "description": "",
                 "type": {
                   "kind": "SCALAR",
@@ -3029,6 +3029,47 @@
                   "ofType": {
                     "kind": "SCALAR",
                     "name": "Boolean",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "MultipleChoiceAnswer",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "addMultipleChoiceSubmissionToAnswer",
+            "description": "",
+            "args": [
+              {
+                "name": "answerId",
+                "description": "",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "submissionId",
+                "description": "",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
                     "ofType": null
                   }
                 },

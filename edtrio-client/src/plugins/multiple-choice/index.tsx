@@ -121,7 +121,10 @@ const RenderMultipleChoiceQuestionNode = {
       focus: { key: last.key, offset: last.text.length },
       mark: {
         type: "placeholder",
-        data: { placeholder: "Schreib deine Frage hier" },
+        data: {
+          placeholder:
+            "Schreib deine Frage hier oder entferne die Frage mit allen Antwortmöglichkeiten",
+        },
       },
     };
 
@@ -186,7 +189,10 @@ const RenderMultipleChoiceAnswerNode = {
       focus: { key: last.key, offset: last.text.length },
       mark: {
         type: "placeholder",
-        data: { placeholder: "Schreib deine Antwort hier" },
+        data: {
+          placeholder:
+            "Schreib deine Antwort hier oder entferne diese Antwortmöglichkeit",
+        },
       },
     };
 

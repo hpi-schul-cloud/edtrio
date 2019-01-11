@@ -9,31 +9,21 @@ export const CREATE_MULTIPLE_CHOICE_ANSWER = gql`
 `;
 
 export const CREATE_USER = gql`
-  mutation createUser(
-    $name: String!
-    $isTeacher: Boolean!
-    $schulCloudId: String
-  ) {
-    createUser(
-      name: $name
-      isTeacher: $isTeacher
-      schulCloudId: $schulCloudId
-    ) {
+  mutation createUser($name: String!, $isTeacher: Boolean!) {
+    createUser(name: $name, isTeacher: $isTeacher) {
       id
       isTeacher
       name
-      schulCloudId
     }
   }
 `;
 
-export const USER_BY_SCHULCLOUDID = gql`
-  query userBySchulCloudId($schulCloudId: String!) {
-    userBySchulCloudId(schulCloudId: $schulCloudId) {
+export const USER_BY_OPENHPIEMAIL = gql`
+  query userByOpenHpiEmail($openHpiEmail: String!) {
+    userByOpenHpiEmail(openHpiEmail: $openHpiEmail) {
       id
       name
       isTeacher
-      schulCloudId
     }
   }
 `;

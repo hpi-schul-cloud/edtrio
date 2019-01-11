@@ -8,9 +8,9 @@ export const queries = {
     user(root: any, args: any, context: IContextType) {
       return context.prisma.user({ id: args.userId });
     },
-    async userBySchulCloudId(root: any, args: any, context: IContextType) {
+    async userByOpenHpiEmail(root: any, args: any, context: IContextType) {
       const user = await context.prisma.users({
-        where: { schulCloudId: args.schulCloudId },
+        where: { openHpiEmail: args.openHpiEmail },
       });
       return user[0];
     },

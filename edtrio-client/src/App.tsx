@@ -29,7 +29,6 @@ export default function App() {
             documentId={"cjqm7lirq00sh0740clb48905"}
           />
         </EditorStateProvider>
-        ); }}
       </LastSavedProvider>
     </ThemeProvider>
   );

@@ -1,4 +1,5 @@
 import React, { PureComponent } from "react";
+import styled from "styled-components";
 
 import { Editor, Node } from "slate";
 
@@ -11,6 +12,13 @@ interface IMultipleChoiceQuestionNodeProps {
   readOnly: boolean;
 }
 
+const StyledQuestion = styled.div`
+  flex-grow: 1;
+  flex-shrink: 0;
+  width: 100%;
+  margin: 8px;
+`;
+
 export class MultipleChoiceQuestionNode extends PureComponent<
   IMultipleChoiceQuestionNodeProps
 > {
@@ -18,6 +26,10 @@ export class MultipleChoiceQuestionNode extends PureComponent<
     const { node, attributes, children } = this.props;
     // @ts-ignore only invoked on section type blocks
     const isVisible = node.data.get("isVisible");
-    return <div {...attributes}>{children}</div>;
+    return (
+      <StyledQuestion {...attributes}>
+        <strong>{children}</strong>
+      </StyledQuestion>
+    );
   }
 }

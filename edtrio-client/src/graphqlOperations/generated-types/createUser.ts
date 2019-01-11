@@ -10,7 +10,6 @@ export interface createUser_createUser {
   id: string;
   isTeacher: boolean;
   name: string;
-  schulCloudId: string | null;
 }
 
 export interface createUser {
@@ -20,5 +19,4 @@ export interface createUser {
 export interface createUserVariables {
   name: string;
   isTeacher: boolean;
-  schulCloudId?: string | null;
 }

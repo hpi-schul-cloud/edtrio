@@ -1,19 +1,14 @@
 import React, { PureComponent } from "react";
+import styled from "styled-components";
 
 import { apolloClient } from "../EditorWrapper/apolloClient";
-import {
-  createUser,
-  createUserVariables,
-} from "../graphqlOperations/generated-types/createUser";
-import {
-  userBySchulCloudId,
-  userBySchulCloudIdVariables,
-} from "../graphqlOperations/generated-types/userBySchulCloudId";
 
 import {
-  CREATE_USER,
-  USER_BY_SCHULCLOUDID,
-} from "../graphqlOperations/operations";
+  userByOpenHpiEmail,
+  userByOpenHpiEmailVariables,
+} from "../graphqlOperations/generated-types/userByOpenHpiEmail";
+
+import { USER_BY_OPENHPIEMAIL } from "../graphqlOperations/operations";
 import { IUserType } from "../types";
 interface IUserBarrierProps {
   children: any;
@@ -22,103 +17,107 @@ interface IUserBarrierProps {
   updateUserList: (users: IUserType[]) => void;
 }
 
-export class UserBarrier extends PureComponent<IUserBarrierProps> {
-  public componentDidMount() {
-    if (!this.props.currentUser) {
-      const { updateCurrentUser, updateUserList } = this.props;
-      // start Ajax
-      const xhttp = new XMLHttpRequest();
-      xhttp.withCredentials = true;
-      xhttp.onreadystatechange = async function() {
-        if (this.readyState === 4 && this.status === 200) {
-          const response = JSON.parse(this.responseText);
-          const isStudent = response.roles.some((role: { name: string }) =>
-            role.name.match(/(s|S)tudent/),
-          );
-          const schulCloudUser = {
-            id: response._id,
-            name: response.displayName,
-            isTeacher: !isStudent,
-          };
-          const potentialUserResponse = await apolloClient.query<
-            userBySchulCloudId,
-            userBySchulCloudIdVariables
-          >({
-            query: USER_BY_SCHULCLOUDID,
-            variables: {
-              schulCloudId: schulCloudUser.id,
-            },
-          });
+const StyledPageWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+`;
 
-          if (
-            potentialUserResponse &&
-            potentialUserResponse.data &&
-            potentialUserResponse.data.userBySchulCloudId
-          ) {
-            updateCurrentUser({
-              id: potentialUserResponse.data.userBySchulCloudId.id,
-              name: potentialUserResponse.data.userBySchulCloudId.name,
-              isTeacher:
-                potentialUserResponse.data.userBySchulCloudId.isTeacher,
-            });
-            updateUserList([
-              {
-                id: potentialUserResponse.data.userBySchulCloudId.id,
-                name: potentialUserResponse.data.userBySchulCloudId.name,
-                isTeacher:
-                  potentialUserResponse.data.userBySchulCloudId.isTeacher,
-              },
-            ]);
-            return;
-          }
-          const createUserResponse = await apolloClient.mutate<
-            createUser,
-            createUserVariables
-          >({
-            mutation: CREATE_USER,
-            variables: {
-              name: schulCloudUser.name,
-              isTeacher: schulCloudUser.isTeacher,
-              schulCloudId: schulCloudUser.id,
-            },
-          });
-          if (
-            createUserResponse &&
-            createUserResponse.data &&
-            createUserResponse.data.createUser
-          ) {
-            updateCurrentUser({
-              id: createUserResponse.data.createUser.id,
-              name: createUserResponse.data.createUser.name,
-              isTeacher: createUserResponse.data.createUser.isTeacher,
-            });
-            updateUserList([
-              {
-                id: createUserResponse.data.createUser.id,
-                name: createUserResponse.data.createUser.name,
-                isTeacher: createUserResponse.data.createUser.isTeacher,
-              },
-            ]);
-          }
-        }
-      };
-      const token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6ImFjY2VzcyJ9.eyJhY2NvdW50SWQiOiIwMDAwZDIxMzgxNmFiYmE1ODQ3MTRjYWEiLCJ1c2VySWQiOiIwMDAwZDIxMzgxNmFiYmE1ODQ3MTRjMGEiLCJpYXQiOjE1NDcwNDczMTAsImV4cCI6MTU0OTYzOTMxMCwiYXVkIjoiaHR0cHM6Ly9zY2h1bC1jbG91ZC5vcmciLCJpc3MiOiJmZWF0aGVycyIsInN1YiI6ImFub255bW91cyIsImp0aSI6IjU4OTM4YWI1LTY0YmItNDgxYS05NjZkLTQ2OTAzNDBiZTE1YyJ9.QUsgxsawJurLPYaXQwFngE7BOXNBtGhthjoq_MAdObM";
-      xhttp.open("GET", "http://localhost:3030/me", true);
-      xhttp.setRequestHeader("Authorization", "Bearer " + token);
-      xhttp.send();
+const StyledPageContent = styled.div`
+  text-align: center;
+  display: block;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 30%;
+  padding: 0 20%;
+`;
+
+const StyledAgainButton = styled.button`
+  display: inline-block;
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 1px solid transparent;
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  padding: 0.5rem 2rem;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+  padding: 24px;
+  flex: 0;
+  margin-top: 16px;
+  color: #fff;
+  background-color: #b10438;
+  border-color: #b10438;
+`;
+
+export class UserBarrier extends PureComponent<IUserBarrierProps> {
+  public async getUser() {
+    const { updateCurrentUser, updateUserList } = this.props;
+
+    const emailInput = prompt(
+      "Bitte nenne uns deine E-Mail-Adresse, die du beim Login auf open.hpi.de verwendest:",
+      "",
+    );
+    if (emailInput != null && emailInput !== "") {
+      // Wert vorhanden
+      const userResponse = await apolloClient.query<
+        userByOpenHpiEmail,
+        userByOpenHpiEmailVariables
+      >({
+        query: USER_BY_OPENHPIEMAIL,
+        variables: { openHpiEmail: emailInput },
+      });
+      if (userResponse.data.userByOpenHpiEmail) {
+        updateCurrentUser({
+          id: userResponse.data.userByOpenHpiEmail.id,
+          name: userResponse.data.userByOpenHpiEmail.name,
+          isTeacher: userResponse.data.userByOpenHpiEmail.isTeacher,
+        });
+        updateUserList([
+          {
+            id: userResponse.data.userByOpenHpiEmail.id,
+            name: userResponse.data.userByOpenHpiEmail.name,
+            isTeacher: userResponse.data.userByOpenHpiEmail.isTeacher,
+          },
+        ]);
+      }
     }
   }
+
   public render() {
     const { currentUser } = this.props;
     if (currentUser) {
       return this.props.children;
     } else {
       return (
-        <p>
-          <a href="https://schul-cloud.org">Please Login</a> and{" "}
-          <a href=".">reload this page</a> afterwards.
-        </p>
+        <StyledPageWrapper>
+          <StyledPageContent>
+            Hallo!
+            <br />
+            Um deinen Fortschritt speichern zu können, brauchen wir deine
+            E-Mail-Adresse, mit der du dich bei{" "}
+            <a href="https://open.hpi.de" target="_blank">
+              openHPI
+            </a>{" "}
+            registriert hast. Bitte gib sie hier im Folgenden ein.
+            <div>
+              <StyledAgainButton onClick={() => this.getUser()}>
+                E-Mail-Adresse eingeben
+              </StyledAgainButton>
+            </div>
+          </StyledPageContent>
+        </StyledPageWrapper>
       );
     }
   }

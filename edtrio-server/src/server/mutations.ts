@@ -6,7 +6,7 @@ export const mutations = {
       return context.prisma.createUser({
         name: args.name,
         isTeacher: args.isTeacher,
-        schulCloudId: args.s,
+        openHpiEmail: args.openHpiEmail,
       });
     },
     createDocument(root: any, args: any, context: IContextType) {
@@ -76,7 +76,6 @@ export const mutations = {
         .multipleChoiceAnswer({ id: args.answerId })
         .submissions();
       submissions.push(newSubmission);
-      console.log(submissions);
       await context.prisma.updateMultipleChoiceAnswer({
         where: { id: args.answerId },
         data: {
@@ -121,14 +120,16 @@ export const mutations = {
       const submissions = await context.prisma
         .multipleChoiceAnswer({ id: args.answerId })
         .submissions();
-      submissions.forEach(submission =>
+      await submissions.forEach(submission =>
         context.prisma.deleteManyMultipleChoiceSubmissions({
           id: submission.id,
         }),
       );
-      return context.prisma.deleteMultipleChoiceAnswer({
+      // TODO: Check, why not all submissions are deleted before trying to delete the answer
+      const answers = await context.prisma.deleteMultipleChoiceAnswer({
         id: args.answerId,
       });
+      return answers;
     },
   },
 };
