@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: edtrio-prisma-service
+  namespace: sc-staging
+  labels:
+    app: edtrio
+spec:
+  ports:
+  - port: 4466
+    targetPort: 4466
+    protocol: TCP
+  selector:
+    app: edtrio

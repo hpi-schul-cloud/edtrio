@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: edtrio-prisma-configmap
+  namespace: sc-staging
+  labels:
+    app: edtrio
+data:
+  PRISMA_CONFIG: |
+    port: 4466
+    # uncomment the next line and provide the env var PRISMA_MANAGEMENT_API_SECRET=my-secret to activate cluster security
+    # managementApiSecret: my-secret
+    databases:
+      default:
+        connector: mysql
+        host: edtrio-mysql-service
+        port: 3306
+        user: root
+        password: prisma
+        migrations: true

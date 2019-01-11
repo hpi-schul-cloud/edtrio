@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: edtrio-prisma-deployment
+  namespace: sc-staging
+  labels:
+    app: edtrio
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: edtrio
+    spec:
+      containers:
+        - name: edtrio-prisma
+          image: 'prismagraphql/prisma-prod:1.22'
+          ports:
+            - name: edtrio-prisma-4466
+              containerPort: 4466
+          env:
+            - name: EDTRIO_PRISMA_CONFIG
+              valueFrom:
+                configMapKeyRef:
+                  name: edtrio-prisma-configmap
+                  key: PRISMA_CONFIG
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: edtrio-mysql-pass
+                  key: password

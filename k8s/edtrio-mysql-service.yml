@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: edtrio-mysql-service
+  namespace: sc-staging
+  labels:
+    app: edtrio
+spec:
+  ports:
+    - port: 3306
+  selector:
+    app: edtrio
+    tier: mysql
+  clusterIP: None
+

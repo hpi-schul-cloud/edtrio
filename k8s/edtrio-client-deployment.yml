@@ -1,17 +1,23 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: edtrio-client
   namespace: sc-staging
+  labels:
+    app: edtrio
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: edtrio
   template:
     metadata:
       labels:
-        app: edtrio-client
+        app: edtrio
     spec:
       containers:
         - name: edtrio-client
           image: schulcloud/edtrio-client
           ports:
-            - containerPort: 3000
+            - containerPort: 80
+              name: edtrio-client

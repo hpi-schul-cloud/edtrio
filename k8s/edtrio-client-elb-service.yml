@@ -1,0 +1,21 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: edtrio-client-elb-service
+  namespace: sc-staging
+  labels:
+    app: edtrio
+  annotations:
+    kubernetes.io/elb.class: union
+    kubernetes.io/elb.id: 6cf925e6-6177-4b79-92df-d596c178c2cf
+spec:
+  type: LoadBalancer
+  loadBalancerIP: 160.44.201.152
+  ports:
+    - port: 8000
+      targetPort: 80
+      protocol: TCP
+  selector:
+    app: edtrio
+

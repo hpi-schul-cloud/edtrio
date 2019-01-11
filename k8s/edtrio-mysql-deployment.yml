@@ -1,0 +1,41 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: edtrio-mysql
+  namespace: sc-staging
+  labels:
+    app: edtrio
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: edtrio
+      tier: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: edtrio
+        tier: mysql
+    spec:
+      containers:
+      - image: mysql:5.7
+        name: edtrio-mysql
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: edtrio-mysql-pass
+              key: password
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: edtrio-mysql-persistent-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: edtrio-mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: edtrio-mysql-pvc

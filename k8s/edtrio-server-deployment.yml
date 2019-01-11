@@ -1,0 +1,19 @@
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: edtrio-server
+  namespace: sc-staging
+  labels:
+    app: edtrio
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: edtrio
+    spec:
+      containers:
+        - name: edtrio-server
+          image: schulcloud/edtrio-server
+          ports:
+            - containerPort: 4000

@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: edtrio-mysql-pvc
+  namespace: sc-staging
+  labels:
+    app: edtrio
+  annotations:
+    volume.beta.kubernetes.io/storage-class: sata         # Storage type; Currently, EVS supports sas, ssd, and sata
+  labels:
+    failure-domain.beta.kubernetes.io/region: eu-de
+    failure-domain.beta.kubernetes.io/zone: eu-de-01
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
