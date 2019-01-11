@@ -1,18 +1,18 @@
-import Button from "@material-ui/core/Button";
-import ListEle from "@material-ui/core/List";
-import AddIcon from "@material-ui/icons/Add";
-import SendIcon from "@material-ui/icons/Send";
 import { List } from "immutable";
 import React, { Fragment } from "react";
 import { Block, Editor, Node, Text } from "slate";
 import styled from "styled-components";
+import { EditorStateContext } from "../../context/EditorStateContext";
 import PollAnswerNode from "./Answer";
+import PollAnswerGroupNode from "./AnswerGroup";
+import { createNewAnswer } from "./Poll";
+import PollNode from "./Poll";
 import PollQuestionNode from "./Question";
 import "./style.css";
 
 export default function Poll() {
   return {
-    changes: {},
+    changes: { onClickPollButton },
     helpers: {},
     components: {
       PollNode,
@@ -21,56 +21,26 @@ export default function Poll() {
   };
 }
 
-// TODO: Node should be used instead of any for 'node'
-const onClickNewAnswerButton = (event: any, editor: Editor, node: any) => {
+const onClickPollButton = (event: any, editor: Editor) => {
   event.preventDefault();
-  appendNewAnswer(editor, node);
-};
 
-const appendNewAnswer = (editor: Editor, node: any) => {
-  const newAnswer = Block.create({
-    type: "poll_answer",
-    nodes: List([Text.create("")]),
-  });
-  const lastIndex = node.nodes.size;
-
-  return editor
-    .insertNodeByKey(node.key, lastIndex, newAnswer)
-    .moveToEndOfNode(newAnswer);
-};
-
-const answerButton = (editor: Editor, node: any, readOnly: boolean) => {
-  return readOnly ? (
-    <Button
-      style={{ float: "right" }}
-      variant="outlined"
-      onClick={event => null}
-    >
-      <SendIcon />
-      &nbsp;Antwort senden
-    </Button>
-  ) : (
-    <Button
-      style={{ float: "right" }}
-      variant="outlined"
-      onClick={event => onClickNewAnswerButton(event, editor, node)}
-    >
-      <AddIcon />
-      &nbsp;Antwort hinzufügen
-    </Button>
+  editor.insertBlock(
+    Block.create({
+      type: "poll",
+      nodes: List([
+        Block.create({
+          type: "poll_question",
+          nodes: List([Text.create("")]),
+        }),
+        Block.create({
+          type: "poll_answergroup",
+          data: { selected_answer: -1 },
+          nodes: List([createNewAnswer(), createNewAnswer()]),
+        }),
+      ]),
+    }),
   );
 };
-
-function PollNode(props: any) {
-  const { children, node, editor, readOnly, ...attributes } = props;
-
-  return (
-    <div>
-      <ListEle {...attributes}>{children}</ListEle>
-      <div className="right-align">{answerButton(editor, node, readOnly)}</div>
-    </div>
-  );
-}
 
 const StyledPlaceholder = styled.span`
   pointer-events: none;
@@ -84,6 +54,8 @@ const StyledPlaceholder = styled.span`
 const RenderPollNode = {
   renderNode(props: any, next: any) {
     // append to parent, see add-section
+    // TODO: Get current user from props
+
     const {
       children,
       attributes,
@@ -96,16 +68,21 @@ const RenderPollNode = {
 
     if (node.type === "poll") {
       return (
-        <PollNode
-          node={node}
-          selected={isFocused}
-          editor={editor}
-          {...attributes}
-          next={next}
-          readOnly={readOnly}
-        >
-          {children}
-        </PollNode>
+        <EditorStateContext.Consumer>
+          {({ currentUser }) => (
+            <PollNode
+              node={node}
+              selected={isFocused}
+              editor={editor}
+              {...attributes}
+              next={next}
+              readOnly={readOnly}
+              currentUser={currentUser}
+            >
+              {children}
+            </PollNode>
+          )}
+        </EditorStateContext.Consumer>
       );
     }
     if (node.type === "poll_question") {
@@ -120,11 +97,16 @@ const RenderPollNode = {
         </PollQuestionNode>
       );
     }
+    if (node.type === "poll_answergroup") {
+      return (
+        <PollAnswerGroupNode {...attributes}>{children}</PollAnswerGroupNode>
+      );
+    }
     if (node.type === "poll_answer") {
       return (
         <PollAnswerNode
           node={node}
-          parentKey={parent.key}
+          parent={parent}
           editor={editor}
           readOnly={readOnly}
           {...attributes}

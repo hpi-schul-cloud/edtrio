@@ -77,7 +77,7 @@
     "docz:dev": "docz dev",
     "docz:build": "docz build",
     "lint": "./node_modules/.bin/eslint --ext .jsx --ext .js ./",
-    "tslint": "./node_modules/.bin/tslint -c tslint.json --project './'"
+    "tslint": "./node_modules/.bin/tslint -c ../tslint.json --project './'"
   },
   "devDependencies": {
     "docz": "^0.11.2",
@@ -107,7 +107,7 @@
       "git add"
     ],
     "src/**/*.{ts,tsx}": [
-      "./node_modules/.bin/tslint -c tslint.json --project tsconfig.json",
+      "./node_modules/.bin/tslint -c ../tslint.json --project tsconfig.json",
       "prettier",
       "git add"
     ]

@@ -12,7 +12,7 @@
   "scripts": {
     "start": "tsc && node build/index",
     "lint": "./node_modules/.bin/eslint --ext .jsx --ext .js ./",
-    "tslint": "./node_modules/.bin/tslint -c tslint.json --project './'",
+    "tslint": "./node_modules/.bin/tslint -c ../tslint.json --project './'",
     "startDB": ". ./src/database/scripts/initialize.sh",
     "resetDB": ". ./src/database/scripts/reset.sh",
     "startFreshDB": "yarn run startDB && yarn run resetDB"
