@@ -27,13 +27,11 @@ export default class SortingTaskNode extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
 
-    // TODO: This is only a temporary solution as long as there is no
-    // interface to actually add new learningItems.
-    const defaultState = {
-      learningItems: [ { term: 'Term A', description: 'Description A' } ],
+    // Ensure the state always has a `learningItems` property
+    this.state = {
+      learningItems: [],
+      ...this.loadState(),
     };
-
-    this.state = this.loadState() || defaultState;
   }
 
   public render() {
