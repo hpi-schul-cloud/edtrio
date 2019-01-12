@@ -55,6 +55,7 @@
     "material-icons": "^0.2.3",
     "moment": "^2.22.2",
     "node-sass": "^4.9.3",
+    "oauth-1.0a": "^2.2.5",
     "react": "^16.4.2",
     "react-apollo": "^2.3.2",
     "react-dom": "^16.4.2",

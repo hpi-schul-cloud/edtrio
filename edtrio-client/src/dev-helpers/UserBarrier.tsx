@@ -17,6 +17,13 @@ interface IUserBarrierProps {
   updateUserList: (users: IUserType[]) => void;
 }
 
+// CodeOcean login start
+// remember to remove oatuh-1.0a from package.json
+import * as crypto from "crypto";
+// tslint:disable-next-line
+const OAuth = require("oauth-1.0a");
+// CoceOcean login done
+
 const StyledPageWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -91,6 +98,78 @@ export class UserBarrier extends PureComponent<IUserBarrierProps> {
             isTeacher: userResponse.data.userByOpenHpiEmail.isTeacher,
           },
         ]);
+
+        // CodeOcean login start
+        // Now login to CodeOcean prior to redirecting ...
+
+        // the consumer key and secret is exposed by intent and will be invalidated soon!
+        const key = "0d8047781a214f55eb607d26d37d99ca";
+        const secret = "4f04aff776c0ef97756d2a7941ff6280";
+        const resource_link_id = "5bc48a31db4df00011083c83"; // existing course in SC
+        const role = userResponse.data.userByOpenHpiEmail.isTeacher
+          ? "Instructor"
+          : "Learner";
+        const name = userResponse.data.userByOpenHpiEmail.name;
+        const id = userResponse.data.userByOpenHpiEmail.id;
+        const email = emailInput;
+        const payload = {
+          lti_version: "LTI-1p0",
+          lti_message_type: "basic-lti-launch-request",
+          resource_link_id,
+          roles: role,
+          launch_presentation_document_target: "window",
+          launch_presentation_locale: "de",
+          lis_person_name_full: name,
+          lis_person_contact_email_primary: email,
+          user_id: id,
+          custom_locale: "de",
+          custom_token: "2744195b",
+          custom_embed_options_hide_navbar: true,
+        };
+
+        const consumer = OAuth({
+          consumer: { key, secret },
+          signature_method: "HMAC-SHA1",
+          hash_function(base_string: any, input_key: any) {
+            return crypto
+              .createHmac("sha1", input_key)
+              .update(base_string)
+              .digest("base64");
+          },
+        });
+
+        const request_data = {
+          url: "https://codeocean.openhpi.de/lti/launch",
+          method: "POST",
+          data: payload,
+        };
+
+        const formData = consumer.authorize(request_data);
+
+        const serialize = (obj: any) => {
+          const str = [];
+          for (const p in obj) {
+            if (obj.hasOwnProperty(p)) {
+              str.push(
+                encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]),
+              );
+            }
+          }
+          return str.join("&");
+        };
+
+        const http = new XMLHttpRequest();
+        const url = "https://codeocean.openhpi.de/lti/launch";
+        const params = serialize(formData);
+        http.open("POST", url, false);
+        http.setRequestHeader(
+          "Content-Type",
+          "application/x-www-form-urlencoded",
+        );
+        http.send(params);
+
+        // if successful, CoceOcean will login the user and set a cookie. This is required in the next step.
+        // CodeOcean login done
       }
     }
   }
