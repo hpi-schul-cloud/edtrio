@@ -143,7 +143,8 @@ class Editor extends PureComponent<IEditorProps, IEditorState> {
         mutation: UPDATE_DOCUMENT,
         variables: {
           value: document,
-          documentId: "cjqm7lirq00sh0740clb48905",
+          // @ts-ignore
+          documentId: this.props.documentId,
         },
       });
     }

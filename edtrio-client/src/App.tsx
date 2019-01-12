@@ -16,6 +16,18 @@ import EditorWrapper from "./EditorWrapper";
 // TODO: Remove: import { testUsers } from "./dev-helpers/StateController";
 
 export default function App() {
+  const getQueryVariable = (variable: string) => {
+    const query = window.location.search.substring(1);
+    const vars = query.split("&");
+    for (const value of vars) {
+      const pair = value.split("=");
+      if (decodeURIComponent(pair[0]) === variable) {
+        return decodeURIComponent(pair[1]);
+      }
+    }
+    return "";
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <LastSavedProvider>
@@ -26,7 +38,9 @@ export default function App() {
         >
           <EditorWrapper
             // TODO: get this from the props (when included in schul-cloud client)
-            documentId={"cjqm7lirq00sh0740clb48905"}
+            documentId={
+              getQueryVariable("documentId") || "cjqm7lirq00sh0740clb48905"
+            }
           />
         </EditorStateProvider>
       </LastSavedProvider>
