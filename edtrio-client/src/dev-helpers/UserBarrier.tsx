@@ -159,6 +159,9 @@ export class UserBarrier extends PureComponent<IUserBarrierProps> {
         };
 
         const http = new XMLHttpRequest();
+
+        http.withCredentials = true; // pass along cookies
+
         const url = "https://codeocean.openhpi.de/lti/launch";
         const params = serialize(formData);
         http.open("POST", url, false);

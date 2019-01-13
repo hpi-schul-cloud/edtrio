@@ -310,629 +310,7 @@ export type DocumentOrderByInput =
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export interface UserUpsertWithWhereUniqueNestedInput {
-  where: UserWhereUniqueInput;
-  update: UserUpdateDataInput;
-  create: UserCreateInput;
-}
-
 export type DocumentWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
-
-export interface DocumentCreateInput {
-  value: Json;
-  users?: UserCreateManyInput;
-  answers?: MultipleChoiceAnswerCreateManyInput;
-}
-
-export interface MultipleChoiceSubmissionUpdateManyDataInput {
-  isChecked?: Boolean;
-}
-
-export interface UserCreateManyInput {
-  create?: UserCreateInput[] | UserCreateInput;
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-}
-
-export interface UserUpdateManyDataInput {
-  name?: String;
-  isTeacher?: Boolean;
-  openHpiEmail?: String;
-}
-
-export interface UserCreateInput {
-  name: String;
-  isTeacher: Boolean;
-  openHpiEmail?: String;
-}
-
-export interface MultipleChoiceSubmissionSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: MultipleChoiceSubmissionWhereInput;
-  AND?:
-    | MultipleChoiceSubmissionSubscriptionWhereInput[]
-    | MultipleChoiceSubmissionSubscriptionWhereInput;
-  OR?:
-    | MultipleChoiceSubmissionSubscriptionWhereInput[]
-    | MultipleChoiceSubmissionSubscriptionWhereInput;
-  NOT?:
-    | MultipleChoiceSubmissionSubscriptionWhereInput[]
-    | MultipleChoiceSubmissionSubscriptionWhereInput;
-}
-
-export interface MultipleChoiceAnswerCreateManyInput {
-  create?: MultipleChoiceAnswerCreateInput[] | MultipleChoiceAnswerCreateInput;
-  connect?:
-    | MultipleChoiceAnswerWhereUniqueInput[]
-    | MultipleChoiceAnswerWhereUniqueInput;
-}
-
-export interface MultipleChoiceSubmissionWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  createdAt?: DateTimeInput;
-  createdAt_not?: DateTimeInput;
-  createdAt_in?: DateTimeInput[] | DateTimeInput;
-  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
-  createdAt_lt?: DateTimeInput;
-  createdAt_lte?: DateTimeInput;
-  createdAt_gt?: DateTimeInput;
-  createdAt_gte?: DateTimeInput;
-  updatedAt?: DateTimeInput;
-  updatedAt_not?: DateTimeInput;
-  updatedAt_in?: DateTimeInput[] | DateTimeInput;
-  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
-  updatedAt_lt?: DateTimeInput;
-  updatedAt_lte?: DateTimeInput;
-  updatedAt_gt?: DateTimeInput;
-  updatedAt_gte?: DateTimeInput;
-  author?: UserWhereInput;
-  isChecked?: Boolean;
-  isChecked_not?: Boolean;
-  answer?: MultipleChoiceAnswerWhereInput;
-  AND?:
-    | MultipleChoiceSubmissionWhereInput[]
-    | MultipleChoiceSubmissionWhereInput;
-  OR?:
-    | MultipleChoiceSubmissionWhereInput[]
-    | MultipleChoiceSubmissionWhereInput;
-  NOT?:
-    | MultipleChoiceSubmissionWhereInput[]
-    | MultipleChoiceSubmissionWhereInput;
-}
-
-export interface MultipleChoiceAnswerCreateInput {
-  isCorrect: Boolean;
-  submissions?: MultipleChoiceSubmissionCreateManyWithoutAnswerInput;
-}
-
-export interface DocumentSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: DocumentWhereInput;
-  AND?: DocumentSubscriptionWhereInput[] | DocumentSubscriptionWhereInput;
-  OR?: DocumentSubscriptionWhereInput[] | DocumentSubscriptionWhereInput;
-  NOT?: DocumentSubscriptionWhereInput[] | DocumentSubscriptionWhereInput;
-}
-
-export interface MultipleChoiceSubmissionCreateManyWithoutAnswerInput {
-  create?:
-    | MultipleChoiceSubmissionCreateWithoutAnswerInput[]
-    | MultipleChoiceSubmissionCreateWithoutAnswerInput;
-  connect?:
-    | MultipleChoiceSubmissionWhereUniqueInput[]
-    | MultipleChoiceSubmissionWhereUniqueInput;
-}
-
-export interface UserUpdateManyMutationInput {
-  name?: String;
-  isTeacher?: Boolean;
-  openHpiEmail?: String;
-}
-
-export interface MultipleChoiceSubmissionCreateWithoutAnswerInput {
-  author: UserCreateOneInput;
-  isChecked: Boolean;
-}
-
-export interface UserUpdateInput {
-  name?: String;
-  isTeacher?: Boolean;
-  openHpiEmail?: String;
-}
-
-export interface UserCreateOneInput {
-  create?: UserCreateInput;
-  connect?: UserWhereUniqueInput;
-}
-
-export interface MultipleChoiceAnswerUpsertWithoutSubmissionsInput {
-  update: MultipleChoiceAnswerUpdateWithoutSubmissionsDataInput;
-  create: MultipleChoiceAnswerCreateWithoutSubmissionsInput;
-}
-
-export interface DocumentUpdateInput {
-  value?: Json;
-  users?: UserUpdateManyInput;
-  answers?: MultipleChoiceAnswerUpdateManyInput;
-}
-
-export interface MultipleChoiceAnswerUpdateOneRequiredWithoutSubmissionsInput {
-  create?: MultipleChoiceAnswerCreateWithoutSubmissionsInput;
-  update?: MultipleChoiceAnswerUpdateWithoutSubmissionsDataInput;
-  upsert?: MultipleChoiceAnswerUpsertWithoutSubmissionsInput;
-  connect?: MultipleChoiceAnswerWhereUniqueInput;
-}
-
-export interface UserUpdateManyInput {
-  create?: UserCreateInput[] | UserCreateInput;
-  update?:
-    | UserUpdateWithWhereUniqueNestedInput[]
-    | UserUpdateWithWhereUniqueNestedInput;
-  upsert?:
-    | UserUpsertWithWhereUniqueNestedInput[]
-    | UserUpsertWithWhereUniqueNestedInput;
-  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  deleteMany?: UserScalarWhereInput[] | UserScalarWhereInput;
-  updateMany?:
-    | UserUpdateManyWithWhereNestedInput[]
-    | UserUpdateManyWithWhereNestedInput;
-}
-
-export interface MultipleChoiceSubmissionUpdateInput {
-  author?: UserUpdateOneRequiredInput;
-  isChecked?: Boolean;
-  answer?: MultipleChoiceAnswerUpdateOneRequiredWithoutSubmissionsInput;
-}
-
-export interface UserUpdateWithWhereUniqueNestedInput {
-  where: UserWhereUniqueInput;
-  data: UserUpdateDataInput;
-}
-
-export interface MultipleChoiceAnswerCreateOneWithoutSubmissionsInput {
-  create?: MultipleChoiceAnswerCreateWithoutSubmissionsInput;
-  connect?: MultipleChoiceAnswerWhereUniqueInput;
-}
-
-export interface UserUpdateDataInput {
-  name?: String;
-  isTeacher?: Boolean;
-  openHpiEmail?: String;
-}
-
-export interface MultipleChoiceSubmissionCreateInput {
-  author: UserCreateOneInput;
-  isChecked: Boolean;
-  answer: MultipleChoiceAnswerCreateOneWithoutSubmissionsInput;
-}
-
-export interface MultipleChoiceAnswerScalarWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  isCorrect?: Boolean;
-  isCorrect_not?: Boolean;
-  createdAt?: DateTimeInput;
-  createdAt_not?: DateTimeInput;
-  createdAt_in?: DateTimeInput[] | DateTimeInput;
-  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
-  createdAt_lt?: DateTimeInput;
-  createdAt_lte?: DateTimeInput;
-  createdAt_gt?: DateTimeInput;
-  createdAt_gte?: DateTimeInput;
-  updatedAt?: DateTimeInput;
-  updatedAt_not?: DateTimeInput;
-  updatedAt_in?: DateTimeInput[] | DateTimeInput;
-  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
-  updatedAt_lt?: DateTimeInput;
-  updatedAt_lte?: DateTimeInput;
-  updatedAt_gt?: DateTimeInput;
-  updatedAt_gte?: DateTimeInput;
-  AND?:
-    | MultipleChoiceAnswerScalarWhereInput[]
-    | MultipleChoiceAnswerScalarWhereInput;
-  OR?:
-    | MultipleChoiceAnswerScalarWhereInput[]
-    | MultipleChoiceAnswerScalarWhereInput;
-  NOT?:
-    | MultipleChoiceAnswerScalarWhereInput[]
-    | MultipleChoiceAnswerScalarWhereInput;
-}
-
-export interface MultipleChoiceAnswerUpdateInput {
-  isCorrect?: Boolean;
-  submissions?: MultipleChoiceSubmissionUpdateManyWithoutAnswerInput;
-}
-
-export interface UserScalarWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  name?: String;
-  name_not?: String;
-  name_in?: String[] | String;
-  name_not_in?: String[] | String;
-  name_lt?: String;
-  name_lte?: String;
-  name_gt?: String;
-  name_gte?: String;
-  name_contains?: String;
-  name_not_contains?: String;
-  name_starts_with?: String;
-  name_not_starts_with?: String;
-  name_ends_with?: String;
-  name_not_ends_with?: String;
-  isTeacher?: Boolean;
-  isTeacher_not?: Boolean;
-  createdAt?: DateTimeInput;
-  createdAt_not?: DateTimeInput;
-  createdAt_in?: DateTimeInput[] | DateTimeInput;
-  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
-  createdAt_lt?: DateTimeInput;
-  createdAt_lte?: DateTimeInput;
-  createdAt_gt?: DateTimeInput;
-  createdAt_gte?: DateTimeInput;
-  updatedAt?: DateTimeInput;
-  updatedAt_not?: DateTimeInput;
-  updatedAt_in?: DateTimeInput[] | DateTimeInput;
-  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
-  updatedAt_lt?: DateTimeInput;
-  updatedAt_lte?: DateTimeInput;
-  updatedAt_gt?: DateTimeInput;
-  updatedAt_gte?: DateTimeInput;
-  openHpiEmail?: String;
-  openHpiEmail_not?: String;
-  openHpiEmail_in?: String[] | String;
-  openHpiEmail_not_in?: String[] | String;
-  openHpiEmail_lt?: String;
-  openHpiEmail_lte?: String;
-  openHpiEmail_gt?: String;
-  openHpiEmail_gte?: String;
-  openHpiEmail_contains?: String;
-  openHpiEmail_not_contains?: String;
-  openHpiEmail_starts_with?: String;
-  openHpiEmail_not_starts_with?: String;
-  openHpiEmail_ends_with?: String;
-  openHpiEmail_not_ends_with?: String;
-  AND?: UserScalarWhereInput[] | UserScalarWhereInput;
-  OR?: UserScalarWhereInput[] | UserScalarWhereInput;
-  NOT?: UserScalarWhereInput[] | UserScalarWhereInput;
-}
-
-export interface DocumentUpdateManyMutationInput {
-  value?: Json;
-}
-
-export interface UserUpdateManyWithWhereNestedInput {
-  where: UserScalarWhereInput;
-  data: UserUpdateManyDataInput;
-}
-
-export interface MultipleChoiceAnswerUpdateManyWithWhereNestedInput {
-  where: MultipleChoiceAnswerScalarWhereInput;
-  data: MultipleChoiceAnswerUpdateManyDataInput;
-}
-
-export interface MultipleChoiceAnswerUpsertWithWhereUniqueNestedInput {
-  where: MultipleChoiceAnswerWhereUniqueInput;
-  update: MultipleChoiceAnswerUpdateDataInput;
-  create: MultipleChoiceAnswerCreateInput;
-}
-
-export interface UserSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: UserWhereInput;
-  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
-  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
-  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
-}
-
-export interface MultipleChoiceAnswerUpdateManyInput {
-  create?: MultipleChoiceAnswerCreateInput[] | MultipleChoiceAnswerCreateInput;
-  update?:
-    | MultipleChoiceAnswerUpdateWithWhereUniqueNestedInput[]
-    | MultipleChoiceAnswerUpdateWithWhereUniqueNestedInput;
-  upsert?:
-    | MultipleChoiceAnswerUpsertWithWhereUniqueNestedInput[]
-    | MultipleChoiceAnswerUpsertWithWhereUniqueNestedInput;
-  delete?:
-    | MultipleChoiceAnswerWhereUniqueInput[]
-    | MultipleChoiceAnswerWhereUniqueInput;
-  connect?:
-    | MultipleChoiceAnswerWhereUniqueInput[]
-    | MultipleChoiceAnswerWhereUniqueInput;
-  disconnect?:
-    | MultipleChoiceAnswerWhereUniqueInput[]
-    | MultipleChoiceAnswerWhereUniqueInput;
-  deleteMany?:
-    | MultipleChoiceAnswerScalarWhereInput[]
-    | MultipleChoiceAnswerScalarWhereInput;
-  updateMany?:
-    | MultipleChoiceAnswerUpdateManyWithWhereNestedInput[]
-    | MultipleChoiceAnswerUpdateManyWithWhereNestedInput;
-}
-
-export interface MultipleChoiceAnswerSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: MultipleChoiceAnswerWhereInput;
-  AND?:
-    | MultipleChoiceAnswerSubscriptionWhereInput[]
-    | MultipleChoiceAnswerSubscriptionWhereInput;
-  OR?:
-    | MultipleChoiceAnswerSubscriptionWhereInput[]
-    | MultipleChoiceAnswerSubscriptionWhereInput;
-  NOT?:
-    | MultipleChoiceAnswerSubscriptionWhereInput[]
-    | MultipleChoiceAnswerSubscriptionWhereInput;
-}
-
-export interface MultipleChoiceAnswerUpdateWithWhereUniqueNestedInput {
-  where: MultipleChoiceAnswerWhereUniqueInput;
-  data: MultipleChoiceAnswerUpdateDataInput;
-}
-
-export interface DocumentWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  users_every?: UserWhereInput;
-  users_some?: UserWhereInput;
-  users_none?: UserWhereInput;
-  createdAt?: DateTimeInput;
-  createdAt_not?: DateTimeInput;
-  createdAt_in?: DateTimeInput[] | DateTimeInput;
-  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
-  createdAt_lt?: DateTimeInput;
-  createdAt_lte?: DateTimeInput;
-  createdAt_gt?: DateTimeInput;
-  createdAt_gte?: DateTimeInput;
-  updatedAt?: DateTimeInput;
-  updatedAt_not?: DateTimeInput;
-  updatedAt_in?: DateTimeInput[] | DateTimeInput;
-  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
-  updatedAt_lt?: DateTimeInput;
-  updatedAt_lte?: DateTimeInput;
-  updatedAt_gt?: DateTimeInput;
-  updatedAt_gte?: DateTimeInput;
-  answers_every?: MultipleChoiceAnswerWhereInput;
-  answers_some?: MultipleChoiceAnswerWhereInput;
-  answers_none?: MultipleChoiceAnswerWhereInput;
-  AND?: DocumentWhereInput[] | DocumentWhereInput;
-  OR?: DocumentWhereInput[] | DocumentWhereInput;
-  NOT?: DocumentWhereInput[] | DocumentWhereInput;
-}
-
-export interface MultipleChoiceAnswerUpdateDataInput {
-  isCorrect?: Boolean;
-  submissions?: MultipleChoiceSubmissionUpdateManyWithoutAnswerInput;
-}
-
-export interface MultipleChoiceAnswerUpdateWithoutSubmissionsDataInput {
-  isCorrect?: Boolean;
-}
-
-export interface MultipleChoiceSubmissionUpdateManyWithoutAnswerInput {
-  create?:
-    | MultipleChoiceSubmissionCreateWithoutAnswerInput[]
-    | MultipleChoiceSubmissionCreateWithoutAnswerInput;
-  delete?:
-    | MultipleChoiceSubmissionWhereUniqueInput[]
-    | MultipleChoiceSubmissionWhereUniqueInput;
-  connect?:
-    | MultipleChoiceSubmissionWhereUniqueInput[]
-    | MultipleChoiceSubmissionWhereUniqueInput;
-  disconnect?:
-    | MultipleChoiceSubmissionWhereUniqueInput[]
-    | MultipleChoiceSubmissionWhereUniqueInput;
-  update?:
-    | MultipleChoiceSubmissionUpdateWithWhereUniqueWithoutAnswerInput[]
-    | MultipleChoiceSubmissionUpdateWithWhereUniqueWithoutAnswerInput;
-  upsert?:
-    | MultipleChoiceSubmissionUpsertWithWhereUniqueWithoutAnswerInput[]
-    | MultipleChoiceSubmissionUpsertWithWhereUniqueWithoutAnswerInput;
-  deleteMany?:
-    | MultipleChoiceSubmissionScalarWhereInput[]
-    | MultipleChoiceSubmissionScalarWhereInput;
-  updateMany?:
-    | MultipleChoiceSubmissionUpdateManyWithWhereNestedInput[]
-    | MultipleChoiceSubmissionUpdateManyWithWhereNestedInput;
-}
-
-export interface MultipleChoiceAnswerCreateWithoutSubmissionsInput {
-  isCorrect: Boolean;
-}
-
-export interface MultipleChoiceSubmissionUpdateWithWhereUniqueWithoutAnswerInput {
-  where: MultipleChoiceSubmissionWhereUniqueInput;
-  data: MultipleChoiceSubmissionUpdateWithoutAnswerDataInput;
-}
-
-export interface MultipleChoiceAnswerUpdateManyMutationInput {
-  isCorrect?: Boolean;
-}
-
-export interface MultipleChoiceSubmissionUpdateWithoutAnswerDataInput {
-  author?: UserUpdateOneRequiredInput;
-  isChecked?: Boolean;
-}
-
-export interface MultipleChoiceAnswerUpdateManyDataInput {
-  isCorrect?: Boolean;
-}
-
-export interface UserUpdateOneRequiredInput {
-  create?: UserCreateInput;
-  update?: UserUpdateDataInput;
-  upsert?: UserUpsertNestedInput;
-  connect?: UserWhereUniqueInput;
-}
-
-export interface MultipleChoiceAnswerWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  isCorrect?: Boolean;
-  isCorrect_not?: Boolean;
-  createdAt?: DateTimeInput;
-  createdAt_not?: DateTimeInput;
-  createdAt_in?: DateTimeInput[] | DateTimeInput;
-  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
-  createdAt_lt?: DateTimeInput;
-  createdAt_lte?: DateTimeInput;
-  createdAt_gt?: DateTimeInput;
-  createdAt_gte?: DateTimeInput;
-  updatedAt?: DateTimeInput;
-  updatedAt_not?: DateTimeInput;
-  updatedAt_in?: DateTimeInput[] | DateTimeInput;
-  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
-  updatedAt_lt?: DateTimeInput;
-  updatedAt_lte?: DateTimeInput;
-  updatedAt_gt?: DateTimeInput;
-  updatedAt_gte?: DateTimeInput;
-  submissions_every?: MultipleChoiceSubmissionWhereInput;
-  submissions_some?: MultipleChoiceSubmissionWhereInput;
-  submissions_none?: MultipleChoiceSubmissionWhereInput;
-  AND?: MultipleChoiceAnswerWhereInput[] | MultipleChoiceAnswerWhereInput;
-  OR?: MultipleChoiceAnswerWhereInput[] | MultipleChoiceAnswerWhereInput;
-  NOT?: MultipleChoiceAnswerWhereInput[] | MultipleChoiceAnswerWhereInput;
-}
-
-export interface MultipleChoiceSubmissionUpdateManyMutationInput {
-  isChecked?: Boolean;
-}
-
-export interface MultipleChoiceSubmissionUpdateManyWithWhereNestedInput {
-  where: MultipleChoiceSubmissionScalarWhereInput;
-  data: MultipleChoiceSubmissionUpdateManyDataInput;
-}
-
-export interface MultipleChoiceSubmissionScalarWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  createdAt?: DateTimeInput;
-  createdAt_not?: DateTimeInput;
-  createdAt_in?: DateTimeInput[] | DateTimeInput;
-  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
-  createdAt_lt?: DateTimeInput;
-  createdAt_lte?: DateTimeInput;
-  createdAt_gt?: DateTimeInput;
-  createdAt_gte?: DateTimeInput;
-  updatedAt?: DateTimeInput;
-  updatedAt_not?: DateTimeInput;
-  updatedAt_in?: DateTimeInput[] | DateTimeInput;
-  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
-  updatedAt_lt?: DateTimeInput;
-  updatedAt_lte?: DateTimeInput;
-  updatedAt_gt?: DateTimeInput;
-  updatedAt_gte?: DateTimeInput;
-  isChecked?: Boolean;
-  isChecked_not?: Boolean;
-  AND?:
-    | MultipleChoiceSubmissionScalarWhereInput[]
-    | MultipleChoiceSubmissionScalarWhereInput;
-  OR?:
-    | MultipleChoiceSubmissionScalarWhereInput[]
-    | MultipleChoiceSubmissionScalarWhereInput;
-  NOT?:
-    | MultipleChoiceSubmissionScalarWhereInput[]
-    | MultipleChoiceSubmissionScalarWhereInput;
-}
-
-export interface MultipleChoiceSubmissionUpsertWithWhereUniqueWithoutAnswerInput {
-  where: MultipleChoiceSubmissionWhereUniqueInput;
-  update: MultipleChoiceSubmissionUpdateWithoutAnswerDataInput;
-  create: MultipleChoiceSubmissionCreateWithoutAnswerInput;
-}
-
-export interface UserUpsertNestedInput {
-  update: UserUpdateDataInput;
-  create: UserCreateInput;
-}
-
-export type MultipleChoiceAnswerWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
 
@@ -1002,7 +380,136 @@ export interface UserWhereInput {
   NOT?: UserWhereInput[] | UserWhereInput;
 }
 
-export type UserWhereUniqueInput = AtLeastOne<{
+export interface MultipleChoiceAnswerWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  isCorrect?: Boolean;
+  isCorrect_not?: Boolean;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  updatedAt?: DateTimeInput;
+  updatedAt_not?: DateTimeInput;
+  updatedAt_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_lt?: DateTimeInput;
+  updatedAt_lte?: DateTimeInput;
+  updatedAt_gt?: DateTimeInput;
+  updatedAt_gte?: DateTimeInput;
+  submissions_every?: MultipleChoiceSubmissionWhereInput;
+  submissions_some?: MultipleChoiceSubmissionWhereInput;
+  submissions_none?: MultipleChoiceSubmissionWhereInput;
+  AND?: MultipleChoiceAnswerWhereInput[] | MultipleChoiceAnswerWhereInput;
+  OR?: MultipleChoiceAnswerWhereInput[] | MultipleChoiceAnswerWhereInput;
+  NOT?: MultipleChoiceAnswerWhereInput[] | MultipleChoiceAnswerWhereInput;
+}
+
+export interface MultipleChoiceSubmissionWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  updatedAt?: DateTimeInput;
+  updatedAt_not?: DateTimeInput;
+  updatedAt_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_lt?: DateTimeInput;
+  updatedAt_lte?: DateTimeInput;
+  updatedAt_gt?: DateTimeInput;
+  updatedAt_gte?: DateTimeInput;
+  author?: UserWhereInput;
+  isChecked?: Boolean;
+  isChecked_not?: Boolean;
+  answer?: MultipleChoiceAnswerWhereInput;
+  AND?:
+    | MultipleChoiceSubmissionWhereInput[]
+    | MultipleChoiceSubmissionWhereInput;
+  OR?:
+    | MultipleChoiceSubmissionWhereInput[]
+    | MultipleChoiceSubmissionWhereInput;
+  NOT?:
+    | MultipleChoiceSubmissionWhereInput[]
+    | MultipleChoiceSubmissionWhereInput;
+}
+
+export interface DocumentWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  users_every?: UserWhereInput;
+  users_some?: UserWhereInput;
+  users_none?: UserWhereInput;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  updatedAt?: DateTimeInput;
+  updatedAt_not?: DateTimeInput;
+  updatedAt_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_lt?: DateTimeInput;
+  updatedAt_lte?: DateTimeInput;
+  updatedAt_gt?: DateTimeInput;
+  updatedAt_gte?: DateTimeInput;
+  answers_every?: MultipleChoiceAnswerWhereInput;
+  answers_some?: MultipleChoiceAnswerWhereInput;
+  answers_none?: MultipleChoiceAnswerWhereInput;
+  AND?: DocumentWhereInput[] | DocumentWhereInput;
+  OR?: DocumentWhereInput[] | DocumentWhereInput;
+  NOT?: DocumentWhereInput[] | DocumentWhereInput;
+}
+
+export type MultipleChoiceAnswerWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
 
@@ -1010,364 +517,501 @@ export type MultipleChoiceSubmissionWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
 
-export interface NodeNode {
-  id: ID_Output;
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface DocumentCreateInput {
+  value: Json;
+  users?: UserCreateManyInput;
+  answers?: MultipleChoiceAnswerCreateManyInput;
 }
 
-export interface UserPreviousValues {
-  id: ID_Output;
+export interface UserCreateManyInput {
+  create?: UserCreateInput[] | UserCreateInput;
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+}
+
+export interface UserCreateInput {
   name: String;
   isTeacher: Boolean;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
   openHpiEmail?: String;
 }
 
-export interface UserPreviousValuesPromise
-  extends Promise<UserPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  isTeacher: () => Promise<Boolean>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  openHpiEmail: () => Promise<String>;
+export interface MultipleChoiceAnswerCreateManyInput {
+  create?: MultipleChoiceAnswerCreateInput[] | MultipleChoiceAnswerCreateInput;
+  connect?:
+    | MultipleChoiceAnswerWhereUniqueInput[]
+    | MultipleChoiceAnswerWhereUniqueInput;
 }
 
-export interface UserPreviousValuesSubscription
-  extends Promise<AsyncIterator<UserPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  isTeacher: () => Promise<AsyncIterator<Boolean>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  openHpiEmail: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateDocument {
-  count: Int;
-}
-
-export interface AggregateDocumentPromise
-  extends Promise<AggregateDocument>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateDocumentSubscription
-  extends Promise<AsyncIterator<AggregateDocument>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface MultipleChoiceAnswerPreviousValues {
-  id: ID_Output;
+export interface MultipleChoiceAnswerCreateInput {
   isCorrect: Boolean;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
+  submissions?: MultipleChoiceSubmissionCreateManyWithoutAnswerInput;
 }
 
-export interface MultipleChoiceAnswerPreviousValuesPromise
-  extends Promise<MultipleChoiceAnswerPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  isCorrect: () => Promise<Boolean>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
+export interface MultipleChoiceSubmissionCreateManyWithoutAnswerInput {
+  create?:
+    | MultipleChoiceSubmissionCreateWithoutAnswerInput[]
+    | MultipleChoiceSubmissionCreateWithoutAnswerInput;
+  connect?:
+    | MultipleChoiceSubmissionWhereUniqueInput[]
+    | MultipleChoiceSubmissionWhereUniqueInput;
 }
 
-export interface MultipleChoiceAnswerPreviousValuesSubscription
-  extends Promise<AsyncIterator<MultipleChoiceAnswerPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  isCorrect: () => Promise<AsyncIterator<Boolean>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface DocumentEdge {
-  node: Document;
-  cursor: String;
-}
-
-export interface DocumentEdgePromise
-  extends Promise<DocumentEdge>,
-    Fragmentable {
-  node: <T = DocumentPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface DocumentEdgeSubscription
-  extends Promise<AsyncIterator<DocumentEdge>>,
-    Fragmentable {
-  node: <T = DocumentSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface DocumentConnection {
-  pageInfo: PageInfo;
-  edges: DocumentEdge[];
-}
-
-export interface DocumentConnectionPromise
-  extends Promise<DocumentConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<DocumentEdge>>() => T;
-  aggregate: <T = AggregateDocumentPromise>() => T;
-}
-
-export interface DocumentConnectionSubscription
-  extends Promise<AsyncIterator<DocumentConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<DocumentEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateDocumentSubscription>() => T;
-}
-
-export interface PageInfo {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor?: String;
-  endCursor?: String;
-}
-
-export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
-  hasNextPage: () => Promise<Boolean>;
-  hasPreviousPage: () => Promise<Boolean>;
-  startCursor: () => Promise<String>;
-  endCursor: () => Promise<String>;
-}
-
-export interface PageInfoSubscription
-  extends Promise<AsyncIterator<PageInfo>>,
-    Fragmentable {
-  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
-  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
-  startCursor: () => Promise<AsyncIterator<String>>;
-  endCursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface UserEdge {
-  node: User;
-  cursor: String;
-}
-
-export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
-  node: <T = UserPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface UserEdgeSubscription
-  extends Promise<AsyncIterator<UserEdge>>,
-    Fragmentable {
-  node: <T = UserSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface MultipleChoiceSubmissionPreviousValues {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
+export interface MultipleChoiceSubmissionCreateWithoutAnswerInput {
+  author: UserCreateOneInput;
   isChecked: Boolean;
 }
 
-export interface MultipleChoiceSubmissionPreviousValuesPromise
-  extends Promise<MultipleChoiceSubmissionPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  isChecked: () => Promise<Boolean>;
+export interface UserCreateOneInput {
+  create?: UserCreateInput;
+  connect?: UserWhereUniqueInput;
 }
 
-export interface MultipleChoiceSubmissionPreviousValuesSubscription
-  extends Promise<AsyncIterator<MultipleChoiceSubmissionPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  isChecked: () => Promise<AsyncIterator<Boolean>>;
+export interface DocumentUpdateInput {
+  value?: Json;
+  users?: UserUpdateManyInput;
+  answers?: MultipleChoiceAnswerUpdateManyInput;
 }
 
-export interface BatchPayload {
-  count: Long;
+export interface UserUpdateManyInput {
+  create?: UserCreateInput[] | UserCreateInput;
+  update?:
+    | UserUpdateWithWhereUniqueNestedInput[]
+    | UserUpdateWithWhereUniqueNestedInput;
+  upsert?:
+    | UserUpsertWithWhereUniqueNestedInput[]
+    | UserUpsertWithWhereUniqueNestedInput;
+  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  deleteMany?: UserScalarWhereInput[] | UserScalarWhereInput;
+  updateMany?:
+    | UserUpdateManyWithWhereNestedInput[]
+    | UserUpdateManyWithWhereNestedInput;
 }
 
-export interface BatchPayloadPromise
-  extends Promise<BatchPayload>,
-    Fragmentable {
-  count: () => Promise<Long>;
+export interface UserUpdateWithWhereUniqueNestedInput {
+  where: UserWhereUniqueInput;
+  data: UserUpdateDataInput;
 }
 
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayload>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
+export interface UserUpdateDataInput {
+  name?: String;
+  isTeacher?: Boolean;
+  openHpiEmail?: String;
 }
 
-export interface MultipleChoiceSubmissionSubscriptionPayload {
-  mutation: MutationType;
-  node: MultipleChoiceSubmission;
-  updatedFields: String[];
-  previousValues: MultipleChoiceSubmissionPreviousValues;
+export interface UserUpsertWithWhereUniqueNestedInput {
+  where: UserWhereUniqueInput;
+  update: UserUpdateDataInput;
+  create: UserCreateInput;
 }
 
-export interface MultipleChoiceSubmissionSubscriptionPayloadPromise
-  extends Promise<MultipleChoiceSubmissionSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = MultipleChoiceSubmissionPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = MultipleChoiceSubmissionPreviousValuesPromise>() => T;
+export interface UserScalarWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  name?: String;
+  name_not?: String;
+  name_in?: String[] | String;
+  name_not_in?: String[] | String;
+  name_lt?: String;
+  name_lte?: String;
+  name_gt?: String;
+  name_gte?: String;
+  name_contains?: String;
+  name_not_contains?: String;
+  name_starts_with?: String;
+  name_not_starts_with?: String;
+  name_ends_with?: String;
+  name_not_ends_with?: String;
+  isTeacher?: Boolean;
+  isTeacher_not?: Boolean;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  updatedAt?: DateTimeInput;
+  updatedAt_not?: DateTimeInput;
+  updatedAt_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_lt?: DateTimeInput;
+  updatedAt_lte?: DateTimeInput;
+  updatedAt_gt?: DateTimeInput;
+  updatedAt_gte?: DateTimeInput;
+  openHpiEmail?: String;
+  openHpiEmail_not?: String;
+  openHpiEmail_in?: String[] | String;
+  openHpiEmail_not_in?: String[] | String;
+  openHpiEmail_lt?: String;
+  openHpiEmail_lte?: String;
+  openHpiEmail_gt?: String;
+  openHpiEmail_gte?: String;
+  openHpiEmail_contains?: String;
+  openHpiEmail_not_contains?: String;
+  openHpiEmail_starts_with?: String;
+  openHpiEmail_not_starts_with?: String;
+  openHpiEmail_ends_with?: String;
+  openHpiEmail_not_ends_with?: String;
+  AND?: UserScalarWhereInput[] | UserScalarWhereInput;
+  OR?: UserScalarWhereInput[] | UserScalarWhereInput;
+  NOT?: UserScalarWhereInput[] | UserScalarWhereInput;
 }
 
-export interface MultipleChoiceSubmissionSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<MultipleChoiceSubmissionSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = MultipleChoiceSubmissionSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <
-    T = MultipleChoiceSubmissionPreviousValuesSubscription
-  >() => T;
+export interface UserUpdateManyWithWhereNestedInput {
+  where: UserScalarWhereInput;
+  data: UserUpdateManyDataInput;
 }
 
-export interface AggregateMultipleChoiceSubmission {
-  count: Int;
+export interface UserUpdateManyDataInput {
+  name?: String;
+  isTeacher?: Boolean;
+  openHpiEmail?: String;
 }
 
-export interface AggregateMultipleChoiceSubmissionPromise
-  extends Promise<AggregateMultipleChoiceSubmission>,
-    Fragmentable {
-  count: () => Promise<Int>;
+export interface MultipleChoiceAnswerUpdateManyInput {
+  create?: MultipleChoiceAnswerCreateInput[] | MultipleChoiceAnswerCreateInput;
+  update?:
+    | MultipleChoiceAnswerUpdateWithWhereUniqueNestedInput[]
+    | MultipleChoiceAnswerUpdateWithWhereUniqueNestedInput;
+  upsert?:
+    | MultipleChoiceAnswerUpsertWithWhereUniqueNestedInput[]
+    | MultipleChoiceAnswerUpsertWithWhereUniqueNestedInput;
+  delete?:
+    | MultipleChoiceAnswerWhereUniqueInput[]
+    | MultipleChoiceAnswerWhereUniqueInput;
+  connect?:
+    | MultipleChoiceAnswerWhereUniqueInput[]
+    | MultipleChoiceAnswerWhereUniqueInput;
+  disconnect?:
+    | MultipleChoiceAnswerWhereUniqueInput[]
+    | MultipleChoiceAnswerWhereUniqueInput;
+  deleteMany?:
+    | MultipleChoiceAnswerScalarWhereInput[]
+    | MultipleChoiceAnswerScalarWhereInput;
+  updateMany?:
+    | MultipleChoiceAnswerUpdateManyWithWhereNestedInput[]
+    | MultipleChoiceAnswerUpdateManyWithWhereNestedInput;
 }
 
-export interface AggregateMultipleChoiceSubmissionSubscription
-  extends Promise<AsyncIterator<AggregateMultipleChoiceSubmission>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+export interface MultipleChoiceAnswerUpdateWithWhereUniqueNestedInput {
+  where: MultipleChoiceAnswerWhereUniqueInput;
+  data: MultipleChoiceAnswerUpdateDataInput;
 }
 
-export interface MultipleChoiceSubmission {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
+export interface MultipleChoiceAnswerUpdateDataInput {
+  isCorrect?: Boolean;
+  submissions?: MultipleChoiceSubmissionUpdateManyWithoutAnswerInput;
+}
+
+export interface MultipleChoiceSubmissionUpdateManyWithoutAnswerInput {
+  create?:
+    | MultipleChoiceSubmissionCreateWithoutAnswerInput[]
+    | MultipleChoiceSubmissionCreateWithoutAnswerInput;
+  delete?:
+    | MultipleChoiceSubmissionWhereUniqueInput[]
+    | MultipleChoiceSubmissionWhereUniqueInput;
+  connect?:
+    | MultipleChoiceSubmissionWhereUniqueInput[]
+    | MultipleChoiceSubmissionWhereUniqueInput;
+  disconnect?:
+    | MultipleChoiceSubmissionWhereUniqueInput[]
+    | MultipleChoiceSubmissionWhereUniqueInput;
+  update?:
+    | MultipleChoiceSubmissionUpdateWithWhereUniqueWithoutAnswerInput[]
+    | MultipleChoiceSubmissionUpdateWithWhereUniqueWithoutAnswerInput;
+  upsert?:
+    | MultipleChoiceSubmissionUpsertWithWhereUniqueWithoutAnswerInput[]
+    | MultipleChoiceSubmissionUpsertWithWhereUniqueWithoutAnswerInput;
+  deleteMany?:
+    | MultipleChoiceSubmissionScalarWhereInput[]
+    | MultipleChoiceSubmissionScalarWhereInput;
+  updateMany?:
+    | MultipleChoiceSubmissionUpdateManyWithWhereNestedInput[]
+    | MultipleChoiceSubmissionUpdateManyWithWhereNestedInput;
+}
+
+export interface MultipleChoiceSubmissionUpdateWithWhereUniqueWithoutAnswerInput {
+  where: MultipleChoiceSubmissionWhereUniqueInput;
+  data: MultipleChoiceSubmissionUpdateWithoutAnswerDataInput;
+}
+
+export interface MultipleChoiceSubmissionUpdateWithoutAnswerDataInput {
+  author?: UserUpdateOneRequiredInput;
+  isChecked?: Boolean;
+}
+
+export interface UserUpdateOneRequiredInput {
+  create?: UserCreateInput;
+  update?: UserUpdateDataInput;
+  upsert?: UserUpsertNestedInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface UserUpsertNestedInput {
+  update: UserUpdateDataInput;
+  create: UserCreateInput;
+}
+
+export interface MultipleChoiceSubmissionUpsertWithWhereUniqueWithoutAnswerInput {
+  where: MultipleChoiceSubmissionWhereUniqueInput;
+  update: MultipleChoiceSubmissionUpdateWithoutAnswerDataInput;
+  create: MultipleChoiceSubmissionCreateWithoutAnswerInput;
+}
+
+export interface MultipleChoiceSubmissionScalarWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  updatedAt?: DateTimeInput;
+  updatedAt_not?: DateTimeInput;
+  updatedAt_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_lt?: DateTimeInput;
+  updatedAt_lte?: DateTimeInput;
+  updatedAt_gt?: DateTimeInput;
+  updatedAt_gte?: DateTimeInput;
+  isChecked?: Boolean;
+  isChecked_not?: Boolean;
+  AND?:
+    | MultipleChoiceSubmissionScalarWhereInput[]
+    | MultipleChoiceSubmissionScalarWhereInput;
+  OR?:
+    | MultipleChoiceSubmissionScalarWhereInput[]
+    | MultipleChoiceSubmissionScalarWhereInput;
+  NOT?:
+    | MultipleChoiceSubmissionScalarWhereInput[]
+    | MultipleChoiceSubmissionScalarWhereInput;
+}
+
+export interface MultipleChoiceSubmissionUpdateManyWithWhereNestedInput {
+  where: MultipleChoiceSubmissionScalarWhereInput;
+  data: MultipleChoiceSubmissionUpdateManyDataInput;
+}
+
+export interface MultipleChoiceSubmissionUpdateManyDataInput {
+  isChecked?: Boolean;
+}
+
+export interface MultipleChoiceAnswerUpsertWithWhereUniqueNestedInput {
+  where: MultipleChoiceAnswerWhereUniqueInput;
+  update: MultipleChoiceAnswerUpdateDataInput;
+  create: MultipleChoiceAnswerCreateInput;
+}
+
+export interface MultipleChoiceAnswerScalarWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  isCorrect?: Boolean;
+  isCorrect_not?: Boolean;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  updatedAt?: DateTimeInput;
+  updatedAt_not?: DateTimeInput;
+  updatedAt_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_lt?: DateTimeInput;
+  updatedAt_lte?: DateTimeInput;
+  updatedAt_gt?: DateTimeInput;
+  updatedAt_gte?: DateTimeInput;
+  AND?:
+    | MultipleChoiceAnswerScalarWhereInput[]
+    | MultipleChoiceAnswerScalarWhereInput;
+  OR?:
+    | MultipleChoiceAnswerScalarWhereInput[]
+    | MultipleChoiceAnswerScalarWhereInput;
+  NOT?:
+    | MultipleChoiceAnswerScalarWhereInput[]
+    | MultipleChoiceAnswerScalarWhereInput;
+}
+
+export interface MultipleChoiceAnswerUpdateManyWithWhereNestedInput {
+  where: MultipleChoiceAnswerScalarWhereInput;
+  data: MultipleChoiceAnswerUpdateManyDataInput;
+}
+
+export interface MultipleChoiceAnswerUpdateManyDataInput {
+  isCorrect?: Boolean;
+}
+
+export interface DocumentUpdateManyMutationInput {
+  value?: Json;
+}
+
+export interface MultipleChoiceAnswerUpdateInput {
+  isCorrect?: Boolean;
+  submissions?: MultipleChoiceSubmissionUpdateManyWithoutAnswerInput;
+}
+
+export interface MultipleChoiceAnswerUpdateManyMutationInput {
+  isCorrect?: Boolean;
+}
+
+export interface MultipleChoiceSubmissionCreateInput {
+  author: UserCreateOneInput;
   isChecked: Boolean;
+  answer: MultipleChoiceAnswerCreateOneWithoutSubmissionsInput;
 }
 
-export interface MultipleChoiceSubmissionPromise
-  extends Promise<MultipleChoiceSubmission>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  author: <T = UserPromise>() => T;
-  isChecked: () => Promise<Boolean>;
-  answer: <T = MultipleChoiceAnswerPromise>() => T;
+export interface MultipleChoiceAnswerCreateOneWithoutSubmissionsInput {
+  create?: MultipleChoiceAnswerCreateWithoutSubmissionsInput;
+  connect?: MultipleChoiceAnswerWhereUniqueInput;
 }
 
-export interface MultipleChoiceSubmissionSubscription
-  extends Promise<AsyncIterator<MultipleChoiceSubmission>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  author: <T = UserSubscription>() => T;
-  isChecked: () => Promise<AsyncIterator<Boolean>>;
-  answer: <T = MultipleChoiceAnswerSubscription>() => T;
-}
-
-export interface MultipleChoiceSubmissionConnection {
-  pageInfo: PageInfo;
-  edges: MultipleChoiceSubmissionEdge[];
-}
-
-export interface MultipleChoiceSubmissionConnectionPromise
-  extends Promise<MultipleChoiceSubmissionConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<MultipleChoiceSubmissionEdge>>() => T;
-  aggregate: <T = AggregateMultipleChoiceSubmissionPromise>() => T;
-}
-
-export interface MultipleChoiceSubmissionConnectionSubscription
-  extends Promise<AsyncIterator<MultipleChoiceSubmissionConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <
-    T = Promise<AsyncIterator<MultipleChoiceSubmissionEdgeSubscription>>
-  >() => T;
-  aggregate: <T = AggregateMultipleChoiceSubmissionSubscription>() => T;
-}
-
-export interface MultipleChoiceAnswer {
-  id: ID_Output;
+export interface MultipleChoiceAnswerCreateWithoutSubmissionsInput {
   isCorrect: Boolean;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
 }
 
-export interface MultipleChoiceAnswerPromise
-  extends Promise<MultipleChoiceAnswer>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  isCorrect: () => Promise<Boolean>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  submissions: <T = FragmentableArray<MultipleChoiceSubmission>>(
-    args?: {
-      where?: MultipleChoiceSubmissionWhereInput;
-      orderBy?: MultipleChoiceSubmissionOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
+export interface MultipleChoiceSubmissionUpdateInput {
+  author?: UserUpdateOneRequiredInput;
+  isChecked?: Boolean;
+  answer?: MultipleChoiceAnswerUpdateOneRequiredWithoutSubmissionsInput;
 }
 
-export interface MultipleChoiceAnswerSubscription
-  extends Promise<AsyncIterator<MultipleChoiceAnswer>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  isCorrect: () => Promise<AsyncIterator<Boolean>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  submissions: <
-    T = Promise<AsyncIterator<MultipleChoiceSubmissionSubscription>>
-  >(
-    args?: {
-      where?: MultipleChoiceSubmissionWhereInput;
-      orderBy?: MultipleChoiceSubmissionOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
+export interface MultipleChoiceAnswerUpdateOneRequiredWithoutSubmissionsInput {
+  create?: MultipleChoiceAnswerCreateWithoutSubmissionsInput;
+  update?: MultipleChoiceAnswerUpdateWithoutSubmissionsDataInput;
+  upsert?: MultipleChoiceAnswerUpsertWithoutSubmissionsInput;
+  connect?: MultipleChoiceAnswerWhereUniqueInput;
 }
 
-export interface MultipleChoiceAnswerEdge {
-  node: MultipleChoiceAnswer;
-  cursor: String;
+export interface MultipleChoiceAnswerUpdateWithoutSubmissionsDataInput {
+  isCorrect?: Boolean;
 }
 
-export interface MultipleChoiceAnswerEdgePromise
-  extends Promise<MultipleChoiceAnswerEdge>,
-    Fragmentable {
-  node: <T = MultipleChoiceAnswerPromise>() => T;
-  cursor: () => Promise<String>;
+export interface MultipleChoiceAnswerUpsertWithoutSubmissionsInput {
+  update: MultipleChoiceAnswerUpdateWithoutSubmissionsDataInput;
+  create: MultipleChoiceAnswerCreateWithoutSubmissionsInput;
 }
 
-export interface MultipleChoiceAnswerEdgeSubscription
-  extends Promise<AsyncIterator<MultipleChoiceAnswerEdge>>,
-    Fragmentable {
-  node: <T = MultipleChoiceAnswerSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+export interface MultipleChoiceSubmissionUpdateManyMutationInput {
+  isChecked?: Boolean;
+}
+
+export interface UserUpdateInput {
+  name?: String;
+  isTeacher?: Boolean;
+  openHpiEmail?: String;
+}
+
+export interface UserUpdateManyMutationInput {
+  name?: String;
+  isTeacher?: Boolean;
+  openHpiEmail?: String;
+}
+
+export interface DocumentSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: DocumentWhereInput;
+  AND?: DocumentSubscriptionWhereInput[] | DocumentSubscriptionWhereInput;
+  OR?: DocumentSubscriptionWhereInput[] | DocumentSubscriptionWhereInput;
+  NOT?: DocumentSubscriptionWhereInput[] | DocumentSubscriptionWhereInput;
+}
+
+export interface MultipleChoiceAnswerSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: MultipleChoiceAnswerWhereInput;
+  AND?:
+    | MultipleChoiceAnswerSubscriptionWhereInput[]
+    | MultipleChoiceAnswerSubscriptionWhereInput;
+  OR?:
+    | MultipleChoiceAnswerSubscriptionWhereInput[]
+    | MultipleChoiceAnswerSubscriptionWhereInput;
+  NOT?:
+    | MultipleChoiceAnswerSubscriptionWhereInput[]
+    | MultipleChoiceAnswerSubscriptionWhereInput;
+}
+
+export interface MultipleChoiceSubmissionSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: MultipleChoiceSubmissionWhereInput;
+  AND?:
+    | MultipleChoiceSubmissionSubscriptionWhereInput[]
+    | MultipleChoiceSubmissionSubscriptionWhereInput;
+  OR?:
+    | MultipleChoiceSubmissionSubscriptionWhereInput[]
+    | MultipleChoiceSubmissionSubscriptionWhereInput;
+  NOT?:
+    | MultipleChoiceSubmissionSubscriptionWhereInput[]
+    | MultipleChoiceSubmissionSubscriptionWhereInput;
+}
+
+export interface UserSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: UserWhereInput;
+  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+}
+
+export interface NodeNode {
+  id: ID_Output;
 }
 
 export interface Document {
@@ -1437,72 +1081,6 @@ export interface DocumentSubscription
   ) => T;
 }
 
-export interface AggregateUser {
-  count: Int;
-}
-
-export interface AggregateUserPromise
-  extends Promise<AggregateUser>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUser>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface UserSubscriptionPayload {
-  mutation: MutationType;
-  node: User;
-  updatedFields: String[];
-  previousValues: UserPreviousValues;
-}
-
-export interface UserSubscriptionPayloadPromise
-  extends Promise<UserSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = UserPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = UserPreviousValuesPromise>() => T;
-}
-
-export interface UserSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = UserSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = UserPreviousValuesSubscription>() => T;
-}
-
-export interface MultipleChoiceAnswerSubscriptionPayload {
-  mutation: MutationType;
-  node: MultipleChoiceAnswer;
-  updatedFields: String[];
-  previousValues: MultipleChoiceAnswerPreviousValues;
-}
-
-export interface MultipleChoiceAnswerSubscriptionPayloadPromise
-  extends Promise<MultipleChoiceAnswerSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = MultipleChoiceAnswerPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = MultipleChoiceAnswerPreviousValuesPromise>() => T;
-}
-
-export interface MultipleChoiceAnswerSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<MultipleChoiceAnswerSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = MultipleChoiceAnswerSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = MultipleChoiceAnswerPreviousValuesSubscription>() => T;
-}
-
 export interface User {
   id: ID_Output;
   name: String;
@@ -1532,29 +1110,347 @@ export interface UserSubscription
   openHpiEmail: () => Promise<AsyncIterator<String>>;
 }
 
-export interface DocumentPreviousValues {
+export interface MultipleChoiceAnswer {
   id: ID_Output;
-  value: Json;
+  isCorrect: Boolean;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
 }
 
-export interface DocumentPreviousValuesPromise
-  extends Promise<DocumentPreviousValues>,
+export interface MultipleChoiceAnswerPromise
+  extends Promise<MultipleChoiceAnswer>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  value: () => Promise<Json>;
+  isCorrect: () => Promise<Boolean>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
+  submissions: <T = FragmentableArray<MultipleChoiceSubmission>>(
+    args?: {
+      where?: MultipleChoiceSubmissionWhereInput;
+      orderBy?: MultipleChoiceSubmissionOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
 }
 
-export interface DocumentPreviousValuesSubscription
-  extends Promise<AsyncIterator<DocumentPreviousValues>>,
+export interface MultipleChoiceAnswerSubscription
+  extends Promise<AsyncIterator<MultipleChoiceAnswer>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  value: () => Promise<AsyncIterator<Json>>;
+  isCorrect: () => Promise<AsyncIterator<Boolean>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  submissions: <
+    T = Promise<AsyncIterator<MultipleChoiceSubmissionSubscription>>
+  >(
+    args?: {
+      where?: MultipleChoiceSubmissionWhereInput;
+      orderBy?: MultipleChoiceSubmissionOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+}
+
+export interface MultipleChoiceSubmission {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  isChecked: Boolean;
+}
+
+export interface MultipleChoiceSubmissionPromise
+  extends Promise<MultipleChoiceSubmission>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  author: <T = UserPromise>() => T;
+  isChecked: () => Promise<Boolean>;
+  answer: <T = MultipleChoiceAnswerPromise>() => T;
+}
+
+export interface MultipleChoiceSubmissionSubscription
+  extends Promise<AsyncIterator<MultipleChoiceSubmission>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  author: <T = UserSubscription>() => T;
+  isChecked: () => Promise<AsyncIterator<Boolean>>;
+  answer: <T = MultipleChoiceAnswerSubscription>() => T;
+}
+
+export interface DocumentConnection {
+  pageInfo: PageInfo;
+  edges: DocumentEdge[];
+}
+
+export interface DocumentConnectionPromise
+  extends Promise<DocumentConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<DocumentEdge>>() => T;
+  aggregate: <T = AggregateDocumentPromise>() => T;
+}
+
+export interface DocumentConnectionSubscription
+  extends Promise<AsyncIterator<DocumentConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<DocumentEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateDocumentSubscription>() => T;
+}
+
+export interface PageInfo {
+  hasNextPage: Boolean;
+  hasPreviousPage: Boolean;
+  startCursor?: String;
+  endCursor?: String;
+}
+
+export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
+  hasNextPage: () => Promise<Boolean>;
+  hasPreviousPage: () => Promise<Boolean>;
+  startCursor: () => Promise<String>;
+  endCursor: () => Promise<String>;
+}
+
+export interface PageInfoSubscription
+  extends Promise<AsyncIterator<PageInfo>>,
+    Fragmentable {
+  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
+  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
+  startCursor: () => Promise<AsyncIterator<String>>;
+  endCursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface DocumentEdge {
+  node: Document;
+  cursor: String;
+}
+
+export interface DocumentEdgePromise
+  extends Promise<DocumentEdge>,
+    Fragmentable {
+  node: <T = DocumentPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface DocumentEdgeSubscription
+  extends Promise<AsyncIterator<DocumentEdge>>,
+    Fragmentable {
+  node: <T = DocumentSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateDocument {
+  count: Int;
+}
+
+export interface AggregateDocumentPromise
+  extends Promise<AggregateDocument>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateDocumentSubscription
+  extends Promise<AsyncIterator<AggregateDocument>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface MultipleChoiceAnswerConnection {
+  pageInfo: PageInfo;
+  edges: MultipleChoiceAnswerEdge[];
+}
+
+export interface MultipleChoiceAnswerConnectionPromise
+  extends Promise<MultipleChoiceAnswerConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<MultipleChoiceAnswerEdge>>() => T;
+  aggregate: <T = AggregateMultipleChoiceAnswerPromise>() => T;
+}
+
+export interface MultipleChoiceAnswerConnectionSubscription
+  extends Promise<AsyncIterator<MultipleChoiceAnswerConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <
+    T = Promise<AsyncIterator<MultipleChoiceAnswerEdgeSubscription>>
+  >() => T;
+  aggregate: <T = AggregateMultipleChoiceAnswerSubscription>() => T;
+}
+
+export interface MultipleChoiceAnswerEdge {
+  node: MultipleChoiceAnswer;
+  cursor: String;
+}
+
+export interface MultipleChoiceAnswerEdgePromise
+  extends Promise<MultipleChoiceAnswerEdge>,
+    Fragmentable {
+  node: <T = MultipleChoiceAnswerPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface MultipleChoiceAnswerEdgeSubscription
+  extends Promise<AsyncIterator<MultipleChoiceAnswerEdge>>,
+    Fragmentable {
+  node: <T = MultipleChoiceAnswerSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateMultipleChoiceAnswer {
+  count: Int;
+}
+
+export interface AggregateMultipleChoiceAnswerPromise
+  extends Promise<AggregateMultipleChoiceAnswer>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateMultipleChoiceAnswerSubscription
+  extends Promise<AsyncIterator<AggregateMultipleChoiceAnswer>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface MultipleChoiceSubmissionConnection {
+  pageInfo: PageInfo;
+  edges: MultipleChoiceSubmissionEdge[];
+}
+
+export interface MultipleChoiceSubmissionConnectionPromise
+  extends Promise<MultipleChoiceSubmissionConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<MultipleChoiceSubmissionEdge>>() => T;
+  aggregate: <T = AggregateMultipleChoiceSubmissionPromise>() => T;
+}
+
+export interface MultipleChoiceSubmissionConnectionSubscription
+  extends Promise<AsyncIterator<MultipleChoiceSubmissionConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <
+    T = Promise<AsyncIterator<MultipleChoiceSubmissionEdgeSubscription>>
+  >() => T;
+  aggregate: <T = AggregateMultipleChoiceSubmissionSubscription>() => T;
+}
+
+export interface MultipleChoiceSubmissionEdge {
+  node: MultipleChoiceSubmission;
+  cursor: String;
+}
+
+export interface MultipleChoiceSubmissionEdgePromise
+  extends Promise<MultipleChoiceSubmissionEdge>,
+    Fragmentable {
+  node: <T = MultipleChoiceSubmissionPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface MultipleChoiceSubmissionEdgeSubscription
+  extends Promise<AsyncIterator<MultipleChoiceSubmissionEdge>>,
+    Fragmentable {
+  node: <T = MultipleChoiceSubmissionSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateMultipleChoiceSubmission {
+  count: Int;
+}
+
+export interface AggregateMultipleChoiceSubmissionPromise
+  extends Promise<AggregateMultipleChoiceSubmission>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateMultipleChoiceSubmissionSubscription
+  extends Promise<AsyncIterator<AggregateMultipleChoiceSubmission>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface UserConnection {
+  pageInfo: PageInfo;
+  edges: UserEdge[];
+}
+
+export interface UserConnectionPromise
+  extends Promise<UserConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<UserEdge>>() => T;
+  aggregate: <T = AggregateUserPromise>() => T;
+}
+
+export interface UserConnectionSubscription
+  extends Promise<AsyncIterator<UserConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateUserSubscription>() => T;
+}
+
+export interface UserEdge {
+  node: User;
+  cursor: String;
+}
+
+export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
+  node: <T = UserPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface UserEdgeSubscription
+  extends Promise<AsyncIterator<UserEdge>>,
+    Fragmentable {
+  node: <T = UserSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateUser {
+  count: Int;
+}
+
+export interface AggregateUserPromise
+  extends Promise<AggregateUser>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateUserSubscription
+  extends Promise<AsyncIterator<AggregateUser>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface BatchPayload {
+  count: Long;
+}
+
+export interface BatchPayloadPromise
+  extends Promise<BatchPayload>,
+    Fragmentable {
+  count: () => Promise<Long>;
+}
+
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayload>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Long>>;
 }
 
 export interface DocumentSubscriptionPayload {
@@ -1582,106 +1478,188 @@ export interface DocumentSubscriptionPayloadSubscription
   previousValues: <T = DocumentPreviousValuesSubscription>() => T;
 }
 
-export interface MultipleChoiceSubmissionEdge {
+export interface DocumentPreviousValues {
+  id: ID_Output;
+  value: Json;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+}
+
+export interface DocumentPreviousValuesPromise
+  extends Promise<DocumentPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  value: () => Promise<Json>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+}
+
+export interface DocumentPreviousValuesSubscription
+  extends Promise<AsyncIterator<DocumentPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  value: () => Promise<AsyncIterator<Json>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface MultipleChoiceAnswerSubscriptionPayload {
+  mutation: MutationType;
+  node: MultipleChoiceAnswer;
+  updatedFields: String[];
+  previousValues: MultipleChoiceAnswerPreviousValues;
+}
+
+export interface MultipleChoiceAnswerSubscriptionPayloadPromise
+  extends Promise<MultipleChoiceAnswerSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = MultipleChoiceAnswerPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = MultipleChoiceAnswerPreviousValuesPromise>() => T;
+}
+
+export interface MultipleChoiceAnswerSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<MultipleChoiceAnswerSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = MultipleChoiceAnswerSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = MultipleChoiceAnswerPreviousValuesSubscription>() => T;
+}
+
+export interface MultipleChoiceAnswerPreviousValues {
+  id: ID_Output;
+  isCorrect: Boolean;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+}
+
+export interface MultipleChoiceAnswerPreviousValuesPromise
+  extends Promise<MultipleChoiceAnswerPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  isCorrect: () => Promise<Boolean>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+}
+
+export interface MultipleChoiceAnswerPreviousValuesSubscription
+  extends Promise<AsyncIterator<MultipleChoiceAnswerPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  isCorrect: () => Promise<AsyncIterator<Boolean>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface MultipleChoiceSubmissionSubscriptionPayload {
+  mutation: MutationType;
   node: MultipleChoiceSubmission;
-  cursor: String;
+  updatedFields: String[];
+  previousValues: MultipleChoiceSubmissionPreviousValues;
 }
 
-export interface MultipleChoiceSubmissionEdgePromise
-  extends Promise<MultipleChoiceSubmissionEdge>,
+export interface MultipleChoiceSubmissionSubscriptionPayloadPromise
+  extends Promise<MultipleChoiceSubmissionSubscriptionPayload>,
     Fragmentable {
+  mutation: () => Promise<MutationType>;
   node: <T = MultipleChoiceSubmissionPromise>() => T;
-  cursor: () => Promise<String>;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = MultipleChoiceSubmissionPreviousValuesPromise>() => T;
 }
 
-export interface MultipleChoiceSubmissionEdgeSubscription
-  extends Promise<AsyncIterator<MultipleChoiceSubmissionEdge>>,
+export interface MultipleChoiceSubmissionSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<MultipleChoiceSubmissionSubscriptionPayload>>,
     Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
   node: <T = MultipleChoiceSubmissionSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface UserConnection {
-  pageInfo: PageInfo;
-  edges: UserEdge[];
-}
-
-export interface UserConnectionPromise
-  extends Promise<UserConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<UserEdge>>() => T;
-  aggregate: <T = AggregateUserPromise>() => T;
-}
-
-export interface UserConnectionSubscription
-  extends Promise<AsyncIterator<UserConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateUserSubscription>() => T;
-}
-
-export interface MultipleChoiceAnswerConnection {
-  pageInfo: PageInfo;
-  edges: MultipleChoiceAnswerEdge[];
-}
-
-export interface MultipleChoiceAnswerConnectionPromise
-  extends Promise<MultipleChoiceAnswerConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<MultipleChoiceAnswerEdge>>() => T;
-  aggregate: <T = AggregateMultipleChoiceAnswerPromise>() => T;
-}
-
-export interface MultipleChoiceAnswerConnectionSubscription
-  extends Promise<AsyncIterator<MultipleChoiceAnswerConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <
-    T = Promise<AsyncIterator<MultipleChoiceAnswerEdgeSubscription>>
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <
+    T = MultipleChoiceSubmissionPreviousValuesSubscription
   >() => T;
-  aggregate: <T = AggregateMultipleChoiceAnswerSubscription>() => T;
 }
 
-export interface AggregateMultipleChoiceAnswer {
-  count: Int;
+export interface MultipleChoiceSubmissionPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  isChecked: Boolean;
 }
 
-export interface AggregateMultipleChoiceAnswerPromise
-  extends Promise<AggregateMultipleChoiceAnswer>,
+export interface MultipleChoiceSubmissionPreviousValuesPromise
+  extends Promise<MultipleChoiceSubmissionPreviousValues>,
     Fragmentable {
-  count: () => Promise<Int>;
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  isChecked: () => Promise<Boolean>;
 }
 
-export interface AggregateMultipleChoiceAnswerSubscription
-  extends Promise<AsyncIterator<AggregateMultipleChoiceAnswer>>,
+export interface MultipleChoiceSubmissionPreviousValuesSubscription
+  extends Promise<AsyncIterator<MultipleChoiceSubmissionPreviousValues>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  isChecked: () => Promise<AsyncIterator<Boolean>>;
 }
 
-/*
-DateTime scalar input type, allowing Date
-*/
-export type DateTimeInput = Date | string;
+export interface UserSubscriptionPayload {
+  mutation: MutationType;
+  node: User;
+  updatedFields: String[];
+  previousValues: UserPreviousValues;
+}
 
-/*
-DateTime scalar output type, which is always a string
-*/
-export type DateTimeOutput = string;
+export interface UserSubscriptionPayloadPromise
+  extends Promise<UserSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = UserPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = UserPreviousValuesPromise>() => T;
+}
 
-/*
-The `Boolean` scalar type represents `true` or `false`.
-*/
-export type Boolean = boolean;
+export interface UserSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = UserSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = UserPreviousValuesSubscription>() => T;
+}
 
-export type Long = string;
+export interface UserPreviousValues {
+  id: ID_Output;
+  name: String;
+  isTeacher: Boolean;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  openHpiEmail?: String;
+}
 
-/*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
-*/
-export type Int = number;
+export interface UserPreviousValuesPromise
+  extends Promise<UserPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  isTeacher: () => Promise<Boolean>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  openHpiEmail: () => Promise<String>;
+}
+
+export interface UserPreviousValuesSubscription
+  extends Promise<AsyncIterator<UserPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  isTeacher: () => Promise<AsyncIterator<Boolean>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  openHpiEmail: () => Promise<AsyncIterator<String>>;
+}
 
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
@@ -1695,6 +1673,28 @@ export type Json = any;
 The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
 */
 export type String = string;
+
+/*
+The `Boolean` scalar type represents `true` or `false`.
+*/
+export type Boolean = boolean;
+
+/*
+DateTime scalar input type, allowing Date
+*/
+export type DateTimeInput = Date | string;
+
+/*
+DateTime scalar output type, which is always a string
+*/
+export type DateTimeOutput = string;
+
+/*
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
+*/
+export type Int = number;
+
+export type Long = string;
 
 /**
  * Model Metadata
