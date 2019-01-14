@@ -3,6 +3,14 @@ module.exports = {
   count: Int!
 }
 
+type AggregatePoll {
+  count: Int!
+}
+
+type AggregatePollAnswer {
+  count: Int!
+}
+
 type AggregateUser {
   count: Int!
 }
@@ -148,6 +156,17 @@ type Mutation {
   upsertDocument(where: DocumentWhereUniqueInput!, create: DocumentCreateInput!, update: DocumentUpdateInput!): Document!
   deleteDocument(where: DocumentWhereUniqueInput!): Document
   deleteManyDocuments(where: DocumentWhereInput): BatchPayload!
+  createPoll(data: PollCreateInput!): Poll!
+  updatePoll(data: PollUpdateInput!, where: PollWhereUniqueInput!): Poll
+  updateManyPolls(data: PollUpdateManyMutationInput!, where: PollWhereInput): BatchPayload!
+  upsertPoll(where: PollWhereUniqueInput!, create: PollCreateInput!, update: PollUpdateInput!): Poll!
+  deletePoll(where: PollWhereUniqueInput!): Poll
+  deleteManyPolls(where: PollWhereInput): BatchPayload!
+  createPollAnswer(data: PollAnswerCreateInput!): PollAnswer!
+  updatePollAnswer(data: PollAnswerUpdateInput!, where: PollAnswerWhereUniqueInput!): PollAnswer
+  upsertPollAnswer(where: PollAnswerWhereUniqueInput!, create: PollAnswerCreateInput!, update: PollAnswerUpdateInput!): PollAnswer!
+  deletePollAnswer(where: PollAnswerWhereUniqueInput!): PollAnswer
+  deleteManyPollAnswers(where: PollAnswerWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -173,10 +192,307 @@ type PageInfo {
   endCursor: String
 }
 
+type Poll {
+  id: ID!
+  votingAllowed: Boolean!
+  displayResults: Boolean!
+  answers(where: PollAnswerWhereInput, orderBy: PollAnswerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PollAnswer!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type PollAnswer {
+  id: ID!
+  votes(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type PollAnswerConnection {
+  pageInfo: PageInfo!
+  edges: [PollAnswerEdge]!
+  aggregate: AggregatePollAnswer!
+}
+
+input PollAnswerCreateInput {
+  votes: UserCreateManyInput
+}
+
+input PollAnswerCreateManyInput {
+  create: [PollAnswerCreateInput!]
+  connect: [PollAnswerWhereUniqueInput!]
+}
+
+type PollAnswerEdge {
+  node: PollAnswer!
+  cursor: String!
+}
+
+enum PollAnswerOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type PollAnswerPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input PollAnswerScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [PollAnswerScalarWhereInput!]
+  OR: [PollAnswerScalarWhereInput!]
+  NOT: [PollAnswerScalarWhereInput!]
+}
+
+type PollAnswerSubscriptionPayload {
+  mutation: MutationType!
+  node: PollAnswer
+  updatedFields: [String!]
+  previousValues: PollAnswerPreviousValues
+}
+
+input PollAnswerSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: PollAnswerWhereInput
+  AND: [PollAnswerSubscriptionWhereInput!]
+  OR: [PollAnswerSubscriptionWhereInput!]
+  NOT: [PollAnswerSubscriptionWhereInput!]
+}
+
+input PollAnswerUpdateDataInput {
+  votes: UserUpdateManyInput
+}
+
+input PollAnswerUpdateInput {
+  votes: UserUpdateManyInput
+}
+
+input PollAnswerUpdateManyInput {
+  create: [PollAnswerCreateInput!]
+  update: [PollAnswerUpdateWithWhereUniqueNestedInput!]
+  upsert: [PollAnswerUpsertWithWhereUniqueNestedInput!]
+  delete: [PollAnswerWhereUniqueInput!]
+  connect: [PollAnswerWhereUniqueInput!]
+  disconnect: [PollAnswerWhereUniqueInput!]
+  deleteMany: [PollAnswerScalarWhereInput!]
+}
+
+input PollAnswerUpdateWithWhereUniqueNestedInput {
+  where: PollAnswerWhereUniqueInput!
+  data: PollAnswerUpdateDataInput!
+}
+
+input PollAnswerUpsertWithWhereUniqueNestedInput {
+  where: PollAnswerWhereUniqueInput!
+  update: PollAnswerUpdateDataInput!
+  create: PollAnswerCreateInput!
+}
+
+input PollAnswerWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  votes_every: UserWhereInput
+  votes_some: UserWhereInput
+  votes_none: UserWhereInput
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [PollAnswerWhereInput!]
+  OR: [PollAnswerWhereInput!]
+  NOT: [PollAnswerWhereInput!]
+}
+
+input PollAnswerWhereUniqueInput {
+  id: ID
+}
+
+type PollConnection {
+  pageInfo: PageInfo!
+  edges: [PollEdge]!
+  aggregate: AggregatePoll!
+}
+
+input PollCreateInput {
+  votingAllowed: Boolean!
+  displayResults: Boolean!
+  answers: PollAnswerCreateManyInput
+}
+
+type PollEdge {
+  node: Poll!
+  cursor: String!
+}
+
+enum PollOrderByInput {
+  id_ASC
+  id_DESC
+  votingAllowed_ASC
+  votingAllowed_DESC
+  displayResults_ASC
+  displayResults_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type PollPreviousValues {
+  id: ID!
+  votingAllowed: Boolean!
+  displayResults: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type PollSubscriptionPayload {
+  mutation: MutationType!
+  node: Poll
+  updatedFields: [String!]
+  previousValues: PollPreviousValues
+}
+
+input PollSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: PollWhereInput
+  AND: [PollSubscriptionWhereInput!]
+  OR: [PollSubscriptionWhereInput!]
+  NOT: [PollSubscriptionWhereInput!]
+}
+
+input PollUpdateInput {
+  votingAllowed: Boolean
+  displayResults: Boolean
+  answers: PollAnswerUpdateManyInput
+}
+
+input PollUpdateManyMutationInput {
+  votingAllowed: Boolean
+  displayResults: Boolean
+}
+
+input PollWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  votingAllowed: Boolean
+  votingAllowed_not: Boolean
+  displayResults: Boolean
+  displayResults_not: Boolean
+  answers_every: PollAnswerWhereInput
+  answers_some: PollAnswerWhereInput
+  answers_none: PollAnswerWhereInput
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [PollWhereInput!]
+  OR: [PollWhereInput!]
+  NOT: [PollWhereInput!]
+}
+
+input PollWhereUniqueInput {
+  id: ID
+}
+
 type Query {
   document(where: DocumentWhereUniqueInput!): Document
   documents(where: DocumentWhereInput, orderBy: DocumentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Document]!
   documentsConnection(where: DocumentWhereInput, orderBy: DocumentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DocumentConnection!
+  poll(where: PollWhereUniqueInput!): Poll
+  polls(where: PollWhereInput, orderBy: PollOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Poll]!
+  pollsConnection(where: PollWhereInput, orderBy: PollOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PollConnection!
+  pollAnswer(where: PollAnswerWhereUniqueInput!): PollAnswer
+  pollAnswers(where: PollAnswerWhereInput, orderBy: PollAnswerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PollAnswer]!
+  pollAnswersConnection(where: PollAnswerWhereInput, orderBy: PollAnswerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PollAnswerConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
@@ -185,6 +501,8 @@ type Query {
 
 type Subscription {
   document(where: DocumentSubscriptionWhereInput): DocumentSubscriptionPayload
+  poll(where: PollSubscriptionWhereInput): PollSubscriptionPayload
+  pollAnswer(where: PollAnswerSubscriptionWhereInput): PollAnswerSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 

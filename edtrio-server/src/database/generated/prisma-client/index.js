@@ -9,6 +9,14 @@ var models = [
     embedded: false
   },
   {
+    name: "Poll",
+    embedded: false
+  },
+  {
+    name: "PollAnswer",
+    embedded: false
+  },
+  {
     name: "User",
     embedded: false
   }
@@ -19,13 +27,3 @@ exports.Prisma = prisma_lib_1.makePrismaClientClass({
   endpoint: `http://localhost:4466`
 });
 exports.prisma = new exports.Prisma();
-var models = [
-  {
-    name: "Document",
-    embedded: false
-  },
-  {
-    name: "User",
-    embedded: false
-  }
-];
