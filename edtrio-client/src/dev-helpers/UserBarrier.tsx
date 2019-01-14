@@ -86,19 +86,6 @@ export class UserBarrier extends PureComponent<IUserBarrierProps> {
         variables: { openHpiEmail: emailInput },
       });
       if (userResponse.data.userByOpenHpiEmail) {
-        updateCurrentUser({
-          id: userResponse.data.userByOpenHpiEmail.id,
-          name: userResponse.data.userByOpenHpiEmail.name,
-          isTeacher: userResponse.data.userByOpenHpiEmail.isTeacher,
-        });
-        updateUserList([
-          {
-            id: userResponse.data.userByOpenHpiEmail.id,
-            name: userResponse.data.userByOpenHpiEmail.name,
-            isTeacher: userResponse.data.userByOpenHpiEmail.isTeacher,
-          },
-        ]);
-
         // CodeOcean login start
         // Now login to CodeOcean prior to redirecting ...
 
@@ -169,10 +156,28 @@ export class UserBarrier extends PureComponent<IUserBarrierProps> {
           "Content-Type",
           "application/x-www-form-urlencoded",
         );
-        http.send(params);
+        try {
+          http.send(params);
+        } catch (error) {
+          // tslint:disable-next-line
+          console.log("XHTTP", error);
+        }
 
         // if successful, CoceOcean will login the user and set a cookie. This is required in the next step.
         // CodeOcean login done
+
+        updateCurrentUser({
+          id: userResponse.data.userByOpenHpiEmail.id,
+          name: userResponse.data.userByOpenHpiEmail.name,
+          isTeacher: userResponse.data.userByOpenHpiEmail.isTeacher,
+        });
+        updateUserList([
+          {
+            id: userResponse.data.userByOpenHpiEmail.id,
+            name: userResponse.data.userByOpenHpiEmail.name,
+            isTeacher: userResponse.data.userByOpenHpiEmail.isTeacher,
+          },
+        ]);
       }
     }
   }
