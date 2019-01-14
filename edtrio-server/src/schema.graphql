@@ -15,6 +15,10 @@ type Mutation {
     value: String!
     userIds: [String!]!
   ): Document
+  createPoll(votingAllowed: Boolean!, displayResults: Boolean!): Poll
+  updatePoll(votingAllowed: Boolean!, displayResults: Boolean!): Poll
+  createPollAnswer(pollId: String!): PollAnswer
+  addUserToPollAnswer(answerId: String!, userId: String!): PollAnswer
 }
 
 type Subscription {

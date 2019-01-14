@@ -13,3 +13,19 @@ type Document {
   createdAt: DateTime!
   updatedAt: DateTime!
 }
+
+type PollAnswer {
+  id: ID! @unique
+  votes: [User]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Poll {
+  id: ID! @unique
+  votingAllowed: Boolean!
+  displayResults: Boolean!
+  answers: [PollAnswer]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
