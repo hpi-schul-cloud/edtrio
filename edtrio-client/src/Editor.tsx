@@ -6,17 +6,13 @@ import { Value } from "slate";
 import { Editor as SlateEditor } from "slate-react";
 import styled from "styled-components";
 
-import schema from "./schema";
+import schema from "./slateSchema";
 
 // @ts-ignore:
 import DocumentViewer from "./dev-helpers/DocumentViewer";
 import { StateController } from "./dev-helpers/StateController";
 
 import { plugins } from "./plugins";
-// @ts-ignore:
-import AddSection from "./plugins/add-section";
-// @ts-ignore:
-import PlusMenuPlugin from "./plugins/plus-menu/index";
 
 import { IUserType } from "./types";
 import importedValue from "./value.json";

@@ -1,4 +1,7 @@
-import { Block, Editor } from "slate";
+import { List } from "immutable";
+import { Block, Editor, Text } from "slate";
+
+let counter = 0;
 
 const schema: object = {
   document: {
@@ -10,11 +13,50 @@ const schema: object = {
       switch (code) {
         case "child_type_invalid": {
           const type = index === 0 ? "title" : "section";
-          return editor.setNodeByKey(child.key, type);
+          editor.setNodeByKey(child.key, type);
+
+          return true;
         }
         case "child_min_invalid": {
-          const block = Block.create(index === 0 ? "title" : "section");
-          return editor.insertNodeByKey(node.key, index, block);
+          // not enough sections
+          if (
+            editor.value.document.nodes.some(
+              nodeToTest => !!nodeToTest && nodeToTest.type === "title",
+            )
+          ) {
+            const newSection = Block.create({
+              type: "section",
+              data: {
+                isVisible: true,
+              },
+              nodes: List([
+                Block.create({
+                  type: "p",
+                  nodes: List([Text.create({})]),
+                }),
+              ]),
+            });
+            counter++;
+
+            const document = editor.value.document;
+            const lastIndex = document.nodes.count();
+
+            editor
+              .insertNodeByKey(document.key, lastIndex, newSection)
+              .moveToEndOfNode(newSection);
+          } else {
+            // no title node
+            const document = editor.value.document;
+            const newTitle = Block.create({
+              type: "title",
+              nodes: List([Text.create({})]),
+            });
+            editor.insertNodeByKey(document.key, index, newTitle);
+          }
+          if (counter > 100) {
+            throw new Error("stop!");
+          }
+          return true;
         }
       }
       return;
@@ -36,6 +78,10 @@ const schema: object = {
       normalize: (editor: Editor, { code, node, child }: any) => {
         switch (code) {
           case "last_child_type_invalid": {
+            if (!("data" in child)) {
+              editor.removeNodeByKey(node.key);
+              return true;
+            }
             const index = node.nodes.size;
             const newParagraph = Block.create("p");
             editor.insertNodeByKey(node.key, index, newParagraph);
