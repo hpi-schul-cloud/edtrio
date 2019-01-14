@@ -48,6 +48,7 @@ export interface IEditorUserProps {
   users: IUserType[];
   currentUser: IUserType;
   updateCurrentUser: (newUser: IUserType) => void;
+  documentId: string;
 }
 
 interface IEditorProps extends IEditorUserProps {
@@ -139,7 +140,6 @@ class Editor extends PureComponent<IEditorProps, IEditorState> {
         mutation: UPDATE_DOCUMENT,
         variables: {
           value: document,
-          // @ts-ignore
           documentId: this.props.documentId,
         },
       });
