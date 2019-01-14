@@ -5,6 +5,8 @@ type Query {
   documents: [Document]
   user(userId: String!): User
   users: [User]
+  poll(pollId: String!): Poll
+  pollAnswer(pollAnswerId: String!): PollAnswer
 }
 
 type Mutation {
@@ -16,11 +18,16 @@ type Mutation {
     userIds: [String!]!
   ): Document
   createPoll(votingAllowed: Boolean!, displayResults: Boolean!): Poll
-  updatePoll(votingAllowed: Boolean!, displayResults: Boolean!): Poll
+  updatePoll(
+    pollId: String!
+    votingAllowed: Boolean
+    displayResults: Boolean
+  ): Poll
   createPollAnswer(pollId: String!): PollAnswer
   addUserToPollAnswer(answerId: String!, userId: String!): PollAnswer
 }
 
 type Subscription {
   valueChanged(documentId: String!): Document
+  # pollAnswerChanged(pollAnswerId: String!): PollAnswer
 }
