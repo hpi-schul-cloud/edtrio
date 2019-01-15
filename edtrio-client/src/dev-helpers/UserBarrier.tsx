@@ -237,6 +237,10 @@ export class UserBarrier extends PureComponent<IUserBarrierProps> {
               <StyledAgainButton onClick={() => this.getUser()}>
                 E-Mail-Adresse eingeben
               </StyledAgainButton>
+              <br />
+              <button onClick={() => this.signInAsStudent()}>
+                Technische Probleme? Hier entlang.
+              </button>
             </div>
           </StyledPageContent>
         </StyledPageWrapper>
@@ -274,7 +278,7 @@ export class UserBarrier extends PureComponent<IUserBarrierProps> {
     ]);
   };
 
-  private async redirectToCodeOcean() {
+  private redirectToCodeOcean() {
     let emailInput = prompt(
       "Bitte nenne uns deine E-Mail-Adresse, die du beim Login auf open.hpi.de verwendest:",
       "",
@@ -284,20 +288,20 @@ export class UserBarrier extends PureComponent<IUserBarrierProps> {
       emailInput = "student@example.com";
     }
 
-    let userName = "Student";
-    let userId = "cjqme9meo010e07400rxnzor6";
+    const userName = "Student";
+    const userId = "cjqme9meo010e07400rxnzor6";
 
-    const userResponse = await apolloClient.query<
-      userByOpenHpiEmail,
-      userByOpenHpiEmailVariables
-    >({
-      query: USER_BY_OPENHPIEMAIL,
-      variables: { openHpiEmail: emailInput },
-    });
-    if (userResponse.data.userByOpenHpiEmail) {
-      userName = "" + userResponse.data.userByOpenHpiEmail.name;
-      userId = "" + userResponse.data.userByOpenHpiEmail.id;
-    }
+    // const userResponse = await apolloClient.query<
+    //   userByOpenHpiEmail,
+    //   userByOpenHpiEmailVariables
+    // >({
+    //   query: USER_BY_OPENHPIEMAIL,
+    //   variables: { openHpiEmail: emailInput },
+    // });
+    // if (userResponse.data.userByOpenHpiEmail) {
+    //   userName = "" + userResponse.data.userByOpenHpiEmail.name;
+    //   userId = "" + userResponse.data.userByOpenHpiEmail.id;
+    // }
 
     let recognize = "";
     // if (userId !== "cjqme9meo010e07400rxnzor6") {
