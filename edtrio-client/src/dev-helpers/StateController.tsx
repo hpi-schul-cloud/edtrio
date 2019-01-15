@@ -59,8 +59,6 @@ export class StateController extends PureComponent<IStateControllerProps> {
   }
 }
 
-// TODO: Remove test users
-/*
 const teacherUser: IUserType = {
   name: "Teacher",
   isTeacher: true,
@@ -76,4 +74,3 @@ const pupilUser: IUserType = {
 const allUsers: IUserType[] = [teacherUser, pupilUser];
 
 export const testUsers = { users: allUsers, currentUser: teacherUser };
-*/
