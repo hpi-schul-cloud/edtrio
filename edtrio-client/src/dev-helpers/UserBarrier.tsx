@@ -288,8 +288,8 @@ export class UserBarrier extends PureComponent<IUserBarrierProps> {
       emailInput = "student@example.com";
     }
 
-    const userName = "Student";
-    const userId = "cjqme9meo010e07400rxnzor6";
+    const userName = emailInput;
+    const userId = emailInput;
 
     // const userResponse = await apolloClient.query<
     //   userByOpenHpiEmail,
