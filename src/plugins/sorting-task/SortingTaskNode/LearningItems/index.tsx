@@ -2,6 +2,8 @@ import React from "react";
 import { ILearningItem, ILearningItems } from "../interfaces";
 import LearningItem from "./LearningItem";
 
+import './styles.scss';
+
 interface IProps {
   learningItems: ILearningItems,
   onEdit: (updatedLearningItems: ILearningItems) => void,
@@ -21,11 +23,11 @@ export default class LearningItems extends React.PureComponent<IProps> {
     });
 
     return (
-      <table>
+      <table className="learning-items">
         <thead>
           <tr>
-            <th>Begriff</th>
-            <th>Erklärung</th>
+            <th className="learning-items__term">Begriff</th>
+            <th className="learning-items__description">Erklärung</th>
           </tr>
         </thead>
         <tbody>

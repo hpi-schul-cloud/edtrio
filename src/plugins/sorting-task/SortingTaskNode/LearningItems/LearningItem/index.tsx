@@ -1,6 +1,8 @@
 import React from "react";
 import { ILearningItem } from "../../interfaces";
 
+import './styles.scss';
+
 interface IProps {
   learningItem: ILearningItem,
   onEdit: (updateLearningItem: ILearningItem) => void,
@@ -11,16 +13,18 @@ export default class LearningItem extends React.PureComponent<IProps> {
   public render() {
     return (
       <tr>
-        <td>
+        <td className="learning-items__cell">
           <input
+            className="learning-items__cell-input"
             type="text"
             value={this.props.learningItem.term}
             onChange={this.editHandler('term')}
             placeholder="Gib einen Begriff ein…"
           />
         </td>
-        <td>
+        <td className="learning-items__cell">
           <input
+            className="learning-items__cell-input"
             type="text"
             value={this.props.learningItem.description}
             onChange={this.editHandler('description')}

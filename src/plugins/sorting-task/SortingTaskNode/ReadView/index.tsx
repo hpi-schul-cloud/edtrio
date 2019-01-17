@@ -1,5 +1,8 @@
 import React from "react";
 import { ILearningItems } from "../interfaces";
+import FlipCard from "./FlipCard";
+
+import "./style.scss";
 
 interface IProps {
   learningItems: ILearningItems,
@@ -8,16 +11,15 @@ interface IProps {
 export default class ReadView extends React.PureComponent<IProps> {
 
   public render() {
-    const learningItems = this.props.learningItems.map((learningItem, index) => {
+    const learningItems = this.props.learningItems
+    .filter(learningItem => learningItem.term && learningItem.description)
+    .map((learningItem, index) => {
       return (
-        <React.Fragment key={index}>
-          <dt>{learningItem.term}</dt>
-          <dd>{learningItem.description}</dd>
-        </React.Fragment>
+        <FlipCard key={index} learningItem={learningItem} />
       );
     });
 
-    return <dl>{learningItems}</dl>;
+    return <ol className="learning-items-cards">{learningItems}</ol>;
   }
 
 }

@@ -1,0 +1,17 @@
+.learning-items {
+  &__cell{
+    padding: 0;
+  }
+  &__cell-input{
+    box-sizing: border-box;
+    width: 100%;
+    padding: .5em .75em;
+    border: 1px solid transparent;
+    border-radius: .125em;
+
+    &:focus{
+      outline: none;
+      border-color: blue;
+    }
+  }
+}

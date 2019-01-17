@@ -39,7 +39,7 @@ export default class SortingTaskNode extends React.Component<IProps, IState> {
 
     return (
       <div
-        className={`plugin-wrapper ${ isFocused && 'selected' }`}
+        className={`plugin-wrapper sorting-task-node ${ isFocused && 'selected' }`}
         onClick={this.clickHandler()}
         {...attributes}
        >

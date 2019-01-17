@@ -63,7 +63,7 @@ class Editor extends PureComponent<IEditorProps, IEditorState> {
         <div className="column" />
         <div className="column is-three-quarters">
           <div style={{ marginTop: "2rem" }}>
-            {process.env.NODE_ENV === "development" ? (
+            {process.env.NODE_ENV === "development" || process.env.REACT_APP_SHOW_PREVIEW_BUTTON ? (
               <StyledEditButton
                 onClick={() =>
                   this.props.updateIsEditable(!this.props.isEditable)
@@ -84,7 +84,7 @@ class Editor extends PureComponent<IEditorProps, IEditorState> {
               readOnly={!this.props.isEditable}
             />
           </div>
-          {process.env.NODE_ENV === "development" ? (
+          {process.env.NODE_ENV === "development" || process.env.REACT_APP_SHOW_DOCUMENT_VIEWER ? (
             <StyledDocumentViewer doc={this.state.docValue} />
           ) : null}
         </div>
