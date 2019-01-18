@@ -1,5 +1,6 @@
 import { List } from "immutable";
 import { Block, Editor, Text } from "slate";
+
 // @ts-ignore
 import Image from "../image";
 
@@ -47,6 +48,30 @@ export const onClickCodeButton = (event: any, editor: Editor) => {
     Block.create({
       type: "code",
       nodes: List([Text.create({})]),
+    }),
+  );
+};
+
+/**
+ * handles clicks on the multiple choice button and
+ * forwards them accordingly to plugins/multiple-choice
+ */
+export const onClickMultipleChoiceButton = (event: any, editor: Editor) => {
+  event.preventDefault();
+
+  editor.insertBlock(
+    Block.create({
+      type: "multiple-choice",
+      nodes: List([
+        Block.create({
+          type: "multiple-choice-question",
+          nodes: List([Text.create({})]),
+        }),
+        Block.create({
+          type: "multiple-choice-answer",
+          nodes: List([Text.create({})]),
+        }),
+      ]),
     }),
   );
 };
