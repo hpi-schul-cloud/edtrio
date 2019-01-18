@@ -4,11 +4,11 @@ import Embed from "./embed/index";
 import Geogebra from "./geogebra/index";
 import Headlines from "./headlines/index";
 import Image from "./image/index";
-import MarkdownShortcuts from "./markdown-shortcuts/index";
+// import MarkdownShortcuts from "./markdown-shortcuts/index";
+import MultipleChoice from "./multiple-choice";
 import PasteURLHandler from "./paste-url-handler/index";
 import PlusMenu from "./plus-menu/index";
 import Section from "./section/index";
-
 import TextMenu from "./text-menu/index";
 import Title from "./title/index";
 import Video from "./video/index";
@@ -22,7 +22,7 @@ export const plugins: object[] = [
   ...TextMenu().plugins,
   ...PlusMenu().plugins,
   ...Headlines().plugins,
-  ...MarkdownShortcuts().plugins,
+  // ...MarkdownShortcuts().plugins,
   ...Embed().plugins,
   ...Video().plugins,
   ...Audio().plugins,
@@ -30,4 +30,5 @@ export const plugins: object[] = [
   ...CodeBlockPlugin().plugins,
   ...Image().plugins,
   ...Geogebra().plugins,
+  ...MultipleChoice().plugins,
 ];
