@@ -24,10 +24,10 @@ type Mutation {
     displayResults: Boolean
   ): Poll
   createPollAnswer(pollId: String!): PollAnswer
-  addUserToPollAnswer(answerId: String!, userId: String!): PollAnswer
+  addUserToPollAnswer(pollAnswerId: String!, userId: String!): PollAnswer
 }
 
 type Subscription {
   valueChanged(documentId: String!): Document
-  # pollAnswerChanged(pollAnswerId: String!): PollAnswer
+  pollAnswerChanged(pollId: String!): PollAnswer
 }

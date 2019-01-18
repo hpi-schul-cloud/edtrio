@@ -40,7 +40,7 @@ const resolvers = {
         value: args.value,
         users: {
           connect: args.userIds.map((id: string) => {
-            return { id: id };
+            return { id };
           }),
         },
       });
@@ -54,7 +54,7 @@ const resolvers = {
         data: {
           users: {
             connect: args.userIds.map((id: string) => {
-              return { id: id };
+              return { id };
             }),
           },
           value: args.value,
@@ -76,23 +76,42 @@ const resolvers = {
         },
       });
     },
-    createPollAnswer(root: any, args: any, context: ContextType) {
-      return context.prisma.createPollAnswer({
+    async createPollAnswer(root: any, args: any, context: ContextType) {
+      const newAnswer = await context.prisma.createPollAnswer({
         poll: {
-          connect: {
-            id: args.pollId,
+          connect: { id: args.pollId },
+        },
+      });
+      const pollAnswers = await context.prisma
+        .poll({ id: args.pollId })
+        .answers();
+      pollAnswers.push(newAnswer);
+
+      return context.prisma.updatePoll({
+        where: { id: args.pollId },
+        data: {
+          answers: {
+            connect: pollAnswers.map(answer => ({ id: answer.id })),
           },
         },
       });
     },
-    addUserToPollAnswer(root: any, args: any, context: ContextType) {
+    async addUserToPollAnswer(root: any, args: any, context: ContextType) {
+      const users = await context.prisma
+        .pollAnswer({ id: args.pollAnswerId })
+        .votes();
+      const userIds = users.map(user => ({ id: user.id }));
+      userIds.push({ id: args.userId });
+
+      context.valueChangedPubSub.publish(`POLL_ANSWER_CHANGED_${args.pollId}`, {
+        valueChanged: args,
+      });
+
       return context.prisma.updatePollAnswer({
         where: { id: args.pollAnswerId },
         data: {
           votes: {
-            connect: args.userIds.map((id: string) => {
-              return { id: id };
-            }),
+            connect: userIds,
           },
         },
       });
@@ -105,12 +124,12 @@ const resolvers = {
         return context.valueChangedPubSub.asyncIterator(channel);
       },
     },
-    // pollAnswerChanged: {
-    //   subscribe: (parent: any, args: any, context: ContextType, info: any) => {
-    //     const channel = "POLL_ANSWER_CHANGED" + args.pollAnswerId;
-    //     return context.valueChangedPubSub.asyncIterator(channel);
-    //   },
-    // },
+    pollAnswerChanged: {
+      subscribe: (parent: any, args: any, context: ContextType, info: any) => {
+        const channel = `POLL_ANSWER_CHANGED_${args.pollId}`;
+        return context.valueChangedPubSub.asyncIterator(channel);
+      },
+    },
   },
 
   Document: {
