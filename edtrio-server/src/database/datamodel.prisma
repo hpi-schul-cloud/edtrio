@@ -8,8 +8,25 @@ type User {
 
 type Document {
   id: ID! @unique
-  value: String!
+  value: Json!
   users: [User!]!
   createdAt: DateTime!
   updatedAt: DateTime!
+  answers: [MultipleChoiceAnswer!]!
+}
+
+type MultipleChoiceAnswer {
+  id: ID! @unique
+  isCorrect: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  multipleChoiceSubmissions: [MultipleChoiceSubmission!]!
+}
+
+type MultipleChoiceSubmission {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  author: User!
+  isChecked: Boolean!
 }
