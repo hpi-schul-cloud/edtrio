@@ -75,9 +75,11 @@
     "docz:dev": "docz dev",
     "docz:build": "docz build",
     "lint": "./node_modules/.bin/eslint --ext .jsx --ext .js ./",
-    "tslint": "./node_modules/.bin/tslint -c tslint.json --project './'"
+    "tslint": "./node_modules/.bin/tslint -c tslint.json --project './'",
+    "generateTypes": "apollo schema:download --endpoint http://localhost:4000 schema.json && apollo codegen:generate --localSchemaFile schema.json --target typescript generated-types"
   },
   "devDependencies": {
+    "apollo": "^2.1.9",
     "docz": "^0.11.2",
     "docz-theme-default": "^0.11.2",
     "eslint-config-prettier": "^3.1.0",
