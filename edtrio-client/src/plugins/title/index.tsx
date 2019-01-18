@@ -49,12 +49,18 @@ const StyledPlaceholder = styled.span`
 
 const RenderTitleNode = {
   renderNode(props: any, editor: Editor, next: () => void) {
-    const { attributes, children, node } = props;
+    const { attributes, children, node, readOnly } = props;
     return node.type === "title" ? (
       <div {...attributes}>
         <StyledTitleBar>{children}</StyledTitleBar>
         <LastSavedContext.Consumer>
-          {({ lastSaved }) => <SaveBar editor={editor} lastSaved={lastSaved} />}
+          {({ lastSaved }) => (
+            <SaveBar
+              editor={editor}
+              lastSaved={lastSaved}
+              readOnly={readOnly}
+            />
+          )}
         </LastSavedContext.Consumer>
       </div>
     ) : (

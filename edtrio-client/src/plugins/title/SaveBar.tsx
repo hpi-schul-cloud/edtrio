@@ -1,7 +1,7 @@
 import { faQuestion, faRedo, faUndo } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import moment from "moment";
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Editor } from "slate";
 import styled from "styled-components";
 
@@ -34,6 +34,7 @@ const StyledDiv = styled.div`
 interface ISaveBarProps {
   lastSaved: moment.Moment | null;
   editor: Editor;
+  readOnly: boolean;
 }
 
 interface ISaveBarState {
@@ -69,19 +70,24 @@ class SaveBar extends Component<ISaveBarProps, ISaveBarState> {
       <nav className="level" contentEditable={false}>
         <div className="level-left">
           <div className="level-item">
-            <StyledButton onMouseDown={this.handleUndo}>
-              <FontAwesomeIcon icon={faUndo} />
-            </StyledButton>
-            <StyledButton onMouseDown={this.handleRedo}>
-              <FontAwesomeIcon icon={faRedo} />
-            </StyledButton>
-            <StyledLink
-              href="https://github.com/schul-cloud/edtrio/wiki/Edtr.io-Hilfe"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <FontAwesomeIcon icon={faQuestion} />
-            </StyledLink>
+            {!this.props.readOnly && (
+              <Fragment>
+                <StyledButton onMouseDown={this.handleUndo}>
+                  <FontAwesomeIcon icon={faUndo} />
+                </StyledButton>
+                <StyledButton onMouseDown={this.handleRedo}>
+                  <FontAwesomeIcon icon={faRedo} />
+                </StyledButton>
+                <StyledLink
+                  href="https://github.com/schul-cloud/edtrio/wiki/Edtr.io-Hilfe"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <FontAwesomeIcon icon={faQuestion} />
+                </StyledLink>
+              </Fragment>
+            )}
+
             <StyledDiv>
               {this.props.lastSaved &&
                 `${moment(this.props.lastSaved).fromNow()} aktualisiert`}

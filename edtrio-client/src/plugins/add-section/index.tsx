@@ -27,7 +27,7 @@ const addSectionButtonAfterEditor = {
     return (
       <Fragment>
         {restOfEditor}
-        <AddSectionButton editor={editor} />
+        {!props.readOnly && <AddSectionButton editor={editor} />}
       </Fragment>
     );
   },
