@@ -1,5 +1,4 @@
 import ApolloClient from "apollo-client";
-import gql from "graphql-tag";
 import moment from "moment";
 import "moment/locale/de";
 import React, { PureComponent } from "react";
@@ -7,20 +6,22 @@ import { Value } from "slate";
 import { Editor as SlateEditor } from "slate-react";
 import styled from "styled-components";
 
-import schema from "./schema";
+import schema from "./slateSchema";
 
 // @ts-ignore:
 import DocumentViewer from "./dev-helpers/DocumentViewer";
 import { StateController } from "./dev-helpers/StateController";
 
 import { plugins } from "./plugins";
-// @ts-ignore:
-import AddSection from "./plugins/add-section";
-// @ts-ignore:
-import PlusMenuPlugin from "./plugins/plus-menu/index";
 
 import { IUserType } from "./types";
 import importedValue from "./value.json";
+
+import {
+  updateDocument,
+  updateDocumentVariables,
+} from "./graphqlOperations/generated-types/updateDocument";
+import { UPDATE_DOCUMENT } from "./graphqlOperations/operations";
 
 moment.locale("de");
 
@@ -32,19 +33,6 @@ const AppWrapper = styled.div`
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-`;
-
-const UPDATE_DOCUMENT = gql`
-  mutation updateDocument(
-    $documentId: String!
-    $value: String!
-    $userIds: [String!]!
-  ) {
-    updateDocument(value: $value, documentId: $documentId, userIds: $userIds) {
-      id
-      value
-    }
-  }
 `;
 
 interface IEditorState {
@@ -60,6 +48,7 @@ export interface IEditorUserProps {
   users: IUserType[];
   currentUser: IUserType;
   updateCurrentUser: (newUser: IUserType) => void;
+  documentId: string;
 }
 
 interface IEditorProps extends IEditorUserProps {
@@ -137,21 +126,21 @@ class Editor extends PureComponent<IEditorProps, IEditorState> {
    */
   private handleSave = (value: Value) => {
     // Save the value to Local Storage.
-
+    if (!this.props.currentUser.isTeacher) {
+      return;
+    }
     const timestamp = moment(new Date());
-    const document = JSON.stringify(
-      this._addHeaderInformationToDocument(value, timestamp),
-    );
-    localStorage.setItem("document", document);
+    const document = this._addHeaderInformationToDocument(value, timestamp);
+
+    localStorage.setItem("document", JSON.stringify(document));
 
     // If a graphql server is available, update the document there
     if (this.props.apolloClient) {
-      this.props.apolloClient.mutate({
+      this.props.apolloClient.mutate<updateDocument, updateDocumentVariables>({
         mutation: UPDATE_DOCUMENT,
         variables: {
-          userIds: ["cjpcyqzsr00230798e5nwrwy5"],
           value: document,
-          documentId: "cjpcys08y002607989geb9ttk",
+          documentId: this.props.documentId,
         },
       });
     }
