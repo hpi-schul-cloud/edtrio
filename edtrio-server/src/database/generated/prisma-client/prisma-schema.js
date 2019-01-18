@@ -204,7 +204,6 @@ type Poll {
 type PollAnswer {
   id: ID!
   votes(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
-  poll: Poll!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -217,16 +216,11 @@ type PollAnswerConnection {
 
 input PollAnswerCreateInput {
   votes: UserCreateManyInput
-  poll: PollCreateOneWithoutAnswersInput!
 }
 
-input PollAnswerCreateManyWithoutPollInput {
-  create: [PollAnswerCreateWithoutPollInput!]
+input PollAnswerCreateManyInput {
+  create: [PollAnswerCreateInput!]
   connect: [PollAnswerWhereUniqueInput!]
-}
-
-input PollAnswerCreateWithoutPollInput {
-  votes: UserCreateManyInput
 }
 
 type PollAnswerEdge {
@@ -303,34 +297,33 @@ input PollAnswerSubscriptionWhereInput {
   NOT: [PollAnswerSubscriptionWhereInput!]
 }
 
-input PollAnswerUpdateInput {
+input PollAnswerUpdateDataInput {
   votes: UserUpdateManyInput
-  poll: PollUpdateOneRequiredWithoutAnswersInput
 }
 
-input PollAnswerUpdateManyWithoutPollInput {
-  create: [PollAnswerCreateWithoutPollInput!]
+input PollAnswerUpdateInput {
+  votes: UserUpdateManyInput
+}
+
+input PollAnswerUpdateManyInput {
+  create: [PollAnswerCreateInput!]
+  update: [PollAnswerUpdateWithWhereUniqueNestedInput!]
+  upsert: [PollAnswerUpsertWithWhereUniqueNestedInput!]
   delete: [PollAnswerWhereUniqueInput!]
   connect: [PollAnswerWhereUniqueInput!]
   disconnect: [PollAnswerWhereUniqueInput!]
-  update: [PollAnswerUpdateWithWhereUniqueWithoutPollInput!]
-  upsert: [PollAnswerUpsertWithWhereUniqueWithoutPollInput!]
   deleteMany: [PollAnswerScalarWhereInput!]
 }
 
-input PollAnswerUpdateWithoutPollDataInput {
-  votes: UserUpdateManyInput
+input PollAnswerUpdateWithWhereUniqueNestedInput {
+  where: PollAnswerWhereUniqueInput!
+  data: PollAnswerUpdateDataInput!
 }
 
-input PollAnswerUpdateWithWhereUniqueWithoutPollInput {
+input PollAnswerUpsertWithWhereUniqueNestedInput {
   where: PollAnswerWhereUniqueInput!
-  data: PollAnswerUpdateWithoutPollDataInput!
-}
-
-input PollAnswerUpsertWithWhereUniqueWithoutPollInput {
-  where: PollAnswerWhereUniqueInput!
-  update: PollAnswerUpdateWithoutPollDataInput!
-  create: PollAnswerCreateWithoutPollInput!
+  update: PollAnswerUpdateDataInput!
+  create: PollAnswerCreateInput!
 }
 
 input PollAnswerWhereInput {
@@ -351,7 +344,6 @@ input PollAnswerWhereInput {
   votes_every: UserWhereInput
   votes_some: UserWhereInput
   votes_none: UserWhereInput
-  poll: PollWhereInput
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -386,17 +378,7 @@ type PollConnection {
 input PollCreateInput {
   votingAllowed: Boolean!
   displayResults: Boolean!
-  answers: PollAnswerCreateManyWithoutPollInput
-}
-
-input PollCreateOneWithoutAnswersInput {
-  create: PollCreateWithoutAnswersInput
-  connect: PollWhereUniqueInput
-}
-
-input PollCreateWithoutAnswersInput {
-  votingAllowed: Boolean!
-  displayResults: Boolean!
+  answers: PollAnswerCreateManyInput
 }
 
 type PollEdge {
@@ -446,29 +428,12 @@ input PollSubscriptionWhereInput {
 input PollUpdateInput {
   votingAllowed: Boolean
   displayResults: Boolean
-  answers: PollAnswerUpdateManyWithoutPollInput
+  answers: PollAnswerUpdateManyInput
 }
 
 input PollUpdateManyMutationInput {
   votingAllowed: Boolean
   displayResults: Boolean
-}
-
-input PollUpdateOneRequiredWithoutAnswersInput {
-  create: PollCreateWithoutAnswersInput
-  update: PollUpdateWithoutAnswersDataInput
-  upsert: PollUpsertWithoutAnswersInput
-  connect: PollWhereUniqueInput
-}
-
-input PollUpdateWithoutAnswersDataInput {
-  votingAllowed: Boolean
-  displayResults: Boolean
-}
-
-input PollUpsertWithoutAnswersInput {
-  update: PollUpdateWithoutAnswersDataInput!
-  create: PollCreateWithoutAnswersInput!
 }
 
 input PollWhereInput {

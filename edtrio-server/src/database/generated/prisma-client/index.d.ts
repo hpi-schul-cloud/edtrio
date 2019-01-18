@@ -273,16 +273,20 @@ export type PollOrderByInput =
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export interface UserUpdateWithWhereUniqueNestedInput {
-  where: UserWhereUniqueInput;
-  data: UserUpdateDataInput;
+export interface UserCreateInput {
+  name: String;
+  isTeacher: Boolean;
 }
 
 export type DocumentWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
 
-export interface PollAnswerScalarWhereInput {
+export type PollAnswerWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface UserScalarWhereInput {
   id?: ID_Input;
   id_not?: ID_Input;
   id_in?: ID_Input[] | ID_Input;
@@ -297,6 +301,22 @@ export interface PollAnswerScalarWhereInput {
   id_not_starts_with?: ID_Input;
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
+  name?: String;
+  name_not?: String;
+  name_in?: String[] | String;
+  name_not_in?: String[] | String;
+  name_lt?: String;
+  name_lte?: String;
+  name_gt?: String;
+  name_gte?: String;
+  name_contains?: String;
+  name_not_contains?: String;
+  name_starts_with?: String;
+  name_not_starts_with?: String;
+  name_ends_with?: String;
+  name_not_ends_with?: String;
+  isTeacher?: Boolean;
+  isTeacher_not?: Boolean;
   createdAt?: DateTimeInput;
   createdAt_not?: DateTimeInput;
   createdAt_in?: DateTimeInput[] | DateTimeInput;
@@ -313,30 +333,34 @@ export interface PollAnswerScalarWhereInput {
   updatedAt_lte?: DateTimeInput;
   updatedAt_gt?: DateTimeInput;
   updatedAt_gte?: DateTimeInput;
-  AND?: PollAnswerScalarWhereInput[] | PollAnswerScalarWhereInput;
-  OR?: PollAnswerScalarWhereInput[] | PollAnswerScalarWhereInput;
-  NOT?: PollAnswerScalarWhereInput[] | PollAnswerScalarWhereInput;
+  AND?: UserScalarWhereInput[] | UserScalarWhereInput;
+  OR?: UserScalarWhereInput[] | UserScalarWhereInput;
+  NOT?: UserScalarWhereInput[] | UserScalarWhereInput;
 }
 
-export interface PollCreateInput {
-  votingAllowed: Boolean;
-  displayResults: Boolean;
-  answers?: PollAnswerCreateManyWithoutPollInput;
+export interface PollAnswerUpdateManyInput {
+  create?: PollAnswerCreateInput[] | PollAnswerCreateInput;
+  update?:
+    | PollAnswerUpdateWithWhereUniqueNestedInput[]
+    | PollAnswerUpdateWithWhereUniqueNestedInput;
+  upsert?:
+    | PollAnswerUpsertWithWhereUniqueNestedInput[]
+    | PollAnswerUpsertWithWhereUniqueNestedInput;
+  delete?: PollAnswerWhereUniqueInput[] | PollAnswerWhereUniqueInput;
+  connect?: PollAnswerWhereUniqueInput[] | PollAnswerWhereUniqueInput;
+  disconnect?: PollAnswerWhereUniqueInput[] | PollAnswerWhereUniqueInput;
+  deleteMany?: PollAnswerScalarWhereInput[] | PollAnswerScalarWhereInput;
 }
 
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
-
-export interface UserUpdateManyWithWhereNestedInput {
-  where: UserScalarWhereInput;
-  data: UserUpdateManyDataInput;
+export interface UserUpdateDataInput {
+  name?: String;
+  isTeacher?: Boolean;
 }
 
-export interface PollAnswerUpsertWithWhereUniqueWithoutPollInput {
-  where: PollAnswerWhereUniqueInput;
-  update: PollAnswerUpdateWithoutPollDataInput;
-  create: PollAnswerCreateWithoutPollInput;
+export interface PollUpdateInput {
+  votingAllowed?: Boolean;
+  displayResults?: Boolean;
+  answers?: PollAnswerUpdateManyInput;
 }
 
 export interface DocumentWhereInput {
@@ -392,8 +416,8 @@ export interface DocumentWhereInput {
   NOT?: DocumentWhereInput[] | DocumentWhereInput;
 }
 
-export interface PollAnswerUpdateWithoutPollDataInput {
-  votes?: UserUpdateManyInput;
+export interface PollAnswerCreateInput {
+  votes?: UserCreateManyInput;
 }
 
 export interface PollSubscriptionWhereInput {
@@ -407,19 +431,29 @@ export interface PollSubscriptionWhereInput {
   NOT?: PollSubscriptionWhereInput[] | PollSubscriptionWhereInput;
 }
 
-export interface PollAnswerUpdateWithWhereUniqueWithoutPollInput {
-  where: PollAnswerWhereUniqueInput;
-  data: PollAnswerUpdateWithoutPollDataInput;
-}
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
 
 export interface UserUpdateManyMutationInput {
   name?: String;
   isTeacher?: Boolean;
 }
 
+export interface PollAnswerCreateManyInput {
+  create?: PollAnswerCreateInput[] | PollAnswerCreateInput;
+  connect?: PollAnswerWhereUniqueInput[] | PollAnswerWhereUniqueInput;
+}
+
 export type PollWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
+
+export interface PollCreateInput {
+  votingAllowed: Boolean;
+  displayResults: Boolean;
+  answers?: PollAnswerCreateManyInput;
+}
 
 export interface PollAnswerWhereInput {
   id?: ID_Input;
@@ -439,7 +473,6 @@ export interface PollAnswerWhereInput {
   votes_every?: UserWhereInput;
   votes_some?: UserWhereInput;
   votes_none?: UserWhereInput;
-  poll?: PollWhereInput;
   createdAt?: DateTimeInput;
   createdAt_not?: DateTimeInput;
   createdAt_in?: DateTimeInput[] | DateTimeInput;
@@ -461,9 +494,181 @@ export interface PollAnswerWhereInput {
   NOT?: PollAnswerWhereInput[] | PollAnswerWhereInput;
 }
 
+export interface DocumentUpdateManyMutationInput {
+  value?: String;
+}
+
+export interface PollUpdateManyMutationInput {
+  votingAllowed?: Boolean;
+  displayResults?: Boolean;
+}
+
+export interface PollAnswerScalarWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  updatedAt?: DateTimeInput;
+  updatedAt_not?: DateTimeInput;
+  updatedAt_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_lt?: DateTimeInput;
+  updatedAt_lte?: DateTimeInput;
+  updatedAt_gt?: DateTimeInput;
+  updatedAt_gte?: DateTimeInput;
+  AND?: PollAnswerScalarWhereInput[] | PollAnswerScalarWhereInput;
+  OR?: PollAnswerScalarWhereInput[] | PollAnswerScalarWhereInput;
+  NOT?: PollAnswerScalarWhereInput[] | PollAnswerScalarWhereInput;
+}
+
+export interface PollAnswerUpdateDataInput {
+  votes?: UserUpdateManyInput;
+}
+
 export interface DocumentCreateInput {
   value: String;
   users?: UserCreateManyInput;
+}
+
+export interface UserSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: UserWhereInput;
+  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+}
+
+export interface UserCreateManyInput {
+  create?: UserCreateInput[] | UserCreateInput;
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+}
+
+export interface DocumentSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: DocumentWhereInput;
+  AND?: DocumentSubscriptionWhereInput[] | DocumentSubscriptionWhereInput;
+  OR?: DocumentSubscriptionWhereInput[] | DocumentSubscriptionWhereInput;
+  NOT?: DocumentSubscriptionWhereInput[] | DocumentSubscriptionWhereInput;
+}
+
+export interface UserUpdateManyDataInput {
+  name?: String;
+  isTeacher?: Boolean;
+}
+
+export interface PollAnswerUpdateInput {
+  votes?: UserUpdateManyInput;
+}
+
+export interface DocumentUpdateInput {
+  value?: String;
+  users?: UserUpdateManyInput;
+}
+
+export interface PollWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  votingAllowed?: Boolean;
+  votingAllowed_not?: Boolean;
+  displayResults?: Boolean;
+  displayResults_not?: Boolean;
+  answers_every?: PollAnswerWhereInput;
+  answers_some?: PollAnswerWhereInput;
+  answers_none?: PollAnswerWhereInput;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  updatedAt?: DateTimeInput;
+  updatedAt_not?: DateTimeInput;
+  updatedAt_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_lt?: DateTimeInput;
+  updatedAt_lte?: DateTimeInput;
+  updatedAt_gt?: DateTimeInput;
+  updatedAt_gte?: DateTimeInput;
+  AND?: PollWhereInput[] | PollWhereInput;
+  OR?: PollWhereInput[] | PollWhereInput;
+  NOT?: PollWhereInput[] | PollWhereInput;
+}
+
+export interface UserUpsertWithWhereUniqueNestedInput {
+  where: UserWhereUniqueInput;
+  update: UserUpdateDataInput;
+  create: UserCreateInput;
+}
+
+export interface UserUpdateManyWithWhereNestedInput {
+  where: UserScalarWhereInput;
+  data: UserUpdateManyDataInput;
+}
+
+export interface UserUpdateWithWhereUniqueNestedInput {
+  where: UserWhereUniqueInput;
+  data: UserUpdateDataInput;
+}
+
+export interface UserUpdateManyInput {
+  create?: UserCreateInput[] | UserCreateInput;
+  update?:
+    | UserUpdateWithWhereUniqueNestedInput[]
+    | UserUpdateWithWhereUniqueNestedInput;
+  upsert?:
+    | UserUpsertWithWhereUniqueNestedInput[]
+    | UserUpsertWithWhereUniqueNestedInput;
+  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  deleteMany?: UserScalarWhereInput[] | UserScalarWhereInput;
+  updateMany?:
+    | UserUpdateManyWithWhereNestedInput[]
+    | UserUpdateManyWithWhereNestedInput;
+}
+
+export interface PollAnswerUpsertWithWhereUniqueNestedInput {
+  where: PollAnswerWhereUniqueInput;
+  update: PollAnswerUpdateDataInput;
+  create: PollAnswerCreateInput;
 }
 
 export interface UserWhereInput {
@@ -518,73 +723,9 @@ export interface UserWhereInput {
   NOT?: UserWhereInput[] | UserWhereInput;
 }
 
-export interface UserCreateManyInput {
-  create?: UserCreateInput[] | UserCreateInput;
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-}
-
-export interface PollUpdateOneRequiredWithoutAnswersInput {
-  create?: PollCreateWithoutAnswersInput;
-  update?: PollUpdateWithoutAnswersDataInput;
-  upsert?: PollUpsertWithoutAnswersInput;
-  connect?: PollWhereUniqueInput;
-}
-
-export interface UserCreateInput {
-  name: String;
-  isTeacher: Boolean;
-}
-
-export interface PollCreateWithoutAnswersInput {
-  votingAllowed: Boolean;
-  displayResults: Boolean;
-}
-
-export interface DocumentUpdateInput {
-  value?: String;
-  users?: UserUpdateManyInput;
-}
-
-export type PollAnswerWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
-
-export interface UserUpdateManyInput {
-  create?: UserCreateInput[] | UserCreateInput;
-  update?:
-    | UserUpdateWithWhereUniqueNestedInput[]
-    | UserUpdateWithWhereUniqueNestedInput;
-  upsert?:
-    | UserUpsertWithWhereUniqueNestedInput[]
-    | UserUpsertWithWhereUniqueNestedInput;
-  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  deleteMany?: UserScalarWhereInput[] | UserScalarWhereInput;
-  updateMany?:
-    | UserUpdateManyWithWhereNestedInput[]
-    | UserUpdateManyWithWhereNestedInput;
-}
-
-export interface PollUpdateManyMutationInput {
-  votingAllowed?: Boolean;
-  displayResults?: Boolean;
-}
-
-export interface PollAnswerUpdateManyWithoutPollInput {
-  create?:
-    | PollAnswerCreateWithoutPollInput[]
-    | PollAnswerCreateWithoutPollInput;
-  delete?: PollAnswerWhereUniqueInput[] | PollAnswerWhereUniqueInput;
-  connect?: PollAnswerWhereUniqueInput[] | PollAnswerWhereUniqueInput;
-  disconnect?: PollAnswerWhereUniqueInput[] | PollAnswerWhereUniqueInput;
-  update?:
-    | PollAnswerUpdateWithWhereUniqueWithoutPollInput[]
-    | PollAnswerUpdateWithWhereUniqueWithoutPollInput;
-  upsert?:
-    | PollAnswerUpsertWithWhereUniqueWithoutPollInput[]
-    | PollAnswerUpsertWithWhereUniqueWithoutPollInput;
-  deleteMany?: PollAnswerScalarWhereInput[] | PollAnswerScalarWhereInput;
+export interface UserUpdateInput {
+  name?: String;
+  isTeacher?: Boolean;
 }
 
 export interface PollAnswerSubscriptionWhereInput {
@@ -598,188 +739,9 @@ export interface PollAnswerSubscriptionWhereInput {
   NOT?: PollAnswerSubscriptionWhereInput[] | PollAnswerSubscriptionWhereInput;
 }
 
-export interface UserUpdateDataInput {
-  name?: String;
-  isTeacher?: Boolean;
-}
-
-export interface UserUpdateInput {
-  name?: String;
-  isTeacher?: Boolean;
-}
-
-export interface UserUpsertWithWhereUniqueNestedInput {
-  where: UserWhereUniqueInput;
-  update: UserUpdateDataInput;
-  create: UserCreateInput;
-}
-
-export interface PollWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  votingAllowed?: Boolean;
-  votingAllowed_not?: Boolean;
-  displayResults?: Boolean;
-  displayResults_not?: Boolean;
-  answers_every?: PollAnswerWhereInput;
-  answers_some?: PollAnswerWhereInput;
-  answers_none?: PollAnswerWhereInput;
-  createdAt?: DateTimeInput;
-  createdAt_not?: DateTimeInput;
-  createdAt_in?: DateTimeInput[] | DateTimeInput;
-  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
-  createdAt_lt?: DateTimeInput;
-  createdAt_lte?: DateTimeInput;
-  createdAt_gt?: DateTimeInput;
-  createdAt_gte?: DateTimeInput;
-  updatedAt?: DateTimeInput;
-  updatedAt_not?: DateTimeInput;
-  updatedAt_in?: DateTimeInput[] | DateTimeInput;
-  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
-  updatedAt_lt?: DateTimeInput;
-  updatedAt_lte?: DateTimeInput;
-  updatedAt_gt?: DateTimeInput;
-  updatedAt_gte?: DateTimeInput;
-  AND?: PollWhereInput[] | PollWhereInput;
-  OR?: PollWhereInput[] | PollWhereInput;
-  NOT?: PollWhereInput[] | PollWhereInput;
-}
-
-export interface UserScalarWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  name?: String;
-  name_not?: String;
-  name_in?: String[] | String;
-  name_not_in?: String[] | String;
-  name_lt?: String;
-  name_lte?: String;
-  name_gt?: String;
-  name_gte?: String;
-  name_contains?: String;
-  name_not_contains?: String;
-  name_starts_with?: String;
-  name_not_starts_with?: String;
-  name_ends_with?: String;
-  name_not_ends_with?: String;
-  isTeacher?: Boolean;
-  isTeacher_not?: Boolean;
-  createdAt?: DateTimeInput;
-  createdAt_not?: DateTimeInput;
-  createdAt_in?: DateTimeInput[] | DateTimeInput;
-  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
-  createdAt_lt?: DateTimeInput;
-  createdAt_lte?: DateTimeInput;
-  createdAt_gt?: DateTimeInput;
-  createdAt_gte?: DateTimeInput;
-  updatedAt?: DateTimeInput;
-  updatedAt_not?: DateTimeInput;
-  updatedAt_in?: DateTimeInput[] | DateTimeInput;
-  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
-  updatedAt_lt?: DateTimeInput;
-  updatedAt_lte?: DateTimeInput;
-  updatedAt_gt?: DateTimeInput;
-  updatedAt_gte?: DateTimeInput;
-  AND?: UserScalarWhereInput[] | UserScalarWhereInput;
-  OR?: UserScalarWhereInput[] | UserScalarWhereInput;
-  NOT?: UserScalarWhereInput[] | UserScalarWhereInput;
-}
-
-export interface PollAnswerUpdateInput {
-  votes?: UserUpdateManyInput;
-  poll?: PollUpdateOneRequiredWithoutAnswersInput;
-}
-
-export interface PollUpdateInput {
-  votingAllowed?: Boolean;
-  displayResults?: Boolean;
-  answers?: PollAnswerUpdateManyWithoutPollInput;
-}
-
-export interface PollAnswerCreateInput {
-  votes?: UserCreateManyInput;
-  poll: PollCreateOneWithoutAnswersInput;
-}
-
-export interface PollAnswerCreateManyWithoutPollInput {
-  create?:
-    | PollAnswerCreateWithoutPollInput[]
-    | PollAnswerCreateWithoutPollInput;
-  connect?: PollAnswerWhereUniqueInput[] | PollAnswerWhereUniqueInput;
-}
-
-export interface PollAnswerCreateWithoutPollInput {
-  votes?: UserCreateManyInput;
-}
-
-export interface DocumentUpdateManyMutationInput {
-  value?: String;
-}
-
-export interface UserUpdateManyDataInput {
-  name?: String;
-  isTeacher?: Boolean;
-}
-
-export interface UserSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: UserWhereInput;
-  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
-  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
-  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
-}
-
-export interface PollCreateOneWithoutAnswersInput {
-  create?: PollCreateWithoutAnswersInput;
-  connect?: PollWhereUniqueInput;
-}
-
-export interface PollUpdateWithoutAnswersDataInput {
-  votingAllowed?: Boolean;
-  displayResults?: Boolean;
-}
-
-export interface PollUpsertWithoutAnswersInput {
-  update: PollUpdateWithoutAnswersDataInput;
-  create: PollCreateWithoutAnswersInput;
-}
-
-export interface DocumentSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: DocumentWhereInput;
-  AND?: DocumentSubscriptionWhereInput[] | DocumentSubscriptionWhereInput;
-  OR?: DocumentSubscriptionWhereInput[] | DocumentSubscriptionWhereInput;
-  NOT?: DocumentSubscriptionWhereInput[] | DocumentSubscriptionWhereInput;
+export interface PollAnswerUpdateWithWhereUniqueNestedInput {
+  where: PollAnswerWhereUniqueInput;
+  data: PollAnswerUpdateDataInput;
 }
 
 export interface NodeNode {
@@ -814,24 +776,28 @@ export interface UserPreviousValuesSubscription
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
-export interface PollAnswerPreviousValues {
+export interface User {
   id: ID_Output;
+  name: String;
+  isTeacher: Boolean;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
 }
 
-export interface PollAnswerPreviousValuesPromise
-  extends Promise<PollAnswerPreviousValues>,
-    Fragmentable {
+export interface UserPromise extends Promise<User>, Fragmentable {
   id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  isTeacher: () => Promise<Boolean>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
 }
 
-export interface PollAnswerPreviousValuesSubscription
-  extends Promise<AsyncIterator<PollAnswerPreviousValues>>,
+export interface UserSubscription
+  extends Promise<AsyncIterator<User>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  isTeacher: () => Promise<AsyncIterator<Boolean>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
@@ -880,7 +846,6 @@ export interface PollAnswerPromise extends Promise<PollAnswer>, Fragmentable {
       last?: Int;
     }
   ) => T;
-  poll: <T = PollPromise>() => T;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
 }
@@ -900,7 +865,6 @@ export interface PollAnswerSubscription
       last?: Int;
     }
   ) => T;
-  poll: <T = PollSubscription>() => T;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
@@ -953,6 +917,28 @@ export interface PollSubscription
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
+export interface PollAnswerPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+}
+
+export interface PollAnswerPreviousValuesPromise
+  extends Promise<PollAnswerPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+}
+
+export interface PollAnswerPreviousValuesSubscription
+  extends Promise<AsyncIterator<PollAnswerPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
 export interface BatchPayload {
   count: Long;
 }
@@ -967,32 +953,6 @@ export interface BatchPayloadSubscription
   extends Promise<AsyncIterator<BatchPayload>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Long>>;
-}
-
-export interface User {
-  id: ID_Output;
-  name: String;
-  isTeacher: Boolean;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-}
-
-export interface UserPromise extends Promise<User>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  isTeacher: () => Promise<Boolean>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-}
-
-export interface UserSubscription
-  extends Promise<AsyncIterator<User>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  isTeacher: () => Promise<AsyncIterator<Boolean>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
 export interface AggregateDocument {
@@ -1194,29 +1154,20 @@ export interface DocumentSubscriptionPayloadSubscription
   previousValues: <T = DocumentPreviousValuesSubscription>() => T;
 }
 
-export interface UserSubscriptionPayload {
-  mutation: MutationType;
-  node: User;
-  updatedFields: String[];
-  previousValues: UserPreviousValues;
+export interface AggregateUser {
+  count: Int;
 }
 
-export interface UserSubscriptionPayloadPromise
-  extends Promise<UserSubscriptionPayload>,
+export interface AggregateUserPromise
+  extends Promise<AggregateUser>,
     Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = UserPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = UserPreviousValuesPromise>() => T;
+  count: () => Promise<Int>;
 }
 
-export interface UserSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
+export interface AggregateUserSubscription
+  extends Promise<AsyncIterator<AggregateUser>>,
     Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = UserSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = UserPreviousValuesSubscription>() => T;
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface UserConnection {
@@ -1358,20 +1309,29 @@ export interface PollAnswerEdgeSubscription
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface AggregateUser {
-  count: Int;
+export interface UserSubscriptionPayload {
+  mutation: MutationType;
+  node: User;
+  updatedFields: String[];
+  previousValues: UserPreviousValues;
 }
 
-export interface AggregateUserPromise
-  extends Promise<AggregateUser>,
+export interface UserSubscriptionPayloadPromise
+  extends Promise<UserSubscriptionPayload>,
     Fragmentable {
-  count: () => Promise<Int>;
+  mutation: () => Promise<MutationType>;
+  node: <T = UserPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = UserPreviousValuesPromise>() => T;
 }
 
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUser>>,
+export interface UserSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = UserSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = UserPreviousValuesSubscription>() => T;
 }
 
 export interface PollConnection {
@@ -1421,23 +1381,23 @@ DateTime scalar output type, which is always a string
 */
 export type DateTimeOutput = string;
 
-export type Long = string;
-
 /*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
 */
 export type Int = number;
+
+export type Long = string;
+
+/*
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+*/
+export type String = string;
 
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
 */
 export type ID_Input = string | number;
 export type ID_Output = string;
-
-/*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
-*/
-export type String = string;
 
 /*
 The `Boolean` scalar type represents `true` or `false`.
