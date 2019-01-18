@@ -4,6 +4,10 @@
 **/*/node_modules
 /node_modules
 
+**/*/yarn.lock
+yarn.lock
+
+
 # docs
 /.docz
 # testing
@@ -11,6 +15,7 @@
 
 # production
 **/*/build
+
 
 # misc
 .DS_Store
@@ -24,3 +29,4 @@ yarn-debug.log*
 yarn-error.log*
 
 /.vscode
+**/.idea/*

@@ -44,11 +44,6 @@
     "react-scripts": "2.1.1",
     "typescript": "^3.2.1"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
     "linters": {
       "edtrio-client/src/**/*.{js,jsx}": [

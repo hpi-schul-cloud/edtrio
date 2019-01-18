@@ -93,11 +93,6 @@
     "tslint-react": "^3.6.0",
     "typescript": "^3.1.6"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
     "src/**/*.{js,jsx}": [
       "./node_modules/.bin/eslint --ext .jsx --ext .js ./",
