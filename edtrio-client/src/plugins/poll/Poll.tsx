@@ -38,15 +38,9 @@ export default class PollNode extends React.Component<{
         {({ locked, updateLocked, updateShowResults }) => (
           <div>
             <ListEle {...attributes}>{children}</ListEle>
-            <div className="right-align">
-              {this.mainActionButton(
-                editor,
-                node,
-                readOnly,
-                currentUser,
-                locked,
-              )}
-            </div>
+
+            {this.mainActionButton(editor, node, readOnly, currentUser, locked)}
+
             <br />
           </div>
         )}
