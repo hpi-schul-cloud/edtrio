@@ -58,7 +58,7 @@ export default class PollAnswerNode extends React.Component<{
       </PollStateContext.Consumer>
     );
   }
-  private calculateBackground(showResults) {
+  private calculateBackground(showResults: boolean) {
     if (!showResults) {
       return null;
     }

@@ -9,3 +9,10 @@ section.section {
 .align-right {
   text-align: right;
 }
+.align-center {
+  text-align: center;
+}
+
+.pollToggleLabel {
+  font-size: 18px !important;
+}
