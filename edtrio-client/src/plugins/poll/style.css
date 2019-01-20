@@ -11,4 +11,5 @@ section.section {
 }
 .pollToggleLabel {
   font-size: 18px !important;
+  color: rgb(92, 92, 92) !important;
 }
