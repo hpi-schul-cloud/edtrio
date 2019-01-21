@@ -10,6 +10,8 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import NativeSelect from "@material-ui/core/NativeSelect";
+import { List } from "immutable";
+import { Block, Editor, Node, Text } from "slate";
 
 const styles = theme => ({
   root: {
@@ -21,10 +23,36 @@ const styles = theme => ({
     minWidth: 200,
   },
 });
+function createNewAnswer(str) {
+  return Block.create({
+    type: "poll_answer",
+    nodes: List([Text.create(str)]),
+  });
+}
+function getFeedbackTemplate() {
+  return Block.create({
+    type: "poll",
+    nodes: List([
+      Block.create({
+        type: "poll_question",
+        nodes: List([Text.create("Was kann cih besser machen?")]),
+      }),
+      Block.create({
+        type: "poll_answergroup",
+        data: { selected_answer: -1 },
+        nodes: List([
+          createNewAnswer("Mehr Zeit"),
+          createNewAnswer("Mehr Infos"),
+        ]),
+      }),
+    ]),
+  });
+}
 
 class NativeSelects extends React.Component {
   state = {
     labelWidth: 0,
+    template: undefined,
   };
 
   componentDidMount() {
@@ -33,12 +61,14 @@ class NativeSelects extends React.Component {
     });
   }
 
-  handleChange = name => event => {
+  handleChange = (name, editor, pollkey) => event => {
     this.setState({ [name]: event.target.value });
+    editor.replaceNodeByKey(pollkey, getFeedbackTemplate());
   };
 
   render() {
-    const { classes, parent } = this.props;
+    const { classes, parent, editor, pollkey } = this.props;
+
     const name = `dropdown-template-${parent.key}`;
     return (
       <div className={classes.root}>
@@ -54,18 +84,18 @@ class NativeSelects extends React.Component {
           <Select
             native
             value={this.state.age}
-            onChange={this.handleChange("age")}
+            onChange={this.handleChange("template", editor, pollkey)}
             input={
               <OutlinedInput
-                name="age"
+                name="template"
                 labelWidth={this.state.labelWidth}
                 id={name}
               />
             }
           >
             <option value="" />
-            <option value={10}>Feedback</option>
-            <option value={20}>Bewertung</option>
+            <option value="feedback">Feedback</option>
+            <option value="bewert">Bewertung</option>
           </Select>
         </FormControl>
       </div>
