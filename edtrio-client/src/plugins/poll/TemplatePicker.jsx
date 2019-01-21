@@ -2,17 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import ReactDOM from "react-dom";
 import { withStyles } from "@material-ui/core/styles";
-import Input from "@material-ui/core/Input";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
-import FilledInput from "@material-ui/core/FilledInput";
 import InputLabel from "@material-ui/core/InputLabel";
-import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import NativeSelect from "@material-ui/core/NativeSelect";
 import { List } from "immutable";
 import { Block, Editor, Node, Text } from "slate";
-import { PassThrough } from "stream";
 
 const styles = theme => ({
   root: {
@@ -73,6 +68,7 @@ function getBTemplate() {
     ]),
   });
 }
+
 function getEmptyTemplate() {
   return Block.create({
     type: "poll",
@@ -90,7 +86,7 @@ function getEmptyTemplate() {
   });
 }
 
-class NativeSelects extends React.Component {
+class TemplatePicker extends React.Component {
   state = {
     labelWidth: 0,
     template: undefined,
@@ -151,8 +147,8 @@ class NativeSelects extends React.Component {
   }
 }
 
-NativeSelects.propTypes = {
+TemplatePicker.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(NativeSelects);
+export default withStyles(styles)(TemplatePicker);
