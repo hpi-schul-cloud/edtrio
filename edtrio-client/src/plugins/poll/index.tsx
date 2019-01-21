@@ -75,10 +75,11 @@ const RenderPollNode = {
                 node={node}
                 selected={isFocused}
                 editor={editor}
-                {...attributes}
+                parent={parent}
                 next={next}
                 readOnly={readOnly}
                 currentUser={currentUser}
+                {...attributes}
               >
                 {children}
               </PollNode>

@@ -38,8 +38,8 @@ class NativeSelects extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
-
+    const { classes, parent } = this.props;
+    const name = `dropdown-template-${parent.key}`;
     return (
       <div className={classes.root}>
         <FormControl variant="outlined" className={classes.formControl}>
@@ -47,7 +47,7 @@ class NativeSelects extends React.Component {
             ref={ref => {
               this.InputLabelRef = ref;
             }}
-            htmlFor="outlined-age-native-simple"
+            htmlFor={name}
           >
             Vorlage
           </InputLabel>
@@ -59,7 +59,7 @@ class NativeSelects extends React.Component {
               <OutlinedInput
                 name="age"
                 labelWidth={this.state.labelWidth}
-                id="outlined-age-native-simple"
+                id={name}
               />
             }
           >

@@ -23,6 +23,7 @@ export default class PollNode extends React.Component<{
   node: any;
   editor: any;
   currentUser: any;
+  parent: any;
 }> {
   public render() {
     const {
@@ -31,6 +32,7 @@ export default class PollNode extends React.Component<{
       editor,
       readOnly,
       currentUser,
+      parent,
       ...attributes
     } = this.props;
 
@@ -40,7 +42,14 @@ export default class PollNode extends React.Component<{
           <div>
             <ListEle {...attributes}>{children}</ListEle>
 
-            {this.mainActionButton(editor, node, readOnly, currentUser, locked)}
+            {this.mainActionButton(
+              editor,
+              node,
+              readOnly,
+              currentUser,
+              locked,
+              parent,
+            )}
 
             <br />
           </div>
@@ -55,19 +64,20 @@ export default class PollNode extends React.Component<{
     readOnly: boolean,
     currentUser: any,
     locked: boolean,
+    parent: Block,
   ) {
     return readOnly
       ? currentUser.isTeacher
         ? this.controlToggles()
         : this.sendAnswerButton(locked)
-      : this.addAnswerButton(editor, node);
+      : this.addAnswerButton(editor, node, parent);
   }
 
-  private addAnswerButton(editor: Editor, node: any) {
+  private addAnswerButton(editor: Editor, node: any, parent: Block) {
     return (
       <Grid container={true} alignItems="center" justify="space-around">
         <Grid item={true}>
-          <Dropdown />
+          <Dropdown parent={parent} />
         </Grid>
         <Grid item={true}>
           <Button
