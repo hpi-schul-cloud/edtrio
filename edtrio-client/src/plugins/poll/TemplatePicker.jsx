@@ -53,7 +53,7 @@ function getFeedbackTemplate() {
     ]),
   });
 }
-function getBTemplate() {
+function getGradeMeTemplate() {
   return Block.create({
     type: "poll",
     nodes: List([
@@ -111,7 +111,7 @@ class TemplatePicker extends React.Component {
     if (event.target.value === "feedback") {
       editor.replaceNodeByKey(pollkey, getFeedbackTemplate());
     } else if (event.target.value === "rate") {
-      editor.replaceNodeByKey(pollkey, getBTemplate());
+      editor.replaceNodeByKey(pollkey, getGradeMeTemplate());
     } else if (event.target.value === "empty") {
       editor.replaceNodeByKey(pollkey, getEmptyTemplate());
     }
