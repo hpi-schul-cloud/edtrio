@@ -81,6 +81,7 @@ export default class PollNode extends React.Component<{
         </Grid>
         <Grid item={true}>
           <Button
+            style={{ width: "200px", height: "56px" }}
             variant="outlined"
             onClick={event => this.onClickAddAnswerButton(event, editor, node)}
           >
