@@ -8,6 +8,8 @@ import { List } from "immutable";
 import React from "react";
 import { Block, Editor, Node, Text } from "slate";
 import { PollStateContext } from "../../context/PollStateContext";
+import PollToggles from "./PollToggles";
+
 export function createNewAnswer() {
   return Block.create({
     type: "poll_answer",
@@ -36,17 +38,9 @@ export default class PollNode extends React.Component<{
         {({ locked, updateLocked, updateShowResults }) => (
           <div>
             <ListEle {...attributes}>{children}</ListEle>
-            <div className="right-align">
-              {this.mainActionButton(
-                editor,
-                node,
-                readOnly,
-                currentUser,
-                locked,
-                updateLocked,
-                updateShowResults,
-              )}
-            </div>
+
+            {this.mainActionButton(editor, node, readOnly, currentUser, locked)}
+
             <br />
           </div>
         )}
@@ -60,14 +54,10 @@ export default class PollNode extends React.Component<{
     readOnly: boolean,
     currentUser: any,
     locked: boolean,
-    updateLocked: Function,
-    updateShowResults: Function,
   ) {
     return readOnly
       ? currentUser.isTeacher
-        ? locked
-          ? this.startPollButton(updateLocked)
-          : this.showPollResultButton(updateShowResults)
+        ? this.controlToggles()
         : this.sendAnswerButton(locked)
       : this.addAnswerButton(editor, node);
   }
@@ -83,6 +73,10 @@ export default class PollNode extends React.Component<{
         &nbsp;Antwort hinzufügen
       </Button>
     );
+  }
+
+  private controlToggles() {
+    return <PollToggles />;
   }
 
   private sendAnswerButton(locked: boolean) {
