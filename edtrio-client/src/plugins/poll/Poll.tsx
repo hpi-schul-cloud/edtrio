@@ -1,6 +1,6 @@
 import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
 import ListEle from "@material-ui/core/List";
-import RadioGroup from "@material-ui/core/RadioGroup";
 import AddIcon from "@material-ui/icons/Add";
 import PollIcon from "@material-ui/icons/Poll";
 import SendIcon from "@material-ui/icons/Send";
@@ -9,6 +9,7 @@ import React from "react";
 import { Block, Editor, Node, Text } from "slate";
 import { PollStateContext } from "../../context/PollStateContext";
 import PollToggles from "./PollToggles";
+import TemplatePicker from "./TemplatePicker";
 
 export function createNewAnswer() {
   return Block.create({
@@ -59,19 +60,26 @@ export default class PollNode extends React.Component<{
       ? currentUser.isTeacher
         ? this.controlToggles()
         : this.sendAnswerButton(locked)
-      : this.addAnswerButton(editor, node);
+      : this.addEditToolbar(editor, node);
   }
 
-  private addAnswerButton(editor: Editor, node: any) {
+  private addEditToolbar(editor: Editor, node: any) {
     return (
-      <Button
-        style={{ float: "right" }}
-        variant="outlined"
-        onClick={event => this.onClickAddAnswerButton(event, editor, node)}
-      >
-        <AddIcon />
-        &nbsp;Antwort hinzufügen
-      </Button>
+      <Grid container={true} alignItems="center" justify="space-around">
+        <Grid item={true}>
+          <TemplatePicker editor={editor} pollkey={node.key} />
+        </Grid>
+        <Grid item={true}>
+          <Button
+            style={{ width: "200px", height: "56px" }}
+            variant="outlined"
+            onClick={event => this.onClickAddAnswerButton(event, editor, node)}
+          >
+            <AddIcon />
+            &nbsp;Antwort hinzufügen
+          </Button>
+        </Grid>
+      </Grid>
     );
   }
 
@@ -89,32 +97,6 @@ export default class PollNode extends React.Component<{
       >
         <SendIcon />
         &nbsp;Antwort senden
-      </Button>
-    );
-  }
-
-  private startPollButton(updateLocked: Function) {
-    return (
-      <Button
-        style={{ float: "right" }}
-        variant="outlined"
-        onClick={event => updateLocked(false)}
-      >
-        <PollIcon />
-        &nbsp;Umfrage starten
-      </Button>
-    );
-  }
-
-  private showPollResultButton(updateShowResults) {
-    return (
-      <Button
-        style={{ float: "right" }}
-        variant="outlined"
-        onClick={event => updateShowResults(true)}
-      >
-        <SendIcon />
-        &nbsp;Ergebnisse freischalten
       </Button>
     );
   }
