@@ -130,6 +130,15 @@ const RenderPollNode = {
     if (node.text !== "") {
       return next();
     }
+    function getPlaceholderTextByNodeType(type: string) {
+      if (type === "poll_answer") {
+        return "Hier eine Antwort eingeben...";
+      }
+      if (type === "poll_question") {
+        return "Hier Frage eingeben...";
+      }
+      return "Hier Text eingeben...";
+    }
 
     const first = node.getFirstText();
     const last = node.getLastText();
@@ -137,13 +146,12 @@ const RenderPollNode = {
       return next();
     }
     const others = next();
-
     const decoration = {
       anchor: { key: first.key, offset: 0 },
       focus: { key: last.key, offset: last.text.length },
       mark: {
         type: "placeholder",
-        data: { placeholder: "Text eingeben..." },
+        data: { placeholder: getPlaceholderTextByNodeType(node.type) },
       },
     };
 
