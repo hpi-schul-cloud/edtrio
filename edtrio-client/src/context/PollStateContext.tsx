@@ -1,24 +1,30 @@
 import React, { Component, createContext } from "react";
 
+interface IPollStateProviderState {
+  id: string;
+  updateId: (id: string) => void;
+  answers: any[];
+  votingAllowed: boolean;
+  updateVotingAllowed: (votingAllowed: boolean) => void;
+  displayResults: boolean;
+  updateDisplayResults: (displayResults: boolean) => void;
+  selectedAnswer: any;
+  updateSelectedAnswer: (selectedAnswer: any) => void;
+}
+
 export const PollStateContext = createContext<IPollStateProviderState>({
+  id: "",
+  updateId: (id: string) => {},
+  answers: [],
+  votingAllowed: false,
+  updateVotingAllowed: (votingAllowed: boolean) => {},
+  displayResults: false,
+  updateDisplayResults: (displayResults: boolean) => {},
   selectedAnswer: null,
   updateSelectedAnswer: (selectedAnswer: any) => {},
-  locked: true,
-  updateLocked: (locked: boolean) => {},
-  showResults: false,
-  updateShowResults: (showresults: boolean) => {},
 });
 
 interface IPollStateProviderProps {}
-
-interface IPollStateProviderState {
-  selectedAnswer: any;
-  updateSelectedAnswer: (selectedAnswer: any) => void;
-  locked: boolean;
-  updateLocked: (locked: boolean) => void;
-  showResults: boolean;
-  updateShowResults: (locked: boolean) => void;
-}
 
 export class PollStateProvider extends Component<
   IPollStateProviderProps,
@@ -28,25 +34,32 @@ export class PollStateProvider extends Component<
     super(props);
 
     this.state = {
+      id: "",
+      updateId: this.updateId,
+      answers: [],
       selectedAnswer: null,
       updateSelectedAnswer: this.updateSelectedAnswer,
-      locked: true,
-      updateLocked: this.updateLocked,
-      showResults: false,
-      updateShowResults: this.updateShowResults,
+      votingAllowed: false,
+      updateVotingAllowed: this.updateVotingAllowed,
+      displayResults: false,
+      updateDisplayResults: this.updateDisplayResults,
     };
   }
+
+  public updateId = (id: string) => {
+    this.setState({ id });
+  };
 
   public updateSelectedAnswer = (newSelectedAnswer: any) => {
     this.setState({ selectedAnswer: newSelectedAnswer });
   };
 
-  public updateLocked = (locked: boolean) => {
-    this.setState({ locked });
+  public updateVotingAllowed = (votingAllowed: boolean) => {
+    this.setState({ votingAllowed });
   };
 
-  public updateShowResults = (showResults: boolean) => {
-    this.setState({ showResults });
+  public updateDisplayResults = (displayResults: boolean) => {
+    this.setState({ displayResults });
   };
 
   public render() {

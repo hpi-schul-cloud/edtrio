@@ -77,24 +77,25 @@ const resolvers = {
       });
     },
     async createPollAnswer(root: any, args: any, context: ContextType) {
-      const newAnswer = await context.prisma.createPollAnswer({
-        poll: {
-          connect: { id: args.pollId },
-        },
-      });
-      const pollAnswers = await context.prisma
-        .poll({ id: args.pollId })
-        .answers();
-      pollAnswers.push(newAnswer);
+      console.log(args);
+      // const newAnswer = await context.prisma.createPollAnswer({
+      //   poll: {
+      //     connect: args.pollId,
+      //   },
+      // });
+      // const pollAnswers = await context.prisma
+      //   .poll({ id: args.pollId })
+      //   .answers();
+      // pollAnswers.push(newAnswer);
 
-      return context.prisma.updatePoll({
-        where: { id: args.pollId },
-        data: {
-          answers: {
-            connect: pollAnswers.map(answer => ({ id: answer.id })),
-          },
-        },
-      });
+      // return context.prisma.updatePoll({
+      //   where: { id: args.pollId },
+      //   data: {
+      //     answers: {
+      //       connect: pollAnswers.map(answer => ({ id: answer.id })),
+      //     },
+      //   },
+      // });
     },
     async addUserToPollAnswer(root: any, args: any, context: ContextType) {
       const users = await context.prisma
@@ -103,7 +104,7 @@ const resolvers = {
       const userIds = users.map(user => ({ id: user.id }));
       userIds.push({ id: args.userId });
 
-      context.valueChangedPubSub.publish(`POLL_ANSWER_CHANGED_${args.pollId}`, {
+      context.valueChangedPubSub.publish(`POLL_CHANGED_${args.pollId}`, {
         valueChanged: args,
       });
 
@@ -124,9 +125,9 @@ const resolvers = {
         return context.valueChangedPubSub.asyncIterator(channel);
       },
     },
-    pollAnswerChanged: {
+    pollChanged: {
       subscribe: (parent: any, args: any, context: ContextType, info: any) => {
-        const channel = `POLL_ANSWER_CHANGED_${args.pollId}`;
+        const channel = `POLL_CHANGED_${args.pollId}`;
         return context.valueChangedPubSub.asyncIterator(channel);
       },
     },

@@ -9,6 +9,7 @@ import RadioButtonUncheckedIcon from "@material-ui/icons/RadioButtonUnchecked";
 import React from "react";
 import { Block, Editor } from "slate";
 import { PollStateContext } from "../../context/PollStateContext";
+import { testPollAnswerNodeValidity } from "./helpers/validity";
 
 export default class PollAnswerNode extends React.Component<{
   readOnly: boolean;
@@ -16,6 +17,20 @@ export default class PollAnswerNode extends React.Component<{
   editor: Editor;
   parent: Block;
 }> {
+  public componentDidMount() {
+    // check for correct node creation
+    setTimeout(
+      () =>
+        testPollAnswerNodeValidity(
+          this.props.editor,
+          this.props.node,
+          this.context,
+          this.props.parent,
+        ),
+      200,
+    );
+  }
+
   public render() {
     const {
       children,
@@ -37,9 +52,9 @@ export default class PollAnswerNode extends React.Component<{
     const name = `answer-radio-button-${parent.key}`;
     return (
       <PollStateContext.Consumer>
-        {({ selectedAnswer, updateSelectedAnswer, showResults }) => (
+        {({ selectedAnswer, updateSelectedAnswer, displayResults }) => (
           <ListItem
-            style={this.calculateBackground(showResults)}
+            style={this.calculateBackground(displayResults)}
             button={true}
             divider={true}
             onClick={() => updateSelectedAnswer(node.key)}
@@ -58,8 +73,8 @@ export default class PollAnswerNode extends React.Component<{
       </PollStateContext.Consumer>
     );
   }
-  private calculateBackground(showResults: boolean) {
-    if (!showResults) {
+  private calculateBackground(displayResults: boolean) {
+    if (!displayResults) {
       return null;
     }
     const percentage = Math.floor(Math.random() * 100);
@@ -105,3 +120,4 @@ export default class PollAnswerNode extends React.Component<{
     this.deleteNode(editor, node);
   }
 }
+PollAnswerNode.contextType = PollStateContext;

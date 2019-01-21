@@ -29,5 +29,5 @@ type Mutation {
 
 type Subscription {
   valueChanged(documentId: String!): Document
-  pollAnswerChanged(pollId: String!): PollAnswer
+  pollChanged(pollId: String!): Poll
 }
