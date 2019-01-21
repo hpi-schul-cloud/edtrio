@@ -1,6 +1,6 @@
 import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
 import ListEle from "@material-ui/core/List";
-import RadioGroup from "@material-ui/core/RadioGroup";
 import AddIcon from "@material-ui/icons/Add";
 import PollIcon from "@material-ui/icons/Poll";
 import SendIcon from "@material-ui/icons/Send";
@@ -8,6 +8,7 @@ import { List } from "immutable";
 import React from "react";
 import { Block, Editor, Node, Text } from "slate";
 import { PollStateContext } from "../../context/PollStateContext";
+import Dropdown from "./Dropdown";
 import PollToggles from "./PollToggles";
 
 export function createNewAnswer() {
@@ -64,14 +65,20 @@ export default class PollNode extends React.Component<{
 
   private addAnswerButton(editor: Editor, node: any) {
     return (
-      <Button
-        style={{ float: "right" }}
-        variant="outlined"
-        onClick={event => this.onClickAddAnswerButton(event, editor, node)}
-      >
-        <AddIcon />
-        &nbsp;Antwort hinzufügen
-      </Button>
+      <Grid container={true} alignItems="center" justify="space-around">
+        <Grid item={true}>
+          <Dropdown />
+        </Grid>
+        <Grid item={true}>
+          <Button
+            variant="outlined"
+            onClick={event => this.onClickAddAnswerButton(event, editor, node)}
+          >
+            <AddIcon />
+            &nbsp;Antwort hinzufügen
+          </Button>
+        </Grid>
+      </Grid>
     );
   }
 
@@ -89,32 +96,6 @@ export default class PollNode extends React.Component<{
       >
         <SendIcon />
         &nbsp;Antwort senden
-      </Button>
-    );
-  }
-
-  private startPollButton(updateLocked: Function) {
-    return (
-      <Button
-        style={{ float: "right" }}
-        variant="outlined"
-        onClick={event => updateLocked(false)}
-      >
-        <PollIcon />
-        &nbsp;Umfrage starten
-      </Button>
-    );
-  }
-
-  private showPollResultButton(updateShowResults) {
-    return (
-      <Button
-        style={{ float: "right" }}
-        variant="outlined"
-        onClick={event => updateShowResults(true)}
-      >
-        <SendIcon />
-        &nbsp;Ergebnisse freischalten
       </Button>
     );
   }
