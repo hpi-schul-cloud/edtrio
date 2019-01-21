@@ -8,8 +8,8 @@ import { List } from "immutable";
 import React from "react";
 import { Block, Editor, Node, Text } from "slate";
 import { PollStateContext } from "../../context/PollStateContext";
-import Dropdown from "./Dropdown";
 import PollToggles from "./PollToggles";
+import TemplatePicker from "./TemplatePicker";
 
 export function createNewAnswer() {
   return Block.create({
@@ -70,14 +70,14 @@ export default class PollNode extends React.Component<{
       ? currentUser.isTeacher
         ? this.controlToggles()
         : this.sendAnswerButton(locked)
-      : this.addAnswerButton(editor, node, parent);
+      : this.addEditToolbar(editor, node, parent);
   }
 
-  private addAnswerButton(editor: Editor, node: any, parent: Block) {
+  private addEditToolbar(editor: Editor, node: any, parent: Block) {
     return (
       <Grid container={true} alignItems="center" justify="space-around">
         <Grid item={true}>
-          <Dropdown parent={parent} editor={editor} pollkey={node.key} />
+          <TemplatePicker parent={parent} editor={editor} pollkey={node.key} />
         </Grid>
         <Grid item={true}>
           <Button
