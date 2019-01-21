@@ -102,7 +102,7 @@ class TemplatePicker extends React.Component {
     this.setState({ [name]: event.target.value });
     if (event.target.value === "feedback") {
       editor.replaceNodeByKey(pollkey, getFeedbackTemplate());
-    } else if (event.target.value === "bewert") {
+    } else if (event.target.value === "rate") {
       editor.replaceNodeByKey(pollkey, getBTemplate());
     } else if (event.target.value === "empty") {
       editor.replaceNodeByKey(pollkey, getEmptyTemplate());
@@ -139,7 +139,7 @@ class TemplatePicker extends React.Component {
             <option value="" />
             <option value="empty">Leer</option>
             <option value="feedback">Feedback</option>
-            <option value="bewert">Bewertung</option>
+            <option value="rate">Bewertung</option>
           </Select>
         </FormControl>
       </div>
