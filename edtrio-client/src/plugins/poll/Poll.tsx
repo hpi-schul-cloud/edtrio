@@ -65,13 +65,18 @@ export default class PollNode extends React.Component<{
 
   private addEditToolbar(editor: Editor, node: any) {
     return (
-      <Grid container={true} alignItems="center" justify="space-around">
+      <Grid
+        style={{ paddingLeft: "22px" }}
+        container={true}
+        alignItems="center"
+        justify="space-between"
+      >
         <Grid item={true}>
           <TemplatePicker editor={editor} pollkey={node.key} />
         </Grid>
         <Grid item={true}>
           <Button
-            style={{ width: "200px", height: "56px" }}
+            style={{ width: "250px", height: "56px" }}
             variant="outlined"
             onClick={event => this.onClickAddAnswerButton(event, editor, node)}
           >
@@ -96,7 +101,7 @@ export default class PollNode extends React.Component<{
         onClick={event => this.onClickSendAnswerButton()}
       >
         <SendIcon />
-        &nbsp;Antwort senden
+        &nbsp;&nbsp;&nbsp;Antwort senden
       </Button>
     );
   }
