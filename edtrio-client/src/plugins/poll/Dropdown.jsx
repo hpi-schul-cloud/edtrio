@@ -12,6 +12,7 @@ import Select from "@material-ui/core/Select";
 import NativeSelect from "@material-ui/core/NativeSelect";
 import { List } from "immutable";
 import { Block, Editor, Node, Text } from "slate";
+import { PassThrough } from "stream";
 
 const styles = theme => ({
   root: {
@@ -29,13 +30,14 @@ function createNewAnswer(str) {
     nodes: List([Text.create(str)]),
   });
 }
+
 function getFeedbackTemplate() {
   return Block.create({
     type: "poll",
     nodes: List([
       Block.create({
         type: "poll_question",
-        nodes: List([Text.create("Was kann cih besser machen?")]),
+        nodes: List([Text.create("Was kann ich besser machen?")]),
       }),
       Block.create({
         type: "poll_answergroup",
@@ -44,6 +46,45 @@ function getFeedbackTemplate() {
           createNewAnswer("Mehr Zeit"),
           createNewAnswer("Mehr Infos"),
         ]),
+      }),
+    ]),
+  });
+}
+function getBTemplate() {
+  return Block.create({
+    type: "poll",
+    nodes: List([
+      Block.create({
+        type: "poll_question",
+        nodes: List([Text.create("Wie würdest du die Stunde bewerten?")]),
+      }),
+      Block.create({
+        type: "poll_answergroup",
+        data: { selected_answer: -1 },
+        nodes: List([
+          createNewAnswer("1"),
+          createNewAnswer("2"),
+          createNewAnswer("3"),
+          createNewAnswer("4"),
+          createNewAnswer("5"),
+          createNewAnswer("6"),
+        ]),
+      }),
+    ]),
+  });
+}
+function getEmptyTemplate() {
+  return Block.create({
+    type: "poll",
+    nodes: List([
+      Block.create({
+        type: "poll_question",
+        nodes: List([Text.create("")]),
+      }),
+      Block.create({
+        type: "poll_answergroup",
+        data: { selected_answer: -1 },
+        nodes: List([createNewAnswer(""), createNewAnswer("")]),
       }),
     ]),
   });
@@ -63,7 +104,13 @@ class NativeSelects extends React.Component {
 
   handleChange = (name, editor, pollkey) => event => {
     this.setState({ [name]: event.target.value });
-    editor.replaceNodeByKey(pollkey, getFeedbackTemplate());
+    if (event.target.value === "feedback") {
+      editor.replaceNodeByKey(pollkey, getFeedbackTemplate());
+    } else if (event.target.value === "bewert") {
+      editor.replaceNodeByKey(pollkey, getBTemplate());
+    } else if (event.target.value === "empty") {
+      editor.replaceNodeByKey(pollkey, getEmptyTemplate());
+    }
   };
 
   render() {
@@ -94,6 +141,7 @@ class NativeSelects extends React.Component {
             }
           >
             <option value="" />
+            <option value="empty">Leer</option>
             <option value="feedback">Feedback</option>
             <option value="bewert">Bewertung</option>
           </Select>
