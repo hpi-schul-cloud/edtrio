@@ -59,7 +59,9 @@ function getGradeMeTemplate() {
     nodes: List([
       Block.create({
         type: "poll_question",
-        nodes: List([Text.create("Wie würdest du die Stunde bewerten?")]),
+        nodes: List([
+          Text.create("Wie würdest du die Stunde in Schulnoten bewerten?"),
+        ]),
       }),
       Block.create({
         type: "poll_answergroup",
@@ -118,9 +120,9 @@ class TemplatePicker extends React.Component {
   };
 
   render() {
-    const { classes, parent, editor, pollkey } = this.props;
+    const { classes, editor, pollkey } = this.props;
 
-    const name = `dropdown-template-${parent.key}`;
+    const name = `dropdown-template-${pollkey}`;
     return (
       <div className={classes.root}>
         <FormControl variant="outlined" className={classes.formControl}>

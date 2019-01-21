@@ -75,7 +75,6 @@ const RenderPollNode = {
                 node={node}
                 selected={isFocused}
                 editor={editor}
-                parent={parent}
                 next={next}
                 readOnly={readOnly}
                 currentUser={currentUser}
