@@ -77,25 +77,24 @@ const resolvers = {
       });
     },
     async createPollAnswer(root: any, args: any, context: ContextType) {
-      console.log(args);
-      // const newAnswer = await context.prisma.createPollAnswer({
-      //   poll: {
-      //     connect: args.pollId,
-      //   },
-      // });
-      // const pollAnswers = await context.prisma
-      //   .poll({ id: args.pollId })
-      //   .answers();
-      // pollAnswers.push(newAnswer);
+      const newAnswer = await context.prisma.createPollAnswer({
+        poll: {
+          connect: args.pollId,
+        },
+      });
+      const pollAnswers = await context.prisma
+        .poll({ id: args.pollId })
+        .answers();
+      pollAnswers.push(newAnswer);
 
-      // return context.prisma.updatePoll({
-      //   where: { id: args.pollId },
-      //   data: {
-      //     answers: {
-      //       connect: pollAnswers.map(answer => ({ id: answer.id })),
-      //     },
-      //   },
-      // });
+      return context.prisma.updatePoll({
+        where: { id: args.pollId },
+        data: {
+          answers: {
+            connect: pollAnswers.map(answer => ({ id: answer.id })),
+          },
+        },
+      });
     },
     async addUserToPollAnswer(root: any, args: any, context: ContextType) {
       const users = await context.prisma
