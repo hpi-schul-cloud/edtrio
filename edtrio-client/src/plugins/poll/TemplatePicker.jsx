@@ -32,14 +32,22 @@ function getFeedbackTemplate() {
     nodes: List([
       Block.create({
         type: "poll_question",
-        nodes: List([Text.create("Was kann ich besser machen?")]),
+        nodes: List([
+          Text.create("Was hat dir in der heutigen Stunde am meisten gefehlt?"),
+        ]),
       }),
       Block.create({
         type: "poll_answergroup",
         data: { selected_answer: -1 },
         nodes: List([
-          createNewAnswer("Mehr Zeit"),
-          createNewAnswer("Mehr Infos"),
+          createNewAnswer("Nichts! Ich bin zufrieden"),
+          createNewAnswer("Zeit. Ich hätte gerne mehr Zeit gehabt"),
+          createNewAnswer("Erklärung. Ich habe kaum etwas verstanden"),
+          createNewAnswer("Vielfalt. Irgendwie war es langweilig heute"),
+          createNewAnswer("Ruhe. Es war viel zu laut"),
+          createNewAnswer(
+            "Feedback. Ich brauche mehr Rückmeldung zu meiner Arbeit",
+          ),
         ]),
       }),
     ]),
