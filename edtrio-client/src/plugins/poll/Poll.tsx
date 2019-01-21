@@ -77,7 +77,7 @@ export default class PollNode extends React.Component<{
     return (
       <Grid container={true} alignItems="center" justify="space-around">
         <Grid item={true}>
-          <Dropdown parent={parent} />
+          <Dropdown parent={parent} editor={editor} pollkey={node.key} />
         </Grid>
         <Grid item={true}>
           <Button
