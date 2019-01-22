@@ -8,7 +8,7 @@ import { List } from "immutable";
 import React from "react";
 import { Block, Editor, Node, Text } from "slate";
 import { PollStateContext } from "../../context/PollStateContext";
-import PollToggles from "./PollToggles";
+import { PollTogglesEditMode, PollTogglesReadOnlyMode } from "./PollToggles";
 import TemplatePicker from "./TemplatePicker";
 
 export function createNewAnswer() {
@@ -66,13 +66,16 @@ export default class PollNode extends React.Component<{
   private addEditToolbar(editor: Editor, node: any) {
     return (
       <Grid
-        style={{ paddingLeft: "22px" }}
+        style={{ paddingLeft: "30px" }}
         container={true}
         alignItems="center"
         justify="space-between"
       >
         <Grid item={true}>
           <TemplatePicker editor={editor} pollkey={node.key} />
+        </Grid>
+        <Grid item={true}>
+          <PollTogglesEditMode />
         </Grid>
         <Grid item={true}>
           <Button
@@ -89,7 +92,7 @@ export default class PollNode extends React.Component<{
   }
 
   private controlToggles() {
-    return <PollToggles />;
+    return <PollTogglesReadOnlyMode />;
   }
 
   private sendAnswerButton(locked: boolean) {

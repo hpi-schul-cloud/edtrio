@@ -7,7 +7,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { List } from "immutable";
-import { Block, Editor, Node, Text } from "slate";
+import { Block, Text } from "slate";
 
 const styles = theme => ({
   root: {
@@ -15,7 +15,6 @@ const styles = theme => ({
     flexWrap: "wrap",
   },
   formControl: {
-    margin: theme.spacing.unit,
     minWidth: 200,
   },
 });
