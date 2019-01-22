@@ -67,6 +67,10 @@ const resolvers = {
         displayResults: args.displayResults,
       });
     },
+    deletePoll(root: any, args: any, context: ContextType) {
+      context.prisma.deleteManyPollAnswers({ poll: args.pollId });
+      return context.prisma.deletePoll({ id: args.pollId });
+    },
     updatePoll(root: any, args: any, context: ContextType) {
       return context.prisma.updatePoll({
         where: { id: args.pollId },
@@ -95,6 +99,9 @@ const resolvers = {
           },
         },
       });
+    },
+    deletePollAnswer(root: any, args: any, context: ContextType) {
+      return context.prisma.deletePoll({ id: args.pollAnswerId });
     },
     async addUserToPollAnswer(root: any, args: any, context: ContextType) {
       const users = await context.prisma

@@ -1,5 +1,4 @@
 import ApolloClient from "apollo-client";
-import gql from "graphql-tag";
 import moment from "moment";
 import "moment/locale/de";
 import React, { PureComponent } from "react";
@@ -19,6 +18,7 @@ import AddSection from "./plugins/add-section";
 // @ts-ignore:
 import PlusMenuPlugin from "./plugins/plus-menu/index";
 
+import { UPDATE_DOCUMENT } from "./graphqlOperations/operations";
 import { IUserType } from "./types";
 import importedValue from "./value.json";
 
@@ -32,19 +32,6 @@ const AppWrapper = styled.div`
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-`;
-
-const UPDATE_DOCUMENT = gql`
-  mutation updateDocument(
-    $documentId: String!
-    $value: String!
-    $userIds: [String!]!
-  ) {
-    updateDocument(value: $value, documentId: $documentId, userIds: $userIds) {
-      id
-      value
-    }
-  }
 `;
 
 interface IEditorState {

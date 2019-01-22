@@ -18,12 +18,14 @@ type Mutation {
     userIds: [String!]!
   ): Document
   createPoll(votingAllowed: Boolean!, displayResults: Boolean!): Poll
+  deletePoll(pollId): None
   updatePoll(
     pollId: String!
     votingAllowed: Boolean
     displayResults: Boolean
   ): Poll
   createPollAnswer(pollId: String!): PollAnswer
+  deletePollAnswer(pollAnswerId:string!): None
   addUserToPollAnswer(pollAnswerId: String!, userId: String!): PollAnswer
 }
 

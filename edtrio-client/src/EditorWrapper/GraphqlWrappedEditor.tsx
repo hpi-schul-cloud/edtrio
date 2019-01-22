@@ -1,33 +1,18 @@
-import gql from "graphql-tag";
 import React from "react";
 import { Value } from "slate";
 
 import { ApolloProvider, Query, Subscription } from "react-apollo";
 
 import Editor, { IEditorUserProps } from "../Editor";
+import {
+  DOCUMENT_QUERY,
+  VALUE_SUBSCRIPTION,
+} from "../graphqlOperations/operations";
 import { apolloClient } from "./apolloClient";
 
 interface IGraphqlWrappedEditorProps extends IEditorUserProps {
   documentId: string;
 }
-
-// get to document value
-const DOCUMENT_QUERY = gql`
-  query document($documentId: String!) {
-    document(documentId: $documentId) {
-      value
-    }
-  }
-`;
-
-// establish a subscription to get the document value
-const VALUE_SUBSCRIPTION = gql`
-  subscription valueChanged($documentId: String!) {
-    valueChanged(documentId: $documentId) {
-      value
-    }
-  }
-`;
 
 export default function GraphqlWrappedEditor(
   props: IGraphqlWrappedEditorProps,
