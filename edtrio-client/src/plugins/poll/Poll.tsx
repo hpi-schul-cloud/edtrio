@@ -19,6 +19,8 @@ export function createNewPollAnswer() {
   });
 }
 
+// TODO: add delete function
+
 export default class PollNode extends React.Component<{
   readOnly: boolean;
   node: any;

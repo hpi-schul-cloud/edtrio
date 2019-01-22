@@ -11,6 +11,8 @@ import { Block, Editor } from "slate";
 import { PollStateContext } from "../../context/PollStateContext";
 import { testPollAnswerNodeValidity } from "./helpers/validity";
 
+// TODO: add delete function
+
 export default class PollAnswerNode extends React.Component<{
   readOnly: boolean;
   node: Block;
