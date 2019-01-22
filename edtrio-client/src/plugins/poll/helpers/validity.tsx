@@ -9,6 +9,8 @@ import { apolloClient } from "../../../EditorWrapper/apolloClient";
 import {
   CREATE_POLL,
   CREATE_POLL_ANSWER,
+  DELETE_POLL,
+  DELETE_POLL_ANSWER,
 } from "../../../graphqlOperations/operations";
 
 export async function testPollNodeValidity(
@@ -48,6 +50,24 @@ export async function testPollNodeValidity(
         type: "poll",
       });
     }
+  }
+}
+
+export function checkAndDeletePollNode(editor: Editor, currentNode: Block) {
+  if (
+    // @ts-ignore: this exists on the document
+    !editor.value.document.findDescendant(
+      (descendantNode: Node) =>
+        "data" in descendantNode &&
+        "data" in currentNode &&
+        descendantNode.data.get("id") === currentNode.data.get("id"),
+    )
+  ) {
+    // node has been deleted :O
+    apolloClient.mutate({
+      mutation: DELETE_POLL,
+      variables: { answerId: currentNode.data.get("id") },
+    });
   }
 }
 
@@ -92,21 +112,23 @@ export async function testPollAnswerNodeValidity(
   }
 }
 
-// TODO: Implement delete
-// export function checkAndDeleteNode(editor: Editor, currentNode: Block) {
-//   if (
-//     // @ts-ignore: this exists on the document
-//     !editor.value.document.findDescendant(
-//       (descendantNode: Node) =>
-//         "data" in descendantNode &&
-//         "data" in currentNode &&
-//         descendantNode.data.get("id") === currentNode.data.get("id"),
-//     )
-//   ) {
-//     // node has been deleted :O
-//     apolloClient.mutate({
-//       mutation: DELETE_MULTIPLE_CHOICE_ANSWER,
-//       variables: { answerId: currentNode.data.get("id") },
-//     });
-//   }
-// }
+export function checkAndDeletePollAnswerNode(
+  editor: Editor,
+  currentNode: Block,
+) {
+  if (
+    // @ts-ignore: this exists on the document
+    !editor.value.document.findDescendant(
+      (descendantNode: Node) =>
+        "data" in descendantNode &&
+        "data" in currentNode &&
+        descendantNode.data.get("id") === currentNode.data.get("id"),
+    )
+  ) {
+    // node has been deleted :O
+    apolloClient.mutate({
+      mutation: DELETE_POLL_ANSWER,
+      variables: { answerId: currentNode.data.get("id") },
+    });
+  }
+}
