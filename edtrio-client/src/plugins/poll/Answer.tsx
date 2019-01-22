@@ -15,6 +15,7 @@ export default class PollAnswerNode extends React.Component<{
   node: Block;
   editor: Editor;
   parent: Block;
+  currentUser: any;
 }> {
   public render() {
     const {
@@ -23,23 +24,29 @@ export default class PollAnswerNode extends React.Component<{
       editor,
       readOnly,
       parent,
+      currentUser,
       ...attributes
     } = this.props;
 
     if (readOnly) {
-      return this.renderReadOnlyMode(node, parent, attributes);
+      return this.renderReadOnlyMode(node, parent, currentUser, attributes);
     } else {
       return this.renderEditMode(children, node, editor, attributes);
     }
   }
 
-  private renderReadOnlyMode(node: Block, parent: Block, attributes: any) {
+  private renderReadOnlyMode(
+    node: Block,
+    parent: Block,
+    currentUser: any,
+    attributes: any,
+  ) {
     const name = `answer-radio-button-${parent.key}`;
     return (
       <PollStateContext.Consumer>
         {({ selectedAnswer, updateSelectedAnswer, showResults }) => (
           <ListItem
-            style={this.calculateBackground(showResults)}
+            style={this.calculateBackground(showResults, currentUser)}
             button={true}
             divider={true}
             onClick={() => updateSelectedAnswer(node.key)}
@@ -58,8 +65,8 @@ export default class PollAnswerNode extends React.Component<{
       </PollStateContext.Consumer>
     );
   }
-  private calculateBackground(showResults: boolean) {
-    if (!showResults) {
+  private calculateBackground(showResults: boolean, currentUser: any) {
+    if (!currentUser.isTeacher && !showResults) {
       return null;
     }
     const percentage = Math.floor(Math.random() * 100);

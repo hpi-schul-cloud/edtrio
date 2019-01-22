@@ -106,15 +106,20 @@ const RenderPollNode = {
     }
     if (node.type === "poll_answer") {
       return (
-        <PollAnswerNode
-          node={node}
-          parent={parent}
-          editor={editor}
-          readOnly={readOnly}
-          {...attributes}
-        >
-          {children}
-        </PollAnswerNode>
+        <EditorStateContext.Consumer>
+          {({ currentUser }) => (
+            <PollAnswerNode
+              node={node}
+              parent={parent}
+              editor={editor}
+              readOnly={readOnly}
+              currentUser={currentUser}
+              {...attributes}
+            >
+              {children}
+            </PollAnswerNode>
+          )}
+        </EditorStateContext.Consumer>
       );
     }
     return;
