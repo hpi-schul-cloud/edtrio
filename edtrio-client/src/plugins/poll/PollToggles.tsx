@@ -14,8 +14,9 @@ import InvisibleIcon from "@material-ui/icons/VisibilityOffOutlined";
 import React from "react";
 import { Block, Editor, Node, Text } from "slate";
 import { PollStateContext } from "../../context/PollStateContext";
+const iconSize = "default";
 
-export default class PollToggles extends React.Component {
+abstract class PollToggles extends React.Component {
   public render() {
     return (
       <PollStateContext.Consumer>
@@ -33,8 +34,8 @@ export default class PollToggles extends React.Component {
                   control={
                     <Checkbox
                       checked={!locked}
-                      icon={<VoteForbiddenIcon fontSize="large" />}
-                      checkedIcon={<VoteAllowedIcon fontSize="large" />}
+                      icon={<VoteForbiddenIcon fontSize={iconSize} />}
+                      checkedIcon={<VoteAllowedIcon fontSize={iconSize} />}
                       onChange={() => updateLocked(!locked)}
                       color="default"
                     />
@@ -55,8 +56,8 @@ export default class PollToggles extends React.Component {
                   control={
                     <Checkbox
                       checked={showResults}
-                      icon={<InvisibleIcon fontSize="large" />}
-                      checkedIcon={<VisibleIcon fontSize="large" />}
+                      icon={<InvisibleIcon fontSize={iconSize} />}
+                      checkedIcon={<VisibleIcon fontSize={iconSize} />}
                       onChange={() => updateShowResults(!showResults)}
                       value="checkedB"
                       color="default"
@@ -74,18 +75,40 @@ export default class PollToggles extends React.Component {
     );
   }
 
-  private getResultsLabel(showResults: boolean) {
+  protected abstract getResultsLabel(showResults: boolean);
+  protected abstract getVoteLabel(isLocked: boolean);
+}
+
+export class PollTogglesReadOnlyMode extends PollToggles {
+  protected getResultsLabel(showResults: boolean) {
     if (showResults) {
       return "Ergebnisse freigeschaltet";
     } else {
       return "Ergebnisse nicht sichtbar";
     }
   }
-  private getVoteLabel(isLocked: boolean) {
+  protected getVoteLabel(isLocked: boolean) {
     if (isLocked) {
       return "Nutzer dürfen nicht abstimmen";
     } else {
       return "Nutzer dürfen abstimmen";
+    }
+  }
+}
+
+export class PollTogglesEditMode extends PollToggles {
+  protected getResultsLabel(showResults: boolean) {
+    if (showResults) {
+      return "Ergebnisse sofort anzeigen";
+    } else {
+      return "Ergebnisse manuell anzeigen";
+    }
+  }
+  protected getVoteLabel(isLocked: boolean) {
+    if (isLocked) {
+      return "Abstimmen manuell freischlaten";
+    } else {
+      return "Abstimmen sofort freischlaten";
     }
   }
 }
