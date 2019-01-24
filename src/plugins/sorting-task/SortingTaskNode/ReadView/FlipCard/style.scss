@@ -1,43 +1,16 @@
 /* inspiration for card-flip animation: https://www.w3schools.com/howto/howto_css_flip_card.asp */
-.flip-card {
-  --border-width: 0.125rem; // 2px on 16px font-size
-  --border-radius: 0.375rem; // 6px on 16px font size
-
-  background-color: transparent;
-  width: 100%;
-  max-width: 20rem;
-  height: 50vh;
-  max-height: 25rem;
-  margin: 0 auto;
+.sorting-task-node .flip-card {
   perspective: 1000px;
 
   &__inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
     transition: transform 0.8s;
     transform-style: preserve-3d;
-    border: var(--border-width) solid #333;
-    border-radius: var(--border-radius);
   }
-  &__content {
-    position: absolute;
-    box-sizing: border-box;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-    border-radius: calc(var(--border-radius) - var(--border-width));
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 
-    padding: .5rem;
-    background-color: #fff;
-    color: #333;
-  }
   &__title{
     margin-top: 1em;
     text-align: center;
+    user-select: none;
   }
 
   &__text{
@@ -47,8 +20,16 @@
     text-align: center;
   }
 
+  &__footer{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    min-width: 65%;
+  }
+
   &__front {
     font-weight: bold;
+    user-select: none;
   }
 
   &__back {
@@ -56,10 +37,14 @@
   }
 
   /* TODO replace :hover with flip-card--is-flipped class and toggle the class with js on click */
-  &:hover, .flip-card--is-flipped {
-
-    & .flip-card__inner {
-      transform: rotateY(180deg);
-    }
+  &--is-flipped.flip-card__inner {
+    transform: rotateY(-180deg);
   }
+}
+
+
+.md-icon{
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
 }
