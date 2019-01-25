@@ -38,12 +38,6 @@ type Mutation {
   ): MultipleChoiceSubmission
   deleteMultipleChoiceAnswer(answerId: String!): MultipleChoiceAnswer
   deleteMultipleChoiceSubmission(submissionId: String): MultipleChoiceSubmission
-  createDocument(value: String!, userIds: [String!]!): Document
-  updateDocument(
-    documentId: String!
-    value: String!
-    userIds: [String!]!
-  ): Document
   createPoll(votingAllowed: Boolean!, displayResults: Boolean!): Poll
   deletePoll(pollId: String!): Poll
   updatePoll(

@@ -31,26 +31,10 @@ scalar DateTime
 type Document {
   id: ID!
   value: Json!
-  users(
-    where: UserWhereInput
-    orderBy: UserOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [User!]
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   createdAt: DateTime!
   updatedAt: DateTime!
-  answers(
-    where: MultipleChoiceAnswerWhereInput
-    orderBy: MultipleChoiceAnswerOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [MultipleChoiceAnswer!]
+  answers(where: MultipleChoiceAnswerWhereInput, orderBy: MultipleChoiceAnswerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MultipleChoiceAnswer!]
 }
 
 type DocumentConnection {
@@ -171,15 +155,7 @@ type MultipleChoiceAnswer {
   isCorrect: Boolean!
   createdAt: DateTime!
   updatedAt: DateTime!
-  multipleChoiceSubmissions(
-    where: MultipleChoiceSubmissionWhereInput
-    orderBy: MultipleChoiceSubmissionOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [MultipleChoiceSubmission!]
+  multipleChoiceSubmissions(where: MultipleChoiceSubmissionWhereInput, orderBy: MultipleChoiceSubmissionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MultipleChoiceSubmission!]
 }
 
 type MultipleChoiceAnswerConnection {
@@ -560,101 +536,38 @@ input MultipleChoiceSubmissionWhereUniqueInput {
 
 type Mutation {
   createDocument(data: DocumentCreateInput!): Document!
-  updateDocument(
-    data: DocumentUpdateInput!
-    where: DocumentWhereUniqueInput!
-  ): Document
-  updateManyDocuments(
-    data: DocumentUpdateManyMutationInput!
-    where: DocumentWhereInput
-  ): BatchPayload!
-  upsertDocument(
-    where: DocumentWhereUniqueInput!
-    create: DocumentCreateInput!
-    update: DocumentUpdateInput!
-  ): Document!
+  updateDocument(data: DocumentUpdateInput!, where: DocumentWhereUniqueInput!): Document
+  updateManyDocuments(data: DocumentUpdateManyMutationInput!, where: DocumentWhereInput): BatchPayload!
+  upsertDocument(where: DocumentWhereUniqueInput!, create: DocumentCreateInput!, update: DocumentUpdateInput!): Document!
   deleteDocument(where: DocumentWhereUniqueInput!): Document
   deleteManyDocuments(where: DocumentWhereInput): BatchPayload!
-  createMultipleChoiceAnswer(
-    data: MultipleChoiceAnswerCreateInput!
-  ): MultipleChoiceAnswer!
-  updateMultipleChoiceAnswer(
-    data: MultipleChoiceAnswerUpdateInput!
-    where: MultipleChoiceAnswerWhereUniqueInput!
-  ): MultipleChoiceAnswer
-  updateManyMultipleChoiceAnswers(
-    data: MultipleChoiceAnswerUpdateManyMutationInput!
-    where: MultipleChoiceAnswerWhereInput
-  ): BatchPayload!
-  upsertMultipleChoiceAnswer(
-    where: MultipleChoiceAnswerWhereUniqueInput!
-    create: MultipleChoiceAnswerCreateInput!
-    update: MultipleChoiceAnswerUpdateInput!
-  ): MultipleChoiceAnswer!
-  deleteMultipleChoiceAnswer(
-    where: MultipleChoiceAnswerWhereUniqueInput!
-  ): MultipleChoiceAnswer
-  deleteManyMultipleChoiceAnswers(
-    where: MultipleChoiceAnswerWhereInput
-  ): BatchPayload!
-  createMultipleChoiceSubmission(
-    data: MultipleChoiceSubmissionCreateInput!
-  ): MultipleChoiceSubmission!
-  updateMultipleChoiceSubmission(
-    data: MultipleChoiceSubmissionUpdateInput!
-    where: MultipleChoiceSubmissionWhereUniqueInput!
-  ): MultipleChoiceSubmission
-  updateManyMultipleChoiceSubmissions(
-    data: MultipleChoiceSubmissionUpdateManyMutationInput!
-    where: MultipleChoiceSubmissionWhereInput
-  ): BatchPayload!
-  upsertMultipleChoiceSubmission(
-    where: MultipleChoiceSubmissionWhereUniqueInput!
-    create: MultipleChoiceSubmissionCreateInput!
-    update: MultipleChoiceSubmissionUpdateInput!
-  ): MultipleChoiceSubmission!
-  deleteMultipleChoiceSubmission(
-    where: MultipleChoiceSubmissionWhereUniqueInput!
-  ): MultipleChoiceSubmission
-  deleteManyMultipleChoiceSubmissions(
-    where: MultipleChoiceSubmissionWhereInput
-  ): BatchPayload!
+  createMultipleChoiceAnswer(data: MultipleChoiceAnswerCreateInput!): MultipleChoiceAnswer!
+  updateMultipleChoiceAnswer(data: MultipleChoiceAnswerUpdateInput!, where: MultipleChoiceAnswerWhereUniqueInput!): MultipleChoiceAnswer
+  updateManyMultipleChoiceAnswers(data: MultipleChoiceAnswerUpdateManyMutationInput!, where: MultipleChoiceAnswerWhereInput): BatchPayload!
+  upsertMultipleChoiceAnswer(where: MultipleChoiceAnswerWhereUniqueInput!, create: MultipleChoiceAnswerCreateInput!, update: MultipleChoiceAnswerUpdateInput!): MultipleChoiceAnswer!
+  deleteMultipleChoiceAnswer(where: MultipleChoiceAnswerWhereUniqueInput!): MultipleChoiceAnswer
+  deleteManyMultipleChoiceAnswers(where: MultipleChoiceAnswerWhereInput): BatchPayload!
+  createMultipleChoiceSubmission(data: MultipleChoiceSubmissionCreateInput!): MultipleChoiceSubmission!
+  updateMultipleChoiceSubmission(data: MultipleChoiceSubmissionUpdateInput!, where: MultipleChoiceSubmissionWhereUniqueInput!): MultipleChoiceSubmission
+  updateManyMultipleChoiceSubmissions(data: MultipleChoiceSubmissionUpdateManyMutationInput!, where: MultipleChoiceSubmissionWhereInput): BatchPayload!
+  upsertMultipleChoiceSubmission(where: MultipleChoiceSubmissionWhereUniqueInput!, create: MultipleChoiceSubmissionCreateInput!, update: MultipleChoiceSubmissionUpdateInput!): MultipleChoiceSubmission!
+  deleteMultipleChoiceSubmission(where: MultipleChoiceSubmissionWhereUniqueInput!): MultipleChoiceSubmission
+  deleteManyMultipleChoiceSubmissions(where: MultipleChoiceSubmissionWhereInput): BatchPayload!
   createPoll(data: PollCreateInput!): Poll!
   updatePoll(data: PollUpdateInput!, where: PollWhereUniqueInput!): Poll
-  updateManyPolls(
-    data: PollUpdateManyMutationInput!
-    where: PollWhereInput
-  ): BatchPayload!
-  upsertPoll(
-    where: PollWhereUniqueInput!
-    create: PollCreateInput!
-    update: PollUpdateInput!
-  ): Poll!
+  updateManyPolls(data: PollUpdateManyMutationInput!, where: PollWhereInput): BatchPayload!
+  upsertPoll(where: PollWhereUniqueInput!, create: PollCreateInput!, update: PollUpdateInput!): Poll!
   deletePoll(where: PollWhereUniqueInput!): Poll
   deleteManyPolls(where: PollWhereInput): BatchPayload!
   createPollAnswer(data: PollAnswerCreateInput!): PollAnswer!
-  updatePollAnswer(
-    data: PollAnswerUpdateInput!
-    where: PollAnswerWhereUniqueInput!
-  ): PollAnswer
-  upsertPollAnswer(
-    where: PollAnswerWhereUniqueInput!
-    create: PollAnswerCreateInput!
-    update: PollAnswerUpdateInput!
-  ): PollAnswer!
+  updatePollAnswer(data: PollAnswerUpdateInput!, where: PollAnswerWhereUniqueInput!): PollAnswer
+  upsertPollAnswer(where: PollAnswerWhereUniqueInput!, create: PollAnswerCreateInput!, update: PollAnswerUpdateInput!): PollAnswer!
   deletePollAnswer(where: PollAnswerWhereUniqueInput!): PollAnswer
   deleteManyPollAnswers(where: PollAnswerWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
-  updateManyUsers(
-    data: UserUpdateManyMutationInput!
-    where: UserWhereInput
-  ): BatchPayload!
-  upsertUser(
-    where: UserWhereUniqueInput!
-    create: UserCreateInput!
-    update: UserUpdateInput!
-  ): User!
+  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   deleteUser(where: UserWhereUniqueInput!): User
   deleteManyUsers(where: UserWhereInput): BatchPayload!
 }
@@ -680,30 +593,14 @@ type Poll {
   id: ID!
   votingAllowed: Boolean!
   displayResults: Boolean!
-  answers(
-    where: PollAnswerWhereInput
-    orderBy: PollAnswerOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [PollAnswer!]
+  answers(where: PollAnswerWhereInput, orderBy: PollAnswerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PollAnswer!]
   createdAt: DateTime!
   updatedAt: DateTime!
 }
 
 type PollAnswer {
   id: ID!
-  votes(
-    where: UserWhereInput
-    orderBy: UserOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [User!]
+  votes(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   poll: Poll!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -1020,138 +917,32 @@ input PollWhereUniqueInput {
 
 type Query {
   document(where: DocumentWhereUniqueInput!): Document
-  documents(
-    where: DocumentWhereInput
-    orderBy: DocumentOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [Document]!
-  documentsConnection(
-    where: DocumentWhereInput
-    orderBy: DocumentOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): DocumentConnection!
-  multipleChoiceAnswer(
-    where: MultipleChoiceAnswerWhereUniqueInput!
-  ): MultipleChoiceAnswer
-  multipleChoiceAnswers(
-    where: MultipleChoiceAnswerWhereInput
-    orderBy: MultipleChoiceAnswerOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [MultipleChoiceAnswer]!
-  multipleChoiceAnswersConnection(
-    where: MultipleChoiceAnswerWhereInput
-    orderBy: MultipleChoiceAnswerOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): MultipleChoiceAnswerConnection!
-  multipleChoiceSubmission(
-    where: MultipleChoiceSubmissionWhereUniqueInput!
-  ): MultipleChoiceSubmission
-  multipleChoiceSubmissions(
-    where: MultipleChoiceSubmissionWhereInput
-    orderBy: MultipleChoiceSubmissionOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [MultipleChoiceSubmission]!
-  multipleChoiceSubmissionsConnection(
-    where: MultipleChoiceSubmissionWhereInput
-    orderBy: MultipleChoiceSubmissionOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): MultipleChoiceSubmissionConnection!
+  documents(where: DocumentWhereInput, orderBy: DocumentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Document]!
+  documentsConnection(where: DocumentWhereInput, orderBy: DocumentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DocumentConnection!
+  multipleChoiceAnswer(where: MultipleChoiceAnswerWhereUniqueInput!): MultipleChoiceAnswer
+  multipleChoiceAnswers(where: MultipleChoiceAnswerWhereInput, orderBy: MultipleChoiceAnswerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MultipleChoiceAnswer]!
+  multipleChoiceAnswersConnection(where: MultipleChoiceAnswerWhereInput, orderBy: MultipleChoiceAnswerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MultipleChoiceAnswerConnection!
+  multipleChoiceSubmission(where: MultipleChoiceSubmissionWhereUniqueInput!): MultipleChoiceSubmission
+  multipleChoiceSubmissions(where: MultipleChoiceSubmissionWhereInput, orderBy: MultipleChoiceSubmissionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MultipleChoiceSubmission]!
+  multipleChoiceSubmissionsConnection(where: MultipleChoiceSubmissionWhereInput, orderBy: MultipleChoiceSubmissionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MultipleChoiceSubmissionConnection!
   poll(where: PollWhereUniqueInput!): Poll
-  polls(
-    where: PollWhereInput
-    orderBy: PollOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [Poll]!
-  pollsConnection(
-    where: PollWhereInput
-    orderBy: PollOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): PollConnection!
+  polls(where: PollWhereInput, orderBy: PollOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Poll]!
+  pollsConnection(where: PollWhereInput, orderBy: PollOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PollConnection!
   pollAnswer(where: PollAnswerWhereUniqueInput!): PollAnswer
-  pollAnswers(
-    where: PollAnswerWhereInput
-    orderBy: PollAnswerOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [PollAnswer]!
-  pollAnswersConnection(
-    where: PollAnswerWhereInput
-    orderBy: PollAnswerOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): PollAnswerConnection!
+  pollAnswers(where: PollAnswerWhereInput, orderBy: PollAnswerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PollAnswer]!
+  pollAnswersConnection(where: PollAnswerWhereInput, orderBy: PollAnswerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PollAnswerConnection!
   user(where: UserWhereUniqueInput!): User
-  users(
-    where: UserWhereInput
-    orderBy: UserOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [User]!
-  usersConnection(
-    where: UserWhereInput
-    orderBy: UserOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): UserConnection!
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   node(id: ID!): Node
 }
 
 type Subscription {
   document(where: DocumentSubscriptionWhereInput): DocumentSubscriptionPayload
-  multipleChoiceAnswer(
-    where: MultipleChoiceAnswerSubscriptionWhereInput
-  ): MultipleChoiceAnswerSubscriptionPayload
-  multipleChoiceSubmission(
-    where: MultipleChoiceSubmissionSubscriptionWhereInput
-  ): MultipleChoiceSubmissionSubscriptionPayload
+  multipleChoiceAnswer(where: MultipleChoiceAnswerSubscriptionWhereInput): MultipleChoiceAnswerSubscriptionPayload
+  multipleChoiceSubmission(where: MultipleChoiceSubmissionSubscriptionWhereInput): MultipleChoiceSubmissionSubscriptionPayload
   poll(where: PollSubscriptionWhereInput): PollSubscriptionPayload
-  pollAnswer(
-    where: PollAnswerSubscriptionWhereInput
-  ): PollAnswerSubscriptionPayload
+  pollAnswer(where: PollAnswerSubscriptionWhereInput): PollAnswerSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 

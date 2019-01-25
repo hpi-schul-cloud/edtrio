@@ -22,7 +22,6 @@ import {
   updateDocument,
   updateDocumentVariables,
 } from "./graphqlOperations/generated-types/updateDocument";
-import { UPDATE_DOCUMENT } from "./graphqlOperations/operations";
 
 moment.locale("de");
 

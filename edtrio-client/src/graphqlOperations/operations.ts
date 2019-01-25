@@ -117,7 +117,7 @@ export const UPDATE_POLL = gql`
       votingAllowed: $votingAllowed
       displayResults: $displayResults
     ) {
-      votingALlowed
+      votingAllowed
       displayResults
     }
   }
