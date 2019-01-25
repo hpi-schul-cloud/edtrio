@@ -88,6 +88,77 @@ export const UPDATE_MULTIPLE_CHOICE_SUBMISSION = gql`
   }
 `;
 
+export const CREATE_POLL = gql`
+  mutation createPoll($votingAllowed: Boolean!, $displayResults: Boolean!) {
+    createPoll(votingAllowed: $votingAllowed, displayResults: $displayResults) {
+      id
+      votingAllowed
+      displayResults
+    }
+  }
+`;
+
+export const DELETE_POLL = gql`
+  mutation deletePoll($pollId: String!) {
+    deletePoll(pollId: $pollId) {
+      id
+    }
+  }
+`;
+
+export const UPDATE_POLL = gql`
+  mutation updatePoll(
+    $pollId: String!
+    $votingAllowed: Boolean
+    $displayResults: Boolean
+  ) {
+    updatePoll(
+      pollId: $pollId
+      votingAllowed: $votingAllowed
+      displayResults: $displayResults
+    ) {
+      votingALlowed
+      displayResults
+    }
+  }
+`;
+
+export const CREATE_POLL_ANSWER = gql`
+  mutation createPollAnswer($pollId: String!) {
+    createPollAnswer(pollId: $pollId) {
+      id
+    }
+  }
+`;
+
+export const DELETE_POLL_ANSWER = gql`
+  mutation deletePollAnswer($pollAnswerId: String!) {
+    deletePollAnswer(pollAnswerId: $pollAnswerId) {
+      id
+    }
+  }
+`;
+
+export const ADD_SUBMISSION_TO_POLL_ANSWER = gql`
+  mutation addSubmissionToPollAnswer($pollAnswerId: String!, $userId: String!) {
+    addSubmissionToPollAnswer(pollAnswerId: $pollAnswerId, userId: $userId) {
+      id
+    }
+  }
+`;
+
+export const POLL_CHANGED = gql`
+  subscription pollChanged($pollId: String!) {
+    pollChanged(pollId: $pollId) {
+      answers {
+        votes {
+          id
+        }
+      }
+    }
+  }
+`;
+
 // get to document value
 export const DOCUMENT_QUERY = gql`
   query document($documentId: String!) {

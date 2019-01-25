@@ -10,6 +10,8 @@ type Query {
   multipleChoiceSubmission(submissionId: String!): MultipleChoiceSubmission
   multipleChoiceSubmissions(answerId: String!): [MultipleChoiceSubmission]
   submissionByUser(answerId: String!, userId: String!): MultipleChoiceSubmission
+  poll(pollId: String!): Poll
+  pollAnswer(pollAnswerId: String!): PollAnswer
 }
 
 type Mutation {
@@ -36,8 +38,25 @@ type Mutation {
   ): MultipleChoiceSubmission
   deleteMultipleChoiceAnswer(answerId: String!): MultipleChoiceAnswer
   deleteMultipleChoiceSubmission(submissionId: String): MultipleChoiceSubmission
+  createDocument(value: String!, userIds: [String!]!): Document
+  updateDocument(
+    documentId: String!
+    value: String!
+    userIds: [String!]!
+  ): Document
+  createPoll(votingAllowed: Boolean!, displayResults: Boolean!): Poll
+  deletePoll(pollId: String!): Poll
+  updatePoll(
+    pollId: String!
+    votingAllowed: Boolean
+    displayResults: Boolean
+  ): Poll
+  createPollAnswer(pollId: String!): PollAnswer
+  deletePollAnswer(pollAnswerId: String!): PollAnswer
+  addSubmissionToPollAnswer(pollAnswerId: String!, userId: String!): PollAnswer
 }
 
 type Subscription {
   valueChanged(documentId: String!): Document
+  pollChanged(pollId: String!): Poll
 }

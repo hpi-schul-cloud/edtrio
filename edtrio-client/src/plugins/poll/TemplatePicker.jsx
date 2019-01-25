@@ -35,20 +35,14 @@ function getFeedbackTemplate() {
           Text.create("Was hat dir in der heutigen Stunde am meisten gefehlt?"),
         ]),
       }),
-      Block.create({
-        type: "poll_answergroup",
-        data: { selected_answer: -1 },
-        nodes: List([
-          createNewAnswer("Nichts! Ich bin zufrieden"),
-          createNewAnswer("Zeit. Ich hätte gerne mehr Zeit gehabt"),
-          createNewAnswer("Erklärung. Ich habe kaum etwas verstanden"),
-          createNewAnswer("Vielfalt. Irgendwie war es langweilig heute"),
-          createNewAnswer("Ruhe. Es war viel zu laut"),
-          createNewAnswer(
-            "Feedback. Ich brauche mehr Rückmeldung zu meiner Arbeit",
-          ),
-        ]),
-      }),
+      createNewAnswer("Nichts! Ich bin zufrieden"),
+      createNewAnswer("Zeit. Ich hätte gerne mehr Zeit gehabt"),
+      createNewAnswer("Erklärung. Ich habe kaum etwas verstanden"),
+      createNewAnswer("Vielfalt. Irgendwie war es langweilig heute"),
+      createNewAnswer("Ruhe. Es war viel zu laut"),
+      createNewAnswer(
+        "Feedback. Ich brauche mehr Rückmeldung zu meiner Arbeit",
+      ),
     ]),
   });
 }
@@ -62,18 +56,12 @@ function getGradeMeTemplate() {
           Text.create("Wie würdest du die Stunde in Schulnoten bewerten?"),
         ]),
       }),
-      Block.create({
-        type: "poll_answergroup",
-        data: { selected_answer: -1 },
-        nodes: List([
-          createNewAnswer("1"),
-          createNewAnswer("2"),
-          createNewAnswer("3"),
-          createNewAnswer("4"),
-          createNewAnswer("5"),
-          createNewAnswer("6"),
-        ]),
-      }),
+      createNewAnswer("1"),
+      createNewAnswer("2"),
+      createNewAnswer("3"),
+      createNewAnswer("4"),
+      createNewAnswer("5"),
+      createNewAnswer("6"),
     ]),
   });
 }
@@ -86,11 +74,8 @@ function getEmptyTemplate() {
         type: "poll_question",
         nodes: List([Text.create("")]),
       }),
-      Block.create({
-        type: "poll_answergroup",
-        data: { selected_answer: -1 },
-        nodes: List([createNewAnswer(""), createNewAnswer("")]),
-      }),
+      createNewAnswer(""),
+      createNewAnswer(""),
     ]),
   });
 }

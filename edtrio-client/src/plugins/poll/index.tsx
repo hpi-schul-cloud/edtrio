@@ -5,8 +5,7 @@ import styled from "styled-components";
 import { EditorStateContext } from "../../context/EditorStateContext";
 import { PollStateProvider } from "../../context/PollStateContext";
 import PollAnswerNode from "./Answer";
-import PollAnswerGroupNode from "./AnswerGroup";
-import PollNode, { createNewAnswer } from "./Poll";
+import PollNode, { createNewPollAnswer } from "./Poll";
 import PollQuestionNode from "./Question";
 import "./style.css";
 
@@ -32,11 +31,8 @@ const onClickPollButton = (event: any, editor: Editor) => {
           type: "poll_question",
           nodes: List([Text.create("")]),
         }),
-        Block.create({
-          type: "poll_answergroup",
-          data: { selected_answer: -1 },
-          nodes: List([createNewAnswer(), createNewAnswer()]),
-        }),
+        createNewPollAnswer(),
+        createNewPollAnswer(),
       ]),
     }),
   );
@@ -97,11 +93,6 @@ const RenderPollNode = {
         >
           {children}
         </PollQuestionNode>
-      );
-    }
-    if (node.type === "poll_answergroup") {
-      return (
-        <PollAnswerGroupNode {...attributes}>{children}</PollAnswerGroupNode>
       );
     }
     if (node.type === "poll_answer") {

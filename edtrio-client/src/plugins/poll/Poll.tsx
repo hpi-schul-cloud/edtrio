@@ -8,15 +8,22 @@ import { List } from "immutable";
 import React from "react";
 import { Block, Editor, Node, Text } from "slate";
 import { PollStateContext } from "../../context/PollStateContext";
-import { PollTogglesEditMode, PollTogglesReadOnlyMode } from "./PollToggles";
+import {
+  checkAndDeletePollNode,
+  testPollNodeValidity,
+} from "./helpers/validity";
 import TemplatePicker from "./TemplatePicker";
+import PollTogglesEditMode from "./toggles/PollTogglesEditMode";
+import PollTogglesReadOnlyMode from "./toggles/PollTogglesReadOnlyMode";
 
-export function createNewAnswer() {
+export function createNewPollAnswer() {
   return Block.create({
     type: "poll_answer",
     nodes: List([Text.create("")]),
   });
 }
+
+// TODO: add delete function
 
 export default class PollNode extends React.Component<{
   readOnly: boolean;
@@ -24,6 +31,15 @@ export default class PollNode extends React.Component<{
   editor: any;
   currentUser: any;
 }> {
+  public componentDidMount() {
+    // check for correct node creation
+    setTimeout(
+      () =>
+        testPollNodeValidity(this.props.editor, this.props.node, this.context),
+      200,
+    );
+  }
+
   public render() {
     const {
       children,
@@ -36,11 +52,17 @@ export default class PollNode extends React.Component<{
 
     return (
       <PollStateContext.Consumer>
-        {({ locked, updateLocked, updateShowResults }) => (
+        {({ votingAllowed, updateVotingAllowed, updateDisplayResults }) => (
           <div>
             <ListEle {...attributes}>{children}</ListEle>
 
-            {this.mainActionButton(editor, node, readOnly, currentUser, locked)}
+            {this.mainActionButton(
+              editor,
+              node,
+              readOnly,
+              currentUser,
+              votingAllowed,
+            )}
 
             <br />
           </div>
@@ -49,17 +71,21 @@ export default class PollNode extends React.Component<{
     );
   }
 
+  public componentWillUnmount() {
+    checkAndDeletePollNode(this.props.editor, this.props.node);
+  }
+
   private mainActionButton(
     editor: Editor,
     node: any,
     readOnly: boolean,
     currentUser: any,
-    locked: boolean,
+    votingAllowed: boolean,
   ) {
     return readOnly
       ? currentUser.isTeacher
         ? this.controlToggles()
-        : this.sendAnswerButton(locked)
+        : this.sendAnswerButton(votingAllowed)
       : this.addEditToolbar(editor, node);
   }
 
@@ -95,12 +121,12 @@ export default class PollNode extends React.Component<{
     return <PollTogglesReadOnlyMode />;
   }
 
-  private sendAnswerButton(locked: boolean) {
+  private sendAnswerButton(votingAllowed: boolean) {
     return (
       <Button
         style={{ float: "right" }}
         variant="outlined"
-        disabled={locked}
+        disabled={votingAllowed}
         onClick={event => this.onClickSendAnswerButton()}
       >
         <SendIcon />
@@ -116,7 +142,7 @@ export default class PollNode extends React.Component<{
   }
 
   private appendNewAnswer(editor: Editor, node: Block) {
-    const newAnswer = createNewAnswer();
+    const newAnswer = createNewPollAnswer();
     const answerGroup: any = node.nodes.get(1);
     editor.insertNodeByKey(answerGroup.key, answerGroup.nodes.size, newAnswer);
   }
@@ -133,3 +159,4 @@ export default class PollNode extends React.Component<{
     // console.log("onClickShowPollResultButton");
   }
 }
+PollNode.contextType = PollStateContext;

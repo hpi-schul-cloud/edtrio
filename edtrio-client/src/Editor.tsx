@@ -14,6 +14,7 @@ import { StateController } from "./dev-helpers/StateController";
 
 import { plugins } from "./plugins";
 
+import { UPDATE_DOCUMENT } from "./graphqlOperations/operations";
 import { IUserType } from "./types";
 import importedValue from "./value.json";
 

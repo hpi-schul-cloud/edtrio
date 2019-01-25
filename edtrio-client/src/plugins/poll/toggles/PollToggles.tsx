@@ -13,14 +13,19 @@ import InvisibleIcon from "@material-ui/icons/VisibilityOffOutlined";
 
 import React from "react";
 import { Block, Editor, Node, Text } from "slate";
-import { PollStateContext } from "../../context/PollStateContext";
+import { PollStateContext } from "../../../context/PollStateContext";
 const iconSize = "default";
 
-abstract class PollToggles extends React.Component {
+export default abstract class PollToggles extends React.Component {
   public render() {
     return (
       <PollStateContext.Consumer>
-        {({ locked, updateLocked, showResults, updateShowResults }) => (
+        {({
+          votingAllowed,
+          updateVotingAllowed,
+          displayResults,
+          updateDisplayResults,
+        }) => (
           <Grid container={true} justify="space-evenly" alignItems="center">
             <Grid
               container={true}
@@ -33,14 +38,14 @@ abstract class PollToggles extends React.Component {
                   classes={{ label: "pollToggleLabel" }}
                   control={
                     <Checkbox
-                      checked={!locked}
+                      checked={votingAllowed}
                       icon={<VoteForbiddenIcon fontSize={iconSize} />}
                       checkedIcon={<VoteAllowedIcon fontSize={iconSize} />}
-                      onChange={() => updateLocked(!locked)}
+                      onChange={() => updateVotingAllowed(!votingAllowed)}
                       color="default"
                     />
                   }
-                  label={this.getVoteLabel(locked)}
+                  label={this.getVoteLabel(votingAllowed)}
                 />
               </Tooltip>
             </Grid>
@@ -55,15 +60,15 @@ abstract class PollToggles extends React.Component {
                   classes={{ label: "pollToggleLabel" }}
                   control={
                     <Checkbox
-                      checked={showResults}
+                      checked={displayResults}
                       icon={<InvisibleIcon fontSize={iconSize} />}
                       checkedIcon={<VisibleIcon fontSize={iconSize} />}
-                      onChange={() => updateShowResults(!showResults)}
+                      onChange={() => updateDisplayResults(!displayResults)}
                       value="checkedB"
                       color="default"
                     />
                   }
-                  label={this.getResultsLabel(showResults)}
+                  label={this.getResultsLabel(displayResults)}
                 />
               </Tooltip>
             </Grid>
@@ -75,40 +80,6 @@ abstract class PollToggles extends React.Component {
     );
   }
 
-  protected abstract getResultsLabel(showResults: boolean);
-  protected abstract getVoteLabel(isLocked: boolean);
-}
-
-export class PollTogglesReadOnlyMode extends PollToggles {
-  protected getResultsLabel(showResults: boolean) {
-    if (showResults) {
-      return "Ergebnisse freigeschaltet";
-    } else {
-      return "Ergebnisse nicht sichtbar";
-    }
-  }
-  protected getVoteLabel(isLocked: boolean) {
-    if (isLocked) {
-      return "Nutzer dürfen nicht abstimmen";
-    } else {
-      return "Nutzer dürfen abstimmen";
-    }
-  }
-}
-
-export class PollTogglesEditMode extends PollToggles {
-  protected getResultsLabel(showResults: boolean) {
-    if (showResults) {
-      return "Ergebnisse sofort anzeigen";
-    } else {
-      return "Ergebnisse manuell anzeigen";
-    }
-  }
-  protected getVoteLabel(isLocked: boolean) {
-    if (isLocked) {
-      return "Abstimmen manuell freischlaten";
-    } else {
-      return "Abstimmen sofort freischlaten";
-    }
-  }
+  protected abstract getResultsLabel(displayResults: boolean);
+  protected abstract getVoteLabel(votingAllowed: boolean);
 }

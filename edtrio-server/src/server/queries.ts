@@ -41,5 +41,11 @@ export const queries = {
       }
       return submissions[0];
     },
+    poll(root: any, args: any, context: IContextType) {
+      return context.prisma.poll({ id: args.pollId });
+    },
+    pollAnswer(root: any, args: any, context: IContextType) {
+      return context.prisma.pollAnswer({ id: args.pollAnswerId });
+    },
   },
 };

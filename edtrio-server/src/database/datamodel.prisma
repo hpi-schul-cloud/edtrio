@@ -30,3 +30,20 @@ type MultipleChoiceSubmission {
   author: User!
   isChecked: Boolean!
 }
+
+type PollAnswer {
+  id: ID! @unique
+  votes: [User]!
+  poll: Poll!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Poll {
+  id: ID! @unique
+  votingAllowed: Boolean!
+  displayResults: Boolean!
+  answers: [PollAnswer]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
