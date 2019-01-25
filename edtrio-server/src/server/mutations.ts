@@ -151,7 +151,7 @@ export const mutations = {
     async createPollAnswer(root: any, args: any, context: IContextType) {
       const newAnswer = await context.prisma.createPollAnswer({
         poll: {
-          connect: args.pollId,
+          connect: {id: args.pollId},
         },
       });
       const pollAnswers = await context.prisma

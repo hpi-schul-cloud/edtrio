@@ -137,14 +137,11 @@ export default class PollNode extends React.Component<{
 
   // TODO: Node should be used instead of any for 'node'
   private onClickAddAnswerButton(event: any, editor: Editor, node: Block) {
-    event.preventDefault();
-    this.appendNewAnswer(editor, node);
-  }
-
-  private appendNewAnswer(editor: Editor, node: Block) {
-    const newAnswer = createNewPollAnswer();
-    const answerGroup: any = node.nodes.get(1);
-    editor.insertNodeByKey(answerGroup.key, answerGroup.nodes.size, newAnswer);
+    editor.insertNodeByPath(
+      editor.value.document.getPath(node.key),
+      node.nodes.size,
+      createNewPollAnswer(),
+    );
   }
 
   private onClickSendAnswerButton() {

@@ -7,6 +7,10 @@ import { apolloClient } from "../../../EditorWrapper/apolloClient";
 // } from "../../../generated-types/createPoll";
 
 import {
+  createPollAnswer,
+  createPollAnswerVariables,
+} from "../../../graphqlOperations/generated-types/createPollAnswer";
+import {
   CREATE_POLL,
   CREATE_POLL_ANSWER,
   DELETE_POLL,
@@ -97,10 +101,13 @@ export async function testPollAnswerNodeValidity(
       pollAnswerId.constructor === Object)
   ) {
     // node needs to be created on backend-side
-    const pollId = parent.data.get("id");
-    const pollAnswer = await apolloClient.mutate({
+    const pollId = await parent.data.get("id");
+    const pollAnswer = await apolloClient.mutate<
+      createPollAnswer,
+      createPollAnswerVariables
+    >({
       mutation: CREATE_POLL_ANSWER,
-      variables: { pollId: "cjr6l0fiv004i0775e7bfcu7a" },
+      variables: { pollId },
     });
     if (pollAnswer && pollAnswer.data && pollAnswer.data.createPollAnswer) {
       editor.setNodeByKey(currentNode.key, {
