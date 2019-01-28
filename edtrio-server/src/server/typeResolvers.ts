@@ -23,4 +23,21 @@ export const typeResolvers = {
         .answers();
     },
   },
+
+  PollAnswer: {
+    poll(root: any, args: any, context: IContextType) {
+      return context.prisma
+        .pollAnswer({
+          id: root.id,
+        })
+        .poll();
+    },
+    votes(root: any, args: any, context: IContextType) {
+      return context.prisma
+        .pollAnswer({
+          id: root.id,
+        })
+        .votes();
+    },
+  },
 };
