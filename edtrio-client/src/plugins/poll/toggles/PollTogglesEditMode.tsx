@@ -5,14 +5,14 @@ export default class PollTogglesEditMode extends PollToggles {
     if (displayResults) {
       return "Ergebnisse sofort anzeigen";
     } else {
-      return "Ergebnisse manuell anzeigen";
+      return "Ergebnisse nicht sofort anzeigen";
     }
   }
   protected getVoteLabel(votingAllowed: boolean) {
-    if (!votingAllowed) {
-      return "Abstimmen manuell freischlaten";
+    if (votingAllowed) {
+      return "Abstimmen sofort freischalten";
     } else {
-      return "Abstimmen sofort freischlaten";
+      return "Abstimmen nicht sofort freischalten";
     }
   }
 }
