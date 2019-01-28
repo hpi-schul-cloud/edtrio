@@ -88,6 +88,16 @@ export const UPDATE_MULTIPLE_CHOICE_SUBMISSION = gql`
   }
 `;
 
+export const POLL_QUERY = gql`
+  query poll($pollId: String!) {
+    poll(pollId: $pollId) {
+      id
+      votingAllowed
+      displayResults
+    }
+  }
+`;
+
 export const CREATE_POLL = gql`
   mutation createPoll($votingAllowed: Boolean!, $displayResults: Boolean!) {
     createPoll(votingAllowed: $votingAllowed, displayResults: $displayResults) {

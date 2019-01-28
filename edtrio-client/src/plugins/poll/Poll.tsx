@@ -2,12 +2,12 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import ListEle from "@material-ui/core/List";
 import AddIcon from "@material-ui/icons/Add";
-import PollIcon from "@material-ui/icons/Poll";
 import SendIcon from "@material-ui/icons/Send";
 import { List } from "immutable";
 import React from "react";
 import { Block, Editor, Node, Text } from "slate";
 import { PollStateContext } from "../../context/PollStateContext";
+import { apolloClient } from "../../EditorWrapper/apolloClient";
 import {
   checkAndDeletePollNode,
   testPollNodeValidity,
@@ -15,6 +15,12 @@ import {
 import TemplatePicker from "./TemplatePicker";
 import PollTogglesEditMode from "./toggles/PollTogglesEditMode";
 import PollTogglesReadOnlyMode from "./toggles/PollTogglesReadOnlyMode";
+
+import {
+  poll,
+  pollVariables,
+} from "../../graphqlOperations/generated-types/poll";
+import { POLL_QUERY } from "../../graphqlOperations/operations";
 
 export function createNewPollAnswer() {
   return Block.create({
@@ -74,9 +80,20 @@ export default class PollNode extends React.Component<{
     checkAndDeletePollNode(this.props.editor, this.props.node);
   }
 
-  private setPollValuesFromDB() {
+  private async setPollValuesFromDB() {
     const id = this.props.node.data.get("id");
-    this.context.updateId(id);
+    if (id) {
+      this.context.updateId(id);
+      const poll = await apolloClient.query<poll, pollVariables>({
+        query: POLL_QUERY,
+        variables: { pollId: id },
+      });
+
+      if (poll.data.poll) {
+        this.context.updateDisplayResults(poll.data.poll.displayResults);
+        this.context.updateVotingAllowed(poll.data.poll.votingAllowed);
+      }
+    }
   }
 
   private mainActionButton(
