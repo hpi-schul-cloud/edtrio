@@ -140,6 +140,10 @@ export const mutations = {
       return context.prisma.deletePoll({ id: args.pollId });
     },
     updatePoll(root: any, args: any, context: IContextType) {
+      context.pollChangedPubSub.publish(`POLL_CHANGED_${args.pollId}`, {
+        pollChanged: args,
+      });
+
       return context.prisma.updatePoll({
         where: { id: args.pollId },
         data: {
@@ -151,7 +155,7 @@ export const mutations = {
     async createPollAnswer(root: any, args: any, context: IContextType) {
       const newAnswer = await context.prisma.createPollAnswer({
         poll: {
-          connect: {id: args.pollId},
+          connect: { id: args.pollId },
         },
       });
       const pollAnswers = await context.prisma
@@ -182,8 +186,8 @@ export const mutations = {
       const userIds = users.map(user => ({ id: user.id }));
       userIds.push({ id: args.userId });
 
-      context.valueChangedPubSub.publish(`POLL_CHANGED_${args.pollId}`, {
-        valueChanged: args,
+      context.pollChangedPubSub.publish(`POLL_CHANGED_${args.pollId}`, {
+        pollChanged: args,
       });
 
       return context.prisma.updatePollAnswer({

@@ -11,7 +11,7 @@ export const subscriptions = {
     pollChanged: {
       subscribe: (parent: any, args: any, context: IContextType, info: any) => {
         const channel = `POLL_CHANGED_${args.pollId}`;
-        return context.valueChangedPubSub.asyncIterator(channel);
+        return context.pollChangedPubSub.asyncIterator(channel);
       },
     },
   },

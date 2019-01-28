@@ -17,6 +17,8 @@ export interface pollChanged_pollChanged_answers {
 
 export interface pollChanged_pollChanged {
   __typename: "Poll";
+  displayResults: boolean;
+  votingAllowed: boolean;
   answers: pollChanged_pollChanged_answers[] | null;
 }
 

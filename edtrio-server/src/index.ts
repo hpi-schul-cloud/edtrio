@@ -6,9 +6,11 @@ import { resolvers } from "./server";
 export interface IContextType {
   prisma: Prisma;
   valueChangedPubSub: PubSub;
+  pollChangedPubSub: PubSub;
 }
 
 const valueChangedPubSub = new PubSub();
+const pollChangedPubSub = new PubSub();
 
 const server = new GraphQLServer({
   typeDefs: "./src/schema.graphql",
@@ -16,6 +18,7 @@ const server = new GraphQLServer({
   context: {
     prisma,
     valueChangedPubSub,
+    pollChangedPubSub,
   },
 });
 

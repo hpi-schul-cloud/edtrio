@@ -160,6 +160,8 @@ export const ADD_SUBMISSION_TO_POLL_ANSWER = gql`
 export const POLL_CHANGED = gql`
   subscription pollChanged($pollId: String!) {
     pollChanged(pollId: $pollId) {
+      displayResults
+      votingAllowed
       answers {
         votes {
           id
