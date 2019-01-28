@@ -65,17 +65,22 @@ const RenderPollNode = {
         <EditorStateContext.Consumer>
           {({ currentUser }) => (
             <PollStateProvider>
-              <PollNode
-                node={node}
-                selected={isFocused}
-                editor={editor}
-                next={next}
-                readOnly={readOnly}
-                currentUser={currentUser}
-                {...attributes}
-              >
-                {children}
-              </PollNode>
+              <PollStateContext.Consumer>
+                {({ votingAllowed }) => (
+                  <PollNode
+                    node={node}
+                    selected={isFocused}
+                    editor={editor}
+                    next={next}
+                    readOnly={readOnly}
+                    currentUser={currentUser}
+                    votingAllowed={votingAllowed}
+                    {...attributes}
+                  >
+                    {children}
+                  </PollNode>
+                )}
+              </PollStateContext.Consumer>
             </PollStateProvider>
           )}
         </EditorStateContext.Consumer>

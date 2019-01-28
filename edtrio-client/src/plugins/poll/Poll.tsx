@@ -5,10 +5,8 @@ import AddIcon from "@material-ui/icons/Add";
 import SendIcon from "@material-ui/icons/Send";
 import { List } from "immutable";
 import React from "react";
-import { Subscription } from "react-apollo";
-import { Block, Editor, Node, Text } from "slate";
+import { Block, Editor, Text } from "slate";
 import { PollStateContext } from "../../context/PollStateContext";
-import { apolloClient } from "../../EditorWrapper/apolloClient";
 import {
   checkAndDeletePollNode,
   testPollNodeValidity,
@@ -16,18 +14,6 @@ import {
 import TemplatePicker from "./TemplatePicker";
 import PollTogglesEditMode from "./toggles/PollTogglesEditMode";
 import PollTogglesReadOnlyMode from "./toggles/PollTogglesReadOnlyMode";
-
-import {
-  poll,
-  pollVariables,
-} from "../../graphqlOperations/generated-types/poll";
-
-import {
-  pollChanged,
-  pollChangedVariables,
-} from "../../graphqlOperations/generated-types/pollChanged";
-
-import { POLL_CHANGED, POLL_QUERY } from "../../graphqlOperations/operations";
 
 export function createNewPollAnswer() {
   return Block.create({
@@ -38,16 +24,12 @@ export function createNewPollAnswer() {
 
 // TODO: add delete function
 
-class PollSubscription extends Subscription<
-  pollChanged,
-  pollChangedVariables
-> {}
-
 export default class PollNode extends React.Component<{
   readOnly: boolean;
   node: any;
   editor: any;
   currentUser: any;
+  votingAllowed: boolean;
 }> {
   public componentDidMount() {
     // check for correct node creation
@@ -64,47 +46,24 @@ export default class PollNode extends React.Component<{
       editor,
       readOnly,
       currentUser,
+      votingAllowed,
       ...attributes
     } = this.props;
 
-    const pollId = this.props.node.data.get("id");
-
     return (
-      <PollSubscription subscription={POLL_CHANGED} variables={{ pollId }}>
-        {({ data: subscriptionData }) => {
-          if (subscriptionData && subscriptionData.pollChanged) {
-            this.context.updateDisplayResults(
-              subscriptionData.pollChanged.displayResults,
-            );
-            this.context.updateVotingAllowed(
-              subscriptionData.pollChanged.votingAllowed,
-            );
-          }
-          return (
-            <PollStateContext.Consumer>
-              {({
-                votingAllowed,
-                updateVotingAllowed,
-                updateDisplayResults,
-              }) => (
-                <div>
-                  <ListEle {...attributes}>{children}</ListEle>
+      <div>
+        <ListEle {...attributes}>{children}</ListEle>
 
-                  {this.mainActionButton(
-                    editor,
-                    node,
-                    readOnly,
-                    currentUser,
-                    votingAllowed,
-                  )}
+        {this.mainActionButton(
+          editor,
+          node,
+          readOnly,
+          currentUser,
+          votingAllowed,
+        )}
 
-                  <br />
-                </div>
-              )}
-            </PollStateContext.Consumer>
-          );
-        }}
-      </PollSubscription>
+        <br />
+      </div>
     );
   }
 
@@ -116,15 +75,6 @@ export default class PollNode extends React.Component<{
     const pollId = this.props.node.data.get("id");
     if (pollId) {
       this.context.updateId(pollId);
-      const poll = await apolloClient.query<poll, pollVariables>({
-        query: POLL_QUERY,
-        variables: { pollId },
-      });
-
-      if (poll.data.poll) {
-        this.context.updateDisplayResults(poll.data.poll.displayResults);
-        this.context.updateVotingAllowed(poll.data.poll.votingAllowed);
-      }
     }
   }
 

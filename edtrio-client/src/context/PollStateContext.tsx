@@ -6,12 +6,23 @@ import {
   updatePollVariables,
 } from "../graphqlOperations/generated-types/updatePoll";
 
-import { UPDATE_POLL } from "../graphqlOperations/operations";
+import { POLL_CHANGED, UPDATE_POLL } from "../graphqlOperations/operations";
+
+import { Subscription } from "react-apollo";
+import {
+  pollChanged,
+  pollChangedVariables,
+} from "../graphqlOperations/generated-types/pollChanged";
+
+class PollSubscription extends Subscription<
+  pollChanged,
+  pollChangedVariables
+> {}
 
 interface IPollStateProviderState {
   id: string;
   updateId: (id: string) => void;
-  answers: any[];
+  answers: any;
   votingAllowed: boolean;
   updateVotingAllowed: (votingAllowed: boolean) => void;
   displayResults: boolean;
@@ -58,7 +69,6 @@ export class PollStateProvider extends Component<{}, IPollStateProviderState> {
   };
 
   public updateVotingAllowed = (votingAllowed: boolean) => {
-    this.setState({ votingAllowed });
     apolloClient.mutate<updatePoll, updatePollVariables>({
       mutation: UPDATE_POLL,
       variables: { pollId: this.state.id, votingAllowed },
@@ -66,7 +76,6 @@ export class PollStateProvider extends Component<{}, IPollStateProviderState> {
   };
 
   public updateDisplayResults = (displayResults: boolean) => {
-    this.setState({ displayResults });
     apolloClient.mutate<updatePoll, updatePollVariables>({
       mutation: UPDATE_POLL,
       variables: { pollId: this.state.id, displayResults },
@@ -75,9 +84,37 @@ export class PollStateProvider extends Component<{}, IPollStateProviderState> {
 
   public render() {
     return (
-      <PollStateContext.Provider value={this.state}>
-        {this.props.children}
-      </PollStateContext.Provider>
+      <PollSubscription
+        subscription={POLL_CHANGED}
+        variables={{ pollId: this.state.id }}
+      >
+        {({ data: subscriptionData }) => {
+          if (subscriptionData && subscriptionData.pollChanged) {
+            const {
+              votingAllowed,
+              displayResults,
+              answers,
+            } = subscriptionData.pollChanged;
+
+            if (
+              votingAllowed != this.state.votingAllowed ||
+              displayResults != this.state.displayResults ||
+              JSON.stringify(answers) != JSON.stringify(this.state.answers)
+            ) {
+              this.setState({
+                votingAllowed,
+                displayResults,
+                answers,
+              });
+            }
+          }
+          return (
+            <PollStateContext.Provider value={this.state}>
+              {this.props.children}
+            </PollStateContext.Provider>
+          );
+        }}
+      </PollSubscription>
     );
   }
 }

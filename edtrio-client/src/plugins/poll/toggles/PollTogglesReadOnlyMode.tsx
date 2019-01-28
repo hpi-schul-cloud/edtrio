@@ -10,9 +10,9 @@ export default class PollTogglesReadOnlyMode extends PollToggles {
   }
   protected getVoteLabel(votingAllowed: boolean) {
     if (votingAllowed) {
-      return "Schüler dürfen nicht abstimmen";
-    } else {
       return "Schüler dürfen abstimmen";
+    } else {
+      return "Schüler dürfen nicht abstimmen";
     }
   }
 }
