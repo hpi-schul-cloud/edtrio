@@ -2,14 +2,26 @@ import { Block, Editor, Node } from "slate";
 
 import { apolloClient } from "../../../EditorWrapper/apolloClient";
 
-// import {
-//   createPoll,
-// } from "../../../generated-types/createPoll";
+import {
+  createPoll,
+  createPollVariables,
+} from "../../../graphqlOperations/generated-types/createPoll";
+
+import {
+  deletePoll,
+  deletePollVariables,
+} from "../../../graphqlOperations/generated-types/deletePoll";
 
 import {
   createPollAnswer,
   createPollAnswerVariables,
 } from "../../../graphqlOperations/generated-types/createPollAnswer";
+
+import {
+  deletePollAnswer,
+  deletePollAnswerVariables,
+} from "../../../graphqlOperations/generated-types/deletePollAnswer";
+
 import {
   CREATE_POLL,
   CREATE_POLL_ANSWER,
@@ -41,7 +53,7 @@ export async function testPollNodeValidity(
     (Object.keys(pollId).length === 0 && pollId.constructor === Object)
   ) {
     // node needs to be created on backend-side
-    const poll = await apolloClient.mutate({
+    const poll = await apolloClient.mutate<createPoll, createPollVariables>({
       mutation: CREATE_POLL,
       variables: { votingAllowed: false, displayResults: false },
     });
@@ -68,9 +80,9 @@ export function checkAndDeletePollNode(editor: Editor, currentNode: Block) {
     )
   ) {
     // node has been deleted :O
-    apolloClient.mutate({
+    apolloClient.mutate<deletePoll, deletePollVariables>({
       mutation: DELETE_POLL,
-      variables: { answerId: currentNode.data.get("id") },
+      variables: { pollId: currentNode.data.get("id") },
     });
   }
 }
@@ -132,9 +144,9 @@ export function checkAndDeletePollAnswerNode(
     )
   ) {
     // node has been deleted :O
-    apolloClient.mutate({
+    apolloClient.mutate<deletePollAnswer, deletePollAnswerVariables>({
       mutation: DELETE_POLL_ANSWER,
-      variables: { answerId: currentNode.data.get("id") },
+      variables: { pollAnswerId: currentNode.data.get("id") },
     });
   }
 }
