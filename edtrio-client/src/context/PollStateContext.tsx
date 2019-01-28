@@ -1,4 +1,12 @@
 import React, { Component, createContext } from "react";
+import { apolloClient } from "../EditorWrapper/apolloClient";
+
+import {
+  updatePoll,
+  updatePollVariables,
+} from "../graphqlOperations/generated-types/updatePoll";
+
+import { UPDATE_POLL } from "../graphqlOperations/operations";
 
 interface IPollStateProviderState {
   id: string;
@@ -51,10 +59,18 @@ export class PollStateProvider extends Component<{}, IPollStateProviderState> {
 
   public updateVotingAllowed = (votingAllowed: boolean) => {
     this.setState({ votingAllowed });
+    apolloClient.mutate<updatePoll, updatePollVariables>({
+      mutation: UPDATE_POLL,
+      variables: { pollId: this.state.id, votingAllowed },
+    });
   };
 
   public updateDisplayResults = (displayResults: boolean) => {
     this.setState({ displayResults });
+    apolloClient.mutate<updatePoll, updatePollVariables>({
+      mutation: UPDATE_POLL,
+      variables: { pollId: this.state.id, displayResults },
+    });
   };
 
   public render() {

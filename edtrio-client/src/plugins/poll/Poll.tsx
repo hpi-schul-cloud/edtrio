@@ -33,11 +33,10 @@ export default class PollNode extends React.Component<{
 }> {
   public componentDidMount() {
     // check for correct node creation
-    setTimeout(
-      () =>
-        testPollNodeValidity(this.props.editor, this.props.node, this.context),
-      200,
-    );
+    setTimeout(() => {
+      testPollNodeValidity(this.props.editor, this.props.node, this.context);
+      this.setPollValuesFromDB();
+    }, 200);
   }
 
   public render() {
@@ -73,6 +72,11 @@ export default class PollNode extends React.Component<{
 
   public componentWillUnmount() {
     checkAndDeletePollNode(this.props.editor, this.props.node);
+  }
+
+  private setPollValuesFromDB() {
+    const id = this.props.node.data.get("id");
+    this.context.updateId(id);
   }
 
   private mainActionButton(

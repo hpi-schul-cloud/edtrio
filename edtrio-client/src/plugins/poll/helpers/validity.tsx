@@ -43,7 +43,8 @@ export async function testPollNodeValidity(
     (descendantNode: Node) =>
       "data" in descendantNode &&
       descendantNode.data.get("id") === pollId &&
-      descendantNode.key !== currentNode.key,
+      descendantNode.key !== currentNode.key &&
+      descendantNode.type === currentNode.type,
   );
   // There is a collision node, or the answer is not initialized yet, or the answerId is an empty
   // object somehow, so it has been wrongly copied / initialized
@@ -97,6 +98,7 @@ export async function testPollAnswerNodeValidity(
   const pollAnswerId = currentNode.data.get("id");
 
   // Test for a copied node
+  // TODO: This is not working for us
   // @ts-ignore: this exists on the document
   const collisionNode = editor.value.document.findDescendant(
     (descendantNode: Node) =>
