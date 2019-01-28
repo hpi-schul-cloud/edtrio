@@ -42,6 +42,7 @@ export default class PollNode extends React.Component<{
   node: any;
   editor: any;
   currentUser: any;
+  getUsersWhoHaveVoted: Function;
   selectedAnswer: any;
   votingAllowed: boolean;
   updateVotingAllowed: Function;
@@ -58,28 +59,12 @@ export default class PollNode extends React.Component<{
   }
 
   public render() {
-    const {
-      children,
-      node,
-      editor,
-      readOnly,
-      currentUser,
-      votingAllowed,
-      ...attributes
-    } = this.props;
+    const { children, ...attributes } = this.props;
 
     return (
       <div>
         <ListEle {...attributes}>{children}</ListEle>
-
-        {this.mainActionButton(
-          editor,
-          node,
-          readOnly,
-          currentUser,
-          votingAllowed,
-        )}
-
+        {this.mainActionButton()}
         <br />
       </div>
     );
@@ -105,21 +90,15 @@ export default class PollNode extends React.Component<{
     }
   }
 
-  private mainActionButton(
-    editor: Editor,
-    node: any,
-    readOnly: boolean,
-    currentUser: any,
-    votingAllowed: boolean,
-  ) {
-    return readOnly
-      ? currentUser.isTeacher
+  private mainActionButton() {
+    return this.props.readOnly
+      ? this.props.currentUser.isTeacher
         ? this.controlToggles()
-        : this.sendAnswerButton(votingAllowed)
-      : this.addEditToolbar(editor, node);
+        : this.sendAnswerButton()
+      : this.addEditToolbar();
   }
 
-  private addEditToolbar(editor: Editor, node: any) {
+  private addEditToolbar() {
     return (
       <Grid
         style={{ paddingLeft: "30px" }}
@@ -128,7 +107,10 @@ export default class PollNode extends React.Component<{
         justify="space-between"
       >
         <Grid item={true}>
-          <TemplatePicker editor={editor} pollkey={node.key} />
+          <TemplatePicker
+            editor={this.props.editor}
+            pollkey={this.props.node.key}
+          />
         </Grid>
         <Grid item={true}>
           <PollTogglesEditMode />
@@ -137,7 +119,7 @@ export default class PollNode extends React.Component<{
           <Button
             style={{ width: "250px", height: "56px" }}
             variant="outlined"
-            onClick={event => this.onClickAddAnswerButton(event, editor, node)}
+            onClick={this.onClickAddAnswerButton.bind(this)}
           >
             <AddIcon />
             &nbsp;Antwort hinzufügen
@@ -148,28 +130,37 @@ export default class PollNode extends React.Component<{
   }
 
   private controlToggles() {
-    return <PollTogglesReadOnlyMode />;
-  }
-
-  private sendAnswerButton(votingAllowed: boolean) {
     return (
-      <Button
-        style={{ float: "right" }}
-        variant="outlined"
-        disabled={!votingAllowed}
-        onClick={event => this.onClickSendAnswerButton()}
-      >
-        <SendIcon />
-        &nbsp;&nbsp;&nbsp;Antwort senden
-      </Button>
+      <div style={{ paddingLeft: "30px" }}>
+        <PollTogglesReadOnlyMode />
+      </div>
     );
   }
 
+  private sendAnswerButton() {
+    console.log("ansans");
+    if (this.props.getUsersWhoHaveVoted().includes(this.props.currentUser.id)) {
+      return <div>Glückwunsch, du hast bereits abgestimmt</div>;
+    } else {
+      return (
+        <Button
+          style={{ float: "right" }}
+          variant="outlined"
+          disabled={!this.props.votingAllowed}
+          onClick={event => this.onClickSendAnswerButton()}
+        >
+          <SendIcon />
+          &nbsp;&nbsp;&nbsp;Antwort senden
+        </Button>
+      );
+    }
+  }
+
   // TODO: Node should be used instead of any for 'node'
-  private onClickAddAnswerButton(event: any, editor: Editor, node: Block) {
-    editor.insertNodeByPath(
-      editor.value.document.getPath(node.key),
-      node.nodes.size,
+  private onClickAddAnswerButton() {
+    this.props.editor.insertNodeByPath(
+      this.props.editor.value.document.getPath(this.props.node.key),
+      this.props.node.nodes.size,
       createNewPollAnswer(),
     );
   }

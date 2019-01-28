@@ -44,7 +44,6 @@ type Poll {
   votingAllowed: Boolean!
   displayResults: Boolean!
   answers: [PollAnswer]!
-  votes: [User]!
   createdAt: DateTime!
   updatedAt: DateTime!
 }

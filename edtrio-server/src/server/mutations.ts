@@ -191,7 +191,7 @@ export const mutations = {
       const userIds = users.map(user => ({ id: user.id }));
       userIds.push({ id: args.userId });
 
-      const poll = await context.prisma.updatePollAnswer({
+      await context.prisma.updatePollAnswer({
         where: { id: args.pollAnswerId },
         data: {
           votes: {
@@ -199,12 +199,11 @@ export const mutations = {
           },
         },
       });
+      const poll = await context.prisma.poll({ id: args.pollId });
 
       context.valueChangedPubSub.publish(`POLL_CHANGED_${args.pollId}`, {
         pollChanged: poll,
       });
-
-      return poll;
     },
   },
 };

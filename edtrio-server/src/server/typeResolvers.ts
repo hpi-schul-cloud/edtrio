@@ -22,25 +22,6 @@ export const typeResolvers = {
         })
         .answers();
     },
-    async votes(root: any, args: any, context: IContextType) {
-      const answers = await context.prisma
-        .poll({
-          id: root.id,
-        })
-        .answers();
-      return answers.reduce(
-        (votes, answer) => {
-          return votes.push(
-            context.prisma
-              .pollAnswer({
-                id: answer.id,
-              })
-              .votes(),
-          );
-        },
-        [] as any,
-      );
-    },
   },
 
   PollAnswer: {

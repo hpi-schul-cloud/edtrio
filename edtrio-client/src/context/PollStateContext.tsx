@@ -12,6 +12,7 @@ import {
   UPDATE_POLL,
 } from "../graphqlOperations/operations";
 
+import { any } from "prop-types";
 import { Subscription } from "react-apollo";
 import {
   pollChanged,
@@ -33,6 +34,7 @@ interface IPollStateProviderState {
   updateDisplayResults: (displayResults: boolean) => void;
   selectedAnswer: any;
   updateSelectedAnswer: (selectedAnswer: any) => void;
+  getUsersWhoHaveVoted: () => any;
 }
 
 export const PollStateContext = createContext<IPollStateProviderState>({
@@ -45,6 +47,7 @@ export const PollStateContext = createContext<IPollStateProviderState>({
   updateDisplayResults: (displayResults: boolean) => {},
   selectedAnswer: null,
   updateSelectedAnswer: (selectedAnswer: any) => {},
+  getUsersWhoHaveVoted: () => {},
 });
 
 export class PollStateProvider extends Component<{}, IPollStateProviderState> {
@@ -61,6 +64,7 @@ export class PollStateProvider extends Component<{}, IPollStateProviderState> {
       updateVotingAllowed: this.updateVotingAllowed,
       displayResults: false,
       updateDisplayResults: this.updateDisplayResults,
+      getUsersWhoHaveVoted: this.getUsersWhoHaveVoted,
     };
   }
 
@@ -71,7 +75,13 @@ export class PollStateProvider extends Component<{}, IPollStateProviderState> {
   public updateSelectedAnswer = (newSelectedAnswer: any) => {
     this.setState({ selectedAnswer: newSelectedAnswer });
   };
-
+  public getUsersWhoHaveVoted = () => {
+    let votes = new Array<any>();
+    for (const answer of this.state.answers) {
+      votes = votes.concat(answer.votes.map(vote => vote.id));
+    }
+    return votes;
+  };
   public updateVotingAllowed = (votingAllowed: boolean) => {
     apolloClient.mutate<updatePoll, updatePollVariables>({
       mutation: UPDATE_POLL,
@@ -86,7 +96,6 @@ export class PollStateProvider extends Component<{}, IPollStateProviderState> {
   };
 
   public updateDisplayResults = (displayResults: boolean) => {
-    console.log("Bad Boy");
     apolloClient.mutate<updatePoll, updatePollVariables>({
       mutation: UPDATE_POLL,
       variables: { pollId: this.state.id, displayResults },
