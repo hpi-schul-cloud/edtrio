@@ -8,6 +8,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { List } from "immutable";
 import { Block, Text } from "slate";
+import createNewAnswer from "./Poll";
 
 const styles = theme => ({
   root: {
@@ -18,12 +19,6 @@ const styles = theme => ({
     minWidth: 200,
   },
 });
-function createNewAnswer(str) {
-  return Block.create({
-    type: "poll_answer",
-    nodes: List([Text.create(str)]),
-  });
-}
 
 function getFeedbackTemplate() {
   return Block.create({

@@ -13,11 +13,16 @@ import {
   addSubmissionToPollAnswerVariables,
 } from "../../graphqlOperations/generated-types/addSubmissionToPollAnswer";
 import {
+  createPollAnswer,
+  createPollAnswerVariables,
+} from "../../graphqlOperations/generated-types/createPollAnswer";
+import {
   poll,
   pollVariables,
 } from "../../graphqlOperations/generated-types/poll";
 import {
   ADD_SUBMISSION_TO_POLL_ANSWER,
+  CREATE_POLL_ANSWER,
   POLL_QUERY,
 } from "../../graphqlOperations/operations";
 import {
@@ -28,11 +33,26 @@ import TemplatePicker from "./TemplatePicker";
 import PollTogglesEditMode from "./toggles/PollTogglesEditMode";
 import PollTogglesReadOnlyMode from "./toggles/PollTogglesReadOnlyMode";
 
-export function createNewPollAnswer() {
-  return Block.create({
-    type: "poll_answer",
-    nodes: List([Text.create("")]),
+export async function createNewPollAnswer(pollId: any, text: any = "") {
+  const pollAnswer = await apolloClient.mutate<
+    createPollAnswer,
+    createPollAnswerVariables
+  >({
+    mutation: CREATE_POLL_ANSWER,
+    variables: { pollId },
   });
+  if (pollAnswer.data) {
+    return Block.create({
+      type: "poll_answer",
+      nodes: List([Text.create(text)]),
+      data: { id: pollAnswer.data.createPollAnswer.id },
+    });
+  } else {
+    return Block.create({
+      type: "poll_answer",
+      nodes: List([Text.create(text)]),
+    });
+  }
 }
 
 // TODO: add delete function
@@ -53,8 +73,9 @@ export default class PollNode extends React.Component<{
     // check for correct node creation
     setTimeout(() => {
       // TODO: Refactor pls
-      testPollNodeValidity(this.props.editor, this.props.node, this.props);
-      this.setPollValuesFromDB();
+      testPollNodeValidity(this.props.editor, this.props.node, this.props).then(
+        () => this.setPollValuesFromDB(),
+      );
     }, 200);
   }
 
@@ -161,7 +182,7 @@ export default class PollNode extends React.Component<{
     this.props.editor.insertNodeByPath(
       this.props.editor.value.document.getPath(this.props.node.key),
       this.props.node.nodes.size,
-      createNewPollAnswer(),
+      createNewPollAnswer(this.props.node.data.get("id")),
     );
   }
 

@@ -5,6 +5,19 @@ import styled from "styled-components";
 import { EditorStateContext } from "../../context/EditorStateContext";
 import { PollStateProvider } from "../../context/PollStateContext";
 import { PollStateContext } from "../../context/PollStateContext";
+import { apolloClient } from "../../EditorWrapper/apolloClient";
+import {
+  createPoll,
+  createPollVariables,
+} from "../../graphqlOperations/generated-types/createPoll";
+import {
+  createPollAnswer,
+  createPollAnswerVariables,
+} from "../../graphqlOperations/generated-types/createPollAnswer";
+import {
+  CREATE_POLL,
+  CREATE_POLL_ANSWER,
+} from "../../graphqlOperations/operations";
 import PollAnswerNode from "./Answer";
 import PollNode, { createNewPollAnswer } from "./Poll";
 import PollQuestionNode from "./Question";
@@ -21,19 +34,23 @@ export default function Poll() {
   };
 }
 
-const onClickPollButton = (event: any, editor: Editor) => {
+const onClickPollButton = async (event: any, editor: Editor) => {
   event.preventDefault();
+  const poll = await apolloClient.mutate<createPoll, createPollVariables>({
+    mutation: CREATE_POLL,
+    variables: { votingAllowed: false, displayResults: false },
+  });
+  // @ts-ignore: I just created it.......... amk
+  const pollid = poll.data.createPoll.id;
 
   editor.insertBlock(
     Block.create({
       type: "poll",
+      data: { id: pollid },
       nodes: List([
-        Block.create({
-          type: "poll_question",
-          nodes: List([Text.create("")]),
-        }),
-        createNewPollAnswer(),
-        createNewPollAnswer(),
+        Block.create({ type: "poll_question" }),
+        await createNewPollAnswer(pollid),
+        await createNewPollAnswer(pollid),
       ]),
     }),
   );
