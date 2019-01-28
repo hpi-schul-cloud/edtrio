@@ -4,6 +4,7 @@ import { Block, Editor, Node, Text } from "slate";
 import styled from "styled-components";
 import { EditorStateContext } from "../../context/EditorStateContext";
 import { PollStateProvider } from "../../context/PollStateContext";
+import { PollStateContext } from "../../context/PollStateContext";
 import PollAnswerNode from "./Answer";
 import PollNode, { createNewPollAnswer } from "./Poll";
 import PollQuestionNode from "./Question";
@@ -49,9 +50,6 @@ const StyledPlaceholder = styled.span`
 
 const RenderPollNode = {
   renderNode(props: any, next: any) {
-    // append to parent, see add-section
-    // TODO: Get current user from props
-
     const {
       children,
       attributes,
@@ -99,16 +97,23 @@ const RenderPollNode = {
       return (
         <EditorStateContext.Consumer>
           {({ currentUser }) => (
-            <PollAnswerNode
-              node={node}
-              parent={parent}
-              editor={editor}
-              readOnly={readOnly}
-              currentUser={currentUser}
-              {...attributes}
-            >
-              {children}
-            </PollAnswerNode>
+            <PollStateContext.Consumer>
+              {({ selectedAnswer, updateSelectedAnswer, displayResults }) => (
+                <PollAnswerNode
+                  node={node}
+                  parent={parent}
+                  editor={editor}
+                  readOnly={readOnly}
+                  currentUser={currentUser}
+                  selectedAnswer={selectedAnswer}
+                  updateSelectedAnswer={updateSelectedAnswer}
+                  displayResults={displayResults}
+                  {...attributes}
+                >
+                  {children}
+                </PollAnswerNode>
+              )}
+            </PollStateContext.Consumer>
           )}
         </EditorStateContext.Consumer>
       );

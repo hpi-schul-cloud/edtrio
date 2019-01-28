@@ -22,6 +22,9 @@ export default class PollAnswerNode extends React.Component<{
   editor: Editor;
   parent: Block;
   currentUser: any;
+  selectedAnswer: any;
+  updateSelectedAnswer: Function;
+  displayResults: boolean;
 }> {
   public componentDidMount() {
     // check for correct node creation
@@ -45,11 +48,22 @@ export default class PollAnswerNode extends React.Component<{
       readOnly,
       parent,
       currentUser,
+      selectedAnswer,
+      updateSelectedAnswer,
+      displayResults,
       ...attributes
     } = this.props;
 
     if (readOnly) {
-      return this.renderReadOnlyMode(node, parent, currentUser, attributes);
+      return this.renderReadOnlyMode(
+        node,
+        parent,
+        currentUser,
+        attributes,
+        selectedAnswer,
+        updateSelectedAnswer,
+        displayResults,
+      );
     } else {
       return this.renderEditMode(children, node, editor, attributes);
     }
@@ -64,29 +78,28 @@ export default class PollAnswerNode extends React.Component<{
     parent: Block,
     currentUser: any,
     attributes: any,
+    selectedAnswer: any,
+    updateSelectedAnswer: Function,
+    displayResults: boolean,
   ) {
     const name = `answer-radio-button-${parent.key}`;
     return (
-      <PollStateContext.Consumer>
-        {({ selectedAnswer, updateSelectedAnswer, displayResults }) => (
-          <ListItem
-            style={this.calculateBackground(displayResults, currentUser)}
-            button={true}
-            divider={true}
-            onClick={() => updateSelectedAnswer(node.key)}
-            {...attributes}
-          >
-            <Radio
-              name={name}
-              checked={selectedAnswer === node.key}
-              color="default"
-              icon={<RadioButtonUncheckedIcon fontSize="small" />}
-              checkedIcon={<RadioButtonCheckedIcon fontSize="small" />}
-            />
-            <ListItemText primary={node.text} />
-          </ListItem>
-        )}
-      </PollStateContext.Consumer>
+      <ListItem
+        style={this.calculateBackground(displayResults, currentUser)}
+        button={true}
+        divider={true}
+        onClick={() => updateSelectedAnswer(node.key)}
+        {...attributes}
+      >
+        <Radio
+          name={name}
+          checked={selectedAnswer === node.key}
+          color="default"
+          icon={<RadioButtonUncheckedIcon fontSize="small" />}
+          checkedIcon={<RadioButtonCheckedIcon fontSize="small" />}
+        />
+        <ListItemText primary={node.text} />
+      </ListItem>
     );
   }
   private calculateBackground(displayResults: boolean, currentUser: any) {
