@@ -66,7 +66,12 @@ const RenderPollNode = {
           {({ currentUser }) => (
             <PollStateProvider>
               <PollStateContext.Consumer>
-                {({ votingAllowed }) => (
+                {({
+                  votingAllowed,
+                  updateDisplayResults,
+                  updateVotingAllowed,
+                  updateId,
+                }) => (
                   <PollNode
                     node={node}
                     selected={isFocused}
@@ -75,6 +80,9 @@ const RenderPollNode = {
                     readOnly={readOnly}
                     currentUser={currentUser}
                     votingAllowed={votingAllowed}
+                    updateVotingAllowed={updateVotingAllowed}
+                    updateDisplayResults={updateDisplayResults}
+                    updateId={updateId}
                     {...attributes}
                   >
                     {children}

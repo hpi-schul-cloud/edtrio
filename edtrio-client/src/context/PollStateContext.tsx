@@ -6,7 +6,11 @@ import {
   updatePollVariables,
 } from "../graphqlOperations/generated-types/updatePoll";
 
-import { POLL_CHANGED, UPDATE_POLL } from "../graphqlOperations/operations";
+import {
+  POLL_CHANGED,
+  POLL_QUERY,
+  UPDATE_POLL,
+} from "../graphqlOperations/operations";
 
 import { Subscription } from "react-apollo";
 import {
@@ -72,13 +76,26 @@ export class PollStateProvider extends Component<{}, IPollStateProviderState> {
     apolloClient.mutate<updatePoll, updatePollVariables>({
       mutation: UPDATE_POLL,
       variables: { pollId: this.state.id, votingAllowed },
+      refetchQueries: [
+        {
+          query: POLL_QUERY,
+          variables: { pollId: this.state.id },
+        },
+      ],
     });
   };
 
   public updateDisplayResults = (displayResults: boolean) => {
+    console.log("Bad Boy");
     apolloClient.mutate<updatePoll, updatePollVariables>({
       mutation: UPDATE_POLL,
       variables: { pollId: this.state.id, displayResults },
+      refetchQueries: [
+        {
+          query: POLL_QUERY,
+          variables: { pollId: this.state.id },
+        },
+      ],
     });
   };
 

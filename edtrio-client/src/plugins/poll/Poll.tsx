@@ -7,6 +7,12 @@ import { List } from "immutable";
 import React from "react";
 import { Block, Editor, Text } from "slate";
 import { PollStateContext } from "../../context/PollStateContext";
+import { apolloClient } from "../../EditorWrapper/apolloClient";
+import {
+  poll,
+  pollVariables,
+} from "../../graphqlOperations/generated-types/poll";
+import { POLL_QUERY } from "../../graphqlOperations/operations";
 import {
   checkAndDeletePollNode,
   testPollNodeValidity,
@@ -30,11 +36,15 @@ export default class PollNode extends React.Component<{
   editor: any;
   currentUser: any;
   votingAllowed: boolean;
+  updateVotingAllowed: Function;
+  updateDisplayResults: Function;
+  updateId: Function;
 }> {
   public componentDidMount() {
     // check for correct node creation
     setTimeout(() => {
-      testPollNodeValidity(this.props.editor, this.props.node, this.context);
+      // TODO: Refactor pls
+      testPollNodeValidity(this.props.editor, this.props.node, this.props);
       this.setPollValuesFromDB();
     }, 200);
   }
@@ -74,7 +84,16 @@ export default class PollNode extends React.Component<{
   private async setPollValuesFromDB() {
     const pollId = this.props.node.data.get("id");
     if (pollId) {
-      this.context.updateId(pollId);
+      this.props.updateId(pollId);
+      const poll = await apolloClient.query<poll, pollVariables>({
+        query: POLL_QUERY,
+        variables: { pollId },
+      });
+      if (poll && poll.data && poll.data.poll) {
+        this.props.updateDisplayResults(poll.data.poll.displayResults);
+        this.props.updateVotingAllowed(poll.data.poll.votingAllowed);
+        // TODO: ALso update answers
+      }
     }
   }
 
@@ -159,4 +178,3 @@ export default class PollNode extends React.Component<{
     // console.log("onClickShowPollResultButton");
   }
 }
-PollNode.contextType = PollStateContext;

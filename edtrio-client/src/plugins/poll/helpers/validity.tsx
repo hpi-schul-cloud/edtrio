@@ -43,8 +43,7 @@ export async function testPollNodeValidity(
     (descendantNode: Node) =>
       "data" in descendantNode &&
       descendantNode.data.get("id") === pollId &&
-      descendantNode.key !== currentNode.key &&
-      descendantNode.type === currentNode.type,
+      descendantNode.key !== currentNode.key,
   );
   // There is a collision node, or the answer is not initialized yet, or the answerId is an empty
   // object somehow, so it has been wrongly copied / initialized
