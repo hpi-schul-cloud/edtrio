@@ -129,7 +129,7 @@ export default class PollNode extends React.Component<{
       <Button
         style={{ float: "right" }}
         variant="outlined"
-        disabled={votingAllowed}
+        disabled={!votingAllowed}
         onClick={event => this.onClickSendAnswerButton()}
       >
         <SendIcon />

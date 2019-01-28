@@ -103,6 +103,7 @@ export default class PollAnswerNode extends React.Component<{
     );
   }
   private calculateBackground(displayResults: boolean, currentUser: any) {
+    displayResults;
     if (!currentUser.isTeacher && !displayResults) {
       return null;
     }
