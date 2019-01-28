@@ -150,8 +150,16 @@ export const DELETE_POLL_ANSWER = gql`
 `;
 
 export const ADD_SUBMISSION_TO_POLL_ANSWER = gql`
-  mutation addSubmissionToPollAnswer($pollAnswerId: String!, $userId: String!) {
-    addSubmissionToPollAnswer(pollAnswerId: $pollAnswerId, userId: $userId) {
+  mutation addSubmissionToPollAnswer(
+    $pollId: String!
+    $pollAnswerId: String!
+    $userId: String!
+  ) {
+    addSubmissionToPollAnswer(
+      pollId: $pollId
+      pollAnswerId: $pollAnswerId
+      userId: $userId
+    ) {
       id
     }
   }

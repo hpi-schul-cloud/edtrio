@@ -160,15 +160,12 @@ export const mutations = {
           connect: { id: args.pollId },
         },
       });
-      console.log("newAnswer", newAnswer);
       const pollAnswers = await context.prisma
         .poll({ id: args.pollId })
         .answers();
-      console.log("pollAnswers pre", pollAnswers);
       pollAnswers.push(newAnswer);
-      console.log("pollAnswers post", pollAnswers);
 
-      const t = await context.prisma.updatePoll({
+      await context.prisma.updatePoll({
         where: { id: args.pollId },
         data: {
           answers: {
@@ -178,7 +175,6 @@ export const mutations = {
           },
         },
       });
-      console.log(t);
       return newAnswer;
     },
     deletePollAnswer(root: any, args: any, context: IContextType) {

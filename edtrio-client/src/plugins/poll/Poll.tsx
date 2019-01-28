@@ -9,10 +9,17 @@ import { Block, Editor, Text } from "slate";
 import { PollStateContext } from "../../context/PollStateContext";
 import { apolloClient } from "../../EditorWrapper/apolloClient";
 import {
+  addSubmissionToPollAnswer,
+  addSubmissionToPollAnswerVariables,
+} from "../../graphqlOperations/generated-types/addSubmissionToPollAnswer";
+import {
   poll,
   pollVariables,
 } from "../../graphqlOperations/generated-types/poll";
-import { POLL_QUERY } from "../../graphqlOperations/operations";
+import {
+  ADD_SUBMISSION_TO_POLL_ANSWER,
+  POLL_QUERY,
+} from "../../graphqlOperations/operations";
 import {
   checkAndDeletePollNode,
   testPollNodeValidity,
@@ -35,6 +42,7 @@ export default class PollNode extends React.Component<{
   node: any;
   editor: any;
   currentUser: any;
+  selectedAnswer: any;
   votingAllowed: boolean;
   updateVotingAllowed: Function;
   updateDisplayResults: Function;
@@ -166,8 +174,19 @@ export default class PollNode extends React.Component<{
     );
   }
 
-  private onClickSendAnswerButton() {
-    // console.log("onClickSendAnswerButton");
+  private async onClickSendAnswerButton() {
+    const { selectedAnswer, node } = this.props;
+    await apolloClient.mutate<
+      addSubmissionToPollAnswer,
+      addSubmissionToPollAnswerVariables
+    >({
+      mutation: ADD_SUBMISSION_TO_POLL_ANSWER,
+      variables: {
+        pollId: node.data.get("id"),
+        pollAnswerId: selectedAnswer,
+        userId: this.props.currentUser.id,
+      },
+    });
   }
 
   private onClickStartPollButton() {

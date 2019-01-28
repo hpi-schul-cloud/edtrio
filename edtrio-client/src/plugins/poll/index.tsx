@@ -71,6 +71,7 @@ const RenderPollNode = {
                   updateDisplayResults,
                   updateVotingAllowed,
                   updateId,
+                  selectedAnswer,
                 }) => (
                   <PollNode
                     node={node}
@@ -80,6 +81,7 @@ const RenderPollNode = {
                     readOnly={readOnly}
                     currentUser={currentUser}
                     votingAllowed={votingAllowed}
+                    selectedAnswer={selectedAnswer}
                     updateVotingAllowed={updateVotingAllowed}
                     updateDisplayResults={updateDisplayResults}
                     updateId={updateId}

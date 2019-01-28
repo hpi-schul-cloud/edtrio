@@ -88,12 +88,12 @@ export default class PollAnswerNode extends React.Component<{
         style={this.calculateBackground(displayResults, currentUser)}
         button={true}
         divider={true}
-        onClick={() => updateSelectedAnswer(node.key)}
+        onClick={() => updateSelectedAnswer(node.data.get("id"))}
         {...attributes}
       >
         <Radio
           name={name}
-          checked={selectedAnswer === node.key}
+          checked={selectedAnswer === node.data.get("id")}
           color="default"
           icon={<RadioButtonUncheckedIcon fontSize="small" />}
           checkedIcon={<RadioButtonCheckedIcon fontSize="small" />}
