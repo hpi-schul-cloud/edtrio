@@ -13,4 +13,14 @@ export const typeResolvers = {
         .multipleChoiceSubmissions();
     },
   },
+
+  Poll: {
+    answers(root: any, args: any, context: IContextType) {
+      return context.prisma
+        .poll({
+          id: root.id,
+        })
+        .answers();
+    },
+  },
 };
