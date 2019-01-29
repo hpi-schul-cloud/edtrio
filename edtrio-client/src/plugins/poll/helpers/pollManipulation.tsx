@@ -15,8 +15,6 @@ import {
 } from "../../../graphqlOperations/operations";
 
 async function createPollAnswerDBEntryAndFetchId(pollId: any) {
-  console.log("before pollDB asnwer ftech");
-
   const answerId = await apolloClient
     .mutate<createPollAnswer, createPollAnswerVariables>({
       mutation: CREATE_POLL_ANSWER,
@@ -27,13 +25,11 @@ async function createPollAnswerDBEntryAndFetchId(pollId: any) {
         // @ts-ignore: I just created it.......... amk
         pollAnswer.data.createPollAnswer.id,
     );
-  console.log("after pollDB answer ftech");
 
   return answerId;
 }
 
 async function createPollDBEntryAndFetchId() {
-  console.log("before pollDB ftech");
   const pollId = await apolloClient
     .mutate<createPoll, createPollVariables>({
       mutation: CREATE_POLL,
@@ -44,21 +40,17 @@ async function createPollDBEntryAndFetchId() {
         // @ts-ignore: I just created it.......... amk
         poll.data.createPoll.id,
     );
-  console.log("after pollDB ftech");
 
   return pollId;
 }
 
 export async function cloneAndDBasifyPoll(pollNode: Block) {
-  console.log(pollNode);
   const pollId = await createPollDBEntryAndFetchId();
-  console.log(pollId);
   const neededDBAnswerEntries = pollNode.nodes.size - 1;
   const dbEntries = Array<any>();
   for (let index = 0; index < neededDBAnswerEntries; index++) {
     dbEntries.push(await createPollAnswerDBEntryAndFetchId(pollId));
   }
-  console.log(dbEntries);
 
   const newPollContent = Array<Block>();
   newPollContent.push(
@@ -76,7 +68,6 @@ export async function cloneAndDBasifyPoll(pollNode: Block) {
       }),
     );
   });
-  console.log(newPollContent);
 
   const newPollNode = Block.create({
     type: "poll",

@@ -26,7 +26,7 @@ export default class PollAnswerNode extends React.Component<{
   updateSelectedAnswer: Function;
   displayResults: boolean;
 }> {
-  /* public componentDidMount() {
+  public componentDidMount() {
     // check for correct node creation
     setTimeout(
       () =>
@@ -38,7 +38,7 @@ export default class PollAnswerNode extends React.Component<{
         ),
       200,
     );
-  } */
+  }
 
   public render() {
     const {

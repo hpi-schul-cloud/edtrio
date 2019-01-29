@@ -21,10 +21,7 @@ import {
   POLL_QUERY,
 } from "../../graphqlOperations/operations";
 import { createNewPollAnswerForPoll } from "./helpers/pollManipulation";
-import {
-  checkAndDeletePollNode,
-  testPollNodeValidity,
-} from "./helpers/validity";
+import { checkAndDeletePollNode } from "./helpers/validity";
 import TemplatePicker from "./TemplatePicker";
 import PollTogglesEditMode from "./toggles/PollTogglesEditMode";
 import PollTogglesReadOnlyMode from "./toggles/PollTogglesReadOnlyMode";
@@ -41,18 +38,6 @@ export default class PollNode extends React.Component<{
   votingAllowed: boolean;
   initState: Function;
 }> {
-  /*   public componentDidMount() {
-    // check for correct node creation
-    setTimeout(() => {
-      // TODO: Refactor pls
-      testPollNodeValidity(
-        this.props.editor,
-        this.props.node,
-        this.props.initState,
-      ).then(() => this.setPollValuesFromDB());
-    }, 200);
-  } */
-
   public render() {
     const { children, ...attributes } = this.props;
 
