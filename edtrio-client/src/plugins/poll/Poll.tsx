@@ -70,7 +70,7 @@ export default class PollNode extends React.Component<{
   // }
 
   private async setPollValuesFromDB() {
-    const pollId = this.props.node.data.get("id");
+    const pollId = this.id();
     if (pollId) {
       const poll = await apolloClient.query<poll, pollVariables>({
         query: POLL_QUERY,
@@ -84,14 +84,18 @@ export default class PollNode extends React.Component<{
   }
 
   private mainActionButton() {
-    return this.props.readOnly
-      ? this.props.currentUser.isTeacher
+    const { readOnly, currentUser } = this.props;
+
+    return readOnly
+      ? currentUser.isTeacher
         ? this.controlToggles()
         : this.sendAnswerButton()
       : this.addEditToolbar();
   }
 
   private addEditToolbar() {
+    const { editor, node } = this.props;
+
     return (
       <Grid
         style={{ paddingLeft: "30px" }}
@@ -100,7 +104,7 @@ export default class PollNode extends React.Component<{
         justify="space-between"
       >
         <Grid item={true}>
-          <TemplatePicker editor={this.props.editor} poll={this.props.node} />
+          <TemplatePicker editor={editor} poll={node} />
         </Grid>
         <Grid item={true}>
           <PollTogglesEditMode />
@@ -128,27 +132,31 @@ export default class PollNode extends React.Component<{
   }
 
   private sendAnswerButton() {
-    let text;
-    const alreadyVoted: boolean = this.props
-      .getUsersWhoHaveVoted()
-      .includes(this.props.currentUser.id);
-    if (alreadyVoted) {
-      text = " Glückwunsch, du hast bereits abgestimmt";
-    } else {
-      text = " Antwort senden";
-    }
+    const { votingAllowed } = this.props;
 
+    const alreadyVoted = this.currentUserHasVoted();
     return (
       <Button
         style={{ float: "right" }}
         variant="outlined"
-        disabled={!this.props.votingAllowed || alreadyVoted}
+        disabled={!votingAllowed || alreadyVoted}
         onClick={event => this.onClickSendAnswerButton()}
       >
         <SendIcon />
-        {text}
+        {this.sendAnswerButtonText(alreadyVoted)}
       </Button>
     );
+  }
+
+  private sendAnswerButtonText(alreadyVoted) {
+    return alreadyVoted
+      ? " Glückwunsch, du hast bereits abgestimmt"
+      : " Antwort senden";
+  }
+
+  private currentUserHasVoted() {
+    const { getUsersWhoHaveVoted, currentUser } = this.props;
+    return getUsersWhoHaveVoted().includes(currentUser.id);
   }
 
   private async onClickAddAnswerButton() {
@@ -172,5 +180,9 @@ export default class PollNode extends React.Component<{
         userId: this.props.currentUser.id,
       },
     });
+  }
+
+  private id() {
+    return this.props.node.data.get("id");
   }
 }
