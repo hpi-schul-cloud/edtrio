@@ -103,18 +103,28 @@ class TemplatePicker extends React.Component {
   handleChange = (name, editor, poll) => event => {
     this.setState({ [name]: event.target.value });
     const pollId = poll.data.get("id");
+    let placeholderKey = null;
+    let placeholder;
     let templatePromise;
     if (event.target.value === "feedback") {
+      placeholder = getFeedbackTemplate(null);
       templatePromise = getFeedbackTemplate(pollId);
     }
     if (event.target.value === "rate") {
+      placeholder = getGradeMeTemplate(null);
       templatePromise = getGradeMeTemplate(pollId);
     }
     if (event.target.value === "empty") {
+      placeholder = getEmptyTemplate(null);
       templatePromise = getEmptyTemplate(pollId);
     }
+    placeholder.then(placeholder => {
+      editor.replaceNodeByKey(poll.key, placeholder);
+      placeholderKey = placeholder.key;
+    });
+
     templatePromise.then(template =>
-      editor.replaceNodeByKey(poll.key, template),
+      editor.replaceNodeByKey(placeholderKey, template),
     );
   };
 

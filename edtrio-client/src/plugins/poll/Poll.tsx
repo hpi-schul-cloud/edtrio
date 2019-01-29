@@ -34,6 +34,12 @@ import PollTogglesEditMode from "./toggles/PollTogglesEditMode";
 import PollTogglesReadOnlyMode from "./toggles/PollTogglesReadOnlyMode";
 
 export async function createNewPollAnswer(pollId: any, text: any = "") {
+  if (!pollId){
+    return Block.create({
+      type: "poll_answer",
+      nodes: List([Text.create(text)]),
+    });
+  }
   const pollAnswer = await apolloClient.mutate<
     createPollAnswer,
     createPollAnswerVariables
