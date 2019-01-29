@@ -103,6 +103,7 @@ export default class PollNode extends React.Component<{
       <Grid
         style={{ paddingLeft: "30px" }}
         container={true}
+        spacing={24}
         alignItems="center"
         justify="space-between"
       >
@@ -114,7 +115,7 @@ export default class PollNode extends React.Component<{
             poll={node}
           />
         </Grid>
-        <Grid item={true}>
+        <Grid xs={true} item={true}>
           <PollTogglesEditMode />
         </Grid>
         <Grid item={true}>
