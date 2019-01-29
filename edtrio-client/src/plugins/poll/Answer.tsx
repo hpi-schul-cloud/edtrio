@@ -24,7 +24,7 @@ export default class PollAnswerNode extends React.Component<{
   selectedAnswer: any;
   updateSelectedAnswer: Function;
   displayResults: boolean;
-  getVotesForAnswer: Function;
+  getAnswerInformation: Function;
   getTotalVotes: Function;
 }> {
   public readonly color = "rgba(0,122,158,0.5)";
@@ -55,7 +55,7 @@ export default class PollAnswerNode extends React.Component<{
       selectedAnswer,
       updateSelectedAnswer,
       displayResults,
-      getVotesForAnswer,
+      getAnswerInformation,
       getTotalVotes,
       ...attributes
     } = this.props;
@@ -169,11 +169,11 @@ export default class PollAnswerNode extends React.Component<{
   }
 
   private voteCount() {
-    return this.props.getVotesForAnswer(this.id()).votesCount;
+    return this.props.getAnswerInformation(this.id()).votesCount;
   }
 
   private isLeading() {
-    return this.props.getVotesForAnswer(this.id()).isLeading;
+    return this.props.getAnswerInformation(this.id()).isLeading;
   }
 
   private id() {

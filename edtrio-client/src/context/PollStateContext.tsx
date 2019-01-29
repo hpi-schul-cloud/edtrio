@@ -34,7 +34,7 @@ interface IPollStateProviderState {
   selectedAnswer: any;
   updateSelectedAnswer: (selectedAnswer: any) => void;
   getUsersWhoHaveVoted: () => any;
-  getVotesForAnswer: (pollAnswerId: string) => any;
+  getAnswerInformation: (pollAnswerId: string) => any;
   getTotalVotes: () => any;
   initState: (
     id: string,
@@ -54,7 +54,7 @@ export const PollStateContext = createContext<IPollStateProviderState>({
   selectedAnswer: null,
   updateSelectedAnswer: (selectedAnswer: any) => {},
   getUsersWhoHaveVoted: () => {},
-  getVotesForAnswer: (pollAnswerId: string) => ({
+  getAnswerInformation: (pollAnswerId: string) => ({
     votesCount: Number,
     isLeading: Boolean,
   }),
@@ -81,7 +81,7 @@ export class PollStateProvider extends Component<{}, IPollStateProviderState> {
       displayResults: false,
       updateDisplayResults: this.updateDisplayResults,
       getUsersWhoHaveVoted: this.getUsersWhoHaveVoted,
-      getVotesForAnswer: this.getVotesForAnswer,
+      getAnswerInformation: this.getAnswerInformation,
       getTotalVotes: this.getTotalVotes,
       initState: this.initState,
     };
@@ -106,7 +106,7 @@ export class PollStateProvider extends Component<{}, IPollStateProviderState> {
       .flat();
   };
 
-  public getVotesForAnswer = (pollAnswerId: string) => {
+  public getAnswerInformation = (pollAnswerId: string) => {
     const answer = this.state.answers.find(
       answer => answer.id === pollAnswerId,
     );

@@ -124,7 +124,7 @@ const RenderPollNode = {
                 selectedAnswer,
                 updateSelectedAnswer,
                 displayResults,
-                getVotesForAnswer,
+                getAnswerInformation,
                 getTotalVotes,
               }) => (
                 <PollAnswerNode
@@ -136,7 +136,7 @@ const RenderPollNode = {
                   selectedAnswer={selectedAnswer}
                   updateSelectedAnswer={updateSelectedAnswer}
                   displayResults={displayResults}
-                  getVotesForAnswer={getVotesForAnswer}
+                  getAnswerInformation={getAnswerInformation}
                   getTotalVotes={getTotalVotes}
                   {...attributes}
                 >
