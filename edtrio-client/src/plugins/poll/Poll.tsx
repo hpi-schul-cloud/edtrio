@@ -50,6 +50,10 @@ export default class PollNode extends React.Component<{
     );
   }
 
+  public componentDidMount() {
+    // check for correct node creation
+    setTimeout(() => this.setPollValuesFromDB(), 200);
+  }
   // public componentWillUnmount() {
   //   checkAndDeletePollNode(this.props.editor, this.props.node);
   // }
