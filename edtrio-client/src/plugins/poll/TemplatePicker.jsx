@@ -48,6 +48,7 @@ class TemplatePicker extends React.Component {
       placeholderTemplate = getEmptyTemplate();
     }
     editor.replaceNodeByKey(poll.key, placeholderTemplate);
+    // TODO: also delete old poll from DB
     let dbasifiedTemplate = await cloneAndDBasifyPoll(placeholderTemplate);
     editor.replaceNodeByKey(placeholderTemplate.key, dbasifiedTemplate);
   };

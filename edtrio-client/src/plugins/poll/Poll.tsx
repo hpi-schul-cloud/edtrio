@@ -135,7 +135,6 @@ export default class PollNode extends React.Component<{
     }
   }
 
-  // TODO: Node should be used instead of any for 'node'
   private async onClickAddAnswerButton() {
     this.props.editor.insertNodeByPath(
       this.props.editor.value.document.getPath(this.props.node.key),
