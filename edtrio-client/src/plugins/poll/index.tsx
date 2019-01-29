@@ -19,7 +19,9 @@ import {
   CREATE_POLL_ANSWER,
 } from "../../graphqlOperations/operations";
 import PollAnswerNode from "./Answer";
-import PollNode, { createNewPollAnswer } from "./Poll";
+import { cloneAndDBasifyPoll } from "./helpers/pollManipulation";
+import { getEmptyTemplate } from "./helpers/templates";
+import PollNode from "./Poll";
 import PollQuestionNode from "./Question";
 import "./style.css";
 
@@ -35,25 +37,10 @@ export default function Poll() {
 }
 
 const onClickPollButton = async (event: any, editor: Editor) => {
-  event.preventDefault();
-  const poll = await apolloClient.mutate<createPoll, createPollVariables>({
-    mutation: CREATE_POLL,
-    variables: { votingAllowed: false, displayResults: false },
-  });
-  // @ts-ignore: I just created it.......... amk
-  const pollid = poll.data.createPoll.id;
-
-  editor.insertBlock(
-    Block.create({
-      type: "poll",
-      data: { id: pollid },
-      nodes: List([
-        Block.create({ type: "poll_question" }),
-        await createNewPollAnswer(pollid),
-        await createNewPollAnswer(pollid),
-      ]),
-    }),
-  );
+  const placeholderUntilDB = getEmptyTemplate();
+  editor.insertBlock(placeholderUntilDB);
+  const dbasifiedTemplate = await cloneAndDBasifyPoll(placeholderUntilDB);
+  editor.replaceNodeByKey(placeholderUntilDB.key, dbasifiedTemplate);
 };
 
 const StyledPlaceholder = styled.span`

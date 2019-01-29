@@ -26,7 +26,7 @@ export default class PollAnswerNode extends React.Component<{
   updateSelectedAnswer: Function;
   displayResults: boolean;
 }> {
-  public componentDidMount() {
+  /* public componentDidMount() {
     // check for correct node creation
     setTimeout(
       () =>
@@ -38,7 +38,7 @@ export default class PollAnswerNode extends React.Component<{
         ),
       200,
     );
-  }
+  } */
 
   public render() {
     const {
@@ -69,9 +69,9 @@ export default class PollAnswerNode extends React.Component<{
     }
   }
 
-  public componentWillUnmount() {
-    checkAndDeletePollAnswerNode(this.props.editor, this.props.node);
-  }
+  // public componentWillUnmount() {
+  //   checkAndDeletePollAnswerNode(this.props.editor, this.props.node);
+  // }
 
   private renderReadOnlyMode(
     node: Block,
