@@ -34,6 +34,8 @@ interface IPollStateProviderState {
   selectedAnswer: any;
   updateSelectedAnswer: (selectedAnswer: any) => void;
   getUsersWhoHaveVoted: () => any;
+  getVotesForAnswer: (pollAnswerId: string) => any[];
+  getTotalVotes: () => any;
   initState: (
     id: string,
     votingAllowed: boolean,
@@ -52,6 +54,8 @@ export const PollStateContext = createContext<IPollStateProviderState>({
   selectedAnswer: null,
   updateSelectedAnswer: (selectedAnswer: any) => {},
   getUsersWhoHaveVoted: () => {},
+  getVotesForAnswer: (pollAnswerId: string) => [],
+  getTotalVotes: () => [],
   initState: (
     id: string,
     votingAllowed: boolean,
@@ -74,6 +78,8 @@ export class PollStateProvider extends Component<{}, IPollStateProviderState> {
       displayResults: false,
       updateDisplayResults: this.updateDisplayResults,
       getUsersWhoHaveVoted: this.getUsersWhoHaveVoted,
+      getVotesForAnswer: this.getVotesForAnswer,
+      getTotalVotes: this.getTotalVotes,
       initState: this.initState,
     };
   }
@@ -90,6 +96,7 @@ export class PollStateProvider extends Component<{}, IPollStateProviderState> {
   public updateSelectedAnswer = (newSelectedAnswer: any) => {
     this.setState({ selectedAnswer: newSelectedAnswer });
   };
+
   public getUsersWhoHaveVoted = () => {
     let votes = new Array<any>();
     for (const answer of this.state.answers) {
@@ -97,6 +104,16 @@ export class PollStateProvider extends Component<{}, IPollStateProviderState> {
     }
     return votes;
   };
+
+  public getVotesForAnswer = (pollAnswerId: string) => {
+    return this.state.answers.filter(answer => answer.id === pollAnswerId)[0]
+      .votes;
+  };
+
+  public getTotalVotes = () => {
+    return this.getUsersWhoHaveVoted().length;
+  };
+
   public updateVotingAllowed = (votingAllowed: boolean) => {
     apolloClient.mutate<updatePoll, updatePollVariables>({
       mutation: UPDATE_POLL,

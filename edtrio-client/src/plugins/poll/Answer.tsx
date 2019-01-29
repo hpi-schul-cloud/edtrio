@@ -25,6 +25,8 @@ export default class PollAnswerNode extends React.Component<{
   selectedAnswer: any;
   updateSelectedAnswer: Function;
   displayResults: boolean;
+  getVotesForAnswer: Function;
+  getTotalVotes: Function;
 }> {
   public componentDidMount() {
     // check for correct node creation
@@ -51,6 +53,8 @@ export default class PollAnswerNode extends React.Component<{
       selectedAnswer,
       updateSelectedAnswer,
       displayResults,
+      getVotesForAnswer,
+      getTotalVotes,
       ...attributes
     } = this.props;
 
@@ -59,10 +63,12 @@ export default class PollAnswerNode extends React.Component<{
         node,
         parent,
         currentUser,
-        attributes,
         selectedAnswer,
         updateSelectedAnswer,
         displayResults,
+        getVotesForAnswer,
+        getTotalVotes,
+        attributes,
       );
     } else {
       return this.renderEditMode(children, node, editor, attributes);
@@ -77,15 +83,17 @@ export default class PollAnswerNode extends React.Component<{
     node: Block,
     parent: Block,
     currentUser: any,
-    attributes: any,
     selectedAnswer: any,
     updateSelectedAnswer: Function,
     displayResults: boolean,
+    getVotesForAnswer: Function,
+    getTotalVotes: Function,
+    attributes: any,
   ) {
     const name = `answer-radio-button-${parent.key}`;
     return (
       <ListItem
-        style={this.calculateBackground(displayResults, currentUser)}
+        style={this.calculateBackground()}
         button={true}
         divider={true}
         onClick={() => updateSelectedAnswer(node.data.get("id"))}
@@ -102,12 +110,14 @@ export default class PollAnswerNode extends React.Component<{
       </ListItem>
     );
   }
-  private calculateBackground(displayResults: boolean, currentUser: any) {
-    displayResults;
+  private calculateBackground() {
+    const { currentUser, displayResults } = this.props;
+
     if (!currentUser.isTeacher && !displayResults) {
       return null;
     }
-    const percentage = Math.floor(Math.random() * 100);
+
+    const percentage = this.votePercentage();
     const color = "rgba(0,122,158,0.5)";
     const background = `linear-gradient(to right, ${color} ${0}%, ${color} ${percentage}%, white ${percentage}%, white ${100 -
       percentage}%)`;
@@ -148,6 +158,23 @@ export default class PollAnswerNode extends React.Component<{
   private onClickDeleteAnswerButton(event: any, editor: Editor, node: Block) {
     event.preventDefault();
     this.deleteNode(editor, node);
+  }
+
+  private votePercentage() {
+    const { getTotalVotes, getVotesForAnswer } = this.props;
+    const totalVotes = getTotalVotes();
+    const percentage =
+      totalVotes > 0
+        ? Math.floor(
+            (getVotesForAnswer(this.id()).length / getTotalVotes()) * 100,
+          )
+        : 0;
+
+    return percentage;
+  }
+
+  private id() {
+    return this.props.node.data.get("id");
   }
 }
 PollAnswerNode.contextType = PollStateContext;

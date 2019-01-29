@@ -115,7 +115,13 @@ const RenderPollNode = {
         <EditorStateContext.Consumer>
           {({ currentUser }) => (
             <PollStateContext.Consumer>
-              {({ selectedAnswer, updateSelectedAnswer, displayResults }) => (
+              {({
+                selectedAnswer,
+                updateSelectedAnswer,
+                displayResults,
+                getVotesForAnswer,
+                getTotalVotes,
+              }) => (
                 <PollAnswerNode
                   node={node}
                   parent={parent}
@@ -125,6 +131,8 @@ const RenderPollNode = {
                   selectedAnswer={selectedAnswer}
                   updateSelectedAnswer={updateSelectedAnswer}
                   displayResults={displayResults}
+                  getVotesForAnswer={getVotesForAnswer}
+                  getTotalVotes={getTotalVotes}
                   {...attributes}
                 >
                   {children}
