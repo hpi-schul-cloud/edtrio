@@ -29,11 +29,13 @@ async function createPollAnswerDBEntryAndFetchId(pollId: any) {
   return answerId;
 }
 
-async function createPollDBEntryAndFetchId() {
+async function createPollDBEntryAndFetchId(stateValues: any) {
   const pollId = await apolloClient
     .mutate<createPoll, createPollVariables>({
       mutation: CREATE_POLL,
-      variables: { votingAllowed: false, displayResults: false },
+      variables: stateValues
+        ? stateValues
+        : { votingAllowed: false, displayResults: false },
     })
     .then(
       poll =>
@@ -44,8 +46,11 @@ async function createPollDBEntryAndFetchId() {
   return pollId;
 }
 
-export async function cloneAndDBasifyPoll(pollNode: Block) {
-  const pollId = await createPollDBEntryAndFetchId();
+export async function cloneAndDBasifyPoll(
+  pollNode: Block,
+  stateValues: any = null,
+) {
+  const pollId = await createPollDBEntryAndFetchId(stateValues);
   const neededDBAnswerEntries = pollNode.nodes.size - 1;
   const dbEntries = Array<any>();
   for (let index = 0; index < neededDBAnswerEntries; index++) {

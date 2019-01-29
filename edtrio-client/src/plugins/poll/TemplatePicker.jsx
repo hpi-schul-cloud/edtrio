@@ -49,7 +49,14 @@ class TemplatePicker extends React.Component {
     }
     editor.replaceNodeByKey(poll.key, placeholderTemplate);
     // TODO: also delete old poll from DB
-    let dbasifiedTemplate = await cloneAndDBasifyPoll(placeholderTemplate);
+    const stateValues = {
+      votingAllowed: this.props.votingAllowed,
+      displayResults: this.props.displayResults,
+    };
+    let dbasifiedTemplate = await cloneAndDBasifyPoll(
+      placeholderTemplate,
+      stateValues,
+    );
     editor.replaceNodeByKey(placeholderTemplate.key, dbasifiedTemplate);
   };
 

@@ -36,6 +36,7 @@ export default class PollNode extends React.Component<{
   getUsersWhoHaveVoted: Function;
   selectedAnswer: any;
   votingAllowed: boolean;
+  displayResults: boolean;
   initState: Function;
 }> {
   public render() {
@@ -96,7 +97,7 @@ export default class PollNode extends React.Component<{
   }
 
   private addEditToolbar() {
-    const { editor, node } = this.props;
+    const { editor, node, votingAllowed, displayResults } = this.props;
 
     return (
       <Grid
@@ -106,7 +107,12 @@ export default class PollNode extends React.Component<{
         justify="space-between"
       >
         <Grid item={true}>
-          <TemplatePicker editor={editor} poll={node} />
+          <TemplatePicker
+            votingAllowed={votingAllowed}
+            displayResults={displayResults}
+            editor={editor}
+            poll={node}
+          />
         </Grid>
         <Grid item={true}>
           <PollTogglesEditMode />

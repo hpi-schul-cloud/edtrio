@@ -8,6 +8,12 @@ import RadioButtonCheckedIcon from "@material-ui/icons/RadioButtonChecked";
 import RadioButtonUncheckedIcon from "@material-ui/icons/RadioButtonUnchecked";
 import React from "react";
 import { Block, Editor } from "slate";
+import { apolloClient } from "../../EditorWrapper/apolloClient";
+import {
+  deletePollAnswer,
+  deletePollAnswerVariables,
+} from "../../graphqlOperations/generated-types/deletePollAnswer";
+import { DELETE_POLL_ANSWER } from "../../graphqlOperations/operations";
 import {
   checkAndDeletePollAnswerNode,
   testPollAnswerNodeValidity,
@@ -133,9 +139,19 @@ export default class PollAnswerNode extends React.Component<{
     return editor.removeNodeByKey(node.key);
   }
 
-  private onClickDeleteAnswerButton(event: any, editor: Editor, node: Block) {
+  private async onClickDeleteAnswerButton(
+    event: any,
+    editor: Editor,
+    node: Block,
+  ) {
     event.preventDefault();
+    const pollAnswerId = node.data.get("id");
+
     this.deleteNode(editor, node);
+    await apolloClient.mutate<deletePollAnswer, deletePollAnswerVariables>({
+      mutation: DELETE_POLL_ANSWER,
+      variables: { pollAnswerId },
+    });
   }
 
   private calculateBackground() {

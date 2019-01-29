@@ -177,7 +177,7 @@ export const mutations = {
       return newAnswer;
     },
     deletePollAnswer(root: any, args: any, context: IContextType) {
-      return context.prisma.deletePoll({ id: args.pollAnswerId });
+      return context.prisma.deletePollAnswer({ id: args.pollAnswerId });
     },
     async addSubmissionToPollAnswer(
       root: any,

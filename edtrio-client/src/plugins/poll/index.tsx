@@ -72,6 +72,7 @@ const RenderPollNode = {
               <PollStateContext.Consumer>
                 {({
                   votingAllowed,
+                  displayResults,
                   initState,
                   selectedAnswer,
                   getUsersWhoHaveVoted,
@@ -84,6 +85,7 @@ const RenderPollNode = {
                     readOnly={readOnly}
                     currentUser={currentUser}
                     votingAllowed={votingAllowed}
+                    displayResults={displayResults}
                     selectedAnswer={selectedAnswer}
                     getUsersWhoHaveVoted={getUsersWhoHaveVoted}
                     initState={initState}

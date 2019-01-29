@@ -130,7 +130,7 @@ const schema: object = {
     poll: {
       nodes: [
         { match: [{ type: "poll_question" }], min: 1, max: 1 },
-        { match: [{ type: "poll_answer" }], min: 2 },
+        { match: [{ type: "poll_answer" }], min: 0 },
       ],
       normalize: (editor: Editor, { code, node, child, index }: any) => {
         switch (code) {
