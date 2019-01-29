@@ -12,6 +12,7 @@ export interface pollChanged_pollChanged_answers_votes {
 
 export interface pollChanged_pollChanged_answers {
   __typename: "PollAnswer";
+  id: string;
   votes: pollChanged_pollChanged_answers_votes[] | null;
 }
 

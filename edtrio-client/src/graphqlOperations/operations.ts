@@ -91,9 +91,14 @@ export const UPDATE_MULTIPLE_CHOICE_SUBMISSION = gql`
 export const POLL_QUERY = gql`
   query poll($pollId: String!) {
     poll(pollId: $pollId) {
-      id
       votingAllowed
       displayResults
+      answers {
+        id
+        votes {
+          id
+        }
+      }
     }
   }
 `;
@@ -171,6 +176,7 @@ export const POLL_CHANGED = gql`
       displayResults
       votingAllowed
       answers {
+        id
         votes {
           id
         }
