@@ -65,9 +65,10 @@ export default class PollNode extends React.Component<{
     // check for correct node creation
     setTimeout(() => this.setPollValuesFromDB(), 200);
   }
-  // public componentWillUnmount() {
-  //   checkAndDeletePollNode(this.props.editor, this.props.node);
-  // }
+
+  public componentWillUnmount() {
+    checkAndDeletePollNode(this.props.editor, this.props.node);
+  }
 
   private async setPollValuesFromDB() {
     const pollId = this.id();

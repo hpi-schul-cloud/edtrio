@@ -136,7 +136,6 @@ export const mutations = {
       });
     },
     deletePoll(root: any, args: any, context: IContextType) {
-      context.prisma.deleteManyPollAnswers({ poll: args.pollId });
       return context.prisma.deletePoll({ id: args.pollId });
     },
     async updatePoll(root: any, args: any, context: IContextType) {

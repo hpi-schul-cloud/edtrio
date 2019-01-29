@@ -4,9 +4,9 @@
 
 import { DocumentNode } from "graphql";
 import {
-  BaseClientOptions,
   makePrismaClientClass,
-  Model,
+  BaseClientOptions,
+  Model
 } from "prisma-client-lib";
 import { typeDefs } from "./prisma-schema";
 
@@ -16,10 +16,10 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
 export interface Exists {
   document: (where?: DocumentWhereInput) => Promise<boolean>;
   multipleChoiceAnswer: (
-    where?: MultipleChoiceAnswerWhereInput,
+    where?: MultipleChoiceAnswerWhereInput
   ) => Promise<boolean>;
   multipleChoiceSubmission: (
-    where?: MultipleChoiceSubmissionWhereInput,
+    where?: MultipleChoiceSubmissionWhereInput
   ) => Promise<boolean>;
   poll: (where?: PollWhereInput) => Promise<boolean>;
   pollAnswer: (where?: PollAnswerWhereInput) => Promise<boolean>;
@@ -28,7 +28,7 @@ export interface Exists {
 
 export interface Node {}
 
-export type FragmentableArray<T> = Promise<T[]> & Fragmentable;
+export type FragmentableArray<T> = Promise<Array<T>> & Fragmentable;
 
 export interface Fragmentable {
   $fragment<T>(fragment: string | DocumentNode): Promise<T>;
@@ -38,7 +38,7 @@ export interface Prisma {
   $exists: Exists;
   $graphql: <T = any>(
     query: string,
-    variables?: { [key: string]: any },
+    variables?: { [key: string]: any }
   ) => Promise<T>;
 
   /**
@@ -46,147 +46,123 @@ export interface Prisma {
    */
 
   document: (where: DocumentWhereUniqueInput) => DocumentPromise;
-  documents: (
-    args?: {
-      where?: DocumentWhereInput;
-      orderBy?: DocumentOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    },
-  ) => FragmentableArray<Document>;
-  documentsConnection: (
-    args?: {
-      where?: DocumentWhereInput;
-      orderBy?: DocumentOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    },
-  ) => DocumentConnectionPromise;
+  documents: (args?: {
+    where?: DocumentWhereInput;
+    orderBy?: DocumentOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Document>;
+  documentsConnection: (args?: {
+    where?: DocumentWhereInput;
+    orderBy?: DocumentOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => DocumentConnectionPromise;
   multipleChoiceAnswer: (
-    where: MultipleChoiceAnswerWhereUniqueInput,
+    where: MultipleChoiceAnswerWhereUniqueInput
   ) => MultipleChoiceAnswerPromise;
-  multipleChoiceAnswers: (
-    args?: {
-      where?: MultipleChoiceAnswerWhereInput;
-      orderBy?: MultipleChoiceAnswerOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    },
-  ) => FragmentableArray<MultipleChoiceAnswer>;
-  multipleChoiceAnswersConnection: (
-    args?: {
-      where?: MultipleChoiceAnswerWhereInput;
-      orderBy?: MultipleChoiceAnswerOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    },
-  ) => MultipleChoiceAnswerConnectionPromise;
+  multipleChoiceAnswers: (args?: {
+    where?: MultipleChoiceAnswerWhereInput;
+    orderBy?: MultipleChoiceAnswerOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<MultipleChoiceAnswer>;
+  multipleChoiceAnswersConnection: (args?: {
+    where?: MultipleChoiceAnswerWhereInput;
+    orderBy?: MultipleChoiceAnswerOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => MultipleChoiceAnswerConnectionPromise;
   multipleChoiceSubmission: (
-    where: MultipleChoiceSubmissionWhereUniqueInput,
+    where: MultipleChoiceSubmissionWhereUniqueInput
   ) => MultipleChoiceSubmissionPromise;
-  multipleChoiceSubmissions: (
-    args?: {
-      where?: MultipleChoiceSubmissionWhereInput;
-      orderBy?: MultipleChoiceSubmissionOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    },
-  ) => FragmentableArray<MultipleChoiceSubmission>;
-  multipleChoiceSubmissionsConnection: (
-    args?: {
-      where?: MultipleChoiceSubmissionWhereInput;
-      orderBy?: MultipleChoiceSubmissionOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    },
-  ) => MultipleChoiceSubmissionConnectionPromise;
+  multipleChoiceSubmissions: (args?: {
+    where?: MultipleChoiceSubmissionWhereInput;
+    orderBy?: MultipleChoiceSubmissionOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<MultipleChoiceSubmission>;
+  multipleChoiceSubmissionsConnection: (args?: {
+    where?: MultipleChoiceSubmissionWhereInput;
+    orderBy?: MultipleChoiceSubmissionOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => MultipleChoiceSubmissionConnectionPromise;
   poll: (where: PollWhereUniqueInput) => PollPromise;
-  polls: (
-    args?: {
-      where?: PollWhereInput;
-      orderBy?: PollOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    },
-  ) => FragmentableArray<Poll>;
-  pollsConnection: (
-    args?: {
-      where?: PollWhereInput;
-      orderBy?: PollOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    },
-  ) => PollConnectionPromise;
+  polls: (args?: {
+    where?: PollWhereInput;
+    orderBy?: PollOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Poll>;
+  pollsConnection: (args?: {
+    where?: PollWhereInput;
+    orderBy?: PollOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => PollConnectionPromise;
   pollAnswer: (where: PollAnswerWhereUniqueInput) => PollAnswerPromise;
-  pollAnswers: (
-    args?: {
-      where?: PollAnswerWhereInput;
-      orderBy?: PollAnswerOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    },
-  ) => FragmentableArray<PollAnswer>;
-  pollAnswersConnection: (
-    args?: {
-      where?: PollAnswerWhereInput;
-      orderBy?: PollAnswerOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    },
-  ) => PollAnswerConnectionPromise;
+  pollAnswers: (args?: {
+    where?: PollAnswerWhereInput;
+    orderBy?: PollAnswerOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<PollAnswer>;
+  pollAnswersConnection: (args?: {
+    where?: PollAnswerWhereInput;
+    orderBy?: PollAnswerOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => PollAnswerConnectionPromise;
   user: (where: UserWhereUniqueInput) => UserPromise;
-  users: (
-    args?: {
-      where?: UserWhereInput;
-      orderBy?: UserOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    },
-  ) => FragmentableArray<User>;
-  usersConnection: (
-    args?: {
-      where?: UserWhereInput;
-      orderBy?: UserOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    },
-  ) => UserConnectionPromise;
+  users: (args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<User>;
+  usersConnection: (args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => UserConnectionPromise;
   node: (args: { id: ID_Output }) => Node;
 
   /**
@@ -194,141 +170,107 @@ export interface Prisma {
    */
 
   createDocument: (data: DocumentCreateInput) => DocumentPromise;
-  updateDocument: (
-    args: {
-      data: DocumentUpdateInput;
-      where: DocumentWhereUniqueInput;
-    },
-  ) => DocumentPromise;
-  updateManyDocuments: (
-    args: {
-      data: DocumentUpdateManyMutationInput;
-      where?: DocumentWhereInput;
-    },
-  ) => BatchPayloadPromise;
-  upsertDocument: (
-    args: {
-      where: DocumentWhereUniqueInput;
-      create: DocumentCreateInput;
-      update: DocumentUpdateInput;
-    },
-  ) => DocumentPromise;
+  updateDocument: (args: {
+    data: DocumentUpdateInput;
+    where: DocumentWhereUniqueInput;
+  }) => DocumentPromise;
+  updateManyDocuments: (args: {
+    data: DocumentUpdateManyMutationInput;
+    where?: DocumentWhereInput;
+  }) => BatchPayloadPromise;
+  upsertDocument: (args: {
+    where: DocumentWhereUniqueInput;
+    create: DocumentCreateInput;
+    update: DocumentUpdateInput;
+  }) => DocumentPromise;
   deleteDocument: (where: DocumentWhereUniqueInput) => DocumentPromise;
   deleteManyDocuments: (where?: DocumentWhereInput) => BatchPayloadPromise;
   createMultipleChoiceAnswer: (
-    data: MultipleChoiceAnswerCreateInput,
+    data: MultipleChoiceAnswerCreateInput
   ) => MultipleChoiceAnswerPromise;
-  updateMultipleChoiceAnswer: (
-    args: {
-      data: MultipleChoiceAnswerUpdateInput;
-      where: MultipleChoiceAnswerWhereUniqueInput;
-    },
-  ) => MultipleChoiceAnswerPromise;
-  updateManyMultipleChoiceAnswers: (
-    args: {
-      data: MultipleChoiceAnswerUpdateManyMutationInput;
-      where?: MultipleChoiceAnswerWhereInput;
-    },
-  ) => BatchPayloadPromise;
-  upsertMultipleChoiceAnswer: (
-    args: {
-      where: MultipleChoiceAnswerWhereUniqueInput;
-      create: MultipleChoiceAnswerCreateInput;
-      update: MultipleChoiceAnswerUpdateInput;
-    },
-  ) => MultipleChoiceAnswerPromise;
+  updateMultipleChoiceAnswer: (args: {
+    data: MultipleChoiceAnswerUpdateInput;
+    where: MultipleChoiceAnswerWhereUniqueInput;
+  }) => MultipleChoiceAnswerPromise;
+  updateManyMultipleChoiceAnswers: (args: {
+    data: MultipleChoiceAnswerUpdateManyMutationInput;
+    where?: MultipleChoiceAnswerWhereInput;
+  }) => BatchPayloadPromise;
+  upsertMultipleChoiceAnswer: (args: {
+    where: MultipleChoiceAnswerWhereUniqueInput;
+    create: MultipleChoiceAnswerCreateInput;
+    update: MultipleChoiceAnswerUpdateInput;
+  }) => MultipleChoiceAnswerPromise;
   deleteMultipleChoiceAnswer: (
-    where: MultipleChoiceAnswerWhereUniqueInput,
+    where: MultipleChoiceAnswerWhereUniqueInput
   ) => MultipleChoiceAnswerPromise;
   deleteManyMultipleChoiceAnswers: (
-    where?: MultipleChoiceAnswerWhereInput,
+    where?: MultipleChoiceAnswerWhereInput
   ) => BatchPayloadPromise;
   createMultipleChoiceSubmission: (
-    data: MultipleChoiceSubmissionCreateInput,
+    data: MultipleChoiceSubmissionCreateInput
   ) => MultipleChoiceSubmissionPromise;
-  updateMultipleChoiceSubmission: (
-    args: {
-      data: MultipleChoiceSubmissionUpdateInput;
-      where: MultipleChoiceSubmissionWhereUniqueInput;
-    },
-  ) => MultipleChoiceSubmissionPromise;
-  updateManyMultipleChoiceSubmissions: (
-    args: {
-      data: MultipleChoiceSubmissionUpdateManyMutationInput;
-      where?: MultipleChoiceSubmissionWhereInput;
-    },
-  ) => BatchPayloadPromise;
-  upsertMultipleChoiceSubmission: (
-    args: {
-      where: MultipleChoiceSubmissionWhereUniqueInput;
-      create: MultipleChoiceSubmissionCreateInput;
-      update: MultipleChoiceSubmissionUpdateInput;
-    },
-  ) => MultipleChoiceSubmissionPromise;
+  updateMultipleChoiceSubmission: (args: {
+    data: MultipleChoiceSubmissionUpdateInput;
+    where: MultipleChoiceSubmissionWhereUniqueInput;
+  }) => MultipleChoiceSubmissionPromise;
+  updateManyMultipleChoiceSubmissions: (args: {
+    data: MultipleChoiceSubmissionUpdateManyMutationInput;
+    where?: MultipleChoiceSubmissionWhereInput;
+  }) => BatchPayloadPromise;
+  upsertMultipleChoiceSubmission: (args: {
+    where: MultipleChoiceSubmissionWhereUniqueInput;
+    create: MultipleChoiceSubmissionCreateInput;
+    update: MultipleChoiceSubmissionUpdateInput;
+  }) => MultipleChoiceSubmissionPromise;
   deleteMultipleChoiceSubmission: (
-    where: MultipleChoiceSubmissionWhereUniqueInput,
+    where: MultipleChoiceSubmissionWhereUniqueInput
   ) => MultipleChoiceSubmissionPromise;
   deleteManyMultipleChoiceSubmissions: (
-    where?: MultipleChoiceSubmissionWhereInput,
+    where?: MultipleChoiceSubmissionWhereInput
   ) => BatchPayloadPromise;
   createPoll: (data: PollCreateInput) => PollPromise;
-  updatePoll: (
-    args: {
-      data: PollUpdateInput;
-      where: PollWhereUniqueInput;
-    },
-  ) => PollPromise;
-  updateManyPolls: (
-    args: {
-      data: PollUpdateManyMutationInput;
-      where?: PollWhereInput;
-    },
-  ) => BatchPayloadPromise;
-  upsertPoll: (
-    args: {
-      where: PollWhereUniqueInput;
-      create: PollCreateInput;
-      update: PollUpdateInput;
-    },
-  ) => PollPromise;
+  updatePoll: (args: {
+    data: PollUpdateInput;
+    where: PollWhereUniqueInput;
+  }) => PollPromise;
+  updateManyPolls: (args: {
+    data: PollUpdateManyMutationInput;
+    where?: PollWhereInput;
+  }) => BatchPayloadPromise;
+  upsertPoll: (args: {
+    where: PollWhereUniqueInput;
+    create: PollCreateInput;
+    update: PollUpdateInput;
+  }) => PollPromise;
   deletePoll: (where: PollWhereUniqueInput) => PollPromise;
   deleteManyPolls: (where?: PollWhereInput) => BatchPayloadPromise;
   createPollAnswer: (data: PollAnswerCreateInput) => PollAnswerPromise;
-  updatePollAnswer: (
-    args: {
-      data: PollAnswerUpdateInput;
-      where: PollAnswerWhereUniqueInput;
-    },
-  ) => PollAnswerPromise;
-  upsertPollAnswer: (
-    args: {
-      where: PollAnswerWhereUniqueInput;
-      create: PollAnswerCreateInput;
-      update: PollAnswerUpdateInput;
-    },
-  ) => PollAnswerPromise;
+  updatePollAnswer: (args: {
+    data: PollAnswerUpdateInput;
+    where: PollAnswerWhereUniqueInput;
+  }) => PollAnswerPromise;
+  upsertPollAnswer: (args: {
+    where: PollAnswerWhereUniqueInput;
+    create: PollAnswerCreateInput;
+    update: PollAnswerUpdateInput;
+  }) => PollAnswerPromise;
   deletePollAnswer: (where: PollAnswerWhereUniqueInput) => PollAnswerPromise;
   deleteManyPollAnswers: (where?: PollAnswerWhereInput) => BatchPayloadPromise;
   createUser: (data: UserCreateInput) => UserPromise;
-  updateUser: (
-    args: {
-      data: UserUpdateInput;
-      where: UserWhereUniqueInput;
-    },
-  ) => UserPromise;
-  updateManyUsers: (
-    args: {
-      data: UserUpdateManyMutationInput;
-      where?: UserWhereInput;
-    },
-  ) => BatchPayloadPromise;
-  upsertUser: (
-    args: {
-      where: UserWhereUniqueInput;
-      create: UserCreateInput;
-      update: UserUpdateInput;
-    },
-  ) => UserPromise;
+  updateUser: (args: {
+    data: UserUpdateInput;
+    where: UserWhereUniqueInput;
+  }) => UserPromise;
+  updateManyUsers: (args: {
+    data: UserUpdateManyMutationInput;
+    where?: UserWhereInput;
+  }) => BatchPayloadPromise;
+  upsertUser: (args: {
+    where: UserWhereUniqueInput;
+    create: UserCreateInput;
+    update: UserUpdateInput;
+  }) => UserPromise;
   deleteUser: (where: UserWhereUniqueInput) => UserPromise;
   deleteManyUsers: (where?: UserWhereInput) => BatchPayloadPromise;
 
@@ -341,22 +283,22 @@ export interface Prisma {
 
 export interface Subscription {
   document: (
-    where?: DocumentSubscriptionWhereInput,
+    where?: DocumentSubscriptionWhereInput
   ) => DocumentSubscriptionPayloadSubscription;
   multipleChoiceAnswer: (
-    where?: MultipleChoiceAnswerSubscriptionWhereInput,
+    where?: MultipleChoiceAnswerSubscriptionWhereInput
   ) => MultipleChoiceAnswerSubscriptionPayloadSubscription;
   multipleChoiceSubmission: (
-    where?: MultipleChoiceSubmissionSubscriptionWhereInput,
+    where?: MultipleChoiceSubmissionSubscriptionWhereInput
   ) => MultipleChoiceSubmissionSubscriptionPayloadSubscription;
   poll: (
-    where?: PollSubscriptionWhereInput,
+    where?: PollSubscriptionWhereInput
   ) => PollSubscriptionPayloadSubscription;
   pollAnswer: (
-    where?: PollAnswerSubscriptionWhereInput,
+    where?: PollAnswerSubscriptionWhereInput
   ) => PollAnswerSubscriptionPayloadSubscription;
   user: (
-    where?: UserSubscriptionWhereInput,
+    where?: UserSubscriptionWhereInput
   ) => UserSubscriptionPayloadSubscription;
 }
 
@@ -1511,30 +1453,26 @@ export interface Document {
 export interface DocumentPromise extends Promise<Document>, Fragmentable {
   id: () => Promise<ID_Output>;
   value: () => Promise<Json>;
-  users: <T = FragmentableArray<User>>(
-    args?: {
-      where?: UserWhereInput;
-      orderBy?: UserOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    },
-  ) => T;
+  users: <T = FragmentableArray<User>>(args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
-  answers: <T = FragmentableArray<MultipleChoiceAnswer>>(
-    args?: {
-      where?: MultipleChoiceAnswerWhereInput;
-      orderBy?: MultipleChoiceAnswerOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    },
-  ) => T;
+  answers: <T = FragmentableArray<MultipleChoiceAnswer>>(args?: {
+    where?: MultipleChoiceAnswerWhereInput;
+    orderBy?: MultipleChoiceAnswerOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface DocumentSubscription
@@ -1542,30 +1480,28 @@ export interface DocumentSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   value: () => Promise<AsyncIterator<Json>>;
-  users: <T = Promise<AsyncIterator<UserSubscription>>>(
-    args?: {
-      where?: UserWhereInput;
-      orderBy?: UserOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    },
-  ) => T;
+  users: <T = Promise<AsyncIterator<UserSubscription>>>(args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  answers: <T = Promise<AsyncIterator<MultipleChoiceAnswerSubscription>>>(
-    args?: {
-      where?: MultipleChoiceAnswerWhereInput;
-      orderBy?: MultipleChoiceAnswerOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    },
-  ) => T;
+  answers: <
+    T = Promise<AsyncIterator<MultipleChoiceAnswerSubscription>>
+  >(args?: {
+    where?: MultipleChoiceAnswerWhereInput;
+    orderBy?: MultipleChoiceAnswerOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface PollAnswerEdge {
@@ -1748,17 +1684,15 @@ export interface PollAnswer {
 
 export interface PollAnswerPromise extends Promise<PollAnswer>, Fragmentable {
   id: () => Promise<ID_Output>;
-  votes: <T = FragmentableArray<User>>(
-    args?: {
-      where?: UserWhereInput;
-      orderBy?: UserOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    },
-  ) => T;
+  votes: <T = FragmentableArray<User>>(args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   poll: <T = PollPromise>() => T;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
@@ -1768,17 +1702,15 @@ export interface PollAnswerSubscription
   extends Promise<AsyncIterator<PollAnswer>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  votes: <T = Promise<AsyncIterator<UserSubscription>>>(
-    args?: {
-      where?: UserWhereInput;
-      orderBy?: UserOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    },
-  ) => T;
+  votes: <T = Promise<AsyncIterator<UserSubscription>>>(args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   poll: <T = PollSubscription>() => T;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
@@ -1840,17 +1772,15 @@ export interface PollPromise extends Promise<Poll>, Fragmentable {
   id: () => Promise<ID_Output>;
   votingAllowed: () => Promise<Boolean>;
   displayResults: () => Promise<Boolean>;
-  answers: <T = FragmentableArray<PollAnswer>>(
-    args?: {
-      where?: PollAnswerWhereInput;
-      orderBy?: PollAnswerOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    },
-  ) => T;
+  answers: <T = FragmentableArray<PollAnswer>>(args?: {
+    where?: PollAnswerWhereInput;
+    orderBy?: PollAnswerOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
 }
@@ -1861,17 +1791,15 @@ export interface PollSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   votingAllowed: () => Promise<AsyncIterator<Boolean>>;
   displayResults: () => Promise<AsyncIterator<Boolean>>;
-  answers: <T = Promise<AsyncIterator<PollAnswerSubscription>>>(
-    args?: {
-      where?: PollAnswerWhereInput;
-      orderBy?: PollAnswerOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    },
-  ) => T;
+  answers: <T = Promise<AsyncIterator<PollAnswerSubscription>>>(args?: {
+    where?: PollAnswerWhereInput;
+    orderBy?: PollAnswerOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
@@ -2092,17 +2020,17 @@ export interface MultipleChoiceAnswerPromise
   isCorrect: () => Promise<Boolean>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
-  multipleChoiceSubmissions: <T = FragmentableArray<MultipleChoiceSubmission>>(
-    args?: {
-      where?: MultipleChoiceSubmissionWhereInput;
-      orderBy?: MultipleChoiceSubmissionOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    },
-  ) => T;
+  multipleChoiceSubmissions: <
+    T = FragmentableArray<MultipleChoiceSubmission>
+  >(args?: {
+    where?: MultipleChoiceSubmissionWhereInput;
+    orderBy?: MultipleChoiceSubmissionOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface MultipleChoiceAnswerSubscription
@@ -2114,17 +2042,15 @@ export interface MultipleChoiceAnswerSubscription
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   multipleChoiceSubmissions: <
     T = Promise<AsyncIterator<MultipleChoiceSubmissionSubscription>>
-  >(
-    args?: {
-      where?: MultipleChoiceSubmissionWhereInput;
-      orderBy?: MultipleChoiceSubmissionOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    },
-  ) => T;
+  >(args?: {
+    where?: MultipleChoiceSubmissionWhereInput;
+    orderBy?: MultipleChoiceSubmissionOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface MultipleChoiceSubmissionPreviousValues {
@@ -2298,28 +2224,28 @@ export type Boolean = boolean;
 export const models: Model[] = [
   {
     name: "Document",
-    embedded: false,
+    embedded: false
   },
   {
     name: "MultipleChoiceAnswer",
-    embedded: false,
+    embedded: false
   },
   {
     name: "MultipleChoiceSubmission",
-    embedded: false,
+    embedded: false
   },
   {
     name: "Poll",
-    embedded: false,
+    embedded: false
   },
   {
     name: "PollAnswer",
-    embedded: false,
+    embedded: false
   },
   {
     name: "User",
-    embedded: false,
-  },
+    embedded: false
+  }
 ];
 
 /**
@@ -2329,6 +2255,6 @@ export const models: Model[] = [
 export const Prisma = makePrismaClientClass<ClientConstructor<Prisma>>({
   typeDefs,
   models,
-  endpoint: `http://localhost:4466`,
+  endpoint: `http://localhost:4466`
 });
 export const prisma = new Prisma();
