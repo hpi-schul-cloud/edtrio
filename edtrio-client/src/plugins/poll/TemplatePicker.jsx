@@ -8,7 +8,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { List } from "immutable";
 import { Block, Text } from "slate";
-import createNewAnswer from "./Poll";
+import { createNewPollAnswer } from "./Poll";
 
 const styles = theme => ({
   root: {
@@ -20,9 +20,10 @@ const styles = theme => ({
   },
 });
 
-function getFeedbackTemplate() {
+async function getFeedbackTemplate(pollId) {
   return Block.create({
     type: "poll",
+    data: { id: pollId },
     nodes: List([
       Block.create({
         type: "poll_question",
@@ -30,20 +31,31 @@ function getFeedbackTemplate() {
           Text.create("Was hat dir in der heutigen Stunde am meisten gefehlt?"),
         ]),
       }),
-      createNewAnswer("Nichts! Ich bin zufrieden"),
-      createNewAnswer("Zeit. Ich hätte gerne mehr Zeit gehabt"),
-      createNewAnswer("Erklärung. Ich habe kaum etwas verstanden"),
-      createNewAnswer("Vielfalt. Irgendwie war es langweilig heute"),
-      createNewAnswer("Ruhe. Es war viel zu laut"),
-      createNewAnswer(
+      await createNewPollAnswer(pollId, "Nichts! Ich bin zufrieden"),
+      await createNewPollAnswer(
+        pollId,
+        "Zeit. Ich hätte gerne mehr Zeit gehabt",
+      ),
+      await createNewPollAnswer(
+        pollId,
+        "Erklärung. Ich habe kaum etwas verstanden",
+      ),
+      await createNewPollAnswer(
+        pollId,
+        "Vielfalt. Irgendwie war es langweilig heute",
+      ),
+      await createNewPollAnswer(pollId, "Ruhe. Es war viel zu laut"),
+      await createNewPollAnswer(
+        pollId,
         "Feedback. Ich brauche mehr Rückmeldung zu meiner Arbeit",
       ),
     ]),
   });
 }
-function getGradeMeTemplate() {
+async function getGradeMeTemplate(pollId) {
   return Block.create({
     type: "poll",
+    data: { id: pollId },
     nodes: List([
       Block.create({
         type: "poll_question",
@@ -51,26 +63,27 @@ function getGradeMeTemplate() {
           Text.create("Wie würdest du die Stunde in Schulnoten bewerten?"),
         ]),
       }),
-      createNewAnswer("1"),
-      createNewAnswer("2"),
-      createNewAnswer("3"),
-      createNewAnswer("4"),
-      createNewAnswer("5"),
-      createNewAnswer("6"),
+      await createNewPollAnswer(pollId, "1"),
+      await createNewPollAnswer(pollId, "2"),
+      await createNewPollAnswer(pollId, "3"),
+      await createNewPollAnswer(pollId, "4"),
+      await createNewPollAnswer(pollId, "5"),
+      await createNewPollAnswer(pollId, "6"),
     ]),
   });
 }
 
-function getEmptyTemplate() {
+async function getEmptyTemplate(pollId) {
   return Block.create({
     type: "poll",
+    data: { id: pollId },
     nodes: List([
       Block.create({
         type: "poll_question",
         nodes: List([Text.create("")]),
       }),
-      createNewAnswer(""),
-      createNewAnswer(""),
+      await createNewPollAnswer(pollId, ""),
+      await createNewPollAnswer(pollId, ""),
     ]),
   });
 }
@@ -87,21 +100,28 @@ class TemplatePicker extends React.Component {
     });
   }
 
-  handleChange = (name, editor, pollkey) => event => {
+  handleChange = (name, editor, poll) => event => {
     this.setState({ [name]: event.target.value });
+    const pollId = poll.data.get("id");
+    let templatePromise;
     if (event.target.value === "feedback") {
-      editor.replaceNodeByKey(pollkey, getFeedbackTemplate());
-    } else if (event.target.value === "rate") {
-      editor.replaceNodeByKey(pollkey, getGradeMeTemplate());
-    } else if (event.target.value === "empty") {
-      editor.replaceNodeByKey(pollkey, getEmptyTemplate());
+      templatePromise = getFeedbackTemplate(pollId);
     }
+    if (event.target.value === "rate") {
+      templatePromise = getGradeMeTemplate(pollId);
+    }
+    if (event.target.value === "empty") {
+      templatePromise = getEmptyTemplate(pollId);
+    }
+    templatePromise.then(template =>
+      editor.replaceNodeByKey(poll.key, template),
+    );
   };
 
   render() {
-    const { classes, editor, pollkey } = this.props;
+    const { classes, editor, poll } = this.props;
 
-    const name = `dropdown-template-${pollkey}`;
+    const name = `dropdown-template-${poll.key}`;
     return (
       <div className={classes.root}>
         <FormControl variant="outlined" className={classes.formControl}>
@@ -116,7 +136,7 @@ class TemplatePicker extends React.Component {
           <Select
             native
             value={this.state.age}
-            onChange={this.handleChange("template", editor, pollkey)}
+            onChange={this.handleChange("template", editor, poll)}
             input={
               <OutlinedInput
                 name="template"

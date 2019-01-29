@@ -128,10 +128,7 @@ export default class PollNode extends React.Component<{
         justify="space-between"
       >
         <Grid item={true}>
-          <TemplatePicker
-            editor={this.props.editor}
-            pollkey={this.props.node.key}
-          />
+          <TemplatePicker editor={this.props.editor} poll={this.props.node} />
         </Grid>
         <Grid item={true}>
           <PollTogglesEditMode />
