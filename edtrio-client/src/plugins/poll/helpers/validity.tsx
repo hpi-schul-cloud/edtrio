@@ -56,6 +56,7 @@ export async function testPollAnswerNodeValidity(
 ) {
   // Test for having no id
   const pollAnswerId = currentNode.data.get("id");
+  if (pollAnswerId === "placeholderNode") { return; }
 
   // Test for a copied node
   // TODO: This is not working for us
@@ -69,7 +70,7 @@ export async function testPollAnswerNodeValidity(
   // There is a collision node,
   if (collisionNode) {
     // node needs to be created on backend-side
-    const pollId = await parent.data.get("id");
+    const pollId = parent.data.get("id");
     const pollAnswer = await apolloClient.mutate<
       createPollAnswer,
       createPollAnswerVariables

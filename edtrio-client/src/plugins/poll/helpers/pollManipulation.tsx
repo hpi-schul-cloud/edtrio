@@ -91,5 +91,6 @@ export function createNewPollAnswerWithoutDB(text: any = "") {
   return Block.create({
     type: "poll_answer",
     nodes: List([Text.create(text)]),
+    data: { id: "placeholderNode" },
   });
 }
