@@ -8,7 +8,6 @@ import RadioButtonCheckedIcon from "@material-ui/icons/RadioButtonChecked";
 import RadioButtonUncheckedIcon from "@material-ui/icons/RadioButtonUnchecked";
 import React from "react";
 import { Block, Editor } from "slate";
-import { PollStateContext } from "../../context/PollStateContext";
 import {
   checkAndDeletePollAnswerNode,
   testPollAnswerNodeValidity,
@@ -28,6 +27,8 @@ export default class PollAnswerNode extends React.Component<{
   getVotesForAnswer: Function;
   getTotalVotes: Function;
 }> {
+  public readonly color = "rgba(0,122,158,0.5)";
+
   public componentDidMount() {
     // check for correct node creation
     setTimeout(
@@ -59,19 +60,9 @@ export default class PollAnswerNode extends React.Component<{
     } = this.props;
 
     if (readOnly) {
-      return this.renderReadOnlyMode(
-        node,
-        parent,
-        currentUser,
-        selectedAnswer,
-        updateSelectedAnswer,
-        displayResults,
-        getVotesForAnswer,
-        getTotalVotes,
-        attributes,
-      );
+      return this.renderReadOnlyMode(attributes);
     } else {
-      return this.renderEditMode(children, node, editor, attributes);
+      return this.renderEditMode(attributes);
     }
   }
 
@@ -79,17 +70,8 @@ export default class PollAnswerNode extends React.Component<{
   //   checkAndDeletePollAnswerNode(this.props.editor, this.props.node);
   // }
 
-  private renderReadOnlyMode(
-    node: Block,
-    parent: Block,
-    currentUser: any,
-    selectedAnswer: any,
-    updateSelectedAnswer: Function,
-    displayResults: boolean,
-    getVotesForAnswer: Function,
-    getTotalVotes: Function,
-    attributes: any,
-  ) {
+  private renderReadOnlyMode(attributes: any) {
+    const { node, parent, selectedAnswer, updateSelectedAnswer } = this.props;
     const name = `answer-radio-button-${parent.key}`;
     return (
       <ListItem
@@ -110,25 +92,9 @@ export default class PollAnswerNode extends React.Component<{
       </ListItem>
     );
   }
-  private calculateBackground() {
-    const { currentUser, displayResults } = this.props;
 
-    if (!currentUser.isTeacher && !displayResults) {
-      return null;
-    }
-
-    const percentage = this.votePercentage();
-    const color = "rgba(0,122,158,0.5)";
-    const background = `linear-gradient(to right, ${color} ${0}%, ${color} ${percentage}%, white ${percentage}%, white ${100 -
-      percentage}%)`;
-    return { background };
-  }
-  private renderEditMode(
-    children: any,
-    node: Block,
-    editor: Editor,
-    attributes: any,
-  ) {
+  private renderEditMode(attributes: any) {
+    const { children, node, editor } = this.props;
     return (
       <ListItem divider={true} {...attributes}>
         <ListItemSecondaryAction>
@@ -160,15 +126,33 @@ export default class PollAnswerNode extends React.Component<{
     this.deleteNode(editor, node);
   }
 
+  private calculateBackground() {
+    const { currentUser, displayResults } = this.props;
+
+    if (!currentUser.isTeacher && !displayResults) {
+      return null;
+    }
+
+    return this.backgroundFillStyle();
+  }
+
+  private backgroundFillStyle() {
+    const percentage = this.votePercentage();
+    const background = `linear-gradient(to right, ${this.color} ${0}%, ${
+      this.color
+    } ${percentage}%, white ${percentage}%, white ${100 - percentage}%)`;
+    return { background };
+  }
+
   private votePercentage() {
     const { getTotalVotes, getVotesForAnswer } = this.props;
     const totalVotes = getTotalVotes();
     const percentage =
-      totalVotes > 0
-        ? Math.floor(
+      totalVotes == 0
+        ? 0
+        : Math.floor(
             (getVotesForAnswer(this.id()).length / getTotalVotes()) * 100,
-          )
-        : 0;
+          );
 
     return percentage;
   }
@@ -177,4 +161,3 @@ export default class PollAnswerNode extends React.Component<{
     return this.props.node.data.get("id");
   }
 }
-PollAnswerNode.contextType = PollStateContext;

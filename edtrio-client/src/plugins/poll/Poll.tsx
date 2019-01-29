@@ -39,7 +39,18 @@ export default class PollNode extends React.Component<{
   initState: Function;
 }> {
   public render() {
-    const { children, ...attributes } = this.props;
+    const {
+      readOnly,
+      node,
+      editor,
+      currentUser,
+      getUsersWhoHaveVoted,
+      selectedAnswer,
+      votingAllowed,
+      initState,
+      children,
+      ...attributes
+    } = this.props;
 
     return (
       <div>
