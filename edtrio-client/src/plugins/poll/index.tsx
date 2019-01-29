@@ -74,7 +74,7 @@ const RenderPollNode = {
                   votingAllowed,
                   initState,
                   selectedAnswer,
-                  getUsersWhoHaveVoted: getUsersWhoHaveVoted,
+                  getUsersWhoHaveVoted,
                 }) => (
                   <PollNode
                     node={node}
@@ -100,14 +100,19 @@ const RenderPollNode = {
     }
     if (node.type === "poll_question") {
       return (
-        <PollQuestionNode
-          parent={parent}
-          editor={editor}
-          readOnly={readOnly}
-          {...attributes}
-        >
-          {children}
-        </PollQuestionNode>
+        <PollStateContext.Consumer>
+          {({ getTotalVotes }) => (
+            <PollQuestionNode
+              parent={parent}
+              editor={editor}
+              readOnly={readOnly}
+              getTotalVotes={getTotalVotes}
+              {...attributes}
+            >
+              {children}
+            </PollQuestionNode>
+          )}
+        </PollStateContext.Consumer>
       );
     }
     if (node.type === "poll_answer") {

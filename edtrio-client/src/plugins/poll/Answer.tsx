@@ -28,6 +28,7 @@ export default class PollAnswerNode extends React.Component<{
   getTotalVotes: Function;
 }> {
   public readonly color = "rgba(0,122,158,0.5)";
+  public readonly leadingColor = "rgba(76,175,80,0.5)";
 
   public componentDidMount() {
     // check for correct node creation
@@ -78,6 +79,7 @@ export default class PollAnswerNode extends React.Component<{
       updateSelectedAnswer,
       getTotalVotes,
     } = this.props;
+    const votes = this.voteCount();
     const name = `answer-radio-button-${parent.key}`;
     return (
       <ListItem
@@ -88,7 +90,8 @@ export default class PollAnswerNode extends React.Component<{
         {...attributes}
       >
         <ListItemSecondaryAction>
-          {this.voteCount()} / {getTotalVotes()} ({this.votePercentage()}%)
+          {votes} {votes === 1 ? "Stimme" : "Stimmen"} ({this.votePercentage()}
+          %)
         </ListItemSecondaryAction>
         <Radio
           name={name}
@@ -147,9 +150,9 @@ export default class PollAnswerNode extends React.Component<{
 
   private backgroundFillStyle() {
     const percentage = this.votePercentage();
-    const background = `linear-gradient(to right, ${this.color} ${0}%, ${
-      this.color
-    } ${percentage}%, white ${percentage}%, white ${100 - percentage}%)`;
+    const bgColor = this.backgroundColor();
+    const background = `linear-gradient(to right, ${bgColor} ${0}%, ${bgColor} ${percentage}%, white ${percentage}%, white ${100 -
+      percentage}%)`;
     return { background };
   }
 
@@ -161,8 +164,16 @@ export default class PollAnswerNode extends React.Component<{
     return percentage;
   }
 
+  private backgroundColor() {
+    return this.isLeading() ? this.leadingColor : this.color;
+  }
+
   private voteCount() {
-    return this.props.getVotesForAnswer(this.id());
+    return this.props.getVotesForAnswer(this.id()).votesCount;
+  }
+
+  private isLeading() {
+    return this.props.getVotesForAnswer(this.id()).isLeading;
   }
 
   private id() {

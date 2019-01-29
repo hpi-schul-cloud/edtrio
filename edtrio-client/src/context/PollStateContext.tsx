@@ -34,7 +34,7 @@ interface IPollStateProviderState {
   selectedAnswer: any;
   updateSelectedAnswer: (selectedAnswer: any) => void;
   getUsersWhoHaveVoted: () => any;
-  getVotesForAnswer: (pollAnswerId: string) => any[];
+  getVotesForAnswer: (pollAnswerId: string) => any;
   getTotalVotes: () => any;
   initState: (
     id: string,
@@ -54,7 +54,10 @@ export const PollStateContext = createContext<IPollStateProviderState>({
   selectedAnswer: null,
   updateSelectedAnswer: (selectedAnswer: any) => {},
   getUsersWhoHaveVoted: () => {},
-  getVotesForAnswer: (pollAnswerId: string) => [],
+  getVotesForAnswer: (pollAnswerId: string) => ({
+    votesCount: Number,
+    isLeading: Boolean,
+  }),
   getTotalVotes: () => [],
   initState: (
     id: string,
@@ -107,7 +110,21 @@ export class PollStateProvider extends Component<{}, IPollStateProviderState> {
     const answer = this.state.answers.find(
       answer => answer.id === pollAnswerId,
     );
-    return answer ? answer.votes.length : 0;
+    if (answer) {
+      const votesCount = answer.votes.length;
+      const leadingCount = Math.max(
+        ...this.state.answers.map(a => a.votes.length),
+      );
+      const isLeading = votesCount === leadingCount;
+      return {
+        votesCount,
+        isLeading,
+      };
+    }
+    return {
+      votesCount: 0,
+      isLeading: false,
+    };
   };
 
   public getTotalVotes = () => {

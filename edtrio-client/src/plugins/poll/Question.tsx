@@ -16,6 +16,7 @@ import React from "react";
 
 export default class PollQuestionNode extends React.Component<{
   readOnly: boolean;
+  getTotalVotes: Function;
 }> {
   public state = {
     isDialogOpen: false,
@@ -38,24 +39,35 @@ export default class PollQuestionNode extends React.Component<{
   }
 
   public render() {
+    const { children, readOnly, getTotalVotes, ...attributes } = this.props;
     if (this.props.readOnly) {
-      return this.renderReadOnly();
+      return this.renderReadOnly(attributes);
     } else {
-      return this.renderEditMode();
+      return this.renderEditMode(attributes);
     }
   }
 
-  private renderReadOnly() {
+  private renderReadOnly(attributes) {
     return (
-      <ListItem divider={true} {...this.state.attributes}>
+      <ListItem divider={true} {...attributes}>
         <h2>{this.props.children}</h2>
+        <br />
+        {this.voterCountText()}
       </ListItem>
     );
   }
 
-  private renderEditMode() {
+  private voterCountText() {
+    const { getTotalVotes } = this.props;
+    const votes = getTotalVotes();
+
+    const text = `${votes} Schüler ${votes === 1 ? "hat" : "haben"} abgestimmt`;
+    return text;
+  }
+
+  private renderEditMode(attributes) {
     return (
-      <ListItem divider={true} {...this.state.attributes}>
+      <ListItem divider={true} {...attributes}>
         <h2>{this.props.children}</h2>
         <ListItemSecondaryAction>
           <IconButton onClick={this.openDialog} className="btn-flat">
