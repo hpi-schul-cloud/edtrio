@@ -55,7 +55,9 @@ export default class PollQuestionNode extends React.Component<{
       <ListItem divider={true} {...attributes}>
         <h2>{this.props.children}</h2>
         <br />
-        {this.voterCountTextIfNecessary()}
+        <ListItemSecondaryAction>
+          {this.voterCountTextIfNecessary()}
+        </ListItemSecondaryAction>
       </ListItem>
     );
   }
