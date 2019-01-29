@@ -13,4 +13,31 @@ export const typeResolvers = {
         .multipleChoiceSubmissions();
     },
   },
+
+  Poll: {
+    answers(root: any, args: any, context: IContextType) {
+      return context.prisma
+        .poll({
+          id: root.id,
+        })
+        .answers();
+    },
+  },
+
+  PollAnswer: {
+    poll(root: any, args: any, context: IContextType) {
+      return context.prisma
+        .pollAnswer({
+          id: root.id,
+        })
+        .poll();
+    },
+    votes(root: any, args: any, context: IContextType) {
+      return context.prisma
+        .pollAnswer({
+          id: root.id,
+        })
+        .votes();
+    },
+  },
 };

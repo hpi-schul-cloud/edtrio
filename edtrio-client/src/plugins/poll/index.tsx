@@ -4,8 +4,24 @@ import { Block, Editor, Node, Text } from "slate";
 import styled from "styled-components";
 import { EditorStateContext } from "../../context/EditorStateContext";
 import { PollStateProvider } from "../../context/PollStateContext";
+import { PollStateContext } from "../../context/PollStateContext";
+import { apolloClient } from "../../EditorWrapper/apolloClient";
+import {
+  createPoll,
+  createPollVariables,
+} from "../../graphqlOperations/generated-types/createPoll";
+import {
+  createPollAnswer,
+  createPollAnswerVariables,
+} from "../../graphqlOperations/generated-types/createPollAnswer";
+import {
+  CREATE_POLL,
+  CREATE_POLL_ANSWER,
+} from "../../graphqlOperations/operations";
 import PollAnswerNode from "./Answer";
-import PollNode, { createNewPollAnswer } from "./Poll";
+import { cloneAndDBasifyPoll } from "./helpers/pollManipulation";
+import { getEmptyTemplate } from "./helpers/templates";
+import PollNode from "./Poll";
 import PollQuestionNode from "./Question";
 import "./style.css";
 
@@ -20,22 +36,11 @@ export default function Poll() {
   };
 }
 
-const onClickPollButton = (event: any, editor: Editor) => {
-  event.preventDefault();
-
-  editor.insertBlock(
-    Block.create({
-      type: "poll",
-      nodes: List([
-        Block.create({
-          type: "poll_question",
-          nodes: List([Text.create("")]),
-        }),
-        createNewPollAnswer(),
-        createNewPollAnswer(),
-      ]),
-    }),
-  );
+const onClickPollButton = async (event: any, editor: Editor) => {
+  const placeholderUntilDB = getEmptyTemplate();
+  editor.insertBlock(placeholderUntilDB);
+  const dbasifiedTemplate = await cloneAndDBasifyPoll(placeholderUntilDB);
+  editor.replaceNodeByKey(placeholderUntilDB.key, dbasifiedTemplate);
 };
 
 const StyledPlaceholder = styled.span`
@@ -49,9 +54,6 @@ const StyledPlaceholder = styled.span`
 
 const RenderPollNode = {
   renderNode(props: any, next: any) {
-    // append to parent, see add-section
-    // TODO: Get current user from props
-
     const {
       children,
       attributes,
@@ -67,17 +69,30 @@ const RenderPollNode = {
         <EditorStateContext.Consumer>
           {({ currentUser }) => (
             <PollStateProvider>
-              <PollNode
-                node={node}
-                selected={isFocused}
-                editor={editor}
-                next={next}
-                readOnly={readOnly}
-                currentUser={currentUser}
-                {...attributes}
-              >
-                {children}
-              </PollNode>
+              <PollStateContext.Consumer>
+                {({
+                  votingAllowed,
+                  initState,
+                  selectedAnswer,
+                  getUsersWhoHaveVoted: getUsersWhoHaveVoted,
+                }) => (
+                  <PollNode
+                    node={node}
+                    selected={isFocused}
+                    editor={editor}
+                    next={next}
+                    readOnly={readOnly}
+                    currentUser={currentUser}
+                    votingAllowed={votingAllowed}
+                    selectedAnswer={selectedAnswer}
+                    getUsersWhoHaveVoted={getUsersWhoHaveVoted}
+                    initState={initState}
+                    {...attributes}
+                  >
+                    {children}
+                  </PollNode>
+                )}
+              </PollStateContext.Consumer>
             </PollStateProvider>
           )}
         </EditorStateContext.Consumer>
@@ -99,16 +114,23 @@ const RenderPollNode = {
       return (
         <EditorStateContext.Consumer>
           {({ currentUser }) => (
-            <PollAnswerNode
-              node={node}
-              parent={parent}
-              editor={editor}
-              readOnly={readOnly}
-              currentUser={currentUser}
-              {...attributes}
-            >
-              {children}
-            </PollAnswerNode>
+            <PollStateContext.Consumer>
+              {({ selectedAnswer, updateSelectedAnswer, displayResults }) => (
+                <PollAnswerNode
+                  node={node}
+                  parent={parent}
+                  editor={editor}
+                  readOnly={readOnly}
+                  currentUser={currentUser}
+                  selectedAnswer={selectedAnswer}
+                  updateSelectedAnswer={updateSelectedAnswer}
+                  displayResults={displayResults}
+                  {...attributes}
+                >
+                  {children}
+                </PollAnswerNode>
+              )}
+            </PollStateContext.Consumer>
           )}
         </EditorStateContext.Consumer>
       );

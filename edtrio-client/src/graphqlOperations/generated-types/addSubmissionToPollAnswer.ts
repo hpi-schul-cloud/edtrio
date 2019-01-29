@@ -15,6 +15,7 @@ export interface addSubmissionToPollAnswer {
 }
 
 export interface addSubmissionToPollAnswerVariables {
+  pollId: string;
   pollAnswerId: string;
   userId: string;
 }

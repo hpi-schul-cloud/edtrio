@@ -88,6 +88,21 @@ export const UPDATE_MULTIPLE_CHOICE_SUBMISSION = gql`
   }
 `;
 
+export const POLL_QUERY = gql`
+  query poll($pollId: String!) {
+    poll(pollId: $pollId) {
+      votingAllowed
+      displayResults
+      answers {
+        id
+        votes {
+          id
+        }
+      }
+    }
+  }
+`;
+
 export const CREATE_POLL = gql`
   mutation createPoll($votingAllowed: Boolean!, $displayResults: Boolean!) {
     createPoll(votingAllowed: $votingAllowed, displayResults: $displayResults) {
@@ -140,8 +155,16 @@ export const DELETE_POLL_ANSWER = gql`
 `;
 
 export const ADD_SUBMISSION_TO_POLL_ANSWER = gql`
-  mutation addSubmissionToPollAnswer($pollAnswerId: String!, $userId: String!) {
-    addSubmissionToPollAnswer(pollAnswerId: $pollAnswerId, userId: $userId) {
+  mutation addSubmissionToPollAnswer(
+    $pollId: String!
+    $pollAnswerId: String!
+    $userId: String!
+  ) {
+    addSubmissionToPollAnswer(
+      pollId: $pollId
+      pollAnswerId: $pollAnswerId
+      userId: $userId
+    ) {
       id
     }
   }
@@ -150,7 +173,10 @@ export const ADD_SUBMISSION_TO_POLL_ANSWER = gql`
 export const POLL_CHANGED = gql`
   subscription pollChanged($pollId: String!) {
     pollChanged(pollId: $pollId) {
+      displayResults
+      votingAllowed
       answers {
+        id
         votes {
           id
         }

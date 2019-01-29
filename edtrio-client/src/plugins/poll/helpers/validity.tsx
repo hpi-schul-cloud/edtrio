@@ -1,57 +1,34 @@
-import { Block, Editor, Node } from "slate";
+import { Block, Editor, Node, Text } from "slate";
 
 import { apolloClient } from "../../../EditorWrapper/apolloClient";
 
-// import {
-//   createPoll,
-// } from "../../../generated-types/createPoll";
+import {
+  createPoll,
+  createPollVariables,
+} from "../../../graphqlOperations/generated-types/createPoll";
 
+import {
+  deletePoll,
+  deletePollVariables,
+} from "../../../graphqlOperations/generated-types/deletePoll";
+
+import {
+  createPollAnswer,
+  createPollAnswerVariables,
+} from "../../../graphqlOperations/generated-types/createPollAnswer";
+
+import {
+  deletePollAnswer,
+  deletePollAnswerVariables,
+} from "../../../graphqlOperations/generated-types/deletePollAnswer";
+
+import { List } from "immutable";
 import {
   CREATE_POLL,
   CREATE_POLL_ANSWER,
   DELETE_POLL,
   DELETE_POLL_ANSWER,
 } from "../../../graphqlOperations/operations";
-
-export async function testPollNodeValidity(
-  editor: Editor,
-  currentNode: Block,
-  context: any,
-) {
-  // Test for having no id
-  const pollId = currentNode.data.get("id");
-
-  // Test for a copied node
-  // @ts-ignore: this exists on the document
-  const collisionNode = editor.value.document.findDescendant(
-    (descendantNode: Node) =>
-      "data" in descendantNode &&
-      descendantNode.data.get("id") === pollId &&
-      descendantNode.key !== currentNode.key,
-  );
-  // There is a collision node, or the answer is not initialized yet, or the answerId is an empty
-  // object somehow, so it has been wrongly copied / initialized
-  if (
-    collisionNode ||
-    !pollId ||
-    (Object.keys(pollId).length === 0 && pollId.constructor === Object)
-  ) {
-    // node needs to be created on backend-side
-    const poll = await apolloClient.mutate({
-      mutation: CREATE_POLL,
-      variables: { votingAllowed: false, displayResults: false },
-    });
-    if (poll && poll.data && poll.data.createPoll) {
-      context.updateVotingAllowed(poll.data.createPoll.votingAllowed);
-      context.updateDisplayResults(poll.data.createPoll.displayResults);
-      context.updateId(poll.data.createPoll.id);
-      editor.setNodeByKey(currentNode.key, {
-        data: { id: poll.data.createPoll.id },
-        type: "poll",
-      });
-    }
-  }
-}
 
 export function checkAndDeletePollNode(editor: Editor, currentNode: Block) {
   if (
@@ -64,9 +41,9 @@ export function checkAndDeletePollNode(editor: Editor, currentNode: Block) {
     )
   ) {
     // node has been deleted :O
-    apolloClient.mutate({
+    apolloClient.mutate<deletePoll, deletePollVariables>({
       mutation: DELETE_POLL,
-      variables: { answerId: currentNode.data.get("id") },
+      variables: { pollId: currentNode.data.get("id") },
     });
   }
 }
@@ -81,6 +58,7 @@ export async function testPollAnswerNodeValidity(
   const pollAnswerId = currentNode.data.get("id");
 
   // Test for a copied node
+  // TODO: This is not working for us
   // @ts-ignore: this exists on the document
   const collisionNode = editor.value.document.findDescendant(
     (descendantNode: Node) =>
@@ -88,19 +66,16 @@ export async function testPollAnswerNodeValidity(
       descendantNode.data.get("id") === pollAnswerId &&
       descendantNode.key !== currentNode.key,
   );
-  // There is a collision node, or the answer is not initialized yet, or the answerId is an empty
-  // object somehow, so it has been wrongly copied / initialized
-  if (
-    collisionNode ||
-    !pollAnswerId ||
-    (Object.keys(pollAnswerId).length === 0 &&
-      pollAnswerId.constructor === Object)
-  ) {
+  // There is a collision node,
+  if (collisionNode) {
     // node needs to be created on backend-side
-    const pollId = parent.data.get("id");
-    const pollAnswer = await apolloClient.mutate({
+    const pollId = await parent.data.get("id");
+    const pollAnswer = await apolloClient.mutate<
+      createPollAnswer,
+      createPollAnswerVariables
+    >({
       mutation: CREATE_POLL_ANSWER,
-      variables: { pollId: "cjr6l0fiv004i0775e7bfcu7a" },
+      variables: { pollId },
     });
     if (pollAnswer && pollAnswer.data && pollAnswer.data.createPollAnswer) {
       editor.setNodeByKey(currentNode.key, {
@@ -125,9 +100,9 @@ export function checkAndDeletePollAnswerNode(
     )
   ) {
     // node has been deleted :O
-    apolloClient.mutate({
+    apolloClient.mutate<deletePollAnswer, deletePollAnswerVariables>({
       mutation: DELETE_POLL_ANSWER,
-      variables: { answerId: currentNode.data.get("id") },
+      variables: { pollAnswerId: currentNode.data.get("id") },
     });
   }
 }

@@ -2,26 +2,29 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import ListEle from "@material-ui/core/List";
 import AddIcon from "@material-ui/icons/Add";
-import PollIcon from "@material-ui/icons/Poll";
 import SendIcon from "@material-ui/icons/Send";
-import { List } from "immutable";
+
 import React from "react";
-import { Block, Editor, Node, Text } from "slate";
-import { PollStateContext } from "../../context/PollStateContext";
+
+import { apolloClient } from "../../EditorWrapper/apolloClient";
 import {
-  checkAndDeletePollNode,
-  testPollNodeValidity,
-} from "./helpers/validity";
+  addSubmissionToPollAnswer,
+  addSubmissionToPollAnswerVariables,
+} from "../../graphqlOperations/generated-types/addSubmissionToPollAnswer";
+
+import {
+  poll,
+  pollVariables,
+} from "../../graphqlOperations/generated-types/poll";
+import {
+  ADD_SUBMISSION_TO_POLL_ANSWER,
+  POLL_QUERY,
+} from "../../graphqlOperations/operations";
+import { createNewPollAnswerForPoll } from "./helpers/pollManipulation";
+import { checkAndDeletePollNode } from "./helpers/validity";
 import TemplatePicker from "./TemplatePicker";
 import PollTogglesEditMode from "./toggles/PollTogglesEditMode";
 import PollTogglesReadOnlyMode from "./toggles/PollTogglesReadOnlyMode";
-
-export function createNewPollAnswer() {
-  return Block.create({
-    type: "poll_answer",
-    nodes: List([Text.create("")]),
-  });
-}
 
 // TODO: add delete function
 
@@ -30,66 +33,54 @@ export default class PollNode extends React.Component<{
   node: any;
   editor: any;
   currentUser: any;
+  getUsersWhoHaveVoted: Function;
+  selectedAnswer: any;
+  votingAllowed: boolean;
+  initState: Function;
 }> {
-  public componentDidMount() {
-    // check for correct node creation
-    setTimeout(
-      () =>
-        testPollNodeValidity(this.props.editor, this.props.node, this.context),
-      200,
-    );
-  }
-
   public render() {
-    const {
-      children,
-      node,
-      editor,
-      readOnly,
-      currentUser,
-      ...attributes
-    } = this.props;
+    const { children, ...attributes } = this.props;
 
     return (
-      <PollStateContext.Consumer>
-        {({ votingAllowed, updateVotingAllowed, updateDisplayResults }) => (
-          <div>
-            <ListEle {...attributes}>{children}</ListEle>
-
-            {this.mainActionButton(
-              editor,
-              node,
-              readOnly,
-              currentUser,
-              votingAllowed,
-            )}
-
-            <br />
-          </div>
-        )}
-      </PollStateContext.Consumer>
+      <div>
+        <ListEle {...attributes}>{children}</ListEle>
+        {this.mainActionButton()}
+        <br />
+      </div>
     );
   }
 
-  public componentWillUnmount() {
-    checkAndDeletePollNode(this.props.editor, this.props.node);
+  public componentDidMount() {
+    // check for correct node creation
+    setTimeout(() => this.setPollValuesFromDB(), 200);
+  }
+  // public componentWillUnmount() {
+  //   checkAndDeletePollNode(this.props.editor, this.props.node);
+  // }
+
+  private async setPollValuesFromDB() {
+    const pollId = this.props.node.data.get("id");
+    if (pollId) {
+      const poll = await apolloClient.query<poll, pollVariables>({
+        query: POLL_QUERY,
+        variables: { pollId },
+      });
+      if (poll && poll.data && poll.data.poll) {
+        const { votingAllowed, displayResults, answers } = poll.data.poll;
+        this.props.initState(pollId, votingAllowed, displayResults, answers);
+      }
+    }
   }
 
-  private mainActionButton(
-    editor: Editor,
-    node: any,
-    readOnly: boolean,
-    currentUser: any,
-    votingAllowed: boolean,
-  ) {
-    return readOnly
-      ? currentUser.isTeacher
+  private mainActionButton() {
+    return this.props.readOnly
+      ? this.props.currentUser.isTeacher
         ? this.controlToggles()
-        : this.sendAnswerButton(votingAllowed)
-      : this.addEditToolbar(editor, node);
+        : this.sendAnswerButton()
+      : this.addEditToolbar();
   }
 
-  private addEditToolbar(editor: Editor, node: any) {
+  private addEditToolbar() {
     return (
       <Grid
         style={{ paddingLeft: "30px" }}
@@ -98,7 +89,7 @@ export default class PollNode extends React.Component<{
         justify="space-between"
       >
         <Grid item={true}>
-          <TemplatePicker editor={editor} pollkey={node.key} />
+          <TemplatePicker editor={this.props.editor} poll={this.props.node} />
         </Grid>
         <Grid item={true}>
           <PollTogglesEditMode />
@@ -107,7 +98,7 @@ export default class PollNode extends React.Component<{
           <Button
             style={{ width: "250px", height: "56px" }}
             variant="outlined"
-            onClick={event => this.onClickAddAnswerButton(event, editor, node)}
+            onClick={this.onClickAddAnswerButton.bind(this)}
           >
             <AddIcon />
             &nbsp;Antwort hinzufügen
@@ -118,45 +109,53 @@ export default class PollNode extends React.Component<{
   }
 
   private controlToggles() {
-    return <PollTogglesReadOnlyMode />;
-  }
-
-  private sendAnswerButton(votingAllowed: boolean) {
     return (
-      <Button
-        style={{ float: "right" }}
-        variant="outlined"
-        disabled={votingAllowed}
-        onClick={event => this.onClickSendAnswerButton()}
-      >
-        <SendIcon />
-        &nbsp;&nbsp;&nbsp;Antwort senden
-      </Button>
+      <div style={{ paddingLeft: "30px" }}>
+        <PollTogglesReadOnlyMode />
+      </div>
     );
   }
 
+  private sendAnswerButton() {
+    console.log("ansans");
+    if (this.props.getUsersWhoHaveVoted().includes(this.props.currentUser.id)) {
+      return <div>Glückwunsch, du hast bereits abgestimmt</div>;
+    } else {
+      return (
+        <Button
+          style={{ float: "right" }}
+          variant="outlined"
+          disabled={!this.props.votingAllowed}
+          onClick={event => this.onClickSendAnswerButton()}
+        >
+          <SendIcon />
+          &nbsp;&nbsp;&nbsp;Antwort senden
+        </Button>
+      );
+    }
+  }
+
   // TODO: Node should be used instead of any for 'node'
-  private onClickAddAnswerButton(event: any, editor: Editor, node: Block) {
-    event.preventDefault();
-    this.appendNewAnswer(editor, node);
+  private async onClickAddAnswerButton() {
+    this.props.editor.insertNodeByPath(
+      this.props.editor.value.document.getPath(this.props.node.key),
+      this.props.node.nodes.size,
+      await createNewPollAnswerForPoll(this.props.node.data.get("id")),
+    );
   }
 
-  private appendNewAnswer(editor: Editor, node: Block) {
-    const newAnswer = createNewPollAnswer();
-    const answerGroup: any = node.nodes.get(1);
-    editor.insertNodeByKey(answerGroup.key, answerGroup.nodes.size, newAnswer);
-  }
-
-  private onClickSendAnswerButton() {
-    // console.log("onClickSendAnswerButton");
-  }
-
-  private onClickStartPollButton() {
-    // console.log("onClickStartPollButton");
-  }
-
-  private onClickShowPollResultButton() {
-    // console.log("onClickShowPollResultButton");
+  private async onClickSendAnswerButton() {
+    const { selectedAnswer, node } = this.props;
+    await apolloClient.mutate<
+      addSubmissionToPollAnswer,
+      addSubmissionToPollAnswerVariables
+    >({
+      mutation: ADD_SUBMISSION_TO_POLL_ANSWER,
+      variables: {
+        pollId: node.data.get("id"),
+        pollAnswerId: selectedAnswer,
+        userId: this.props.currentUser.id,
+      },
+    });
   }
 }
-PollNode.contextType = PollStateContext;

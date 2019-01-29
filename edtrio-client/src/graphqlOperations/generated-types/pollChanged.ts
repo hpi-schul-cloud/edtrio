@@ -12,11 +12,14 @@ export interface pollChanged_pollChanged_answers_votes {
 
 export interface pollChanged_pollChanged_answers {
   __typename: "PollAnswer";
+  id: string;
   votes: pollChanged_pollChanged_answers_votes[] | null;
 }
 
 export interface pollChanged_pollChanged {
   __typename: "Poll";
+  displayResults: boolean;
+  votingAllowed: boolean;
   answers: pollChanged_pollChanged_answers[] | null;
 }
 

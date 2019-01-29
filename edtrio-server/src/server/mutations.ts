@@ -139,19 +139,25 @@ export const mutations = {
       context.prisma.deleteManyPollAnswers({ poll: args.pollId });
       return context.prisma.deletePoll({ id: args.pollId });
     },
-    updatePoll(root: any, args: any, context: IContextType) {
-      return context.prisma.updatePoll({
+    async updatePoll(root: any, args: any, context: IContextType) {
+      const poll = await context.prisma.updatePoll({
         where: { id: args.pollId },
         data: {
           votingAllowed: args.votingAllowed,
           displayResults: args.displayResults,
         },
       });
+
+      context.valueChangedPubSub.publish(`POLL_CHANGED_${args.pollId}`, {
+        pollChanged: poll,
+      });
+
+      return poll;
     },
     async createPollAnswer(root: any, args: any, context: IContextType) {
       const newAnswer = await context.prisma.createPollAnswer({
         poll: {
-          connect: args.pollId,
+          connect: { id: args.pollId },
         },
       });
       const pollAnswers = await context.prisma
@@ -159,14 +165,17 @@ export const mutations = {
         .answers();
       pollAnswers.push(newAnswer);
 
-      return context.prisma.updatePoll({
+      await context.prisma.updatePoll({
         where: { id: args.pollId },
         data: {
           answers: {
-            connect: pollAnswers.map(answer => ({ id: answer.id })),
+            connect: pollAnswers.map(answer => {
+              return { id: answer.id };
+            }),
           },
         },
       });
+      return newAnswer;
     },
     deletePollAnswer(root: any, args: any, context: IContextType) {
       return context.prisma.deletePoll({ id: args.pollAnswerId });
@@ -182,17 +191,18 @@ export const mutations = {
       const userIds = users.map(user => ({ id: user.id }));
       userIds.push({ id: args.userId });
 
-      context.valueChangedPubSub.publish(`POLL_CHANGED_${args.pollId}`, {
-        valueChanged: args,
-      });
-
-      return context.prisma.updatePollAnswer({
+      await context.prisma.updatePollAnswer({
         where: { id: args.pollAnswerId },
         data: {
           votes: {
             connect: userIds,
           },
         },
+      });
+      const poll = await context.prisma.poll({ id: args.pollId });
+
+      context.valueChangedPubSub.publish(`POLL_CHANGED_${args.pollId}`, {
+        pollChanged: poll,
       });
     },
   },

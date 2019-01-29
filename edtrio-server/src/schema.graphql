@@ -47,7 +47,11 @@ type Mutation {
   ): Poll
   createPollAnswer(pollId: String!): PollAnswer
   deletePollAnswer(pollAnswerId: String!): PollAnswer
-  addSubmissionToPollAnswer(pollAnswerId: String!, userId: String!): PollAnswer
+  addSubmissionToPollAnswer(
+    pollId: String!
+    pollAnswerId: String!
+    userId: String!
+  ): PollAnswer
 }
 
 type Subscription {

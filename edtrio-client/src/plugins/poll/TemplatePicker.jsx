@@ -6,8 +6,12 @@ import OutlinedInput from "@material-ui/core/OutlinedInput";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import { List } from "immutable";
-import { Block, Text } from "slate";
+import { cloneAndDBasifyPoll } from "./helpers/pollManipulation";
+import {
+  getGradeMeTemplate,
+  getEmptyTemplate,
+  getFeedbackTemplate,
+} from "./helpers/templates";
 
 const styles = theme => ({
   root: {
@@ -18,67 +22,6 @@ const styles = theme => ({
     minWidth: 200,
   },
 });
-function createNewAnswer(str) {
-  return Block.create({
-    type: "poll_answer",
-    nodes: List([Text.create(str)]),
-  });
-}
-
-function getFeedbackTemplate() {
-  return Block.create({
-    type: "poll",
-    nodes: List([
-      Block.create({
-        type: "poll_question",
-        nodes: List([
-          Text.create("Was hat dir in der heutigen Stunde am meisten gefehlt?"),
-        ]),
-      }),
-      createNewAnswer("Nichts! Ich bin zufrieden"),
-      createNewAnswer("Zeit. Ich hätte gerne mehr Zeit gehabt"),
-      createNewAnswer("Erklärung. Ich habe kaum etwas verstanden"),
-      createNewAnswer("Vielfalt. Irgendwie war es langweilig heute"),
-      createNewAnswer("Ruhe. Es war viel zu laut"),
-      createNewAnswer(
-        "Feedback. Ich brauche mehr Rückmeldung zu meiner Arbeit",
-      ),
-    ]),
-  });
-}
-function getGradeMeTemplate() {
-  return Block.create({
-    type: "poll",
-    nodes: List([
-      Block.create({
-        type: "poll_question",
-        nodes: List([
-          Text.create("Wie würdest du die Stunde in Schulnoten bewerten?"),
-        ]),
-      }),
-      createNewAnswer("1"),
-      createNewAnswer("2"),
-      createNewAnswer("3"),
-      createNewAnswer("4"),
-      createNewAnswer("5"),
-      createNewAnswer("6"),
-    ]),
-  });
-}
-
-function getEmptyTemplate() {
-  return Block.create({
-    type: "poll",
-    nodes: List([
-      Block.create({
-        type: "poll_question",
-        nodes: List([Text.create("")]),
-      }),
-      createNewAnswer(""),
-      createNewAnswer(""),
-    ]),
-  });
-}
 
 class TemplatePicker extends React.Component {
   state = {
@@ -92,21 +35,27 @@ class TemplatePicker extends React.Component {
     });
   }
 
-  handleChange = (name, editor, pollkey) => event => {
-    this.setState({ [name]: event.target.value });
+  handleChange = async (event, editor, poll) => {
+    this.setState({ template: event.target.value });
+    let placeholderTemplate;
     if (event.target.value === "feedback") {
-      editor.replaceNodeByKey(pollkey, getFeedbackTemplate());
-    } else if (event.target.value === "rate") {
-      editor.replaceNodeByKey(pollkey, getGradeMeTemplate());
-    } else if (event.target.value === "empty") {
-      editor.replaceNodeByKey(pollkey, getEmptyTemplate());
+      placeholderTemplate = getFeedbackTemplate();
     }
+    if (event.target.value === "rate") {
+      placeholderTemplate = getGradeMeTemplate();
+    }
+    if (event.target.value === "empty") {
+      placeholderTemplate = getEmptyTemplate();
+    }
+    editor.replaceNodeByKey(poll.key, placeholderTemplate);
+    let dbasifiedTemplate = await cloneAndDBasifyPoll(placeholderTemplate);
+    editor.replaceNodeByKey(placeholderTemplate.key, dbasifiedTemplate);
   };
 
   render() {
-    const { classes, editor, pollkey } = this.props;
+    const { classes, editor, poll } = this.props;
 
-    const name = `dropdown-template-${pollkey}`;
+    const name = `dropdown-template-${poll.key}`;
     return (
       <div className={classes.root}>
         <FormControl variant="outlined" className={classes.formControl}>
@@ -121,7 +70,7 @@ class TemplatePicker extends React.Component {
           <Select
             native
             value={this.state.age}
-            onChange={this.handleChange("template", editor, pollkey)}
+            onChange={event => this.handleChange(event, editor, poll)}
             input={
               <OutlinedInput
                 name="template"
