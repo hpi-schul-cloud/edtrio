@@ -26,7 +26,6 @@ class PollSubscription extends Subscription<
 
 interface IPollStateProviderState {
   id: string;
-  updateId: (id: string) => void;
   answers: any;
   votingAllowed: boolean;
   updateVotingAllowed: (votingAllowed: boolean) => void;
@@ -35,11 +34,16 @@ interface IPollStateProviderState {
   selectedAnswer: any;
   updateSelectedAnswer: (selectedAnswer: any) => void;
   getUsersWhoHaveVoted: () => any;
+  initState: (
+    id: string,
+    votingAllowed: boolean,
+    displayResults: boolean,
+    answers: any,
+  ) => void;
 }
 
 export const PollStateContext = createContext<IPollStateProviderState>({
   id: "",
-  updateId: (id: string) => {},
   answers: [],
   votingAllowed: false,
   updateVotingAllowed: (votingAllowed: boolean) => {},
@@ -48,6 +52,12 @@ export const PollStateContext = createContext<IPollStateProviderState>({
   selectedAnswer: null,
   updateSelectedAnswer: (selectedAnswer: any) => {},
   getUsersWhoHaveVoted: () => {},
+  initState: (
+    id: string,
+    votingAllowed: boolean,
+    displayResults: boolean,
+    answers: any,
+  ) => {},
 });
 
 export class PollStateProvider extends Component<{}, IPollStateProviderState> {
@@ -56,7 +66,6 @@ export class PollStateProvider extends Component<{}, IPollStateProviderState> {
 
     this.state = {
       id: "",
-      updateId: this.updateId,
       answers: [],
       selectedAnswer: null,
       updateSelectedAnswer: this.updateSelectedAnswer,
@@ -65,11 +74,17 @@ export class PollStateProvider extends Component<{}, IPollStateProviderState> {
       displayResults: false,
       updateDisplayResults: this.updateDisplayResults,
       getUsersWhoHaveVoted: this.getUsersWhoHaveVoted,
+      initState: this.initState,
     };
   }
 
-  public updateId = (id: string) => {
-    this.setState({ id });
+  public initState = (
+    id: string,
+    votingAllowed: boolean,
+    displayResults: boolean,
+    answers: any,
+  ) => {
+    this.setState({ id, votingAllowed, displayResults, answers });
   };
 
   public updateSelectedAnswer = (newSelectedAnswer: any) => {

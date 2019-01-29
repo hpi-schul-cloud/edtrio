@@ -32,7 +32,7 @@ import {
 export async function testPollNodeValidity(
   editor: Editor,
   currentNode: Block,
-  context: any,
+  initState: Function,
 ) {
   // Test for having no id
   const pollId = currentNode.data.get("id");
@@ -58,9 +58,8 @@ export async function testPollNodeValidity(
       variables: { votingAllowed: false, displayResults: false },
     });
     if (poll && poll.data && poll.data.createPoll) {
-      context.updateVotingAllowed(poll.data.createPoll.votingAllowed);
-      context.updateDisplayResults(poll.data.createPoll.displayResults);
-      context.updateId(poll.data.createPoll.id);
+      const { id, votingAllowed, displayResults } = poll.data.createPoll;
+      initState(id, votingAllowed, displayResults, []);
       editor.setNodeByKey(currentNode.key, {
         data: { id: poll.data.createPoll.id },
         type: "poll",

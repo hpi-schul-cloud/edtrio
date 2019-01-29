@@ -85,9 +85,7 @@ const RenderPollNode = {
               <PollStateContext.Consumer>
                 {({
                   votingAllowed,
-                  updateDisplayResults,
-                  updateVotingAllowed,
-                  updateId,
+                  initState,
                   selectedAnswer,
                   getUsersWhoHaveVoted: getUsersWhoHaveVoted,
                 }) => (
@@ -101,9 +99,7 @@ const RenderPollNode = {
                     votingAllowed={votingAllowed}
                     selectedAnswer={selectedAnswer}
                     getUsersWhoHaveVoted={getUsersWhoHaveVoted}
-                    updateVotingAllowed={updateVotingAllowed}
-                    updateDisplayResults={updateDisplayResults}
-                    updateId={updateId}
+                    initState={initState}
                     {...attributes}
                   >
                     {children}

@@ -34,7 +34,7 @@ import PollTogglesEditMode from "./toggles/PollTogglesEditMode";
 import PollTogglesReadOnlyMode from "./toggles/PollTogglesReadOnlyMode";
 
 export async function createNewPollAnswer(pollId: any, text: any = "") {
-  if (!pollId){
+  if (!pollId) {
     return Block.create({
       type: "poll_answer",
       nodes: List([Text.create(text)]),
@@ -71,17 +71,17 @@ export default class PollNode extends React.Component<{
   getUsersWhoHaveVoted: Function;
   selectedAnswer: any;
   votingAllowed: boolean;
-  updateVotingAllowed: Function;
-  updateDisplayResults: Function;
-  updateId: Function;
+  initState: Function;
 }> {
   public componentDidMount() {
     // check for correct node creation
     setTimeout(() => {
       // TODO: Refactor pls
-      testPollNodeValidity(this.props.editor, this.props.node, this.props).then(
-        () => this.setPollValuesFromDB(),
-      );
+      testPollNodeValidity(
+        this.props.editor,
+        this.props.node,
+        this.props.initState,
+      ).then(() => this.setPollValuesFromDB());
     }, 200);
   }
 
@@ -104,15 +104,13 @@ export default class PollNode extends React.Component<{
   private async setPollValuesFromDB() {
     const pollId = this.props.node.data.get("id");
     if (pollId) {
-      this.props.updateId(pollId);
       const poll = await apolloClient.query<poll, pollVariables>({
         query: POLL_QUERY,
         variables: { pollId },
       });
       if (poll && poll.data && poll.data.poll) {
-        this.props.updateDisplayResults(poll.data.poll.displayResults);
-        this.props.updateVotingAllowed(poll.data.poll.votingAllowed);
-        // TODO: ALso update answers
+        const { votingAllowed, displayResults, answers } = poll.data.poll;
+        this.props.initState(pollId, votingAllowed, displayResults, answers);
       }
     }
   }
