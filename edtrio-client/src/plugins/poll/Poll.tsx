@@ -117,22 +117,27 @@ export default class PollNode extends React.Component<{
   }
 
   private sendAnswerButton() {
-    console.log("ansans");
-    if (this.props.getUsersWhoHaveVoted().includes(this.props.currentUser.id)) {
-      return <div>Glückwunsch, du hast bereits abgestimmt</div>;
+    let text;
+    const alreadyVoted: boolean = this.props
+      .getUsersWhoHaveVoted()
+      .includes(this.props.currentUser.id);
+    if (alreadyVoted) {
+      text = " Glückwunsch, du hast bereits abgestimmt";
     } else {
-      return (
-        <Button
-          style={{ float: "right" }}
-          variant="outlined"
-          disabled={!this.props.votingAllowed}
-          onClick={event => this.onClickSendAnswerButton()}
-        >
-          <SendIcon />
-          &nbsp;&nbsp;&nbsp;Antwort senden
-        </Button>
-      );
+      text = " Antwort senden";
     }
+
+    return (
+      <Button
+        style={{ float: "right" }}
+        variant="outlined"
+        disabled={!this.props.votingAllowed || alreadyVoted}
+        onClick={event => this.onClickSendAnswerButton()}
+      >
+        <SendIcon />
+        {text}
+      </Button>
+    );
   }
 
   private async onClickAddAnswerButton() {
