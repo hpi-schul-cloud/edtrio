@@ -98,20 +98,22 @@ export class PollStateProvider extends Component<{}, IPollStateProviderState> {
   };
 
   public getUsersWhoHaveVoted = () => {
-    let votes = new Array<any>();
-    for (const answer of this.state.answers) {
-      votes = votes.concat(answer.votes.map(vote => vote.id));
-    }
-    return votes;
+    return this.state.answers
+      .map(answer => answer.votes.map(vote => vote.id))
+      .flat();
   };
 
   public getVotesForAnswer = (pollAnswerId: string) => {
-    return this.state.answers.filter(answer => answer.id === pollAnswerId)[0]
-      .votes;
+    const answer = this.state.answers.find(
+      answer => answer.id === pollAnswerId,
+    );
+    return answer ? answer.votes.length : 0;
   };
 
   public getTotalVotes = () => {
-    return this.getUsersWhoHaveVoted().length;
+    return this.state.answers.length === 0
+      ? 0
+      : this.getUsersWhoHaveVoted().length;
   };
 
   public updateVotingAllowed = (votingAllowed: boolean) => {

@@ -71,7 +71,13 @@ export default class PollAnswerNode extends React.Component<{
   // }
 
   private renderReadOnlyMode(attributes: any) {
-    const { node, parent, selectedAnswer, updateSelectedAnswer } = this.props;
+    const {
+      node,
+      parent,
+      selectedAnswer,
+      updateSelectedAnswer,
+      getTotalVotes,
+    } = this.props;
     const name = `answer-radio-button-${parent.key}`;
     return (
       <ListItem
@@ -81,6 +87,9 @@ export default class PollAnswerNode extends React.Component<{
         onClick={() => updateSelectedAnswer(node.data.get("id"))}
         {...attributes}
       >
+        <ListItemSecondaryAction>
+          {this.voteCount()} / {getTotalVotes()} ({this.votePercentage()}%)
+        </ListItemSecondaryAction>
         <Radio
           name={name}
           checked={selectedAnswer === node.data.get("id")}
@@ -145,16 +154,15 @@ export default class PollAnswerNode extends React.Component<{
   }
 
   private votePercentage() {
-    const { getTotalVotes, getVotesForAnswer } = this.props;
-    const totalVotes = getTotalVotes();
+    const totalVotes = this.props.getTotalVotes();
     const percentage =
-      totalVotes == 0
-        ? 0
-        : Math.floor(
-            (getVotesForAnswer(this.id()).length / getTotalVotes()) * 100,
-          );
+      totalVotes === 0 ? 0 : Math.floor((this.voteCount() / totalVotes) * 100);
 
     return percentage;
+  }
+
+  private voteCount() {
+    return this.props.getVotesForAnswer(this.id());
   }
 
   private id() {
