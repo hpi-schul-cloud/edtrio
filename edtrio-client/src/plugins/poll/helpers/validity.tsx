@@ -41,6 +41,7 @@ export function checkAndDeletePollNode(editor: Editor, currentNode: Block) {
     )
   ) {
     // node has been deleted :O
+    console.log("deletepoll");
     apolloClient.mutate<deletePoll, deletePollVariables>({
       mutation: DELETE_POLL,
       variables: { pollId: currentNode.data.get("id") },
@@ -56,7 +57,9 @@ export async function testPollAnswerNodeValidity(
 ) {
   // Test for having no id
   const pollAnswerId = currentNode.data.get("id");
-  if (pollAnswerId === "placeholderNode") { return; }
+  if (pollAnswerId === "placeholderNode") {
+    return;
+  }
 
   // Test for a copied node
   // TODO: This is not working for us

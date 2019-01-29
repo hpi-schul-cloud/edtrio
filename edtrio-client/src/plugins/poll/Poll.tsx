@@ -67,6 +67,7 @@ export default class PollNode extends React.Component<{
   }
 
   public componentWillUnmount() {
+    console.log("unmountedPoll");
     checkAndDeletePollNode(this.props.editor, this.props.node);
   }
 

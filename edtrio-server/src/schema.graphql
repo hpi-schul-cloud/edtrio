@@ -10,7 +10,9 @@ type Query {
   multipleChoiceSubmission(submissionId: String!): MultipleChoiceSubmission
   multipleChoiceSubmissions(answerId: String!): [MultipleChoiceSubmission]
   submissionByUser(answerId: String!, userId: String!): MultipleChoiceSubmission
+  polls: [Poll]
   poll(pollId: String!): Poll
+  pollAnswers: [PollAnswer]
   pollAnswer(pollAnswerId: String!): PollAnswer
 }
 
