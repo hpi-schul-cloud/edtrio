@@ -17,6 +17,9 @@ import React from "react";
 export default class PollQuestionNode extends React.Component<{
   readOnly: boolean;
   getTotalVotes: Function;
+  currentUser: any;
+  getUsersWhoHaveVoted: any;
+  displayResults: any;
 }> {
   public state = {
     isDialogOpen: false,
@@ -52,17 +55,29 @@ export default class PollQuestionNode extends React.Component<{
       <ListItem divider={true} {...attributes}>
         <h2>{this.props.children}</h2>
         <br />
-        {this.voterCountText()}
+        {this.voterCountTextIfNecessary()}
       </ListItem>
     );
   }
+  private currentUserHasVoted() {
+    const { getUsersWhoHaveVoted, currentUser } = this.props;
+    return getUsersWhoHaveVoted().includes(currentUser.id);
+  }
 
-  private voterCountText() {
-    const { getTotalVotes } = this.props;
+  private voterCountTextIfNecessary() {
+    const { currentUser, displayResults, getTotalVotes } = this.props;
+
     const votes = getTotalVotes();
-
-    const text = `${votes} Schüler ${votes === 1 ? "hat" : "haben"} abgestimmt`;
-    return text;
+    if (
+      currentUser.isTeacher ||
+      (displayResults && this.currentUserHasVoted())
+    ) {
+      const text = `${votes} Schüler ${
+        votes === 1 ? "hat" : "haben"
+      } abgestimmt`;
+      return text;
+    }
+    return;
   }
 
   private renderEditMode(attributes) {

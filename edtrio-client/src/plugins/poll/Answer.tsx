@@ -32,6 +32,7 @@ export default class PollAnswerNode extends React.Component<{
   displayResults: boolean;
   getAnswerInformation: Function;
   getTotalVotes: Function;
+  getUsersWhoHaveVoted: Function;
 }> {
   public readonly color = "rgba(0,122,158,0.5)";
   public readonly leadingColor = "rgba(76,175,80,0.5)";
@@ -85,19 +86,18 @@ export default class PollAnswerNode extends React.Component<{
       updateSelectedAnswer,
       getTotalVotes,
     } = this.props;
-    const votes = this.voteCount();
+
     const name = `answer-radio-button-${parent.key}`;
     return (
       <ListItem
         style={this.calculateBackground()}
         button={true}
         divider={true}
-        onClick={() => updateSelectedAnswer(node.data.get("id"))}
+        onClick={this.clickIfUserAllowed.bind(this)}
         {...attributes}
       >
         <ListItemSecondaryAction>
-          {votes} {votes === 1 ? "Stimme" : "Stimmen"} ({this.votePercentage()}
-          %)
+          {this.displayResultTextIfNecessary()}
         </ListItemSecondaryAction>
         <Radio
           name={name}
@@ -134,18 +134,41 @@ export default class PollAnswerNode extends React.Component<{
       </ListItem>
     );
   }
+  private displayResultTextIfNecessary() {
+    const { currentUser, displayResults } = this.props;
+    if (
+      currentUser.isTeacher ||
+      (displayResults && this.currentUserHasVoted())
+    ) {
+      const votes = this.voteCount();
+      return `${votes} ${
+        votes === 1 ? "Stimme" : "Stimmen"
+      } (${this.votePercentage()}%)`;
+    }
+    return;
+  }
+  private clickIfUserAllowed() {
+    const { currentUser, updateSelectedAnswer } = this.props;
+    if (currentUser.isTeacher || this.currentUserHasVoted()) {
+      return;
+    }
+    updateSelectedAnswer(this.id());
+  }
 
   private deleteNode(editor: Editor, node: Block) {
     return editor.removeNodeByKey(node.key);
   }
-
+  private currentUserHasVoted() {
+    const { getUsersWhoHaveVoted, currentUser } = this.props;
+    return getUsersWhoHaveVoted().includes(currentUser.id);
+  }
   private async onClickDeleteAnswerButton(
     event: any,
     editor: Editor,
     node: Block,
   ) {
     event.preventDefault();
-    const pollAnswerId = node.data.get("id");
+    const pollAnswerId = this.id();
 
     this.deleteNode(editor, node);
     await apolloClient.mutate<deletePollAnswer, deletePollAnswerVariables>({
