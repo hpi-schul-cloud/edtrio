@@ -22,9 +22,7 @@ import {
   deletePollAnswerVariables,
 } from "../../../graphqlOperations/generated-types/deletePollAnswer";
 
-import { List } from "immutable";
 import {
-  CREATE_POLL,
   CREATE_POLL_ANSWER,
   DELETE_POLL,
   DELETE_POLL_ANSWER,
