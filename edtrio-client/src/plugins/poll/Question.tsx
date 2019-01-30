@@ -74,10 +74,8 @@ export default class PollQuestionNode extends React.Component<{
       currentUser.isTeacher ||
       (displayResults && this.currentUserHasVoted())
     ) {
-      const text = `${votes} Schüler ${
-        votes === 1 ? "hat" : "haben"
-      } abgestimmt`;
-      return text;
+      // prettier-ignore
+      return`${votes} Schüler ${votes === 1 ? "hat" : "haben"} abgestimmt`;
     }
     return;
   }

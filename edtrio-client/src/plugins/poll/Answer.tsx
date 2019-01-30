@@ -93,7 +93,7 @@ export default class PollAnswerNode extends React.Component<{
         style={this.calculateBackground()}
         button={true}
         divider={true}
-        onClick={this.clickIfUserAllowed.bind(this)}
+        onClick={this.selectAnswerIfAllowed.bind(this)}
         {...attributes}
       >
         <ListItemSecondaryAction>
@@ -135,19 +135,16 @@ export default class PollAnswerNode extends React.Component<{
     );
   }
   private displayResultTextIfNecessary() {
-    const { currentUser, displayResults } = this.props;
-    if (
-      currentUser.isTeacher ||
-      (displayResults && this.currentUserHasVoted())
-    ) {
+    if (this.shouldDisplayResults()) {
       const votes = this.voteCount();
-      return `${votes} ${
-        votes === 1 ? "Stimme" : "Stimmen"
-      } (${this.votePercentage()}%)`;
+      // prettier-ignore
+      return `${votes} ${votes === 1 ? "Stimme" : "Stimmen"} (${this.votePercentage()}%)`;
+    } else {
+      return null;
     }
-    return;
   }
-  private clickIfUserAllowed() {
+
+  private selectAnswerIfAllowed() {
     const { currentUser, updateSelectedAnswer } = this.props;
     if (currentUser.isTeacher || this.currentUserHasVoted()) {
       return;
@@ -155,13 +152,6 @@ export default class PollAnswerNode extends React.Component<{
     updateSelectedAnswer(this.id());
   }
 
-  private deleteNode(editor: Editor, node: Block) {
-    return editor.removeNodeByKey(node.key);
-  }
-  private currentUserHasVoted() {
-    const { getUsersWhoHaveVoted, currentUser } = this.props;
-    return getUsersWhoHaveVoted().includes(currentUser.id);
-  }
   private async onClickDeleteAnswerButton(
     event: any,
     editor: Editor,
@@ -169,7 +159,6 @@ export default class PollAnswerNode extends React.Component<{
   ) {
     event.preventDefault();
     const pollAnswerId = this.id();
-
     this.deleteNode(editor, node);
     await apolloClient.mutate<deletePollAnswer, deletePollAnswerVariables>({
       mutation: DELETE_POLL_ANSWER,
@@ -178,13 +167,28 @@ export default class PollAnswerNode extends React.Component<{
   }
 
   private calculateBackground() {
-    const { currentUser, displayResults } = this.props;
-
-    if (!currentUser.isTeacher && !displayResults) {
+    if (this.shouldDisplayResults()) {
+      return this.backgroundFillStyle();
+    } else {
       return null;
     }
+  }
 
-    return this.backgroundFillStyle();
+  /*#################### HELPERS ################### */
+
+  private shouldDisplayResults() {
+    const { currentUser, displayResults } = this.props;
+    return (
+      currentUser.isTeacher || (displayResults && this.currentUserHasVoted())
+    );
+  }
+
+  private deleteNode(editor: Editor, node: Block) {
+    return editor.removeNodeByKey(node.key);
+  }
+  private currentUserHasVoted() {
+    const { getUsersWhoHaveVoted, currentUser } = this.props;
+    return getUsersWhoHaveVoted().includes(currentUser.id);
   }
 
   private backgroundFillStyle() {
