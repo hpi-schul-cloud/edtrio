@@ -3,9 +3,9 @@ import PollToggles from "./PollToggles";
 export default class PollTogglesEditMode extends PollToggles {
   protected getResultsLabel(displayResults: boolean) {
     if (displayResults) {
-      return "Ergebnisse sofort anzeigen";
+      return "Ergebnisse sofort freischalten";
     } else {
-      return "Ergebnisse nicht sofort anzeigen";
+      return "Ergebnisse nicht sofort freischalten";
     }
   }
   protected getVoteLabel(votingAllowed: boolean) {

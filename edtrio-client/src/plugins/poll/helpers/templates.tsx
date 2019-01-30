@@ -58,3 +58,23 @@ export function getEmptyTemplate() {
     ]),
   });
 }
+
+export function getWebframeworksTemplate() {
+  return Block.create({
+    type: "poll",
+    nodes: List([
+      Block.create({
+        type: "poll_question",
+        nodes: List([
+          Text.create(
+            "Welche Gruppe hat das beste Webframeworks-Projekt abgeliefert?",
+          ),
+        ]),
+      }),
+      createNewPollAnswerWithoutDB("Poll-Plugin"),
+      createNewPollAnswerWithoutDB("Poll-Plugin"),
+      createNewPollAnswerWithoutDB("Poll-Plugin"),
+      createNewPollAnswerWithoutDB("Poll-Plugin"),
+    ]),
+  });
+}

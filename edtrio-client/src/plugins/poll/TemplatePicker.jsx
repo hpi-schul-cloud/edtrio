@@ -11,6 +11,7 @@ import {
   getGradeMeTemplate,
   getEmptyTemplate,
   getFeedbackTemplate,
+  getWebframeworksTemplate,
 } from "./helpers/templates";
 
 const styles = theme => ({
@@ -46,6 +47,9 @@ class TemplatePicker extends React.Component {
     }
     if (event.target.value === "empty") {
       placeholderTemplate = getEmptyTemplate();
+    }
+    if (event.target.value === "webframeworks") {
+      placeholderTemplate = getWebframeworksTemplate();
     }
     editor.replaceNodeByKey(poll.key, placeholderTemplate);
     // TODO: also delete old poll from DB
@@ -91,6 +95,7 @@ class TemplatePicker extends React.Component {
             <option value="empty">Leer</option>
             <option value="feedback">Feedback</option>
             <option value="rate">Bewertung</option>
+            <option value="webframeworks">Webframeworks</option>
           </Select>
         </FormControl>
       </div>
