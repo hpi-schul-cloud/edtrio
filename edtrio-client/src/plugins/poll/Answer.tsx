@@ -50,7 +50,9 @@ export default class PollAnswerNode extends React.Component<{
     );
   }
   public componentWillUnmount() {
-    checkAndDeletePollAnswerNode(this.props.editor, this.props.node);
+    if (!(this.props.node.data.get("data") === "placeholderNode")) {
+      checkAndDeletePollAnswerNode(this.props.editor, this.props.node);
+    }
   }
 
   public render() {

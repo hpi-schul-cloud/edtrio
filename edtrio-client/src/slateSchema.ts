@@ -127,11 +127,12 @@ const schema: object = {
         return;
       },
     },
-    poll: {
+    "poll": {
       nodes: [
         { match: [{ type: "poll_question" }], min: 1, max: 1 },
         { match: [{ type: "poll_answer" }], min: 0 },
       ],
+      
       normalize: (editor: Editor, { code, node, child, index }: any) => {
         switch (code) {
           case "child_min_invalid": {
@@ -145,6 +146,12 @@ const schema: object = {
         }
         return;
       },
+    },
+    "poll_answer": {
+      parent: { type: "poll" },
+    },
+    "poll_question": {
+      parent: { type: "poll" },
     },
     embed: { marks: [] },
     audio: {

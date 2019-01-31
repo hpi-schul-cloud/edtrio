@@ -29,7 +29,6 @@ export function checkAndDeletePollNode(editor: Editor, currentNode: Block) {
     )
   ) {
     // node has been deleted :O
-    console.log("deletepoll");
     apolloClient.mutate<deletePoll, deletePollVariables>({
       mutation: DELETE_POLL,
       variables: { pollId: currentNode.data.get("id") },
@@ -43,11 +42,6 @@ export async function testPollAnswerNodeValidity(
   parent: Block,
 ) {
   const pollAnswerId = currentNode.data.get("id");
-
-  // placeholderNodes will be replaced anyway
-  if (pollAnswerId === "placeholderNode") {
-    return;
-  }
 
   // Test for a copied node, slate is not cool </3 and copies the answer when you press enter
   // @ts-ignore: this exists on the document
