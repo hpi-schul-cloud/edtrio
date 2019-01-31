@@ -53,11 +53,11 @@ export default class PollQuestionNode extends React.Component<{
   private renderReadOnly(attributes) {
     return (
       <ListItem divider={true} {...attributes}>
-        <h2>{this.props.children}</h2>
-        <br />
         <ListItemSecondaryAction>
           {this.voterCountTextIfNecessary()}
         </ListItemSecondaryAction>
+        <h2>{this.props.children}</h2>
+        <br />
       </ListItem>
     );
   }
