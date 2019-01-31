@@ -3,15 +3,12 @@ import Grid from "@material-ui/core/Grid";
 import ListEle from "@material-ui/core/List";
 import AddIcon from "@material-ui/icons/Add";
 import SendIcon from "@material-ui/icons/Send";
-
 import React from "react";
-
 import { apolloClient } from "../../EditorWrapper/apolloClient";
 import {
   addSubmissionToPollAnswer,
   addSubmissionToPollAnswerVariables,
 } from "../../graphqlOperations/generated-types/addSubmissionToPollAnswer";
-
 import {
   poll,
   pollVariables,
@@ -36,10 +33,22 @@ export default class PollNode extends React.Component<{
   getUsersWhoHaveVoted: Function;
   selectedAnswer: any;
   votingAllowed: boolean;
+  displayResults: boolean;
   initState: Function;
 }> {
   public render() {
-    const { children, ...attributes } = this.props;
+    const {
+      readOnly,
+      node,
+      editor,
+      currentUser,
+      getUsersWhoHaveVoted,
+      selectedAnswer,
+      votingAllowed,
+      initState,
+      children,
+      ...attributes
+    } = this.props;
 
     return (
       <div>
@@ -54,12 +63,14 @@ export default class PollNode extends React.Component<{
     // check for correct node creation
     setTimeout(() => this.setPollValuesFromDB(), 200);
   }
-  // public componentWillUnmount() {
-  //   checkAndDeletePollNode(this.props.editor, this.props.node);
-  // }
+
+  public componentWillUnmount() {
+    console.log("unmountedPoll");
+    checkAndDeletePollNode(this.props.editor, this.props.node);
+  }
 
   private async setPollValuesFromDB() {
-    const pollId = this.props.node.data.get("id");
+    const pollId = this.id();
     if (pollId) {
       const poll = await apolloClient.query<poll, pollVariables>({
         query: POLL_QUERY,
@@ -73,25 +84,35 @@ export default class PollNode extends React.Component<{
   }
 
   private mainActionButton() {
-    return this.props.readOnly
-      ? this.props.currentUser.isTeacher
+    const { readOnly, currentUser } = this.props;
+
+    return readOnly
+      ? currentUser.isTeacher
         ? this.controlToggles()
         : this.sendAnswerButton()
       : this.addEditToolbar();
   }
 
   private addEditToolbar() {
+    const { editor, node, votingAllowed, displayResults } = this.props;
+
     return (
       <Grid
         style={{ paddingLeft: "30px" }}
         container={true}
+        spacing={24}
         alignItems="center"
         justify="space-between"
       >
         <Grid item={true}>
-          <TemplatePicker editor={this.props.editor} poll={this.props.node} />
+          <TemplatePicker
+            votingAllowed={votingAllowed}
+            displayResults={displayResults}
+            editor={editor}
+            poll={node}
+          />
         </Grid>
-        <Grid item={true}>
+        <Grid xs={true} item={true}>
           <PollTogglesEditMode />
         </Grid>
         <Grid item={true}>
@@ -117,27 +138,31 @@ export default class PollNode extends React.Component<{
   }
 
   private sendAnswerButton() {
-    let text;
-    const alreadyVoted: boolean = this.props
-      .getUsersWhoHaveVoted()
-      .includes(this.props.currentUser.id);
-    if (alreadyVoted) {
-      text = " Glückwunsch, du hast bereits abgestimmt";
-    } else {
-      text = " Antwort senden";
-    }
+    const { votingAllowed } = this.props;
 
+    const alreadyVoted = this.currentUserHasVoted();
     return (
       <Button
         style={{ float: "right" }}
         variant="outlined"
-        disabled={!this.props.votingAllowed || alreadyVoted}
+        disabled={!votingAllowed || alreadyVoted}
         onClick={event => this.onClickSendAnswerButton()}
       >
         <SendIcon />
-        {text}
+        {this.sendAnswerButtonText(alreadyVoted)}
       </Button>
     );
+  }
+
+  private sendAnswerButtonText(alreadyVoted) {
+    return alreadyVoted
+      ? " Glückwunsch, du hast bereits abgestimmt"
+      : " Antwort senden";
+  }
+
+  private currentUserHasVoted() {
+    const { getUsersWhoHaveVoted, currentUser } = this.props;
+    return getUsersWhoHaveVoted().includes(currentUser.id);
   }
 
   private async onClickAddAnswerButton() {
@@ -161,5 +186,9 @@ export default class PollNode extends React.Component<{
         userId: this.props.currentUser.id,
       },
     });
+  }
+
+  private id() {
+    return this.props.node.data.get("id");
   }
 }

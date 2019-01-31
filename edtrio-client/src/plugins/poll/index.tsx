@@ -1,23 +1,11 @@
-import { List } from "immutable";
 import React, { Fragment } from "react";
-import { Block, Editor, Node, Text } from "slate";
+import { Editor, Node } from "slate";
 import styled from "styled-components";
 import { EditorStateContext } from "../../context/EditorStateContext";
-import { PollStateProvider } from "../../context/PollStateContext";
-import { PollStateContext } from "../../context/PollStateContext";
-import { apolloClient } from "../../EditorWrapper/apolloClient";
 import {
-  createPoll,
-  createPollVariables,
-} from "../../graphqlOperations/generated-types/createPoll";
-import {
-  createPollAnswer,
-  createPollAnswerVariables,
-} from "../../graphqlOperations/generated-types/createPollAnswer";
-import {
-  CREATE_POLL,
-  CREATE_POLL_ANSWER,
-} from "../../graphqlOperations/operations";
+  PollStateContext,
+  PollStateProvider,
+} from "../../context/PollStateContext";
 import PollAnswerNode from "./Answer";
 import { cloneAndDBasifyPoll } from "./helpers/pollManipulation";
 import { getEmptyTemplate } from "./helpers/templates";
@@ -72,9 +60,10 @@ const RenderPollNode = {
               <PollStateContext.Consumer>
                 {({
                   votingAllowed,
+                  displayResults,
                   initState,
                   selectedAnswer,
-                  getUsersWhoHaveVoted: getUsersWhoHaveVoted,
+                  getUsersWhoHaveVoted,
                 }) => (
                   <PollNode
                     node={node}
@@ -84,6 +73,7 @@ const RenderPollNode = {
                     readOnly={readOnly}
                     currentUser={currentUser}
                     votingAllowed={votingAllowed}
+                    displayResults={displayResults}
                     selectedAnswer={selectedAnswer}
                     getUsersWhoHaveVoted={getUsersWhoHaveVoted}
                     initState={initState}
@@ -100,14 +90,26 @@ const RenderPollNode = {
     }
     if (node.type === "poll_question") {
       return (
-        <PollQuestionNode
-          parent={parent}
-          editor={editor}
-          readOnly={readOnly}
-          {...attributes}
-        >
-          {children}
-        </PollQuestionNode>
+        <EditorStateContext.Consumer>
+          {({ currentUser }) => (
+            <PollStateContext.Consumer>
+              {({ getTotalVotes, getUsersWhoHaveVoted, displayResults }) => (
+                <PollQuestionNode
+                  parent={parent}
+                  editor={editor}
+                  readOnly={readOnly}
+                  getTotalVotes={getTotalVotes}
+                  currentUser={currentUser}
+                  getUsersWhoHaveVoted={getUsersWhoHaveVoted}
+                  displayResults={displayResults}
+                  {...attributes}
+                >
+                  {children}
+                </PollQuestionNode>
+              )}
+            </PollStateContext.Consumer>
+          )}
+        </EditorStateContext.Consumer>
       );
     }
     if (node.type === "poll_answer") {
@@ -115,7 +117,14 @@ const RenderPollNode = {
         <EditorStateContext.Consumer>
           {({ currentUser }) => (
             <PollStateContext.Consumer>
-              {({ selectedAnswer, updateSelectedAnswer, displayResults }) => (
+              {({
+                selectedAnswer,
+                updateSelectedAnswer,
+                displayResults,
+                getAnswerInformation,
+                getTotalVotes,
+                getUsersWhoHaveVoted,
+              }) => (
                 <PollAnswerNode
                   node={node}
                   parent={parent}
@@ -125,6 +134,9 @@ const RenderPollNode = {
                   selectedAnswer={selectedAnswer}
                   updateSelectedAnswer={updateSelectedAnswer}
                   displayResults={displayResults}
+                  getAnswerInformation={getAnswerInformation}
+                  getTotalVotes={getTotalVotes}
+                  getUsersWhoHaveVoted={getUsersWhoHaveVoted}
                   {...attributes}
                 >
                   {children}

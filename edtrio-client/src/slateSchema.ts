@@ -130,14 +130,10 @@ const schema: object = {
     poll: {
       nodes: [
         { match: [{ type: "poll_question" }], min: 1, max: 1 },
-        { match: [{ type: "poll_answer" }], min: 2 },
+        { match: [{ type: "poll_answer" }], min: 0 },
       ],
       normalize: (editor: Editor, { code, node, child, index }: any) => {
         switch (code) {
-          case "child_type_invalid": {
-            const type = index === 0 ? "poll_question" : "poll_answer";
-            return editor.setNodeByKey(child.key, type);
-          }
           case "child_min_invalid": {
             if (index === 0) {
               return editor.removeNodeByKey(node.key);

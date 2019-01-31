@@ -34,6 +34,8 @@ interface IPollStateProviderState {
   selectedAnswer: any;
   updateSelectedAnswer: (selectedAnswer: any) => void;
   getUsersWhoHaveVoted: () => any;
+  getAnswerInformation: (pollAnswerId: string) => any;
+  getTotalVotes: () => any;
   initState: (
     id: string,
     votingAllowed: boolean,
@@ -52,6 +54,11 @@ export const PollStateContext = createContext<IPollStateProviderState>({
   selectedAnswer: null,
   updateSelectedAnswer: (selectedAnswer: any) => {},
   getUsersWhoHaveVoted: () => {},
+  getAnswerInformation: (pollAnswerId: string) => ({
+    votesCount: Number,
+    isLeading: Boolean,
+  }),
+  getTotalVotes: () => [],
   initState: (
     id: string,
     votingAllowed: boolean,
@@ -74,6 +81,8 @@ export class PollStateProvider extends Component<{}, IPollStateProviderState> {
       displayResults: false,
       updateDisplayResults: this.updateDisplayResults,
       getUsersWhoHaveVoted: this.getUsersWhoHaveVoted,
+      getAnswerInformation: this.getAnswerInformation,
+      getTotalVotes: this.getTotalVotes,
       initState: this.initState,
     };
   }
@@ -90,13 +99,40 @@ export class PollStateProvider extends Component<{}, IPollStateProviderState> {
   public updateSelectedAnswer = (newSelectedAnswer: any) => {
     this.setState({ selectedAnswer: newSelectedAnswer });
   };
+
   public getUsersWhoHaveVoted = () => {
-    let votes = new Array<any>();
-    for (const answer of this.state.answers) {
-      votes = votes.concat(answer.votes.map(vote => vote.id));
-    }
-    return votes;
+    return this.state.answers
+      .map(answer => answer.votes.map(vote => vote.id))
+      .flat();
   };
+
+  public getAnswerInformation = (pollAnswerId: string) => {
+    const answer = this.state.answers.find(
+      answer => answer.id === pollAnswerId,
+    );
+    if (answer) {
+      const votesCount = answer.votes.length;
+      const leadingCount = Math.max(
+        ...this.state.answers.map(a => a.votes.length),
+      );
+      const isLeading = votesCount === leadingCount;
+      return {
+        votesCount,
+        isLeading,
+      };
+    }
+    return {
+      votesCount: 0,
+      isLeading: false,
+    };
+  };
+
+  public getTotalVotes = () => {
+    return this.state.answers.length === 0
+      ? 0
+      : this.getUsersWhoHaveVoted().length;
+  };
+
   public updateVotingAllowed = (votingAllowed: boolean) => {
     apolloClient.mutate<updatePoll, updatePollVariables>({
       mutation: UPDATE_POLL,

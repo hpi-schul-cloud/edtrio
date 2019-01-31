@@ -228,6 +228,22 @@
             "deprecationReason": null
           },
           {
+            "name": "polls",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Poll",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "poll",
             "description": "",
             "args": [
@@ -250,6 +266,22 @@
               "kind": "OBJECT",
               "name": "Poll",
               "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "pollAnswers",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "PollAnswer",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null

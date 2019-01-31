@@ -34,7 +34,7 @@ type MultipleChoiceSubmission {
 type PollAnswer {
   id: ID! @unique
   votes: [User]!
-  poll: Poll!
+  poll: Poll! @relation(name: "PollAnswers")
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -43,7 +43,7 @@ type Poll {
   id: ID! @unique
   votingAllowed: Boolean!
   displayResults: Boolean!
-  answers: [PollAnswer]!
+  answers: [PollAnswer]! @relation(name: "PollAnswers" onDelete: CASCADE)
   createdAt: DateTime!
   updatedAt: DateTime!
 }

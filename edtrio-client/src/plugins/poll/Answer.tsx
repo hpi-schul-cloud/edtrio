@@ -8,7 +8,12 @@ import RadioButtonCheckedIcon from "@material-ui/icons/RadioButtonChecked";
 import RadioButtonUncheckedIcon from "@material-ui/icons/RadioButtonUnchecked";
 import React from "react";
 import { Block, Editor } from "slate";
-import { PollStateContext } from "../../context/PollStateContext";
+import { apolloClient } from "../../EditorWrapper/apolloClient";
+import {
+  deletePollAnswer,
+  deletePollAnswerVariables,
+} from "../../graphqlOperations/generated-types/deletePollAnswer";
+import { DELETE_POLL_ANSWER } from "../../graphqlOperations/operations";
 import {
   checkAndDeletePollAnswerNode,
   testPollAnswerNodeValidity,
@@ -25,7 +30,13 @@ export default class PollAnswerNode extends React.Component<{
   selectedAnswer: any;
   updateSelectedAnswer: Function;
   displayResults: boolean;
+  getAnswerInformation: Function;
+  getTotalVotes: Function;
+  getUsersWhoHaveVoted: Function;
 }> {
+  public readonly color = "rgba(0,122,158,0.5)";
+  public readonly leadingColor = "rgba(76,175,80,0.5)";
+
   public componentDidMount() {
     // check for correct node creation
     setTimeout(
@@ -33,64 +44,40 @@ export default class PollAnswerNode extends React.Component<{
         testPollAnswerNodeValidity(
           this.props.editor,
           this.props.node,
-          this.context,
           this.props.parent,
         ),
       200,
     );
   }
+  public componentWillUnmount() {
+    checkAndDeletePollAnswerNode(this.props.editor, this.props.node);
+  }
 
   public render() {
-    const {
-      children,
-      node,
-      editor,
-      readOnly,
-      parent,
-      currentUser,
-      selectedAnswer,
-      updateSelectedAnswer,
-      displayResults,
-      ...attributes
-    } = this.props;
+    const { readOnly } = this.props;
 
     if (readOnly) {
-      return this.renderReadOnlyMode(
-        node,
-        parent,
-        currentUser,
-        attributes,
-        selectedAnswer,
-        updateSelectedAnswer,
-        displayResults,
-      );
+      return this.renderReadOnlyMode();
     } else {
-      return this.renderEditMode(children, node, editor, attributes);
+      return this.renderEditMode();
     }
   }
 
-  // public componentWillUnmount() {
-  //   checkAndDeletePollAnswerNode(this.props.editor, this.props.node);
-  // }
+  private renderReadOnlyMode() {
+    const { node, parent, selectedAnswer, ...attributes } = this.props;
 
-  private renderReadOnlyMode(
-    node: Block,
-    parent: Block,
-    currentUser: any,
-    attributes: any,
-    selectedAnswer: any,
-    updateSelectedAnswer: Function,
-    displayResults: boolean,
-  ) {
     const name = `answer-radio-button-${parent.key}`;
     return (
       <ListItem
-        style={this.calculateBackground(displayResults, currentUser)}
+        style={this.calculateBackground()}
         button={true}
         divider={true}
-        onClick={() => updateSelectedAnswer(node.data.get("id"))}
+        onClick={this.selectAnswerIfAllowed.bind(this)}
         {...attributes}
       >
+        <ListItemSecondaryAction>
+          {this.displayResultTextIfNecessary()}
+        </ListItemSecondaryAction>
         <Radio
           name={name}
           checked={selectedAnswer === node.data.get("id")}
@@ -102,23 +89,9 @@ export default class PollAnswerNode extends React.Component<{
       </ListItem>
     );
   }
-  private calculateBackground(displayResults: boolean, currentUser: any) {
-    displayResults;
-    if (!currentUser.isTeacher && !displayResults) {
-      return null;
-    }
-    const percentage = Math.floor(Math.random() * 100);
-    const color = "rgba(0,122,158,0.5)";
-    const background = `linear-gradient(to right, ${color} ${0}%, ${color} ${percentage}%, white ${percentage}%, white ${100 -
-      percentage}%)`;
-    return { background };
-  }
-  private renderEditMode(
-    children: any,
-    node: Block,
-    editor: Editor,
-    attributes: any,
-  ) {
+
+  private renderEditMode() {
+    const { children, node, editor, ...attributes } = this.props;
     return (
       <ListItem divider={true} {...attributes}>
         <ListItemSecondaryAction>
@@ -141,13 +114,92 @@ export default class PollAnswerNode extends React.Component<{
     );
   }
 
+  private displayResultTextIfNecessary() {
+    if (this.shouldDisplayResults()) {
+      const votes = this.voteCount();
+      // prettier-ignore
+      return `${votes} ${votes === 1 ? "Stimme" : "Stimmen"} (${this.votePercentage()}%)`;
+    } else {
+      return null;
+    }
+  }
+
+  private selectAnswerIfAllowed() {
+    const { currentUser, updateSelectedAnswer } = this.props;
+    if (currentUser.isTeacher || this.currentUserHasVoted()) {
+      return;
+    }
+    updateSelectedAnswer(this.id());
+  }
+
+  private async onClickDeleteAnswerButton(
+    event: any,
+    editor: Editor,
+    node: Block,
+  ) {
+    event.preventDefault();
+    const pollAnswerId = this.id();
+    this.deleteNode(editor, node);
+    await apolloClient.mutate<deletePollAnswer, deletePollAnswerVariables>({
+      mutation: DELETE_POLL_ANSWER,
+      variables: { pollAnswerId },
+    });
+  }
+
+  private calculateBackground() {
+    if (this.shouldDisplayResults()) {
+      return this.backgroundFillStyle();
+    } else {
+      return undefined;
+    }
+  }
+
+  /*#################### HELPERS ################### */
+
+  private shouldDisplayResults() {
+    const { currentUser, displayResults } = this.props;
+    return (
+      currentUser.isTeacher || (displayResults && this.currentUserHasVoted())
+    );
+  }
+
   private deleteNode(editor: Editor, node: Block) {
     return editor.removeNodeByKey(node.key);
   }
+  private currentUserHasVoted() {
+    const { getUsersWhoHaveVoted, currentUser } = this.props;
+    return getUsersWhoHaveVoted().includes(currentUser.id);
+  }
 
-  private onClickDeleteAnswerButton(event: any, editor: Editor, node: Block) {
-    event.preventDefault();
-    this.deleteNode(editor, node);
+  private backgroundFillStyle() {
+    const percentage = this.votePercentage();
+    const bgColor = this.backgroundColor();
+    const background = `linear-gradient(to right, ${bgColor} ${0}%, ${bgColor} ${percentage}%, white ${percentage}%, white ${100 -
+      percentage}%)`;
+    return { background };
+  }
+
+  private votePercentage() {
+    const totalVotes = this.props.getTotalVotes();
+    const percentage =
+      totalVotes === 0 ? 0 : Math.floor((this.voteCount() / totalVotes) * 100);
+
+    return percentage;
+  }
+
+  private backgroundColor() {
+    return this.isLeading() ? this.leadingColor : this.color;
+  }
+
+  private voteCount() {
+    return this.props.getAnswerInformation(this.id()).votesCount;
+  }
+
+  private isLeading() {
+    return this.props.getAnswerInformation(this.id()).isLeading;
+  }
+
+  private id() {
+    return this.props.node.data.get("id");
   }
 }
-PollAnswerNode.contextType = PollStateContext;
