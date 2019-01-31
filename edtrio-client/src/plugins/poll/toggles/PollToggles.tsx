@@ -1,19 +1,14 @@
-import Button from "@material-ui/core/Button";
 import Checkbox from "@material-ui/core/Checkbox";
-import grey from "@material-ui/core/colors/grey";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormGroup from "@material-ui/core/FormGroup";
 import Grid from "@material-ui/core/Grid";
-import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import VoteAllowedIcon from "@material-ui/icons/SpeakerNotes";
 import VoteForbiddenIcon from "@material-ui/icons/SpeakerNotesOffOutlined";
 import VisibleIcon from "@material-ui/icons/Visibility";
 import InvisibleIcon from "@material-ui/icons/VisibilityOffOutlined";
-
 import React from "react";
-import { Block, Editor, Node, Text } from "slate";
 import { PollStateContext } from "../../../context/PollStateContext";
+
 const iconSize = "default";
 
 export default abstract class PollToggles extends React.Component {

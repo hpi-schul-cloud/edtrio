@@ -1,23 +1,11 @@
-import { List } from "immutable";
 import React, { Fragment } from "react";
-import { Block, Editor, Node, Text } from "slate";
+import { Editor, Node } from "slate";
 import styled from "styled-components";
 import { EditorStateContext } from "../../context/EditorStateContext";
-import { PollStateProvider } from "../../context/PollStateContext";
-import { PollStateContext } from "../../context/PollStateContext";
-import { apolloClient } from "../../EditorWrapper/apolloClient";
 import {
-  createPoll,
-  createPollVariables,
-} from "../../graphqlOperations/generated-types/createPoll";
-import {
-  createPollAnswer,
-  createPollAnswerVariables,
-} from "../../graphqlOperations/generated-types/createPollAnswer";
-import {
-  CREATE_POLL,
-  CREATE_POLL_ANSWER,
-} from "../../graphqlOperations/operations";
+  PollStateContext,
+  PollStateProvider,
+} from "../../context/PollStateContext";
 import PollAnswerNode from "./Answer";
 import { cloneAndDBasifyPoll } from "./helpers/pollManipulation";
 import { getEmptyTemplate } from "./helpers/templates";

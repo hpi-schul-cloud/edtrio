@@ -3,15 +3,12 @@ import Grid from "@material-ui/core/Grid";
 import ListEle from "@material-ui/core/List";
 import AddIcon from "@material-ui/icons/Add";
 import SendIcon from "@material-ui/icons/Send";
-
 import React from "react";
-
 import { apolloClient } from "../../EditorWrapper/apolloClient";
 import {
   addSubmissionToPollAnswer,
   addSubmissionToPollAnswerVariables,
 } from "../../graphqlOperations/generated-types/addSubmissionToPollAnswer";
-
 import {
   poll,
   pollVariables,

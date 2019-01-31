@@ -1,27 +1,17 @@
-import { Block, Editor, Node, Text } from "slate";
-
+import { Block, Editor, Node } from "slate";
 import { apolloClient } from "../../../EditorWrapper/apolloClient";
-
-import {
-  createPoll,
-  createPollVariables,
-} from "../../../graphqlOperations/generated-types/createPoll";
-
-import {
-  deletePoll,
-  deletePollVariables,
-} from "../../../graphqlOperations/generated-types/deletePoll";
-
 import {
   createPollAnswer,
   createPollAnswerVariables,
 } from "../../../graphqlOperations/generated-types/createPollAnswer";
-
+import {
+  deletePoll,
+  deletePollVariables,
+} from "../../../graphqlOperations/generated-types/deletePoll";
 import {
   deletePollAnswer,
   deletePollAnswerVariables,
 } from "../../../graphqlOperations/generated-types/deletePollAnswer";
-
 import {
   CREATE_POLL_ANSWER,
   DELETE_POLL,
@@ -50,17 +40,16 @@ export function checkAndDeletePollNode(editor: Editor, currentNode: Block) {
 export async function testPollAnswerNodeValidity(
   editor: Editor,
   currentNode: Block,
-  context: any,
   parent: Block,
 ) {
-  // Test for having no id
   const pollAnswerId = currentNode.data.get("id");
+
+  // placeholderNodes will be replaced anyway
   if (pollAnswerId === "placeholderNode") {
     return;
   }
 
-  // Test for a copied node
-  // TODO: This is not working for us
+  // Test for a copied node, slate is not cool </3 and copies the answer when you press enter
   // @ts-ignore: this exists on the document
   const collisionNode = editor.value.document.findDescendant(
     (descendantNode: Node) =>
@@ -68,9 +57,9 @@ export async function testPollAnswerNodeValidity(
       descendantNode.data.get("id") === pollAnswerId &&
       descendantNode.key !== currentNode.key,
   );
-  // There is a collision node,
+
   if (collisionNode) {
-    // node needs to be created on backend-side
+    // we need new answer in backend and assign its id
     const pollId = parent.data.get("id");
     const pollAnswer = await apolloClient.mutate<
       createPollAnswer,

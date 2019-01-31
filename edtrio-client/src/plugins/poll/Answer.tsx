@@ -44,48 +44,27 @@ export default class PollAnswerNode extends React.Component<{
         testPollAnswerNodeValidity(
           this.props.editor,
           this.props.node,
-          this.context,
           this.props.parent,
         ),
       200,
     );
   }
+  public componentWillUnmount() {
+    checkAndDeletePollAnswerNode(this.props.editor, this.props.node);
+  }
 
   public render() {
-    const {
-      children,
-      node,
-      editor,
-      readOnly,
-      parent,
-      currentUser,
-      selectedAnswer,
-      updateSelectedAnswer,
-      displayResults,
-      getAnswerInformation,
-      getTotalVotes,
-      ...attributes
-    } = this.props;
+    const { readOnly } = this.props;
 
     if (readOnly) {
-      return this.renderReadOnlyMode(attributes);
+      return this.renderReadOnlyMode();
     } else {
-      return this.renderEditMode(attributes);
+      return this.renderEditMode();
     }
   }
 
-  // public componentWillUnmount() {
-  //   checkAndDeletePollAnswerNode(this.props.editor, this.props.node);
-  // }
-
-  private renderReadOnlyMode(attributes: any) {
-    const {
-      node,
-      parent,
-      selectedAnswer,
-      updateSelectedAnswer,
-      getTotalVotes,
-    } = this.props;
+  private renderReadOnlyMode() {
+    const { node, parent, selectedAnswer, ...attributes } = this.props;
 
     const name = `answer-radio-button-${parent.key}`;
     return (
@@ -111,8 +90,8 @@ export default class PollAnswerNode extends React.Component<{
     );
   }
 
-  private renderEditMode(attributes: any) {
-    const { children, node, editor } = this.props;
+  private renderEditMode() {
+    const { children, node, editor, ...attributes } = this.props;
     return (
       <ListItem divider={true} {...attributes}>
         <ListItemSecondaryAction>
@@ -134,6 +113,7 @@ export default class PollAnswerNode extends React.Component<{
       </ListItem>
     );
   }
+
   private displayResultTextIfNecessary() {
     if (this.shouldDisplayResults()) {
       const votes = this.voteCount();
@@ -170,7 +150,7 @@ export default class PollAnswerNode extends React.Component<{
     if (this.shouldDisplayResults()) {
       return this.backgroundFillStyle();
     } else {
-      return null;
+      return undefined;
     }
   }
 
