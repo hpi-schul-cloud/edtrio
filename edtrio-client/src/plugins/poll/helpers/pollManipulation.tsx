@@ -22,7 +22,7 @@ async function createPollAnswerDBEntryAndFetchId(pollId: any) {
     })
     .then(
       pollAnswer =>
-        // @ts-ignore: I just created it.......... amk
+        // @ts-ignore
         pollAnswer.data.createPollAnswer.id,
     );
 
@@ -39,7 +39,7 @@ async function createPollDBEntryAndFetchId(stateValues: any) {
     })
     .then(
       poll =>
-        // @ts-ignore: I just created it.......... amk
+        // @ts-ignore
         poll.data.createPoll.id,
     );
 
