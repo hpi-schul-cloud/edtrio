@@ -54,7 +54,6 @@ class TemplatePicker extends React.Component {
       placeholderTemplate = getWebframeworksTemplate();
     }
     editor.replaceNodeByKey(poll.key, placeholderTemplate);
-    // TODO: also delete old poll from DB
     const stateValues = {
       votingAllowed: this.props.votingAllowed,
       displayResults: this.props.displayResults,
