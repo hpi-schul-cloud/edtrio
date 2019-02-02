@@ -8,7 +8,36 @@ order: 10
 # Sorting Task Plugin
 
 ## 1. Use case
+Give teachers the ability to create questions and answers. The students then decide whether they can explain the question or not.
+At the end, students can discuss those questions with each other.
 
-## 2. Technologies used
+## 2. Technologies
+React Components are extended with Typescript Interfaces for type safety similar to [React PropTypes](https://reactjs.org/docs/typechecking-with-proptypes.html)
 
 ## 3. Architecture
+The plugin uses several components as shown below and is treated as a [void](https://docs.slatejs.org/slate-core/schema#isvoid) node by Slate.js.
+This means the plugin needs to handle events like click and edit itself. Additionally the state must be persisted into the global Editor State.
+
+```text
+├── SortingTaskNode
+│   └── LearningItems
+        └── LearningItem
+│   └── EditView
+│   └── ReadView
+│       └── FlipCard
+│       └── ResultCard
+```
+The `LearningItems` and `EditView` components are only visible for the teacher. The `ReadView` component for the student.
+The `SortingTaskNode` component decides which of those components to render
+```jsx
+public render() {
+    return (
+        ...
+        { readOnly
+        ? <ReadView learningItems={this.state.learningItems} />
+        : <EditView learningItems={this.state.learningItems} onEdit={this.editHandler()} />
+        }
+        ...
+    );
+}
+```
