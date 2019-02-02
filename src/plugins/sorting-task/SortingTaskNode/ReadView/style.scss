@@ -1,3 +1,7 @@
+.sorting-task-node {
+  box-shadow:none !important; //remove default red outline
+}
+
 .sorting-task-node ol.learning-items__cards {
   --max-height: 25rem;
   --wrapper-padding: 40px; // needed for flip animation
@@ -33,13 +37,13 @@
     &__button{
       background: transparent;
       border: 0;
-      padding: .5rem 1rem;
+      padding: 1.5rem 2rem;
       border-radius: 5rem;
       white-space: nowrap;
       text-transform: uppercase;
 
       &--has-icon{
-        padding: 1rem;
+        padding: 1.5rem;
         font-size: 0;
         line-height: 0;
       }
