@@ -1,6 +1,6 @@
 ---
 name: Sorting Task
-route: /plugins/sorting-task/
+route: /plugins/sorting-task
 menu: 3. Plugins
 order: 10
 ---
@@ -11,7 +11,7 @@ order: 10
 Give teachers the ability to create questions and answers. The students then decide whether they can explain the question or not.
 At the end, students can discuss those questions with each other.
 
-Sorting tasks are a didactic concept in which students can acquire knowledge iteratively. The teacher provides the pupils with index cards with keywords to be explained, which they then sort into two stacks. "I can explain" and "I can't explain yet". 
+Sorting tasks are a didactic concept in which students can acquire knowledge iteratively. The teacher provides the pupils with index cards with keywords to be explained, which they then sort into two stacks. "I can explain" and "I can't explain yet".
 
 In the following iterations the students get together and try to understand their not yet known terms and to acquire new knowledge.
 
@@ -23,8 +23,7 @@ Further details about this learning method can be found here:
 React Components are extended with Typescript Interfaces for type safety similar to [React PropTypes](https://reactjs.org/docs/typechecking-with-proptypes.html)
 
 ## 3. Architecture
-The plugin uses several components as shown below and is treated as a [void](https://docs.slatejs.org/slate-core/schema#isvoid) node by Slate.js.
-This means the plugin needs to handle events like click and edit itself. Additionally the state must be persisted into the global Editor State.
+The plugin uses several components as shown below;
 
 ```text
 ├── SortingTaskNode
@@ -35,6 +34,7 @@ This means the plugin needs to handle events like click and edit itself. Additio
 │       └── FlipCard
 │       └── ResultCard
 ```
+
 The `LearningItems` and `EditView` components are only visible for the teacher. The `ReadView` component for the student.
 The `SortingTaskNode` component decides which of those components to render
 ```jsx
@@ -49,3 +49,13 @@ public render() {
     );
 }
 ```
+
+### Integration with Slate.js
+We let Slate.js treat our plugin as a [void](https://docs.slatejs.org/slate-core/schema#isvoid) node.
+This means the plugin needs to handle events like click and edit itself.
+Additionally the state must be persisted into the global Editor State.
+
+To achive this, our top component (`SortingTaskNode/index.tsx`) has two functions.
+`persistState()` will be called, whenever we edit something inside one of our teacher sub components. We call this to sync our internal state with the saved Slate.js state for further use. We only need to care about the teacher view (at the moment), because the student view is almost stateless. The sorting task concept does not directly envisage stretching processing over a longer (interrupted) period of time. Thus there is no need to persist the state of the student view. Furthermore, this also offers the possibility for the student to easily check his knowledge again later.
+
+In addition we have `loadState()` to get our saves state back from Slate.js. This function is only called on the initial load to populate our own internal react state with the saved state.
