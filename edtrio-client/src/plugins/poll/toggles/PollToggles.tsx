@@ -7,7 +7,7 @@ import VoteForbiddenIcon from "@material-ui/icons/SpeakerNotesOffOutlined";
 import VisibleIcon from "@material-ui/icons/Visibility";
 import InvisibleIcon from "@material-ui/icons/VisibilityOffOutlined";
 import React from "react";
-import { PollStateContext } from "../../../context/PollStateContext";
+import { PollStateContext } from "../../../context/poll/PollStateContext";
 
 const iconSize = "default";
 

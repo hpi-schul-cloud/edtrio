@@ -1,71 +1,19 @@
-import React, { Component, createContext } from "react";
-import { apolloClient } from "../EditorWrapper/apolloClient";
+import React, { Component } from "react";
+import { apolloClient } from "../../EditorWrapper/apolloClient";
 
 import {
   updatePoll,
   updatePollVariables,
-} from "../graphqlOperations/generated-types/updatePoll";
+} from "../../graphqlOperations/generated-types/updatePoll";
 
 import {
   POLL_CHANGED,
   POLL_QUERY,
   UPDATE_POLL,
-} from "../graphqlOperations/operations";
+} from "../../graphqlOperations/operations";
 
-import { any } from "prop-types";
-import { Subscription } from "react-apollo";
-import {
-  pollChanged,
-  pollChangedVariables,
-} from "../graphqlOperations/generated-types/pollChanged";
-
-class PollSubscription extends Subscription<
-  pollChanged,
-  pollChangedVariables
-> {}
-
-interface IPollStateProviderState {
-  id: string;
-  answers: any;
-  votingAllowed: boolean;
-  updateVotingAllowed: (votingAllowed: boolean) => void;
-  displayResults: boolean;
-  updateDisplayResults: (displayResults: boolean) => void;
-  selectedAnswer: any;
-  updateSelectedAnswer: (selectedAnswer: any) => void;
-  getUsersWhoHaveVoted: () => any;
-  getAnswerInformation: (pollAnswerId: string) => any;
-  getTotalVotes: () => any;
-  initState: (
-    id: string,
-    votingAllowed: boolean,
-    displayResults: boolean,
-    answers: any,
-  ) => void;
-}
-
-export const PollStateContext = createContext<IPollStateProviderState>({
-  id: "",
-  answers: [],
-  votingAllowed: false,
-  updateVotingAllowed: (votingAllowed: boolean) => {},
-  displayResults: false,
-  updateDisplayResults: (displayResults: boolean) => {},
-  selectedAnswer: null,
-  updateSelectedAnswer: (selectedAnswer: any) => {},
-  getUsersWhoHaveVoted: () => {},
-  getAnswerInformation: (pollAnswerId: string) => ({
-    votesCount: Number,
-    isLeading: Boolean,
-  }),
-  getTotalVotes: () => [],
-  initState: (
-    id: string,
-    votingAllowed: boolean,
-    displayResults: boolean,
-    answers: any,
-  ) => {},
-});
+import { IPollStateProviderState, PollStateContext } from "./PollStateContext";
+import { PollSubscription } from "./PollSubscription";
 
 export class PollStateProvider extends Component<{}, IPollStateProviderState> {
   constructor(props: any) {
@@ -74,7 +22,7 @@ export class PollStateProvider extends Component<{}, IPollStateProviderState> {
     this.state = {
       id: "",
       answers: [],
-      selectedAnswer: null,
+      selectedAnswer: "",
       updateSelectedAnswer: this.updateSelectedAnswer,
       votingAllowed: false,
       updateVotingAllowed: this.updateVotingAllowed,
@@ -92,11 +40,19 @@ export class PollStateProvider extends Component<{}, IPollStateProviderState> {
     votingAllowed: boolean,
     displayResults: boolean,
     answers: any,
+    currentUser: any,
   ) => {
-    this.setState({ id, votingAllowed, displayResults, answers });
+    const selectedAnswer = this.getSelectedAnswer(answers, currentUser);
+    this.setState({
+      id,
+      selectedAnswer,
+      votingAllowed,
+      displayResults,
+      answers,
+    });
   };
 
-  public updateSelectedAnswer = (newSelectedAnswer: any) => {
+  public updateSelectedAnswer = (newSelectedAnswer: string) => {
     this.setState({ selectedAnswer: newSelectedAnswer });
   };
 
@@ -108,7 +64,7 @@ export class PollStateProvider extends Component<{}, IPollStateProviderState> {
 
   public getAnswerInformation = (pollAnswerId: string) => {
     const answer = this.state.answers.find(
-      answer => answer.id === pollAnswerId,
+      pollAnswer => pollAnswer.id === pollAnswerId,
     );
     if (answer) {
       const votesCount = answer.votes.length;
@@ -174,9 +130,9 @@ export class PollStateProvider extends Component<{}, IPollStateProviderState> {
             } = subscriptionData.pollChanged;
 
             if (
-              votingAllowed != this.state.votingAllowed ||
-              displayResults != this.state.displayResults ||
-              JSON.stringify(answers) != JSON.stringify(this.state.answers)
+              votingAllowed !== this.state.votingAllowed ||
+              displayResults !== this.state.displayResults ||
+              JSON.stringify(answers) !== JSON.stringify(this.state.answers)
             ) {
               this.setState({
                 votingAllowed,
@@ -194,4 +150,11 @@ export class PollStateProvider extends Component<{}, IPollStateProviderState> {
       </PollSubscription>
     );
   }
+
+  private getSelectedAnswer = (answers: any, currentUser: any) => {
+    const answer = answers.find(pollAnswer =>
+      pollAnswer.votes.map(user => user.id).includes(currentUser.id),
+    );
+    return answer ? answer.id : "";
+  };
 }

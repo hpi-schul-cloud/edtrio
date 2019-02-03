@@ -14,12 +14,6 @@ import {
   deletePollAnswerVariables,
 } from "../../graphqlOperations/generated-types/deletePollAnswer";
 import { DELETE_POLL_ANSWER } from "../../graphqlOperations/operations";
-import {
-  checkAndDeletePollAnswerNode,
-  testPollAnswerNodeValidity,
-} from "./helpers/validity";
-
-// TODO: add delete function
 
 export default class PollAnswerNode extends React.Component<{
   readOnly: boolean;
@@ -28,45 +22,41 @@ export default class PollAnswerNode extends React.Component<{
   parent: Block;
   currentUser: any;
   selectedAnswer: any;
-  updateSelectedAnswer: Function;
+  updateSelectedAnswer: (string) => void;
   displayResults: boolean;
-  getAnswerInformation: Function;
-  getTotalVotes: Function;
-  getUsersWhoHaveVoted: Function;
+  getAnswerInformation: (string) => { votesCount: number; isLeading: boolean };
+  getTotalVotes: () => number;
+  getUsersWhoHaveVoted: () => string[];
 }> {
   public readonly color = "rgba(0,122,158,0.5)";
   public readonly leadingColor = "rgba(76,175,80,0.5)";
 
-  public componentDidMount() {
-    // check for correct node creation
-    setTimeout(
-      () =>
-        testPollAnswerNodeValidity(
-          this.props.editor,
-          this.props.node,
-          this.props.parent,
-        ),
-      200,
-    );
-  }
-  public componentWillUnmount() {
-    if (!(this.props.node.data.get("data") === "placeholderNode")) {
-      checkAndDeletePollAnswerNode(this.props.editor, this.props.node);
-    }
-  }
-
   public render() {
-    const { readOnly } = this.props;
+    const {
+      children,
+      readOnly,
+      node,
+      editor,
+      parent,
+      currentUser,
+      selectedAnswer,
+      updateSelectedAnswer,
+      displayResults,
+      getAnswerInformation,
+      getTotalVotes,
+      getUsersWhoHaveVoted,
+      ...attributes
+    } = this.props;
 
     if (readOnly) {
-      return this.renderReadOnlyMode();
+      return this.renderReadOnlyMode(attributes);
     } else {
-      return this.renderEditMode();
+      return this.renderEditMode(attributes);
     }
   }
 
-  private renderReadOnlyMode() {
-    const { node, parent, selectedAnswer, ...attributes } = this.props;
+  private renderReadOnlyMode(attributes) {
+    const { node, parent, selectedAnswer } = this.props;
 
     const name = `answer-radio-button-${parent.key}`;
     return (
@@ -74,7 +64,7 @@ export default class PollAnswerNode extends React.Component<{
         style={this.calculateBackground()}
         button={true}
         divider={true}
-        onClick={this.selectAnswerIfAllowed.bind(this)}
+        onClick={this.selectAnswerIfAllowed}
         {...attributes}
       >
         <ListItemSecondaryAction>
@@ -92,8 +82,8 @@ export default class PollAnswerNode extends React.Component<{
     );
   }
 
-  private renderEditMode() {
-    const { children, node, editor, ...attributes } = this.props;
+  private renderEditMode(attributes) {
+    const { children, node, editor } = this.props;
     return (
       <ListItem divider={true} {...attributes}>
         <ListItemSecondaryAction>
@@ -126,13 +116,13 @@ export default class PollAnswerNode extends React.Component<{
     }
   }
 
-  private selectAnswerIfAllowed() {
+  private selectAnswerIfAllowed = () => {
     const { currentUser, updateSelectedAnswer } = this.props;
     if (currentUser.isTeacher || this.currentUserHasVoted()) {
       return;
     }
     updateSelectedAnswer(this.id());
-  }
+  };
 
   private async onClickDeleteAnswerButton(
     event: any,

@@ -18,23 +18,26 @@ import {
   POLL_QUERY,
 } from "../../graphqlOperations/operations";
 import { createNewPollAnswerForPoll } from "./helpers/pollManipulation";
-import { checkAndDeletePollNode } from "./helpers/validity";
 import TemplatePicker from "./TemplatePicker";
 import PollTogglesEditMode from "./toggles/PollTogglesEditMode";
 import PollTogglesReadOnlyMode from "./toggles/PollTogglesReadOnlyMode";
-
-// TODO: add delete function
 
 export default class PollNode extends React.Component<{
   readOnly: boolean;
   node: any;
   editor: any;
   currentUser: any;
-  getUsersWhoHaveVoted: Function;
+  getUsersWhoHaveVoted: () => string[];
   selectedAnswer: any;
   votingAllowed: boolean;
   displayResults: boolean;
-  initState: Function;
+  initState: (
+    id: string,
+    votingAllowed: boolean,
+    displayResults: boolean,
+    answers: any,
+    currentUser: any,
+  ) => {};
 }> {
   public render() {
     const {
@@ -47,6 +50,7 @@ export default class PollNode extends React.Component<{
       votingAllowed,
       initState,
       children,
+      displayResults,
       ...attributes
     } = this.props;
 
@@ -64,21 +68,23 @@ export default class PollNode extends React.Component<{
     setTimeout(() => this.setPollValuesFromDB(), 200);
   }
 
-  public componentWillUnmount() {
-    console.log("unmountedPoll");
-    checkAndDeletePollNode(this.props.editor, this.props.node);
-  }
-
   private async setPollValuesFromDB() {
     const pollId = this.id();
     if (pollId) {
-      const poll = await apolloClient.query<poll, pollVariables>({
+      const pollQuery = await apolloClient.query<poll, pollVariables>({
         query: POLL_QUERY,
         variables: { pollId },
       });
-      if (poll && poll.data && poll.data.poll) {
-        const { votingAllowed, displayResults, answers } = poll.data.poll;
-        this.props.initState(pollId, votingAllowed, displayResults, answers);
+      if (pollQuery && pollQuery.data && pollQuery.data.poll) {
+        const { currentUser } = this.props;
+        const { votingAllowed, displayResults, answers } = pollQuery.data.poll;
+        this.props.initState(
+          pollId,
+          votingAllowed,
+          displayResults,
+          answers,
+          currentUser,
+        );
       }
     }
   }
@@ -119,7 +125,7 @@ export default class PollNode extends React.Component<{
           <Button
             style={{ width: "250px", height: "56px" }}
             variant="outlined"
-            onClick={this.onClickAddAnswerButton.bind(this)}
+            onClick={this.onClickAddAnswerButton}
           >
             <AddIcon />
             &nbsp;Antwort hinzufügen
@@ -165,13 +171,13 @@ export default class PollNode extends React.Component<{
     return getUsersWhoHaveVoted().includes(currentUser.id);
   }
 
-  private async onClickAddAnswerButton() {
+  private onClickAddAnswerButton = async () => {
     this.props.editor.insertNodeByPath(
       this.props.editor.value.document.getPath(this.props.node.key),
       this.props.node.nodes.size,
       await createNewPollAnswerForPoll(this.props.node.data.get("id")),
     );
-  }
+  };
 
   private async onClickSendAnswerButton() {
     const { selectedAnswer, node } = this.props;

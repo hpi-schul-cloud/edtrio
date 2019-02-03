@@ -9,10 +9,16 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import DeleteIcon from "@material-ui/icons/Delete";
 import React from "react";
+import { apolloClient } from "../../EditorWrapper/apolloClient";
+import {
+  deletePoll,
+  deletePollVariables,
+} from "../../graphqlOperations/generated-types/deletePoll";
+import { DELETE_POLL } from "../../graphqlOperations/operations";
 
 export default class PollQuestionNode extends React.Component<{
   readOnly: boolean;
-  getTotalVotes: Function;
+  getTotalVotes: () => number;
   currentUser: any;
   getUsersWhoHaveVoted: any;
   displayResults: any;
@@ -38,7 +44,15 @@ export default class PollQuestionNode extends React.Component<{
   }
 
   public render() {
-    const { children, readOnly, getTotalVotes, ...attributes } = this.props;
+    const {
+      children,
+      readOnly,
+      getTotalVotes,
+      currentUser,
+      getUsersWhoHaveVoted,
+      displayResults,
+      ...attributes
+    } = this.props;
     if (this.props.readOnly) {
       return this.renderReadOnly(attributes);
     } else {
@@ -105,9 +119,15 @@ export default class PollQuestionNode extends React.Component<{
       </ListItem>
     );
   }
-  private onClickDeletePollButton(event: any, editor: any, node: any) {
+  private async onClickDeletePollButton(event: any, editor: any, node: any) {
     event.preventDefault();
+    const pollId = node.data.get("id");
     this.deleteNode(editor, node);
+
+    await apolloClient.mutate<deletePoll, deletePollVariables>({
+      mutation: DELETE_POLL,
+      variables: { pollId },
+    });
   }
 
   private deleteNode(editor: any, node: any) {

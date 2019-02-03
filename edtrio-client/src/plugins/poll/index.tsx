@@ -4,8 +4,10 @@ import styled from "styled-components";
 import { EditorStateContext } from "../../context/EditorStateContext";
 import {
   PollStateContext,
-  PollStateProvider,
-} from "../../context/PollStateContext";
+} from "../../context/poll/PollStateContext";
+import {
+  PollStateProvider
+} from "../../context/poll/PollStateProvider";
 import PollAnswerNode from "./Answer";
 import { cloneAndDBasifyPoll } from "./helpers/pollManipulation";
 import { getEmptyTemplate } from "./helpers/templates";

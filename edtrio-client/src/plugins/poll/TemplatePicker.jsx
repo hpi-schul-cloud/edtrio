@@ -13,6 +13,8 @@ import {
   getGradeMeTemplate,
   getWebframeworksTemplate,
 } from "./helpers/templates";
+import { DELETE_POLL } from "../../graphqlOperations/operations";
+import { apolloClient } from "../../EditorWrapper/apolloClient";
 
 const styles = theme => ({
   root: {
@@ -53,6 +55,10 @@ class TemplatePicker extends React.Component {
     if (event.target.value === "webframeworks") {
       placeholderTemplate = getWebframeworksTemplate();
     }
+    await apolloClient.mutate({
+      mutation: DELETE_POLL,
+      variables: { pollId: poll.data.get("id") },
+    });
     editor.replaceNodeByKey(poll.key, placeholderTemplate);
     const stateValues = {
       votingAllowed: this.props.votingAllowed,
