@@ -1,93 +1,10 @@
-.sorting-task-node ol.learning-items__cards {
-  --max-height: 25rem;
-  --wrapper-padding: 40px; // needed for flip animation
-  padding: var(--wrapper-padding);
-  margin: 0;
-  list-style-type: none;
-  position:relative;
-  box-sizing: border-box;
-  width: 100%;
-  height: 100vh;
-  max-height: calc(var(--max-height) + (2 * var(--wrapper-padding)));
+.st-read-view {
+    margin: 2rem -1rem;
+    padding: 2rem;
+    background-color: #f4f4f4;
+}
 
-  .card__wrapper{
-    --border-width: 0.125rem; // 2px on 16px font-size
-    --border-radius: 0.375rem; // 6px on 16px font size
-
-    background-color: transparent;
-    margin: 0 auto;
-    width: 100%;
-    max-width: 20rem;
-    height: 50vh;
-    max-height: var(--max-height);
-  }
-  .card{
-    box-sizing: border-box;
-    border: var(--border-width) solid #333;
-    border-radius: var(--border-radius);
-    box-shadow: 0 0 5px rgba(0,0,0,.3);
-    position: relative;
-    width: 100%;
-    height: 100%;
-
-    &__button{
-      background: transparent;
-      border: 0;
-      padding: .5rem 1rem;
-      border-radius: 5rem;
-      white-space: nowrap;
-      text-transform: uppercase;
-
-      &--has-icon{
-        padding: 1rem;
-        font-size: 0;
-        line-height: 0;
-      }
-      &--green{
-        background: #4caf50;
-      }
-      &--red{
-        background: #d32f2f;
-      }
-      &--yellow{
-        background: #FFC83D;
-      }
-      &--outlined{
-        border: 1px solid grey;
-      }
-    }
-  }
-  .card__content{
-    display: flex;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-    border-radius: calc(var(--border-radius) - var(--border-width));
-    flex-direction: column;
-    align-items: center;
-
-    padding: .5rem .5rem 1rem;
-    background-color: #fff;
-    color: #333;
-  }
-
-  .card__wrapper{
-    position: absolute;
-    top: var(--wrapper-padding);
-    left: 0;
-    right: 0;
-    visibility: hidden;
-    transition: transform .3s ease;
-
-    @for $i from 0 through 3 {
-      // todo change the selector to classes like .learning-items__stack-item--1, .learning-items__stack-item--2, ...
-      &:nth-of-type( #{$i + 1} ) {
-        visibility: visible;
-        $offset: $i * 4px;
-        z-index: -$i;
-        transform: translate($offset, $offset);
-      }
-    }
-  }
+.st-read-view__cards {
+	max-width: 20rem;
+	margin: auto;
 }

@@ -1,0 +1,22 @@
+.st-action-button {
+    height: 3rem;
+    width: 3rem;
+    font-size: 1.25rem;
+
+    background: transparent;
+    border: none;
+    border-radius: 50%;
+    color: #fff;
+}
+
+.st-action-button + .st-action-button {
+	margin-left: .75rem;
+}
+
+.st-action-button--negative {
+	background-color: #d32f2f;
+}
+
+.st-action-button--positive {
+	background-color: #4caf50;
+}

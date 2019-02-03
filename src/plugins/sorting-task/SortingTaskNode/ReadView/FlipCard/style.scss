@@ -1,50 +1,32 @@
-/* inspiration for card-flip animation: https://www.w3schools.com/howto/howto_css_flip_card.asp */
-.sorting-task-node .flip-card {
-  perspective: 1000px;
-
-  &__inner {
-    transition: transform 0.8s;
-    transform-style: preserve-3d;
-  }
-
-  &__title{
-    margin-top: 1em;
-    text-align: center;
-    user-select: none;
-  }
-
-  &__text{
-    flex: 1;
-    display: flex;
-    align-items: center;
-    text-align: center;
-  }
-
-  &__footer{
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    min-width: 65%;
-  }
-
-  &__front {
-    font-weight: bold;
-    user-select: none;
-  }
-
-  &__back {
-    transform: rotateY(180deg);
-  }
-
-  /* TODO replace :hover with flip-card--is-flipped class and toggle the class with js on click */
-  &--is-flipped.flip-card__inner {
-    transform: rotateY(-180deg);
-  }
+.st-flip-card {
+    position: relative;
+    perspective: 1000px;
 }
 
+.st-flip-card__sides {
+    transition: transform .75s;
+    transform-style: preserve-3d;
+}
 
-.md-icon{
-  display: inline-block;
-  width: 1rem;
-  height: 1rem;
+.st-flip-card--flipped .st-flip-card__sides {
+    transform: rotateY(180deg);
+}
+
+.st-flip-card-front,
+.st-flip-card-back {
+    backface-visibility: hidden;
+}
+
+.st-flip-card-front {
+    position: relative;
+    z-index: 2;
+}
+
+.st-flip-card-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: rotateY(180deg);
 }

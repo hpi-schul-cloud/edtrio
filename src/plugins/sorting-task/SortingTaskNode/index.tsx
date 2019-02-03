@@ -35,13 +35,13 @@ export default class SortingTaskNode extends React.Component<IProps, IState> {
   }
 
   public render() {
-    const { attributes, readOnly, isFocused } = this.props;
+    const { readOnly } = this.props;
 
     return (
       <div
-        className={`plugin-wrapper sorting-task-node ${ isFocused && 'selected' }`}
+        className={`sorting-task-node`}
+        style={{ margin: '2rem 0' }}
         onClick={this.clickHandler()}
-        {...attributes}
        >
         { readOnly
           ? <ReadView learningItems={this.state.learningItems} />

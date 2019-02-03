@@ -1,0 +1,12 @@
+.st-result-card {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	text-align: center;
+}
+
+.st-result-card__heading {
+	// Need to overwrite higher-specifity selector :(
+	margin-bottom: auto!important;
+	margin-top: 1.5rem;
+}

@@ -1,0 +1,22 @@
+.st-flash-card__front,
+.st-flash-card__back {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.st-flash-card__term,
+.st-flash-card__description {
+    // `!important is necessary to overwrite
+    // higher-specificity selectors targeting
+    // `p` tags
+    margin: auto 0!important;
+    text-align: center;
+    hyphens: auto;
+}
+
+.st-flash-card__term {
+    font-size: 1.5rem;
+    font-weight: bold;
+}

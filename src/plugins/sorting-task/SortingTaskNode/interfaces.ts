@@ -3,10 +3,10 @@ export interface ILearningItem {
   term: string,
   description?: string,
 };
-export interface ILearningItemsWithKnownState extends Array<ILearningItemWithKnownState> {};
-export interface ILearningItemWithKnownState {
-  term: string,
-  description?: string,
-  isSolved: boolean,
-  wasViewed: boolean
+
+export interface IFlashCards extends Array<IFlashCard> {};
+export interface IFlashCard {
+  learningItem: ILearningItem,
+  isKnown: boolean,
+  isFlipped: boolean,
 };

@@ -1,43 +1,55 @@
 import React from "react";
+import Button from "../Button";
+import Card from "../Card";
+import "./style.scss";
 
 interface IProps {
-	unknownItemsCount: number;
-	continue: () => void,
-	reset: () => void,
+  unknownCount: number,
+  onContinue?: () => void,
+  onReset?: () => void,
 }
 
-export default class ResultCard extends React.Component<IProps> {
+export default class ResultCard extends React.PureComponent<IProps> {
 
-	public render() {
-		let knownString;
-		if(this.props.unknownItemsCount === 0){ knownString = "Du wusstest alles."}
-		else{ knownString = `Bis auf ${this.props.unknownItemsCount} Begriff${this.props.unknownItemsCount>1?'e':''} wusstest du alles.`;}
-		return (
-			<li className="card__wrapper">
-				<div className="card">
-					<div className="flip-card__front card__content">
-						<h2 className="flip-card__title">
-							😊Super!👍<br/>
-							{knownString}
-						</h2>
-						<div className="flip-card__text">
-							{this.props.unknownItemsCount &&
-									<button
-										className="card__button card__button--outlined card__button--yellow"
-										type="button"
-										onClick={this.props.continue}
-									>
-										{this.props.unknownItemsCount} Begriffe wiederholen.
-									</button>}
-					</div>
-						<div className="flip-card__footer">
-							<button className="card__button card__button" type="button" onClick={this.props.reset}>
-								Von vorne anfangen
-							</button>
-						</div>
-					</div>
-				</div>
-			</li>
-		);
-	}
+  public render() {
+    const { unknownCount, onContinue, onReset } = this.props;
+
+    const unknown = unknownCount === 1
+      ? "1 Begriff"
+      : `${ unknownCount } Begriffe`;
+
+    const message = unknownCount <= 0
+      ? "Du kennst alle Begriffe!"
+      : `Du kennst alle bis auf ${ unknown }.`
+
+    return (
+      <Card>
+        <div className="st-result-card">
+
+          <h2 className="st-result-card__heading">
+            😊 Super! 👍<br />
+            { message }
+          </h2>
+
+          { unknownCount <= 0 ? null :
+            <Button
+              theme="primary"
+              onClick={ onContinue }
+            >
+                { unknown } wiederholen
+            </Button>
+          }
+
+          <Button
+            theme={ unknownCount <= 0 ? "primary" : "text"}
+            onClick={ onReset }
+          >
+            Von vorne beginnen
+          </Button>
+        </div>
+
+      </Card>
+    );
+  }
+
 }
