@@ -1,9 +1,8 @@
 import React from "react";
+import CardStack from "../CardStack";
+import FlashCard from "../FlashCard";
 import { IFlashCards, ILearningItems } from "../interfaces";
-import CardStack from "./CardStack";
-import FlashCard from "./FlashCard";
-import ResultCard from "./ResultCard";
-
+import ResultCard from "../ResultCard";
 import "./style.scss";
 
 interface IProps {

@@ -1,8 +1,8 @@
 import React from "react";
-import EditView from "./EditView";
-import ReadView from "./ReadView";
+import EditView from "../EditView";
+import ReadView from "../ReadView";
 
-import { ILearningItems } from "./interfaces";
+import { ILearningItems } from "../interfaces";
 
 interface IProps {
   attributes: object,

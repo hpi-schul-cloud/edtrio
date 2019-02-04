@@ -1,7 +1,7 @@
 import React from "react";
-import { ILearningItem } from "../../interfaces";
 import ActionButtons from "../ActionButtons";
 import FlipCard from "../FlipCard";
+import { ILearningItem } from "../interfaces";
 import "./style.scss";
 
 interface IProps {
