@@ -2,6 +2,7 @@ import React from "react";
 import CardStack from "../CardStack";
 import FlashCard from "../FlashCard";
 import { IFlashCards, ILearningItems } from "../interfaces";
+import OnboardingCard from "../OnboardingCard";
 import ResultCard from "../ResultCard";
 import "./style.scss";
 
@@ -11,7 +12,9 @@ interface IProps {
 
 interface IState {
   cards: IFlashCards,
-  currentCardIndex: number
+  currentCardIndex: number,
+  isOnboardingCardFlipped: boolean,
+  hasPassedOnboarding: boolean,
 }
 
 export default class ReadView extends React.Component<IProps, IState> {
@@ -35,22 +38,35 @@ export default class ReadView extends React.Component<IProps, IState> {
 
     this.state = {
       cards,
-      currentCardIndex: 0
+      currentCardIndex: 0,
+      isOnboardingCardFlipped: false,
+      hasPassedOnboarding: false,
     }
   }
 
   public render() {
-    const { currentCardIndex } = this.state;
+    const { currentCardIndex, hasPassedOnboarding } = this.state;
 
+    const onboardingCard = this.renderOnboardingCard();
     const flashCards = this.renderFlashCards();
     const resultCard = this.renderResultCard();
+
+    // If the user has already seen the onboarding card
+    // make sure that the first card is not shown a gain.
+    const index = !hasPassedOnboarding
+      ? currentCardIndex
+      : Math.max(1, currentCardIndex);
 
     return (
       <div className="st-read-view">
         <div className="st-read-view__cards">
           <CardStack
-            cards={ [ ...flashCards, resultCard ] }
-            currentIndex={ currentCardIndex }
+            currentIndex={ index }
+            cards={[
+              onboardingCard,
+              ...flashCards,
+              resultCard
+            ]}
           />
         </div>
       </div>
@@ -72,6 +88,25 @@ export default class ReadView extends React.Component<IProps, IState> {
         />
       );
     }); 
+  }
+
+  protected renderOnboardingCard() {
+    const onFlip = () => {
+      this.setState({ isOnboardingCardFlipped: true });
+    };
+
+    const onStart = () => {
+      this.setState({ hasPassedOnboarding: true });
+      this.showNextUnknownCard();
+    }
+
+    return (
+      <OnboardingCard
+        isFlipped={ this.state.isOnboardingCardFlipped }
+        onFlip={ onFlip }
+        onStart={ onStart }
+      />
+    );
   }
 
   protected renderResultCard() {
