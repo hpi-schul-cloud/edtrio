@@ -1,12 +1,14 @@
 import React from "react"
+
 import Action from "~/components/Action"
 import Container from "~/components/Container"
 import Text from "~/components/Text"
+import Heading from "~/components/Heading"
 
 const Dashboard = () => {
     return (
         <Container>
-            <h1>Dashboard</h1>
+            <Heading>Dashboard</Heading>
             <Text>
                 Duis mollis, est non commodo luctus, nisi erat porttitor ligula,
                 eget lacinia odio sem nec elit. Donec sed odio dui. Fusce
