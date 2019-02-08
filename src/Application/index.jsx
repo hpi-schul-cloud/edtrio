@@ -1,14 +1,17 @@
 import React from "react";
+import { BrowserRouter } from "react-router-dom";
 
-import Workspace from "../workspace";
+import Workspace from "~/workspace";
 import GlobalStyle from "./GlobalStyle";
 
 const Application = () => {
   return (
-    <div>
-      <Workspace />
-      <GlobalStyle />
-    </div>
+    <BrowserRouter>
+      <div>
+        <GlobalStyle />
+        <Workspace />
+      </div>
+    </BrowserRouter>
   );
 };
 
