@@ -2,8 +2,14 @@ import { createGlobalStyle } from "styled-components";
 import React from "react";
 
 const GS = createGlobalStyle`
-  body {
-    color: ${props => (props.whiteColor ? "white" : "black")};
+  * {
+    box-sizing: border-box;
+  }
+
+  html, body {
+    margin: 0;
+    font-family: 'PT Sans', sans-serif;
+    font-size: 16px;
   }
 `;
 

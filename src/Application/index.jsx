@@ -1,11 +1,15 @@
-import React from 'react';
+import React from "react";
 
-import Workspace from '../workspace'
+import Workspace from "../workspace";
+import GlobalStyle from "./GlobalStyle";
 
 const Application = () => {
-    return (
-        <Workspace/>
-    )
+  return (
+    <div>
+      <Workspace />
+      <GlobalStyle />
+    </div>
+  );
 };
 
 export default Application;
