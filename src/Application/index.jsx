@@ -6,6 +6,7 @@ import GlobalStyle from "./GlobalStyle"
 
 const Application = () => {
     return (
+        // TODO set base url for schul-cloud integration
         <BrowserRouter>
             <div>
                 <GlobalStyle />

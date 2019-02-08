@@ -14,7 +14,8 @@ const GS = createGlobalStyle`
 `
 
 const GlobalStyle = () => {
-    // TODO make distinction for schul-cloud
+    // TODO make distinction for schul-cloud?
+    // TODO include theme
     return <GS />
 }
 
