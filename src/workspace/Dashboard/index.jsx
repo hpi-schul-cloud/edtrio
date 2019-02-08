@@ -8,7 +8,7 @@ import Heading from "~/components/Heading"
 const Dashboard = () => {
     return (
         <Container>
-            <Heading>Dashboard</Heading>
+            <Heading primary>Dashboard</Heading>
             <Text>
                 Duis mollis, est non commodo luctus, nisi erat porttitor ligula,
                 eget lacinia odio sem nec elit. Donec sed odio dui. Fusce

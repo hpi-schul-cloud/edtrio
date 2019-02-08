@@ -1,6 +1,8 @@
-import React from "react"
+import React, { useContext } from "react"
 import styled, { css } from "styled-components"
 import { Link } from "react-router-dom"
+
+import { ThemeContext } from "~/Contexts/Theme"
 
 const baseStyles = css`
     font-size: ${props => {
@@ -9,15 +11,17 @@ const baseStyles = css`
     }};
 
     color: ${props => {
-        if (props.black) return "#000"
-        return "red" // TODO change to theme color
+        return props.theme.colors.red
     }};
 
-    transition: all 200ms ease-in-out;
+    transition: all 100ms ease-in-out;
     cursor: pointer;
     text-decoration: none;
 
     &:hover {
+        color: ${props => {
+            return props.theme.colors.darkRed
+        }};
         text-decoration: underline;
     }
 `
@@ -61,9 +65,12 @@ const StyledClickable = styled.span`
  */
 
 const Action = ({ clickable, a, block, to, children, style, ...props }) => {
+    const { theme } = useContext(ThemeContext)
+
     if (clickable) {
         return (
             <StyledClickable
+                theme={theme}
                 style={{ display: block ? "block" : "inline", ...style }}
                 {...props}>
                 {children}
@@ -72,6 +79,7 @@ const Action = ({ clickable, a, block, to, children, style, ...props }) => {
     } else if (a) {
         return (
             <StyledAnchor
+                theme={theme}
                 style={{ display: block ? "block" : "inline", ...style }}
                 href={to}
                 target="_blank">
@@ -82,9 +90,12 @@ const Action = ({ clickable, a, block, to, children, style, ...props }) => {
 
     return (
         <StyledLink
+            theme={theme}
             style={{ display: block ? "block" : "inline", ...style }}
             to={to}>
-            <StyledContent {...props}>{children}</StyledContent>
+            <StyledContent {...props} theme={theme}>
+                {children}
+            </StyledContent>
         </StyledLink>
     )
 }

@@ -1,5 +1,7 @@
-import React from "react"
+import React, { useContext } from "react"
 import styled, { css } from "styled-components"
+
+import { ThemeContext } from "~/Contexts/Theme"
 
 const baseStyles = css`
     max-width: 100%;
@@ -9,7 +11,10 @@ const baseStyles = css`
         return "16px"
     }};
 
-    color: #373a3c;
+    color: ${props => {
+        if (props.primary) return props.theme.colors.red
+        return props.theme.colors.text
+    }};
 
     font-weight: ${props => {
         if (props.bold) return 700
@@ -50,12 +55,14 @@ const StyledSpan = styled.span`
  *     noMargin: Boolean, defines whether the element has a bottom margin (only applies for non-inline)
  *     bold: Boolean, defines the font-weight
  *     width: String, e.g. 25%
+ *     primary: Boolean, displays red text
  * }
  */
 
 const Text = ({ inline, ...props }) => {
-    if (inline) return <StyledSpan {...props} />
-    return <StyledParagraph {...props} />
+    const { theme } = useContext(ThemeContext)
+    if (inline) return <StyledSpan {...props} theme={theme} />
+    return <StyledParagraph {...props} theme={theme} />
 }
 
 export default Text

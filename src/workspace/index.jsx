@@ -9,7 +9,7 @@ const Workspace = () => {
             <Switch>
                 <Route path="/lesson/:lessonId" component={Lesson} />
                 <Route exact path="/" component={Dashboard} />
-                <Redirect component={Dashboard} />
+                <Redirect to="/" />
             </Switch>
         </React.Fragment>
     )

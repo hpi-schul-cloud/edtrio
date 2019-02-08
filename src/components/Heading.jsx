@@ -1,9 +1,14 @@
-import React from "react"
+import React, { useContext } from "react"
 import styled, { css } from "styled-components"
+
+import { ThemeContext } from "~/Contexts/Theme"
 
 const baseStyle = css`
     margin-bottom: ${props => props.noMargin && "0"};
-    color: #373a3c;
+    color: ${props => {
+        if (props.primary) return props.theme.colors.red
+        return props.theme.colors.text
+    }};
     font-weight: bold;
 
     text-align: ${props => {
@@ -57,15 +62,17 @@ const HeadingFive = styled.h5`
  *     h4,
  *     h5,
  *     noMargin,
+ *     primary: Displays a red heading
  * }
  */
 
 const Heading = ({ h2, h3, h4, h5, ...props }) => {
-    if (h2) return <HeadingTwo {...props} />
-    if (h3) return <HeadingThree {...props} />
-    if (h4) return <HeadingFour {...props} />
-    if (h5) return <HeadingFive {...props} />
-    return <HeadingOne {...props} />
+    const { theme } = useContext(ThemeContext)
+    if (h2) return <HeadingTwo theme={theme} {...props} />
+    if (h3) return <HeadingThree theme={theme} {...props} />
+    if (h4) return <HeadingFour theme={theme} {...props} />
+    if (h5) return <HeadingFive theme={theme} {...props} />
+    return <HeadingOne theme={theme} {...props} />
 }
 
 export default Heading
