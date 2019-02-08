@@ -1,23 +1,28 @@
 {
-  "env": {
-    "browser": true,
-    "es6": true,
-    "node": true
-  },
-  "extends": ["eslint:recommended", "react-app", "prettier"],
-  "parserOptions": {
-    "ecmaVersion": 9,
-    "ecmaFeatures": {
-      "jsx": true
+    "env": {
+        "browser": true,
+        "es6": true,
+        "node": true
     },
-    "sourceType": "module"
-  },
-  "plugins": ["react", "prettier", "babel"],
-  "rules": {
-    "prettier/prettier": "error",
-    "linebreak-style": [2, "unix"],
-    "semi": [2, "always"],
-    "no-unused-vars": [0],
-    "unicode-bom": ["error", "never"]
-  }
+    "extends": [
+        "standard",
+        "plugin:react/recommended",
+        "pretter",
+        "prettier/react"
+    ],
+    "parserOptions": {
+        "ecmaVersion": 9,
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "sourceType": "module"
+    },
+    "plugins": ["standard", "react"],
+    "rules": {
+        "prettier/prettier": "error",
+        "linebreak-style": [2, "unix"],
+        "semi": [2, "never"],
+        "no-unused-vars": [0],
+        "unicode-bom": ["error", "never"]
+    }
 }
