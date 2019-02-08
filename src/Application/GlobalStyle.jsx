@@ -1,5 +1,5 @@
-import { createGlobalStyle } from "styled-components";
-import React from "react";
+import { createGlobalStyle } from "styled-components"
+import React from "react"
 
 const GS = createGlobalStyle`
   * {
@@ -11,11 +11,11 @@ const GS = createGlobalStyle`
     font-family: 'PT Sans', sans-serif;
     font-size: 16px;
   }
-`;
+`
 
 const GlobalStyle = () => {
-  // TODO make distinction for schul-cloud
-  return <GS />;
-};
+    // TODO make distinction for schul-cloud
+    return <GS />
+}
 
-export default GlobalStyle;
+export default GlobalStyle
