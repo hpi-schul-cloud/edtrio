@@ -7,8 +7,8 @@
     "scripts": {
         "docz:dev": "docz dev",
         "docz:build": "docz build",
-        "dev": "parcel dev/index.html -d dist/dev --open",
-        "build": "rm -rf dist && parcel build src/Application/index.jsx"
+        "dev": "parcel src/index.html -d dist/dev --open",
+        "build": "rm -rf dist && parcel build src/index.js"
     },
     "dependencies": {
         "react": "^16.8.1",
