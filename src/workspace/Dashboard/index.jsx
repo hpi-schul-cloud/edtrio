@@ -25,6 +25,9 @@ const Dashboard = () => {
             <Action to="/lesson/5678" block>
                 Go to sample Lesson 5678
             </Action>
+            <Action to="/apollo/5678" block>
+                Go to Apollo Playground
+            </Action>
         </Container>
     )
 }
