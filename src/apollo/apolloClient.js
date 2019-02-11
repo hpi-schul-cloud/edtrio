@@ -6,12 +6,14 @@ import { WebSocketLink } from "apollo-link-ws"
 import { getMainDefinition } from "apollo-utilities"
 import { withClientState } from "apollo-link-state"
 
-import {
-    GRAPHQL_HTTP_URL as graphqlHttpUrl,
-    GRAPHQL_WS_URL as graphqlWSUrl,
-} from "~/config"
+import config from "~/config"
 import { createResolvers } from "./clientResolvers"
 import typeDefs from "./schema.graphql"
+
+const {
+    GRAPHQL_HTTP_URL: graphqlHttpUrl,
+    GRAPHQL_WS_URL: graphqlWSUrl,
+} = config
 
 // Create the cache
 const cache = new InMemoryCache()
