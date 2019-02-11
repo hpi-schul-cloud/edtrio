@@ -6,7 +6,10 @@ import { WebSocketLink } from "apollo-link-ws"
 import { getMainDefinition } from "apollo-utilities"
 import { withClientState } from "apollo-link-state"
 
-import { graphqlHttpUrl, graphqlWSUrl } from "./clientConfig"
+import {
+    GRAPHQL_HTTP_URL as graphqlHttpUrl,
+    GRAPHQL_WS_URL as graphqlWSUrl,
+} from "~/config"
 import { createResolvers } from "./clientResolvers"
 import typeDefs from "./schema.graphql"
 
