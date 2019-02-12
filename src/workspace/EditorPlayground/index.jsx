@@ -1,17 +1,19 @@
 import * as React from "react"
+
 import {
-    createDocument,
-    DocumentIdentifier,
-    Editor,
-    EditorContext,
+    createDocumentIdentifier,
+    Document,
+    EditorProvider,
     Plugin,
-    serializeDocument,
     StatefulPlugin,
 } from "@edtr-io/core"
 import { rowsPlugin } from "@edtr-io/ui"
 
+import Container from "~/components/Container"
+import Heading from "~/components/Heading"
+import Action from "~/components/Action"
+
 const counterPlugin = {
-    // eslint-disable-next-line react/display-name
     Component: ({ focused, onChange, state }) => {
         return (
             <div
@@ -49,14 +51,20 @@ const plugins = {
 }
 
 const EditorPlayground = () => {
-    const state = createDocument({
+    const state = createDocumentIdentifier({
         plugin: "counter",
     })
 
     return (
-        <Editor plugins={plugins} defaultPlugin="counter" state={state}>
-            {/* <LogState state={state} /> */}
-        </Editor>
+        <Container>
+            <Heading>Sample Editor</Heading>
+            <Container small>
+                <EditorProvider plugins={plugins} defaultPlugin="stateless">
+                    <Document state={state} />
+                </EditorProvider>
+            </Container>
+            <Action to="/">Go back to dashboard</Action>
+        </Container>
     )
 }
 
