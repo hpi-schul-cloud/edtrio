@@ -1,10 +1,10 @@
 import React, { useContext } from "react"
 import styled, { css } from "styled-components"
 
-import { ThemeContext } from "~/Contexts/Theme"
+import { ThemeContext, theme as defaultTheme } from "~/Contexts/Theme"
 
 const baseStyle = css`
-    margin-bottom: ${props => props.noMargin && "0"};
+    margin-top: 0;
     color: ${props => {
         if (props.primary) return props.theme.colors.red
         return props.theme.colors.text
@@ -22,7 +22,7 @@ const baseStyle = css`
 
 const HeadingOne = styled.h1`
     font-size: 40px;
-    margin-bottom: 25px;
+    margin-bottom: ${props => (props.noMargin ? 0 : 25)}px;
     ${baseStyle};
 
     @media (max-width: 480px) {
@@ -32,25 +32,25 @@ const HeadingOne = styled.h1`
 
 const HeadingTwo = styled.h2`
     font-size: 32px;
-    margin-bottom: 20px;
+    margin-bottom: ${props => (props.noMargin ? 0 : 20)}px;
     ${baseStyle};
 `
 
 const HeadingThree = styled.h3`
     font-size: 28px;
-    margin-bottom: 15px;
+    margin-bottom: ${props => (props.noMargin ? 0 : 15)}px;
     ${baseStyle};
 `
 
 const HeadingFour = styled.h4`
     font-size: 24px;
-    margin-bottom: 10px;
+    margin-bottom: ${props => (props.noMargin ? 0 : 10)}px;
     ${baseStyle};
 `
 
 const HeadingFive = styled.h5`
     font-size: 20px;
-    margin-bottom: 5px;
+    margin-bottom: ${props => (props.noMargin ? 0 : 5)}px;
     ${baseStyle};
 `
 
@@ -67,7 +67,11 @@ const HeadingFive = styled.h5`
  */
 
 const Heading = ({ h2, h3, h4, h5, ...props }) => {
-    const { theme } = useContext(ThemeContext)
+    const context = useContext(ThemeContext)
+    const theme = context && context.theme ? context.theme : defaultTheme
+
+    console.log("props.primary :", props.primary)
+
     if (h2) return <HeadingTwo theme={theme} {...props} />
     if (h3) return <HeadingThree theme={theme} {...props} />
     if (h4) return <HeadingFour theme={theme} {...props} />

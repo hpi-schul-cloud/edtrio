@@ -28,6 +28,9 @@ const Dashboard = () => {
             <Action to="/apollo/5678" block>
                 Go to Apollo Playground
             </Action>
+            <Action to="/editor" block>
+                Go to Editor Playground
+            </Action>
         </Container>
     )
 }

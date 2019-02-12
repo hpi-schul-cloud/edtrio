@@ -1,7 +1,7 @@
 import React, { useContext } from "react"
 import styled, { css } from "styled-components"
 
-import { ThemeContext } from "~/Contexts/Theme"
+import { ThemeContext, theme as defaultTheme } from "~/Contexts/Theme"
 
 const baseStyles = css`
     max-width: 100%;
@@ -30,6 +30,7 @@ const baseStyles = css`
         if (props.noMargin) return 0
         return "10px"
     }};
+    margin-top: 0px;
 
     text-align: ${props => {
         if (props.center) return "center"
@@ -60,7 +61,9 @@ const StyledSpan = styled.span`
  */
 
 const Text = ({ inline, ...props }) => {
-    const { theme } = useContext(ThemeContext)
+    const context = useContext(ThemeContext)
+    const theme = context && context.theme ? context.theme : defaultTheme
+
     if (inline) return <StyledSpan {...props} theme={theme} />
     return <StyledParagraph {...props} theme={theme} />
 }

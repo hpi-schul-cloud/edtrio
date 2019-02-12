@@ -19,7 +19,7 @@ const Container = styled.div`
     ${props =>
         props.small &&
         css`
-            padding: 15px;
+            padding: 15px !important;
         `}
 
     ${props =>

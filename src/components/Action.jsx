@@ -2,7 +2,7 @@ import React, { useContext } from "react"
 import styled, { css } from "styled-components"
 import { Link } from "react-router-dom"
 
-import { ThemeContext } from "~/Contexts/Theme"
+import { ThemeContext, theme as defaultTheme } from "~/Contexts/Theme"
 
 const baseStyles = css`
     font-size: ${props => {
@@ -58,14 +58,14 @@ const StyledClickable = styled.span`
  * props: {
  *     block: Boolean, display: block or not
  *     white: Boolean,
- *     secondary: Boolean,
  *     noMargin: Boolean, only applies if block element
  *     size: Integer
  * }
  */
 
 const Action = ({ clickable, a, block, to, children, style, ...props }) => {
-    const { theme } = useContext(ThemeContext)
+    const context = useContext(ThemeContext)
+    const theme = context && context.theme ? context.theme : defaultTheme
 
     if (clickable) {
         return (
@@ -83,7 +83,9 @@ const Action = ({ clickable, a, block, to, children, style, ...props }) => {
                 style={{ display: block ? "block" : "inline", ...style }}
                 href={to}
                 target="_blank">
-                <StyledContent {...props}>{children}</StyledContent>
+                <StyledContent {...props} theme={theme}>
+                    {children}
+                </StyledContent>
             </StyledAnchor>
         )
     }
