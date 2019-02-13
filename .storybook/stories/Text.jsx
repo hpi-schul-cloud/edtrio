@@ -59,21 +59,6 @@ storiesOf("Text/Overview", module)
             <Text style={{ backgroundColor: "#AC9FBB" }}>Lorem.</Text>
         </Container>
     ))
-    .add("noMargin", () => (
-        <Container>
-            <Text style={{ backgroundColor: "#AC9FBB" }}>
-                By default, Text blocks do have margin.
-            </Text>
-            <Text noMargin style={{ backgroundColor: "#DDBDD5" }}>
-                You can disable margin by passing{" "}
-                <Text inline bold>
-                    noMargin
-                </Text>
-                .
-            </Text>
-            <Text style={{ backgroundColor: "#AC9FBB" }}>Lorem.</Text>
-        </Container>
-    ))
 
 const stories = storiesOf("Text", module)
 stories.addDecorator(withKnobs)

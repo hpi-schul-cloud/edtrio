@@ -70,8 +70,6 @@ const Heading = ({ h2, h3, h4, h5, ...props }) => {
     const context = useContext(ThemeContext)
     const theme = context && context.theme ? context.theme : defaultTheme
 
-    console.log("props.primary :", props.primary)
-
     if (h2) return <HeadingTwo theme={theme} {...props} />
     if (h3) return <HeadingThree theme={theme} {...props} />
     if (h4) return <HeadingFour theme={theme} {...props} />

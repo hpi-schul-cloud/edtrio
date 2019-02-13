@@ -2,6 +2,7 @@ import React, { useState } from "react"
 
 export const theme = {
     colors: {
+        deepDarkRed: "#5b011c",
         darkRed: "#660220",
         red: "rgba(175, 4, 55, 1)",
         hpiRed: "#b10438",
