@@ -1,0 +1,23 @@
+.st-card {
+    // Cards always take the full available width
+    // and maintain a 4/3 ratio.
+    position: relative;
+    box-sizing: content-box;
+    padding-bottom: 133%;
+
+    border: 2px solid;
+    border-radius: 3px;
+    background-color: #fff;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, .1);
+}
+
+.st-card__content {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 1.5rem;
+}

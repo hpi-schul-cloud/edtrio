@@ -1,0 +1,19 @@
+.st-button {
+    height: 3rem;
+    padding: .5rem 1.5rem;
+    font-size: 1rem;
+
+    background: transparent;
+    border: 2px solid;
+    border-radius: 1.5rem;
+    font-weight: 600;
+}
+
+.st-button--text {
+	border: none;
+	font-weight: 400;
+}
+
+.st-button--primary {
+	background-color: #ffd469;
+}

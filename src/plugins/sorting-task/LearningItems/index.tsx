@@ -1,7 +1,6 @@
 import React from "react";
 import { ILearningItem, ILearningItems } from "../interfaces";
 import LearningItem from "./LearningItem";
-
 import './styles.scss';
 
 interface IProps {
