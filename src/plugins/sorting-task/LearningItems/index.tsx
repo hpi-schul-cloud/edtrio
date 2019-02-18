@@ -11,6 +11,13 @@ interface IProps {
 
 export default class LearningItems extends React.PureComponent<IProps> {
 
+  protected tableElement: React.Ref<HTMLTableElement>;
+
+  constructor(props: IProps) {
+    super(props);
+    this.tableElement = React.createRef();
+  }
+
   public render() {
     const rows = this.getRows().map((learningItem, index) => {
       return (
@@ -43,7 +50,11 @@ export default class LearningItems extends React.PureComponent<IProps> {
     );
 
     return (
-      <table className="learning-items">
+      <table
+        ref={ this.tableElement }
+        className="learning-items"
+        onKeyDown={ this.keyHandler() }
+      >
         <thead>
           <tr>
             { term }
@@ -102,6 +113,107 @@ export default class LearningItems extends React.PureComponent<IProps> {
       delete learningItems[index];
       this.props.onEdit(learningItems);
     };
+  }
+
+  /*
+   * This handles keys in order to provide a quick way to
+   * navigate between table cells using Ctrl, Alt, Shift
+   * and arrow keys. This implementation is rather imperative,
+   * making heavy use of low-level DOM-APIs.
+   */
+  protected keyHandler() {
+    return (event: React.KeyboardEvent) => {
+      const { key, metaKey, altKey, shiftKey } = event;
+
+      // Navigation should only be possible if all three
+      // modifier keys are pressed. Other key combinations
+      // are typically already used by operating systems or
+      // browser to navigate in form elements or between tabs
+      if(!metaKey || !altKey || !shiftKey) {
+        return;
+      }
+
+      event.preventDefault();  
+      
+      if(key === 'ArrowDown') {
+        return this.focusCellBelow();
+      }
+
+      if(key === 'ArrowUp') {
+        return this.focusCellAbove();
+      }
+
+      if(key === 'ArrowLeft') {
+        return this.focusLeftCell();
+      }
+
+      if(key === 'ArrowRight') {
+        return this.focusRightCell();
+      }
+    };
+  }
+
+  protected getCurrentlyFocusedCell() {
+    if(!this.tableElement || this.tableElement instanceof Function || !this.tableElement.current) {
+      return null;
+    }
+
+    return this.tableElement.current.querySelector('td:focus-within') as HTMLTableCellElement;
+  }
+
+  protected getCurrentlyFocusedRow() {
+    const currentCell = this.getCurrentlyFocusedCell();
+    return currentCell && currentCell.parentElement as HTMLTableRowElement;
+  }
+
+  protected focusCell(cell: HTMLElement | null) {
+    if(cell) {
+      const focusableElement = cell.querySelector('input, textarea, button') as HTMLElement;
+      
+      if(focusableElement) {
+        focusableElement.focus();
+      }
+    }
+  }
+
+  protected focusCellBelow() {
+    const currentCell = this.getCurrentlyFocusedCell();
+    const currentRow = this.getCurrentlyFocusedRow();
+
+    if(!currentCell || !currentRow) {
+      return;
+    }
+
+    const rowBelow = currentRow.nextSibling as HTMLTableRowElement | null;
+    const cellBelow = rowBelow && rowBelow.cells.item(currentCell.cellIndex);
+
+    this.focusCell(cellBelow);
+  }
+
+  protected focusCellAbove() {
+    const currentCell = this.getCurrentlyFocusedCell();
+    const currentRow = this.getCurrentlyFocusedRow();
+
+    if(!currentCell || !currentRow) {
+      return;
+    }
+
+    const rowAbove = currentRow.previousSibling as HTMLTableRowElement | null;
+    const cellAbove = rowAbove && rowAbove.cells.item(currentCell.cellIndex);
+
+    this.focusCell(cellAbove);
+  }
+
+  protected focusLeftCell() {
+    const currentCell = this.getCurrentlyFocusedCell();
+    const leftCell = currentCell && currentCell.previousSibling as HTMLElement;
+    this.focusCell(leftCell);
+  }
+
+  protected focusRightCell() {
+    const currentCell = this.getCurrentlyFocusedCell();
+    const rightCell = currentCell && currentCell.nextSibling as HTMLElement;
+    this.focusCell(rightCell);
   }
 
 }
