@@ -55,4 +55,4 @@ Additionally the state must be persisted into the global Editor State.
 To achieve this, our top component (`SortingTaskNode/index.tsx`) has two functions.
 `persistState()` will be called, whenever we edit something inside one of our teacher sub components. We call this to sync our internal state with the saved Slate.js state for further use. We only need to care about the teacher view (at the moment), because the student view is almost stateless. The sorting task concept does not directly envisage stretching processing over a longer (interrupted) period of time. Thus there is no need to persist the state of the student view. Furthermore, this also offers the possibility for the student to easily check his knowledge again later.
 
-In addition we have `loadState()` to get our saves state back from Slate.js. This function is only called on the initial load to populate our own internal react state with the saved state.
+In addition we have `loadState()` to get our saves state back from Slate.js. This function is only called on the initial load to populate the React component’s local state with the state saved in the Slate document.
