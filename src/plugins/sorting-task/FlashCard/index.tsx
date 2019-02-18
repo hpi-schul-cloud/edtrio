@@ -7,6 +7,7 @@ import "./style.scss";
 interface IProps {
   isFlipped?: boolean,
   learningItem: ILearningItem,
+  hasDescription: boolean,
   onFlip?: () => void,
   // definitely need better names for these
   onKnown?: () => void,
@@ -18,8 +19,9 @@ export default class FlashCard extends React.PureComponent<IProps> {
   public render() {
 
     const {
-      isFlipped,
+      hasDescription,
       learningItem,
+      isFlipped,
       onFlip,
       onKnown,
       onNotKnown
@@ -36,7 +38,7 @@ export default class FlashCard extends React.PureComponent<IProps> {
           prompt="Kannst du den Begriff erklären?"
           confirmLabel="Ja, kann ich erklären."
           cancelLabel="Nein, kann ich nicht erklären."
-          onConfirm={ onFlip }
+          onConfirm={ hasDescription ? onFlip : onKnown }
           onCancel={ onNotKnown }
         />
         

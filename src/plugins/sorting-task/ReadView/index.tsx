@@ -8,6 +8,7 @@ import "./style.scss";
 
 interface IProps {
   learningItems: ILearningItems,
+  hasDescriptions: boolean,
 };
 
 interface IState {
@@ -53,22 +54,21 @@ export default class ReadView extends React.Component<IProps, IState> {
 
     return (
       <div className="st-read-view">
-        <div className="st-read-view__cards">
-          <CardStack
-            currentIndex={ currentCardStackIndex }
-            cards={[
-              onboardingCard,
-              ...flashCards,
-              resultCard
-            ]}
-          />
-        </div>
+        <CardStack
+          currentIndex={ currentCardStackIndex }
+          cards={[
+            onboardingCard,
+            ...flashCards,
+            resultCard
+          ]}
+        />
       </div>
     );
   }
 
   protected renderFlashCards() {
     const { cards } = this.state;
+    const { hasDescriptions } = this.props;
 
     return cards.map((card, index) => {
       return (
@@ -76,6 +76,7 @@ export default class ReadView extends React.Component<IProps, IState> {
           key={ index }
           isFlipped={ card.isFlipped }
           learningItem={ card.learningItem }
+          hasDescription={ hasDescriptions } 
           onFlip={ this.flipHandler(index) }
           onKnown={ this.knownHandler(index) }
           onNotKnown={ this.notKnownHandler(index) }
@@ -85,6 +86,8 @@ export default class ReadView extends React.Component<IProps, IState> {
   }
 
   protected renderOnboardingCard() {
+    const { hasDescriptions } = this.props;
+
     const onFlip = () => {
       this.setState({ isOnboardingCardFlipped: true });
     };
@@ -98,6 +101,7 @@ export default class ReadView extends React.Component<IProps, IState> {
     return (
       <OnboardingCard
         isFlipped={ this.state.isOnboardingCardFlipped }
+        hasDescriptions={ hasDescriptions }
         onFlip={ onFlip }
         onStart={ onStart }
       />

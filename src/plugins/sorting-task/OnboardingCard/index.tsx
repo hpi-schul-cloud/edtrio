@@ -4,6 +4,7 @@ import FlipCard from "../FlipCard";
 import "./style.scss";
 
 interface IProps {
+  hasDescriptions: boolean,
   isFlipped?: boolean,
   onFlip?: () => void,
   onStart?: () => void,
@@ -12,7 +13,7 @@ interface IProps {
 export default class OnboardingCard extends React.PureComponent<IProps> {
 
   public render() {
-    const { isFlipped, onFlip, onStart } = this.props;
+    const { hasDescriptions, isFlipped, onFlip, onStart } = this.props;
 
     const front = (
       <div className="st-onboarding-card">
@@ -24,8 +25,8 @@ export default class OnboardingCard extends React.PureComponent<IProps> {
           </p>
         </div>
 
-        <Button onClick={ onFlip }>
-          Weiter...
+        <Button onClick={ hasDescriptions ? onFlip : onStart }>
+          { hasDescriptions ? 'Alles klar!' : 'Mit dem Lernen beginnen' }
         </Button>
 
       </div>
@@ -37,15 +38,6 @@ export default class OnboardingCard extends React.PureComponent<IProps> {
         <p className="st-onboarding-card__text">
           Auf der Rückseite der Karte findest du eine Musterlösung. Prüfe, ob du den Begriff richtig erklärt hast und klicke wieder auf einen der Buttons.
         </p>
-
-        {/*
-        <Button
-          theme="text"
-          onClick={ () => alert('Not implemented!') }
-        >
-          Ausführliche Hilfe anzeigen
-        </Button>
-        */}
 
         <Button onClick={ onStart }>
           Mit dem Lernen beginnen
