@@ -15,7 +15,15 @@ export default class EditView extends React.PureComponent<IProps> {
     return (
       <div className="st-edit-view">
         <h4>Sortieraufgabe</h4>
-        <p>Das Konzept der Sortieraufgabe basiert auf den Prinzipien des eigenverantwortlichen Lernens. Im Folgenden kannst du Lernbegriffe hinterlegen, die den Schülerinnen und Schülern in Form von Lernkarten angezeigt werden. In mehreren Phasen entscheiden die Schülerinnen und Schüler in Einzel- und Kleingruppenarbeit, ob sie die Begriffe eigenständig erklären können. <a href="#">Ausführliche Anleitung anzeigen</a></p>
+        <p>
+          Das Konzept der Sortieraufgabe basiert auf den Prinzipien des eigenverantwortlichen Lernens. Im Folgenden kannst du Lernbegriffe hinterlegen, die den Schülerinnen und Schülern in Form von Lernkarten angezeigt werden. In mehreren Phasen entscheiden die Schülerinnen und Schüler in Einzel- und Kleingruppenarbeit, ob sie die Begriffe eigenständig erklären können. 
+          <a
+            href="https://gist.github.com/tillprochaska/3d3552385046de7abd5ba137d61c1df1"
+            target="_blank"
+          >
+            Ausführliche Anleitung anzeigen
+          </a>
+        </p>
         <p>
           <label>
             <input
