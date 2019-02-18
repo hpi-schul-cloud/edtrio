@@ -1,17 +1,55 @@
-.learning-items {
-  &__cell{
+.learning-item__term.learning-item__term,
+.learning-item__description.learning-item__description,
+.learning-item__actions.learning-item__actions {
     padding: 0;
-  }
-  &__cell-input{
-    box-sizing: border-box;
-    width: 100%;
-    padding: .5em .75em;
-    border: 1px solid transparent;
-    border-radius: .125em;
+    background-color: #fff;
+    vertical-align: middle;
+}
 
-    &:focus{
-      outline: none;
-      border-color: blue;
-    }
-  }
+.learning-item__description {
+    width: 60%;
+}
+
+.learning-item__input,
+.learning-item__input:focus {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: .75rem;
+
+    font-size: inherit;
+    line-height: inherit;
+    font-family: inherit;
+
+    border: none;
+    outline: none;
+    border-radius: 2px;
+    resize: none;
+}
+
+.learning-item td:focus-within {
+    position: relative;
+    box-shadow: 0 0 0 1px rgb(1, 161, 255), 0 0 0 4px rgb(208, 237, 255);
+    outline: none;
+}
+
+.learning-item__actions {
+    width: 4rem;
+    text-align: center;
+}
+
+.learning-item__action {
+    opacity: 0;
+    transition: .1s opacity ease-in-out;
+}
+
+.learning-item:hover .learning-item__action,
+.learning-item:focus-within .learning-item__action {
+    opacity: .25;
+}
+
+.learning-item .learning-item__action:hover,
+.learning-item .learning-item__action:focus {
+    opacity: 1;
+    outline: none;
 }

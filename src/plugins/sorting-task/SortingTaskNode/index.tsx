@@ -1,8 +1,8 @@
 import React from "react";
 import EditView from "../EditView";
-import ReadView from "../ReadView";
-
 import { ILearningItems } from "../interfaces";
+import ReadView from "../ReadView";
+import "./style.scss"
 
 interface IProps {
   attributes: object,
@@ -14,6 +14,7 @@ interface IProps {
 
 interface IState {
   learningItems: ILearningItems,
+  hasDescriptions: boolean,
 };
 
 /*
@@ -30,23 +31,41 @@ export default class SortingTaskNode extends React.Component<IProps, IState> {
     // Ensure the state always has a `learningItems` property
     this.state = {
       learningItems: [],
+      hasDescriptions: true,
       ...this.loadState(),
     };
   }
 
   public render() {
     const { readOnly } = this.props;
+    let view;
+
+    if(readOnly) {
+      view = (
+        <ReadView
+          learningItems={ this.state.learningItems }
+          hasDescriptions={ this.state.hasDescriptions }
+        />
+      );
+    }
+
+    if(!readOnly) {
+      view = (
+        <EditView
+          learningItems={ this.state.learningItems }
+          hasDescriptions={ this.state.hasDescriptions }
+          onEdit={ this.editHandler() }
+          onDescriptionsToggle={ this.toggleDescriptionsHandler() }
+        />
+      );
+    }
 
     return (
       <div
-        className={`sorting-task-node`}
-        style={{ margin: '2rem 0' }}
-        onClick={this.clickHandler()}
+        className="st-wrapper"
+        onClick={ this.clickHandler() }
        >
-        { readOnly
-          ? <ReadView learningItems={this.state.learningItems} />
-          : <EditView learningItems={this.state.learningItems} onEdit={this.editHandler()} />
-        }
+        <div className="st-wrapper__body">{ view }</div>
       </div>
     );
   }
@@ -71,6 +90,12 @@ export default class SortingTaskNode extends React.Component<IProps, IState> {
   protected editHandler() {
     return (learningItems: ILearningItems) => {
       this.setState({ learningItems }, this.persistState);
+    };
+  }
+
+  protected toggleDescriptionsHandler() {
+    return (hasDescriptions: boolean) => {
+      this.setState({ hasDescriptions }, this.persistState);
     };
   }
 

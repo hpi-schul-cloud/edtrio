@@ -5,6 +5,7 @@ import './styles.scss';
 
 interface IProps {
   learningItems: ILearningItems,
+  hasDescriptions: boolean,
   onEdit: (updatedLearningItems: ILearningItems) => void,
 }
 
@@ -14,19 +15,39 @@ export default class LearningItems extends React.PureComponent<IProps> {
     const rows = this.getRows().map((learningItem, index) => {
       return (
         <LearningItem
-            key={index}
-            learningItem={learningItem}
-            onEdit={this.editHandler(index)}
+            key={ index }
+            learningItem={ learningItem }
+            hasDescription={ this.props.hasDescriptions }
+            onEdit={ this.editHandler(index) }
+            onDelete={ this.deleteHandler(index) }
         />
       );
     });
+
+    const term = (
+      <th
+        className="learning-items__term"
+        colSpan={ this.props.hasDescriptions ? 1 : 2 }
+      >
+        Begriff
+      </th>
+    );
+
+    const description = (
+      <th
+        className="learning-items__description"
+        colSpan={2}
+      >
+        Musterlösung
+      </th>
+    );
 
     return (
       <table className="learning-items">
         <thead>
           <tr>
-            <th className="learning-items__term">Begriff</th>
-            <th className="learning-items__description">Erklärung</th>
+            { term }
+            { this.props.hasDescriptions && description }
           </tr>
         </thead>
         <tbody>
@@ -71,6 +92,14 @@ export default class LearningItems extends React.PureComponent<IProps> {
         learningItems.pop();
       }
 
+      this.props.onEdit(learningItems);
+    };
+  }
+
+  protected deleteHandler(index: number) {
+    return () => {
+      const learningItems = this.props.learningItems;
+      delete learningItems[index];
       this.props.onEdit(learningItems);
     };
   }
