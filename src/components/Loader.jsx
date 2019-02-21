@@ -1,7 +1,7 @@
 import React, { useContext } from "react"
 import styled, { keyframes } from "styled-components"
 
-import { ThemeContext, theme as defaultTheme } from "~/Contexts/Theme"
+import { ThemeContext, theme as defaultTheme } from "~/contexts/Theme"
 
 const Bounce = keyframes`
   0%, 80%, 100% { 

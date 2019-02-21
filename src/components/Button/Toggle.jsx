@@ -1,7 +1,7 @@
 import React, { useContext } from "react"
 import styled, { css } from "styled-components"
 
-import { ThemeContext, theme as defaultTheme } from "~/Contexts/Theme"
+import { ThemeContext, theme as defaultTheme } from "~/contexts/Theme"
 
 import Flex from "~/components/Flex"
 import Text from "~/components/Text"
@@ -23,6 +23,7 @@ const StyledToggle = styled.span`
     height: 30px;
     position: relative;
     transition: 125ms all ease-in-out;
+    flex-shrink: 0;
 
     &::after {
         position: absolute;
@@ -50,7 +51,12 @@ const StyledToggle = styled.span`
 const Caption = styled(Text)`
     margin: 5px;
     color: #505050;
+    display: inline-block;
+    max-width: 150px;
+    width: auto;
+    text-align: center;
     transition: 125ms all ease-in-out;
+    flex-shrink: 0;
     ${props =>
         props.active &&
         css`
@@ -60,6 +66,7 @@ const Caption = styled(Text)`
 
 const Toggle = ({
     caption = "Toggle me",
+    activeCaption,
     active,
     children,
     onChange,
@@ -71,20 +78,35 @@ const Toggle = ({
 
     const primaryColor = theme.colors.red
 
+    const hasActiveCaption = activeCaption && activeCaption.length
+
     return (
         <Wrapper
             noWrap
             alignCenter={!props.alignStart}
-            column
+            column={!hasActiveCaption}
+            row={hasActiveCaption}
             onClick={evt => {
                 if (onClick) onClick(evt)
                 if (onChange) onChange(!active)
             }}
             {...props}>
-            <StyledToggle primaryColor={primaryColor} active={active} />
-            <Caption noMargin primaryColor={primaryColor} active={active}>
+            <Caption
+                noMargin
+                primaryColor={primaryColor}
+                active={!hasActiveCaption && active}>
                 {caption}
             </Caption>
+            <StyledToggle
+                primaryColor={primaryColor}
+                active={active}
+                style={{ order: !hasActiveCaption ? -1 : undefined }}
+            />
+            {hasActiveCaption && (
+                <Caption noMargin primaryColor={primaryColor} active={active}>
+                    {activeCaption}
+                </Caption>
+            )}
             {children}
         </Wrapper>
     )

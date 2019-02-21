@@ -1,11 +1,14 @@
 import React from "react"
 import { ThemeContextProvider } from "./Theme"
 import ApolloContextProvider from "./Apollo"
+import LessonContextProvider from "./Lesson"
 
 const Contexts = ({ children }) => {
     return (
         <ThemeContextProvider>
-            <ApolloContextProvider>{children}</ApolloContextProvider>
+            <ApolloContextProvider>
+                <LessonContextProvider>{children}</LessonContextProvider>
+            </ApolloContextProvider>
         </ThemeContextProvider>
     )
 }

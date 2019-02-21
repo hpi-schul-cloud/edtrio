@@ -57,6 +57,7 @@ toggleStories.add("Interactive", () => {
             <Toggle
                 active={boolean("active", false)}
                 caption={text("caption", "Click to toggle me!")}
+                activeCaption={text("activeCaption", "")}
                 alignEnd={boolean("alignEnd", false)}
                 alignStart={boolean("alignStart", false)}
                 columnReverse={boolean("columnReverse", false)}

@@ -10,14 +10,8 @@ const Dashboard = () => {
         <Container>
             <Heading primary>Dashboard</Heading>
             <Text>
-                Duis mollis, est non commodo luctus, nisi erat porttitor ligula,
-                eget lacinia odio sem nec elit. Donec sed odio dui. Fusce
-                dapibus, tellus ac cursus commodo, tortor mauris condimentum
-                nibh, ut fermentum massa justo sit amet risus. Donec ullamcorper
-                nulla non metus auctor fringilla. Maecenas sed diam eget risus
-                varius blandit sit amet non magna. Maecenas sed diam eget risus
-                varius blandit sit amet non magna. Cras justo odio, dapibus ac
-                facilisis in, egestas eget quam.
+                This is the sample entry point. Later on, we will load into the
+                lesson directly.
             </Text>
             <Action to="/lesson/1234" block>
                 Go to sample Lesson 1234
