@@ -1,23 +1,28 @@
 import gql from "graphql-tag"
+import request from "~/api/request"
 
-const query = id => `
-    {
-        user(id: ${id}) {
+/* start of one request chunk */
+export const SAMPLE_REQUEST_QUERY = gql`
+    query sampleRequest($count: Int!) {
+        allUsers(count: $count) {
+            id
             firstName
             lastName
         }
     }
 `
+export const sampleRequest = count => {
+    // You can clone https://github.com/notrab/fakerql and run it to make this request work
+    return request(SAMPLE_REQUEST_QUERY, count)
+}
+/* end of one request chunk */
 
-// query is now a GraphQL syntax tree object
-console.log(query(5))
-
-export const BOOTSTRAP_LESSON = gql`
-    query BootstrapLesson($id: String!) {
-        lesson(id: $id) @client {
-            id
-            title
-            sections
-        }
-    }
-`
+// export const BOOTSTRAP_LESSON = gql`
+//     query BootstrapLesson($id: String!) {
+//         lesson(id: $id) @client {
+//             id
+//             title
+//             sections
+//         }
+//     }
+// `

@@ -6,9 +6,9 @@ import LessonContextProvider from "./Lesson"
 const Contexts = ({ children }) => {
     return (
         <ThemeContextProvider>
-            <ApolloContextProvider>
-                <LessonContextProvider>{children}</LessonContextProvider>
-            </ApolloContextProvider>
+            {/* <ApolloContextProvider> */}
+            <LessonContextProvider>{children}</LessonContextProvider>
+            {/* </ApolloContextProvider> */}
         </ThemeContextProvider>
     )
 }

@@ -1,14 +1,13 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useContext } from "react"
 import { withRouter } from "react-router"
 import styled from "styled-components"
 
-import { useQuery } from "react-apollo-hooks"
+import { LessonContext } from "~/contexts/Lesson"
+import { bootstrapLesson } from "~/api"
 
 import Container from "~/components/Container"
 import Flex from "~/components/Flex"
 import Loader from "~/components/Loader"
-
-import { BOOTSTRAP_LESSON } from "~/apollo"
 
 import Header from "./Header"
 import Sections from "./Sections"
@@ -19,16 +18,23 @@ const Wrapper = styled.div`
 `
 
 const Lesson = props => {
-    const { data, loading, error } = useQuery(BOOTSTRAP_LESSON, {
-        variables: { id: props.match.params.lessonId },
-        suspend: false,
-    })
+    const { store, dispatch } = useContext(LessonContext)
+
+    async function fetchLesson() {
+        try {
+            const lesson = await bootstrapLesson({ id: 123 }, true)
+
+            dispatch({ type: "BOOTSTRAP", payload: lesson })
+        } catch (err) {
+            dispatch({ type: "ERROR" })
+        }
+    }
 
     useEffect(() => {
-        console.log("data :", data)
-    }, [data])
+        fetchLesson()
+    }, [])
 
-    if (loading) {
+    if (store.loading) {
         return (
             <Container>
                 <Flex justifyCenter alignCenter style={{ minHeight: "70vh" }}>
@@ -38,7 +44,7 @@ const Lesson = props => {
         )
     }
 
-    const { lesson } = data
+    const { lesson } = store
     return (
         <Wrapper>
             <Header title={lesson.title} />

@@ -19,12 +19,12 @@ const {
 const cache = new InMemoryCache()
 
 // Create links for the different connections
-const wsLink = new WebSocketLink({
-    uri: graphqlWSUrl,
-    options: {
-        reconnect: true,
-    },
-})
+// const wsLink = new WebSocketLink({
+//     uri: graphqlWSUrl,
+//     options: {
+//         reconnect: true,
+//     },
+// })
 const httpLink = new HttpLink({ uri: graphqlHttpUrl })
 
 // using the ability to split links, we can send data to each link
@@ -35,7 +35,7 @@ const outgoingLink = split(
         const { kind, operation } = getMainDefinition(query)
         return kind === "OperationDefinition" && operation === "subscription"
     },
-    wsLink,
+    // wsLink,
     httpLink,
 )
 

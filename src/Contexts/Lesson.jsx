@@ -1,6 +1,9 @@
 import React, { useReducer } from "react"
 
 export const initialState = {
+    loading: true,
+    error: "",
+    lesson: {},
     editing: false,
 }
 
@@ -11,6 +14,30 @@ function reducer(state, { type, payload }) {
                 ...state,
                 editing: payload,
             }
+
+        case "BOOTSTRAP": {
+            return {
+                ...state,
+                loading: false,
+                error: "",
+                lesson: payload,
+            }
+        }
+        case "ERROR": {
+            return {
+                ...state,
+                error:
+                    payload === undefined
+                        ? "Ein Fehler ist aufgetreten..."
+                        : payload,
+            }
+        }
+        case "LOADING": {
+            return {
+                ...state,
+                loading: !!payload,
+            }
+        }
         case "RESET":
             return initalState
         default:

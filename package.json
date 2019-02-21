@@ -22,6 +22,7 @@
         "apollo-link-ws": "^1.0.14",
         "apollo-utilities": "^1.1.2",
         "babel-polyfill": "^6.26.0",
+        "graphql-request": "^1.8.2",
         "react": "^16.8.1",
         "react-apollo": "^2.4.1",
         "react-apollo-hooks": "^0.3.1",

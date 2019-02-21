@@ -5,6 +5,7 @@ import Workspace from "~/workspace"
 import GlobalStyle from "./GlobalStyle"
 import config from "~/config"
 import Contexts from "~/contexts"
+import Error from "./Error"
 
 const Application = () => {
     return (
@@ -13,6 +14,7 @@ const Application = () => {
                 config.IS_EMBED ? `${window.location.pathname}` : undefined
             }>
             <Contexts>
+                <Error />
                 <GlobalStyle />
                 <Workspace />
             </Contexts>
