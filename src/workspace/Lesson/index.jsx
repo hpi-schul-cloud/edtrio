@@ -3,7 +3,7 @@ import { withRouter } from "react-router"
 import styled from "styled-components"
 
 import { LessonContext } from "~/contexts/Lesson"
-import { bootstrapLesson } from "~/api"
+import { bootstrapLesson, updateLesson } from "~/api"
 
 import Container from "~/components/Container"
 import Flex from "~/components/Flex"
@@ -17,9 +17,7 @@ const Wrapper = styled.div`
     padding-top: 125px;
 `
 
-const Lesson = props => {
-    const { store, dispatch } = useContext(LessonContext)
-
+function useBootstrap(dispatch) {
     async function fetchLesson() {
         try {
             const lesson = await bootstrapLesson({ id: 123 }, true)
@@ -28,11 +26,37 @@ const Lesson = props => {
         } catch (err) {
             dispatch({ type: "ERROR" })
         }
+        dispatch({ type: "BOOTSTRAP_FINISH" })
     }
 
     useEffect(() => {
         fetchLesson()
     }, [])
+}
+
+async function saveLesson(store, dispatch) {
+    dispatch({ type: "SAVE_STATUS", payload: "Sichern..." })
+    const backendResponse = await updateLesson({ lesson: store.lesson }, true)
+    console.log("SAVED LESSON TO BACKEND :", backendResponse)
+    dispatch({ type: "SAVE_STATUS", payload: "Gespeichert" })
+}
+
+function useChangeListener(store, dispatch) {
+    useEffect(() => {
+        if (!store.bootstrapFinished) return
+
+        dispatch({ type: "SAVE_STATUS", payload: "Ungesicherte Änderungen" })
+        const saveTimeout = setTimeout(() => saveLesson(store, dispatch), 5000)
+
+        return () => clearTimeout(saveTimeout)
+    }, [store.lesson])
+}
+
+const Lesson = props => {
+    const { store, dispatch } = useContext(LessonContext)
+
+    useBootstrap(dispatch)
+    useChangeListener(store, dispatch)
 
     if (store.loading) {
         return (
@@ -44,11 +68,10 @@ const Lesson = props => {
         )
     }
 
-    const { lesson } = store
     return (
         <Wrapper>
-            <Header title={lesson.title} />
-            <Sections sections={lesson.sections} />
+            <Header title={store.lesson.title} dispatch={dispatch} />
+            <Sections sections={store.lesson.sections} />
         </Wrapper>
     )
 }

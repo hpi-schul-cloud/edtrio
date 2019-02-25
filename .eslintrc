@@ -2,14 +2,16 @@
     "env": {
         "browser": true,
         "es6": true,
-        "node": true
+        "node": false
     },
     "extends": [
         "standard",
-        "plugin:react/recommended",
-        "pretter",
-        "prettier/react"
+        "eslint:recommended",
+        "prettier",
+        "prettier/react",
+        "plugin:react/recommended"
     ],
+    "parser": "babel-eslint",
     "parserOptions": {
         "ecmaVersion": 9,
         "ecmaFeatures": {
@@ -17,12 +19,15 @@
         },
         "sourceType": "module"
     },
-    "plugins": ["standard", "react"],
+    "plugins": ["standard", "react-hooks"],
     "rules": {
-        "prettier/prettier": "error",
         "linebreak-style": [2, "unix"],
         "semi": [2, "never"],
         "no-unused-vars": [0],
-        "unicode-bom": ["error", "never"]
+        "unicode-bom": ["error", "never"],
+        "react-hooks/rules-of-hooks": 2,
+        "react-hooks/exhaustive-deps": 0,
+        "no-console": 1,
+        "react/prop-types": 0
     }
 }
