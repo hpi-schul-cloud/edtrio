@@ -19,11 +19,14 @@ const counterPlugin = {
     // eslint-disable-next-line react/display-name
     Component: ({ focused, state }) => {
         return (
-            <div
-                style={{
-                    outline: focused ? "1px solid blue" : "none",
-                }}>
+            <div>
                 {state.value}
+                <button
+                    onClick={() => {
+                        state.set(value => value - 1)
+                    }}>
+                    -
+                </button>
                 <button
                     onClick={() => {
                         state.set(value => value + 1)
@@ -41,46 +44,32 @@ const plugins = {
     rows: rowsPlugin,
 }
 
-// const ChangeListener = state => {
-//     console.log("state :", state)
-//     const
+class Editor extends React.Component {
+    constructor(props) {
+        super(props)
+        this.editorState = createDocument(props.docValue || {})
+    }
 
-//     return (
-//         <EditorContext.Consumer>
-//             {store => {}}
-//         <EditorContext.Consumer>
-//     )
-// }
-
-// function useInit(docValue) {
-//     useEffect(() => {
-
-//     }, )
-// }
-
-const Editor = ({ docValue }) => {
-    const state = createDocument(docValue ? JSON.parse(docValue) : {})
-    const { store: lessonStore } = useContext(LessonContext)
-
-    return (
-        <div
-            style={{
-                minHeight: "500px",
-                backgroundColor: lessonStore.editing
-                    ? "rgb(245, 245, 245)"
-                    : "#fff",
-                transition: "250ms background-color ease-in-out",
-            }}>
-            <Edtr plugins={plugins} defaultPlugin="counter" state={state}>
-                <LogState state={state} />
-                {/* <ChangeListener></ChangeListener> */}
-            </Edtr>
-        </div>
-    )
+    render() {
+        return (
+            <div
+                style={{
+                    minHeight: "500px",
+                }}>
+                <Edtr
+                    plugins={plugins}
+                    defaultPlugin="counter"
+                    state={this.editorState}>
+                    <LogState state={this.editorState} />
+                </Edtr>
+            </div>
+        )
+    }
 }
 
 export function LogState({ state }) {
     const store = useContext(EditorContext)
+
     return (
         <button
             onClick={() => {

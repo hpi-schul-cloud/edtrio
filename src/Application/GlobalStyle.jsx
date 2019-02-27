@@ -9,7 +9,8 @@ const GS = createGlobalStyle`
 	html, body {
 		margin: 0;
 		font-family: 'PT Sans', sans-serif;
-		font-size: 16px;
+		font-size: 20px;
+		overflow-x: hidden;
 	}
 `
 

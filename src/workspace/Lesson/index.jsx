@@ -14,7 +14,8 @@ import Sections from "./Sections"
 
 const Wrapper = styled.div`
     position: relative;
-    padding-top: 125px;
+    padding-top: 50px;
+    width: 100%;
 `
 
 function useBootstrap(dispatch) {
@@ -37,7 +38,6 @@ function useBootstrap(dispatch) {
 async function saveLesson(store, dispatch) {
     dispatch({ type: "SAVE_STATUS", payload: "Sichern..." })
     const backendResponse = await updateLesson({ lesson: store.lesson }, true)
-    console.log("SAVED LESSON TO BACKEND :", backendResponse)
     dispatch({ type: "SAVE_STATUS", payload: "Gespeichert" })
 }
 
@@ -71,7 +71,11 @@ const Lesson = props => {
     return (
         <Wrapper>
             <Header title={store.lesson.title} dispatch={dispatch} />
-            <Sections sections={store.lesson.sections} />
+            <Sections
+                showSectionOverview={store.showSectionOverview}
+                editing={store.editing}
+                sections={store.lesson.sections}
+            />
         </Wrapper>
     )
 }

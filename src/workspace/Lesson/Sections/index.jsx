@@ -8,19 +8,28 @@ import Section from "./Section"
 
 const Wrapper = styled(Flex)``
 
-const Sections = ({ sections }) => {
+const Sections = ({ sections, editing, showSectionOverview }) => {
     return (
-        <Wrapper justifyCenter>
-            <SectionOverview sections={sections} />
-            <div>
-                {sections.map((section, index) => (
-                    <Section
-                        key={section.id}
-                        index={index}
-                        section={section}
-                        isLast={index === sections.length - 1}
-                    />
-                ))}
+        <Wrapper justifyCenter style={{ width: "100%" }}>
+            <SectionOverview
+                sections={sections}
+                editing={editing}
+                visible={showSectionOverview}
+            />
+            <div style={{ width: "100%" }}>
+                {sections
+                    .filter(section => {
+                        if (editing) return true
+                        return section.visible
+                    })
+                    .map((section, index) => (
+                        <Section
+                            key={section.id}
+                            index={index}
+                            section={section}
+                            isLast={index === sections.length - 1}
+                        />
+                    ))}
             </div>
         </Wrapper>
     )

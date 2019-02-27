@@ -19,20 +19,20 @@ const Container = styled.div`
     ${props =>
         props.small &&
         css`
-            padding: 15px !important;
+            padding: 15px;
         `}
 
     ${props =>
         props.full &&
         css`
-            padding-left: 0 !important;
-            padding-right: 0 !important;
+            padding-left: 0;
+            padding-right: 0;
         `}
     ${props =>
         props.fullVertical &&
         css`
-            padding-top: 0 !important;
-            padding-bottom: 0 !important;
+            padding-top: 0;
+            padding-bottom: 0;
         `};
 `
 

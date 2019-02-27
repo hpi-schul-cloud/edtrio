@@ -6,23 +6,37 @@ export const UPDATE_LESSON = gql`
         lesson(id: $lesson) {
             id
             title
-            sections
         }
     }
 `
 
-const updateLessonFakeResponse = lesson => {
+const updateLessonFakeResponse = lessonId => {
     return new Promise((resolve, reject) => {
         setTimeout(function() {
-            resolve(lesson)
+            resolve(lessonId)
         }, 1000)
     })
 }
 
-export const updateLesson = ({ lesson }, fake) => {
+export const updateLesson = ({ lessonId, steps, title }, fake) => {
     if (process.env.NODE_ENV !== "production" && fake === true) {
-        return updateLessonFakeResponse(lesson)
+        return updateLessonFakeResponse(lessonId)
     }
 
-    return request(UPDATE_LESSON, { id: lesson.id })
+    return request(UPDATE_LESSON, { id: lessonId })
+}
+const deleteSectionFakeResponse = sectionId => {
+    return new Promise((resolve, reject) => {
+        setTimeout(function() {
+            resolve({ success: true })
+        }, 125)
+    })
+}
+
+export const deleteSection = ({ sectionId }, fake) => {
+    if (process.env.NODE_ENV !== "production" && fake === true) {
+        return deleteSectionFakeResponse(sectionId)
+    }
+
+    return request(UPDATE_LESSON, { id: sectionId })
 }

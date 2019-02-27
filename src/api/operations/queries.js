@@ -65,26 +65,31 @@ const bootstrapFakeResponse = id => {
                         id: 124124,
                         notes: "",
                         title: "Sample Section",
-                        docValue:
+                        docValue: JSON.parse(
                             '{"type":"@edtr-io/document","plugin":"rows","state":[{"type":"@edtr-io/document","plugin":"counter","state":1},{"type":"@edtr-io/document","plugin":"counter","state":2},{"type":"@edtr-io/document","plugin":"counter","state":3}]}',
+                        ),
+                        visible: true,
                     },
                     {
                         id: 1235551,
                         notes: "",
                         title: "Second Sample Section",
                         docValue: null,
+                        visible: false,
                     },
                     {
                         id: 5666,
                         notes: "",
                         title: "Third Sample Section",
                         docValue: null,
+                        visible: true,
                     },
                     {
                         id: 75666,
                         notes: "",
                         title: "Fourth Sample Section",
                         docValue: null,
+                        visible: true,
                     },
                 ],
             })

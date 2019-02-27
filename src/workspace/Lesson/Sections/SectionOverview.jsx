@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useContext } from "react"
 import styled from "styled-components"
 import Heading from "~/components/Heading"
+
+import { LessonContext } from "~/contexts/Lesson"
 
 const Wrapper = styled.div`
     padding: 15px;
@@ -8,10 +10,16 @@ const Wrapper = styled.div`
     left: 0;
     top: 125px;
     width: 300px;
-    max-width: 300px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    max-width: 100vw;
     overflow: hidden;
+    transform: ${props => (props.visible ? 0 : "translateX(-100%)")};
+    opacity: ${props => (props.visible ? 1 : 0)};
+    transition: 250ms all ease-in-out;
+    background-color: #fff;
+    border-radius: 0 5px 5px 0;
+    @media (max-width: 1500px) {
+        box-shadow: 0 5px 35px -15px rgba(0, 0, 0, 0.8);
+    }
 `
 
 const SectionTitle = styled(Heading)`
@@ -71,23 +79,51 @@ function useScrollListener() {
     return [activeSectionIndex, setActiveSectionIndex]
 }
 
-const SectionOverview = ({ sections }) => {
-    const [activeSectionIndex, setActiveSectionIndex] = useScrollListener()
+function useResizeListener() {
+    const { store, dispatch } = useContext(LessonContext)
 
+    function resizeListener() {
+        if (store.showSectionOverview && window.innerWidth < 1500) {
+            dispatch({ type: "TOGGLE_SECTION_OVERVIEW", payload: false })
+        }
+
+        if (store.showSectionOverview === false && window.innerWidth > 1500) {
+            dispatch({ type: "TOGGLE_SECTION_OVERVIEW", payload: true })
+        }
+    }
+
+    useEffect(() => {
+        if (window.innerWidth > 1500) {
+            dispatch({ type: "TOGGLE_SECTION_OVERVIEW", payload: true })
+        }
+
+        window.addEventListener("resize", resizeListener)
+        return () => window.removeEventListener("resize", resizeListener)
+    }, [store.showSectionOverview])
+}
+
+const SectionOverview = ({ sections, editing, visible }) => {
+    const [activeSectionIndex, setActiveSectionIndex] = useScrollListener()
+    useResizeListener()
     return (
-        <Wrapper>
-            {sections.map((section, index) => (
-                <SectionTitle
-                    h4
-                    left
-                    onClick={() => {
-                        scrollToSection(index)
-                    }}
-                    key={section.id}
-                    active={index === activeSectionIndex}>
-                    {section.title || "Neuer Abschnitt"}
-                </SectionTitle>
-            ))}
+        <Wrapper visible={visible}>
+            {sections
+                .filter(section => {
+                    if (editing) return true
+                    return section.visible
+                })
+                .map((section, index) => (
+                    <SectionTitle
+                        h4
+                        left
+                        onClick={() => {
+                            scrollToSection(index)
+                        }}
+                        key={section.id}
+                        active={index === activeSectionIndex}>
+                        {section.title || "Neuer Abschnitt"}
+                    </SectionTitle>
+                ))}
         </Wrapper>
     )
 }

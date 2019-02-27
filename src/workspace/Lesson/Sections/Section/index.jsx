@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, useRef } from "react"
 import styled, { css } from "styled-components"
 
 import { LessonContext } from "~/contexts/Lesson"
@@ -9,56 +9,42 @@ import Input from "~/components/Input"
 import Editor from "./Editor"
 import Notes from "./Notes"
 import Separator from "./Separator"
+import Controls from "./Controls"
+
+const StyledSection = styled(Flex)`
+    transition: 250ms all ease-in-out;
+
+    ${props =>
+        props.delete &&
+        css`
+            transform: translateX(500px);
+            opacity: 0;
+        `}
+`
 
 const Wrapper = styled.div`
-    width: 650px;
     padding: 25px;
-    border-radius: 5px;
+    flex-shrink: 1;
+    flex-grow: 1;
+    background-color: rgb(240, 240, 240);
+    max-width: 850px;
 
-    box-shadow: 0 5px 30px -15px rgba(0, 0, 0, 1);
-    transition: 250ms all ease-in-out;
-    margin-right: 25px;
+    filter: ${props => !props.visible && "blur(2px)"};
 
-    &:hover {
-        box-shadow: 0 5px 40px -15px rgba(0, 0, 0, 1);
-    }
-`
-
-const OrderChanger = styled(Flex)`
-    width: 50px;
-    margin-left: 200px;
-
-    transition: 250ms opacity ease-in-out;
-    ${props =>
-        props.hide &&
-        css`
-            opacity: 0;
-            pointer-events: none;
-        `}
-`
-
-const Arrow = styled.img`
-    cursor: pointer;
-    margin: 5px;
-    width: 24px;
-    ${props =>
-        !props.visible &&
-        css`
-            opacity: 0;
-            pointer-events: none;
-            cursor: inherit;
-        `}
+    transition: 250ms margin ease-in-out;
 `
 
 const Section = ({ section, isLast, index }) => {
     const { store, dispatch } = useContext(LessonContext)
-
+    const sectionRef = useRef(null)
     return (
-        <Flex
+        <StyledSection
             column
+            delete={section.delete}
             alignCenter
             data-section={index}
-            className="lesson-section">
+            className="lesson-section"
+            ref={sectionRef}>
             {index === 0 && (
                 <Separator
                     isFirst
@@ -67,32 +53,17 @@ const Section = ({ section, isLast, index }) => {
                     editing={store.editing}
                 />
             )}
-            <Flex alignStretch>
-                <OrderChanger column alignCenter hide={!store.editing}>
-                    <Arrow
-                        src={require("~/assets/arrow-up.svg")}
-                        alt=""
-                        visible={index !== 0}
-                        onClick={() => {
-                            dispatch({
-                                type: "SWAP_SECTIONS",
-                                payload: [index, index - 1],
-                            })
-                        }}
-                    />
-                    <Arrow
-                        src={require("~/assets/arrow-down.svg")}
-                        alt=""
-                        onClick={() => {
-                            dispatch({
-                                type: "SWAP_SECTIONS",
-                                payload: [index, index + 1],
-                            })
-                        }}
-                        visible={!isLast}
-                    />
-                </OrderChanger>
-                <Wrapper>
+            <Flex noWrap alignStretch justifyCenter style={{ width: "100%" }}>
+                <Controls
+                    store={store}
+                    index={index}
+                    dispatch={dispatch}
+                    isLast={isLast}
+                    sectionRef={sectionRef}
+                    visible={section.visible}
+                    sectionId={section.id}
+                />
+                <Wrapper visible={section.visible}>
                     <Input
                         style={{ fontWeight: 700 }}
                         full
@@ -120,7 +91,7 @@ const Section = ({ section, isLast, index }) => {
                 index={index}
                 editing={store.editing}
             />
-        </Flex>
+        </StyledSection>
     )
 }
 

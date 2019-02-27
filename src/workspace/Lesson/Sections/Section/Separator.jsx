@@ -8,10 +8,6 @@ import Button from "~/components/Button"
 const SeparatorWrapper = styled(Flex)`
     align-self: stretch;
     height: 100px;
-
-    &:hover .separator-button {
-        opacity: 1;
-    }
 `
 
 const StyledSeparator = styled.div`
@@ -27,17 +23,41 @@ const SeparatorButton = styled(Button)`
     position: absolute;
     top: 50%;
     left: 50%;
-    opacity: 0;
     transform: translate(-50%, -50%);
+    ${props =>
+        props.small &&
+        css`
+            width: 26px;
+            height: 26px;
+            border-radius: 13px;
+            padding: 0;
+        `}
 `
 
 const Separator = ({ index, isFirst, isLast, dispatch, editing }) => {
+    const content =
+        isFirst || isLast ? (
+            "Neuer Abschnitt"
+        ) : (
+            <img
+                src={require("~/assets/add-white.svg")}
+                style={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    height: 20,
+                }}
+                alt=""
+            />
+        )
+
     return (
         <SeparatorWrapper justifyCenter>
             <StyledSeparator hide={isFirst || isLast}>
                 {editing && (
                     <SeparatorButton
-                        className="separator-button"
+                        small={!isFirst && !isLast}
                         onClick={() =>
                             dispatch({
                                 type: "ADD_SECTION",
@@ -45,7 +65,7 @@ const Separator = ({ index, isFirst, isLast, dispatch, editing }) => {
                             })
                         }
                         noMargin>
-                        Neuer Abschnitt
+                        {content}
                     </SeparatorButton>
                 )}
             </StyledSeparator>
