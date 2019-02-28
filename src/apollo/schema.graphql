@@ -1,7 +1,0 @@
-type HelloWorldMessage {
-    message: String!
-}
-
-type Query {
-    HelloWorld(firstMessagePart: String!): HelloWorldMessage
-}

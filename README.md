@@ -9,18 +9,14 @@
 </p>
 <br/>
 
-![Screenshot of Edtr.io in action](screenshot.png "Edtr.io in action")
-
-> :rotating_light: Check it out here: https://schul-cloud.github.io/edtrio/
-
 ## Getting started
 
 ```shell
-yarn install
+npm install
 ```
 
 ```shell
-yarn dev
+npm run dev
 ```
 
 ## License
