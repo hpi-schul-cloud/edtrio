@@ -4,6 +4,9 @@
         "es6": true,
         "node": false
     },
+    "globals": {
+        "process": true
+    },
     "extends": [
         "standard",
         "eslint:recommended",
@@ -28,6 +31,7 @@
         "react-hooks/rules-of-hooks": 2,
         "react-hooks/exhaustive-deps": 0,
         "no-console": 1,
-        "react/prop-types": 0
+        "react/prop-types": 0,
+        "no-case-declarations": 0
     }
 }

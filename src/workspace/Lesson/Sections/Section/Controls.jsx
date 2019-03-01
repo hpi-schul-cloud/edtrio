@@ -1,7 +1,7 @@
 import React, { useContext, useRef } from "react"
 import styled, { css } from "styled-components"
 
-import { deleteSection } from "~/api/operations"
+import api from "~/utils/api"
 
 import previewIcon from "~/assets/preview.svg"
 import noPreviewIcon from "~/assets/no-preview.svg"
@@ -94,7 +94,7 @@ const Controls = ({
                 <Icon
                     src={trashIcon}
                     visible
-                    onClick={() => {
+                    onClick={async () => {
                         dispatch({
                             type: "PREPARE_DELETE_SECTION",
                             payload: sectionId,
@@ -107,7 +107,13 @@ const Controls = ({
                             })
                         }, 250)
 
-                        deleteSection({ sectionId }, true)
+                        await api.delete(
+                            `/editor/sections/${sectionId}`,
+                            null,
+                            null,
+                            null,
+                            { success: true },
+                        )
                     }}
                 />
             )}

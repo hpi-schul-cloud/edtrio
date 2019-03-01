@@ -1,7 +1,10 @@
 import React from "react"
-
 import styled, { css } from "styled-components"
+import uuid from "uuid/v4"
 
+import api from "~/utils/api"
+
+import plusIcon from "~/assets/add-white.svg"
 import Flex from "~/components/Flex"
 import Button from "~/components/Button"
 
@@ -34,13 +37,43 @@ const SeparatorButton = styled(Button)`
         `}
 `
 
-const Separator = ({ index, isFirst, isLast, dispatch, editing }) => {
+async function handleClick(dispatch, isFirst, index, lessonId) {
+    const tempId = uuid()
+    dispatch({
+        type: "ADD_SECTION",
+        payload: {
+            position: isFirst ? -1 : index,
+            tempId,
+        },
+    })
+
+    const newSection = await api.post(
+        "/editor/sections",
+        {
+            lessonId,
+            visible: true,
+        },
+        null,
+        null,
+        { id: uuid(), lessonId },
+    )
+
+    dispatch({
+        type: "REPLACE_ADDED_SECTION_ID",
+        payload: {
+            tempId,
+            backendId: newSection.id,
+        },
+    })
+}
+
+const Separator = ({ index, isFirst, isLast, lessonId, dispatch, editing }) => {
     const content =
         isFirst || isLast ? (
             "Neuer Abschnitt"
         ) : (
             <img
-                src={require("~/assets/add-white.svg")}
+                src={plusIcon}
                 style={{
                     position: "absolute",
                     top: "50%",
@@ -59,10 +92,7 @@ const Separator = ({ index, isFirst, isLast, dispatch, editing }) => {
                     <SeparatorButton
                         small={!isFirst && !isLast}
                         onClick={() =>
-                            dispatch({
-                                type: "ADD_SECTION",
-                                payload: isFirst ? -1 : index,
-                            })
+                            handleClick(dispatch, isFirst, index, lessonId)
                         }
                         noMargin>
                         {content}

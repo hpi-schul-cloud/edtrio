@@ -48,6 +48,7 @@ const Section = ({ section, isLast, index }) => {
             {index === 0 && (
                 <Separator
                     isFirst
+                    lessonId={store.lesson.id}
                     dispatch={dispatch}
                     index={index}
                     editing={store.editing}
@@ -89,6 +90,7 @@ const Section = ({ section, isLast, index }) => {
                 isLast={isLast}
                 dispatch={dispatch}
                 index={index}
+                lessonId={store.lesson.id}
                 editing={store.editing}
             />
         </StyledSection>

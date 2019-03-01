@@ -30,6 +30,7 @@ const SectionTitle = styled(Heading)`
     margin-bottom: 0px;
     max-width: 100%;
     text-overflow: ellipsis;
+    white-space: nowrap;
     overflow: hidden;
     &:hover {
         cursor: pointer;
@@ -93,7 +94,7 @@ function useResizeListener() {
     }
 
     useEffect(() => {
-        if (window.innerWidth > 1500) {
+        if (window.innerWidth > 1500 && !store.bootstrapFinished) {
             dispatch({ type: "TOGGLE_SECTION_OVERVIEW", payload: true })
         }
 

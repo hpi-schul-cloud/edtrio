@@ -39,7 +39,13 @@ function reducer(state, { type, payload }) {
                 ...state,
                 loading: false,
                 error: "",
-                lesson: payload,
+                lesson: {
+                    ...payload,
+                    changed: new Set(),
+                    sections: payload.sections.map(section => {
+                        return { ...section, changed: new Set() }
+                    }),
+                },
             }
 
         case "BOOTSTRAP_FINISH":
@@ -55,7 +61,22 @@ function reducer(state, { type, payload }) {
                 saveStatus: payload,
             }
 
+        case "LESSON_TITLE_CHANGE":
+            state.lesson.changed.add("title")
+            return {
+                ...state,
+                lesson: {
+                    ...state.lesson,
+                    title: payload,
+                },
+            }
+
+        case "LESSON_SAVED":
+            state.lesson.changed.clear()
+            return state
+
         case "SWAP_SECTIONS":
+            state.lesson.changed.add("order")
             return {
                 ...state,
                 lesson: {
@@ -75,17 +96,17 @@ function reducer(state, { type, payload }) {
         case "ADD_SECTION":
             const newSection = {
                 title: "",
-                id: "new" + new Date().getTime(),
+                id: payload.tempId,
                 notes: "",
                 visible: true,
                 docValue: null,
             }
             const newSections = []
-            if (payload === -1) newSections.push(newSection)
+            if (payload.position === -1) newSections.push(newSection)
 
             state.lesson.sections.forEach((section, index) => {
                 newSections.push(section)
-                if (index === payload) newSections.push(newSection)
+                if (index === payload.position) newSections.push(newSection)
             })
 
             return {
@@ -96,14 +117,32 @@ function reducer(state, { type, payload }) {
                 },
             }
 
+        case "REPLACE_ADDED_SECTION_ID": {
+            state.lesson.changed.add("order")
+            return {
+                ...state,
+                lesson: {
+                    ...state.lesson,
+                    sections: state.lesson.sections.map(section => {
+                        if (section.id === payload.tempId) {
+                            return { ...section, id: payload.backendId }
+                        }
+                        return section
+                    }),
+                },
+            }
+        }
+
         case "SECTION_VISIBILITY":
             return {
                 ...state,
                 lesson: {
                     ...state.lesson,
                     sections: state.lesson.sections.map(section => {
-                        if (section.id === payload)
+                        if (section.id === payload) {
+                            section.changed.add("visible")
                             return { ...section, visible: !section.visible }
+                        }
                         return section
                     }),
                 },
@@ -138,11 +177,12 @@ function reducer(state, { type, payload }) {
                 ...state,
                 lesson: {
                     ...state.lesson,
-                    sections: state.lesson.sections.map(section =>
-                        section.id !== payload.sectionId
-                            ? section
-                            : { ...section, notes: payload.newValue },
-                    ),
+                    sections: state.lesson.sections.map(section => {
+                        if (section.id !== payload.sectionId) return section
+
+                        section.changed.add("notes")
+                        return { ...section, notes: payload.newValue }
+                    }),
                 },
             }
 
@@ -151,22 +191,20 @@ function reducer(state, { type, payload }) {
                 ...state,
                 lesson: {
                     ...state.lesson,
-                    sections: state.lesson.sections.map(section =>
-                        section.id !== payload.sectionId
-                            ? section
-                            : { ...section, title: payload.title },
-                    ),
+                    sections: state.lesson.sections.map(section => {
+                        if (section.id !== payload.sectionId) return section
+
+                        section.changed.add("title")
+                        return { ...section, title: payload.title }
+                    }),
                 },
             }
 
-        case "LESSON_TITLE_CHANGE":
-            return {
-                ...state,
-                lesson: {
-                    ...state.lesson,
-                    title: payload,
-                },
-            }
+        case "SECTION_SAVED":
+            state.lesson.sections.forEach(section => {
+                if (section.id === payload) section.changed.clear()
+            })
+            return state
 
         case "ERROR":
             return {
