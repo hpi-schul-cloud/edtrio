@@ -200,6 +200,20 @@ function reducer(state, { type, payload }) {
                 },
             }
 
+        case "SECTION_DOCVALUE_CHANGE":
+            if (!state.editing) return state
+            return {
+                ...state,
+                lesson: {
+                    ...state.lesson,
+                    sections: state.lesson.sections.map(section => {
+                        if (section.id !== payload.sectionId) return section
+                        section.changed.add("docValue")
+                        return { ...section, docValue: payload.docValue }
+                    }),
+                },
+            }
+
         case "SECTION_SAVED":
             state.lesson.sections.forEach(section => {
                 if (section.id === payload) section.changed.clear()

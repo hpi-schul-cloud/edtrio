@@ -26,7 +26,6 @@ const Wrapper = styled.div`
     padding: 25px;
     flex-shrink: 1;
     flex-grow: 1;
-    background-color: rgb(240, 240, 240);
     max-width: 850px;
 
     filter: ${props => !props.visible && "blur(2px)"};
@@ -68,6 +67,7 @@ const Section = ({ section, isLast, index }) => {
                     <Input
                         style={{ fontWeight: 700 }}
                         full
+                        noMargin
                         size={32}
                         value={section.title}
                         readOnly={!store.editing}
@@ -82,7 +82,18 @@ const Section = ({ section, isLast, index }) => {
                             })
                         }
                     />
-                    <Editor docValue={section.docValue} />
+                    <Editor
+                        docValue={section.docValue}
+                        dispatchChange={docValue => {
+                            dispatch({
+                                type: "SECTION_DOCVALUE_CHANGE",
+                                payload: {
+                                    sectionId: section.id,
+                                    docValue,
+                                },
+                            })
+                        }}
+                    />
                 </Wrapper>
                 <Notes notes={section.notes} sectionId={section.id} />
             </Flex>

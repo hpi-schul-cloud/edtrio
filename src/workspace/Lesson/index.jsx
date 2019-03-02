@@ -5,6 +5,7 @@ import styled from "styled-components"
 import api from "~/utils/api"
 import { LessonContext } from "~/contexts/Lesson"
 import { useInterval } from "~/utils/hooks"
+import { loadEditorData, saveEditorData } from "~/utils/cache"
 
 import Container from "~/components/Container"
 import Flex from "~/components/Flex"
@@ -22,42 +23,46 @@ const Wrapper = styled.div`
 function useBootstrap(id, dispatch) {
     async function fetchLesson() {
         try {
-            const lesson = await api.get(`/editor/lessons/${id}`, {
-                id,
-                title: `Sample lesson`,
-                sections: [
-                    {
-                        id: 1,
-                        notes: "",
-                        title: "Sample Section",
-                        docValue: JSON.parse(
-                            '{"type":"@edtr-io/document","plugin":"rows","state":[{"type":"@edtr-io/document","plugin":"counter","state":1},{"type":"@edtr-io/document","plugin":"counter","state":2},{"type":"@edtr-io/document","plugin":"counter","state":3}]}',
-                        ),
-                        visible: true,
-                    },
-                    {
-                        id: 2,
-                        notes: "",
-                        title: "Second Sample Section",
-                        docValue: null,
-                        visible: false,
-                    },
-                    {
-                        id: 3,
-                        notes: "",
-                        title: "Third Sample Section",
-                        docValue: null,
-                        visible: true,
-                    },
-                    {
-                        id: 4,
-                        notes: "",
-                        title: "Fourth Sample Section",
-                        docValue: null,
-                        visible: true,
-                    },
-                ],
-            })
+            const cacheData = loadEditorData(id)
+            let lesson
+            if (cacheData.savedToBackend === false) {
+                lesson = cacheData.lesson
+            } else {
+                lesson = await api.get(`/editor/lessons/${id}`, {
+                    id,
+                    title: `Sample lesson`,
+                    sections: [
+                        {
+                            id: 1,
+                            notes: "",
+                            title: "Sample Section",
+                            docValue: null,
+                            visible: true,
+                        },
+                        {
+                            id: 2,
+                            notes: "",
+                            title: "Second Sample Section",
+                            docValue: null,
+                            visible: false,
+                        },
+                        {
+                            id: 3,
+                            notes: "",
+                            title: "Third Sample Section",
+                            docValue: null,
+                            visible: true,
+                        },
+                        {
+                            id: 4,
+                            notes: "",
+                            title: "Fourth Sample Section",
+                            docValue: null,
+                            visible: true,
+                        },
+                    ],
+                })
+            }
 
             dispatch({ type: "BOOTSTRAP", payload: lesson })
         } catch (err) {
@@ -71,7 +76,8 @@ function useBootstrap(id, dispatch) {
     }, [])
 }
 
-async function saveLesson(store, dispatch) {
+async function saveLesson(store, dispatch, override) {
+    if (!store.editing && !override) return
     dispatch({ type: "SAVE_STATUS", payload: "Sichern..." })
     const savePromises = []
 
@@ -99,9 +105,7 @@ async function saveLesson(store, dispatch) {
                     )
                     dispatch({ type: "LESSON_SAVED" })
                 } catch (err) {
-                    console.error("Error saving lesson", err)
-                } finally {
-                    resolve(lessonChanges)
+                    resolve("error")
                 }
             }),
         )
@@ -116,11 +120,7 @@ async function saveLesson(store, dispatch) {
 
         const sectionChanges = {}
         section.changed.forEach(key => {
-            if (key === "docValue") {
-                // TODO
-            } else {
-                sectionChanges[key] = section[key]
-            }
+            sectionChanges[key] = section[key]
         })
 
         savePromises.push(
@@ -131,23 +131,29 @@ async function saveLesson(store, dispatch) {
                         sectionChanges,
                         null,
                         null,
-                        { id: section.id, ...sectionChanges },
+                        // { success: true },
                     )
                     dispatch({ type: "SECTION_SAVED", payload: section.id })
                     resolve(backendResult)
                 } catch (err) {
-                    console.error("Error saving section " + section.id, err)
-                } finally {
-                    resolve()
+                    resolve("error")
                 }
             }),
         )
     })
 
     const results = await Promise.all(savePromises)
-    console.log("DATA SAVED TO BACKEND :", results)
+    const cacheData = { savedToBackend: true, lesson: store.lesson }
+    if (results.includes("error")) cacheData.savedToBackend = false
 
-    dispatch({ type: "SAVE_STATUS", payload: "Gespeichert" })
+    saveEditorData(cacheData, store.lesson.id)
+
+    dispatch({
+        type: "SAVE_STATUS",
+        payload: !cacheData.savedToBackend
+            ? "Lokal Gespeichert"
+            : "Gespeichert",
+    })
 }
 
 function useChangeListener(store, dispatch) {
@@ -164,7 +170,12 @@ const Lesson = props => {
     const id = 123 // TODO change to actual lesson id
     useBootstrap(id, dispatch)
     useChangeListener(store, dispatch)
-    useInterval(() => saveLesson(store, dispatch), 5000)
+    useInterval(() => saveLesson(store, dispatch), 10000)
+
+    useEffect(() => {
+        if (store.bootstrapFinished && store.editing === false)
+            saveLesson(store, dispatch, true)
+    }, [store.editing])
 
     if (store.loading) {
         return (

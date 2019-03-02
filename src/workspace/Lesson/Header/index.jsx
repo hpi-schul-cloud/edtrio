@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import styled from "styled-components"
 
 import { LessonContext } from "~/contexts/Lesson"
@@ -22,6 +22,10 @@ const StyledHeader = styled(Container)`
     padding-top: 5px !important;
     padding-bottom: 5px !important;
     box-shadow: 0 5px 25px -15px rgba(0, 0, 0, 1);
+
+    &:hover .save-status {
+        opacity: 1 !important;
+    }
 
     @media (max-width: 1150px) {
         padding-left: 75px;
@@ -63,6 +67,16 @@ const TitleInput = styled(Input)`
 
 const Header = () => {
     const { store, dispatch } = useContext(LessonContext)
+    const [showSaveStatus, setShowSaveStatus] = useState(false)
+    useEffect(() => {
+        let timeout
+        if (store.saveStatus === "Ungesicherte Änderungen")
+            return setShowSaveStatus(true)
+        if (store.saveStatus === "Gespeichert")
+            timeout = setTimeout(() => setShowSaveStatus(false), 1500)
+
+        return () => clearTimeout(timeout)
+    }, [store.saveStatus])
 
     return (
         <StyledHeader>
@@ -84,7 +98,16 @@ const Header = () => {
                     />
                 </Flex>
                 <Flex alignCenter noWrap>
-                    <SaveStatus noMargin>{store.saveStatus}</SaveStatus>
+                    <SaveStatus
+                        noMargin
+                        className="save-status"
+                        style={{
+                            textAlign: "right",
+                            opacity: showSaveStatus ? 1 : 0,
+                            transition: "250ms all ease-in-out",
+                        }}>
+                        {store.saveStatus}
+                    </SaveStatus>
                     <Toggle
                         caption="Präsentieren"
                         activeCaption="Bearbeiten"

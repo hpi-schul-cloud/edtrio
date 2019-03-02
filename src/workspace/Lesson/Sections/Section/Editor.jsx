@@ -1,17 +1,17 @@
 import React, { useContext, useEffect } from "react"
 import {
     createDocument,
-    DocumentIdentifier,
     Editor as Edtr,
     EditorContext,
-    Plugin,
     serializeDocument,
-    StatefulPlugin,
     StateType,
 } from "@edtr-io/core"
 import { rowsPlugin } from "@edtr-io/ui"
-
-import { LessonContext } from "~/contexts/Lesson"
+import { anchorPlugin } from "@edtr-io/plugin-anchor"
+import { blockquotePlugin } from "@edtr-io/plugin-blockquote"
+// import { highlightPlugin } from "@edtr-io/plugin-highlight"
+// import { spoilerPlugin } from "@edtr-io/plugin-spoiler"
+import { textPlugin } from "@edtr-io/plugin-text"
 
 const counterState = StateType.number(0)
 
@@ -40,8 +40,13 @@ const counterPlugin = {
 }
 
 const plugins = {
-    counter: counterPlugin,
     rows: rowsPlugin,
+    anchor: anchorPlugin,
+    counter: counterPlugin,
+    blockquote: blockquotePlugin,
+    // highlight: highlightPlugin,
+    // spoiler: spoilerPlugin,
+    text: textPlugin,
 }
 
 class Editor extends React.Component {
@@ -60,26 +65,23 @@ class Editor extends React.Component {
                     plugins={plugins}
                     defaultPlugin="counter"
                     state={this.editorState}>
-                    <LogState state={this.editorState} />
+                    <ChangeListener
+                        state={this.editorState}
+                        dispatchChange={this.props.dispatchChange}
+                    />
                 </Edtr>
             </div>
         )
     }
 }
 
-export function LogState({ state }) {
+function ChangeListener({ state, dispatchChange }) {
     const store = useContext(EditorContext)
-
-    return (
-        <button
-            onClick={() => {
-                const serialized = serializeDocument(store.state, state.id)
-                // eslint-disable-next-line no-console
-                console.log(serialized)
-            }}>
-            Log State
-        </button>
-    )
+    useEffect(() => {
+        const docValue = serializeDocument(store.state, state.id)
+        dispatchChange(docValue)
+    }, [store.state])
+    return null
 }
 
 export default Editor

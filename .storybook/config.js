@@ -7,6 +7,7 @@ function loadStories() {
     require("./stories/Button.jsx")
     require("./stories/Heading.jsx")
     require("./stories/Text.jsx")
+    require("./stories/Input.jsx")
     require("./stories/Loader.jsx")
 }
 
