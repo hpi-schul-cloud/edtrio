@@ -37,6 +37,14 @@ const SeparatorButton = styled(Button)`
         `}
 `
 
+const StyledImage = styled.img`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 20px;
+`
+
 async function handleClick(dispatch, isFirst, index, lessonId) {
     const tempId = uuid()
     dispatch({
@@ -72,17 +80,7 @@ const Separator = ({ index, isFirst, isLast, lessonId, dispatch, editing }) => {
         isFirst || isLast ? (
             "Neuer Abschnitt"
         ) : (
-            <img
-                src={plusIcon}
-                style={{
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                    height: 20,
-                }}
-                alt=""
-            />
+            <StyledImage src={plusIcon} alt="" />
         )
 
     return (

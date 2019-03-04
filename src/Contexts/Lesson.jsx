@@ -35,7 +35,7 @@ function reducer(state, { type, payload }) {
             }
 
         case "BOOTSTRAP":
-            return {
+            const newState = {
                 ...state,
                 loading: false,
                 error: "",
@@ -47,6 +47,8 @@ function reducer(state, { type, payload }) {
                     }),
                 },
             }
+
+            return newState
 
         case "BOOTSTRAP_FINISH":
             return {
@@ -100,6 +102,7 @@ function reducer(state, { type, payload }) {
                 notes: "",
                 visible: true,
                 docValue: null,
+                changed: new Set(),
             }
             const newSections = []
             if (payload.position === -1) newSections.push(newSection)

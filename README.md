@@ -115,28 +115,28 @@ The api connection is done through REST with a feathers backend. The backend end
 
 ```
 // 1. normal get request
-api.get('/api').then(data => {
+api.get('/editor/lessons/123').then(data => {
     console.log(data)
 })
 
 // 2. post request with body
-api.post('/api/beer/new', { name: 'Augustiner' }).then(data => {
+api.post('/editor/lessons/123', { name: 'Augustiner' }).then(data => {
     console.log(data)
 })
 
 // 3. post request with body with an error
-api.post('/api/beer/new', { name: 'Augustiner' })
+api.post('/editor/sections/456', { name: 'Augustiner' })
     .then(data => {
         console.log(data)
     })
     .catch(err => {
-        console.log(err.description) // display that on the page
+        console.error(err)
     })
 
 // 4. post request with files
-api.post('/api/artwork/new', { name: 'Whatever' }, { artworkPicture: store.artworkPicture })
+api.post('/editor/sections/456', { name: 'Whatever' }, { picture: store.picture })
     .then(data => {
-    // artworkPicture will be sent as FormData
+    // picture will be sent as FormData
         console.log(data)
     }
 )
@@ -158,7 +158,7 @@ Whenever there is an error saving to the backend, the current lesson data will b
 
 ### Editor
 
-The editor used is (edtr-io)[https://github.com/edtr-io/edtr-io]. The API for the editor can be found on their github page.
+The editor used is [edtr-io](https://github.com/edtr-io/edtr-io). The API for the editor can be found on their github page.
 
 #### Plugins
 

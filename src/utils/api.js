@@ -1,29 +1,30 @@
 import axios from "axios"
+import { getCookie } from "~/utils/cookie"
 
 // EXAMPLE:
-// // 1. normal get request
-// api.get('/api').then(data => {
+// 1. normal get request
+// api.get('/editor/lessons/123').then(data => {
 //     console.log(data)
 // })
 
 // // 2. post request with body
-// api.post('/api/beer/new', { name: 'Augustiner' }).then(data => {
+// api.post('/editor/lessons/123', { name: 'Augustiner' }).then(data => {
 //     console.log(data)
 // })
 
 // // 3. post request with body with an error
-// api.post('/api/beer/new', { name: 'Augustiner' })
+// api.post('/editor/sections/456', { name: 'Augustiner' })
 //     .then(data => {
 //         console.log(data)
 //     })
 //     .catch(err => {
-//         console.log(err.description) // display that on the page
+//         console.error(err)
 //     })
 
 // // 4. post request with files
-// api.post('/api/artwork/new', { name: 'Whatever' }, { artworkPicture: store.artworkPicture }).then(
-//     // artworkPicture will be sent as FormData
-//     data => {
+// api.post('/editor/sections/456', { name: 'Whatever' }, { picture: store.picture })
+//     .then(data => {
+//     // picture will be sent as FormData
 //         console.log(data)
 //     }
 // )
@@ -58,13 +59,11 @@ const bodyRequest = (
         } else {
             data = body
         }
-
         axios[type](endpoint, data, {
-            baseURL:
-                process.env.NODE_ENV !== "production" &&
-                "http://localhost:3030", // TODO include test system? staging?
+            baseURL: process.env.BACKEND_URL || "http://localhost:3030", // TODO include test system? staging?
             headers: {
-                Authorization: `Bearer ${localStorage.getItem("identity")}`, // TODO correctly set JWT
+                "Content-Type": "application/json",
+                Authorization: getCookie("jwt"),
             },
             onUploadProgress:
                 uploadProgress && typeof uploadProgress === "function"
@@ -102,9 +101,7 @@ const api = {
             axios
                 .get(endpoint, {
                     headers: {
-                        Authorization: `Bearer ${localStorage.getItem(
-                            "identity",
-                        )}`,
+                        Authorization: getCookie("jwt"),
                     },
                 })
                 .then(result => resolve(result.data))
