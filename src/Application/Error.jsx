@@ -21,7 +21,7 @@ const ErrorWrapper = styled.div`
     background-color: #ffcccc;
     padding: 7px 10px;
     position: fixed;
-    top: 125px;
+    top: 75px;
     left: 50%;
     transform: translateX(-50%);
     animation: ${slideIn} 500ms ease-in-out 1;
@@ -40,7 +40,7 @@ const Error = () => {
     if (!store.error.length) return null
     return (
         <ErrorWrapper onClick={() => dispatch({ type: "ERROR", payload: "" })}>
-            <Flex inline alignCenter>
+            <Flex inline alignCenter noWrap>
                 {store.error}
                 <img
                     src={require("~/assets/remove.svg")}

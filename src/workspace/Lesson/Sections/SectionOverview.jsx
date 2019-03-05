@@ -8,7 +8,7 @@ const Wrapper = styled.div`
     padding: 15px;
     position: fixed;
     left: 0;
-    top: 125px;
+    top: 150px;
     width: 300px;
     max-width: 100vw;
     overflow: hidden;
@@ -17,9 +17,7 @@ const Wrapper = styled.div`
     transition: 250ms all ease-in-out;
     background-color: #fff;
     border-radius: 0 5px 5px 0;
-    @media (max-width: 1500px) {
-        box-shadow: 0 5px 35px -15px rgba(0, 0, 0, 0.8);
-    }
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 `
 
 const SectionTitle = styled(Heading)`

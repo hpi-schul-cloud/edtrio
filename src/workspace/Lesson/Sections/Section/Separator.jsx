@@ -14,11 +14,10 @@ const SeparatorWrapper = styled(Flex)`
 `
 
 const StyledSeparator = styled.div`
-    width: 3px;
+    width: 2px;
     height: 100%;
     border-radius: 1px;
-    background-color: ${props =>
-        props.hide ? "transparent" : "rgb(200, 200, 200)"};
+    background-color: ${props => (props.hide ? "transparent" : "#C2C2C2")};
     position: relative;
 `
 

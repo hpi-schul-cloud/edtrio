@@ -11,10 +11,18 @@ import trashIcon from "~/assets/trash.svg"
 
 import Flex from "~/components/Flex"
 
+import DeleteModal from "./DeleteModal"
+
 const StyledControls = styled(Flex)`
-    width: ${props => (props.hide ? 0 : 50)}px;
+    width: ${props => (props.hide ? 0 : 40)}px;
+    padding: 5px 0;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
     overflow: hidden;
     flex-shrink: 0;
+    align-self: flex-start;
+    border-radius: 5px;
+    background-color: #fff;
+    margin-right: 10px;
 
     transition: 250ms all ease-in-out;
     ${props =>
@@ -33,12 +41,11 @@ const Icon = styled.img`
     cursor: pointer;
     margin: 5px;
     width: 20px;
+
     ${props =>
         !props.visible &&
         css`
-            opacity: 0;
-            pointer-events: none;
-            cursor: inherit;
+            display: none;
         `}
 `
 
@@ -50,6 +57,7 @@ const Controls = ({
     isLast,
     sectionRef,
     visible,
+    sectionTitle,
 }) => {
     function handleOrderChange(down) {
         dispatch({
@@ -61,6 +69,24 @@ const Controls = ({
                 behavior: "smooth",
             })
         }, 25)
+    }
+
+    async function confirmDelete() {
+        dispatch({
+            type: "PREPARE_DELETE_SECTION",
+            payload: sectionId,
+        })
+
+        setTimeout(() => {
+            dispatch({
+                type: "DELETE_SECTION",
+                payload: sectionId,
+            })
+        }, 250)
+
+        await api.delete(`/editor/sections/${sectionId}`, null, null, null, {
+            success: true,
+        })
     }
 
     const isOnly = isLast && index === 0
@@ -91,28 +117,12 @@ const Controls = ({
                 }}
             />
             {!isOnly && (
-                <Icon
-                    src={trashIcon}
-                    visible
-                    onClick={async () => {
-                        dispatch({
-                            type: "PREPARE_DELETE_SECTION",
-                            payload: sectionId,
-                        })
-
-                        setTimeout(() => {
-                            dispatch({
-                                type: "DELETE_SECTION",
-                                payload: sectionId,
-                            })
-                        }, 250)
-
-                        await api.delete(
-                            `/editor/sections/${sectionId}`,
-                            null,
-                            null,
-                            null,
-                            { success: true },
+                <DeleteModal
+                    sectionTitle={sectionTitle}
+                    confirmDelete={confirmDelete}
+                    renderIcon={openModal => {
+                        return (
+                            <Icon src={trashIcon} visible onClick={openModal} />
                         )
                     }}
                 />

@@ -16,7 +16,11 @@ const Sections = ({ sections, editing, showSectionOverview }) => {
                 editing={editing}
                 visible={showSectionOverview}
             />
-            <div style={{ width: "100%" }}>
+            <div
+                style={{
+                    width: "100%",
+                    backgroundColor: "rgb(248, 248, 248)",
+                }}>
                 {sections
                     .filter(section => {
                         if (editing) return true

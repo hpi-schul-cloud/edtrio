@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 
 import { LessonContext } from "~/contexts/Lesson"
 
@@ -9,7 +9,7 @@ import Text from "~/components/Text"
 import Input from "~/components/Input"
 import { Toggle } from "~/components/Button"
 
-import OverviewToggle from "./OverviewToggle"
+import Controls from "./Controls"
 
 const StyledHeader = styled(Container)`
     height: auto;
@@ -24,7 +24,11 @@ const StyledHeader = styled(Container)`
     box-shadow: 0 5px 25px -15px rgba(0, 0, 0, 1);
 
     &:hover .save-status {
-        opacity: 1 !important;
+        ${props =>
+            props.editing &&
+            css`
+                opacity: 1 !important;
+            `}
     }
 
     @media (max-width: 1150px) {
@@ -72,15 +76,18 @@ const Header = () => {
         let timeout
         if (store.saveStatus === "Ungesicherte Änderungen")
             return setShowSaveStatus(true)
-        if (store.saveStatus === "Gespeichert")
+        if (
+            store.saveStatus === "Gespeichert" ||
+            store.saveStatus === "Lokal Gespeichert"
+        )
             timeout = setTimeout(() => setShowSaveStatus(false), 1500)
 
         return () => clearTimeout(timeout)
     }, [store.saveStatus])
 
     return (
-        <StyledHeader>
-            <OverviewToggle />
+        <StyledHeader editing={store.editing}>
+            <Controls />
             <Wrapper noWrap justifyBetween alignCenter>
                 <Flex alignCenter noWrap>
                     <TitleInput

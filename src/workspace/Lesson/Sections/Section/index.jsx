@@ -29,7 +29,9 @@ const Wrapper = styled.div`
     max-width: 850px;
 
     filter: ${props => !props.visible && "blur(2px)"};
-
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    background-color: #fff;
+    border-radius: 5px;
     transition: 250ms margin ease-in-out;
 `
 
@@ -55,6 +57,7 @@ const Section = ({ section, isLast, index }) => {
             )}
             <Flex noWrap alignStretch justifyCenter style={{ width: "100%" }}>
                 <Controls
+                    sectionTitle={section.title}
                     store={store}
                     index={index}
                     dispatch={dispatch}

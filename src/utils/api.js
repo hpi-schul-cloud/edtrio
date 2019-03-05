@@ -37,8 +37,7 @@ const bodyRequest = (
     uploadProgress,
     fakeResponse,
 ) => {
-    // if (fakeResponse && process.env.NODE_ENV !== "production") {
-    if (fakeResponse) {
+    if (fakeResponse && process.env.NODE_ENV !== "production") {
         return new Promise(resolve =>
             setTimeout(() => resolve(fakeResponse), 250),
         )
@@ -64,7 +63,9 @@ const bodyRequest = (
             baseURL: process.env.BACKEND_URL || "http://localhost:3030", // TODO include test system? staging?
             headers: {
                 "Content-Type": "application/json",
-                Authorization: getCookie("jwt"),
+                Authorization:
+                    (getCookie("jwt").startsWith("Bearer ") ? "" : "Bearer ") +
+                    getCookie("jwt"),
             },
             onUploadProgress:
                 uploadProgress && typeof uploadProgress === "function"
@@ -92,8 +93,7 @@ const bodyRequest = (
 
 const api = {
     get: (endpoint, fakeResponse) => {
-        // if (fakeResponse && process.env.NODE_ENV !== "production") {
-        if (fakeResponse) {
+        if (fakeResponse && process.env.NODE_ENV !== "production") {
             return new Promise(resolve =>
                 setTimeout(() => resolve(fakeResponse), 250),
             )
@@ -102,8 +102,12 @@ const api = {
         return new Promise((resolve, reject) => {
             axios
                 .get(endpoint, {
+                    baseURL: process.env.BACKEND_URL || "http://localhost:3030", // TODO include test system? staging?
                     headers: {
-                        Authorization: getCookie("jwt"),
+                        Authorization:
+                            (getCookie("jwt").startsWith("Bearer ")
+                                ? ""
+                                : "Bearer ") + getCookie("jwt"),
                     },
                 })
                 .then(result => resolve(result.data))

@@ -3,6 +3,7 @@ import { withRouter } from "react-router"
 import styled from "styled-components"
 
 import api from "~/utils/api"
+import { setCookie, getCookie } from "~/utils/cookie"
 import { LessonContext } from "~/contexts/Lesson"
 import { useInterval } from "~/utils/hooks"
 import { loadEditorData, saveEditorData } from "~/utils/cache"
@@ -22,10 +23,16 @@ const Wrapper = styled.div`
 
 function useBootstrap(id, dispatch) {
     async function fetchLesson() {
+        // if (process.env.NODE_ENV === "development") {
+        //     const lesson = await api.get("/editor/test")
+        //     id = lesson._id
+        //     setCookie("jwt", lesson.jwt)
+        // }
+
         try {
             const cacheData = loadEditorData(id)
             let lesson
-            if (cacheData.savedToBackend === false) {
+            if (cacheData && cacheData.savedToBackend === false) {
                 lesson = cacheData.lesson
             } else {
                 lesson = await api.get(`/editor/lessons/${id}`, {
