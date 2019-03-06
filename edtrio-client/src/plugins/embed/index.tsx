@@ -166,8 +166,10 @@ class EmbedNode extends React.Component<any, IEmbedNodeState> {
             className={`input ${selected && !url ? "is-focused" : ""}`}
             onPaste={this.handlePasteUrl}
           >
-            {children}
-            {url}
+            <a href={url} target="_blank">
+              {children}
+              {url}
+            </a>
           </p>
 
           <span className="icon is-left">
