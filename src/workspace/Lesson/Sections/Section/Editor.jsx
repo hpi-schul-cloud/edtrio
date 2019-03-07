@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from "react"
 import {
-    createDocument,
     Editor as Edtr,
     EditorContext,
     serializeDocument,
@@ -14,6 +13,7 @@ import { blockquotePlugin } from "@edtr-io/plugin-blockquote"
 import { textPlugin } from "@edtr-io/plugin-text"
 // import nexboardPlugin from "~/plugins/nexboard"
 import etherpadPlugin from "~/plugins/etherpad"
+import { groupPlugin } from "~/plugins/groups/index"
 
 const counterState = StateType.number(0)
 
@@ -45,6 +45,7 @@ const plugins = {
     // highlight: highlightPlugin,
     // spoiler: spoilerPlugin,
     text: textPlugin,
+    group: groupPlugin,
 }
 
 export default class Editor extends React.Component {

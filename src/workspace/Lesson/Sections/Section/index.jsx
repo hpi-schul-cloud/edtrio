@@ -26,7 +26,7 @@ const Wrapper = styled.div`
     padding: 25px;
     flex-shrink: 1;
     flex-grow: 1;
-    max-width: 850px;
+    max-width: 1250px;
 
     filter: ${props => !props.visible && "blur(2px)"};
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);

@@ -1,5 +1,6 @@
 import React, { useEffect, useContext, useState } from "react"
 import styled from "styled-components"
+import { DragDropContext } from "react-beautiful-dnd"
 
 import LessonContext from "~/Contexts/Lesson"
 import UserContext from "~/Contexts/User"
