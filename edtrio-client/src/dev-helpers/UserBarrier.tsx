@@ -335,7 +335,6 @@ export class UserBarrier extends PureComponent<IUserBarrierProps> {
         window.location.protocol +
         "//" +
         window.location.host +
-        "/" +
         window.location.pathname +
         "?skipPrompt=" +
         this.getQueryVariable("skipPrompt") +
