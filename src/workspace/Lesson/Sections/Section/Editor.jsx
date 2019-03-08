@@ -13,7 +13,7 @@ import { blockquotePlugin } from "@edtr-io/plugin-blockquote"
 // import { spoilerPlugin } from "@edtr-io/plugin-spoiler"
 import { textPlugin } from "@edtr-io/plugin-text"
 // import nexboardPlugin from "~/plugins/nexboard"
-// import etherpadPlugin from "~/plugins/etherpad"
+import etherpadPlugin from "~/plugins/etherpad"
 
 const counterState = StateType.number(0)
 
@@ -46,7 +46,7 @@ const plugins = {
     anchor: anchorPlugin,
     counter: counterPlugin,
     blockquote: blockquotePlugin,
-    // etherpad: etherpadPlugin,
+    etherpad: etherpadPlugin,
     // nexboard: nexboardPlugin,
     // highlight: highlightPlugin,
     // spoiler: spoilerPlugin,
@@ -68,7 +68,7 @@ class Editor extends React.Component {
                 <Edtr
                     plugins={plugins}
                     defaultPlugin={
-                        this.props.index === 0 ? "nexboard" : "counter"
+                        this.props.index === 0 ? "etherpad" : "counter"
                     }
                     state={this.editorState}>
                     <ChangeListener
