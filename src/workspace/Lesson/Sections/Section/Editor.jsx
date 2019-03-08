@@ -12,6 +12,8 @@ import { blockquotePlugin } from "@edtr-io/plugin-blockquote"
 // import { highlightPlugin } from "@edtr-io/plugin-highlight"
 // import { spoilerPlugin } from "@edtr-io/plugin-spoiler"
 import { textPlugin } from "@edtr-io/plugin-text"
+// import nexboardPlugin from "~/plugins/nexboard"
+// import etherpadPlugin from "~/plugins/etherpad"
 
 const counterState = StateType.number(0)
 
@@ -44,6 +46,8 @@ const plugins = {
     anchor: anchorPlugin,
     counter: counterPlugin,
     blockquote: blockquotePlugin,
+    // etherpad: etherpadPlugin,
+    // nexboard: nexboardPlugin,
     // highlight: highlightPlugin,
     // spoiler: spoilerPlugin,
     text: textPlugin,
@@ -63,7 +67,9 @@ class Editor extends React.Component {
                 }}>
                 <Edtr
                     plugins={plugins}
-                    defaultPlugin="counter"
+                    defaultPlugin={
+                        this.props.index === 0 ? "nexboard" : "counter"
+                    }
                     state={this.editorState}>
                     <ChangeListener
                         state={this.editorState}
@@ -78,8 +84,9 @@ class Editor extends React.Component {
 function ChangeListener({ state, dispatchChange }) {
     const store = useContext(EditorContext)
     useEffect(() => {
-        const docValue = serializeDocument(store.state, state.id)
-        dispatchChange(docValue)
+        dispatchChange(function() {
+            return serializeDocument(store.state, state.id)
+        })
     }, [store.state])
     return null
 }

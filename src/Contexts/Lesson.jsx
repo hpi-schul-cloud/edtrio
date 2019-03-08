@@ -10,7 +10,6 @@ export const initialState = {
     showSectionOverview: false,
     showNotes: false,
 }
-
 function reducer(state, { type, payload }) {
     switch (type) {
         case "SET_EDITING":
@@ -212,7 +211,10 @@ function reducer(state, { type, payload }) {
                     sections: state.lesson.sections.map(section => {
                         if (section.id !== payload.sectionId) return section
                         section.changed.add("docValue")
-                        return { ...section, docValue: payload.docValue }
+                        return {
+                            ...section,
+                            collectDocValue: payload.collectDocValue,
+                        }
                     }),
                 },
             }

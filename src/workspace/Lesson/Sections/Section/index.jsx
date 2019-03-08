@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react"
+import React, { useContext, useRef, useEffect } from "react"
 import styled, { css } from "styled-components"
 
 import { LessonContext } from "~/contexts/Lesson"
@@ -87,12 +87,13 @@ const Section = ({ section, isLast, index }) => {
                     />
                     <Editor
                         docValue={section.docValue}
-                        dispatchChange={docValue => {
+                        index={index}
+                        dispatchChange={collectDocValue => {
                             dispatch({
                                 type: "SECTION_DOCVALUE_CHANGE",
                                 payload: {
                                     sectionId: section.id,
-                                    docValue,
+                                    collectDocValue,
                                 },
                             })
                         }}

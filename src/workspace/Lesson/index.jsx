@@ -127,7 +127,17 @@ async function saveLesson(store, dispatch, override) {
 
         const sectionChanges = {}
         section.changed.forEach(key => {
-            sectionChanges[key] = section[key]
+            if (key === "docValue") {
+                const updatedDocValue = section.collectDocValue()
+                if (
+                    JSON.stringify(section[key]) !==
+                    JSON.stringify(updatedDocValue)
+                ) {
+                    sectionChanges[key] = updatedDocValue
+                }
+            } else {
+                sectionChanges[key] = section[key]
+            }
         })
 
         savePromises.push(
@@ -150,8 +160,23 @@ async function saveLesson(store, dispatch, override) {
     })
 
     const results = await Promise.all(savePromises)
-    const cacheData = { savedToBackend: true, lesson: store.lesson }
-    if (results.includes("error")) cacheData.savedToBackend = false
+    const cacheData = {
+        savedToBackend: true,
+        lesson: {
+            ...store.lesson,
+            sections: store.lesson.sections.map(section => ({
+                ...section,
+                docValue:
+                    typeof section.collectDocValue === "function"
+                        ? section.collectDocValue()
+                        : section.docValue,
+            })),
+        },
+    }
+    if (results.includes("error")) {
+        cacheData.savedToBackend = false
+    }
+    cacheData.savedToBackend = false // REMOVE
 
     saveEditorData(cacheData, store.lesson.id)
 
