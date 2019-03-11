@@ -123,8 +123,8 @@ export class MultipleChoiceNode extends PureComponent<
             <StyledFontAwesomeIcon icon={faInfo} size="sm" />
             <StyledInfoBannerText>
               <StyledInfoBannerHeading>Multiple Choice</StyledInfoBannerHeading>
-              Bitte markiere die richtigen Antworten durch eine Auswahl. <br />
-              Dies wird für die automatische Auswertung benötigt.
+              LEHRER-MODUS: Bitte markiere die richtigen Antworten durch eine Auswahl. <br />
+              Dies wird für die automatische Auswertung der Schüler/innen benötigt.
             </StyledInfoBannerText>
           </StyledInfoBanner>
         )}
