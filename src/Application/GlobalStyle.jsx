@@ -11,6 +11,7 @@ const GS = createGlobalStyle`
 		font-family: 'PT Sans', sans-serif;
 		font-size: 20px;
 		overflow-x: hidden;
+		background-color: #F8F8F8;
 	}
 `
 

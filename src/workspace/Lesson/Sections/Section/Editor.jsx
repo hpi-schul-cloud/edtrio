@@ -25,12 +25,6 @@ const counterPlugin = {
                 {state.value}
                 <button
                     onClick={() => {
-                        state.set(value => value - 1)
-                    }}>
-                    -
-                </button>
-                <button
-                    onClick={() => {
                         state.set(value => value + 1)
                     }}>
                     +
@@ -50,16 +44,18 @@ const plugins = {
     // nexboard: nexboardPlugin,
     // highlight: highlightPlugin,
     // spoiler: spoilerPlugin,
-    text: textPlugin,
+    // text: textPlugin,
 }
 
-class Editor extends React.Component {
+export default class Editor extends React.Component {
     constructor(props) {
         super(props)
-        this.editorState = createDocument(props.docValue || {})
+        this.docValue = this.props.docValue || {}
     }
 
     render() {
+        const { docValue, index, dispatchChange } = this.props
+
         return (
             <div
                 style={{
@@ -67,28 +63,21 @@ class Editor extends React.Component {
                 }}>
                 <Edtr
                     plugins={plugins}
-                    defaultPlugin={
-                        this.props.index === 0 ? "etherpad" : "counter"
-                    }
-                    state={this.editorState}>
-                    <ChangeListener
-                        state={this.editorState}
-                        dispatchChange={this.props.dispatchChange}
-                    />
+                    defaultPlugin={"counter"}
+                    initialState={this.docValue}>
+                    <ChangeListener dispatchChange={dispatchChange} />
                 </Edtr>
             </div>
         )
     }
 }
 
-function ChangeListener({ state, dispatchChange }) {
+function ChangeListener({ dispatchChange }) {
     const store = useContext(EditorContext)
     useEffect(() => {
         dispatchChange(function() {
-            return serializeDocument(store.state, state.id)
+            return serializeDocument(store.state)
         })
     }, [store.state])
     return null
 }
-
-export default Editor

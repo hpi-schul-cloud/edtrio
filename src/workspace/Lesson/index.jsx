@@ -75,7 +75,9 @@ function useBootstrap(id, dispatch) {
         } catch (err) {
             dispatch({ type: "ERROR" })
         }
-        dispatch({ type: "BOOTSTRAP_FINISH" })
+        requestAnimationFrame(() => {
+            dispatch({ type: "BOOTSTRAP_FINISH" })
+        })
     }
 
     useEffect(() => {
@@ -191,7 +193,6 @@ async function saveLesson(store, dispatch, override) {
 function useChangeListener(store, dispatch) {
     useEffect(() => {
         if (!store.bootstrapFinished) return
-
         dispatch({ type: "SAVE_STATUS", payload: "Ungesicherte Änderungen" })
     }, [store.lesson])
 }

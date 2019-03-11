@@ -53,7 +53,7 @@ function reducer(state, { type, payload }) {
             return {
                 ...state,
                 bootstrapFinished: true,
-                saveStatus: "Gespeichert",
+                saveStatus: "",
             }
 
         case "SAVE_STATUS":
