@@ -13,7 +13,10 @@ import { blockquotePlugin } from "@edtr-io/plugin-blockquote"
 import { textPlugin } from "@edtr-io/plugin-text"
 // import nexboardPlugin from "~/plugins/nexboard"
 import etherpadPlugin from "~/plugins/etherpad"
-import { groupPlugin } from "~/plugins/groups/index"
+import {
+    groupPlugin,
+    advancedGroupPlugin,
+} from "~/plugins/groups/index"
 
 const counterState = StateType.number(0)
 
@@ -46,6 +49,7 @@ const plugins = {
     // spoiler: spoilerPlugin,
     text: textPlugin,
     group: groupPlugin,
+    advancedGroup: advancedGroupPlugin,
 }
 
 export default class Editor extends React.Component {
@@ -62,7 +66,7 @@ export default class Editor extends React.Component {
                 }}>
                 <Edtr
                     plugins={plugins}
-                    defaultPlugin={this.props.index === 0 ? "etherpad" : "text"}
+                    defaultPlugin={ this.props.index === 0 ? "group" : "advancedGroup"}
                     editable={this.props.editing}
                     initialState={this.docValue}>
                     <ChangeListener

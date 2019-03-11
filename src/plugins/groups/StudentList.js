@@ -32,18 +32,24 @@ const StyledTitle = styled.h4`
 `
 
 export function StudentList(props) {
+    const {
+        studentList,
+        className,
+        droppableId,
+        moveStudentsToRandomGroups,
+    } = props
     return (
         <StyledRoot>
             <StyledTitle>Nicht zugeordnete Schüler:</StyledTitle>
-            <Droppable droppableId={props.droppableId} direction="vertical">
+            <Droppable droppableId={droppableId} direction="vertical">
                 {(provided, snapshot) => {
                     return (
                         <StyledUnassignedStudentList
                             ref={provided.innerRef}
                             {...provided.droppableProps}
                             isDraggingOver={snapshot.isDraggingOver}
-                            className={props.className}>
-                            {props.studentList.map((studentName, index) => (
+                            className={className}>
+                            {studentList.map((studentName, index) => (
                                 <Draggable
                                     key={studentName}
                                     draggableId={studentName}
@@ -63,8 +69,8 @@ export function StudentList(props) {
                     )
                 }}
             </Droppable>
-            {props.studentList.length > 0 && (
-                <Button onClick={props.moveStudentsToRandomGroups}>
+            {studentList.length > 0 && (
+                <Button onClick={moveStudentsToRandomGroups}>
                     {"<-"} zufällig zuordnen
                 </Button>
             )}

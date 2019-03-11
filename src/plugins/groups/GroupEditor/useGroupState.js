@@ -1,25 +1,18 @@
 import { useState } from "react"
 
-import { move, reorder } from "../helpers"
-
-// TODO: Evaluate: are these needed?
-function onBeforeDragStart() {
-    /*...*/
-}
-
-function onDragStart() {
-    /*...*/
-}
-function onDragUpdate() {
-    /*...*/
-}
+import { move, reorder } from "./helpers"
 
 // TODO: rewrite this to make it a lot easier...
-// also use workingPackages.groups instead of only groups now
 
-export function useGroupState(studentList) {
-    const [workingPackages, setWorkingPackages] = useState([])
+export function useGroupState(studentList, editorStateValue, state) {
+    const startValue = Array.isArray(editorStateValue) ? editorStateValue : []
+    const [workingPackages, setWorkingPackages] = useState(startValue)
     const [unassignedStudents, setUnassignedStudents] = useState(studentList)
+
+    function updateWorkingPackages(newWorkingPackages) {
+        editorStateValue = newWorkingPackages
+        setWorkingPackages(newWorkingPackages)
+    }
 
     function findGroupWithDroppableId(droppableId) {
         // This is extremely ugly, but I don't have that much time...
@@ -56,8 +49,9 @@ export function useGroupState(studentList) {
         } = findGroupWithDroppableId(droppableId)
 
         const newGroup = reorder(
-            workingPackages[affectedWorkingPackageIndex][affectedGroupIndex]
-                .students,
+            workingPackages[affectedWorkingPackageIndex].groups[
+                affectedGroupIndex
+            ].students,
             sourceIndex,
             destinationIndex,
         )
@@ -68,12 +62,11 @@ export function useGroupState(studentList) {
         newGroups[affectedGroupIndex] = newGroup
         newWorkingPackages[affectedWorkingPackageIndex].groups = newGroups
 
-        setWorkingPackages(newWorkingPackages)
+        updateWorkingPackages(newWorkingPackages)
     }
 
     function onDragEnd(result, state) {
         const { source, destination } = result
-        const groups = workingPackages[0].groups
 
         // dropped outside the list
         if (!destination) {
@@ -94,25 +87,41 @@ export function useGroupState(studentList) {
             // moved to another list
         } else {
             // determine source list array
+            let sourceGroupIndex,
+                sourceWorkingPackageIndex,
+                destinationGroupIndex,
+                destinationWorkingPackageIndex
             let sourceList
 
             if (source.droppableId === "unassignedStudents") {
                 sourceList = unassignedStudents
             } else {
-                const affectedGroup = groups.find(
-                    group => group.droppableId === source.droppableId,
-                )
-                sourceList = affectedGroup.students
+                const {
+                    affectedGroupIndex,
+                    affectedWorkingPackageIndex,
+                } = findGroupWithDroppableId(source.droppableId)
+                sourceGroupIndex = affectedGroupIndex
+                sourceWorkingPackageIndex = affectedWorkingPackageIndex
+                sourceList =
+                    workingPackages[affectedWorkingPackageIndex].groups[
+                        affectedGroupIndex
+                    ].students
             }
             // determine destination list array
             let destinationList
             if (destination.droppableId === "unassignedStudents") {
                 destinationList = unassignedStudents
             } else {
-                const affectedGroup = groups.find(
-                    group => group.droppableId === destination.droppableId,
-                )
-                destinationList = affectedGroup.students
+                const {
+                    affectedGroupIndex,
+                    affectedWorkingPackageIndex,
+                } = findGroupWithDroppableId(destination.droppableId)
+                destinationGroupIndex = affectedGroupIndex
+                destinationWorkingPackageIndex = affectedWorkingPackageIndex
+                destinationList =
+                    workingPackages[affectedWorkingPackageIndex].groups[
+                        affectedGroupIndex
+                    ].students
             }
 
             // move the student around
@@ -131,31 +140,20 @@ export function useGroupState(studentList) {
                 setUnassignedStudents(result.unassignedStudents)
             }
             // update groups for source and destination, if necesssary
-            let newGroups = Array.from(groups)
+            const newWorkingPackages = Array.from(workingPackages)
 
-            if (source.droppableId !== "unassignedStudents") {
-                const affectedGroup = groups.find(
-                    group => group.droppableId === source.droppableId,
-                )
-                newGroups = newGroups.map(group => {
-                    const newGroup = group
-                    if (group.droppableId === affectedGroup.droppableId)
-                        newGroup.students = result[affectedGroup.droppableId]
-                    return newGroup
-                })
+            if (sourceWorkingPackageIndex !== undefined) {
+                newWorkingPackages[sourceWorkingPackageIndex].groups[
+                    sourceGroupIndex
+                ].students = result[source.droppableId]
             }
-            if (destination.droppableId !== "unassignedStudents") {
-                const affectedGroup = groups.find(
-                    group => group.droppableId === destination.droppableId,
-                )
-                newGroups = newGroups.map(group => {
-                    const newGroup = group
-                    if (group.droppableId === affectedGroup.droppableId)
-                        newGroup.students = result[affectedGroup.droppableId]
-                    return newGroup
-                })
+            if (destinationWorkingPackageIndex !== undefined) {
+                newWorkingPackages[destinationWorkingPackageIndex].groups[
+                    destinationGroupIndex
+                ].students = result[destination.droppableId]
             }
-            setGroups(newGroups)
+
+            updateWorkingPackages(newWorkingPackages)
         }
     }
 
@@ -164,10 +162,10 @@ export function useGroupState(studentList) {
         newWorkingPackages[workingPackageIndex].groups.push({
             students: [],
             name: groupName,
-            droppableId: groupName,
+            droppableId: `${workingPackageIndex} - ${groupName}`,
             workspace: groupName + "'s Sample group workspace",
         })
-        setWorkingPackages(newWorkingPackages)
+        updateWorkingPackages(newWorkingPackages)
     }
 
     function addWorkingPackage(title) {
@@ -177,19 +175,47 @@ export function useGroupState(studentList) {
             title,
             content: title + "'s Sample group workspace",
         })
-        setWorkingPackages(newWorkingPackages)
+        updateWorkingPackages(newWorkingPackages)
+        state.value.workingPackages.insert(state.value.workingPackages.length, {
+            plugin: "counter",
+        })
     }
 
     function moveStudentsToRandomGroups() {
-        let newGroups = Array.from(groups)
-        let counter = 0
+        let newWorkingPackages = Array.from(workingPackages)
+        // determine groups number
+        const reducer = (accumulator, currentValue) =>
+            accumulator + currentValue.groups.length
+        const numberOfGroups = newWorkingPackages.reduce(reducer, 0)
         unassignedStudents.forEach((student, id) => {
-            newGroups[counter].students.push(student)
-            counter++
-            if (counter >= groups.length) counter = 0
+            const newGroupNumber = Math.floor(Math.random() * numberOfGroups)
+            let counter = 0
+            newWorkingPackages.forEach(workingPackage => {
+                workingPackage.groups.forEach(group => {
+                    if (counter === newGroupNumber) {
+                        group.students.push(student)
+                    }
+                    counter++
+                })
+            })
         })
-        setGroups(newGroups)
+        updateWorkingPackages(newWorkingPackages)
         setUnassignedStudents([])
+    }
+
+    function removeStudentsFromAllGroups() {
+        let newUnassignedStudents = Array.from(unassignedStudents)
+        let newWorkingPackages = Array.from(workingPackages)
+        newWorkingPackages.forEach(workingPackage => {
+            workingPackage.groups.forEach(group => {
+                newUnassignedStudents = newUnassignedStudents.concat(
+                    group.students,
+                )
+                group.students = []
+            })
+        })
+        setUnassignedStudents(newUnassignedStudents)
+        updateWorkingPackages(newWorkingPackages)
     }
     return [
         workingPackages,
@@ -198,5 +224,7 @@ export function useGroupState(studentList) {
         addGroup,
         addWorkingPackage,
         moveStudentsToRandomGroups,
+        removeStudentsFromAllGroups,
+        updateWorkingPackages,
     ]
 }
