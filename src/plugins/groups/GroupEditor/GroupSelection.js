@@ -22,7 +22,16 @@ const StyledRoot = styled.div`
     border: 1px solid black;
 `
 
-const StyledGroups = styled.div``
+const StyledGroups = styled.div`
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+`
+
+const StyledGroup = styled(Group)`
+    flex: 1;
+    flex-grow: 0;
+`
 
 export function GroupSelection(props) {
     const {
@@ -45,7 +54,7 @@ export function GroupSelection(props) {
                             <StyledGroups>
                                 {workingPackage.groups.map((group, index) => {
                                     return (
-                                        <Group
+                                        <StyledGroup
                                             key={`group-droppable-${index}`}
                                             studentList={group.students}
                                             droppableId={group.droppableId}

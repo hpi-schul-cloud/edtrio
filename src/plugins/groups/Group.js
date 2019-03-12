@@ -36,13 +36,15 @@ export function Group(props) {
         studentList,
         droppableId,
         editable,
+        className,
+        direction = "vertical",
     } = props
     return (
-        <StyledRoot>
+        <StyledRoot className={className}>
             Gruppe <Input onChange={input => console.log(input)} value={name} />{" "}
             ({studentList.length})
             {teacherAssignsStudents && (
-                <Droppable droppableId={droppableId} direction="horizontal">
+                <Droppable droppableId={droppableId} direction={direction}>
                     {(provided, snapshot) => {
                         return (
                             <StyledGroupedStudentList

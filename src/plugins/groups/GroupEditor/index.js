@@ -3,7 +3,6 @@ import styled from "styled-components"
 import { DragDropContext } from "react-beautiful-dnd"
 import uuid from "uuid/v4"
 
-
 import {
     saveWorkingPackages,
     loadWorkingPackages,
@@ -55,22 +54,21 @@ export function GroupEditor(props) {
         state,
     )
     // Save the group to localStorage
-    let groupId = state.groupId();
+    let groupId = state.groupId()
     if (!groupId) {
         groupId = uuid()
-        state.groupId.set(groupId) 
+        state.groupId.set(groupId)
     }
     useEffect(() => {
-            const timeout= setTimeout(() => {
-                console.log("saved")
-                saveWorkingPackages(
-                groupId,
-                workingPackages,
-            )}, 3000)
-        return () => {clearTimeout(timeout)}
+        const timeout = setTimeout(() => {
+            console.log("saved")
+            saveWorkingPackages(groupId, workingPackages)
+        }, 3000)
+        return () => {
+            clearTimeout(timeout)
+        }
     })
-    
-    
+
     const [teacherAssignsStudents, setTeacherAssignsStudents] = useState(true)
     return (
         <StyledRoot>

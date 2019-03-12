@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 
-import { move, reorder } from "./helpers"
+import { move, reorder, shuffle } from "./helpers"
 
 // TODO: rewrite this to make it a lot easier...
 
@@ -57,7 +57,7 @@ export function useGroupState(studentList, editorStateValue, state) {
             affectedWorkingPackageIndex,
         } = findGroupWithDroppableId(droppableId)
 
-        const newGroup = reorder(
+        const newGroupStudents = reorder(
             workingPackages[affectedWorkingPackageIndex].groups[
                 affectedGroupIndex
             ].students,
@@ -68,7 +68,7 @@ export function useGroupState(studentList, editorStateValue, state) {
         const newGroups = Array.from(
             workingPackages[affectedWorkingPackageIndex].groups,
         )
-        newGroups[affectedGroupIndex] = newGroup
+        newGroups[affectedGroupIndex].students = newGroupStudents
         newWorkingPackages[affectedWorkingPackageIndex].groups = newGroups
 
         updateWorkingPackages(newWorkingPackages)
@@ -172,7 +172,6 @@ export function useGroupState(studentList, editorStateValue, state) {
             students: [],
             name: groupName,
             droppableId: `${workingPackageIndex} - ${groupName}`,
-            workspace: groupName + "'s Sample group workspace",
         })
         updateWorkingPackages(newWorkingPackages)
     }
@@ -182,7 +181,6 @@ export function useGroupState(studentList, editorStateValue, state) {
         newWorkingPackages.push({
             groups: [],
             title,
-            content: title + "'s Sample group workspace",
         })
         updateWorkingPackages(newWorkingPackages)
         state.workingPackages.insert(state.workingPackages.items.length, {
@@ -212,6 +210,37 @@ export function useGroupState(studentList, editorStateValue, state) {
         setUnassignedStudents([])
     }
 
+    function createAndFillGroups(numberOfGroups) {
+        let students = [...unassignedStudents]
+        if (workingPackages[0])
+            workingPackages[0].groups.forEach(group => {
+                students = [...students, ...group.students]
+            })
+        const newWorkingPackages = []
+        newWorkingPackages.push({
+            groups: [],
+            title: "Working Package",
+        })
+        // create groups
+        for (let i = 1; i <= numberOfGroups; i++) {
+            newWorkingPackages[0].groups.push({
+                students: [],
+                name: `Gruppe ${i}`,
+                droppableId: `group ${i}`,
+            })
+        }
+        // fill groups
+        const newUnassignedStudents = shuffle(students)
+        newUnassignedStudents.forEach((student, index) => {
+            newWorkingPackages[0].groups[index % numberOfGroups].students.push(
+                student,
+            )
+        })
+
+        updateWorkingPackages(newWorkingPackages)
+        setUnassignedStudents([])
+    }
+
     function removeStudentsFromAllGroups() {
         let newUnassignedStudents = Array.from(unassignedStudents)
         let newWorkingPackages = Array.from(workingPackages)
@@ -235,5 +264,6 @@ export function useGroupState(studentList, editorStateValue, state) {
         moveStudentsToRandomGroups,
         removeStudentsFromAllGroups,
         updateWorkingPackages,
+        createAndFillGroups,
     ]
 }

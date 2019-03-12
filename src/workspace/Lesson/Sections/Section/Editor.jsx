@@ -16,6 +16,7 @@ import etherpadPlugin from "~/plugins/etherpad"
 import {
     groupPlugin,
     advancedGroupPlugin,
+    quickGroupPlugin,
 } from "~/plugins/groups/index"
 
 const counterState = StateType.number(0)
@@ -50,6 +51,7 @@ const plugins = {
     text: textPlugin,
     group: groupPlugin,
     advancedGroup: advancedGroupPlugin,
+    quickGroup: quickGroupPlugin,
 }
 
 export default class Editor extends React.Component {
@@ -66,7 +68,13 @@ export default class Editor extends React.Component {
                 }}>
                 <Edtr
                     plugins={plugins}
-                    defaultPlugin={ this.props.index === 0 ? "group" : "advancedGroup"}
+                    defaultPlugin={
+                        this.props.index === 0
+                            ? "quickGroup"
+                            : this.props.index === 1
+                            ? "group"
+                            : "advancedGroup"
+                    }
                     editable={this.props.editing}
                     initialState={this.docValue}>
                     <ChangeListener

@@ -32,6 +32,15 @@
         "react-hooks/exhaustive-deps": 0,
         "no-console": 1,
         "react/prop-types": 0,
-        "no-case-declarations": 0
+        "no-case-declarations": 0,
+        "standard/computed-property-even-spacing": 1
+    },
+    "settings": {
+        "react": {
+            "createClass": "createReactClass",
+
+            "pragma": "React",
+            "version": "detect"
+        }
     }
 }
