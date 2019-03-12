@@ -34,10 +34,9 @@ export function WorkingPackages(props) {
                     </GroupTab>
                 ))}
             </TabTitles>
-            {state.value.workingPackages.items.map((item, index) => {
-                console.log(item)
+            {state.workingPackages.items.map((item, index) => {
                 return index === tabSelected ? (
-                    <div key={index}>Arbeitspaket {item.render()}</div>
+                    <div key={index}>{item.render()}</div>
                 ) : null
             })}
         </StyledWorkingPackages>

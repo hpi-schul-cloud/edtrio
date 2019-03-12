@@ -24,11 +24,3 @@ export const move = (
 
     return result
 }
-
-export function loadWorkingPackages() {
-    return JSON.parse(localStorage.getItem("workingPackages")) || []
-}
-
-export function saveWorkingPackages(workingPackages) {
-    localStorage.setItem("workingPackages", JSON.stringify(workingPackages))
-}

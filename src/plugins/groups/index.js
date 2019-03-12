@@ -5,8 +5,8 @@ import { GroupEditor } from "./GroupEditor/index"
 import { AdvancedGroupEditor } from "./AdvancedGroupEditor/index"
 
 const groupState = StateType.object({
-    studentIds: StateType.string("ids"),
     workingPackages: StateType.list(StateType.child({ plugin: "counter" }), 0),
+    groupId: StateType.string()
 })
 
 export const groupPlugin = {

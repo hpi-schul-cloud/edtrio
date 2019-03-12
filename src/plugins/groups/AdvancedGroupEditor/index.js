@@ -28,7 +28,6 @@ export function AdvancedGroupEditor(props) {
     const { editable, state } = props
     const [workingPackagesSet, setWorkingPackagesSet] = useState({})
     const [chosenWorkingPackages, setChosenWorkingPackages] = useState(null)
-    console.log(workingPackagesSet)
     return (
         <StyledRoot>
             <StyledHeader>Erweiterte Gruppenarbeit</StyledHeader>
@@ -40,35 +39,40 @@ export function AdvancedGroupEditor(props) {
                     Lade vorige Gruppen
                 </Button>
             </StyledPreferences>
-            {Object.entries(workingPackagesSet).map(
-                ([key, workingPackages], index) => {
-                    return (
-                        <div key={index}>
-                            {key}
-                            {workingPackages.map((workingPackage, index) => {
-                                return (
-                                    <div key={index}>
-                                        {workingPackage.title}
-                                    </div>
-                                )
-                            })}
-                            <Button
-                                onClick={() =>
-                                    setChosenWorkingPackages(workingPackages)
-                                }>
-                                Dieses Set wählen
-                            </Button>
-                        </div>
-                    )
-                },
-            )}
-            {chosenWorkingPackages && (
+            {chosenWorkingPackages ? (
                 <div>
                     <GroupEditor
                         {...props}
                         startWorkingPackage={chosenWorkingPackages}
                     />
                 </div>
+            ) : (
+                Object.entries(workingPackagesSet).map(
+                    ([key, workingPackages], index) => {
+                        return (
+                            <div key={index}>
+                                {key}
+                                {workingPackages.map(
+                                    (workingPackage, index) => {
+                                        return (
+                                            <div key={index}>
+                                                {workingPackage.title}
+                                            </div>
+                                        )
+                                    },
+                                )}
+                                <Button
+                                    onClick={() =>
+                                        setChosenWorkingPackages(
+                                            workingPackages,
+                                        )
+                                    }>
+                                    Dieses Set wählen
+                                </Button>
+                            </div>
+                        )
+                    },
+                )
             )}
         </StyledRoot>
     )

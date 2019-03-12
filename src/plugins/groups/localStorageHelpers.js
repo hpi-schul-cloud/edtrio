@@ -10,3 +10,7 @@ export function saveWorkingPackages(key, workingPackages) {
     items[key] = workingPackages
     localStorage.setItem("workingPackages", JSON.stringify(items))
 }
+
+export function clearWorkingPackages() {
+    localStorage.remove("workingPackages")
+}

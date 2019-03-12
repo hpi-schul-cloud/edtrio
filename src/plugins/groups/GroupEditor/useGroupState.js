@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 import { move, reorder } from "./helpers"
 
@@ -6,6 +6,7 @@ import { move, reorder } from "./helpers"
 
 export function useGroupState(studentList, editorStateValue, state) {
     const startValue = Array.isArray(editorStateValue) ? editorStateValue : []
+
     const [workingPackages, setWorkingPackages] = useState(startValue)
     const [unassignedStudents, setUnassignedStudents] = useState(studentList)
 
@@ -13,6 +14,14 @@ export function useGroupState(studentList, editorStateValue, state) {
         editorStateValue = newWorkingPackages
         setWorkingPackages(newWorkingPackages)
     }
+
+    useEffect(() => {
+        startValue.forEach(() => {
+            state.workingPackages.insert(state.workingPackages.items.length, {
+                plugin: "counter",
+            })
+        })
+    }, [startValue])
 
     function findGroupWithDroppableId(droppableId) {
         // This is extremely ugly, but I don't have that much time...
@@ -176,7 +185,7 @@ export function useGroupState(studentList, editorStateValue, state) {
             content: title + "'s Sample group workspace",
         })
         updateWorkingPackages(newWorkingPackages)
-        state.value.workingPackages.insert(state.value.workingPackages.length, {
+        state.workingPackages.insert(state.workingPackages.items.length, {
             plugin: "counter",
         })
     }

@@ -1,6 +1,8 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 import { DragDropContext } from "react-beautiful-dnd"
+import uuid from "uuid/v4"
+
 
 import {
     saveWorkingPackages,
@@ -52,7 +54,23 @@ export function GroupEditor(props) {
         startWorkingPackage ? startWorkingPackage : state.workingPackages,
         state,
     )
-
+    // Save the group to localStorage
+    let groupId = state.groupId();
+    if (!groupId) {
+        groupId = uuid()
+        state.groupId.set(groupId) 
+    }
+    useEffect(() => {
+            const timeout= setTimeout(() => {
+                console.log("saved")
+                saveWorkingPackages(
+                groupId,
+                workingPackages,
+            )}, 3000)
+        return () => {clearTimeout(timeout)}
+    })
+    
+    
     const [teacherAssignsStudents, setTeacherAssignsStudents] = useState(true)
     return (
         <StyledRoot>
@@ -63,16 +81,6 @@ export function GroupEditor(props) {
                         updateWorkingPackages(loadWorkingPackages()["set 1"])
                     }>
                     Lade vorige Gruppen
-                </Button>
-                <Button
-                    onClick={() => {
-                        const d = new Date()
-                        saveWorkingPackages(
-                            `${d.getHours()}:${d.getMinutes()}`,
-                            workingPackages,
-                        )
-                    }}>
-                    Speichere Gruppe
                 </Button>
                 <Toggle
                     caption="Schüler wählen Gruppen selbst"
