@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react"
 import styled, { css } from "styled-components"
 import Heading from "~/components/Heading"
 
-import { LessonContext } from "~/contexts/Lesson"
+import { LessonContext } from "~/Contexts/Lesson"
 
 const Wrapper = styled.div`
     padding: 15px;

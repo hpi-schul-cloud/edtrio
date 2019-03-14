@@ -3,7 +3,7 @@ import styled from "styled-components"
 
 import arrowLeft from "~/assets/arrow-left.svg"
 
-import { LessonContext } from "~/contexts/Lesson"
+import { LessonContext } from "~/Contexts/Lesson"
 
 import Heading from "~/components/Heading"
 import Flex from "~/components/Flex"

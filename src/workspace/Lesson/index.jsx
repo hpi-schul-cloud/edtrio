@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState } from "react"
 import styled from "styled-components"
 
-import { LessonContext } from "~/contexts/Lesson"
+import { LessonContext } from "~/Contexts/Lesson"
 import { useInterval } from "~/utils/hooks"
 
 import Container from "~/components/Container"

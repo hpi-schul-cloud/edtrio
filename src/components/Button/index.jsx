@@ -1,7 +1,7 @@
 import React, { useContext } from "react"
 import styled from "styled-components"
 
-import { ThemeContext, theme as defaultTheme } from "~/contexts/Theme"
+import { ThemeContext, theme as defaultTheme } from "~/Contexts/Theme"
 
 export { default as Toggle } from "./Toggle"
 

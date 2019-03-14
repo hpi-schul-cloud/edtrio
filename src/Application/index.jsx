@@ -4,7 +4,7 @@ import { BrowserRouter } from "react-router-dom"
 import Workspace from "~/workspace"
 import GlobalStyle from "./GlobalStyle"
 import config from "~/config"
-import Contexts from "~/contexts"
+import Contexts from "~/Contexts"
 import Error from "./Error"
 
 const Application = () => {

@@ -1,7 +1,7 @@
 import React, { useContext } from "react"
 import styled, { css } from "styled-components"
 
-import { ThemeContext, theme as defaultTheme } from "~/contexts/Theme"
+import { ThemeContext, theme as defaultTheme } from "~/Contexts/Theme"
 
 const baseStyle = css`
     margin-top: 0;
