@@ -36,26 +36,24 @@ const counterPlugin = {
 }
 
 const plugins = {
-    rows: rowsPlugin,
-    anchor: anchorPlugin,
+    // rows: rowsPlugin,
+    // anchor: anchorPlugin,
     counter: counterPlugin,
-    blockquote: blockquotePlugin,
+    // blockquote: blockquotePlugin,
     etherpad: etherpadPlugin,
     // nexboard: nexboardPlugin,
     // highlight: highlightPlugin,
     // spoiler: spoilerPlugin,
-    // text: textPlugin,
+    text: textPlugin,
 }
 
 export default class Editor extends React.Component {
     constructor(props) {
         super(props)
-        this.docValue = this.props.docValue || {}
+        this.docValue = this.props.docValue || { plugin: "text" }
     }
 
     render() {
-        const { docValue, index, dispatchChange } = this.props
-
         return (
             <div
                 style={{
@@ -63,9 +61,11 @@ export default class Editor extends React.Component {
                 }}>
                 <Edtr
                     plugins={plugins}
-                    defaultPlugin={"counter"}
+                    defaultPlugin={this.props.index === 0 ? "etherpad" : "text"}
                     initialState={this.docValue}>
-                    <ChangeListener dispatchChange={dispatchChange} />
+                    <ChangeListener
+                        dispatchChange={this.props.dispatchChange}
+                    />
                 </Edtr>
             </div>
         )

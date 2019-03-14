@@ -15,13 +15,20 @@ const StyledHeader = styled(Container)`
     height: auto;
     position: fixed;
     top: 0;
-    left: 0;
-    width: 100%;
+    width: calc(100vw - 239px);
+    left: 239px;
     background-color: #fff;
     z-index: 100;
     padding-top: 5px !important;
     padding-bottom: 5px !important;
     box-shadow: 0 5px 25px -15px rgba(0, 0, 0, 1);
+
+    ${props =>
+        props.isFullScreen &&
+        css`
+            width: 100vw;
+            left: 0;
+        `}
 
     &:hover .save-status {
         ${props =>
@@ -69,9 +76,10 @@ const TitleInput = styled(Input)`
     }
 `
 
-const Header = () => {
+const Header = ({ isFullScreen }) => {
     const { store, dispatch } = useContext(LessonContext)
     const [showSaveStatus, setShowSaveStatus] = useState(false)
+
     useEffect(() => {
         let timeout
         if (store.saveStatus === "Ungesicherte Änderungen")
@@ -86,7 +94,7 @@ const Header = () => {
     }, [store.saveStatus])
 
     return (
-        <StyledHeader editing={store.editing}>
+        <StyledHeader editing={store.editing} isFullScreen={isFullScreen}>
             <Controls />
             <Wrapper noWrap justifyBetween alignCenter>
                 <Flex alignCenter noWrap>

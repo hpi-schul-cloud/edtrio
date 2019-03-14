@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import Heading from "~/components/Heading"
 
 import { LessonContext } from "~/contexts/Lesson"
@@ -7,7 +7,7 @@ import { LessonContext } from "~/contexts/Lesson"
 const Wrapper = styled.div`
     padding: 15px;
     position: fixed;
-    left: 0;
+    left: 245px;
     top: 150px;
     width: 300px;
     max-width: 100vw;
@@ -16,8 +16,15 @@ const Wrapper = styled.div`
     opacity: ${props => (props.visible ? 1 : 0)};
     transition: 250ms all ease-in-out;
     background-color: #fff;
-    border-radius: 0 5px 5px 0;
+    border-radius: 5px;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+
+    ${props =>
+        props.isFullScreen &&
+        css`
+            left: 0;
+            border-radius: 0 5px 5px 0;
+        `}
 `
 
 const SectionTitle = styled(Heading)`
@@ -101,11 +108,11 @@ function useResizeListener() {
     }, [store.showSectionOverview])
 }
 
-const SectionOverview = ({ sections, editing, visible }) => {
+const SectionOverview = ({ sections, editing, visible, isFullScreen }) => {
     const [activeSectionIndex, setActiveSectionIndex] = useScrollListener()
     useResizeListener()
     return (
-        <Wrapper visible={visible}>
+        <Wrapper visible={visible} isFullScreen={isFullScreen}>
             {sections
                 .filter(section => {
                     if (editing) return true
@@ -118,6 +125,7 @@ const SectionOverview = ({ sections, editing, visible }) => {
                         onClick={() => {
                             scrollToSection(index)
                         }}
+                        style={{ marginTop: 0 }}
                         key={section.id}
                         active={index === activeSectionIndex}>
                         {section.title || "Neuer Abschnitt"}

@@ -9,16 +9,11 @@ import Error from "./Error"
 
 const Application = () => {
     return (
-        <BrowserRouter
-            basename={
-                config.IS_EMBED ? `${window.location.pathname}` : undefined
-            }>
-            <Contexts>
-                <Error />
-                <GlobalStyle />
-                <Workspace />
-            </Contexts>
-        </BrowserRouter>
+        <Contexts>
+            <Error />
+            <GlobalStyle />
+            <Workspace />
+        </Contexts>
     )
 }
 

@@ -8,13 +8,14 @@ import Section from "./Section"
 
 const Wrapper = styled(Flex)``
 
-const Sections = ({ sections, editing, showSectionOverview }) => {
+const Sections = ({ sections, editing, showSectionOverview, isFullScreen }) => {
     return (
         <Wrapper justifyCenter style={{ width: "100%" }}>
             <SectionOverview
                 sections={sections}
                 editing={editing}
                 visible={showSectionOverview}
+                isFullScreen={isFullScreen}
             />
             <div
                 style={{

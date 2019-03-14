@@ -4,13 +4,7 @@ import Dashboard from "./Dashboard"
 import Lesson from "./Lesson"
 
 const Workspace = () => {
-    return (
-        <Switch>
-            <Route path="/lesson/:lessonId" component={Lesson} />
-            <Route exact path="/" component={Dashboard} />
-            <Redirect to="/" />
-        </Switch>
-    )
+    return <Lesson />
 }
 
 export default Workspace
