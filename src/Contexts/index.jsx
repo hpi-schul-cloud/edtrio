@@ -1,11 +1,14 @@
 import React from "react"
 import { ThemeContextProvider } from "./Theme"
-import LessonContextProvider from "./Lesson"
+import { LessonContextProvider } from "./Lesson"
+import { UserContextProvider } from "./User"
 
 const Contexts = ({ children }) => {
     return (
         <ThemeContextProvider>
-            <LessonContextProvider>{children}</LessonContextProvider>
+            <UserContextProvider>
+                <LessonContextProvider>{children}</LessonContextProvider>
+            </UserContextProvider>
         </ThemeContextProvider>
     )
 }

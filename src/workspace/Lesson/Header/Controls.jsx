@@ -4,7 +4,7 @@ import styled, { css } from "styled-components"
 import { List as ListIcon } from "@material-ui/icons"
 import { SvgIcon } from "@material-ui/core"
 
-import { LessonContext } from "~/Contexts/Lesson"
+import LessonContext from "~/Contexts/Lesson"
 
 const NotesIcon = props => {
     return (

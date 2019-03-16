@@ -1,7 +1,7 @@
 import React, { useContext, useRef, useEffect } from "react"
 import styled, { css } from "styled-components"
 
-import { LessonContext } from "~/Contexts/Lesson"
+import LessonContext from "~/Contexts/Lesson"
 
 import Flex from "~/components/Flex"
 import Input from "~/components/Input"
@@ -88,6 +88,7 @@ const Section = ({ section, isLast, index }) => {
                     <Editor
                         docValue={section.docValue}
                         index={index}
+                        editing={store.editing}
                         dispatchChange={collectDocValue => {
                             dispatch({
                                 type: "SECTION_DOCVALUE_CHANGE",

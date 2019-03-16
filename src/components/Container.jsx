@@ -1,8 +1,14 @@
-import React from "react"
+import React, { useContext } from "react"
 import styled, { css } from "styled-components"
+import LessonContext from "~/Contexts/Lesson"
 
-const Container = styled.div`
-    padding: 25px calc((100vw - 995px) / 2); /* // TODO take schul-cloud sidebar into account */
+const StyledContainer = styled.div`
+    padding: 25px calc((100vw - 995px) / 2);
+    ${props =>
+        !props.isFullScreen &&
+        css`
+            padding: 25px calc((100vw - 995px - 239px) / 2);
+        `}
 
     @media (max-width: 1035px) {
         padding: 25px 20px;
@@ -35,5 +41,10 @@ const Container = styled.div`
             padding-bottom: 0;
         `};
 `
+
+const Container = props => {
+    const { store } = useContext(LessonContext)
+    return <StyledContainer isFullScreen={store.isFullScreen} {...props} />
+}
 
 export default Container

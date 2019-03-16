@@ -37,7 +37,7 @@ const bodyRequest = (
     uploadProgress,
     fakeResponse,
 ) => {
-    if (fakeResponse) {
+    if (fakeResponse && process.env.NODE_ENV !== "production") {
         return new Promise(resolve =>
             setTimeout(() => resolve(fakeResponse), 250),
         )
@@ -93,7 +93,7 @@ const bodyRequest = (
 
 const api = {
     get: (endpoint, fakeResponse) => {
-        if (fakeResponse) {
+        if (fakeResponse && process.env.NODE_ENV !== "production") {
             return new Promise(resolve =>
                 setTimeout(() => resolve(fakeResponse), 250),
             )

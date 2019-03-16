@@ -62,6 +62,7 @@ export default class Editor extends React.Component {
                 <Edtr
                     plugins={plugins}
                     defaultPlugin={this.props.index === 0 ? "etherpad" : "text"}
+                    editable={this.props.editing}
                     initialState={this.docValue}>
                     <ChangeListener
                         dispatchChange={this.props.dispatchChange}

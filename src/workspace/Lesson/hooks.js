@@ -1,16 +1,25 @@
 import React, { useEffect, useState } from "react"
 
 import api from "~/utils/api"
+import { setCookie } from "~/utils/cookie"
 import { useInterval } from "~/utils/hooks"
 import { loadEditorData, saveEditorData } from "~/utils/cache"
 
-export function useBootstrap(id, dispatch) {
-    async function fetchLesson() {
-        // if (process.env.NODE_ENV === "development") {
-        //     const lesson = await api.get("/editor/test")
-        //     id = lesson._id
-        //     setCookie("jwt", lesson.jwt)
-        // }
+export function useBootstrap(id, dispatch, dispatchUserAction) {
+    async function fetchData() {
+        if (!process.env.CLIENT && process.env.NODE_ENV !== "production") {
+            // NOTE if you want to persist your lesson data in local development (not in schulcloud-client), simply comment this block
+            try {
+                // DEVELOPMENT ONLY
+                const lesson = await api.get("/editor/test")
+                id = lesson._id
+                setCookie("jwt", lesson.jwt)
+            } catch (err) {
+                // in case the backend is not running, we should still be able to continue
+            }
+        }
+        const user = await api.get("/me")
+        dispatchUserAction({ type: "BOOTSTRAP_USER", payload: user })
 
         try {
             const cacheData = loadEditorData(id)
@@ -29,27 +38,6 @@ export function useBootstrap(id, dispatch) {
                             docValue: null,
                             visible: true,
                         },
-                        {
-                            id: 2,
-                            notes: "",
-                            title: "Second Sample Section",
-                            docValue: null,
-                            visible: false,
-                        },
-                        {
-                            id: 3,
-                            notes: "",
-                            title: "Third Sample Section",
-                            docValue: null,
-                            visible: true,
-                        },
-                        {
-                            id: 4,
-                            notes: "",
-                            title: "Fourth Sample Section",
-                            docValue: null,
-                            visible: true,
-                        },
                     ],
                 })
             }
@@ -64,7 +52,7 @@ export function useBootstrap(id, dispatch) {
     }
 
     useEffect(() => {
-        fetchLesson()
+        fetchData()
     }, [])
 }
 
@@ -180,24 +168,32 @@ export function useChangeListener(store, dispatch) {
     }, [store.lesson])
 }
 
-export function useFullScreenListener() {
-    const [isFullScreen, setIsFullScreen] = useState(false)
+export function useFullScreenListener(store, dispatch) {
     useInterval(() => {
         if (
             document.body.classList.value.includes("loaded") &&
             !document.body.classList.value.includes("fullscreen")
-        )
-            setIsFullScreen(false)
-        else setIsFullScreen(true)
+        ) {
+            if (store.isFullScreen) {
+                dispatch({ type: "FULL_SCREEN", payload: false })
+            }
+        } else if (!store.isFullScreen) {
+            dispatch({ type: "FULL_SCREEN", payload: true })
+        }
     }, 100) // TODO maybe think of another way than an interval
 
     useEffect(() => {
-        if (isFullScreen) {
-            document.querySelector("body").style.paddingTop = 0
-        } else {
-            document.querySelector("body").style.paddingTop = "75px"
-        }
-    }, [isFullScreen])
+        document.body.classList.add("edtr")
+        const fullscreenBtn = document.querySelector(".btn-fullscreen")
+        // if (store.isFullScreen) {
+        //     document.querySelector("body").style.paddingTop = 0
+        //     if (fullscreenBtn) fullscreenBtn.style.top = "83px"
+        // } else {
+        //     document.querySelector("body").style.paddingTop = "75px"
+        //     if (fullscreenBtn) fullscreenBtn.style.top = "8px"
+        // }
+        return () => document.body.classList.remove("edtr")
+    }, [])
 
-    return isFullScreen
+    return store.isFullScreen
 }

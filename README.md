@@ -166,11 +166,13 @@ Internal plugins will lie in `src/plugins` and should be completely isolated.
 
 #### Build
 
-To build the editor, simply run `npm run build`. Currently, external assets are not supported, so make sure everything is inline. If you need to use PNG or other external assets, you can temporarily use the [parcel url loader plugin](https://www.npmjs.com/package/parcel-plugin-url-loader).
+To build the editor, simply run `npm run build`.
 
 #### Integration in schulcloud-client
 
 Once built, push your build to github. Then, copy the commit hash and use jsdelivr to generate a static link to the script, for example: `https://cdn.jsdelivr.net/gh/schul-cloud/edtrio@COMMIT_HASH/dist/index.js`. You can then pass this url to the schulcloud-editor as `process.env.EDTR_SOURCE`. When you go to the current topic editor, you can now add the query `?edtr=true` to load the new editor.
+
+If you want to debug the editor integration locally, you can run the editor with `npm run dev:editor` and start the schulcloud-client with `EDTR_SOURCE="http://localhost:1234/index.js" npm run watch`. You can then go to the topic editor locally and open this editor when appending the query `?edtr=true`.
 
 ## License
 

@@ -1,7 +1,8 @@
 import React, { useEffect, useContext, useState } from "react"
 import styled from "styled-components"
 
-import { LessonContext } from "~/Contexts/Lesson"
+import LessonContext from "~/Contexts/Lesson"
+import UserContext from "~/Contexts/User"
 import { useInterval } from "~/utils/hooks"
 
 import Container from "~/components/Container"
@@ -20,17 +21,26 @@ import {
 
 const Wrapper = styled.div`
     position: relative;
-    padding-top: 50px;
+    padding-top: ${props => props.isFullScreen && "50px"};
     width: 100%;
 `
 
 const Lesson = props => {
     const { store, dispatch } = useContext(LessonContext)
+    const { store: userStore, dispatch: dispatchUserAction } = useContext(
+        UserContext,
+    )
 
-    const id = 123 // TODO change to actual lesson id
-    useBootstrap(id, dispatch)
+    let id = 123
+    try {
+        const location = window.location.pathname
+        const topicId = location.split("/topics/")[1]
+        if (topicId) id = topicId
+    } catch (err) {}
+
+    useBootstrap(id, dispatch, dispatchUserAction)
     useChangeListener(store, dispatch)
-    const isFullScreen = useFullScreenListener()
+    const isFullScreen = useFullScreenListener(store, dispatch)
     useInterval(() => saveLesson(store, dispatch), 10000)
 
     useEffect(() => {
@@ -49,7 +59,7 @@ const Lesson = props => {
     }
 
     return (
-        <Wrapper>
+        <Wrapper isFullScreen={isFullScreen}>
             <Header
                 title={store.lesson.title}
                 dispatch={dispatch}

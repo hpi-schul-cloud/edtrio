@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react"
 import styled, { css } from "styled-components"
 
-import { LessonContext } from "~/Contexts/Lesson"
+import LessonContext from "~/Contexts/Lesson"
 
 import Container from "~/components/Container"
 import Flex from "~/components/Flex"
@@ -15,7 +15,7 @@ const StyledHeader = styled(Container)`
     height: auto;
     position: fixed;
     top: 0;
-    width: calc(100vw - 239px);
+    width: calc(100vw - 240px);
     left: 239px;
     background-color: #fff;
     z-index: 100;
@@ -23,11 +23,16 @@ const StyledHeader = styled(Container)`
     padding-bottom: 5px !important;
     box-shadow: 0 5px 25px -15px rgba(0, 0, 0, 1);
 
+    @media (max-width: 1250px) {
+        width: calc(100vw - 60px);
+        left: 60px;
+    }
+
     ${props =>
         props.isFullScreen &&
         css`
-            width: 100vw;
-            left: 0;
+            width: 100vw !important;
+            left: 0px !important;
         `}
 
     &:hover .save-status {
@@ -50,6 +55,10 @@ const StyledHeader = styled(Container)`
 `
 
 const Wrapper = styled(Flex)`
+    @media (max-width: 1325px) {
+        justify-content: flex-start;
+    }
+
     @media (max-width: 750px) {
         flex-wrap: wrap;
     }
@@ -64,7 +73,7 @@ const TitleInput = styled(Input)`
     font-weight: 700;
     width: 450px;
 
-    @media (max-width: 900px) {
+    @media (max-width: 1250px) {
         width: 350px;
     }
     @media (max-width: 800px) {
@@ -116,8 +125,10 @@ const Header = ({ isFullScreen }) => {
                     <SaveStatus
                         noMargin
                         className="save-status"
+                        inline
                         style={{
                             textAlign: "right",
+                            width: "185px",
                             opacity: showSaveStatus ? 1 : 0,
                             transition: "250ms all ease-in-out",
                         }}>

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react"
 import styled, { css } from "styled-components"
 import Heading from "~/components/Heading"
 
-import { LessonContext } from "~/Contexts/Lesson"
+import LessonContext from "~/Contexts/Lesson"
 
 const Wrapper = styled.div`
     padding: 15px;
@@ -19,10 +19,14 @@ const Wrapper = styled.div`
     border-radius: 5px;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 
+    @media (max-width: 1250px) {
+        left: 65px;
+    }
+
     ${props =>
         props.isFullScreen &&
         css`
-            left: 0;
+            left: 0 !important;
             border-radius: 0 5px 5px 0;
         `}
 `

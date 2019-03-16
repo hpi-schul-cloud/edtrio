@@ -9,6 +9,7 @@ export const initialState = {
     saveStatus: "",
     showSectionOverview: false,
     showNotes: false,
+    isFullScreen: false,
 }
 function reducer(state, { type, payload }) {
     switch (type) {
@@ -17,6 +18,10 @@ function reducer(state, { type, payload }) {
                 ...state,
                 editing: payload,
             }
+
+        case "FULL_SCREEN": {
+            return { ...state, isFullScreen: payload }
+        }
 
         case "TOGGLE_SECTION_OVERVIEW":
             return {
@@ -248,9 +253,9 @@ function reducer(state, { type, payload }) {
     }
 }
 
-export const LessonContext = React.createContext()
+const LessonContext = React.createContext()
 
-export default function LessonContextProvider({ children }) {
+export function LessonContextProvider({ children }) {
     const [state, dispatch] = useReducer(reducer, initialState)
 
     const value = { store: state, dispatch }
@@ -261,3 +266,5 @@ export default function LessonContextProvider({ children }) {
         </LessonContext.Provider>
     )
 }
+
+export default LessonContext
