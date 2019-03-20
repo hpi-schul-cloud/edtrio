@@ -33,14 +33,33 @@ const StyledStudentName = styled.div`
     font-size: 12px;
 `
 
+const StyledAvatar = styled.span`
+     {
+        background: black;
+        width: 24px;
+        height: 24px;
+        text-align: center;
+        border-radius: 50%;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        font-size: 14px;
+        line-height: 14px;
+        color: #fff;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        }
+    }
+`
+
 export function Student(props) {
+    let initials = props.name.match(/\b\w/g) || []
+    initials = ((initials.shift() || "") + (initials.pop() || "")).toUpperCase()
     return (
         <StyledStudent>
             <StyledAvatarWrapper>
-                <Avatar
-                    style={{ width: "24px", height: "24px" }}
-                    avatarStyle="Circle"
-                />
+                <StyledAvatar>{initials}</StyledAvatar>
             </StyledAvatarWrapper>
             <StyledStudentName>{props.name}</StyledStudentName>
         </StyledStudent>

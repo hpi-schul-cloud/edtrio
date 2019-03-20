@@ -7,12 +7,21 @@ import { QuickGroupEditor } from "./QuickGroupEditor/index"
 
 const groupState = StateType.object({
     workingPackages: StateType.list(StateType.child("text"), 0),
-    groupId: StateType.string(),
+    startValues: StateType.scalar(null),
+    setId: StateType.string(),
+})
+
+const advancedGroupState = StateType.object({
+    workingPackages: StateType.list(StateType.child("text"), 0),
+    startValues: StateType.scalar(null),
+    setId: StateType.string(),
+    fixedGroupId: StateType.string(),
 })
 
 const simpleGroupState = StateType.object({
-    workingPackage: StateType.child("counter"),
-    groupId: StateType.string(),
+    workingPackage: StateType.child("text"),
+    startValues: StateType.scalar(),
+    setId: StateType.string(),
 })
 
 export const groupPlugin = {
@@ -27,7 +36,7 @@ export const advancedGroupPlugin = {
     Component: props => {
         return <AdvancedGroupEditor {...props} />
     },
-    state: groupState,
+    state: advancedGroupState,
 }
 
 export const quickGroupPlugin = {

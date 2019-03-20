@@ -1,4 +1,4 @@
-import React from "react"
+import React, { PureComponent } from "react"
 import { Droppable, Draggable } from "react-beautiful-dnd"
 import styled from "styled-components"
 import { Student } from "./Student"
@@ -7,8 +7,9 @@ import Input from "../../components/Input"
 const StyledGroupedStudentList = styled.div`
     ${({ editable }) =>
         editable ? "background: ivory; box-shadow: inset 0 0 10px Grey;" : null}
-    ${({ isDraggingOver }) =>
-        isDraggingOver ? "background: blue;" : null}
+    ${({ isDraggingOver }) => (isDraggingOver ? "background: blue;" : null)}
+    ${({ draggingFromThisWith }) =>
+        draggingFromThisWith ? "background: pink;" : null}
     min-height: 50px;
     min-width: 50px;
     display: flex;
@@ -44,29 +45,24 @@ export function Group(props) {
             Gruppe <Input onChange={input => console.log(input)} value={name} />{" "}
             ({studentList.length})
             {teacherAssignsStudents && (
-                <Droppable droppableId={droppableId} direction={direction}>
+                <Droppable
+                    droppableId={droppableId}
+                    direction={direction}
+                    isDropDisabled={!editable}>
                     {(provided, snapshot) => {
                         return (
                             <StyledGroupedStudentList
                                 ref={provided.innerRef}
                                 {...provided.droppableProps}
                                 isDraggingOver={snapshot.isDraggingOver}
-                                editable={true}>
-                                {studentList.map((studentName, index) => (
-                                    <Draggable
-                                        key={studentName}
-                                        draggableId={studentName}
-                                        index={index}>
-                                        {(provided, snapshot) => (
-                                            <StudentWrapper
-                                                ref={provided.innerRef}
-                                                {...provided.draggableProps}
-                                                {...provided.dragHandleProps}>
-                                                <Student name={studentName} />
-                                            </StudentWrapper>
-                                        )}
-                                    </Draggable>
-                                ))}
+                                draggingFromThisWith={
+                                    snapshot.draggingFromThisWith
+                                }
+                                editable={editable}>
+                                <InnerList
+                                    studentList={studentList}
+                                    editable={editable}
+                                />
                                 {provided.placeholder}
                             </StyledGroupedStudentList>
                         )
@@ -87,4 +83,28 @@ export function Group(props) {
             )}
         </StyledRoot>
     )
+}
+
+class InnerList extends PureComponent {
+    // do not re-render if the students list has not changed
+
+    render() {
+        const { editable, studentList } = this.props
+        return studentList.map((studentName, index) => (
+            <Draggable
+                key={studentName}
+                draggableId={studentName}
+                isDragDisabled={!editable}
+                index={index}>
+                {(provided, snapshot) => (
+                    <StudentWrapper
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}>
+                        <Student name={studentName} />
+                    </StudentWrapper>
+                )}
+            </Draggable>
+        ))
+    }
 }

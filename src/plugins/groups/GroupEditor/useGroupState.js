@@ -18,7 +18,7 @@ export function useGroupState(studentList, editorStateValue, state) {
     useEffect(() => {
         startValue.forEach(() => {
             state.workingPackages.insert(state.workingPackages.items.length, {
-                plugin: "counter",
+                plugin: "text",
             })
         })
     }, [startValue])
@@ -184,7 +184,7 @@ export function useGroupState(studentList, editorStateValue, state) {
         })
         updateWorkingPackages(newWorkingPackages)
         state.workingPackages.insert(state.workingPackages.items.length, {
-            plugin: "counter",
+            plugin: "text",
         })
     }
 

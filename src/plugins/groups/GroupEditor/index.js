@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useContext } from "react"
 import styled from "styled-components"
 import { DragDropContext } from "react-beautiful-dnd"
 import uuid from "uuid/v4"
 
+import LessonContext from "~/Contexts/Lesson"
 import {
     saveWorkingPackages,
     loadWorkingPackages,
 } from "../localStorageHelpers"
-import { useGroupState } from "./useGroupState"
+import { useGroupState } from "./useGroupStatev2"
 import Button, { Toggle } from "../../../components/Button"
 import { WorkingPackages } from "./WorkingPackages"
 import { GroupSelection } from "./GroupSelection"
@@ -37,61 +38,83 @@ const StyledWorkingPackages = styled(WorkingPackages)`
 
 // ({ editable, focused, state })
 export function GroupEditor(props) {
-    const { editable, state, startWorkingPackage } = props
-    // TODO: these default props probably belong to the editor state somehow
+    const { state, startValues } = props
+    const { store } = useContext(LessonContext)
+    const editable = store.editing
+    console.log("rerendered")
+    // get StartValues from Props
+    const defaultStartValues = {
+        unassignedStudents: students,
+        workingPackages: [],
+        groups: [],
+    }
+
+    const realStartValues = state.startValues()
+        ? state.startValues()
+        : startValues
+        ? startValues
+        : defaultStartValues
     const [
         workingPackages,
+        groups,
         unassignedStudents,
         onDragEnd,
         addGroup,
         addWorkingPackage,
         moveStudentsToRandomGroups,
         removeStudentsFromAllGroups,
-        updateWorkingPackages,
-    ] = useGroupState(
-        students,
-        startWorkingPackage ? startWorkingPackage : state.workingPackages,
-        state,
-    )
+        createAndFillGroups,
+    ] = useGroupState(realStartValues, state)
+
     // Save the group to localStorage
-    let groupId = state.groupId()
-    if (!groupId) {
-        groupId = uuid()
-        state.groupId.set(groupId)
+    let setId = state.setId()
+    if (!setId) {
+        setId = uuid()
+        state.setId.set(setId)
     }
+    useEffect(() => {
+        const updatedStartValues = {
+            unassignedStudents,
+            workingPackages,
+            groups,
+        }
+        state.startValues.set(updatedStartValues)
+    }, [workingPackages, groups, unassignedStudents])
     useEffect(() => {
         const timeout = setTimeout(() => {
             console.log("saved")
-            saveWorkingPackages(groupId, workingPackages)
-        }, 3000)
+            saveWorkingPackages(setId, workingPackages)
+        }, 2000)
         return () => {
             clearTimeout(timeout)
         }
-    })
+    }, [workingPackages, groups, unassignedStudents])
 
     const [teacherAssignsStudents, setTeacherAssignsStudents] = useState(true)
     return (
         <StyledRoot>
             <StyledHeader>Gruppenarbeit</StyledHeader>
-            <StyledPreferences>
-                <Button
-                    onClick={() =>
-                        updateWorkingPackages(loadWorkingPackages()["set 1"])
-                    }>
-                    Lade vorige Gruppen
-                </Button>
-                <Toggle
-                    caption="Schüler wählen Gruppen selbst"
-                    activeCaption="Schüler selbst zuordnen"
-                    active={teacherAssignsStudents}
-                    onClick={() => {
-                        if (teacherAssignsStudents) {
-                            removeStudentsFromAllGroups()
-                        }
-                        setTeacherAssignsStudents(!teacherAssignsStudents)
-                    }}
-                />
-            </StyledPreferences>
+            {editable && (
+                <StyledPreferences>
+                    <Button
+                        onClick={() => {
+                            // TODO: fill
+                        }}>
+                        Lade vorige Gruppen
+                    </Button>
+                    <Toggle
+                        caption="Schüler wählen Gruppen selbst"
+                        activeCaption="Schüler selbst zuordnen"
+                        active={teacherAssignsStudents}
+                        onClick={() => {
+                            if (teacherAssignsStudents) {
+                                removeStudentsFromAllGroups()
+                            }
+                            setTeacherAssignsStudents(!teacherAssignsStudents)
+                        }}
+                    />
+                </StyledPreferences>
+            )}
             <DragDropContext onDragEnd={onDragEnd}>
                 <StyledGroupSelection
                     unassignedStudents={unassignedStudents}
@@ -99,7 +122,9 @@ export function GroupEditor(props) {
                     addWorkingPackage={addWorkingPackage}
                     moveStudentsToRandomGroups={moveStudentsToRandomGroups}
                     workingPackages={workingPackages}
+                    groups={groups}
                     teacherAssignsStudents={teacherAssignsStudents}
+                    editable={editable}
                 />
             </DragDropContext>
             <StyledWorkingPackages

@@ -18,8 +18,8 @@ export function useBootstrap(id, dispatch, dispatchUserAction) {
                 // in case the backend is not running, we should still be able to continue
             }
         }
-        const user = await api.get("/me")
-        dispatchUserAction({ type: "BOOTSTRAP_USER", payload: user })
+        //const user = await api.get("/me")
+        //dispatchUserAction({ type: "BOOTSTRAP_USER", payload: user })
 
         try {
             const cacheData = loadEditorData(id)
@@ -41,7 +41,6 @@ export function useBootstrap(id, dispatch, dispatchUserAction) {
                     ],
                 })
             }
-
             dispatch({ type: "BOOTSTRAP", payload: lesson })
         } catch (err) {
             dispatch({ type: "ERROR" })

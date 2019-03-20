@@ -43,7 +43,9 @@ export function GroupSelection(props) {
         teacherAssignsStudents,
         editable,
         className,
+        groups,
     } = props
+
     return (
         <StyledRoot className={className}>
             <StyledWorkingPackageGroups>
@@ -52,43 +54,51 @@ export function GroupSelection(props) {
                         <div key={workingPackageIndex}>
                             {workingPackage.title}
                             <StyledGroups>
-                                {workingPackage.groups.map((group, index) => {
-                                    return (
-                                        <StyledGroup
-                                            key={`group-droppable-${index}`}
-                                            studentList={group.students}
-                                            droppableId={group.droppableId}
-                                            name={group.name}
-                                            teacherAssignsStudents={
-                                                teacherAssignsStudents
-                                            }
-                                            editable={editable}
-                                        />
+                                {groups
+                                    .filter(
+                                        group =>
+                                            group.workingPackageId ===
+                                            workingPackage.id,
                                     )
-                                })}
+                                    .map((group, index) => {
+                                        return (
+                                            <StyledGroup
+                                                key={`group-droppable-${index}`}
+                                                studentList={group.students}
+                                                droppableId={group.droppableId}
+                                                name={group.name}
+                                                teacherAssignsStudents={
+                                                    teacherAssignsStudents
+                                                }
+                                                editable={editable}
+                                            />
+                                        )
+                                    })}
                             </StyledGroups>
-                            <Button
-                                onClick={() =>
-                                    addGroup(
-                                        workingPackageIndex,
-                                        `group ${workingPackage.groups.length +
-                                            1}`,
-                                    )
-                                }>
-                                Gruppe hinzufügen
-                            </Button>
+                            {editable && (
+                                <Button
+                                    onClick={() =>
+                                        addGroup(
+                                            workingPackage.id,
+                                            `group ${groups.length + 1}`,
+                                        )
+                                    }>
+                                    Gruppe hinzufügen
+                                </Button>
+                            )}
                         </div>
                     )
                 })}
-
-                <Button
-                    onClick={() =>
-                        addWorkingPackage(
-                            `Arbeitspaket ${workingPackages.length + 1}`,
-                        )
-                    }>
-                    Arbeitpaket hinzufügen
-                </Button>
+                {editable && (
+                    <Button
+                        onClick={() =>
+                            addWorkingPackage(
+                                `Arbeitspaket ${workingPackages.length + 1}`,
+                            )
+                        }>
+                        Arbeitpaket hinzufügen
+                    </Button>
+                )}
             </StyledWorkingPackageGroups>
 
             {teacherAssignsStudents && (
@@ -96,6 +106,7 @@ export function GroupSelection(props) {
                     studentList={unassignedStudents}
                     droppableId="unassignedStudents"
                     moveStudentsToRandomGroups={moveStudentsToRandomGroups}
+                    editable={editable}
                 />
             )}
         </StyledRoot>

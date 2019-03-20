@@ -11,6 +11,7 @@ import { blockquotePlugin } from "@edtr-io/plugin-blockquote"
 // import { highlightPlugin } from "@edtr-io/plugin-highlight"
 // import { spoilerPlugin } from "@edtr-io/plugin-spoiler"
 import { textPlugin } from "@edtr-io/plugin-text"
+import { menuPlugin } from "~/plugins/menu/index"
 // import nexboardPlugin from "~/plugins/nexboard"
 import etherpadPlugin from "~/plugins/etherpad"
 import {
@@ -52,12 +53,13 @@ const plugins = {
     group: groupPlugin,
     advancedGroup: advancedGroupPlugin,
     quickGroup: quickGroupPlugin,
+    menu: menuPlugin,
 }
 
 export default class Editor extends React.Component {
     constructor(props) {
         super(props)
-        this.docValue = this.props.docValue || { plugin: "text" }
+        this.docValue = this.props.docValue || { plugin: "menu" }
     }
 
     render() {
@@ -68,14 +70,8 @@ export default class Editor extends React.Component {
                 }}>
                 <Edtr
                     plugins={plugins}
-                    defaultPlugin={
-                        this.props.index === 0
-                            ? "quickGroup"
-                            : this.props.index === 1
-                            ? "group"
-                            : "advancedGroup"
-                    }
-                    editable={this.props.editing}
+                    defaultPlugin={"menu"}
+                    editable={true}
                     initialState={this.docValue}>
                     <ChangeListener
                         dispatchChange={this.props.dispatchChange}
