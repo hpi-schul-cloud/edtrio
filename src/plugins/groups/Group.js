@@ -3,11 +3,15 @@ import { Droppable, Draggable } from "react-beautiful-dnd"
 import styled from "styled-components"
 import { Student } from "./Student"
 import Input from "../../components/Input"
+import Text from "../../components/Text"
 
 const StyledGroupedStudentList = styled.div`
+    background: White;
     ${({ editable }) =>
-        editable ? "background: ivory; box-shadow: inset 0 0 10px Grey;" : null}
-    ${({ isDraggingOver }) => (isDraggingOver ? "background: blue;" : null)}
+        editable
+            ? "border: 2px dashed rgba(175, 4, 55, 1);  "
+            : "border: 1px solid #333333;"}
+    ${({ isDraggingOver }) => (isDraggingOver ? "background: Aqua;" : null)}
     ${({ draggingFromThisWith }) =>
         draggingFromThisWith ? "background: pink;" : null}
     min-height: 50px;
@@ -15,19 +19,27 @@ const StyledGroupedStudentList = styled.div`
     display: flex;
     flex-direction: row;
     flex: 2;
-    border: 1px solid black;
     flex-wrap: wrap;
-
+    justify-content: center;
     padding: 6px;
+    min-height: 75px;
+    border-radius: 3px;
 `
 
-const StyledRoot = styled.div``
+const StyledRoot = styled.div`
+    margin: 8px;
+`
 
 const StudentWrapper = styled.div`
     display: flex;
     margin: 4px;
     justify-content: center;
     flex-shrink: 0;
+`
+
+const StyledStudentNumber = styled.div`
+    display: flex;
+    justify-content: center;
 `
 
 export function Group(props) {
@@ -38,49 +50,45 @@ export function Group(props) {
         droppableId,
         editable,
         className,
+        maxStudents,
         direction = "vertical",
     } = props
     return (
         <StyledRoot className={className}>
-            Gruppe <Input onChange={input => console.log(input)} value={name} />{" "}
-            ({studentList.length})
-            {teacherAssignsStudents && (
-                <Droppable
-                    droppableId={droppableId}
-                    direction={direction}
-                    isDropDisabled={!editable}>
-                    {(provided, snapshot) => {
-                        return (
-                            <StyledGroupedStudentList
-                                ref={provided.innerRef}
-                                {...provided.droppableProps}
-                                isDraggingOver={snapshot.isDraggingOver}
-                                draggingFromThisWith={
-                                    snapshot.draggingFromThisWith
-                                }
-                                editable={editable}>
-                                <InnerList
-                                    studentList={studentList}
-                                    editable={editable}
-                                />
-                                {provided.placeholder}
-                            </StyledGroupedStudentList>
-                        )
-                    }}
-                </Droppable>
-            )}
-            {!teacherAssignsStudents && (
-                <div>
-                    maximale Gruppengröße:{" "}
-                    <input
-                        type="number"
-                        min="0"
-                        onChange={input => console.log(input)}
-                        defaultValue="8"
-                        placeholder="Setze eine maximale Gruppengröße"
-                    />
-                </div>
-            )}
+            <Input onChange={input => console.log(input)} value={name} />
+            <StyledStudentNumber>
+                <Text inline noMargin center>
+                    {teacherAssignsStudents ? (
+                        <span>({studentList.length} Schüler)</span>
+                    ) : (
+                        <span>
+                            ({studentList.length} von {maxStudents} geplanten
+                            Schülern)
+                        </span>
+                    )}
+                </Text>
+            </StyledStudentNumber>
+            <Droppable
+                droppableId={droppableId}
+                direction={direction}
+                isDropDisabled={false}>
+                {(provided, snapshot) => {
+                    return (
+                        <StyledGroupedStudentList
+                            ref={provided.innerRef}
+                            {...provided.droppableProps}
+                            isDraggingOver={snapshot.isDraggingOver}
+                            draggingFromThisWith={snapshot.draggingFromThisWith}
+                            editable={editable}>
+                            <InnerList
+                                studentList={studentList}
+                                editable={editable}
+                            />
+                            {provided.placeholder}
+                        </StyledGroupedStudentList>
+                    )
+                }}
+            </Droppable>
         </StyledRoot>
     )
 }
@@ -94,7 +102,7 @@ class InnerList extends PureComponent {
             <Draggable
                 key={studentName}
                 draggableId={studentName}
-                isDragDisabled={!editable}
+                isDragDisabled={false}
                 index={index}>
                 {(provided, snapshot) => (
                     <StudentWrapper

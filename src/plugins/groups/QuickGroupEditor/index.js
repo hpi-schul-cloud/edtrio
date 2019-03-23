@@ -1,44 +1,35 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useContext } from "react"
 import styled from "styled-components"
-import { DragDropContext } from "react-beautiful-dnd"
 import uuid from "uuid/v4"
+import { DragDropContext } from "react-beautiful-dnd"
 
+import Text from "../../../components/Text"
+import LessonContext from "~/Contexts/Lesson"
 import {
     saveWorkingPackages,
     loadWorkingPackages,
 } from "../localStorageHelpers"
-import { useGroupState } from "../GroupEditor/useGroupState"
-import Button, { Toggle } from "../../../components/Button"
-import { WorkingPackages } from "../GroupEditor//WorkingPackages"
-import { GroupSelection } from "../GroupEditor/GroupSelection"
+import { useGroupState } from "../GroupEditor/useGroupStatev2"
 import { students } from "../GroupEditor/mockData"
+import Button, { Toggle } from "../../../components/Button"
+
+import {
+    UnassignedStudentList,
+    LiveUnassignedStudentList,
+} from "./UnassignedStudentList"
+import { QuickGroupSelection } from "./QuickGroupSelection"
 import { Group } from "../Group"
 
-const StyledGroupSelection = styled(GroupSelection)`
-    margin: 20px;
-`
-const StyledRoot = styled.div`
-    display: flex;
-    flex-direction: column;
-    border: 1px solid red;
-`
-
-const StyledPreferences = styled.div`
-    display: flex;
-    justify-content: flex-end;
-`
-
-const StyledHeader = styled.h2`
-    margin-left: 16px;
-`
-
-const StyledWorkingPackages = styled(WorkingPackages)`
-    margin-left: 16px;
+const StyledWorkingPackages = styled.div`
+    margin: 16px;
+    padding-top: 16px;
+    border-top: 2px solid #333333;
 `
 
 const StyledGroup = styled(Group)`
     flex: 1;
     flex-grow: 0;
+    margin: 0px 8px;
 `
 
 const StyledGroupList = styled.div`
@@ -47,114 +38,177 @@ const StyledGroupList = styled.div`
     flex-wrap: wrap;
 `
 
+const StyledRoot = styled.div`
+    display: flex;
+    flex-direction: column;
+    ${({ editable }) =>
+        editable
+            ? "border: 2px solid rgba(175, 4, 55, 1);"
+            : "border: 2px solid #00640030;"}
+    border-radius: 3px;
+`
+
+const StyledGroupSelection = styled.div`
+    display: flex;
+    flex-direction: row;
+`
+
+const StyledUnassignedStudentList = styled(UnassignedStudentList)`
+    flex: 2;
+`
+
+const StyledSubHeadline = styled(Text)`
+    font-weight: bold;
+    padding-left: 8px;
+`
+
+const StyledGroups = styled.div`
+    margin: 16px;
+    padding-top: 16px;
+    border-top: 2px solid #333333;
+`
+
+const StyledTeacherView = styled.div`
+    ${({ editable }) => (!editable ? "background: #00640030;" : null)}
+`
+const StyledWorkingPackageContainer = styled.div`
+    padding-left: 8px;
+`
+
 // ({ editable, focused, state })
 export function QuickGroupEditor(props) {
-    const { editable, state, startWorkingPackage } = props
-    // TODO: these default props probably belong to the editor state somehow
+    const { state, startValues } = props
+    const { store } = useContext(LessonContext)
+    const editable = store.editing
+    // get StartValues from Props
+    const defaultStartValues = {
+        unassignedStudents: students,
+        workingPackages: [],
+        groups: [],
+    }
+
+    const realStartValues = state.startValues()
+        ? state.startValues()
+        : startValues
+        ? startValues
+        : defaultStartValues
     const [
         workingPackages,
+        groups,
         unassignedStudents,
         onDragEnd,
         addGroup,
         addWorkingPackage,
         moveStudentsToRandomGroups,
         removeStudentsFromAllGroups,
-        updateWorkingPackages,
         createAndFillGroups,
-    ] = useGroupState(
-        students,
-        startWorkingPackage ? startWorkingPackage : state.workingPackages,
-        state,
-    )
-    // Save the group to localStorage
-    let groupId = state.groupId()
-    if (!groupId) {
-        groupId = uuid()
-        state.groupId.set(groupId)
+        createEmptyGroups,
+    ] = useGroupState(realStartValues, state)
+
+    if (workingPackages.length === 0) {
+        addWorkingPackage("Arbeitspaket")
     }
+
+    // Save the group to localStorage
+    let setId = state.setId()
+    if (!setId) {
+        setId = uuid()
+        state.setId.set(setId)
+    }
+    useEffect(() => {
+        const updatedStartValues = {
+            unassignedStudents,
+            workingPackages,
+            groups,
+        }
+        state.startValues.set(updatedStartValues)
+    }, [workingPackages, groups, unassignedStudents])
+
     useEffect(() => {
         const timeout = setTimeout(() => {
             console.log("saved")
-            saveWorkingPackages(groupId, workingPackages)
-        }, 3000)
+            saveWorkingPackages(setId, workingPackages)
+        }, 2000)
         return () => {
             clearTimeout(timeout)
         }
-    })
+    }, [workingPackages, groups, unassignedStudents])
 
     const [isGroupWork, setIsGroupWork] = useState(true)
-    const [randomlyAssignStudents, setRandomlyAssignStudents] = useState(true)
+    const [randomlyAssignStudents, setRandomlyAssignStudents] = useState(
+        !state.StudentsChooseGroup(),
+    )
+
+    console.log(state.StudentsChooseGroup())
     const [numberOfGroups, setNumberOfGroups] = useState(5)
+    useEffect(() => {
+        state.StudentsChooseGroup.set(!randomlyAssignStudents)
+    }, [randomlyAssignStudents])
+
+    const [counter, setCounter] = useState(0)
+    useEffect(() => {
+        if (workingPackages.length > 0 && editable && counter > 0) {
+            if (randomlyAssignStudents) {
+                createAndFillGroups(numberOfGroups)
+            } else {
+                createEmptyGroups(numberOfGroups)
+            }
+        }
+        setCounter(counter + 1)
+    }, [numberOfGroups, randomlyAssignStudents])
 
     return (
-        <StyledRoot>
-            <StyledHeader>Schnelle Gruppenarbeit</StyledHeader>
-            <StyledPreferences>
-                <Toggle
-                    caption="Schüler wählen Gruppen selbst"
-                    activeCaption="Schüler zufällig zuordnen"
-                    active={randomlyAssignStudents}
-                    onClick={() => {
-                        if (randomlyAssignStudents) {
-                            removeStudentsFromAllGroups()
-                        }
-                        setRandomlyAssignStudents(!randomlyAssignStudents)
-                    }}
-                />
-                <Toggle
-                    caption="Bilde Gruppen mit x Schülern"
-                    activeCaption="Bilde x Gruppen"
-                    active={isGroupWork}
-                    onClick={() => {
-                        if (isGroupWork) {
-                            removeStudentsFromAllGroups()
-                        }
-                        setIsGroupWork(!isGroupWork)
-                    }}
-                />
-            </StyledPreferences>
-            {isGroupWork ? (
-                <div>
-                    Wie viele Gruppen sollen gebildet werden?:{" "}
-                    <input
-                        type="number"
-                        min="2"
-                        onChange={event => {
-                            let value = event.target.value
-                            if (value < 2) {
-                                value = 2
+        <StyledRoot editable={editable}>
+            <DragDropContext onDragEnd={onDragEnd}>
+                <StyledTeacherView editable={editable}>
+                    <StyledGroupSelection>
+                        <QuickGroupSelection
+                            randomlyAssignStudents={randomlyAssignStudents}
+                            setRandomlyAssignStudents={
+                                setRandomlyAssignStudents
                             }
-                            setNumberOfGroups(value)
-                            createAndFillGroups(value)
-                        }}
-                        defaultValue="5"
-                        placeholder="Wie viele Gruppen sollen gebildet werden?"
-                    />
-                </div>
-            ) : (
-                <div>
-                    Wie viele Schüler sollen in einer Gruppe sein?:{" "}
-                    <input
-                        type="number"
-                        min="2"
-                        onChange={input => console.log(input)}
-                        defaultValue="2"
-                        placeholder="Wie viele Schüler sollen in einer Gruppe sein?"
-                    />
-                </div>
-            )}
+                            removeStudentsFromAllGroups={
+                                removeStudentsFromAllGroups
+                            }
+                            isGroupWork={isGroupWork}
+                            setIsGroupWork={setIsGroupWork}
+                            setNumberOfGroups={setNumberOfGroups}
+                            createAndFillGroups={createAndFillGroups}
+                            groups={groups}
+                            numberOfGroups={numberOfGroups}
+                            editable={editable}
+                            students={students}
+                            onDragEnd={onDragEnd}
+                            state={state}
+                        />
+                        {editable && (
+                            <StyledUnassignedStudentList students={students} />
+                        )}
+                    </StyledGroupSelection>
+                    {!editable && !randomlyAssignStudents && (
+                        <LiveUnassignedStudentList
+                            moveStudentsToRandomGroups={
+                                moveStudentsToRandomGroups
+                            }
+                            students={unassignedStudents}
+                        />
+                    )}
+                    <StyledGroups>
+                        <StyledSubHeadline>Gruppen:</StyledSubHeadline>
 
-            {randomlyAssignStudents && (
-                <div>
-                    <Button onClick={() => createAndFillGroups(numberOfGroups)}>
-                        Gruppen neu bilden
-                    </Button>
-                    {workingPackages && workingPackages[0] && (
                         <div>
-                            <DragDropContext onDragEnd={onDragEnd}>
-                                <StyledGroupList>
-                                    {workingPackages[0].groups.map(
-                                        (group, index) => {
+                            {randomlyAssignStudents && editable && (
+                                <Button
+                                    onClick={() =>
+                                        createAndFillGroups(numberOfGroups)
+                                    }>
+                                    Gruppen neu durchmischen
+                                </Button>
+                            )}
+                            {groups.length > 0 && (
+                                <div>
+                                    <StyledGroupList>
+                                        {groups.map((group, index) => {
                                             return (
                                                 <StyledGroup
                                                     key={`group-droppable-${index}`}
@@ -164,21 +218,37 @@ export function QuickGroupEditor(props) {
                                                     }
                                                     name={group.name}
                                                     teacherAssignsStudents={
-                                                        true
+                                                        randomlyAssignStudents
                                                     }
-                                                    editable={editable}
+                                                    maxStudents={Math.ceil(
+                                                        students.length /
+                                                            numberOfGroups,
+                                                    )}
+                                                    editable={
+                                                        randomlyAssignStudents
+                                                            ? editable
+                                                            : false
+                                                    }
                                                 />
                                             )
-                                        },
-                                    )}
-                                </StyledGroupList>
-                            </DragDropContext>
+                                        })}
+                                    </StyledGroupList>
+                                </div>
+                            )}
                         </div>
-                    )}
-                    List of Student groups
-                </div>
-            )}
-            {state.workingPackage.render()}
+                    </StyledGroups>
+                </StyledTeacherView>
+            </DragDropContext>
+
+            <StyledWorkingPackages>
+                <StyledSubHeadline>
+                    Aufgaben der Gruppenarbeit:
+                </StyledSubHeadline>
+                <StyledWorkingPackageContainer>
+                    {state.workingPackages.items.length > 0 &&
+                        state.workingPackages.items[0].render()}
+                </StyledWorkingPackageContainer>
+            </StyledWorkingPackages>
         </StyledRoot>
     )
 }

@@ -9,6 +9,7 @@ const groupState = StateType.object({
     workingPackages: StateType.list(StateType.child("text"), 0),
     startValues: StateType.scalar(null),
     setId: StateType.string(),
+    StudentsChooseGroup: StateType.scalar(false),
 })
 
 const advancedGroupState = StateType.object({
@@ -16,12 +17,6 @@ const advancedGroupState = StateType.object({
     startValues: StateType.scalar(null),
     setId: StateType.string(),
     fixedGroupId: StateType.string(),
-})
-
-const simpleGroupState = StateType.object({
-    workingPackage: StateType.child("text"),
-    startValues: StateType.scalar(),
-    setId: StateType.string(),
 })
 
 export const groupPlugin = {
@@ -44,5 +39,5 @@ export const quickGroupPlugin = {
     Component: props => {
         return <QuickGroupEditor {...props} />
     },
-    state: simpleGroupState,
+    state: groupState,
 }

@@ -53,10 +53,10 @@ const Button = ({ children, ...props }) => {
 
     return (
         <StyledButton
-            {...props}
             primaryColor={primaryColor}
             tintedPrimaryColor={tintedPrimaryColor}
-            darkPrimaryColor={darkPrimaryColor}>
+            darkPrimaryColor={darkPrimaryColor}
+            {...props}>
             {children}
         </StyledButton>
     )

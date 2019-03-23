@@ -5,61 +5,68 @@ import {
     serializeDocument,
     StateType,
 } from "@edtr-io/core"
-import { rowsPlugin } from "@edtr-io/ui"
+import { rowsPlugin } from "@edtr-io/plugin-rows"
 import { anchorPlugin } from "@edtr-io/plugin-anchor"
 import { blockquotePlugin } from "@edtr-io/plugin-blockquote"
+import { createImagePlugin } from "@edtr-io/plugin-image"
+
 // import { highlightPlugin } from "@edtr-io/plugin-highlight"
 // import { spoilerPlugin } from "@edtr-io/plugin-spoiler"
 import { textPlugin } from "@edtr-io/plugin-text"
 import { menuPlugin } from "~/plugins/menu/index"
 // import nexboardPlugin from "~/plugins/nexboard"
 import etherpadPlugin from "~/plugins/etherpad"
+import assignmentPlugin from "~/plugins/assignment"
 import {
     groupPlugin,
     advancedGroupPlugin,
     quickGroupPlugin,
 } from "~/plugins/groups/index"
 
-const counterState = StateType.number(0)
-
-const counterPlugin = {
-    // eslint-disable-next-line react/display-name
-    Component: ({ focused, state }) => {
-        return (
-            <div>
-                {state.value}
-                <button
-                    onClick={() => {
-                        state.set(value => value + 1)
-                    }}>
-                    +
-                </button>
-            </div>
-        )
+const uploadConfig = {
+    url: "nothing_yet",
+    paramName: "attachment[file]",
+    maxFileSize: 2 * 1024 * 1024,
+    allowedExtensions: ["gif", "jpg", "jpeg", "png", "svg"],
+    getAdditionalFields: () => {
+        return {
+            type: "file",
+            csrf: window.csrf,
+        }
     },
-    state: counterState,
+    getStateFromResponse: response => {
+        return {
+            src: response.files[0].location,
+        }
+    },
 }
 
 const plugins = {
-    // rows: rowsPlugin,
     // anchor: anchorPlugin,
-    counter: counterPlugin,
+    //counter: counterPlugin,
     // blockquote: blockquotePlugin,
-    etherpad: etherpadPlugin,
     // nexboard: nexboardPlugin,
     // highlight: highlightPlugin,
     // spoiler: spoilerPlugin,
-    text: textPlugin,
-    group: groupPlugin,
-    advancedGroup: advancedGroupPlugin,
-    quickGroup: quickGroupPlugin,
-    menu: menuPlugin,
+    Text: textPlugin,
+    Bild: createImagePlugin({ upload: uploadConfig }),
+    "Einfache Gruppenarbeit": quickGroupPlugin,
+    Abgabe: assignmentPlugin,
+    "Komplexe Gruppenarbeit": groupPlugin,
+    Gruppeniteration: advancedGroupPlugin,
+    Etherpad: etherpadPlugin,
+    Reihe: rowsPlugin,
+    // TODO:
+    // Templates
 }
 
 export default class Editor extends React.Component {
     constructor(props) {
         super(props)
-        this.docValue = this.props.docValue || { plugin: "menu" }
+        this.docValue = this.props.docValue || {
+            plugin: "Reihe",
+            state: [{ plugin: "Text" }],
+        }
     }
 
     render() {
@@ -70,8 +77,8 @@ export default class Editor extends React.Component {
                 }}>
                 <Edtr
                     plugins={plugins}
-                    defaultPlugin={"menu"}
-                    editable={true}
+                    defaultPlugin={"Reihe"}
+                    editable={this.props.editing}
                     initialState={this.docValue}>
                     <ChangeListener
                         dispatchChange={this.props.dispatchChange}

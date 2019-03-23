@@ -25,7 +25,7 @@ export function useGroupState(startValue, state) {
             droppableId: `${workingPackageId} - ${groupName}`,
             workingPackageId,
         })
-     
+
         setGroups(newGroups)
     }
 
@@ -34,10 +34,10 @@ export function useGroupState(startValue, state) {
         newWorkingPackages.push({
             title,
             id: uuid(),
-            content: StateType.child("text"),
         })
         state.workingPackages.insert(state.workingPackages.items.length, {
-            plugin: "text",
+            plugin: "Reihe",
+            state: [{ plugin: "Text" }],
         })
         setWorkingPackages(newWorkingPackages)
     }
@@ -180,6 +180,26 @@ export function useGroupState(startValue, state) {
         setUnassignedStudents([])
     }
 
+    function createEmptyGroups(numberOfGroups) {
+        let students = [...unassignedStudents]
+        groups.forEach(group => {
+            students = [...students, ...group.students]
+        })
+        const newGroups = []
+        // create groups
+        for (let i = 1; i <= numberOfGroups; i++) {
+            newGroups.push({
+                students: [],
+                name: `Gruppe ${i}`,
+                droppableId: `group ${i}`,
+                workingPackageId: workingPackages[0].id,
+            })
+        }
+
+        setGroups(newGroups)
+        setUnassignedStudents(students)
+    }
+
     function removeStudentsFromAllGroups() {
         let newUnassignedStudents = Array.from(unassignedStudents)
         let newGroups = Array.from(groups)
@@ -203,5 +223,6 @@ export function useGroupState(startValue, state) {
         moveStudentsToRandomGroups,
         removeStudentsFromAllGroups,
         createAndFillGroups,
+        createEmptyGroups,
     ]
 }

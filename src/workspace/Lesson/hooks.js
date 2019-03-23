@@ -34,7 +34,7 @@ export function useBootstrap(id, dispatch, dispatchUserAction) {
                         {
                             id: 1,
                             notes: "",
-                            title: "Sample Section",
+                            title: "Interaktives Arbeitsblatt",
                             docValue: null,
                             visible: true,
                         },

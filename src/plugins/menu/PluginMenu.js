@@ -1,91 +1,74 @@
-import React from "react"
+import React, { useState } from "react"
+import styled from "styled-components"
 import Button from "../../components/Button"
-import { StateType } from "@edtr-io/core"
-import uuid from "uuid/v4"
+
+import {
+    GroupButton,
+    SimpleGroupButton,
+    AdvancedGroupButton,
+    JigsawButton,
+    TextButton,
+    ImageButton,
+    AssignmentButton,
+} from "./actionButtons"
+
+const StyledContentBox = styled.div`
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+`
+
+const StyledRoot = styled.div`
+    display: flex;
+    flex-direction: column;
+`
+const StyledEditorBox = styled.div`
+    flex: 2;
+    padding-left: 12px;
+`
+const StyledPluginBox = styled.div`
+    flex: 1;
+    background-color: #666666;
+    padding: 12px;
+    min-height: -webkit-fill-available;
+`
+
+const StyledPlusButtonContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+`
 
 export function PluginMenu(props) {
     const { state } = props
-    console.log(state.children.items)
-    if (state.children.items.length <= 0)
-        return (
-            <div>
-                {state.text.render()}
-                Wähle den nächsten Baustein:
-                <Button
-                    onClick={() =>
-                        state.children.insert(state.children.items.length, {
-                            plugin: "group",
-                        })
-                    }>
-                    Gruppenarbeit
-                </Button>
-                <Button
-                    onClick={() =>
-                        state.children.insert(state.children.items.length, {
-                            plugin: "quickGroup",
-                        })
-                    }>
-                    Einfache Gruppenarbeit
-                </Button>
-                <Button
-                    onClick={() =>
-                        state.children.insert(state.children.items.length, {
-                            plugin: "advancedGroup",
-                        })
-                    }>
-                    Erweiterte Gruppenarbeit
-                </Button>
-                Oder wähle ein gesamtes Template:
-                <Button
-                    onClick={() => {
-                        const id = uuid()
-                        const groupState = StateType.object({
-                            workingPackages: StateType.list(
-                                StateType.child("text"),
-                                0,
-                            ),
-                            startValues: StateType.scalar(null),
-                            setId: StateType.string(id),
-                        })
-                        const advancedGroupState = StateType.object({
-                            workingPackages: StateType.list(
-                                StateType.child("text"),
-                                0,
-                            ),
-                            startValues: StateType.scalar(null),
-                            setId: StateType.string(),
-                            fixedGroupId: StateType.string(id),
-                        })
+    const [showPlugins, setShowPlugins] = useState(true)
 
-                        state.children.insert(state.children.items.length, {
-                            plugin: "group",
-                            state: {
-                                workingPackages: [],
-                                startValues: null,
-                                setId: id,
-                            },
-                        })
-                        state.children.insert(state.children.items.length + 1, {
-                            plugin: "advancedGroup",
-                            state: {
-                                workingPackages: [],
-                                startValues: null,
-                                setId: null,
-                                fixedGroupId: id,
-                            },
-                        })
-                    }}>
-                    JIGSAW
-                </Button>
-            </div>
-        )
-    else
-        return (
-            <div>
-                {state.text.render()}
-                {state.children.items.map(child => {
-                    return child.render()
-                })}
-            </div>
-        )
+    return (
+        <StyledRoot>
+            <StyledContentBox>
+                {showPlugins && (
+                    <StyledPluginBox showPlugins={showPlugins}>
+                        <TextButton state={state} />
+                        <ImageButton state={state} />
+                        <GroupButton state={state} />
+                        <SimpleGroupButton state={state} />
+                        <AdvancedGroupButton state={state} />
+                        <AssignmentButton state={state} />
+                        <JigsawButton state={state} />
+                    </StyledPluginBox>
+                )}
+                <StyledEditorBox onClick={() => setShowPlugins(false)}>
+                    {state.text.render()}
+                    {state.children.items.map(child => {
+                        return child.render()
+                    })}
+                </StyledEditorBox>
+            </StyledContentBox>
+            {!showPlugins && (
+                <StyledPlusButtonContainer>
+                    <Button onClick={() => setShowPlugins(true)}>+</Button>
+                </StyledPlusButtonContainer>
+            )}
+        </StyledRoot>
+    )
 }
