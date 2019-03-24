@@ -5,13 +5,11 @@ import { DragDropContext } from "react-beautiful-dnd"
 
 import Text from "../../../components/Text"
 import LessonContext from "~/Contexts/Lesson"
-import {
-    saveWorkingPackages,
-    loadWorkingPackages,
-} from "../localStorageHelpers"
+import GroupsContext from "~/Contexts/Groups"
+
 import { useGroupState } from "../GroupEditor/useGroupStatev2"
 import { students } from "../GroupEditor/mockData"
-import Button, { Toggle } from "../../../components/Button"
+import Button from "../../../components/Button"
 
 import {
     UnassignedStudentList,
@@ -23,7 +21,7 @@ import { Group } from "../Group"
 const StyledWorkingPackages = styled.div`
     margin: 16px;
     padding-top: 16px;
-    border-top: 2px solid #333333;
+    border-top: 2px solid rgba(0, 0, 0, 0.125);
 `
 
 const StyledGroup = styled(Group)`
@@ -65,7 +63,7 @@ const StyledSubHeadline = styled(Text)`
 const StyledGroups = styled.div`
     margin: 16px;
     padding-top: 16px;
-    border-top: 2px solid #333333;
+    border-top: 2px solid rgba(0, 0, 0, 0.125);
 `
 
 const StyledTeacherView = styled.div`
@@ -80,15 +78,30 @@ export function QuickGroupEditor(props) {
     const { state, startValues } = props
     const { store } = useContext(LessonContext)
     const editable = store.editing
-    // get StartValues from Props
+
+    const { state: groupState, setState: setGroupState } = useContext(
+        GroupsContext,
+    )
+
+    let setId = state.setId()
+    if (!setId) {
+        setId = uuid()
+        state.setId.set(setId)
+    }
+
     const defaultStartValues = {
         unassignedStudents: students,
         workingPackages: [],
         groups: [],
     }
+    if (!groupState[setId]) {
+        const newGroupState = { ...groupState }
+        newGroupState[setId] = defaultStartValues
+        setGroupState(newGroupState)
+    }
 
-    const realStartValues = state.startValues()
-        ? state.startValues()
+    const realStartValues = groupState[setId]
+        ? groupState[setId]
         : startValues
         ? startValues
         : defaultStartValues
@@ -103,43 +116,50 @@ export function QuickGroupEditor(props) {
         removeStudentsFromAllGroups,
         createAndFillGroups,
         createEmptyGroups,
+        changeGroupName,
+        assignRandomStudent,
     ] = useGroupState(realStartValues, state)
 
     if (workingPackages.length === 0) {
-        addWorkingPackage("Arbeitspaket")
+        addWorkingPackage("Aufgaben")
     }
 
     // Save the group to localStorage
-    let setId = state.setId()
-    if (!setId) {
-        setId = uuid()
-        state.setId.set(setId)
-    }
+
     useEffect(() => {
         const updatedStartValues = {
             unassignedStudents,
             workingPackages,
             groups,
         }
-        state.startValues.set(updatedStartValues)
-    }, [workingPackages, groups, unassignedStudents])
-
-    useEffect(() => {
-        const timeout = setTimeout(() => {
-            console.log("saved")
-            saveWorkingPackages(setId, workingPackages)
-        }, 2000)
-        return () => {
-            clearTimeout(timeout)
-        }
+        const newGroupState = { ...groupState }
+        newGroupState[setId] = updatedStartValues
+        setGroupState(newGroupState)
     }, [workingPackages, groups, unassignedStudents])
 
     const [isGroupWork, setIsGroupWork] = useState(true)
     const [randomlyAssignStudents, setRandomlyAssignStudents] = useState(
         !state.StudentsChooseGroup(),
     )
+    const [studentMoveCounter, setStudentMoveCounter] = useState(0)
+    useEffect(() => {
+        let randomTimeout
+        if (
+            !randomlyAssignStudents &&
+            !editable &&
+            unassignedStudents.length > 0
+        ) {
+            // simulate Students choosing their own groups
+            randomTimeout = setTimeout(() => {
+                assignRandomStudent()
+                setStudentMoveCounter(studentMoveCounter + 1)
+            }, 2000 + Math.random() * studentMoveCounter * 1000)
+        }
+        return () => {
+            clearTimeout(randomTimeout)
+        }
+    }, [unassignedStudents])
 
-    console.log(state.StudentsChooseGroup())
     const [numberOfGroups, setNumberOfGroups] = useState(5)
     useEffect(() => {
         state.StudentsChooseGroup.set(!randomlyAssignStudents)
@@ -180,6 +200,7 @@ export function QuickGroupEditor(props) {
                             students={students}
                             onDragEnd={onDragEnd}
                             state={state}
+                            setId={setId}
                         />
                         {editable && (
                             <StyledUnassignedStudentList students={students} />
@@ -229,6 +250,10 @@ export function QuickGroupEditor(props) {
                                                             ? editable
                                                             : false
                                                     }
+                                                    changeGroupName={
+                                                        changeGroupName
+                                                    }
+                                                    index={index}
                                                 />
                                             )
                                         })}

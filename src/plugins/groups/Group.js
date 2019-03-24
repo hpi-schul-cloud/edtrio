@@ -45,17 +45,22 @@ const StyledStudentNumber = styled.div`
 export function Group(props) {
     const {
         teacherAssignsStudents,
+        index,
         name,
         studentList,
         droppableId,
         editable,
         className,
         maxStudents,
+        changeGroupName,
         direction = "vertical",
     } = props
     return (
         <StyledRoot className={className}>
-            <Input onChange={input => console.log(input)} value={name} />
+            <Input
+                onChange={input => changeGroupName(index, input)}
+                value={name}
+            />
             <StyledStudentNumber>
                 <Text inline noMargin center>
                     {teacherAssignsStudents ? (

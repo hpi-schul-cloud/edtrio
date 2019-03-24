@@ -16,6 +16,21 @@ export function useGroupState(startValue, state) {
     const [unassignedStudents, setUnassignedStudents] = useState(
         startValue.unassignedStudents,
     )
+    console.log("startValue", startValue.workingPackages.length)
+    console.log("state", state.workingPackages.items.length)
+    if (
+        startValue.workingPackages.length > state.workingPackages.items.length
+    ) {
+        const j =
+        startValue.workingPackages.length -
+        state.workingPackages.items.length
+        for (let i = 0; i < j; i++) {
+            state.workingPackages.insert(state.workingPackages.items.length, {
+                plugin: "Reihe",
+                state: [{ plugin: "Text" }],
+            })
+        }
+    }
 
     function addGroup(workingPackageId, groupName) {
         const newGroups = Array.from(groups)
@@ -156,6 +171,35 @@ export function useGroupState(startValue, state) {
         setUnassignedStudents([])
     }
 
+    function changeGroupName(index, name) {
+        const newGroups = Array.from(groups)
+        newGroups[index].name = name
+        setGroups(newGroups)
+    }
+
+    function assignRandomStudent() {
+        const newGroups = Array.from(groups)
+        const newUnassignedStudents = Array.from(unassignedStudents)
+        const randomStudentIndex = Math.floor(
+            Math.random() * unassignedStudents.length,
+        )
+        const randomGroupIndex = Math.floor(Math.random() * groups.length)
+        const randomGroupStudentIndex = Math.floor(
+            Math.random() * newGroups[randomGroupIndex].students.length,
+        )
+        const [removed] = newUnassignedStudents.splice(randomStudentIndex, 1)
+        newGroups[randomGroupIndex].students = Array.from(
+            newGroups[randomGroupIndex].students,
+        )
+        newGroups[randomGroupIndex].students.splice(
+            randomGroupStudentIndex,
+            0,
+            removed,
+        )
+        setGroups(newGroups)
+        setUnassignedStudents(newUnassignedStudents)
+    }
+
     function createAndFillGroups(numberOfGroups) {
         let students = [...unassignedStudents]
         groups.forEach(group => {
@@ -224,5 +268,7 @@ export function useGroupState(startValue, state) {
         removeStudentsFromAllGroups,
         createAndFillGroups,
         createEmptyGroups,
+        changeGroupName,
+        assignRandomStudent,
     ]
 }

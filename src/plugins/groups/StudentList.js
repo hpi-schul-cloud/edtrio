@@ -5,6 +5,7 @@ import { Student } from "./Student"
 import Button from "../../components/Button"
 
 const StyledUnassignedStudentList = styled.div`
+    background: white;
     ${({ isDraggingOver }) =>
         isDraggingOver ? "background: Aquamarine;" : null}
     ${({ draggingFromThisWith }) =>
@@ -15,6 +16,8 @@ const StyledUnassignedStudentList = styled.div`
     flex-direction: column;
     max-height: 400px;
     overflow: scroll;
+    ${({ editable }) =>
+        editable ? "border: 2px dashed rgba(175, 4, 55, 1);" : "null"}
 `
 
 const StudentWrapper = styled.div`
@@ -25,12 +28,16 @@ const StudentWrapper = styled.div`
 `
 const StyledRoot = styled.div`
     padding: 6px;
-    border: 1px solid black;
 `
 
 const StyledTitle = styled.h4`
     overflow-wrap: break-word;
     word-break: break-all;
+`
+
+const StyledButtonContainer = styled.div`
+    display: flex;
+    justify-content: center;
 `
 
 export function StudentList(props) {
@@ -42,12 +49,12 @@ export function StudentList(props) {
         editable,
     } = props
     return (
-        <StyledRoot>
+        <StyledRoot editable={editable} className={className}>
             <StyledTitle>Nicht zugeordnete Schüler:</StyledTitle>
             <Droppable
                 droppableId={droppableId}
                 direction="vertical"
-                isDropDisabled={!editable}>
+                isDropDisabled={false}>
                 {(provided, snapshot) => {
                     return (
                         <StyledUnassignedStudentList
@@ -55,7 +62,7 @@ export function StudentList(props) {
                             {...provided.droppableProps}
                             isDraggingOver={snapshot.isDraggingOver}
                             draggingFromThisWith={snapshot.draggingFromThisWith}
-                            className={className}>
+                            editable={editable}>
                             <InnerList
                                 studentList={studentList}
                                 editable={editable}
@@ -65,11 +72,13 @@ export function StudentList(props) {
                     )
                 }}
             </Droppable>
-            {studentList.length > 0 && (
-                <Button onClick={moveStudentsToRandomGroups}>
-                    {"<-"} zufällig zuordnen
-                </Button>
-            )}
+            <StyledButtonContainer>
+                {studentList.length > 0 && (
+                    <Button onClick={moveStudentsToRandomGroups}>
+                        {"<-"} zufällig zuordnen
+                    </Button>
+                )}
+            </StyledButtonContainer>
         </StyledRoot>
     )
 }
@@ -83,7 +92,7 @@ class InnerList extends PureComponent {
             <Draggable
                 key={studentName}
                 draggableId={studentName}
-                isDragDisabled={!editable}
+                isDragDisabled={false}
                 index={index}>
                 {(provided, snapshot) => (
                     <StudentWrapper

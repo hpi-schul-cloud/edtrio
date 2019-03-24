@@ -107,6 +107,7 @@ export function QuickGroupSelection(props) {
         onDragEnd,
         students,
         state,
+        setId,
     } = props
 
     const [numberOfStudentsInGroup, setNumberOfStudentsInGroup] = useState(2)
@@ -114,7 +115,7 @@ export function QuickGroupSelection(props) {
 
     return (
         <StyledIntroPanel>
-            <StyledHeader>Schnelle Gruppenarbeit</StyledHeader>
+            <StyledHeader>Einfache Gruppenarbeit</StyledHeader>
             <StyledExplanation size={14}>
                 {editable ? (
                     <span>
@@ -140,10 +141,10 @@ export function QuickGroupSelection(props) {
                         <StyledInputGroup>
                             <StyledRadioInput
                                 type="radio"
-                                name="groupWork"
+                                name={`${setId}-groupWork`}
                                 value="xGroups"
                                 checked={isGroupWork}
-                                id="xGroups"
+                                id={`${setId}-xGroups`}
                                 onChange={event => {
                                     setIsGroupWork(event.target.checked)
                                     if (event.target.checked) {
@@ -151,7 +152,7 @@ export function QuickGroupSelection(props) {
                                     }
                                 }}
                             />
-                            <label htmlFor="xGroups">
+                            <label htmlFor={`${setId}-xGroups`}>
                                 {" "}
                                 <StyledLabelText>Ich möchte </StyledLabelText>
                                 <StyledInput
@@ -178,9 +179,9 @@ export function QuickGroupSelection(props) {
                         <StyledInputGroup>
                             <StyledRadioInput
                                 type="radio"
-                                name="groupWork"
+                                name={`${setId}-groupWork`}
                                 value="groupsWithXStudents"
-                                id="groupsWithXStudents"
+                                id={`${setId}-groupsWithXStudents`}
                                 checked={!isGroupWork}
                                 onChange={event => {
                                     setIsGroupWork(!event.target.checked)
@@ -195,7 +196,7 @@ export function QuickGroupSelection(props) {
                                 }}
                             />
 
-                            <label htmlFor="groupsWithXStudents">
+                            <label htmlFor={`${setId}-groupsWithXStudents`}>
                                 {" "}
                                 <StyledLabelText>
                                     Ich möchte Gruppen mit je{" "}
@@ -233,17 +234,17 @@ export function QuickGroupSelection(props) {
                         <StyledInputGroup>
                             <StyledRadioInput
                                 type="radio"
-                                name="groupAssignment"
+                                name={`${setId}-groupAssignment`}
                                 value="studentsChoose"
                                 checked={randomlyAssignStudents}
-                                id="studentsChoose"
+                                id={`${setId}-studentsChoose`}
                                 onChange={event =>
                                     setRandomlyAssignStudents(
                                         event.target.checked,
                                     )
                                 }
                             />
-                            <label htmlFor="studentsChoose">
+                            <label htmlFor={`${setId}-studentsChoose`}>
                                 <StyledLabelText>
                                     Gruppen jetzt zufällig bilden
                                 </StyledLabelText>
@@ -252,9 +253,9 @@ export function QuickGroupSelection(props) {
                         <StyledInputGroup>
                             <StyledRadioInput
                                 type="radio"
-                                name="groupAssignment"
+                                name={`${setId}-groupAssignment`}
                                 value="randomAssignment"
-                                id="randomAssignment"
+                                id={`${setId}-randomAssignment`}
                                 checked={!randomlyAssignStudents}
                                 onChange={event =>
                                     setRandomlyAssignStudents(
@@ -263,7 +264,7 @@ export function QuickGroupSelection(props) {
                                 }
                             />
 
-                            <label htmlFor="randomAssignment">
+                            <label htmlFor={`${setId}-randomAssignment`}>
                                 <StyledLabelText>
                                     Schüler wählen Gruppen selbstständig
                                     (während der Stunde)

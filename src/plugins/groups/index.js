@@ -13,9 +13,7 @@ const groupState = StateType.object({
 })
 
 const advancedGroupState = StateType.object({
-    workingPackages: StateType.list(StateType.child("text"), 0),
-    startValues: StateType.scalar(null),
-    setId: StateType.string(),
+    groupState,
     fixedGroupId: StateType.string(),
 })
 

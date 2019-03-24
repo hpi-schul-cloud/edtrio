@@ -25,6 +25,7 @@ const StyledFullStudent = styled.div`
     padding: 3px 6px;
     flex-grow: 0;
     max-height: 20px;
+    color: White;
 `
 
 const StyledStudentName = styled(Text)`
@@ -48,7 +49,6 @@ const StyledFullStudentName = styled.div`
     white-space: nowrap;
     display: inline-block;
     font-size: 12px;
-    color: White;
 `
 
 export function Student(props) {

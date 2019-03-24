@@ -74,6 +74,7 @@ export default class Editor extends React.Component {
             <div
                 style={{
                     minHeight: "500px",
+                    marginBottom: "500px"
                 }}>
                 <Edtr
                     plugins={plugins}
