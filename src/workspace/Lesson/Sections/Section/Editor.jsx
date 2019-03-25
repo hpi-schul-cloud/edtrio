@@ -17,6 +17,7 @@ import { menuPlugin } from "~/plugins/menu/index"
 // import nexboardPlugin from "~/plugins/nexboard"
 import etherpadPlugin from "~/plugins/etherpad"
 import assignmentPlugin from "~/plugins/assignment"
+import { jigsawPlugin } from "~/plugins/jigsawTemplate"
 import {
     groupPlugin,
     advancedGroupPlugin,
@@ -56,6 +57,7 @@ const plugins = {
     Gruppeniteration: advancedGroupPlugin,
     Etherpad: etherpadPlugin,
     Reihe: rowsPlugin,
+    "Template: mehrstufige Gruppenarbeit": jigsawPlugin,
     // TODO:
     // Templates
 }
@@ -74,7 +76,7 @@ export default class Editor extends React.Component {
             <div
                 style={{
                     minHeight: "500px",
-                    marginBottom: "500px"
+                    marginBottom: "500px",
                 }}>
                 <Edtr
                     plugins={plugins}

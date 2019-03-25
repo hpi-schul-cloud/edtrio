@@ -16,8 +16,6 @@ export function useGroupState(startValue, state) {
     const [unassignedStudents, setUnassignedStudents] = useState(
         startValue.unassignedStudents,
     )
-    console.log("startValue", startValue.workingPackages.length)
-    console.log("state", state.workingPackages.items.length)
     if (
         startValue.workingPackages.length > state.workingPackages.items.length
     ) {
