@@ -54,22 +54,16 @@ async function handleClick(dispatch, isFirst, index, lessonId) {
         },
     })
 
-    const newSection = await api.post(
-        "/editor/sections",
-        {
-            lessonId,
-            visible: true,
-        },
-        null,
-        null,
-        { id: uuid(), lessonId },
-    )
+    const newSection = await api.post("/editor/sections", {
+        lesson: lessonId,
+        visible: true,
+    })
 
     dispatch({
         type: "REPLACE_ADDED_SECTION_ID",
         payload: {
             tempId,
-            backendId: newSection.id,
+            backendId: newSection._id,
         },
     })
 }

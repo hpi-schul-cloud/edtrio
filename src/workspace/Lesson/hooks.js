@@ -9,14 +9,14 @@ export function useBootstrap(id, dispatch, dispatchUserAction) {
     async function fetchData() {
         if (!process.env.CLIENT && process.env.NODE_ENV !== "production") {
             // NOTE if you want to persist your lesson data in local development (not in schulcloud-client), simply comment this block
-            try {
-                // DEVELOPMENT ONLY
-                const lesson = await api.get("/editor/test")
-                id = lesson._id
-                setCookie("jwt", lesson.jwt)
-            } catch (err) {
-                // in case the backend is not running, we should still be able to continue
-            }
+            // try {
+            //     // DEVELOPMENT ONLY
+            //     const lesson = await api.get("/editor/test")
+            //     id = lesson._id
+            //     setCookie("jwt", lesson.jwt)
+            // } catch (err) {
+            //     // in case the backend is not running, we should still be able to continue
+            // }
         }
         const user = await api.get("/me")
         dispatchUserAction({ type: "BOOTSTRAP_USER", payload: user })
@@ -27,19 +27,30 @@ export function useBootstrap(id, dispatch, dispatchUserAction) {
             if (cacheData && cacheData.savedToBackend === false) {
                 lesson = cacheData.lesson
             } else {
-                lesson = await api.get(`/editor/lessons/${id}`, {
-                    id,
-                    title: `Sample lesson`,
-                    sections: [
-                        {
-                            id: 1,
-                            notes: "",
-                            title: "Sample Section",
-                            docValue: null,
-                            visible: true,
-                        },
-                    ],
-                })
+                lesson = await api.get(`/editor/lessons/${id}`)
+                if (lesson.steps.length === 0) {
+                    const section = await api.post(`/editor/sections/`, {
+                        lesson: lesson._id,
+                        title: "Neuer Abschnitt",
+                        owner: lesson.owner._id,
+                    })
+
+                    lesson.sections = [section]
+                } else {
+                    lesson.sections = lesson.steps.map(step => ({
+                        ...step,
+                        stepId: step._id,
+                        notes: step.note,
+                        ...step.sections,
+                    }))
+                }
+
+                lesson.id = lesson._id
+                lesson.sections = lesson.sections.map(section => ({
+                    ...section,
+                    id: section._id,
+                    docValue: section.state,
+                }))
             }
 
             dispatch({ type: "BOOTSTRAP", payload: lesson })
@@ -65,8 +76,8 @@ export async function saveLesson(store, dispatch, override) {
     const lessonChanges = {}
     store.lesson.changed.forEach(key => {
         if (key === "order") {
-            lessonChanges.order = store.lesson.sections.map(
-                section => section.id,
+            lessonChanges.steps = store.lesson.sections.map(
+                section => section.stepId,
             )
         } else {
             lessonChanges[key] = store.lesson[key]
@@ -79,9 +90,6 @@ export async function saveLesson(store, dispatch, override) {
                     await api.patch(
                         `/editor/lessons/${store.lesson.id}`,
                         lessonChanges,
-                        null,
-                        null,
-                        { id: store.lesson.id, ...lessonChanges },
                     )
                     dispatch({ type: "LESSON_SAVED" })
                 } catch (err) {
@@ -106,7 +114,7 @@ export async function saveLesson(store, dispatch, override) {
                     JSON.stringify(section[key]) !==
                     JSON.stringify(updatedDocValue)
                 ) {
-                    sectionChanges[key] = updatedDocValue
+                    sectionChanges.state = updatedDocValue
                 }
             } else {
                 sectionChanges[key] = section[key]
@@ -119,9 +127,6 @@ export async function saveLesson(store, dispatch, override) {
                     const backendResult = await api.patch(
                         `/editor/sections/${section.id}`,
                         sectionChanges,
-                        null,
-                        null,
-                        // { success: true },
                     )
                     dispatch({ type: "SECTION_SAVED", payload: section.id })
                     resolve(backendResult)
@@ -149,7 +154,6 @@ export async function saveLesson(store, dispatch, override) {
     if (results.includes("error")) {
         cacheData.savedToBackend = false
     }
-    cacheData.savedToBackend = false // REMOVE
 
     saveEditorData(cacheData, store.lesson.id)
 

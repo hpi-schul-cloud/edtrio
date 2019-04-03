@@ -84,9 +84,7 @@ const Controls = ({
             })
         }, 250)
 
-        await api.delete(`/editor/sections/${sectionId}`, null, null, null, {
-            success: true,
-        })
+        await api.delete(`/editor/sections/${sectionId}`)
     }
 
     const isOnly = isLast && index === 0

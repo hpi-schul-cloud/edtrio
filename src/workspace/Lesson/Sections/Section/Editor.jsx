@@ -57,11 +57,11 @@ export default class Editor extends React.Component {
         return (
             <div
                 style={{
-                    minHeight: "500px",
+                    minHeight: "50px",
                 }}>
                 <Edtr
                     plugins={plugins}
-                    defaultPlugin={this.props.index === 0 ? "etherpad" : "text"}
+                    defaultPlugin={"text"}
                     editable={this.props.editing}
                     initialState={this.docValue}>
                     <ChangeListener

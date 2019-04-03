@@ -147,15 +147,40 @@ const api = {
             uploadProgress,
             fakeResponse,
         ),
-    delete: (endpoint, body, files, uploadProgress, fakeResponse) =>
-        bodyRequest(
-            "delete",
-            endpoint,
-            body,
-            files,
-            uploadProgress,
-            fakeResponse,
-        ),
+    delete: (endpoint, fakeResponse) => {
+        if (fakeResponse && process.env.NODE_ENV !== "production") {
+            return new Promise(resolve =>
+                setTimeout(() => resolve(fakeResponse), 250),
+            )
+        }
+
+        return new Promise((resolve, reject) => {
+            axios
+                .delete(endpoint, {
+                    baseURL: process.env.BACKEND_URL || "http://localhost:3030", // TODO include test system? staging?
+                    headers: {
+                        Authorization:
+                            (getCookie("jwt").startsWith("Bearer ")
+                                ? ""
+                                : "Bearer ") + getCookie("jwt"),
+                    },
+                })
+                .then(result => resolve(result.data))
+                .catch(err => {
+                    if (
+                        err &&
+                        err.response &&
+                        err.response.data &&
+                        err.response.data.error
+                    ) {
+                        err.description = err.response.data.error
+                        reject(err)
+                    } else {
+                        reject(err)
+                    }
+                })
+        })
+    },
 }
 
 export default api
