@@ -35,7 +35,9 @@ export function useBootstrap(id, dispatch, dispatchUserAction) {
                         owner: lesson.owner._id,
                     })
 
-                    lesson.sections = [section]
+                    lesson.sections = [
+                        { ...section, visible: true, notes: "", title: "" },
+                    ]
                 } else {
                     lesson.sections = lesson.steps.map(step => ({
                         ...step,

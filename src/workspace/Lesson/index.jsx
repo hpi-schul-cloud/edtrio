@@ -41,12 +41,12 @@ const Lesson = props => {
     useBootstrap(id, dispatch, dispatchUserAction)
     useChangeListener(store, dispatch)
     const isFullScreen = useFullScreenListener(store, dispatch)
-    // useInterval(() => saveLesson(store, dispatch), 10000)
+    useInterval(() => saveLesson(store, dispatch), 10000)
 
-    // useEffect(() => {
-    //     if (store.bootstrapFinished && store.editing === false)
-    //         saveLesson(store, dispatch, true)
-    // }, [store.editing])
+    useEffect(() => {
+        if (store.bootstrapFinished && store.editing === false)
+            saveLesson(store, dispatch, true)
+    }, [store.editing])
 
     if (store.loading) {
         return (
@@ -60,9 +60,6 @@ const Lesson = props => {
 
     return (
         <Wrapper isFullScreen={isFullScreen}>
-            <button onClick={() => saveLesson(store, dispatch)}>
-                SEND TO BACKEND
-            </button>
             <Header
                 title={store.lesson.title}
                 dispatch={dispatch}

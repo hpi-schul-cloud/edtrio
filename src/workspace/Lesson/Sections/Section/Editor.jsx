@@ -12,7 +12,7 @@ import { blockquotePlugin } from "@edtr-io/plugin-blockquote"
 // import { highlightPlugin } from "@edtr-io/plugin-highlight"
 // import { spoilerPlugin } from "@edtr-io/plugin-spoiler"
 import { textPlugin } from "@edtr-io/plugin-text"
-// import nexboardPlugin from "~/plugins/nexboard"
+import nexboardPlugin from "~/plugins/nexboard"
 import etherpadPlugin from "~/plugins/etherpad"
 
 const counterState = StateType.number(0)
@@ -41,7 +41,7 @@ const plugins = {
     counter: counterPlugin,
     // blockquote: blockquotePlugin,
     etherpad: etherpadPlugin,
-    // nexboard: nexboardPlugin,
+    nexboard: nexboardPlugin,
     // highlight: highlightPlugin,
     // spoiler: spoilerPlugin,
     text: textPlugin,
@@ -50,7 +50,11 @@ const plugins = {
 export default class Editor extends React.Component {
     constructor(props) {
         super(props)
-        this.docValue = this.props.docValue || { plugin: "text" }
+        this.docValue = this.props.docValue 
+            ? this.props.docValue : this.props.index === 0 
+            ? { plugin: "text" } : this.props.index === 1 
+            ? {plugin: 'nexboard'} : this.props.index === 2 
+            ? {plugin: 'etherpad'} : {plugin: 'text'}
     }
 
     render() {
@@ -61,7 +65,7 @@ export default class Editor extends React.Component {
                 }}>
                 <Edtr
                     plugins={plugins}
-                    defaultPlugin={"text"}
+                    defaultPlugin={"nexboard"}
                     editable={this.props.editing}
                     initialState={this.docValue}>
                     <ChangeListener
