@@ -36,10 +36,10 @@ const counterPlugin = {
 }
 
 const plugins = {
-    // rows: rowsPlugin,
-    // anchor: anchorPlugin,
+    rows: rowsPlugin,
+    anchor: anchorPlugin,
     counter: counterPlugin,
-    // blockquote: blockquotePlugin,
+    blockquote: blockquotePlugin,
     etherpad: etherpadPlugin,
     nexboard: nexboardPlugin,
     // highlight: highlightPlugin,
@@ -50,11 +50,16 @@ const plugins = {
 export default class Editor extends React.Component {
     constructor(props) {
         super(props)
-        this.docValue = this.props.docValue 
-            ? this.props.docValue : this.props.index === 0 
-            ? { plugin: "text" } : this.props.index === 1 
-            ? {plugin: 'nexboard'} : this.props.index === 2 
-            ? {plugin: 'etherpad'} : {plugin: 'text'}
+        this.docValue = this.props.docValue
+            ? this.props.docValue
+            : {
+                  plugin: "rows",
+                  state: Object.keys(plugins)
+                      .filter(key => key !== "rows")
+                      .map(key => ({ plugin: key })),
+              }
+
+        console.log("this.docValue :", this.docValue)
     }
 
     render() {
@@ -65,7 +70,7 @@ export default class Editor extends React.Component {
                 }}>
                 <Edtr
                     plugins={plugins}
-                    defaultPlugin={"nexboard"}
+                    defaultPlugin={"text"}
                     editable={this.props.editing}
                     initialState={this.docValue}>
                     <ChangeListener
