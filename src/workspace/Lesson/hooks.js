@@ -186,7 +186,7 @@ export function useFullScreenListener(store, dispatch) {
         } else if (!store.isFullScreen) {
             dispatch({ type: "FULL_SCREEN", payload: true })
         }
-    }, 100) // TODO maybe think of another way than an interval
+    }, 1500) // TODO maybe think of another way than an interval
 
     useEffect(() => {
         document.body.classList.add("edtr")
