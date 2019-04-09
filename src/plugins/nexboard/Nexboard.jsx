@@ -4,6 +4,7 @@ import UserContext from "~/Contexts/User"
 import { createBoard, getBoard } from "./utils"
 import Action from "~/components/Action"
 import Flex from "~/components/Flex"
+import Loader from "~/components/Loader"
 
 const Nexboard = ({ focused, state }) => {
     // const [state, setState] = useState({ board: {}, project: {} })
@@ -35,9 +36,9 @@ const Nexboard = ({ focused, state }) => {
 
     if (loading) {
         return (
-            <div>
-                <h3>Dein Nexboard wird gerade geladen...</h3>
-            </div>
+            <Flex justifyCenter>
+                <Loader />
+            </Flex>
         )
     } else {
         return (

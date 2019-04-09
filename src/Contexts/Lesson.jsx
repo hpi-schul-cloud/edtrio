@@ -125,7 +125,6 @@ function reducer(state, { type, payload }) {
             }
 
         case "REPLACE_ADDED_SECTION_ID": {
-            state.lesson.changed.add("order")
             return {
                 ...state,
                 lesson: {

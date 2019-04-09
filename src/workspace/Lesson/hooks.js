@@ -36,7 +36,13 @@ export function useBootstrap(id, dispatch, dispatchUserAction) {
                     })
 
                     lesson.sections = [
-                        { ...section, visible: true, notes: "", title: "" },
+                        {
+                            ...section,
+                            visible: true,
+                            notes: "",
+                            title: "",
+                            state: { plugin: "rows" },
+                        },
                     ]
                 } else {
                     lesson.sections = lesson.steps.map(step => ({

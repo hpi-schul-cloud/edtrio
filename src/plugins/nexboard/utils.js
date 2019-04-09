@@ -1,13 +1,15 @@
 import api from "~/utils/api"
 
 export const createBoard = async (lessonId, title) => {
-    return api.post(`/nexboard/board`, {
+    const board = await api.post(`/nexboard/board`, {
         lessonId,
         title,
         // description,
     })
+    return board
 }
 
 export const getBoard = async id => {
-    return api.get(`/nexboard/board/${id}`)
+    const board = await api.get(`/nexboard/board/${id}`)
+    return board
 }

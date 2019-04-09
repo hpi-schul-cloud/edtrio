@@ -53,10 +53,10 @@ async function handleClick(dispatch, isFirst, index, lessonId) {
             tempId,
         },
     })
-
     const newSection = await api.post("/editor/sections", {
         lesson: lessonId,
         visible: true,
+        position: isFirst ? index : index + 1,
         notes: "",
         title: "",
     })

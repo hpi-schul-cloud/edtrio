@@ -36,10 +36,10 @@ const Etherpad = ({ focused, state }) => {
     }
     return (
         <div>
-            <Flex alignEnd>
+            {/* <Flex alignEnd>
                 <Input
                     size={24}
-                    placeholder="Etherpad title"
+                    placeholder="Etherpad Titel"
                     style={{ marginBottom: 15, marginRight: 15, width: 150 }}
                     onChange={state.title.set}
                     value={state.title.value}
@@ -48,12 +48,12 @@ const Etherpad = ({ focused, state }) => {
                 <Input
                     size={16}
                     style={{ marginBottom: 15, flexGrow: 1 }}
-                    placeholder="Etherpad description"
+                    placeholder="Etherpad Beschreibung"
                     onChange={state.description.set}
                     value={state.description.value}
                     readOnly={!store.editing}
                 />
-            </Flex>
+            </Flex> */}
             {etherpadFrame}
         </div>
     )
