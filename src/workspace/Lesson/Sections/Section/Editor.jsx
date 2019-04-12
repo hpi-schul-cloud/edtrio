@@ -6,7 +6,8 @@ import {
     serializeDocument,
     StateType,
 } from "@edtr-io/core"
-import { rowsPlugin } from "@edtr-io/plugin-rows"
+// import { rowsPlugin } from "@edtr-io/plugin-rows"
+import { rowsPlugin } from "~/plugins/rows"
 import { anchorPlugin } from "@edtr-io/plugin-anchor"
 import { blockquotePlugin } from "@edtr-io/plugin-blockquote"
 // import { highlightPlugin } from "@edtr-io/plugin-highlight"
@@ -63,11 +64,12 @@ const plugins = {
 export default class Editor extends React.Component {
     constructor(props) {
         super(props)
-        this.docValue = this.props.docValue
-            ? this.props.docValue
-            : {
-                  plugin: "rows",
-              }
+        this.docValue =
+            this.props.docValue && Object.keys(this.props.docValue).length
+                ? this.props.docValue
+                : {
+                      plugin: "rows",
+                  }
     }
 
     render() {

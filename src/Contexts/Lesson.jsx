@@ -47,7 +47,13 @@ function reducer(state, { type, payload }) {
                     ...payload,
                     changed: new Set(),
                     sections: payload.sections.map(section => {
-                        return { ...section, changed: new Set() }
+                        const sectionData = { ...section, changed: new Set() }
+                        if (section.new) {
+                            sectionData.new = undefined
+                            sectionData.changed.add("")
+                        }
+
+                        return sectionData
                     }),
                 },
             }
@@ -105,7 +111,7 @@ function reducer(state, { type, payload }) {
                 id: payload.tempId,
                 notes: "",
                 visible: true,
-                docValue: null,
+                docValue: {},
                 changed: new Set(),
             }
             const newSections = []

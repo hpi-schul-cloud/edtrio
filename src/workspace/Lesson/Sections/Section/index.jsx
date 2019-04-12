@@ -68,9 +68,13 @@ const Section = ({ section, isLast, index }) => {
                 />
                 <Wrapper visible={section.visible}>
                     <Input
-                        style={{ fontWeight: 700 }}
+                        style={{
+                            fontWeight: 700,
+                            marginLeft: 25,
+                            marginRight: 25,
+                            width: "calc(100% - 50px)",
+                        }}
                         full
-                        noMargin
                         size={32}
                         value={section.title}
                         readOnly={!store.editing}

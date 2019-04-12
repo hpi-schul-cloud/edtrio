@@ -28,29 +28,11 @@ export function useBootstrap(id, dispatch, dispatchUserAction) {
                 lesson = cacheData.lesson
             } else {
                 lesson = await api.get(`/editor/lessons/${id}`)
-                if (lesson.steps.length === 0) {
+                if (lesson.sections.length === 0) {
                     const section = await api.post(`/editor/sections/`, {
                         lesson: lesson._id,
-                        title: "Neuer Abschnitt",
-                        owner: lesson.owner._id,
                     })
-
-                    lesson.sections = [
-                        {
-                            ...section,
-                            visible: true,
-                            notes: "",
-                            title: "",
-                            state: { plugin: "rows" },
-                        },
-                    ]
-                } else {
-                    lesson.sections = lesson.steps.map(step => ({
-                        ...step,
-                        stepId: step._id,
-                        notes: step.note,
-                        ...step.sections,
-                    }))
+                    lesson.sections = [section]
                 }
 
                 lesson.id = lesson._id
@@ -58,6 +40,7 @@ export function useBootstrap(id, dispatch, dispatchUserAction) {
                     ...section,
                     id: section._id,
                     docValue: section.state,
+                    notes: section.note,
                 }))
             }
 
@@ -83,9 +66,10 @@ export async function saveLesson(store, dispatch, override) {
     // save lesson title and section order
     const lessonChanges = {}
     store.lesson.changed.forEach(key => {
+        // TODO
         if (key === "order") {
-            lessonChanges.steps = store.lesson.sections.map(
-                section => section.stepId,
+            lessonChanges.sections = store.lesson.sections.map(
+                section => section.id,
             )
         } else {
             lessonChanges[key] = store.lesson[key]
@@ -109,11 +93,6 @@ export async function saveLesson(store, dispatch, override) {
 
     // save sections
     store.lesson.sections.forEach(section => {
-        if (section.changed.size === 0)
-            return savePromises.push(
-                Promise.resolve(`No changes for section ${section.id}`),
-            )
-
         const sectionChanges = {}
         section.changed.forEach(key => {
             if (key === "docValue") {
@@ -128,6 +107,11 @@ export async function saveLesson(store, dispatch, override) {
                 sectionChanges[key] = section[key]
             }
         })
+        if (Object.keys(sectionChanges).length === 0) {
+            return savePromises.push(
+                Promise.resolve(`No changes for section ${section.id}`),
+            )
+        }
 
         savePromises.push(
             new Promise(async resolve => {
