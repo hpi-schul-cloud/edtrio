@@ -8,7 +8,7 @@
         "dev": "parcel src/index.html -d dist/dev --open",
         "dev:client": "CLIENT=true parcel src/index.js -d dist/dev",
         "storybook": "start-storybook -p 9001 -c .storybook",
-        "build": "node build/index.js && parcel build --experimental-scope-hoisting src/index.js"
+        "build": "node build/index.js && parcel build src/index.js"
     },
     "dependencies": {
         "@edtr-io/core": "^0.4.3",
