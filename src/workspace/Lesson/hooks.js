@@ -131,7 +131,6 @@ export async function saveLesson(store, dispatch, override) {
     })
 
     const results = await Promise.all(savePromises)
-    console.log("results :", results)
     const cacheData = {
         savedToBackend: true,
         lesson: {
