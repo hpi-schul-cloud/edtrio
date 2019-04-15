@@ -55,9 +55,7 @@ const Clipboard = ({ onClose, ...props }) => {
                 {states.length ? (
                     states.map((state, index) => {
                         return (
-                            <Button
-                                key={index}
-                                onClick={() => props.onClose(state)}>
+                            <Button key={index} onClick={() => onClose(state)}>
                                 <Preview>
                                     <PreventMouseEvents>
                                         <Editor
