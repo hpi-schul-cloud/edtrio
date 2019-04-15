@@ -11,6 +11,7 @@ import Dropzone from "./Dropzone"
 const Wrapper = styled.div`
     display: flex;
     padding: 25px calc((100vw - 960px) / 2) 150px;
+    padding-bottom: 200px;
     flex-direction: column;
     background-color: rgba(255, 255, 255, 0.95);
     position: fixed;
@@ -91,6 +92,7 @@ const Menu = ({ visible, menu, setMenu, index, store, name }) => {
         <Portal>
             <Wrapper>
                 <Search search={search} setSearch={setSearch} />
+                <Clipboard onClose={menu.onClose} />
                 <PluginList>{mappedPlugins}</PluginList>
                 <Dropzone />
                 <CloseButton
@@ -100,32 +102,6 @@ const Menu = ({ visible, menu, setMenu, index, store, name }) => {
             </Wrapper>
         </Portal>
     )
-    // TODO clipboard
 }
-
-// const old = ({ plugins, name, setPopup, popup }) => (
-//     <OnClickOutside onClick={() => setPopup(undefined)}>
-//         <AddMenuContainer>
-//             <AddMenu>
-//                 {R.map(plugin => {
-//                     if (plugin === name) {
-//                         return null
-//                     }
-//                     return (
-//                         <Button
-//                             key={plugin}
-//                             onClick={() => {
-//                                 popup.onClose({ plugin })
-//                             }}>
-//                             {plugin}
-//                         </Button>
-//                     )
-//                 }, R.keys(plugins))}
-//             </AddMenu>
-//             <hr />
-//             <Clipboard onClose={popup.onClose} />
-//         </AddMenuContainer>
-//     </OnClickOutside>
-// )
 
 export default Menu

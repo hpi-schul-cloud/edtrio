@@ -9,13 +9,16 @@ import {
 import styled from "styled-components"
 
 const ClipboardHeader = styled.div({
-    fontSize: "130%",
+    fontSize: 20,
     textAlign: "center",
     marginBottom: "10px",
 })
 
 const Container = styled.div({
     textAlign: "center",
+    backgroundColor: "rgba(245, 245, 245, 1.00)",
+    padding: 15,
+    borderRadius: 5,
 })
 
 const ButtonContainer = styled.div({
