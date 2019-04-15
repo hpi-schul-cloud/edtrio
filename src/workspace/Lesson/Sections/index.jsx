@@ -9,6 +9,10 @@ import Section from "./Section"
 const Wrapper = styled(Flex)``
 
 const Sections = ({ sections, editing, showSectionOverview, isFullScreen }) => {
+    const filteredSections = sections.filter(section => {
+        if (editing) return true
+        return section.visible
+    })
     return (
         <Wrapper justifyCenter style={{ width: "100%" }}>
             <SectionOverview
@@ -22,19 +26,14 @@ const Sections = ({ sections, editing, showSectionOverview, isFullScreen }) => {
                     width: "100%",
                     backgroundColor: "rgb(248, 248, 248)",
                 }}>
-                {sections
-                    .filter(section => {
-                        if (editing) return true
-                        return section.visible
-                    })
-                    .map((section, index) => (
-                        <Section
-                            key={section.id}
-                            index={index}
-                            section={section}
-                            isLast={index === sections.length - 1}
-                        />
-                    ))}
+                {filteredSections.map((section, index) => (
+                    <Section
+                        key={section.id}
+                        index={index}
+                        section={section}
+                        isLast={index === filteredSections.length - 1}
+                    />
+                ))}
             </div>
         </Wrapper>
     )

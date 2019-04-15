@@ -63,10 +63,8 @@ export async function saveLesson(store, dispatch, override) {
     dispatch({ type: "SAVE_STATUS", payload: "Sichern..." })
     const savePromises = []
 
-    // save lesson title and section order
     const lessonChanges = {}
     store.lesson.changed.forEach(key => {
-        // TODO
         if (key === "order") {
             lessonChanges.sections = store.lesson.sections.map(
                 section => section.id,
@@ -79,11 +77,12 @@ export async function saveLesson(store, dispatch, override) {
         savePromises.push(
             new Promise(async resolve => {
                 try {
-                    await api.patch(
+                    const lessonResult = await api.patch(
                         `/editor/lessons/${store.lesson.id}`,
                         lessonChanges,
                     )
                     dispatch({ type: "LESSON_SAVED" })
+                    resolve(lessonResult)
                 } catch (err) {
                     resolve("error")
                 }
@@ -103,6 +102,8 @@ export async function saveLesson(store, dispatch, override) {
                 ) {
                     sectionChanges.state = updatedDocValue
                 }
+            } else if (key === "notes") {
+                sectionChanges.note = section.notes
             } else {
                 sectionChanges[key] = section[key]
             }
@@ -130,6 +131,7 @@ export async function saveLesson(store, dispatch, override) {
     })
 
     const results = await Promise.all(savePromises)
+    console.log("results :", results)
     const cacheData = {
         savedToBackend: true,
         lesson: {
