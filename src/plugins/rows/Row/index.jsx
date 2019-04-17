@@ -37,12 +37,15 @@ export const Row = props => {
     const index = props.index
     const row = rows()[index]
 
-    function openMenu(insertIndex) {
+    function openMenu(insertIndex, replaceIndex) {
         setMenu({
             index: insertIndex,
             onClose: pluginState => {
                 rows.insert(insertIndex, pluginState)
                 setMenu(undefined)
+                if (typeof replaceIndex === "number") {
+                    rows.remove(replaceIndex)
+                }
             },
         })
     }
@@ -79,7 +82,7 @@ export const Row = props => {
                 />
             )}
             {props.editable && isEmptyTextPlugin && (
-                <Add onClick={() => openMenu(index + 1)} inline />
+                <Add onClick={() => openMenu(index + 1, index)} inline />
             )}
             <Menu
                 visible={!!menu}

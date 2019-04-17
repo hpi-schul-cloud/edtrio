@@ -7,7 +7,6 @@ import Flex from "~/components/Flex"
 import Loader from "~/components/Loader"
 
 const Nexboard = ({ focused, state }) => {
-    // const [state, setState] = useState({ board: {}, project: {} })
     const [loading, setLoading] = useState(true)
     const [board, setBoard] = useState({})
     const { store } = useContext(LessonContext)
