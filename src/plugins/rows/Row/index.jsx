@@ -1,5 +1,5 @@
 import * as React from "react"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import {
     getDocument,
     EditorContext,
@@ -13,12 +13,19 @@ import Separator, { Add } from "./Separator"
 import render from "./render"
 
 export const RowContainer = styled.div`
-    min-height: 10px;
+    margin-left: 25px;
+    margin-right: 25px;
+
+    ${props =>
+        !props.noHeight &&
+        css`
+            min-height: 10px;
+            margin: 25px;
+            margin-top: ${props => (props.isFirst ? 25 : 0)}px;
+        `}
     position: relative;
     border-right: 3px solid transparent;
     transition: 250ms all ease-in-out;
-    margin: 25px;
-    margin-top: ${props => (props.isFirst ? 25 : 0)}px;
 
     &:hover {
         border-color: ${props => props.editable && "rgba(177, 4, 56, 1)"};
@@ -59,9 +66,9 @@ export const Row = props => {
 
     const doc = getDocument(store.state, row.id)
     const isEmptyTextPlugin = doc.plugin === "text" && !doc.state.document.data
-
     return (
         <RowContainer
+            noHeight={doc.plugin === "notes" && !props.editable}
             editable={props.editable}
             isFirst={index === 0}
             onMouseEnter={() => setHover(true)}

@@ -22,6 +22,7 @@ import { inputExercisePlugin } from "@edtr-io/plugin-input-exercise"
 
 import nexboardPlugin from "~/plugins/nexboard"
 import etherpadPlugin from "~/plugins/etherpad"
+import notesPlugin from "~/plugins/notes"
 
 const counterState = StateType.number(0)
 
@@ -44,6 +45,7 @@ const counterPlugin = {
 }
 
 const plugins = {
+    notes: notesPlugin,
     rows: rowsPlugin,
     anchor: anchorPlugin,
     counter: counterPlugin,

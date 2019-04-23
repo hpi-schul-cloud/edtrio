@@ -57,30 +57,31 @@ function scrollToSection(sectionIndex) {
 function useScrollListener() {
     const [activeSectionIndex, setActiveSectionIndex] = useState(0)
 
-    function scrollListener(evt) {
-        let newActiveSection
-        const domSections = Array.from(
-            document.querySelectorAll(".lesson-section"),
-        )
-
-        if (
-            window.innerHeight + window.pageYOffset >=
-            document.body.offsetHeight - 5
-        ) {
-            newActiveSection = domSections[domSections.length - 1]
-        } else {
-            domSections.forEach(domSection => {
-                const rect = domSection.getBoundingClientRect()
-                if (rect.top > 0 && rect.top < window.innerHeight / 2)
-                    newActiveSection = domSection
-            })
-        }
-
-        if (newActiveSection)
-            setActiveSectionIndex(parseInt(newActiveSection.dataset.section))
-    }
-
     useEffect(() => {
+        function scrollListener(evt) {
+            let newActiveSection
+            const domSections = Array.from(
+                document.querySelectorAll(".lesson-section"),
+            )
+
+            if (
+                window.innerHeight + window.pageYOffset >=
+                document.body.offsetHeight - 5
+            ) {
+                newActiveSection = domSections[domSections.length - 1]
+            } else {
+                domSections.forEach(domSection => {
+                    const rect = domSection.getBoundingClientRect()
+                    if (rect.top > 0 && rect.top < window.innerHeight / 2)
+                        newActiveSection = domSection
+                })
+            }
+
+            if (newActiveSection)
+                setActiveSectionIndex(
+                    parseInt(newActiveSection.dataset.section),
+                )
+        }
         window.addEventListener("scroll", scrollListener)
 
         return () => window.removeEventListener("scroll", scrollListener)
