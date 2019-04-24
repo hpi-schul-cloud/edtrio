@@ -8,7 +8,6 @@ export const initialState = {
     bootstrapFinished: false,
     saveStatus: "",
     showSectionOverview: false,
-    showNotes: false,
     isFullScreen: false,
 }
 function reducer(state, { type, payload }) {
@@ -30,12 +29,6 @@ function reducer(state, { type, payload }) {
                     payload !== undefined
                         ? payload
                         : !state.showSectionOverview,
-            }
-
-        case "TOGGLE_NOTES":
-            return {
-                ...state,
-                showNotes: payload !== undefined ? payload : !state.showNotes,
             }
 
         case "BOOTSTRAP":
@@ -109,7 +102,6 @@ function reducer(state, { type, payload }) {
             const newSection = {
                 title: "",
                 id: payload.tempId,
-                notes: "",
                 visible: true,
                 docValue: {},
                 changed: new Set(),
@@ -181,20 +173,6 @@ function reducer(state, { type, payload }) {
                     sections: state.lesson.sections.filter(
                         section => section.id !== payload,
                     ),
-                },
-            }
-
-        case "NOTES":
-            return {
-                ...state,
-                lesson: {
-                    ...state.lesson,
-                    sections: state.lesson.sections.map(section => {
-                        if (section.id !== payload.sectionId) return section
-
-                        section.changed.add("notes")
-                        return { ...section, notes: payload.newValue }
-                    }),
                 },
             }
 

@@ -24,7 +24,6 @@ const Sections = ({ sections, editing, showSectionOverview, isFullScreen }) => {
             <div
                 style={{
                     width: "100%",
-                    backgroundColor: "rgb(248, 248, 248)",
                 }}>
                 {filteredSections.map((section, index) => (
                     <Section

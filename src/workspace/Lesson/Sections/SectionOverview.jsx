@@ -16,8 +16,8 @@ const Wrapper = styled.div`
     opacity: ${props => (props.visible ? 1 : 0)};
     transition: 250ms all ease-in-out;
     background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    /* border-radius: 5px; */
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.18);
 
     @media (max-width: 1250px) {
         left: 65px;

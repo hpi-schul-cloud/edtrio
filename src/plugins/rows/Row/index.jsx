@@ -65,7 +65,6 @@ export const Row = props => {
     }
 
     const doc = getDocument(store.state, row.id)
-    const isEmptyTextPlugin = doc.plugin === "text" && !doc.state.document.data
     return (
         <RowContainer
             noHeight={doc.plugin === "notes" && !props.editable}
@@ -87,9 +86,6 @@ export const Row = props => {
                     copyToClipboard={copyToClipboard}
                     row={row}
                 />
-            )}
-            {props.editable && isEmptyTextPlugin && (
-                <Add onClick={() => openMenu(index + 1, index)} inline />
             )}
             <Menu
                 visible={!!menu}

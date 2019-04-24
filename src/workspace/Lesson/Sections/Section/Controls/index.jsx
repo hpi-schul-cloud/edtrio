@@ -14,15 +14,10 @@ import Flex from "~/components/Flex"
 import DeleteModal from "./DeleteModal"
 
 const StyledControls = styled(Flex)`
-    width: ${props => (props.hide ? 0 : 40)}px;
+    width: 850px;
     padding: 5px 0;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
     overflow: hidden;
     flex-shrink: 0;
-    align-self: flex-start;
-    border-radius: 5px;
-    background-color: #fff;
-    margin-right: 10px;
 
     transition: 250ms all ease-in-out;
     ${props =>
@@ -31,10 +26,6 @@ const StyledControls = styled(Flex)`
             opacity: 0;
             pointer-events: none;
         `}
-
-    @media (min-width: 1400px) {
-        margin-left: ${props => (props.showNotes ? 250 : 0)}px;
-    }
 `
 
 const Icon = styled.img`
@@ -92,8 +83,8 @@ const Controls = ({
     return (
         <StyledControls
             showNotes={store.showNotes}
-            column
             alignCenter
+            justifyEnd
             hide={!store.editing}>
             <Icon
                 src={arrowUpIcon}
