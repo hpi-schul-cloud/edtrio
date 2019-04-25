@@ -17,6 +17,7 @@ const Wrapper = styled.div`
     transition: 250ms all ease-in-out;
     background-color: #fff;
     /* border-radius: 5px; */
+    z-index: 100;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.18);
 
     @media (max-width: 1250px) {

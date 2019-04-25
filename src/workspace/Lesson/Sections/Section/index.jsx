@@ -34,6 +34,15 @@ const Wrapper = styled.div`
     transition: 250ms margin ease-in-out;
 `
 
+const SectionInput = styled(Input)`
+    font-weight: 700;
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-right: 25px;
+    width: calc(100% - 50px);
+    font-family: "Poppins", sans-serif;
+`
+
 const Section = ({ section, isLast, index }) => {
     const { store, dispatch } = useContext(LessonContext)
     const sectionRef = useRef(null)
@@ -65,13 +74,7 @@ const Section = ({ section, isLast, index }) => {
                 sectionId={section.id}
             />
             <Wrapper visible={section.visible}>
-                <Input
-                    style={{
-                        fontWeight: 700,
-                        marginLeft: 25,
-                        marginRight: 25,
-                        width: "calc(100% - 50px)",
-                    }}
+                <SectionInput
                     full
                     size={32}
                     value={section.title}

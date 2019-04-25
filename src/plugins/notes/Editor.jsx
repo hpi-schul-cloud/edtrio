@@ -11,7 +11,7 @@ const Wrapper = styled.div`
 `
 
 const Textarea = styled.textarea`
-    font-style: italic;
+    /* font-style: italic; */
     width: 100%;
     overflow: hidden;
     min-height: 30px;
@@ -20,6 +20,7 @@ const Textarea = styled.textarea`
     outline: none;
     color: rgb(100, 100, 100);
     resize: none;
+    font-family: "Kalam", cursive;
 
     &::placeholder {
         color: rgb(140, 140 140);

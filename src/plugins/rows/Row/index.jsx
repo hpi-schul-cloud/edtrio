@@ -9,6 +9,8 @@ import {
 
 import Menu from "./Menu"
 import Controls from "./Controls"
+import Globals from "./Globals"
+import Settings from "./Settings"
 import Separator, { Add } from "./Separator"
 import render from "./render"
 
@@ -24,11 +26,20 @@ export const RowContainer = styled.div`
             margin-top: ${props => (props.isFirst ? 25 : 0)}px;
         `}
     position: relative;
-    border-right: 3px solid transparent;
+    border-left: 3px solid transparent;
     transition: 250ms all ease-in-out;
+    padding-left: 25px;
+    padding-right: 25px;
 
     &:hover {
-        border-color: ${props => props.editable && "rgba(177, 4, 56, 1)"};
+        ${props =>
+            props.editable &&
+            css`
+                border-color: rgba(177, 4, 56, 1);
+                padding-top: 25px;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
+                    0 1px 2px rgba(0, 0, 0, 0.24);
+            `}
     }
 
     &:hover .row-controls {
@@ -43,6 +54,10 @@ export const Row = props => {
     const rows = props.state
     const index = props.index
     const row = rows()[index]
+    const doc = getDocument(store.state, row.id)
+    const plugins = getPlugins(store.state)
+
+    const matchingPlugin = plugins[doc.plugin]
 
     function openMenu(insertIndex, replaceIndex) {
         setMenu({
@@ -57,19 +72,16 @@ export const Row = props => {
         })
     }
 
-    function copyToClipboard(id) {
-        store.dispatch({
-            type: ActionType.CopyToClipboard,
-            payload: id,
-        })
+    function duplicateRow() {
+        rows.insert(index, doc)
     }
 
-    const doc = getDocument(store.state, row.id)
     return (
         <RowContainer
             noHeight={doc.plugin === "notes" && !props.editable}
             editable={props.editable}
             isFirst={index === 0}
+            hover={hover}
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}>
             {index === 0 && (
@@ -79,13 +91,25 @@ export const Row = props => {
             {render({ row, rows, index, store, getDocument })}
             <Separator onClick={() => openMenu(index + 1)} />
             {props.editable && (
-                <Controls
-                    hover={hover}
-                    index={index}
-                    rows={rows}
-                    copyToClipboard={copyToClipboard}
-                    row={row}
-                />
+                <React.Fragment>
+                    <Controls
+                        hover={hover}
+                        index={index}
+                        rows={rows}
+                        row={row}
+                    />
+                    <Settings
+                        index={index}
+                        pluginName={matchingPlugin.title || doc.plugin}
+                    />
+                    <Globals
+                        hover={hover}
+                        index={index}
+                        rows={rows}
+                        duplicateRow={duplicateRow}
+                        row={row}
+                    />
+                </React.Fragment>
             )}
             <Menu
                 visible={!!menu}

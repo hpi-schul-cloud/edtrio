@@ -2,9 +2,9 @@ import React, { useState, useEffect, useRef } from "react"
 import styled from "styled-components"
 
 const Text = styled.p`
-    font-style: italic;
     color: rgb(100, 100, 100);
     margin: 0;
+    font-family: "Kalam", cursive;
 `
 
 const TextWrapper = styled.div`

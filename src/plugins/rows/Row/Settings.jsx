@@ -4,12 +4,12 @@ import styled, { css } from "styled-components"
 const StyledControls = styled.div`
     position: absolute;
     top: 0;
-    right: 0;
-    transform: translateX(calc(100% + 3px));
-    width: 30px;
+    left: 0;
+    transform: translateX(calc(-100% - 10px));
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-end;
+    padding-top: 10px;
     border-radius: 0 3px 3px 0;
     opacity: 0;
     z-index: ${props => 100 - props.index};
@@ -17,8 +17,8 @@ const StyledControls = styled.div`
 `
 
 const StyledIcon = styled.img`
-    width: 25px;
-    margin-bottom: 15px;
+    width: 30px;
+    margin-bottom: 10px;
 
     ${props =>
         props.disabled
@@ -36,34 +36,28 @@ const StyledIcon = styled.img`
     }
 `
 
-const MoveUp = ({ rows, index, row, ...props }) => (
+const Name = styled.p`
+    font-size: 16px;
+    opacity: 0.6;
+`
+
+const SettingsIcon = ({ rows, index, row, ...props }) => (
     <StyledIcon
         disabled={index === 0}
-        src={require("../assets/angle-up.svg")}
+        src={require("../assets/settings.svg")}
         onClick={() => {
-            if (index === 0) return
-            rows.move(index, index - 1)
+            console.log("open settings")
         }}
     />
 )
 
-const MoveDown = ({ rows, index, row, ...props }) => (
-    <StyledIcon
-        disabled={index + 1 >= rows.items.length}
-        src={require("../assets/angle-down.svg")}
-        onClick={() => {
-            index + 1 < rows.items.length && rows.move(index, index + 1)
-        }}
-    />
-)
-
-const Controls = ({ index, rows, row, hover, duplicateRow }) => {
+const Settings = ({ index, pluginName }) => {
     return (
         <StyledControls index={index} className="row-controls">
-            <MoveUp rows={rows} index={index} row={row} />
-            <MoveDown rows={rows} index={index} row={row} />
+            <SettingsIcon />
+            <Name>{pluginName}</Name>
         </StyledControls>
     )
 }
 
-export default Controls
+export default Settings
