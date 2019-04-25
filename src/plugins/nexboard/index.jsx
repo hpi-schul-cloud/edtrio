@@ -9,7 +9,13 @@ export const nexboardState = StateType.object({
 const nexboardPlugin = {
     Component: Nexboard,
     state: nexboardState,
-    icon: () => <img src={require("./assets/logo.png")} alt="" />,
+    icon: () => (
+        <img
+            src={require("./assets/logo.png")}
+            style={{ width: "100%" }}
+            alt=""
+        />
+    ),
     title: "Nexboard",
     description:
         "Benutze das digitale Nexboard, um all deine Ideen festzuhalten!",

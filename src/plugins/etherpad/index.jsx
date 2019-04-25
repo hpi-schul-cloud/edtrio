@@ -12,11 +12,7 @@ const etherpadPlugin = {
     Component: Etherpad,
     state: etherpadState,
     icon: () => (
-        <img
-            src={require("./assets/logo.svg")}
-            style={{ height: 150 }}
-            alt=""
-        />
+        <img src={require("./assets/logo.svg")} style={{ height: 50 }} alt="" />
     ),
     title: "Etherpad",
     description: "Real time collaboration.",

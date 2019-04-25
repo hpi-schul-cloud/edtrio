@@ -2,9 +2,6 @@ import React from "react"
 import styled from "styled-components"
 
 const StyledDropzone = styled.div`
-    position: absolute;
-    bottom: 0;
-    left: 0;
     height: 200px;
     width: 100%;
     background-color: rgba(245, 245, 245, 1);

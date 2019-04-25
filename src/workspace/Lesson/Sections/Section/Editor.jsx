@@ -45,6 +45,7 @@ const counterPlugin = {
 }
 
 const plugins = {
+    text: textPlugin,
     notes: notesPlugin,
     rows: rowsPlugin,
     anchor: anchorPlugin,
@@ -55,7 +56,6 @@ const plugins = {
     singleMultipleChoice: scMcExercisePlugin,
     // highlight: highlightPlugin,
     spoiler: spoilerPlugin,
-    text: textPlugin,
     equations: equationsPlugin,
     geogebra: geogebraPlugin,
     inputExercise: inputExercisePlugin,

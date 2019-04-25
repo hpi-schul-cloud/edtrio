@@ -3,15 +3,13 @@ import styled from "styled-components"
 import { Portal } from "react-portal"
 import { getPlugins } from "@edtr-io/core"
 
-import Clipboard from "../Clipboard"
 import Search from "./Search"
 import Plugin from "./Plugin"
 import Dropzone from "./Dropzone"
 
 const Wrapper = styled.div`
     display: flex;
-    padding: 25px calc((100vw - 960px) / 2) 150px;
-    padding-bottom: 200px;
+    padding: 25px calc((100vw - 960px) / 2) 0;
     flex-direction: column;
     background-color: rgba(255, 255, 255, 0.95);
     position: fixed;
@@ -22,7 +20,7 @@ const Wrapper = styled.div`
     z-index: 9999;
 
     @media (max-width: 1000px) {
-        padding: 25px 20px 150px;
+        padding: 25px 20px 0;
     }
 `
 
@@ -92,9 +90,8 @@ const Menu = ({ visible, menu, setMenu, index, store, name }) => {
         <Portal>
             <Wrapper>
                 <Search search={search} setSearch={setSearch} />
-                <Clipboard onClose={menu.onClose} />
-                <PluginList>{mappedPlugins}</PluginList>
                 <Dropzone />
+                <PluginList>{mappedPlugins}</PluginList>
                 <CloseButton
                     onClick={() => setMenu(undefined)}
                     src={require("../../assets/close.svg")}

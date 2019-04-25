@@ -19,7 +19,7 @@ const StyledPlugin = styled.div`
 `
 
 const DefaultIcon = styled.img`
-    width: 75%;
+    height: 50px;
 `
 
 const Title = styled.h3`
@@ -40,7 +40,7 @@ const Plugin = ({ plugin, pluginName, onClick }) => {
     return (
         <StyledPlugin onClick={onClick}>
             {plugin.icon ? (
-                <plugin.icon />
+                <plugin.icon style={{ height: 50 }} />
             ) : (
                 <DefaultIcon src={require("../../assets/default-plugin.svg")} />
             )}

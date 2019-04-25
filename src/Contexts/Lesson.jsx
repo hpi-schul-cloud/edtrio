@@ -4,7 +4,7 @@ export const initialState = {
     loading: true,
     error: "",
     lesson: {},
-    editing: false,
+    editing: true,
     bootstrapFinished: false,
     saveStatus: "",
     showSectionOverview: false,
