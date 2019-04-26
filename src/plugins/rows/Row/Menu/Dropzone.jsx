@@ -4,19 +4,19 @@ import styled from "styled-components"
 const StyledDropzone = styled.div`
     height: 200px;
     width: 100%;
-    background-color: rgba(245, 245, 245, 1);
+    background-color: rgba(73, 73, 73, 1);
     border: 3px dashed rgba(0, 0, 0, 0.4);
     transition: 250ms all ease-in-out;
+    border-radius: 5px;
     cursor: pointer;
-    padding: 0 calc((100vw - 960px) / 2);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 
     &:hover {
-        border-color: rgba(177, 4, 56, 1);
-        background-color: rgba(250, 250, 250, 1);
+        border-color: rgb(200, 200, 200);
+        background-color: rgba(60, 60, 60, 1);
     }
 
     &:hover img {
@@ -39,7 +39,13 @@ const Dropzone = () => {
     return (
         <StyledDropzone>
             <StyledImage src={require("../../assets/upload.svg")} />
-            <p style={{ opacity: 0.8 }}>
+            <p
+                style={{
+                    opacity: 0.8,
+                    color: "#fff",
+                    textAlign: "center",
+                    maxWidth: 600,
+                }}>
                 Du kannst überall Dateien per Drag'n'Drop hinzufügen. Alternativ
                 kannst du auch hier klicken...
             </p>

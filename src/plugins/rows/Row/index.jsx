@@ -26,7 +26,7 @@ export const RowContainer = styled.div`
             margin-top: ${props => (props.isFirst ? 25 : 0)}px;
         `}
     position: relative;
-    border-left: 3px solid transparent;
+    border-left: 5px solid transparent;
     transition: 250ms all ease-in-out;
     padding-left: 25px;
     padding-right: 25px;
@@ -35,7 +35,7 @@ export const RowContainer = styled.div`
         ${props =>
             props.editable &&
             css`
-                border-color: rgba(177, 4, 56, 1);
+                border-color: #000;
                 padding-top: 25px;
                 box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
                     0 1px 2px rgba(0, 0, 0, 0.24);

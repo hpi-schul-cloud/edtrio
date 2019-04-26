@@ -1,1 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><g class="nc-icon-wrapper" stroke-linecap="square" stroke-linejoin="miter" stroke-width="4" fill="#000000" stroke="#000000"><path d="M39,16V42a4,4,0,0,1-4,4H13a4,4,0,0,1-4-4V16" fill="none" stroke="#000000" stroke-miterlimit="10"></path> <line x1="3" y1="10" x2="45" y2="10" fill="none" stroke="#000000" stroke-miterlimit="10"></line> <line data-color="color-2" x1="24" y1="22" x2="24" y2="37" fill="none" stroke-miterlimit="10"></line> <line data-color="color-2" x1="17" y1="22" x2="17" y2="37" fill="none" stroke-miterlimit="10"></line> <line data-color="color-2" x1="31" y1="22" x2="31" y2="37" fill="none" stroke-miterlimit="10"></line> <polyline data-cap="butt" points="17 10 17 2 31 2 31 10" fill="none" stroke="#000000" stroke-miterlimit="10" stroke-linecap="butt"></polyline></g></svg>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com -->
+    <title>Delete</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Delete" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="outline-delete-24px">
+            <polygon id="Path" points="0 0 24 0 24 24 0 24"></polygon>
+            <path d="M16,9 L16,19 L8,19 L8,9 L16,9 L16,9 Z M14.5,3 L9.5,3 L8.5,4 L5,4 L5,6 L19,6 L19,4 L15.5,4 L14.5,3 Z M18,7 L6,7 L6,19 C6,20.1 6.9,21 8,21 L16,21 C17.1,21 18,20.1 18,19 L18,7 Z" id="Shape" fill="#000000" fill-rule="nonzero"></path>
+        </g>
+    </g>
+</svg>

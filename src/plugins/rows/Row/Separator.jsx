@@ -1,11 +1,10 @@
 import React from "react"
 import styled, { css } from "styled-components"
-import { Icon, faPlus } from "@edtr-io/ui"
 
 const StyledSeparator = styled.div`
     position: absolute;
     height: auto;
-    width: 100%;
+    width: calc(100% - 60px);
 
     ${props =>
         props.isFirst
@@ -33,11 +32,11 @@ const AddTrigger = styled.div`
     width: 26px;
     height: 26px;
     border-radius: 13px;
-    border: 2px solid black;
+    /* border: 2px solid black; */
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #fff;
+    /* background-color: #fff; */
     opacity: 0;
     transition: 250ms all ease-in-out;
     position: relative;
@@ -59,6 +58,10 @@ const AddTrigger = styled.div`
         `}
 `
 
+const Icon = styled.img`
+    width: 26px;
+`
+
 export const Add = ({ onClick, inline, ...props }) => {
     return (
         <AddTrigger
@@ -66,7 +69,7 @@ export const Add = ({ onClick, inline, ...props }) => {
             className="add-trigger"
             onClick={onClick}
             {...props}>
-            <Icon style={{ width: 14, height: 14 }} icon={faPlus} />
+            <Icon src={require("../assets/plus.svg")} />
         </AddTrigger>
     )
 }

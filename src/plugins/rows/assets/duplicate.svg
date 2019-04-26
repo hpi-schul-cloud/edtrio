@@ -1,1 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><g class="nc-icon-wrapper" stroke-linecap="square" stroke-linejoin="miter" stroke-width="4" fill="#000000" stroke="#000000"><rect x="6" y="8" fill="none" stroke="#000000" stroke-miterlimit="10" width="32" height="38"></rect> <polyline data-color="color-2" fill="none" stroke-miterlimit="10" points=" 10,2 44,2 44,42 "></polyline> <line data-color="color-2" fill="none" stroke-miterlimit="10" x1="14" y1="18" x2="30" y2="18"></line> <line data-color="color-2" fill="none" stroke-miterlimit="10" x1="14" y1="26" x2="30" y2="26"></line> <line data-color="color-2" fill="none" stroke-miterlimit="10" x1="14" y1="34" x2="22" y2="34"></line></g></svg>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com -->
+    <title>Copy</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Copy" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="outline-file_copy-24px">
+            <polygon id="Path" points="0 0 24 0 24 24 0 24"></polygon>
+            <path d="M16,1 L4,1 C2.9,1 2,1.9 2,3 L2,17 L4,17 L4,3 L16,3 L16,1 Z M15,5 L8,5 C6.9,5 6.01,5.9 6.01,7 L6,21 C6,22.1 6.89,23 7.99,23 L19,23 C20.1,23 21,22.1 21,21 L21,11 L15,5 Z M8,21 L8,7 L14,7 L14,12 L19,12 L19,21 L8,21 Z" id="Shape" fill="#000000" fill-rule="nonzero"></path>
+        </g>
+    </g>
+</svg>

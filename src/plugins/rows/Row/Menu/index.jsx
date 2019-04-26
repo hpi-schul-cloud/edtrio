@@ -89,8 +89,8 @@ const Menu = ({ visible, menu, setMenu, index, store, name }) => {
     return (
         <Portal>
             <Wrapper>
-                <Search search={search} setSearch={setSearch} />
                 <Dropzone />
+                <Search search={search} setSearch={setSearch} />
                 <PluginList>{mappedPlugins}</PluginList>
                 <CloseButton
                     onClick={() => setMenu(undefined)}
