@@ -36,6 +36,18 @@ const StyledIcon = styled.img`
     }
 `
 
+const DragIcon = styled(StyledIcon)`
+    margin-bottom: 5px;
+    margin-top: -10px;
+
+    cursor: grab;
+    user-select: none;
+
+    &:active {
+        cursor: grabbing;
+    }
+`
+
 const MoveUp = ({ rows, index, row, ...props }) => (
     <StyledIcon
         disabled={index === 0}
@@ -57,10 +69,30 @@ const MoveDown = ({ rows, index, row, ...props }) => (
     />
 )
 
-const Controls = ({ index, rows, row, hover, duplicateRow }) => {
+const Drag = ({ rows, index, row, dragRef, connectDragSource, ...props }) =>
+    connectDragSource(
+        <div>
+            <DragIcon
+                draggable="false"
+                disabled={rows.items.length === 1}
+                src={require("../assets/drag-handle.svg")}
+                // onClick={() => {
+                //     index + 1 < rows.items.length && rows.move(index, index + 1)
+                // }}
+            />
+        </div>,
+    )
+
+const Controls = ({ index, rows, row, hover, connectDragSource }) => {
     return (
         <StyledControls index={index} className="row-controls">
             <MoveUp rows={rows} index={index} row={row} />
+            <Drag
+                rows={rows}
+                index={index}
+                row={row}
+                connectDragSource={connectDragSource}
+            />
             <MoveDown rows={rows} index={index} row={row} />
         </StyledControls>
     )

@@ -18,7 +18,6 @@ const StyledControls = styled.div`
 
 const StyledIcon = styled.img`
     width: 30px;
-    margin-bottom: 10px;
 
     ${props =>
         props.disabled
@@ -54,8 +53,8 @@ const SettingsIcon = ({ rows, index, row, ...props }) => (
 const Settings = ({ index, pluginName }) => {
     return (
         <StyledControls index={index} className="row-controls">
-            <SettingsIcon />
             <Name>{pluginName}</Name>
+            <SettingsIcon />
         </StyledControls>
     )
 }

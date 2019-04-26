@@ -1,4 +1,5 @@
-import * as React from "react"
+import React, { useImperativeHandle, useRef } from "react"
+import { DragSource, DropTarget } from "react-dnd"
 import styled, { css } from "styled-components"
 import {
     getDocument,
@@ -47,77 +48,156 @@ export const RowContainer = styled.div`
     }
 `
 
-export const Row = props => {
-    const [hover, setHover] = React.useState(false)
-    const [menu, setMenu] = React.useState(undefined)
-    const store = React.useContext(EditorContext)
-    const rows = props.state
-    const index = props.index
-    const row = rows()[index]
-    const doc = getDocument(store.state, row.id)
-    const plugins = getPlugins(store.state)
+export const Row = React.forwardRef(
+    (
+        {
+            isDragging,
+            connectDragSource,
+            connectDropTarget,
+            connectDragPreview,
+            doc,
+            store,
+            ...props
+        },
+        ref,
+    ) => {
+        const [hover, setHover] = React.useState(false)
+        const [menu, setMenu] = React.useState(undefined)
+        const rows = props.state
+        const index = props.index
+        const row = rows()[index]
+        const plugins = getPlugins(store.state)
 
-    const matchingPlugin = plugins[doc.plugin]
+        const matchingPlugin = plugins[doc.plugin]
 
-    function openMenu(insertIndex, replaceIndex) {
-        setMenu({
-            index: insertIndex,
-            onClose: pluginState => {
-                rows.insert(insertIndex, pluginState)
-                setMenu(undefined)
-                if (typeof replaceIndex === "number") {
-                    rows.remove(replaceIndex)
-                }
-            },
-        })
-    }
+        function openMenu(insertIndex, replaceIndex) {
+            setMenu({
+                index: insertIndex,
+                onClose: pluginState => {
+                    rows.insert(insertIndex, pluginState)
+                    setMenu(undefined)
+                    if (typeof replaceIndex === "number") {
+                        rows.remove(replaceIndex)
+                    }
+                },
+            })
+        }
 
-    function duplicateRow() {
-        rows.insert(index, doc)
-    }
+        function duplicateRow() {
+            rows.insert(index, doc)
+        }
 
-    return (
-        <RowContainer
-            noHeight={doc.plugin === "notes" && !props.editable}
-            editable={props.editable}
-            isFirst={index === 0}
-            hover={hover}
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}>
-            {index === 0 && (
-                <Separator isFirst={true} onClick={() => openMenu(index)} />
-            )}
+        // DnD
+        const rowRef = useRef(null)
+        if (connectDragSource) {
+            connectDragPreview(rowRef)
+            connectDropTarget(rowRef)
+            // const opacity = isDragging ? 0 : 1
+            useImperativeHandle(ref, () => ({
+                getNode: () => rowRef.current,
+            }))
+        }
 
-            {render({ row, rows, index, store, getDocument })}
-            <Separator onClick={() => openMenu(index + 1)} />
-            {props.editable && (
-                <React.Fragment>
-                    <Controls
-                        hover={hover}
-                        index={index}
-                        rows={rows}
-                        row={row}
-                    />
-                    <Settings
-                        index={index}
-                        pluginName={matchingPlugin.title || doc.plugin}
-                    />
-                    <Globals
-                        hover={hover}
-                        index={index}
-                        rows={rows}
-                        duplicateRow={duplicateRow}
-                        row={row}
-                    />
-                </React.Fragment>
-            )}
-            <Menu
-                visible={!!menu}
-                menu={menu}
-                setMenu={setMenu}
-                store={store}
-                name={props.name}
-            />
-        </RowContainer>
-    )
-}
+        return (
+            <RowContainer
+                ref={rowRef}
+                noHeight={doc.plugin === "notes" && !props.editable}
+                editable={props.editable}
+                isFirst={index === 0}
+                hover={hover}
+                onMouseEnter={() => {
+                    setHover(true)
+                }}
+                onMouseLeave={() => setHover(false)}>
+                {index === 0 && (
+                    <Separator isFirst={true} onClick={() => openMenu(index)} />
+                )}
+
+                {render({ row, rows, index, store, getDocument })}
+                <Separator onClick={() => openMenu(index + 1)} />
+                {props.editable && (
+                    <React.Fragment>
+                        <Controls
+                            hover={hover}
+                            index={index}
+                            rows={rows}
+                            row={row}
+                            connectDragSource={connectDragSource}
+                        />
+                        <Settings
+                            index={index}
+                            pluginName={matchingPlugin.title || doc.plugin}
+                        />
+                        <Globals
+                            hover={hover}
+                            index={index}
+                            rows={rows}
+                            duplicateRow={duplicateRow}
+                            row={row}
+                        />
+                    </React.Fragment>
+                )}
+                <Menu
+                    visible={!!menu}
+                    menu={menu}
+                    setMenu={setMenu}
+                    store={store}
+                    name={props.name}
+                />
+            </RowContainer>
+        )
+    },
+)
+
+export default DropTarget(
+    "row",
+    {
+        hover(props, monitor, component) {
+            if (!component) {
+                return null
+            }
+            const node = component.getNode()
+            if (!node) {
+                return null
+            }
+            const dragIndex = monitor.getItem().index
+            const hoverIndex = props.index
+            if (dragIndex === hoverIndex) {
+                return
+            }
+            const hoverBoundingRect = node.getBoundingClientRect()
+            const hoverMiddleY =
+                (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
+            const clientOffset = monitor.getClientOffset()
+            const hoverClientY = clientOffset.y - hoverBoundingRect.top
+
+            if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+                return
+            }
+            if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+                return
+            }
+
+            props.moveRow(dragIndex, hoverIndex)
+            monitor.getItem().index = hoverIndex
+        },
+    },
+    connect => ({
+        connectDropTarget: connect.dropTarget(),
+    }),
+)(
+    DragSource(
+        "row",
+        {
+            beginDrag: props => ({
+                id: props.id,
+                index: props.index,
+            }),
+        },
+        (connect, monitor) => ({
+            connectDragSource: connect.dragSource(),
+            connectDragPreview: connect.dragPreview(),
+            isDragging: monitor.isDragging(),
+        }),
+    )(Row),
+)
