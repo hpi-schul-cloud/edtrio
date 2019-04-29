@@ -5,7 +5,7 @@ const StyledControls = styled.div`
     position: absolute;
     top: 0;
     right: 0;
-    transform: translateX(calc(100% + 3px));
+    transform: translateX(100%);
     width: 30px;
     display: flex;
     flex-direction: column;

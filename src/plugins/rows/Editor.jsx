@@ -17,7 +17,6 @@ export const RowsEditor = props => {
     const rows = props.state
 
     const store = React.useContext(EditorContext)
-
     return (
         <RowsContainer>
             {rows.items.map((row, index) => {
@@ -28,8 +27,7 @@ export const RowsEditor = props => {
                             doc={doc}
                             store={store}
                             moveRow={(dragIndex, hoverIndex) => {
-                                rows.remove(hoverIndex)
-                                rows.insert(dragIndex, doc)
+                                rows.move(dragIndex, hoverIndex)
                             }}
                             state={props.state}
                             editable={props.editable}
