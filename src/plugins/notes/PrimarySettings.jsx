@@ -7,7 +7,7 @@ const PrimarySettings = ({ state, expanded }) => {
     return (
         <div
             style={{
-                height: expanded ? 30 : 0,
+                height: expanded ? 24 : 0,
                 marginTop: expanded && 15,
                 transition: "250ms all ease-in-out",
                 transform: expanded ? "scaleY(1)" : "scaleY(0)",

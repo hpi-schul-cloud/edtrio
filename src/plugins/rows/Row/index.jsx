@@ -15,6 +15,17 @@ import Settings from "./Settings"
 import Separator, { Add } from "./Separator"
 import render from "./render"
 
+function isDescendant(parent, child) {
+    var node = child.parentNode
+    while (node != null) {
+        if (node == parent) {
+            return true
+        }
+        node = node.parentNode
+    }
+    return false
+}
+
 export const RowContainer = styled.div`
     margin-left: 25px;
     margin-right: 25px;
@@ -27,8 +38,7 @@ export const RowContainer = styled.div`
             margin-top: ${props => (props.isFirst ? 25 : 0)}px;
         `}
     position: relative;
-    border: 2px solid transparent;
-    border-top-width: 0px;
+    border-left: 2px solid transparent;
     transition: 250ms all ease-in-out;
     padding-left: 25px;
     padding-right: 25px;
@@ -36,9 +46,9 @@ export const RowContainer = styled.div`
     ${props =>
         props.expanded &&
         css`
-            border-color: #000;
-            padding-top: 25px;
-            padding-bottom: 25px;
+            border-color: rgba(182, 182, 182, 1);
+            padding-top: 0;
+            padding-bottom: 0;
         `}
 `
 
@@ -117,25 +127,25 @@ export const Row = React.forwardRef(
                 <Separator onClick={() => openMenu(index + 1)} />
                 {props.editable && (
                     <React.Fragment>
-                        <Controls
-                            expanded={expanded}
-                            index={index}
-                            rows={rows}
-                            row={row}
-                            connectDragSource={connectDragSource}
-                        />
                         <Settings
                             index={index}
                             expanded={expanded}
-                            pluginName={matchingPlugin.title || doc.plugin}
-                        />
-                        <Globals
+                            pluginName={matchingPlugin.title || doc.plugin}>
+                            <Controls
+                                expanded={expanded}
+                                index={index}
+                                rows={rows}
+                                row={row}
+                                connectDragSource={connectDragSource}
+                            />
+                        </Settings>
+                        {/* <Globals
                             expanded={expanded}
                             index={index}
                             rows={rows}
                             duplicateRow={duplicateRow}
                             row={row}
-                        />
+                        /> */}
                     </React.Fragment>
                 )}
                 <Menu
