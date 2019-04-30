@@ -11,6 +11,7 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
+    transition: 250ms all ease-in-out;
 `
 
 const Textarea = styled.textarea`

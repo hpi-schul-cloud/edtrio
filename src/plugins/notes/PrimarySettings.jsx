@@ -3,10 +3,11 @@ import React from "react"
 import { Toggle } from "~/components/Button"
 
 const PrimarySettings = ({ state, expanded }) => {
-    if (!expanded) return null
+    // if (!expanded) return null
     return (
         <div
             style={{
+                height: expanded ? 30 : 0,
                 marginTop: expanded && 15,
                 transition: "250ms all ease-in-out",
                 transform: expanded ? "scaleY(1)" : "scaleY(0)",
