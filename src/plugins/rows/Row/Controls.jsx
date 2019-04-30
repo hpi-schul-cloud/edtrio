@@ -112,14 +112,14 @@ const Drag = ({ rows, index, row, dragRef, connectDragSource, ...props }) =>
 const Controls = ({ index, rows, row, expanded, connectDragSource }) => {
     return (
         <StyledControls index={index} expanded={expanded}>
-            <MoveUp rows={rows} index={index} row={row} />
+            {/* <MoveUp rows={rows} index={index} row={row} /> */}
             <Drag
                 rows={rows}
                 index={index}
                 row={row}
                 connectDragSource={connectDragSource}
             />
-            <MoveDown rows={rows} index={index} row={row} />
+            {/* <MoveDown rows={rows} index={index} row={row} /> */}
         </StyledControls>
     )
 }
