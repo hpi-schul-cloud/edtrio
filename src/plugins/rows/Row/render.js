@@ -1,5 +1,6 @@
-export default function({ row, rows, index, store, getDocument }) {
+export default function({ row, rows, index, store, getDocument, expanded }) {
     return row.render({
+        expanded,
         insert: options => rows.insert(index + 1, options),
         mergeWithPrevious: merge => {
             if (index - 1 < 0) return

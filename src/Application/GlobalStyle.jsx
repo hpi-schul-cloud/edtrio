@@ -2,7 +2,7 @@ import { createGlobalStyle } from "styled-components"
 import React from "react"
 
 const GS = createGlobalStyle`
-	@import url('https://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700|PT+Sans:400,400i,700|Kalam');
+	@import url('https://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700|PT+Sans:400,400i,700|Kalam|Faster+One');
 	* {
 		box-sizing: border-box;
 	}

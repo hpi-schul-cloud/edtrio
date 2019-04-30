@@ -113,7 +113,7 @@ export const Row = React.forwardRef(
                     <Separator isFirst={true} onClick={() => openMenu(index)} />
                 )}
 
-                {render({ row, rows, index, store, getDocument })}
+                {render({ row, rows, index, store, getDocument, expanded })}
                 <Separator onClick={() => openMenu(index + 1)} />
                 {props.editable && (
                     <React.Fragment>

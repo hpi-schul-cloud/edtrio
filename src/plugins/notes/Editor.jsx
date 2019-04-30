@@ -1,8 +1,11 @@
 import React, { useEffect, useRef } from "react"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
+
+import PrimarySettings from "./PrimarySettings"
 
 const Wrapper = styled.div`
-    background-color: rgb(245, 245, 245);
+    background-color: ${props =>
+        props.funky ? "rgba(249, 5, 126, 1.00)" : "rgb(245, 245, 245)"};
     padding: 15px;
     border-radius: 5px;
     display: flex;
@@ -18,16 +21,21 @@ const Textarea = styled.textarea`
     border: none;
     background-color: transparent;
     outline: none;
-    color: rgb(100, 100, 100);
+    color: ${props => (props.funky ? "#fff" : "rgb(100, 100, 100)")};
     resize: none;
-    font-family: "Kalam", cursive;
+    font-family: ${props => (props.funky ? "Faster One" : "Kalam")}, cursive;
+    ${props =>
+        props.funky &&
+        css`
+            font-size: 20px;
+        `}
 
     &::placeholder {
         color: rgb(140, 140 140);
     }
 `
 
-const NotesEditor = ({ focused, state }) => {
+const NotesEditor = ({ focused, state, expanded }) => {
     useEffect(() => {
         adaptHeight()
     }, [])
@@ -46,18 +54,22 @@ const NotesEditor = ({ focused, state }) => {
     }
 
     return (
-        <Wrapper>
-            <Textarea
-                ref={r}
-                placeholder="Gib hier deine Notizen ein..."
-                rows={1}
-                value={state.text.value}
-                onChange={evt => {
-                    state.text.set(evt.target.value)
-                    adaptHeight()
-                }}
-            />
-        </Wrapper>
+        <React.Fragment>
+            <Wrapper funky={state.primarySettings.funky.value}>
+                <Textarea
+                    ref={r}
+                    placeholder="Gib hier deine Notizen ein..."
+                    rows={1}
+                    value={state.text.value}
+                    funky={state.primarySettings.funky.value}
+                    onChange={evt => {
+                        state.text.set(evt.target.value)
+                        adaptHeight()
+                    }}
+                />
+            </Wrapper>
+            <PrimarySettings state={state} expanded={expanded} />
+        </React.Fragment>
     )
 }
 
