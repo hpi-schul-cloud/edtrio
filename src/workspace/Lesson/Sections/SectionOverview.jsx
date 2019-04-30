@@ -134,7 +134,7 @@ const SectionOverview = ({ sections, editing, visible, isFullScreen }) => {
                         style={{ marginTop: 0 }}
                         key={section.id}
                         active={index === activeSectionIndex}>
-                        {section.title || "Neuer Abschnitt"}
+                        {section.title || `Abschnitt ${index + 1}`}
                     </SectionTitle>
                 ))}
         </Wrapper>

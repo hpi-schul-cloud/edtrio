@@ -20,6 +20,7 @@ const StyledSeparator = styled.div`
 
 const TriggerArea = styled.div`
     width: 100%;
+    padding: 4px 0;
     display: flex;
     justify-content: center;
 

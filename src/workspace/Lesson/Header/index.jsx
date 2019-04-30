@@ -21,7 +21,8 @@ const StyledHeader = styled(Container)`
     z-index: 100;
     padding-top: 5px !important;
     padding-bottom: 5px !important;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.18);
+    /* box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.18); */
+    z-index: 200;
 
     @media (max-width: 1250px) {
         width: calc(100vw - 60px);

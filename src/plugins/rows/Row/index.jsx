@@ -27,25 +27,19 @@ export const RowContainer = styled.div`
             margin-top: ${props => (props.isFirst ? 25 : 0)}px;
         `}
     position: relative;
-    border-left: 5px solid transparent;
+    border: 2px solid transparent;
+    border-top-width: 0px;
     transition: 250ms all ease-in-out;
     padding-left: 25px;
     padding-right: 25px;
 
-    &:hover {
-        ${props =>
-            props.editable &&
-            css`
-                border-color: #000;
-                padding-top: 25px;
-                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
-                    0 1px 2px rgba(0, 0, 0, 0.24);
-            `}
-    }
-
-    &:hover .row-controls {
-        opacity: 1;
-    }
+    ${props =>
+        props.expanded &&
+        css`
+            border-color: #000;
+            padding-top: 25px;
+            padding-bottom: 25px;
+        `}
 `
 
 export const Row = React.forwardRef(
@@ -61,13 +55,12 @@ export const Row = React.forwardRef(
         },
         ref,
     ) => {
-        const [hover, setHover] = React.useState(false)
+        const [expanded, setExpanded] = React.useState(false)
         const [menu, setMenu] = React.useState(undefined)
         const rows = props.state
         const index = props.index
         const row = rows()[index]
         const plugins = getPlugins(store.state)
-
         const matchingPlugin = plugins[doc.plugin]
 
         function openMenu(insertIndex, replaceIndex) {
@@ -98,17 +91,24 @@ export const Row = React.forwardRef(
             }))
         }
 
+        function outsideClickListener(event) {
+            if (rowRef.current.contains(event.target)) return
+
+            setExpanded(false)
+            document.removeEventListener("mousedown", outsideClickListener)
+        }
+
         return (
             <RowContainer
                 ref={rowRef}
                 noHeight={doc.plugin === "notes" && !props.editable}
                 editable={props.editable}
                 isFirst={index === 0}
-                hover={hover}
-                onMouseEnter={() => {
-                    setHover(true)
-                }}
-                onMouseLeave={() => setHover(false)}>
+                expanded={expanded}
+                onMouseDown={() => {
+                    setExpanded(true)
+                    document.addEventListener("mousedown", outsideClickListener)
+                }}>
                 {index === 0 && (
                     <Separator isFirst={true} onClick={() => openMenu(index)} />
                 )}
@@ -118,7 +118,7 @@ export const Row = React.forwardRef(
                 {props.editable && (
                     <React.Fragment>
                         <Controls
-                            hover={hover}
+                            expanded={expanded}
                             index={index}
                             rows={rows}
                             row={row}
@@ -126,10 +126,11 @@ export const Row = React.forwardRef(
                         />
                         <Settings
                             index={index}
+                            expanded={expanded}
                             pluginName={matchingPlugin.title || doc.plugin}
                         />
                         <Globals
-                            hover={hover}
+                            expanded={expanded}
                             index={index}
                             rows={rows}
                             duplicateRow={duplicateRow}

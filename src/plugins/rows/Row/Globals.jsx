@@ -2,17 +2,47 @@ import React, { useState, useEffect } from "react"
 import styled, { css } from "styled-components"
 
 const StyledGlobals = styled.div`
-    height: ${props => (props.hover ? 50 : 0)}px;
+    height: 24px;
     overflow: hidden;
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    transition: 250ms all ease-in-out;
+    /* transition: 250ms all ease-in-out; */
+    position: absolute;
+    bottom: 12px;
+    right: 50px;
+    transform: translateY(100%) scaleY(0);
+    background-color: #fff;
+
+    ${props =>
+        props.expanded &&
+        css`
+            transform: translateY(100%) scaleY(1);
+        `}
+
+    &::after {
+        transition: 250ms all ease-in-out;
+        position: absolute;
+        pointer-events: none;
+        top: 0;
+        left: 0;
+        content: "";
+        opacity: 1;
+        height: 100%;
+        width: 100%;
+        background-color: #fff;
+
+        ${props =>
+            props.expanded &&
+            css`
+                opacity: 0;
+            `}
+    }
 `
 
 const StyledIcon = styled.img`
-    height: 30px;
-    margin-left: 15px;
+    height: 24px;
+    margin: 0 7px;
 
     ${props =>
         props.disabled
@@ -54,9 +84,9 @@ const Remove = ({ rows, index, ...props }) => {
     )
 }
 
-const Globals = ({ index, rows, row, hover, duplicateRow }) => {
+const Globals = ({ index, rows, row, expanded, duplicateRow }) => {
     return (
-        <StyledGlobals index={index} hover={hover}>
+        <StyledGlobals index={index} expanded={expanded}>
             <Copy duplicateRow={duplicateRow} />
             <Remove rows={rows} index={index} />
         </StyledGlobals>

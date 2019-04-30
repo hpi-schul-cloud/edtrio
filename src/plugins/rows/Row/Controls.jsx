@@ -4,20 +4,46 @@ import styled, { css } from "styled-components"
 const StyledControls = styled.div`
     position: absolute;
     top: 0;
-    right: 0;
-    transform: translateX(100%);
-    width: 30px;
+    right: 11px;
+    transform-origin: center top;
+    transform: translateX(100%) scaleY(0);
+    width: 24px;
     display: flex;
     flex-direction: column;
     align-items: center;
     border-radius: 0 3px 3px 0;
-    opacity: 0;
     z-index: ${props => 100 - props.index};
     transition: 250ms all ease-in-out;
+    background-color: #fff;
+
+    ${props =>
+        props.expanded &&
+        css`
+            transform: translateX(100%) scaleY(1);
+        `}
+
+    &::after {
+        transition: 250ms all ease-in-out;
+        position: absolute;
+        pointer-events: none;
+        top: 0;
+        left: 0;
+        content: "";
+        opacity: 1;
+        height: 100%;
+        width: 100%;
+        background-color: #fff;
+
+        ${props =>
+            props.expanded &&
+            css`
+                opacity: 0;
+            `}
+    }
 `
 
 const StyledIcon = styled.img`
-    width: 25px;
+    width: 24px;
     margin-bottom: 15px;
 
     ${props =>
@@ -83,9 +109,9 @@ const Drag = ({ rows, index, row, dragRef, connectDragSource, ...props }) =>
         </div>,
     )
 
-const Controls = ({ index, rows, row, hover, connectDragSource }) => {
+const Controls = ({ index, rows, row, expanded, connectDragSource }) => {
     return (
-        <StyledControls index={index} className="row-controls">
+        <StyledControls index={index} expanded={expanded}>
             <MoveUp rows={rows} index={index} row={row} />
             <Drag
                 rows={rows}

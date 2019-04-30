@@ -40,7 +40,7 @@ const SectionInput = styled(Input)`
     margin-right: 25px;
     margin-right: 25px;
     width: calc(100% - 50px);
-    font-family: "Poppins", sans-serif;
+    font-family: "PT Sans Narrow", sans-serif;
 `
 
 const Section = ({ section, isLast, index }) => {
@@ -74,7 +74,7 @@ const Section = ({ section, isLast, index }) => {
                 sectionId={section.id}
             />
             <Wrapper visible={section.visible}>
-                <SectionInput
+                {/* <SectionInput
                     full
                     size={32}
                     value={section.title}
@@ -89,7 +89,7 @@ const Section = ({ section, isLast, index }) => {
                             },
                         })
                     }
-                />
+                /> */}
                 <Editor
                     docValue={section.docValue}
                     index={index}

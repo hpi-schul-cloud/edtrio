@@ -107,7 +107,7 @@ const Controls = ({
             />
             {!isOnly && (
                 <DeleteModal
-                    sectionTitle={sectionTitle}
+                    sectionTitle={sectionTitle || `Abschnitt ${index + 1}`}
                     confirmDelete={confirmDelete}
                     renderIcon={openModal => {
                         return (
