@@ -6,6 +6,10 @@ const StyledSearch = styled.div`
     padding-bottom: 25px;
     display: flex;
     justify-content: center;
+    width: 600px;
+    @media (max-width: 650px) {
+        width: 100%;
+    }
 `
 
 const InputWrapper = styled.div`

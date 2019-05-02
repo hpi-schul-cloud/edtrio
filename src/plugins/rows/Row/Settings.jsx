@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react"
 import styled, { css } from "styled-components"
 
+import ExtendedSettings from "./ExtendedSettings"
+
 const StyledSettings = styled.div`
     position: absolute;
     top: 0;
@@ -50,24 +52,28 @@ const Name = styled.p`
     opacity: 0.6;
 `
 
-const SettingsIcon = ({ rows, index, row, ...props }) => (
+const SettingsIcon = ({ rows, index, row, open, ...props }) => (
     <StyledIcon
         disabled={index === 0}
         src={require("../assets/settings.svg")}
-        onClick={() => {
-            console.log("open settings")
-        }}
+        onClick={open}
     />
 )
 
-const Settings = ({ index, pluginName, children, expanded }) => {
+const Settings = ({
+    index,
+    pluginName,
+    children,
+    expanded,
+    setShowExtendedSettings,
+}) => {
     return (
         <StyledSettings
             index={index}
             expanded={expanded}
             className="row-controls">
             {children}
-            <SettingsIcon />
+            <SettingsIcon open={() => setShowExtendedSettings(true)} />
         </StyledSettings>
     )
 }

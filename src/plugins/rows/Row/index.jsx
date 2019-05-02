@@ -6,6 +6,7 @@ import {
     EditorContext,
     ActionType,
     getPlugins,
+    getPlugin,
 } from "@edtr-io/core"
 
 import Menu from "./Menu"
@@ -14,6 +15,8 @@ import Globals from "./Globals"
 import Settings from "./Settings"
 import Separator, { Add } from "./Separator"
 import render from "./render"
+
+import ExtendedSettingsWrapper from "./ExtendedSettings"
 
 function isDescendant(parent, child) {
     var node = child.parentNode
@@ -52,6 +55,11 @@ export const RowContainer = styled.div`
         `}
 `
 
+const PrimarySettingsWrapper = styled.div`
+    transition: 250ms all ease-in-out;
+    margin-top: 15px;
+`
+
 export const Row = React.forwardRef(
     (
         {
@@ -67,6 +75,9 @@ export const Row = React.forwardRef(
     ) => {
         const [expanded, setExpanded] = React.useState(false)
         const [menu, setMenu] = React.useState(undefined)
+        const [showExtendedSettings, setShowExtendedSettings] = React.useState(
+            false,
+        )
         const rows = props.state
         const index = props.index
         const row = rows()[index]
@@ -123,13 +134,26 @@ export const Row = React.forwardRef(
                     <Separator isFirst={true} onClick={() => openMenu(index)} />
                 )}
 
-                {render({ row, rows, index, store, getDocument, expanded })}
+                {render({
+                    row,
+                    rows,
+                    index,
+                    store,
+                    getDocument,
+                    expanded,
+                    ExtendedSettingsWrapper,
+                    hideExtendedSettings: () => setShowExtendedSettings(false),
+                    extendedSettingsVisible: showExtendedSettings,
+                    PrimarySettingsWrapper,
+                    primarySettingsVisible: expanded,
+                })}
                 <Separator onClick={() => openMenu(index + 1)} />
                 {props.editable && (
                     <React.Fragment>
                         <Settings
                             index={index}
                             expanded={expanded}
+                            setShowExtendedSettings={setShowExtendedSettings}
                             pluginName={matchingPlugin.title || doc.plugin}>
                             <Controls
                                 expanded={expanded}

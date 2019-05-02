@@ -12,12 +12,14 @@ const Wrapper = styled.div`
     padding: 25px calc((100vw - 960px) / 2) 0;
     flex-direction: column;
     background-color: rgba(255, 255, 255, 0.95);
+    align-items: center;
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
     z-index: 9999;
+    padding-top: 125px;
 
     @media (max-width: 1000px) {
         padding: 25px 20px 0;

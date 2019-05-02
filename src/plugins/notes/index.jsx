@@ -3,8 +3,12 @@ import { StateType } from "@edtr-io/core"
 
 import Notes from "./Notes"
 import PrimarySettings from "./PrimarySettings"
+import ExtendedSettings from "./ExtendedSettings"
 export const notesState = StateType.object({
     text: StateType.string(),
+    extendedSettings: StateType.object({
+        extraFunky: StateType.scalar(false),
+    }),
     primarySettings: StateType.object({
         funky: StateType.scalar(false),
     }),
@@ -18,7 +22,6 @@ const notesPlugin = {
     ),
     title: "Notizen",
     description: "Erstelle Notizen, sodass du nichts vergisst!",
-    PrimarySettings,
 }
 
 export default notesPlugin

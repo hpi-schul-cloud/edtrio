@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react"
 import styled, { css } from "styled-components"
 
 import PrimarySettings from "./PrimarySettings"
+import ExtendedSettings from "./ExtendedSettings"
 
 const Wrapper = styled.div`
     background-color: ${props =>
@@ -12,6 +13,16 @@ const Wrapper = styled.div`
     flex-direction: column;
     justify-content: center;
     transition: 250ms all ease-in-out;
+
+    ${props =>
+        props.extraFunky &&
+        css`
+            border: 4px solid #73ee16;
+
+            border-top-color: #03ffff;
+            border-right-color: #ffe700;
+            border-bottom-color: #1e00ff;
+        `}
 `
 
 const Textarea = styled.textarea`
@@ -36,11 +47,19 @@ const Textarea = styled.textarea`
     }
 `
 
-const NotesEditor = ({ focused, state, expanded }) => {
+const NotesEditor = ({
+    focused,
+    state,
+    expanded,
+    PrimarySettingsWrapper,
+    primarySettingsVisible,
+    ExtendedSettingsWrapper,
+    extendedSettingsVisible,
+    hideExtendedSettings,
+}) => {
     useEffect(() => {
         adaptHeight()
     }, [])
-
     const r = useRef(null)
 
     function adaptHeight() {
@@ -56,7 +75,9 @@ const NotesEditor = ({ focused, state, expanded }) => {
 
     return (
         <React.Fragment>
-            <Wrapper funky={state.primarySettings.funky.value}>
+            <Wrapper
+                funky={state.primarySettings.funky.value}
+                extraFunky={state.extendedSettings.extraFunky.value}>
                 <Textarea
                     ref={r}
                     placeholder="Gib hier deine Notizen ein..."
@@ -69,7 +90,16 @@ const NotesEditor = ({ focused, state, expanded }) => {
                     }}
                 />
             </Wrapper>
-            <PrimarySettings state={state} expanded={expanded} />
+            {primarySettingsVisible && (
+                <PrimarySettingsWrapper>
+                    <PrimarySettings state={state} />
+                </PrimarySettingsWrapper>
+            )}
+            {extendedSettingsVisible && (
+                <ExtendedSettingsWrapper close={hideExtendedSettings}>
+                    <ExtendedSettings state={state} />
+                </ExtendedSettingsWrapper>
+            )}
         </React.Fragment>
     )
 }

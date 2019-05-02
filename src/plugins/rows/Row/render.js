@@ -1,5 +1,22 @@
-export default function({ row, rows, index, store, getDocument, expanded }) {
+export default function({
+    row,
+    rows,
+    index,
+    store,
+    getDocument,
+    expanded,
+    PrimarySettingsWrapper,
+    ExtendedSettingsWrapper,
+    primarySettingsVisible,
+    extendedSettingsVisible,
+    hideExtendedSettings,
+}) {
     return row.render({
+        PrimarySettingsWrapper,
+        ExtendedSettingsWrapper,
+        primarySettingsVisible,
+        extendedSettingsVisible,
+        hideExtendedSettings,
         expanded,
         insert: options => rows.insert(index + 1, options),
         mergeWithPrevious: merge => {
