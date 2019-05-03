@@ -8,6 +8,7 @@ const StyledGlobals = styled.div`
 
 const StyledIcon = styled.img`
     height: 24px;
+    margin: 0;
     margin-left: 5px;
 
     ${props =>
@@ -30,7 +31,6 @@ const Copy = ({ duplicateRow, close, ...props }) => {
     return (
         <StyledIcon
             src={require("../assets/duplicate.svg")}
-            style={{ marginTop: 5, marginBottom: 5, marginRight: -1 }}
             onClick={() => {
                 duplicateRow()
                 close()
@@ -44,7 +44,6 @@ const Remove = ({ rows, index, close, ...props }) => {
         <StyledIcon
             disabled={rows.items.length === 1}
             src={require("../assets/remove.svg")}
-            style={{ marginBottom: 3 }}
             onClick={() => {
                 if (rows.items.length === 1) return
                 rows.remove(index)
