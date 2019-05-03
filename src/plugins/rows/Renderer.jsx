@@ -1,14 +1,9 @@
-import {
-    StatefulPluginEditorProps,
-    getDocument,
-    EditorContext,
-} from "@edtr-io/core"
-import { rowsState } from "."
-import * as React from "react"
+import React from "react"
+import { getDocument, EditorContext } from "@edtr-io/core"
 
-import { RowContainer } from "./Row"
+import RowContainer from "./RowContainer"
 
-export const RowsRenderer = props => {
+const RowsRenderer = props => {
     const store = React.useContext(EditorContext)
 
     return (
@@ -27,3 +22,5 @@ export const RowsRenderer = props => {
         </React.Fragment>
     )
 }
+
+export default RowsRenderer

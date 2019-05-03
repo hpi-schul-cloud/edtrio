@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react"
 import styled, { css } from "styled-components"
 
-import ExtendedSettings from "./ExtendedSettings"
-
 const StyledSettings = styled.div`
     position: absolute;
     top: 0;
@@ -55,7 +53,7 @@ const Name = styled.p`
 const SettingsIcon = ({ rows, index, row, open, ...props }) => (
     <StyledIcon
         disabled={index === 0}
-        src={require("../assets/settings.svg")}
+        src={require("../../assets/settings.svg")}
         onClick={open}
     />
 )

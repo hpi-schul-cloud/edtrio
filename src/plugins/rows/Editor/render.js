@@ -1,6 +1,15 @@
-export default function({ row, rows, index, store, getDocument, rowProps }) {
+export default function({
+    row,
+    rows,
+    index,
+    store,
+    getDocument,
+    ExtendedSettingsWrapper,
+    PrimarySettingsWrapper,
+}) {
     return row.render({
-        rowProps,
+        ExtendedSettingsWrapper,
+        PrimarySettingsWrapper,
         insert: options => rows.insert(index + 1, options),
         mergeWithPrevious: merge => {
             if (index - 1 < 0) return

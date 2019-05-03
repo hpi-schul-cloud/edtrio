@@ -30,7 +30,7 @@ const StyledIcon = styled.img`
 const Copy = ({ duplicateRow, close, ...props }) => {
     return (
         <StyledIcon
-            src={require("../assets/duplicate.svg")}
+            src={require("../../assets/duplicate.svg")}
             onClick={() => {
                 duplicateRow()
                 close()
@@ -43,7 +43,7 @@ const Remove = ({ rows, index, close, ...props }) => {
     return (
         <StyledIcon
             disabled={rows.items.length === 1}
-            src={require("../assets/remove.svg")}
+            src={require("../../assets/remove.svg")}
             onClick={() => {
                 if (rows.items.length === 1) return
                 rows.remove(index)

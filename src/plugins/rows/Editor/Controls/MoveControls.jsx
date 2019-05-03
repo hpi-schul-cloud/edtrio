@@ -78,7 +78,7 @@ const DragIcon = styled(StyledIcon)`
 const MoveUp = ({ rows, index, row, ...props }) => (
     <StyledIcon
         disabled={index === 0}
-        src={require("../assets/angle-up.svg")}
+        src={require("../../assets/angle-up.svg")}
         onClick={() => {
             if (index === 0) return
             rows.move(index, index - 1)
@@ -89,7 +89,7 @@ const MoveUp = ({ rows, index, row, ...props }) => (
 const MoveDown = ({ rows, index, row, ...props }) => (
     <StyledIcon
         disabled={index + 1 >= rows.items.length}
-        src={require("../assets/angle-down.svg")}
+        src={require("../../assets/angle-down.svg")}
         onClick={() => {
             index + 1 < rows.items.length && rows.move(index, index + 1)
         }}
@@ -102,12 +102,12 @@ const Drag = ({ rows, index, row, dragRef, connectDragSource, ...props }) =>
             <DragIcon
                 draggable="false"
                 disabled={rows.items.length === 1}
-                src={require("../assets/drag-handle.svg")}
+                src={require("../../assets/drag-handle.svg")}
             />
         </div>,
     )
 
-const Controls = ({ index, rows, row, expanded, connectDragSource }) => {
+const MoveControls = ({ index, rows, row, expanded, connectDragSource }) => {
     return (
         <StyledControls index={index} expanded={expanded}>
             {/* <MoveUp rows={rows} index={index} row={row} /> */}
@@ -122,4 +122,4 @@ const Controls = ({ index, rows, row, expanded, connectDragSource }) => {
     )
 }
 
-export default Controls
+export default MoveControls
