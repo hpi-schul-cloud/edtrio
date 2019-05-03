@@ -55,10 +55,25 @@ export const RowContainer = styled.div`
         `}
 `
 
-const PrimarySettingsWrapper = styled.div`
+const StyledPrimarySettingsWrapper = styled.div`
     transition: 250ms all ease-in-out;
     margin-top: 15px;
+
+    ${props =>
+        !props.primarySettingsVisible &&
+        css`
+            display: none;
+        `}
 `
+
+export const PrimarySettingsWrapper = props => {
+    return (
+        <StyledPrimarySettingsWrapper
+            primarySettingsVisible={props.primarySettingsVisible}>
+            {props.children}
+        </StyledPrimarySettingsWrapper>
+    )
+}
 
 export const Row = React.forwardRef(
     (
@@ -119,6 +134,20 @@ export const Row = React.forwardRef(
             document.removeEventListener("mousedown", outsideClickListener)
         }
 
+        const rowProps = {
+            expanded,
+            ExtendedSettingsWrapper,
+            hideExtendedSettings: () => setShowExtendedSettings(false),
+            extendedSettingsVisible: showExtendedSettings,
+            PrimarySettingsWrapper,
+            primarySettingsVisible: expanded,
+            connectDragSource,
+            index,
+            rows,
+            duplicateRow,
+            row,
+        }
+
         return (
             <RowContainer
                 ref={rowRef}
@@ -140,12 +169,7 @@ export const Row = React.forwardRef(
                     index,
                     store,
                     getDocument,
-                    expanded,
-                    ExtendedSettingsWrapper,
-                    hideExtendedSettings: () => setShowExtendedSettings(false),
-                    extendedSettingsVisible: showExtendedSettings,
-                    PrimarySettingsWrapper,
-                    primarySettingsVisible: expanded,
+                    rowProps,
                 })}
                 <Separator onClick={() => openMenu(index + 1)} />
                 {props.editable && (
@@ -163,13 +187,6 @@ export const Row = React.forwardRef(
                                 connectDragSource={connectDragSource}
                             />
                         </Settings>
-                        {/* <Globals
-                            expanded={expanded}
-                            index={index}
-                            rows={rows}
-                            duplicateRow={duplicateRow}
-                            row={row}
-                        /> */}
                     </React.Fragment>
                 )}
                 <Menu

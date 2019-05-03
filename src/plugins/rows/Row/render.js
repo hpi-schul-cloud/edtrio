@@ -1,23 +1,6 @@
-export default function({
-    row,
-    rows,
-    index,
-    store,
-    getDocument,
-    expanded,
-    PrimarySettingsWrapper,
-    ExtendedSettingsWrapper,
-    primarySettingsVisible,
-    extendedSettingsVisible,
-    hideExtendedSettings,
-}) {
+export default function({ row, rows, index, store, getDocument, rowProps }) {
     return row.render({
-        PrimarySettingsWrapper,
-        ExtendedSettingsWrapper,
-        primarySettingsVisible,
-        extendedSettingsVisible,
-        hideExtendedSettings,
-        expanded,
+        rowProps,
         insert: options => rows.insert(index + 1, options),
         mergeWithPrevious: merge => {
             if (index - 1 < 0) return

@@ -2,6 +2,8 @@ import React, { useEffect } from "react"
 import styled from "styled-components"
 import { Portal } from "react-portal"
 
+import Globals from "./Globals"
+
 const Overlay = styled.div`
     width: 100vw;
     height: 100vh;
@@ -37,7 +39,8 @@ const Footer = styled.div`
     margin-top: 25px;
     border-top: 1px solid rgba(182, 182, 182, 1);
     display: flex;
-    justify-content: flex-end;
+    align-items: center;
+    justify-content: space-between;
 `
 
 const CloseCaption = styled.span`
@@ -45,11 +48,21 @@ const CloseCaption = styled.span`
     cursor: pointer;
 `
 
-const ExtendedSettingsWrapper = ({ close, children }) => {
+const ExtendedSettingsWrapper = ({
+    hideExtendedSettings,
+    children,
+    expanded,
+    index,
+    rows,
+    duplicateRow,
+    row,
+    extendedSettingsVisible,
+}) => {
     useEffect(() => {
+        if (!extendedSettingsVisible) return
         function closeListener(evt) {
             if (evt.key === "Escape") {
-                close()
+                hideExtendedSettings()
             }
         }
         window.addEventListener("keydown", closeListener)
@@ -57,8 +70,9 @@ const ExtendedSettingsWrapper = ({ close, children }) => {
         return () => {
             window.removeEventListener("keydown", closeListener)
         }
-    }, [])
+    }, [extendedSettingsVisible])
 
+    if (!extendedSettingsVisible) return null
     return (
         <Portal>
             <Overlay>
@@ -69,12 +83,22 @@ const ExtendedSettingsWrapper = ({ close, children }) => {
                         </h4>
                         <CloseBtn
                             src={require("../assets/close.svg")}
-                            onClick={close}
+                            onClick={hideExtendedSettings}
                         />
                     </Header>
                     {children}
                     <Footer>
-                        <CloseCaption onClick={close}>Schließen</CloseCaption>
+                        <Globals
+                            close={hideExtendedSettings}
+                            expanded={expanded}
+                            index={index}
+                            rows={rows}
+                            duplicateRow={duplicateRow}
+                            row={row}
+                        />
+                        <CloseCaption onClick={hideExtendedSettings}>
+                            Schließen
+                        </CloseCaption>
                     </Footer>
                 </Content>
             </Overlay>

@@ -5,14 +5,14 @@ const StyledControls = styled.div`
     /* position: absolute; */
     /* top: 0; */
     /* right: 11px; */
-    transform-origin: center top;
+    /* transform-origin: center top; */
     /* transform: translateX(100%) scaleY(0); */
     /* width: 24px; */
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    /* flex-direction: column; */
+    /* align-items: center; */
     /* border-radius: 0 3px 3px 0; */
-    z-index: ${props => 100 - props.index};
+    /* z-index: ${props => 100 - props.index}; */
     /* transition: 250ms all ease-in-out; */
     /* background-color: #fff; */
 
@@ -51,6 +51,7 @@ const StyledIcon = styled.img`
             ? css`
                   opacity: 0.2;
                   cursor: not-allowed;
+                  pointer-events: none;
               `
             : css`
                   cursor: pointer;
@@ -102,9 +103,6 @@ const Drag = ({ rows, index, row, dragRef, connectDragSource, ...props }) =>
                 draggable="false"
                 disabled={rows.items.length === 1}
                 src={require("../assets/drag-handle.svg")}
-                // onClick={() => {
-                //     index + 1 < rows.items.length && rows.move(index, index + 1)
-                // }}
             />
         </div>,
     )

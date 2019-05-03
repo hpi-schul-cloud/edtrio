@@ -4,31 +4,9 @@ import styled from "styled-components"
 import Editor from "./Editor"
 import Renderer from "./Renderer"
 
-const Notes = ({
-    focused,
-    state,
-    editable,
-    attachSettings,
-    expanded,
-    PrimarySettingsWrapper,
-    ExtendedSettingsWrapper,
-    primarySettingsVisible,
-    extendedSettingsVisible,
-    hideExtendedSettings,
-}) => {
+const Notes = ({ focused, state, editable, rowProps }) => {
     if (editable) {
-        return (
-            <Editor
-                state={state}
-                expanded={expanded}
-                attachSettings={attachSettings}
-                PrimarySettingsWrapper={PrimarySettingsWrapper}
-                ExtendedSettingsWrapper={ExtendedSettingsWrapper}
-                primarySettingsVisible={primarySettingsVisible}
-                extendedSettingsVisible={extendedSettingsVisible}
-                hideExtendedSettings={hideExtendedSettings}
-            />
-        )
+        return <Editor state={state} rowProps={rowProps} />
     } else {
         return <Renderer state={state} />
     }

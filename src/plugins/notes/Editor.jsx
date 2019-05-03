@@ -47,16 +47,7 @@ const Textarea = styled.textarea`
     }
 `
 
-const NotesEditor = ({
-    focused,
-    state,
-    expanded,
-    PrimarySettingsWrapper,
-    primarySettingsVisible,
-    ExtendedSettingsWrapper,
-    extendedSettingsVisible,
-    hideExtendedSettings,
-}) => {
+const NotesEditor = ({ focused, state, rowProps }) => {
     useEffect(() => {
         adaptHeight()
     }, [])
@@ -90,16 +81,12 @@ const NotesEditor = ({
                     }}
                 />
             </Wrapper>
-            {primarySettingsVisible && (
-                <PrimarySettingsWrapper>
-                    <PrimarySettings state={state} />
-                </PrimarySettingsWrapper>
-            )}
-            {extendedSettingsVisible && (
-                <ExtendedSettingsWrapper close={hideExtendedSettings}>
-                    <ExtendedSettings state={state} />
-                </ExtendedSettingsWrapper>
-            )}
+            <rowProps.PrimarySettingsWrapper {...rowProps}>
+                <PrimarySettings state={state} />
+            </rowProps.PrimarySettingsWrapper>
+            <rowProps.ExtendedSettingsWrapper {...rowProps}>
+                <ExtendedSettings state={state} />
+            </rowProps.ExtendedSettingsWrapper>
         </React.Fragment>
     )
 }
