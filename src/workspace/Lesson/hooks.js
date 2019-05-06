@@ -7,19 +7,10 @@ import { loadEditorData, saveEditorData } from "~/utils/cache"
 
 export function useBootstrap(id, dispatch, dispatchUserAction) {
     async function fetchData() {
-        if (!process.env.CLIENT && process.env.NODE_ENV !== "production") {
-            // NOTE if you want to persist your lesson data in local development (not in schulcloud-client), simply comment this block
-            // try {
-            //     // DEVELOPMENT ONLY
-            //     const lesson = await api.get("/editor/test")
-            //     id = lesson._id
-            //     setCookie("jwt", lesson.jwt)
-            // } catch (err) {
-            //     // in case the backend is not running, we should still be able to continue
-            // }
-        }
-        const user = await api.get("/me")
-        dispatchUserAction({ type: "BOOTSTRAP_USER", payload: user })
+        try {
+            const user = await api.get("/me")
+            dispatchUserAction({ type: "BOOTSTRAP_USER", payload: user })
+        } catch (err) {}
 
         try {
             const cacheData = loadEditorData(id)
@@ -47,6 +38,23 @@ export function useBootstrap(id, dispatch, dispatchUserAction) {
             dispatch({ type: "BOOTSTRAP", payload: lesson })
         } catch (err) {
             dispatch({ type: "ERROR" })
+            dispatch({
+                type: "BOOTSTRAP",
+                payload: {
+                    id: new Date().getTime(),
+                    sections: [
+                        {
+                            id:
+                                new Date().getTime() +
+                                "" +
+                                Math.floor(Math.random() * 100),
+                            docValue: null,
+                            visible: true,
+                        },
+                    ],
+                    changed: new Set(),
+                },
+            })
         }
         requestAnimationFrame(() => {
             dispatch({ type: "BOOTSTRAP_FINISH" })
