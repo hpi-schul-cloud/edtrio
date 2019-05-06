@@ -50,15 +50,7 @@ const CloseCaption = styled.span`
     cursor: pointer;
 `
 
-export const renderIntoExtendedSettings = children => {
-    if (!extendedSettingsNode.current)
-        return null
-
-    return createPortal(children, extendedSettingsNode.current)
-}
-
-const extendedSettingsNode = React.createRef()
-const ExtendedSettingsWrapper = ({
+const ExtendedSettingsWrapper = React.forwardRef(({
     hideExtendedSettings,
     expanded,
     index,
@@ -66,7 +58,7 @@ const ExtendedSettingsWrapper = ({
     duplicateRow,
     row,
     extendedSettingsVisible
-}) => {
+}, ref) => {
     useEffect(() => {
         function closeListener(evt) {
             if (evt.key === "Escape") {
@@ -99,7 +91,7 @@ const ExtendedSettingsWrapper = ({
                         onClick={hideExtendedSettings}
                     />
                 </Header>
-                <div ref={extendedSettingsNode} />
+                <div ref={ref} />
                 <Footer>
                     <Globals
                         close={hideExtendedSettings}
@@ -116,6 +108,6 @@ const ExtendedSettingsWrapper = ({
             </Content>
         </Overlay>
     )
-}
+})
 
 export default ExtendedSettingsWrapper

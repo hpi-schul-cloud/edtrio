@@ -3,7 +3,6 @@ import styled, { css } from "styled-components"
 
 import PrimarySettings from "./PrimarySettings"
 import ExtendedSettings from "./ExtendedSettings"
-import { renderIntoExtendedSettings } from "../rows/Editor/Controls/ExtendedSettings"
 
 const Wrapper = styled.div`
     background-color: ${props =>
@@ -51,6 +50,7 @@ const Textarea = styled.textarea`
 const NotesEditor = ({
     focused,
     state,
+    renderIntoExtendedSettings,
     PrimarySettingsWrapper,
 }) => {
     useEffect(() => {

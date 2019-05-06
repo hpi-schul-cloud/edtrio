@@ -4,9 +4,11 @@ export default function({
     index,
     store,
     getDocument,
+    renderIntoExtendedSettings,
     PrimarySettingsWrapper,
 }) {
     return row.render({
+        renderIntoExtendedSettings,
         PrimarySettingsWrapper,
         insert: options => rows.insert(index + 1, options),
         mergeWithPrevious: merge => {

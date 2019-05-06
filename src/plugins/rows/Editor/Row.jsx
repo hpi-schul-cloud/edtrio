@@ -62,6 +62,8 @@ const Row = React.forwardRef(
             }))
         }
 
+        const extendedSettingsNode = useRef(null)
+
         function outsideClickListener(event) {
             // TODO
             if (rowRef.current.contains(event.target) || showExtendedSettings) return
@@ -90,6 +92,12 @@ const Row = React.forwardRef(
                     index,
                     store,
                     getDocument,
+                    renderIntoExtendedSettings: children => {
+                        if (!extendedSettingsNode.current)
+                            return null
+
+                        return createPortal(children, extendedSettingsNode.current)
+                    },
                     PrimarySettingsWrapper: createPrimarySettingsWrapper({
                         expanded,
                     }),
@@ -102,6 +110,7 @@ const Row = React.forwardRef(
                     duplicateRow={() => rows.insert(index, doc)}
                     row={row}
                     extendedSettingsVisible={showExtendedSettings}
+                    ref={extendedSettingsNode}
                 />
                 <Separator onClick={() => openMenu(index + 1)} />
                 {props.editable && (
