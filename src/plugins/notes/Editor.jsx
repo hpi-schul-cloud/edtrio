@@ -58,6 +58,10 @@ const NotesEditor = ({
     }, [])
     const r = useRef(null)
 
+    useEffect(() => {
+        console.log("rerender")
+    }, [])
+
     function adaptHeight() {
         if (!r || !r.current) return
         const el = r.current

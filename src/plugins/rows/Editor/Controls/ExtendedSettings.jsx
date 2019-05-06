@@ -1,5 +1,5 @@
-import React, { useEffect } from "react"
-import styled from "styled-components"
+import React, { useEffect, useMemo } from "react"
+import styled, { css } from "styled-components"
 import { Portal } from "react-portal"
 
 import Globals from "./Globals"
@@ -57,7 +57,6 @@ const createExtendedSettingsWrapper = ({
     row,
     extendedSettingsVisible,
 }) => {
-    console.log(extendedSettingsVisible)
     const ExtendedSettingsWrapper = ({ children }) => {
         useEffect(() => {
             function closeListener(evt) {
@@ -71,37 +70,42 @@ const createExtendedSettingsWrapper = ({
                 window.removeEventListener("keydown", closeListener)
             }
         }, [])
-        if (!extendedSettingsVisible) return null
+
+        useEffect(() => {
+            console.log("rerender")
+        }, [])
+
+        if (!extendedSettingsVisible) return <React.Fragment />
         return (
-            <Portal>
-                <Overlay>
-                    <Content>
-                        <Header>
-                            <h4 style={{ marginRight: 25 }}>
-                                Erweiterte Einstellungen
-                            </h4>
-                            <CloseBtn
-                                src={require("../../assets/close.svg")}
-                                onClick={() => hideExtendedSettings()}
-                            />
-                        </Header>
-                        {children}
-                        <Footer>
-                            <Globals
-                                close={hideExtendedSettings}
-                                expanded={expanded}
-                                index={index}
-                                rows={rows}
-                                duplicateRow={duplicateRow}
-                                row={row}
-                            />
-                            <CloseCaption onClick={hideExtendedSettings}>
-                                Schließen
-                            </CloseCaption>
-                        </Footer>
-                    </Content>
-                </Overlay>
-            </Portal>
+            // <Portal>
+            <Overlay visible={extendedSettingsVisible}>
+                <Content>
+                    <Header>
+                        <h4 style={{ marginRight: 25 }}>
+                            Erweiterte Einstellungen
+                        </h4>
+                        <CloseBtn
+                            src={require("../../assets/close.svg")}
+                            onClick={hideExtendedSettings}
+                        />
+                    </Header>
+                    {children}
+                    <Footer>
+                        <Globals
+                            close={hideExtendedSettings}
+                            expanded={expanded}
+                            index={index}
+                            rows={rows}
+                            duplicateRow={duplicateRow}
+                            row={row}
+                        />
+                        <CloseCaption onClick={hideExtendedSettings}>
+                            Schließen
+                        </CloseCaption>
+                    </Footer>
+                </Content>
+            </Overlay>
+            // </Portal>
         )
     }
 

@@ -82,7 +82,7 @@ export default class Editor extends React.Component {
                 }}>
                 <Edtr
                     plugins={plugins}
-                    defaultPlugin={"text"}
+                    defaultPlugin={"notes"}
                     editable={this.props.editing}
                     initialState={this.docValue}>
                     <ChangeListener

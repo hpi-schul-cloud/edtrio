@@ -29,6 +29,8 @@ import { getCookie } from "~/utils/cookie"
 //     }
 // )
 
+const BACKEND_URL = BACKEND_URL || ""
+
 const bodyRequest = (
     type,
     endpoint,

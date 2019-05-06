@@ -36,7 +36,6 @@ const Row = React.forwardRef(
         const row = rows()[index]
         const plugins = getPlugins(store.state)
         const matchingPlugin = plugins[doc.plugin]
-
         function openMenu(insertIndex, replaceIndex) {
             setMenu({
                 index: insertIndex,
