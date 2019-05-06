@@ -1,4 +1,5 @@
 import React, { useImperativeHandle, useRef } from "react"
+import { createPortal } from 'react-dom'
 import { getDocument, getPlugins } from "@edtr-io/core"
 
 import RowContainer from "../RowContainer"
@@ -8,10 +9,11 @@ import Separator from "./Separator"
 import render from "./render"
 import Controls, {
     createPrimarySettingsWrapper,
-    createExtendedSettingsWrapper,
 } from "./Controls"
 
 import DnDHOC from "./DnDHOC"
+import ExtendedSettingsWrapper from "./Controls/ExtendedSettings"
+
 
 const Row = React.forwardRef(
     (
@@ -62,8 +64,7 @@ const Row = React.forwardRef(
 
         function outsideClickListener(event) {
             // TODO
-            if (rowRef.current.contains(event.target)) return
-
+            if (rowRef.current.contains(event.target) || showExtendedSettings) return
             setExpanded(false)
             document.removeEventListener("mousedown", outsideClickListener)
         }
@@ -89,21 +90,19 @@ const Row = React.forwardRef(
                     index,
                     store,
                     getDocument,
-                    ExtendedSettingsWrapper: createExtendedSettingsWrapper({
-                        hideExtendedSettings: () => {
-                            setShowExtendedSettings(false)
-                        },
-                        expanded,
-                        index,
-                        rows,
-                        duplicateRow: () => rows.insert(index, doc),
-                        row,
-                        extendedSettingsVisible: showExtendedSettings,
-                    }),
                     PrimarySettingsWrapper: createPrimarySettingsWrapper({
                         expanded,
                     }),
                 })}
+                <ExtendedSettingsWrapper
+                    hideExtendedSettings={() => { setShowExtendedSettings(false) }}
+                    expanded={expanded}
+                    index={index}
+                    rows={rows}
+                    duplicateRow={() => rows.insert(index, doc)}
+                    row={row}
+                    extendedSettingsVisible={showExtendedSettings}
+                />
                 <Separator onClick={() => openMenu(index + 1)} />
                 {props.editable && (
                     <React.Fragment>
