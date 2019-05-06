@@ -3,6 +3,7 @@ import styled, { css } from "styled-components"
 
 import PrimarySettings from "./PrimarySettings"
 import ExtendedSettings from "./ExtendedSettings"
+import { renderIntoExtendedSettings } from "../rows/Editor/Controls/ExtendedSettings"
 
 const Wrapper = styled.div`
     background-color: ${props =>
@@ -51,7 +52,6 @@ const NotesEditor = ({
     focused,
     state,
     PrimarySettingsWrapper,
-    ExtendedSettingsWrapper,
 }) => {
     useEffect(() => {
         adaptHeight()
@@ -93,9 +93,7 @@ const NotesEditor = ({
             <PrimarySettingsWrapper>
                 <PrimarySettings state={state} />
             </PrimarySettingsWrapper>
-            <ExtendedSettingsWrapper>
-                <ExtendedSettings state={state} />
-            </ExtendedSettingsWrapper>
+            {renderIntoExtendedSettings(<ExtendedSettings state={state} />)}
         </React.Fragment>
     )
 }

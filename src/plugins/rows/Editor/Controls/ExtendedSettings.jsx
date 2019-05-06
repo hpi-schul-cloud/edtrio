@@ -1,10 +1,12 @@
-import React, { useEffect, useMemo } from "react"
+import React, { useEffect, useMemo, forwardRef } from "react"
 import styled, { css } from "styled-components"
 import { Portal } from "react-portal"
 
 import Globals from "./Globals"
+import { createPortal } from "react-dom"
 
 const Overlay = styled.div`
+    visibility: ${props => props.visible ? 'visible' : 'hidden'};
     width: 100vw;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.3);
@@ -48,68 +50,72 @@ const CloseCaption = styled.span`
     cursor: pointer;
 `
 
-const createExtendedSettingsWrapper = ({
+export const renderIntoExtendedSettings = children => {
+    if (!extendedSettingsNode.current)
+        return null
+
+    return createPortal(children, extendedSettingsNode.current)
+}
+
+const extendedSettingsNode = React.createRef()
+const ExtendedSettingsWrapper = ({
     hideExtendedSettings,
     expanded,
     index,
     rows,
     duplicateRow,
     row,
-    extendedSettingsVisible,
+    extendedSettingsVisible
 }) => {
-    const ExtendedSettingsWrapper = ({ children }) => {
-        useEffect(() => {
-            function closeListener(evt) {
-                if (evt.key === "Escape") {
-                    hideExtendedSettings()
-                }
+    useEffect(() => {
+        function closeListener(evt) {
+            if (evt.key === "Escape") {
+                hideExtendedSettings()
             }
-            window.addEventListener("keydown", closeListener)
+        }
+        window.addEventListener("keydown", closeListener)
 
-            return () => {
-                window.removeEventListener("keydown", closeListener)
-            }
-        }, [])
+        return () => {
+            window.removeEventListener("keydown", closeListener)
+        }
+    }, [])
 
-        useEffect(() => {
-            console.log("rerender")
-        }, [])
+    useEffect(() => {
+        console.log("rerendering Extended Settings")
+    }, [])
 
-        if (!extendedSettingsVisible) return <React.Fragment />
-        return (
-            // <Portal>
-            <Overlay visible={extendedSettingsVisible}>
-                <Content>
-                    <Header>
-                        <h4 style={{ marginRight: 25 }}>
-                            Erweiterte Einstellungen
-                        </h4>
-                        <CloseBtn
-                            src={require("../../assets/close.svg")}
-                            onClick={hideExtendedSettings}
-                        />
-                    </Header>
-                    {children}
-                    <Footer>
-                        <Globals
-                            close={hideExtendedSettings}
-                            expanded={expanded}
-                            index={index}
-                            rows={rows}
-                            duplicateRow={duplicateRow}
-                            row={row}
-                        />
-                        <CloseCaption onClick={hideExtendedSettings}>
-                            Schließen
-                        </CloseCaption>
-                    </Footer>
-                </Content>
-            </Overlay>
-            // </Portal>
-        )
-    }
-
-    return ExtendedSettingsWrapper
+    // render only the expanded, so only one extended settings exist
+    if (!expanded) return <React.Fragment />
+    // render even if not yet visible, because of ref.
+    return (
+        <Overlay visible={extendedSettingsVisible}>
+            <Content>
+                <Header>
+                    <h4 style={{ marginRight: 25 }}>
+                        Erweiterte Einstellungen
+                    </h4>
+                    <CloseBtn
+                        src={require("../../assets/close.svg")}
+                        onClick={hideExtendedSettings}
+                    />
+                </Header>
+                <div ref={extendedSettingsNode} />
+                <Footer>
+                    <Globals
+                        close={hideExtendedSettings}
+                        expanded={expanded}
+                        index={index}
+                        rows={rows}
+                        duplicateRow={duplicateRow}
+                        row={row}
+                    />
+                    <CloseCaption onClick={hideExtendedSettings}>
+                        Schließen
+                    </CloseCaption>
+                </Footer>
+            </Content>
+        </Overlay>
+    )
 }
 
-export default createExtendedSettingsWrapper
+export default ExtendedSettingsWrapper

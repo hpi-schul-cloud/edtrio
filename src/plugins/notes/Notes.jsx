@@ -4,7 +4,7 @@ import styled from "styled-components"
 import Editor from "./Editor"
 import Renderer from "./Renderer"
 
-const Notes = ({ focused, state, editable, ...props }) => {
+const Notes = ({ state, editable, ...props }) => {
     if (editable) {
         return <Editor state={state} {...props} />
     } else {
