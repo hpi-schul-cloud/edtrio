@@ -1,5 +1,6 @@
 import axios from "axios"
 import { getCookie } from "~/utils/cookie"
+import config from "~/config"
 
 // EXAMPLE:
 // 1. normal get request
@@ -39,7 +40,7 @@ const bodyRequest = (
     uploadProgress,
     fakeResponse,
 ) => {
-    if (fakeResponse && process.env.NODE_ENV !== "production") {
+    if (fakeResponse && config.DISABLE_BACKEND) {
         return new Promise(resolve =>
             setTimeout(() => resolve(fakeResponse), 250),
         )
@@ -95,7 +96,7 @@ const bodyRequest = (
 
 const api = {
     get: (endpoint, fakeResponse) => {
-        if (fakeResponse && process.env.NODE_ENV !== "production") {
+        if (fakeResponse && config.DISABLE_BACKEND) {
             return new Promise(resolve =>
                 setTimeout(() => resolve(fakeResponse), 250),
             )

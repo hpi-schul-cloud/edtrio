@@ -4,30 +4,33 @@ import styled, { css } from "styled-components"
 const StyledSettings = styled.div`
     position: absolute;
     top: 0;
-    left: -10px;
-    transition: 250ms all ease-in-out;
+    left: 0;
     transform-origin: center top;
     transform: translateX(-100%);
-    opacity: 0;
     pointer-events: none;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    border-radius: 0 3px 3px 0;
-    z-index: ${props => 100 - props.index};
-    background-color: #fff;
-    padding-bottom: 10px;
 
     ${props =>
         props.expanded &&
         css`
-            opacity: 1;
             pointer-events: all;
         `}
+
+    &::before {
+        position: absolute;
+        pointer-events: none;
+        top: 0;
+        right: 0;
+        content: "";
+        opacity: 1;
+        height: 100%;
+        width: 2px;
+        background-color: #fff;
+        z-index: 15;
+    }
 `
 
 const StyledIcon = styled.img`
-    width: 24px;
+    height: 24px;
 
     ${props =>
         props.disabled
@@ -45,9 +48,25 @@ const StyledIcon = styled.img`
     }
 `
 
-const Name = styled.p`
-    font-size: 16px;
-    opacity: 0.6;
+const Content = styled.div`
+    background-color: #fff;
+    padding-bottom: 10px;
+    border-right: 2px solid #333333;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    opacity: 0;
+    z-index: 16;
+    position: relative;
+    transition: 250ms all ease-in-out;
+
+    ${props =>
+        props.expanded &&
+        css`
+            opacity: 1;
+            pointer-events: all;
+        `}
 `
 
 const SettingsIcon = ({ rows, index, row, open, ...props }) => (
@@ -70,8 +89,10 @@ const Settings = ({
             index={index}
             expanded={expanded}
             className="row-controls">
-            {children}
-            <SettingsIcon open={() => setShowExtendedSettings(true)} />
+            <Content expanded={expanded}>
+                {children}
+                <SettingsIcon open={() => setShowExtendedSettings(true)} />
+            </Content>
         </StyledSettings>
     )
 }

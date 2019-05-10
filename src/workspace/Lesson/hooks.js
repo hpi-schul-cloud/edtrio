@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react"
 
 import api from "~/utils/api"
+import config from "~/config"
+import { lessonFakeData } from "~/utils/fake"
 import { setCookie } from "~/utils/cookie"
 import { useInterval } from "~/utils/hooks"
 import { loadEditorData, saveEditorData } from "~/utils/cache"
@@ -10,15 +12,21 @@ export function useBootstrap(id, dispatch, dispatchUserAction) {
         try {
             const user = await api.get("/me")
             dispatchUserAction({ type: "BOOTSTRAP_USER", payload: user })
-        } catch (err) {}
+        } catch (err) {
+            console.warn("Could not fetch user data")
+        }
 
         try {
             const cacheData = loadEditorData(id)
             let lesson
-            if (cacheData && cacheData.savedToBackend === false) {
+            if (
+                cacheData &&
+                cacheData.hasOwnProperty("lesson") &&
+                (cacheData.savedToBackend === false || config.DISABLE_BACKEND)
+            ) {
                 lesson = cacheData.lesson
             } else {
-                lesson = await api.get(`/editor/lessons/${id}`)
+                lesson = await api.get(`/editor/lessons/${id}`, lessonFakeData)
                 if (lesson.sections.length === 0) {
                     const section = await api.post(`/editor/sections/`, {
                         lesson: lesson._id,

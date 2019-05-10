@@ -21,7 +21,7 @@ const RowContainer = styled.div`
     ${props =>
         props.expanded &&
         css`
-            border-color: rgba(182, 182, 182, 1);
+            border-color: #333333;
             padding-top: 0;
             padding-bottom: 0;
         `}

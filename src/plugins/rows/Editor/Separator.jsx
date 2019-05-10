@@ -20,11 +20,12 @@ const StyledSeparator = styled.div`
 
 const TriggerArea = styled.div`
     width: 100%;
-    padding: 4px 0;
+    padding: 2px 0 4px;
     display: flex;
     justify-content: center;
 
     &:hover .add-trigger {
+        transition: 0ms all ease-in-out 0ms;
         opacity: 0.6;
     }
 `
@@ -33,13 +34,11 @@ const AddTrigger = styled.div`
     width: 26px;
     height: 26px;
     border-radius: 13px;
-    /* border: 2px solid black; */
     display: flex;
     justify-content: center;
     align-items: center;
-    /* background-color: #fff; */
     opacity: 0;
-    transition: 250ms all ease-in-out;
+    transition: 250ms all ease-in-out 250ms;
     position: relative;
     z-index: 999;
 

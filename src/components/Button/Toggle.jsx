@@ -55,7 +55,7 @@ const StyledToggle = styled.span`
 `
 
 const Caption = styled(Text)`
-    margin: 5px;
+    margin: 0 5px;
     color: #505050;
     display: inline-block;
     max-width: 150px;
