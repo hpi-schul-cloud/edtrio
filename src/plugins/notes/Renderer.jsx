@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from "react"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 
 const Text = styled.p`
-    color: rgb(100, 100, 100);
+    color: ${props => (props.funky ? "#fff" : "rgb(100, 100, 100)")};
     margin: 0;
-    font-family: "Kalam", cursive;
+    font-family: ${props => (props.funky ? "Faster One" : "Kalam")}, cursive;
 `
 
 const TextWrapper = styled.div`
@@ -21,6 +21,17 @@ const TextWrapper = styled.div`
     left: 15px;
     transform: translateY(-50%);
     max-width: 100%;
+    background-color: ${props =>
+        props.funky ? "rgba(249, 5, 126, 1.00)" : "rgb(245, 245, 245)"};
+    ${props =>
+        props.extraFunky &&
+        css`
+            border: 4px solid #73ee16;
+
+            border-top-color: #03ffff;
+            border-right-color: #ffe700;
+            border-bottom-color: #1e00ff;
+        `}
 `
 
 const Positioner = styled.div`
@@ -47,7 +58,7 @@ const Arrow = styled.div`
     height: 40px;
     position: absolute;
     top: 50%;
-    left: 0;
+    left: ${props => (props.extraFunky ? "-3px" : 0)};
     transform: translate(-100%, -50%);
     overflow: hidden;
     background-color: transparent;
@@ -58,7 +69,8 @@ const Arrow = styled.div`
         position: absolute;
         width: 20px;
         height: 20px;
-        background: rgb(250, 250, 250);
+        background-color: ${props =>
+            props.extraFunky ? "#73ee16" : "rgb(250, 250, 250)"};
         transform-origin: center center;
         transform: translate(50%, -50%) rotate(45deg);
         top: 50%;
@@ -92,9 +104,17 @@ const NotesRenderer = ({ state }) => {
                 visible={visible}
                 onClick={() => setVisible(!visible)}
             />
-            <TextWrapper visible={visible} ref={ref}>
-                <Arrow />
-                <Text>{state.text.value}</Text>
+            <TextWrapper
+                funky={state.primarySettings.funky.value}
+                extraFunky={state.extendedSettings.extraFunky.value}
+                visible={visible}
+                ref={ref}>
+                <Arrow extraFunky={state.extendedSettings.extraFunky.value} />
+                <Text
+                    funky={state.primarySettings.funky.value}
+                    extraFunky={state.extendedSettings.extraFunky.value}>
+                    {state.text.value}
+                </Text>
             </TextWrapper>
         </Positioner>
     )

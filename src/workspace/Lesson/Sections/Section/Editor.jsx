@@ -49,7 +49,6 @@ const plugins = {
     notes: notesPlugin,
     rows: rowsPlugin,
     anchor: anchorPlugin,
-    counter: counterPlugin,
     blockquote: blockquotePlugin,
     etherpad: etherpadPlugin,
     nexboard: nexboardPlugin,

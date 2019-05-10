@@ -54,15 +54,6 @@ const Section = ({ section, isLast, index }) => {
             data-section={index}
             className="lesson-section"
             ref={sectionRef}>
-            {index === 0 && (
-                <Separator
-                    isFirst
-                    lessonId={store.lesson.id}
-                    dispatch={dispatch}
-                    index={index}
-                    editing={store.editing}
-                />
-            )}
             <Controls
                 sectionTitle={section.title}
                 store={store}
