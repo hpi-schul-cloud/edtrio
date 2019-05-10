@@ -32,8 +32,8 @@ const Sections = ({ sections, editing, showSectionOverview, isFullScreen }) => {
             />
             <Flex justifyCenter>
                 <Warning center bold>
-                    Dies ist nur eine Testversion des neuen Editors! Die Inhalte
-                    werden nicht gespeichert.
+                    +++ Alpha-Testversion +++ ohne Speicherfunktion +++ wir
+                    freuen uns über Feedback 🙂 +++
                 </Warning>
             </Flex>
             <div

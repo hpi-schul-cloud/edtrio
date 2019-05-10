@@ -41,7 +41,7 @@ export const lessonFakeData = {
                                                     {
                                                         object: "leaf",
                                                         text:
-                                                            "Hallo liebe Schul-Cloud Nutzer! Viel Spaß beim Ausprobieren des neuen Editors :)",
+                                                            "Herzlich Willkommen in der Alpha-Version des neuen Themen-Werkzeugs!\n\nDas ist das Grundgerüst für den komplett überarbeiteten Themen-Editor. Schon in dieser frühen Entwicklungsphase freuen wir uns über Feedback zu den vorhandenen Funktionen, um diese zu verbessern und zu erweitern. Bitte beachte: Es wird nichts gespeichert, das ist eine reine Spielwiese.\n\nProbier es aus und gib uns formloses Feedback - jedes kleine bisschen hilft!",
                                                         marks: [],
                                                     },
                                                 ],
