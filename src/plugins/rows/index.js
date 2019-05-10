@@ -5,8 +5,8 @@ import {
 } from "@edtr-io/core"
 import * as React from "react"
 
-import { RowsEditor } from "./Editor"
-import { RowsRenderer } from "./Renderer"
+import RowsEditor from "./Editor"
+import RowsRenderer from "./Renderer"
 
 export const rowsState = StateType.list(StateType.child(), 1)
 

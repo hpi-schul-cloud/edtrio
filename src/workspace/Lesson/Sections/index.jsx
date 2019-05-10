@@ -2,11 +2,20 @@ import React from "react"
 import styled from "styled-components"
 
 import Flex from "~/components/Flex"
+import Text from "~/components/Text"
 
 import SectionOverview from "./SectionOverview"
 import Section from "./Section"
 
 const Wrapper = styled(Flex)``
+
+const Warning = styled(Text)`
+    width: auto;
+    max-width: 850px;
+    padding: 15px;
+    background-color: #cc0000;
+    color: #fff;
+`
 
 const Sections = ({ sections, editing, showSectionOverview, isFullScreen }) => {
     const filteredSections = sections.filter(section => {
@@ -21,6 +30,12 @@ const Sections = ({ sections, editing, showSectionOverview, isFullScreen }) => {
                 visible={showSectionOverview}
                 isFullScreen={isFullScreen}
             />
+            <Flex justifyCenter>
+                <Warning center bold>
+                    Dies ist nur eine Testversion des neuen Editors! Die Inhalte
+                    werden nicht gespeichert.
+                </Warning>
+            </Flex>
             <div
                 style={{
                     width: "100%",

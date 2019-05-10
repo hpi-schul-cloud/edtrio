@@ -4,9 +4,9 @@ import styled from "styled-components"
 import Editor from "./Editor"
 import Renderer from "./Renderer"
 
-const Notes = ({ focused, state, editable, expanded }) => {
+const Notes = ({ state, editable, ...props }) => {
     if (editable) {
-        return <Editor state={state} expanded={expanded} />
+        return <Editor state={state} {...props} />
     } else {
         return <Renderer state={state} />
     }

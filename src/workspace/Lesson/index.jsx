@@ -1,6 +1,8 @@
 import React, { useEffect, useContext, useState } from "react"
 import styled from "styled-components"
 
+import config from "~/config"
+
 import LessonContext from "~/Contexts/Lesson"
 import UserContext from "~/Contexts/User"
 import { useInterval } from "~/utils/hooks"
@@ -31,11 +33,11 @@ const Lesson = props => {
         UserContext,
     )
 
-    let id = 123
+    let id = "TEST"
     try {
         const location = window.location.pathname
         const topicId = location.split("/topics/")[1]
-        if (topicId) id = topicId
+        if (topicId && !config.DISABLE_BACKEND) id = topicId
     } catch (err) {}
 
     useBootstrap(id, dispatch, dispatchUserAction)

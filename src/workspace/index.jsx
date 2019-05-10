@@ -1,5 +1,6 @@
 import React, { useEffect } from "react"
 import Lesson from "./Lesson"
+import Feedback from "./Feedback"
 
 const Workspace = () => {
     useEffect(() => {
@@ -17,7 +18,12 @@ const Workspace = () => {
             } catch (err) {}
         }
     })
-    return <Lesson />
+    return (
+        <React.Fragment>
+            <Feedback />
+            <Lesson />
+        </React.Fragment>
+    )
 }
 
 export default Workspace
