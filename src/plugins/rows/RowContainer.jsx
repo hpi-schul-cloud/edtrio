@@ -4,6 +4,7 @@ import styled, { css } from "styled-components"
 const RowContainer = styled.div`
     margin-left: 25px;
     margin-right: 25px;
+    outline: none;
 
     ${props =>
         !props.noHeight &&
@@ -25,6 +26,10 @@ const RowContainer = styled.div`
             padding-top: 0;
             padding-bottom: 0;
         `}
+
+    * {
+        outline: none;
+    }
 `
 
 export default RowContainer

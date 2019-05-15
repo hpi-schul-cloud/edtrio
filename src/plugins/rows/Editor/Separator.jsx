@@ -25,7 +25,7 @@ const TriggerArea = styled.div`
     justify-content: center;
 
     &:hover .add-trigger {
-        transition: 0ms all ease-in-out 0ms;
+        /* transition: 250ms all ease-in-out 250ms; */
         opacity: 0.6;
     }
 `
