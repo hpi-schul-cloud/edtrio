@@ -46,10 +46,16 @@ const StyledToggle = styled.span`
                 left: 32px;
             }
         `}
+
+    ${props =>
+        props.small &&
+        css`
+            transform: scale(0.7);
+        `}
 `
 
 const Caption = styled(Text)`
-    margin: 5px;
+    margin: 0 5px;
     color: #505050;
     display: inline-block;
     max-width: 150px;
@@ -62,6 +68,11 @@ const Caption = styled(Text)`
         css`
             color: ${props => props.active && props.primaryColor};
         `}
+    ${props =>
+        props.small &&
+        css`
+            font-size: 13px;
+        `}
 `
 
 const Toggle = ({
@@ -71,6 +82,7 @@ const Toggle = ({
     children,
     onChange,
     onClick,
+    small,
     ...props
 }) => {
     const context = useContext(ThemeContext)
@@ -94,16 +106,22 @@ const Toggle = ({
             <Caption
                 noMargin
                 primaryColor={primaryColor}
+                small={small}
                 active={!hasActiveCaption && active}>
                 {caption}
             </Caption>
             <StyledToggle
                 primaryColor={primaryColor}
                 active={active}
+                small={small}
                 style={{ order: !hasActiveCaption ? -1 : undefined }}
             />
             {hasActiveCaption && (
-                <Caption noMargin primaryColor={primaryColor} active={active}>
+                <Caption
+                    noMargin
+                    primaryColor={primaryColor}
+                    active={active}
+                    small={small}>
                     {activeCaption}
                 </Caption>
             )}

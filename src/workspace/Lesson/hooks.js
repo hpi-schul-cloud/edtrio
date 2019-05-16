@@ -1,49 +1,68 @@
 import React, { useEffect, useState } from "react"
 
 import api from "~/utils/api"
+import config from "~/config"
+import { lessonFakeData } from "~/utils/fake"
 import { setCookie } from "~/utils/cookie"
 import { useInterval } from "~/utils/hooks"
 import { loadEditorData, saveEditorData } from "~/utils/cache"
 
 export function useBootstrap(id, dispatch, dispatchUserAction) {
     async function fetchData() {
-        if (!process.env.CLIENT && process.env.NODE_ENV !== "production") {
-            // NOTE if you want to persist your lesson data in local development (not in schulcloud-client), simply comment this block
-            try {
-                // DEVELOPMENT ONLY
-                const lesson = await api.get("/editor/test")
-                id = lesson._id
-                setCookie("jwt", lesson.jwt)
-            } catch (err) {
-                // in case the backend is not running, we should still be able to continue
-            }
+        try {
+            const user = await api.get("/me")
+            dispatchUserAction({ type: "BOOTSTRAP_USER", payload: user })
+        } catch (err) {
+            console.warn("Could not fetch user data")
         }
-        //const user = await api.get("/me")
-        //dispatchUserAction({ type: "BOOTSTRAP_USER", payload: user })
 
         try {
             const cacheData = loadEditorData(id)
             let lesson
-            if (cacheData && cacheData.savedToBackend === false) {
+            if (
+                cacheData &&
+                cacheData.hasOwnProperty("lesson") &&
+                (cacheData.savedToBackend === false || config.DISABLE_BACKEND)
+            ) {
                 lesson = cacheData.lesson
             } else {
-                lesson = await api.get(`/editor/lessons/${id}`, {
-                    id,
-                    title: `Sample lesson`,
+                lesson = await api.get(`/editor/lessons/${id}`, lessonFakeData)
+                if (lesson.sections.length === 0) {
+                    const section = await api.post(`/editor/sections/`, {
+                        lesson: lesson._id,
+                    })
+                    lesson.sections = [section]
+                }
+
+                lesson.id = lesson._id
+                lesson.sections = lesson.sections.map(section => ({
+                    ...section,
+                    id: section._id,
+                    docValue: section.state,
+                    notes: section.note,
+                }))
+            }
+
+            dispatch({ type: "BOOTSTRAP", payload: lesson })
+        } catch (err) {
+            dispatch({ type: "ERROR" })
+            dispatch({
+                type: "BOOTSTRAP",
+                payload: {
+                    id: new Date().getTime(),
                     sections: [
                         {
-                            id: 1,
-                            notes: "",
-                            title: "Interaktives Arbeitsblatt",
+                            id:
+                                new Date().getTime() +
+                                "" +
+                                Math.floor(Math.random() * 100),
                             docValue: null,
                             visible: true,
                         },
                     ],
-                })
-            }
-            dispatch({ type: "BOOTSTRAP", payload: lesson })
-        } catch (err) {
-            dispatch({ type: "ERROR" })
+                    changed: new Set(),
+                },
+            })
         }
         requestAnimationFrame(() => {
             dispatch({ type: "BOOTSTRAP_FINISH" })
@@ -60,11 +79,10 @@ export async function saveLesson(store, dispatch, override) {
     dispatch({ type: "SAVE_STATUS", payload: "Sichern..." })
     const savePromises = []
 
-    // save lesson title and section order
     const lessonChanges = {}
     store.lesson.changed.forEach(key => {
         if (key === "order") {
-            lessonChanges.order = store.lesson.sections.map(
+            lessonChanges.sections = store.lesson.sections.map(
                 section => section.id,
             )
         } else {
@@ -75,14 +93,12 @@ export async function saveLesson(store, dispatch, override) {
         savePromises.push(
             new Promise(async resolve => {
                 try {
-                    await api.patch(
+                    const lessonResult = await api.patch(
                         `/editor/lessons/${store.lesson.id}`,
                         lessonChanges,
-                        null,
-                        null,
-                        { id: store.lesson.id, ...lessonChanges },
                     )
                     dispatch({ type: "LESSON_SAVED" })
+                    resolve(lessonResult)
                 } catch (err) {
                     resolve("error")
                 }
@@ -92,11 +108,6 @@ export async function saveLesson(store, dispatch, override) {
 
     // save sections
     store.lesson.sections.forEach(section => {
-        if (section.changed.size === 0)
-            return savePromises.push(
-                Promise.resolve(`No changes for section ${section.id}`),
-            )
-
         const sectionChanges = {}
         section.changed.forEach(key => {
             if (key === "docValue") {
@@ -105,12 +116,19 @@ export async function saveLesson(store, dispatch, override) {
                     JSON.stringify(section[key]) !==
                     JSON.stringify(updatedDocValue)
                 ) {
-                    sectionChanges[key] = updatedDocValue
+                    sectionChanges.state = updatedDocValue
                 }
+            } else if (key === "notes") {
+                sectionChanges.note = section.notes
             } else {
                 sectionChanges[key] = section[key]
             }
         })
+        if (Object.keys(sectionChanges).length === 0) {
+            return savePromises.push(
+                Promise.resolve(`No changes for section ${section.id}`),
+            )
+        }
 
         savePromises.push(
             new Promise(async resolve => {
@@ -118,9 +136,6 @@ export async function saveLesson(store, dispatch, override) {
                     const backendResult = await api.patch(
                         `/editor/sections/${section.id}`,
                         sectionChanges,
-                        null,
-                        null,
-                        // { success: true },
                     )
                     dispatch({ type: "SECTION_SAVED", payload: section.id })
                     resolve(backendResult)
@@ -148,7 +163,6 @@ export async function saveLesson(store, dispatch, override) {
     if (results.includes("error")) {
         cacheData.savedToBackend = false
     }
-    cacheData.savedToBackend = false // REMOVE
 
     saveEditorData(cacheData, store.lesson.id)
 
@@ -179,7 +193,7 @@ export function useFullScreenListener(store, dispatch) {
         } else if (!store.isFullScreen) {
             dispatch({ type: "FULL_SCREEN", payload: true })
         }
-    }, 100) // TODO maybe think of another way than an interval
+    }, 2500) // TODO maybe think of another way than an interval
 
     useEffect(() => {
         document.body.classList.add("edtr")

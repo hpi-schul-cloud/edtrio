@@ -16,8 +16,9 @@ const Wrapper = styled.div`
     opacity: ${props => (props.visible ? 1 : 0)};
     transition: 250ms all ease-in-out;
     background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    /* border-radius: 5px; */
+    z-index: 100;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.18);
 
     @media (max-width: 1250px) {
         left: 65px;
@@ -57,30 +58,31 @@ function scrollToSection(sectionIndex) {
 function useScrollListener() {
     const [activeSectionIndex, setActiveSectionIndex] = useState(0)
 
-    function scrollListener(evt) {
-        let newActiveSection
-        const domSections = Array.from(
-            document.querySelectorAll(".lesson-section"),
-        )
-
-        if (
-            window.innerHeight + window.pageYOffset >=
-            document.body.offsetHeight - 5
-        ) {
-            newActiveSection = domSections[domSections.length - 1]
-        } else {
-            domSections.forEach(domSection => {
-                const rect = domSection.getBoundingClientRect()
-                if (rect.top > 0 && rect.top < window.innerHeight / 2)
-                    newActiveSection = domSection
-            })
-        }
-
-        if (newActiveSection)
-            setActiveSectionIndex(parseInt(newActiveSection.dataset.section))
-    }
-
     useEffect(() => {
+        function scrollListener(evt) {
+            let newActiveSection
+            const domSections = Array.from(
+                document.querySelectorAll(".lesson-section"),
+            )
+
+            if (
+                window.innerHeight + window.pageYOffset >=
+                document.body.offsetHeight - 5
+            ) {
+                newActiveSection = domSections[domSections.length - 1]
+            } else {
+                domSections.forEach(domSection => {
+                    const rect = domSection.getBoundingClientRect()
+                    if (rect.top > 0 && rect.top < window.innerHeight / 2)
+                        newActiveSection = domSection
+                })
+            }
+
+            if (newActiveSection)
+                setActiveSectionIndex(
+                    parseInt(newActiveSection.dataset.section),
+                )
+        }
         window.addEventListener("scroll", scrollListener)
 
         return () => window.removeEventListener("scroll", scrollListener)
@@ -132,7 +134,7 @@ const SectionOverview = ({ sections, editing, visible, isFullScreen }) => {
                         style={{ marginTop: 0 }}
                         key={section.id}
                         active={index === activeSectionIndex}>
-                        {section.title || "Neuer Abschnitt"}
+                        {section.title || `Abschnitt ${index + 1}`}
                     </SectionTitle>
                 ))}
         </Wrapper>

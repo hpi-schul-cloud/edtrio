@@ -5,17 +5,26 @@ import {
     serializeDocument,
     StateType,
 } from "@edtr-io/core"
-import { rowsPlugin } from "@edtr-io/plugin-rows"
+// import { rowsPlugin } from "@edtr-io/plugin-rows"
+import { rowsPlugin } from "~/plugins/rows"
 import { anchorPlugin } from "@edtr-io/plugin-anchor"
 import { blockquotePlugin } from "@edtr-io/plugin-blockquote"
 import { createImagePlugin } from "@edtr-io/plugin-image"
 
 // import { highlightPlugin } from "@edtr-io/plugin-highlight"
-// import { spoilerPlugin } from "@edtr-io/plugin-spoiler"
+import { spoilerPlugin } from "@edtr-io/plugin-spoiler"
 import { textPlugin } from "@edtr-io/plugin-text"
-import { menuPlugin } from "~/plugins/menu/index"
-// import nexboardPlugin from "~/plugins/nexboard"
+import { scMcExercisePlugin } from "@edtr-io/plugin-sc-mc-exercise"
+import { equationsPlugin } from "@edtr-io/plugin-equations"
+import { geogebraPlugin } from "@edtr-io/plugin-geogebra"
+import { videoPlugin } from "@edtr-io/plugin-video"
+import { inputExercisePlugin } from "@edtr-io/plugin-input-exercise"
+// import { h5pPlugin } from "@edtr-io/plugin-h5p"
+
+import nexboardPlugin from "~/plugins/nexboard"
 import etherpadPlugin from "~/plugins/etherpad"
+import notesPlugin from "~/plugins/notes"
+
 import assignmentPlugin from "~/plugins/assignment"
 import { jigsawPlugin } from "~/plugins/jigsawTemplate"
 import {
@@ -43,44 +52,49 @@ const uploadConfig = {
 }
 
 const plugins = {
-    // anchor: anchorPlugin,
-    //counter: counterPlugin,
-    // blockquote: blockquotePlugin,
-    // nexboard: nexboardPlugin,
+    text: textPlugin,
+    notes: notesPlugin,
+    rows: rowsPlugin,
+    anchor: anchorPlugin,
+    blockquote: blockquotePlugin,
+    etherpad: etherpadPlugin,
+    nexboard: nexboardPlugin,
+    singleMultipleChoice: scMcExercisePlugin,
     // highlight: highlightPlugin,
-    // spoiler: spoilerPlugin,
-    Text: textPlugin,
-    Bild: createImagePlugin({ upload: uploadConfig }),
+    spoiler: spoilerPlugin,
+    equations: equationsPlugin,
+    geogebra: geogebraPlugin,
+    inputExercise: inputExercisePlugin,
+    video: videoPlugin,
+    // group work changes
     "Einfache Gruppenarbeit": quickGroupPlugin,
     Abgabe: assignmentPlugin,
     "Komplexe Gruppenarbeit": groupPlugin,
     Gruppeniteration: advancedGroupPlugin,
-    Etherpad: etherpadPlugin,
-    Reihe: rowsPlugin,
     "Template: mehrstufige Gruppenarbeit": jigsawPlugin,
-    // TODO:
-    // Templates
+    // h5p: h5pPlugin,
 }
 
 export default class Editor extends React.Component {
     constructor(props) {
         super(props)
-        this.docValue = this.props.docValue || {
-            plugin: "Reihe",
-            state: [{ plugin: "Text" }],
-        }
+        this.docValue =
+            this.props.docValue && Object.keys(this.props.docValue).length
+                ? this.props.docValue
+                : {
+                      plugin: "rows",
+                  }
     }
 
     render() {
         return (
             <div
                 style={{
-                    minHeight: "500px",
-                    marginBottom: "500px",
+                    minHeight: "50px",
                 }}>
                 <Edtr
                     plugins={plugins}
-                    defaultPlugin={"Reihe"}
+                    defaultPlugin={"text"}
                     editable={this.props.editing}
                     initialState={this.docValue}>
                     <ChangeListener

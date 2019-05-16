@@ -16,6 +16,7 @@ const SeparatorWrapper = styled(Flex)`
 const StyledSeparator = styled.div`
     width: 2px;
     height: 100%;
+    transform: translateX(-50%);
     border-radius: 1px;
     background-color: ${props => (props.hide ? "transparent" : "#C2C2C2")};
     position: relative;
@@ -37,11 +38,18 @@ const SeparatorButton = styled(Button)`
 `
 
 const StyledImage = styled.img`
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    height: 20px;
+    ${props =>
+        !props.inline
+            ? css`
+                  position: absolute;
+                  top: 50%;
+                  left: 50%;
+                  transform: translate(-50%, -50%);
+              `
+            : css`
+                  margin-top: -2px;
+              `}
+    width: 20px;
 `
 
 async function handleClick(dispatch, isFirst, index, lessonId) {
@@ -53,23 +61,19 @@ async function handleClick(dispatch, isFirst, index, lessonId) {
             tempId,
         },
     })
-
-    const newSection = await api.post(
-        "/editor/sections",
-        {
-            lessonId,
-            visible: true,
-        },
-        null,
-        null,
-        { id: uuid(), lessonId },
-    )
+    const newSection = await api.post("/editor/sections", {
+        lesson: lessonId,
+        visible: true,
+        position: isFirst ? index : index + 1,
+        notes: "",
+        title: "",
+    })
 
     dispatch({
         type: "REPLACE_ADDED_SECTION_ID",
         payload: {
             tempId,
-            backendId: newSection.id,
+            backendId: newSection._id,
         },
     })
 }
@@ -77,7 +81,10 @@ async function handleClick(dispatch, isFirst, index, lessonId) {
 const Separator = ({ index, isFirst, isLast, lessonId, dispatch, editing }) => {
     const content =
         isFirst || isLast ? (
-            "Neuer Abschnitt"
+            <span style={{ marginRight: 20 }}>
+                <StyledImage inline src={plusIcon} alt="" />
+                Neuer Abschnitt
+            </span>
         ) : (
             <StyledImage src={plusIcon} alt="" />
         )

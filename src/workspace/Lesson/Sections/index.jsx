@@ -2,13 +2,26 @@ import React from "react"
 import styled from "styled-components"
 
 import Flex from "~/components/Flex"
+import Text from "~/components/Text"
 
 import SectionOverview from "./SectionOverview"
 import Section from "./Section"
 
 const Wrapper = styled(Flex)``
 
+const Warning = styled(Text)`
+    width: auto;
+    max-width: 850px;
+    padding: 15px;
+    background-color: #cc0000;
+    color: #fff;
+`
+
 const Sections = ({ sections, editing, showSectionOverview, isFullScreen }) => {
+    const filteredSections = sections.filter(section => {
+        if (editing) return true
+        return section.visible
+    })
     return (
         <Wrapper justifyCenter style={{ width: "100%" }}>
             <SectionOverview
@@ -17,24 +30,24 @@ const Sections = ({ sections, editing, showSectionOverview, isFullScreen }) => {
                 visible={showSectionOverview}
                 isFullScreen={isFullScreen}
             />
+            <Flex justifyCenter>
+                <Warning center bold>
+                    +++ Alpha-Testversion +++ ohne Speicherfunktion +++ wir
+                    freuen uns über Feedback 🙂 +++
+                </Warning>
+            </Flex>
             <div
                 style={{
                     width: "100%",
-                    backgroundColor: "rgb(248, 248, 248)",
                 }}>
-                {sections
-                    .filter(section => {
-                        if (editing) return true
-                        return section.visible
-                    })
-                    .map((section, index) => (
-                        <Section
-                            key={section.id}
-                            index={index}
-                            section={section}
-                            isLast={index === sections.length - 1}
-                        />
-                    ))}
+                {filteredSections.map((section, index) => (
+                    <Section
+                        key={section.id}
+                        index={index}
+                        section={section}
+                        isLast={index === filteredSections.length - 1}
+                    />
+                ))}
             </div>
         </Wrapper>
     )

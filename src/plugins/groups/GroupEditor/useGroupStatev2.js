@@ -20,12 +20,12 @@ export function useGroupState(startValue, state) {
         startValue.workingPackages.length > state.workingPackages.items.length
     ) {
         const j =
-        startValue.workingPackages.length -
-        state.workingPackages.items.length
+            startValue.workingPackages.length -
+            state.workingPackages.items.length
         for (let i = 0; i < j; i++) {
             state.workingPackages.insert(state.workingPackages.items.length, {
-                plugin: "Reihe",
-                state: [{ plugin: "Text" }],
+                plugin: "rows",
+                state: [{ plugin: "text" }],
             })
         }
     }
@@ -49,8 +49,8 @@ export function useGroupState(startValue, state) {
             id: uuid(),
         })
         state.workingPackages.insert(state.workingPackages.items.length, {
-            plugin: "Reihe",
-            state: [{ plugin: "Text" }],
+            plugin: "rows",
+            state: [{ plugin: "text" }],
         })
         setWorkingPackages(newWorkingPackages)
     }

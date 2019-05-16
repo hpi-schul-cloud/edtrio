@@ -1,18 +1,66 @@
-import React, { useState, useEffect } from "react"
-import { createBoard } from "./utils"
+import React, { useState, useEffect, useContext } from "react"
+import LessonContext from "~/Contexts/Lesson"
+import UserContext from "~/Contexts/User"
+import { createBoard, getBoard } from "./utils"
+import Action from "~/components/Action"
+import Flex from "~/components/Flex"
+import Loader from "~/components/Loader"
 
-const Nexboard = () => {
-    const [state, setState] = useState({ board: {}, project: {} })
+const Nexboard = ({ focused, state }) => {
+    const [loading, setLoading] = useState(true)
+    const [board, setBoard] = useState({})
+    const { store } = useContext(LessonContext)
+    const { store: user } = useContext(UserContext)
+    async function bootstrap() {
+        try {
+            let board
+            if (state.id.value) {
+                board = await getBoard(state.id.value)
+            } else {
+                board = await createBoard(
+                    store.lesson.id,
+                    `${store.lesson.title} Nexboard`,
+                )
+            }
+            state.id.set(board.id)
+            setBoard(board)
+        } catch (err) {}
+
+        setLoading(false)
+    }
+
     useEffect(() => {
-        const newState = createBoard()
-        setState(newState)
+        bootstrap()
     }, [])
 
-    return (
-        <div>
-            <h1>THIS IS A NEXBOARD PLUGIN</h1>
-        </div>
-    )
+    if (loading) {
+        return (
+            <Flex justifyCenter>
+                <Loader />
+            </Flex>
+        )
+    } else {
+        return (
+            <Flex column alignEnd>
+                <iframe
+                    src={`${board.publicLink}?username=${user.displayName}`}
+                    style={{
+                        width: "100%",
+                        height: "600px",
+                        resize: "vertical",
+                        overflow: "auto",
+                        border: "none",
+                    }}
+                />
+                <Action
+                    a
+                    to={`${board.publicLink}?username=${user.displayName}`}
+                    target="_blank">
+                    in neuem Tab öffnen
+                </Action>
+            </Flex>
+        )
+    }
 }
 
 export default Nexboard

@@ -21,11 +21,14 @@ const StyledHeader = styled(Container)`
     z-index: 100;
     padding-top: 5px !important;
     padding-bottom: 5px !important;
-    box-shadow: 0 5px 25px -15px rgba(0, 0, 0, 1);
+    /* box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.18); */
+    z-index: 200;
 
     @media (max-width: 1250px) {
         width: calc(100vw - 60px);
         left: 60px;
+        padding-left: 75px !important;
+        padding-right: 25px !important;
     }
 
     ${props =>
@@ -43,7 +46,7 @@ const StyledHeader = styled(Container)`
             `}
     }
 
-    @media (max-width: 1150px) {
+    @media (max-width: 1375px) {
         padding-left: 75px;
         padding-right: 75px;
     }

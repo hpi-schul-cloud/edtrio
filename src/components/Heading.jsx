@@ -9,6 +9,7 @@ const baseStyle = css`
         if (props.primary) return props.theme.colors.red
         return props.theme.colors.text
     }};
+    font-family: "PT Sans Narrow", sans-serif;
     font-weight: bold;
 
     text-align: ${props => {

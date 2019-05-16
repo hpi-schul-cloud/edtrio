@@ -4,11 +4,10 @@ export const initialState = {
     loading: true,
     error: "",
     lesson: {},
-    editing: false,
+    editing: true,
     bootstrapFinished: false,
     saveStatus: "",
     showSectionOverview: false,
-    showNotes: false,
     isFullScreen: false,
 }
 function reducer(state, { type, payload }) {
@@ -32,12 +31,6 @@ function reducer(state, { type, payload }) {
                         : !state.showSectionOverview,
             }
 
-        case "TOGGLE_NOTES":
-            return {
-                ...state,
-                showNotes: payload !== undefined ? payload : !state.showNotes,
-            }
-
         case "BOOTSTRAP":
             const newState = {
                 ...state,
@@ -47,7 +40,13 @@ function reducer(state, { type, payload }) {
                     ...payload,
                     changed: new Set(),
                     sections: payload.sections.map(section => {
-                        return { ...section, changed: new Set() }
+                        const sectionData = { ...section, changed: new Set() }
+                        if (section.new) {
+                            sectionData.new = undefined
+                            sectionData.changed.add("")
+                        }
+
+                        return sectionData
                     }),
                 },
             }
@@ -103,9 +102,8 @@ function reducer(state, { type, payload }) {
             const newSection = {
                 title: "",
                 id: payload.tempId,
-                notes: "",
                 visible: true,
-                docValue: null,
+                docValue: {},
                 changed: new Set(),
             }
             const newSections = []
@@ -125,7 +123,6 @@ function reducer(state, { type, payload }) {
             }
 
         case "REPLACE_ADDED_SECTION_ID": {
-            state.lesson.changed.add("order")
             return {
                 ...state,
                 lesson: {
@@ -176,20 +173,6 @@ function reducer(state, { type, payload }) {
                     sections: state.lesson.sections.filter(
                         section => section.id !== payload,
                     ),
-                },
-            }
-
-        case "NOTES":
-            return {
-                ...state,
-                lesson: {
-                    ...state.lesson,
-                    sections: state.lesson.sections.map(section => {
-                        if (section.id !== payload.sectionId) return section
-
-                        section.changed.add("notes")
-                        return { ...section, notes: payload.newValue }
-                    }),
                 },
             }
 

@@ -1,6 +1,5 @@
 import React, { useContext } from "react"
 import styled, { css } from "styled-components"
-import { Link } from "react-router-dom"
 
 import { ThemeContext, theme as defaultTheme } from "~/Contexts/Theme"
 
@@ -24,14 +23,6 @@ const baseStyles = css`
         }};
         text-decoration: underline;
     }
-`
-
-const StyledLink = styled(Link)`
-    text-decoration: none;
-    margin-bottom: ${props => {
-        if (props.noMargin) return 0
-        return "5px"
-    }};
 `
 
 const StyledAnchor = styled.a`
@@ -76,30 +67,17 @@ const Action = ({ clickable, a, block, to, children, style, ...props }) => {
                 {children}
             </StyledClickable>
         )
-    } else if (a) {
-        return (
-            <StyledAnchor
-                theme={theme}
-                style={{ display: block ? "block" : "inline", ...style }}
-                href={to}
-                target="_blank">
-                <StyledContent {...props} theme={theme}>
-                    {children}
-                </StyledContent>
-            </StyledAnchor>
-        )
     }
-
     return (
-        <StyledLink
+        <StyledAnchor
             theme={theme}
             style={{ display: block ? "block" : "inline", ...style }}
-            to={to}>
+            href={to}
+            target="_blank">
             <StyledContent {...props} theme={theme}>
                 {children}
             </StyledContent>
-        </StyledLink>
+        </StyledAnchor>
     )
 }
-
 export default Action

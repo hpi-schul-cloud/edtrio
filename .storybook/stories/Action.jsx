@@ -1,5 +1,4 @@
 import React from "react"
-import { BrowserRouter } from "react-router-dom"
 import { storiesOf } from "@storybook/react"
 import Container from "~/components/Container"
 import Action from "~/components/Action"
@@ -7,11 +6,9 @@ import Text from "~/components/Text"
 
 storiesOf("Action", module)
     .add("standard Action", () => (
-        <BrowserRouter>
-            <Container>
-                <Action to="">Standard Action</Action>
-            </Container>
-        </BrowserRouter>
+        <Container>
+            <Action to="">Standard Action</Action>
+        </Container>
     ))
     .add("external Link", () => (
         <Container>

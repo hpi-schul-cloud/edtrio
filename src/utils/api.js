@@ -1,5 +1,6 @@
 import axios from "axios"
 import { getCookie } from "~/utils/cookie"
+import config from "~/config"
 
 // EXAMPLE:
 // 1. normal get request
@@ -29,6 +30,8 @@ import { getCookie } from "~/utils/cookie"
 //     }
 // )
 
+const BACKEND_URL = BACKEND_URL || ""
+
 const bodyRequest = (
     type,
     endpoint,
@@ -37,7 +40,7 @@ const bodyRequest = (
     uploadProgress,
     fakeResponse,
 ) => {
-    if (fakeResponse && process.env.NODE_ENV !== "production") {
+    if (fakeResponse && config.DISABLE_BACKEND) {
         return new Promise(resolve =>
             setTimeout(() => resolve(fakeResponse), 250),
         )
@@ -60,7 +63,7 @@ const bodyRequest = (
             data = body
         }
         axios[type](endpoint, data, {
-            baseURL: process.env.BACKEND_URL || "http://localhost:3030", // TODO include test system? staging?
+            baseURL: BACKEND_URL || "http://localhost:3030", // TODO include test system? staging?
             headers: {
                 "Content-Type": "application/json",
                 Authorization:
@@ -93,7 +96,7 @@ const bodyRequest = (
 
 const api = {
     get: (endpoint, fakeResponse) => {
-        if (fakeResponse && process.env.NODE_ENV !== "production") {
+        if (fakeResponse && config.DISABLE_BACKEND) {
             return new Promise(resolve =>
                 setTimeout(() => resolve(fakeResponse), 250),
             )
@@ -102,7 +105,7 @@ const api = {
         return new Promise((resolve, reject) => {
             axios
                 .get(endpoint, {
-                    baseURL: process.env.BACKEND_URL || "http://localhost:3030", // TODO include test system? staging?
+                    baseURL: BACKEND_URL || "http://localhost:3030", // TODO include test system? staging?
                     headers: {
                         Authorization:
                             (getCookie("jwt").startsWith("Bearer ")
@@ -147,15 +150,40 @@ const api = {
             uploadProgress,
             fakeResponse,
         ),
-    delete: (endpoint, body, files, uploadProgress, fakeResponse) =>
-        bodyRequest(
-            "delete",
-            endpoint,
-            body,
-            files,
-            uploadProgress,
-            fakeResponse,
-        ),
+    delete: (endpoint, fakeResponse) => {
+        if (fakeResponse && process.env.NODE_ENV !== "production") {
+            return new Promise(resolve =>
+                setTimeout(() => resolve(fakeResponse), 250),
+            )
+        }
+
+        return new Promise((resolve, reject) => {
+            axios
+                .delete(endpoint, {
+                    baseURL: BACKEND_URL || "http://localhost:3030", // TODO include test system? staging?
+                    headers: {
+                        Authorization:
+                            (getCookie("jwt").startsWith("Bearer ")
+                                ? ""
+                                : "Bearer ") + getCookie("jwt"),
+                    },
+                })
+                .then(result => resolve(result.data))
+                .catch(err => {
+                    if (
+                        err &&
+                        err.response &&
+                        err.response.data &&
+                        err.response.data.error
+                    ) {
+                        err.description = err.response.data.error
+                        reject(err)
+                    } else {
+                        reject(err)
+                    }
+                })
+        })
+    },
 }
 
 export default api
