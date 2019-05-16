@@ -1,5 +1,7 @@
 import React, { useState } from "react"
 import styled from "styled-components"
+import "@reach/tabs/styles.css"
+
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@reach/tabs"
 // and the styles
 import "@reach/tabs/styles.css"
@@ -7,11 +9,6 @@ import "@reach/tabs/styles.css"
 const StyledWorkingPackages = styled.div`
     border: 1px solid rgba(0, 0, 0, 0.125);
     border-radius: 3px;
-`
-
-const StyledWorkingPackage = styled.div`
-    margin-left: 16px;
-    padding-top: 16px;
 `
 
 export function WorkingPackages(props) {
