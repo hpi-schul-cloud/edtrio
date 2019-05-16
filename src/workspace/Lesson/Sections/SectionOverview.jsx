@@ -6,13 +6,13 @@ import LessonContext from "~/Contexts/Lesson"
 
 const Wrapper = styled.div`
     padding: 15px;
+    right: 0;
     position: fixed;
-    left: 245px;
-    top: 150px;
-    width: 300px;
+    top: 250px;
+    width: 175px;
     max-width: 100vw;
     overflow: hidden;
-    transform: ${props => (props.visible ? 0 : "translateX(-100%)")};
+    transform: ${props => (props.visible ? 0 : "translateX(100%)")};
     opacity: ${props => (props.visible ? 1 : 0)};
     transition: 250ms all ease-in-out;
     background-color: #fff;
@@ -20,16 +20,7 @@ const Wrapper = styled.div`
     z-index: 100;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.18);
 
-    @media (max-width: 1250px) {
-        left: 65px;
-    }
-
-    ${props =>
-        props.isFullScreen &&
-        css`
-            left: 0 !important;
-            border-radius: 0 5px 5px 0;
-        `}
+    border-radius: 5px 0px 0px 5px;
 `
 
 const SectionTitle = styled(Heading)`
@@ -95,17 +86,17 @@ function useResizeListener() {
     const { store, dispatch } = useContext(LessonContext)
 
     function resizeListener() {
-        if (store.showSectionOverview && window.innerWidth < 1500) {
+        if (store.showSectionOverview && window.innerWidth < 1250) {
             dispatch({ type: "TOGGLE_SECTION_OVERVIEW", payload: false })
         }
 
-        if (store.showSectionOverview === false && window.innerWidth > 1500) {
+        if (store.showSectionOverview === false && window.innerWidth > 1250) {
             dispatch({ type: "TOGGLE_SECTION_OVERVIEW", payload: true })
         }
     }
 
     useEffect(() => {
-        if (window.innerWidth > 1500 && !store.bootstrapFinished) {
+        if (window.innerWidth > 1250 && !store.bootstrapFinished) {
             dispatch({ type: "TOGGLE_SECTION_OVERVIEW", payload: true })
         }
 
@@ -114,11 +105,11 @@ function useResizeListener() {
     }, [store.showSectionOverview])
 }
 
-const SectionOverview = ({ sections, editing, visible, isFullScreen }) => {
+const SectionOverview = ({ sections, editing, visible }) => {
     const [activeSectionIndex, setActiveSectionIndex] = useScrollListener()
     useResizeListener()
     return (
-        <Wrapper visible={visible} isFullScreen={isFullScreen}>
+        <Wrapper visible={visible}>
             {sections
                 .filter(section => {
                     if (editing) return true

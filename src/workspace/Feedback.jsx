@@ -49,29 +49,12 @@ const FeedbackBtn = styled(Button)`
     }
 `
 
-const BackBtn = styled(Button)`
-    position: fixed;
-    bottom: 50px;
-    left: 1px;
-    margin: 0;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2), 0 3px 6px rgba(0, 0, 0, 0.36);
-`
-
 const Feedback = () => {
     return (
         <React.Fragment>
             <StyledLink href="mailto:feedback@schul-cloud.org@hpi.de?subject=Mein%20Feedback%20zum%20neuen%20Themen-Werkzeug&amp;body=Liebes%20Schul-Cloud-Team%2C%0A%0AHier%20kommt%20mein%20Feedback%20zum%20neuen%20Editor.%0A%0ADas%20hat%20gut%20funktioniert%3A%0A%0A%0AHier%20hatte%20ich%20Probleme%3A%0A%0A%0ADiese%20Funktion%20w%C3%BCnsche%20ich%20mir%20am%20meisten%3A%0A%0A%0A">
                 <FeedbackBtn>Gib uns Feedback!</FeedbackBtn>
             </StyledLink>
-            <BackBtn
-                onClick={() => {
-                    window.location.href = window.location.href.replace(
-                        "?edtr=true",
-                        "",
-                    )
-                }}>
-                Zurück zum normalen Editor
-            </BackBtn>
         </React.Fragment>
     )
 }

@@ -28,7 +28,7 @@ const SeparatorButton = styled(Button)`
     left: 50%;
     transform: translate(-50%, -50%);
     ${props =>
-        props.small &&
+        props.round &&
         css`
             width: 26px;
             height: 26px;
@@ -47,7 +47,8 @@ const StyledImage = styled.img`
                   transform: translate(-50%, -50%);
               `
             : css`
-                  margin-top: -2px;
+                  margin-top: 0px;
+                  margin-left: -3px;
               `}
     width: 20px;
 `
@@ -81,10 +82,10 @@ async function handleClick(dispatch, isFirst, index, lessonId) {
 const Separator = ({ index, isFirst, isLast, lessonId, dispatch, editing }) => {
     const content =
         isFirst || isLast ? (
-            <span style={{ marginRight: 20 }}>
+            <Flex inline alignCenter noWrap>
                 <StyledImage inline src={plusIcon} alt="" />
                 Neuer Abschnitt
-            </span>
+            </Flex>
         ) : (
             <StyledImage src={plusIcon} alt="" />
         )
@@ -94,7 +95,8 @@ const Separator = ({ index, isFirst, isLast, lessonId, dispatch, editing }) => {
             <StyledSeparator hide={isFirst || isLast}>
                 {editing && (
                     <SeparatorButton
-                        small={!isFirst && !isLast}
+                        round={!isFirst && !isLast}
+                        small
                         onClick={() =>
                             handleClick(dispatch, isFirst, index, lessonId)
                         }

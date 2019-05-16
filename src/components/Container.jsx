@@ -4,11 +4,6 @@ import LessonContext from "~/Contexts/Lesson"
 
 const StyledContainer = styled.div`
     padding: 25px calc((100vw - 995px) / 2);
-    ${props =>
-        !props.isFullScreen &&
-        css`
-            padding: 25px calc((100vw - 995px - 239px) / 2);
-        `}
 
     @media (max-width: 1035px) {
         padding: 25px 20px;
@@ -44,7 +39,7 @@ const StyledContainer = styled.div`
 
 const Container = props => {
     const { store } = useContext(LessonContext)
-    return <StyledContainer isFullScreen={store.isFullScreen} {...props} />
+    return <StyledContainer {...props} />
 }
 
 export default Container

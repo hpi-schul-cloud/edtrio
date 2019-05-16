@@ -4,11 +4,11 @@ export const initialState = {
     loading: true,
     error: "",
     lesson: {},
+    course: {},
     editing: true,
     bootstrapFinished: false,
     saveStatus: "",
     showSectionOverview: false,
-    isFullScreen: false,
 }
 function reducer(state, { type, payload }) {
     switch (type) {
@@ -18,9 +18,11 @@ function reducer(state, { type, payload }) {
                 editing: payload,
             }
 
-        case "FULL_SCREEN": {
-            return { ...state, isFullScreen: payload }
-        }
+        case "SET_COURSE":
+            return {
+                ...state,
+                course: payload,
+            }
 
         case "TOGGLE_SECTION_OVERVIEW":
             return {

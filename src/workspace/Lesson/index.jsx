@@ -23,7 +23,6 @@ import {
 
 const Wrapper = styled.div`
     position: relative;
-    padding-top: ${props => props.isFullScreen && "50px"};
     width: 100%;
 `
 
@@ -42,7 +41,6 @@ const Lesson = props => {
 
     useBootstrap(id, dispatch, dispatchUserAction)
     useChangeListener(store, dispatch)
-    const isFullScreen = useFullScreenListener(store, dispatch)
     useInterval(() => saveLesson(store, dispatch), 10000)
 
     useEffect(() => {
@@ -61,17 +59,12 @@ const Lesson = props => {
     }
 
     return (
-        <Wrapper isFullScreen={isFullScreen}>
-            <Header
-                title={store.lesson.title}
-                dispatch={dispatch}
-                isFullScreen={isFullScreen}
-            />
+        <Wrapper>
+            <Header title={store.lesson.title} dispatch={dispatch} />
             <Sections
                 showSectionOverview={store.showSectionOverview}
                 editing={store.editing}
                 sections={store.lesson.sections}
-                isFullScreen={isFullScreen}
             />
         </Wrapper>
     )

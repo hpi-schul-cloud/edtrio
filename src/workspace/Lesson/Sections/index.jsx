@@ -17,7 +17,7 @@ const Warning = styled(Text)`
     color: #fff;
 `
 
-const Sections = ({ sections, editing, showSectionOverview, isFullScreen }) => {
+const Sections = ({ sections, editing, showSectionOverview }) => {
     const filteredSections = sections.filter(section => {
         if (editing) return true
         return section.visible
@@ -28,7 +28,6 @@ const Sections = ({ sections, editing, showSectionOverview, isFullScreen }) => {
                 sections={sections}
                 editing={editing}
                 visible={showSectionOverview}
-                isFullScreen={isFullScreen}
             />
             <Flex justifyCenter>
                 <Warning center bold>

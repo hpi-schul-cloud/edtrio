@@ -54,7 +54,16 @@ const StyledClickable = styled.span`
  * }
  */
 
-const Action = ({ clickable, a, block, to, children, style, ...props }) => {
+const Action = ({
+    clickable,
+    a,
+    block,
+    to,
+    children,
+    style,
+    target,
+    ...props
+}) => {
     const context = useContext(ThemeContext)
     const theme = context && context.theme ? context.theme : defaultTheme
 
@@ -73,7 +82,7 @@ const Action = ({ clickable, a, block, to, children, style, ...props }) => {
             theme={theme}
             style={{ display: block ? "block" : "inline", ...style }}
             href={to}
-            target="_blank">
+            target={target || "_blank"}>
             <StyledContent {...props} theme={theme}>
                 {children}
             </StyledContent>
