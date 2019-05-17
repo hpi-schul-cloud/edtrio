@@ -63,7 +63,12 @@ const Menu = ({ visible, menu, setMenu, index, store, name }) => {
     const mappedPlugins = Object.keys(plugins)
         .filter(pluginKey => {
             const plugin = plugins[pluginKey]
-            if (pluginKey === name || pluginKey === "rows") return false
+            if (
+                pluginKey === name ||
+                pluginKey === "rows" ||
+                plugin.dontIncludeInMenu
+            )
+                return false
             if (!search.length) return true
 
             if (

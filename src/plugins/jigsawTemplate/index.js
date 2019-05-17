@@ -13,4 +13,5 @@ export const jigsawPlugin = {
         return <Jigsaw {...props} />
     },
     state: jigsawState,
+    dontIncludeInMenu: true,
 }

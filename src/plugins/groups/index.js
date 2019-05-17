@@ -4,6 +4,8 @@ import { StateType } from "@edtr-io/core"
 import { GroupEditor } from "./GroupEditor/index"
 import { AdvancedGroupEditor } from "./AdvancedGroupEditor/index"
 import { QuickGroupEditor } from "./QuickGroupEditor/index"
+import { GroupsOverview } from "./GroupsOverview/index"
+import { PluginIcon } from "./PluginIcon"
 
 const groupState = StateType.object({
     workingPackages: StateType.list(StateType.child("text"), 0),
@@ -17,12 +19,28 @@ const advancedGroupState = StateType.object({
     fixedGroupId: StateType.string(),
 })
 
+const groupOverviewState = StateType.object({
+    children: StateType.list(StateType.child("text"), 0),
+})
+
+export const groupsOverviewPlugin = {
+    // eslint-disable-next-line react/display-name
+    Component: props => {
+        return <GroupsOverview {...props} />
+    },
+    state: groupOverviewState,
+    title: "Gruppenübersicht",
+    description: "TODO!",
+    icon: () => <PluginIcon />,
+}
+
 export const groupPlugin = {
     // eslint-disable-next-line react/display-name
     Component: props => {
         return <GroupEditor {...props} />
     },
     state: groupState,
+    dontIncludeInMenu: true,
 }
 export const advancedGroupPlugin = {
     // eslint-disable-next-line react/display-name
@@ -30,6 +48,7 @@ export const advancedGroupPlugin = {
         return <AdvancedGroupEditor {...props} />
     },
     state: advancedGroupState,
+    dontIncludeInMenu: true,
 }
 
 export const quickGroupPlugin = {
@@ -38,4 +57,5 @@ export const quickGroupPlugin = {
         return <QuickGroupEditor {...props} />
     },
     state: groupState,
+    dontIncludeInMenu: true,
 }

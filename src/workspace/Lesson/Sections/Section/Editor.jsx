@@ -31,6 +31,7 @@ import {
     groupPlugin,
     advancedGroupPlugin,
     quickGroupPlugin,
+    groupsOverviewPlugin,
 } from "~/plugins/groups/index"
 
 const uploadConfig = {
@@ -67,11 +68,12 @@ const plugins = {
     inputExercise: inputExercisePlugin,
     video: videoPlugin,
     // group work changes
-    "Einfache Gruppenarbeit": quickGroupPlugin,
+    quickGroup: quickGroupPlugin,
     Abgabe: assignmentPlugin,
-    "Komplexe Gruppenarbeit": groupPlugin,
-    Gruppeniteration: advancedGroupPlugin,
-    "Template: mehrstufige Gruppenarbeit": jigsawPlugin,
+    group: groupPlugin,
+    groupIteration: advancedGroupPlugin,
+    groupsOverview: groupsOverviewPlugin,
+    jigsaw: jigsawPlugin,
     // h5p: h5pPlugin,
 }
 
