@@ -1,7 +1,7 @@
 import React, { useContext } from "react"
 import styled, { css } from "styled-components"
 
-import { ThemeContext, theme as defaultTheme } from "~/Contexts/Theme"
+import theme from "~/theme"
 
 import Flex from "~/components/Flex"
 import Text from "~/components/Text"
@@ -41,7 +41,7 @@ const StyledToggle = styled.span`
     ${props =>
         props.active &&
         css`
-            background-color: ${props => props.primaryColor};
+            background-color: ${theme.primaryColor};
             &::after {
                 left: 32px;
             }
@@ -66,7 +66,7 @@ const Caption = styled(Text)`
     ${props =>
         props.active &&
         css`
-            color: ${props => props.active && props.primaryColor};
+            color: ${props => props.active && theme.primaryColor};
         `}
     ${props =>
         props.small &&
@@ -85,11 +85,6 @@ const Toggle = ({
     small,
     ...props
 }) => {
-    const context = useContext(ThemeContext)
-    const theme = context && context.theme ? context.theme : defaultTheme
-
-    const primaryColor = theme.colors.red
-
     const hasActiveCaption = activeCaption && activeCaption.length
 
     return (
@@ -105,23 +100,17 @@ const Toggle = ({
             {...props}>
             <Caption
                 noMargin
-                primaryColor={primaryColor}
                 small={small}
                 active={!hasActiveCaption && active}>
                 {caption}
             </Caption>
             <StyledToggle
-                primaryColor={primaryColor}
                 active={active}
                 small={small}
                 style={{ order: !hasActiveCaption ? -1 : undefined }}
             />
             {hasActiveCaption && (
-                <Caption
-                    noMargin
-                    primaryColor={primaryColor}
-                    active={active}
-                    small={small}>
+                <Caption noMargin active={active} small={small}>
                     {activeCaption}
                 </Caption>
             )}

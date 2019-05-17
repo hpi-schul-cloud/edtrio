@@ -1,7 +1,7 @@
 import React, { useContext } from "react"
 import styled from "styled-components"
 
-import { ThemeContext, theme as defaultTheme } from "~/Contexts/Theme"
+import theme from "~/theme"
 
 export { default as Toggle } from "./Toggle"
 
@@ -24,11 +24,12 @@ const StyledButton = styled.button`
     white-space: nowrap;
 
     background-color: ${props => {
-        if (props.secondary) return "#fff"
-        return props.primaryColor
+        if (props.secondary) return theme.colorWhite
+        return theme.primaryColor
     }};
-    color: ${props => (props.secondary ? props.primaryColor : "#fff")};
-    border: 1px solid ${props => props.primaryColor};
+    color: ${props =>
+        props.secondary ? theme.primaryColor : theme.colorWhite};
+    border: 1px solid ${props => theme.primaryColor};
     border-radius: 3px;
     outline: none;
 
@@ -46,22 +47,7 @@ const StyledButton = styled.button`
 `
 
 const Button = ({ children, ...props }) => {
-    const context = useContext(ThemeContext)
-    const theme = context && context.theme ? context.theme : defaultTheme
-
-    const primaryColor = theme.colors.red
-    const tintedPrimaryColor = theme.colors.darkRed
-    const darkPrimaryColor = theme.colors.deepDarkRed
-
-    return (
-        <StyledButton
-            {...props}
-            primaryColor={primaryColor}
-            tintedPrimaryColor={tintedPrimaryColor}
-            darkPrimaryColor={darkPrimaryColor}>
-            {children}
-        </StyledButton>
-    )
+    return <StyledButton {...props}>{children}</StyledButton>
 }
 
 export default Button

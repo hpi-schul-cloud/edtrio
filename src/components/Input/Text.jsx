@@ -1,10 +1,12 @@
 import React from "react"
 import styled from "styled-components"
 
+import theme from "~/theme"
+
 const StyledTextInput = styled.input`
     font-size: ${props => props.size}px;
     font-family: "PT Sans", sans-serif;
-    color: #373a3c;
+    color: ${theme.textColor};
     border: none;
     outline: none;
     width: ${props => props.full && "100%"};
@@ -12,7 +14,7 @@ const StyledTextInput = styled.input`
 
     margin-bottom: ${props => !props.noMargin && props.size / 1.6}px;
 
-    border-bottom: 2px solid #373a3c;
+    border-bottom: 2px solid ${theme.colorGrey};
     border-bottom-color: ${props => props.readOnly && "transparent"};
 
     transition: 250ms border-bottom-color ease-in-out;
@@ -22,7 +24,7 @@ const StyledTextInput = styled.input`
     }
 
     &::placeholder {
-        color: rgb(160, 160, 160);
+        color: ${theme.colorGrey};
     }
 `
 

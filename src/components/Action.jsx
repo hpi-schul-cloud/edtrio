@@ -1,7 +1,7 @@
 import React, { useContext } from "react"
 import styled, { css } from "styled-components"
 
-import { ThemeContext, theme as defaultTheme } from "~/Contexts/Theme"
+import theme from "~/theme"
 
 const baseStyles = css`
     font-size: ${props => {
@@ -9,18 +9,14 @@ const baseStyles = css`
         return "16px"
     }};
 
-    color: ${props => {
-        return props.theme.colors.red
-    }};
+    color: ${theme.primaryColor};
 
     transition: all 100ms ease-in-out;
     cursor: pointer;
     text-decoration: none;
 
     &:hover {
-        color: ${props => {
-            return props.theme.colors.darkRed
-        }};
+        color: ${theme.tintedPrimaryColor};
         text-decoration: underline;
     }
 `
@@ -64,9 +60,6 @@ const Action = ({
     target,
     ...props
 }) => {
-    const context = useContext(ThemeContext)
-    const theme = context && context.theme ? context.theme : defaultTheme
-
     if (clickable) {
         return (
             <StyledClickable

@@ -38,7 +38,6 @@ const StyledContainer = styled.div`
 `
 
 const Container = props => {
-    const { store } = useContext(LessonContext)
     return <StyledContainer {...props} />
 }
 

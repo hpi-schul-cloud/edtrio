@@ -26,24 +26,6 @@ import notesPlugin from "~/plugins/notes"
 
 const counterState = StateType.number(0)
 
-const counterPlugin = {
-    // eslint-disable-next-line react/display-name
-    Component: ({ focused, state }) => {
-        return (
-            <div>
-                {state.value}
-                <button
-                    onClick={() => {
-                        state.set(value => value + 1)
-                    }}>
-                    +
-                </button>
-            </div>
-        )
-    },
-    state: counterState,
-}
-
 const plugins = {
     text: textPlugin,
     notes: notesPlugin,

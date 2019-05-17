@@ -72,6 +72,8 @@ import LocalModule from './local-module.js'
 
 ### components
 
+You can find a live storybook at [https://edtr-storybook.web.app](https://edtr-storybook.web.app)
+
 Reusable components are built with `styled-components` and can be viewed in the storybook (`npm run storybook`). All props can be viewed either in the component file itself (destructuring) or under the "Knobs" tab in storybook. Often times, props can be bassed as booleans and are structured in a way that the default value is false, for example:
 
 ```
