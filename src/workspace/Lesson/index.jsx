@@ -12,7 +12,8 @@ import Flex from "~/components/Flex"
 import Loader from "~/components/Loader"
 
 import Header from "./Header"
-import Sections from "./Sections"
+import Section from "./Section"
+import SectionOverview from "./SectionOverview"
 
 import {
     useBootstrap,
@@ -61,11 +62,8 @@ const Lesson = props => {
     return (
         <Wrapper>
             <Header title={store.lesson.title} dispatch={dispatch} />
-            <Sections
-                showSectionOverview={store.showSectionOverview}
-                editing={store.editing}
-                sections={store.lesson.sections}
-            />
+            <Section store={store} dispatch={dispatch} />
+            <SectionOverview store={store} dispatch={dispatch} />
         </Wrapper>
     )
 }

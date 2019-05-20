@@ -13,7 +13,11 @@ const TitleInput = styled(Input)`
     margin-top: 0px;
 `
 
-const StyledCrumb = styled(Flex)``
+const StyledCrumb = styled(Flex)`
+    @media (max-width: 900px) {
+        display: none;
+    }
+`
 
 const Crumb = ({ to, caption }) => {
     return (

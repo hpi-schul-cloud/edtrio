@@ -9,6 +9,7 @@ const StyledSettings = styled(Flex)`
     background-color: #af0437;
     padding: 10px 0;
     height: 100%;
+    margin-left: 15px;
     cursor: pointer;
 `
 

@@ -12,5 +12,6 @@ export default {
     colorGrey: "rgba(160, 160, 160, 1)",
     colorLightGrey: "rgba(0,0,0,0.1)",
     colorDarkerGrey: "#555555",
+    colorDarkGrey: "#333",
     colorWhite: "#fff",
 }

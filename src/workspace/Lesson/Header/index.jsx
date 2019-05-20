@@ -7,7 +7,6 @@ import Flex from "~/components/Flex"
 import Text from "~/components/Text"
 import { Toggle } from "~/components/Button"
 
-import Controls from "./Controls"
 import Back from "./Back"
 import BreadCrumbs from "./BreadCrumbs"
 import Settings from "./Settings"
@@ -80,7 +79,6 @@ const Header = () => {
                         dispatch({ type: "SET_EDITING", payload: newValue })
                     }}
                 />
-                <Controls />
                 <Settings store={store} dispatch={dispatch} />
             </Flex>
         </StyledHeader>

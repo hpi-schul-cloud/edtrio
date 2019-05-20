@@ -24,9 +24,7 @@ import nexboardPlugin from "~/plugins/nexboard"
 import etherpadPlugin from "~/plugins/etherpad"
 import notesPlugin from "~/plugins/notes"
 
-const counterState = StateType.number(0)
-
-const plugins = {
+export const plugins = {
     text: textPlugin,
     notes: notesPlugin,
     rows: rowsPlugin,

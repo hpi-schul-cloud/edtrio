@@ -6,6 +6,7 @@ export const initialState = {
     lesson: {},
     course: {},
     editing: true,
+    activeSectionId: "",
     bootstrapFinished: false,
     saveStatus: "",
     showSectionOverview: false,
@@ -51,6 +52,7 @@ function reducer(state, { type, payload }) {
                         return sectionData
                     }),
                 },
+                activeSectionId: payload.sections[0].id,
             }
 
             return newState
@@ -59,6 +61,13 @@ function reducer(state, { type, payload }) {
             return {
                 ...state,
                 bootstrapFinished: true,
+                saveStatus: "",
+            }
+
+        case "SET_ACTIVE_SECTION":
+            return {
+                ...state,
+                activeSectionId: payload.id,
                 saveStatus: "",
             }
 
@@ -75,6 +84,18 @@ function reducer(state, { type, payload }) {
                 lesson: {
                     ...state.lesson,
                     title: payload,
+                },
+            }
+
+        case "UPDATE_SECTION_DOC_VALUE":
+            return {
+                ...state,
+                lesson: {
+                    ...state.lesson,
+                    sections: state.lesson.sections.map(section => {
+                        if (section.id !== payload.id) return section
+                        return { ...section, docValue: payload.docValue }
+                    }),
                 },
             }
 

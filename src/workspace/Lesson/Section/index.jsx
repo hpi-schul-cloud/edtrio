@@ -5,15 +5,13 @@ import LessonContext from "~/Contexts/Lesson"
 
 import Flex from "~/components/Flex"
 import Input from "~/components/Input"
+import Text from "~/components/Text"
 import Container from "~/components/Container"
 
 import Editor from "./Editor"
-import Separator from "./Separator"
-import Controls from "./Controls"
 
 const StyledSection = styled(Flex)`
     transition: 250ms all ease-in-out;
-
     ${props =>
         props.delete &&
         css`
@@ -43,9 +41,33 @@ const SectionInput = styled(Input)`
     font-family: "PT Sans Narrow", sans-serif;
 `
 
-const Section = ({ section, isLast, index }) => {
-    const { store, dispatch } = useContext(LessonContext)
+const Warning = styled(Text)`
+    width: auto;
+    max-width: 850px;
+    padding: 15px;
+    background-color: #cc0000;
+    color: #fff;
+    margin-bottom: 25px;
+`
+
+const Section = ({ store, dispatch }) => {
     const sectionRef = useRef(null)
+
+    if (!store.activeSectionId)
+        return (
+            <Container>
+                <Flex>
+                    <Text center>Kein Abschnitt ausgewählt...</Text>
+                </Flex>
+            </Container>
+        )
+
+    const index = store.lesson.sections.findIndex(
+        section => section.id === store.activeSectionId,
+    )
+    const section = store.lesson.sections[index]
+    const isLast = store.lesson.sections.length - 1 === index
+
     return (
         <StyledSection
             column
@@ -54,35 +76,17 @@ const Section = ({ section, isLast, index }) => {
             data-section={index}
             className="lesson-section"
             ref={sectionRef}>
-            <Controls
-                sectionTitle={section.title}
-                store={store}
-                index={index}
-                dispatch={dispatch}
-                isLast={isLast}
-                sectionRef={sectionRef}
-                visible={section.visible}
-                sectionId={section.id}
-            />
+            <Flex justifyCenter>
+                <Warning center bold>
+                    +++ Alpha-Testversion +++ ohne Speicherfunktion +++ wir
+                    freuen uns über Feedback 🙂 +++
+                </Warning>
+            </Flex>
             <Wrapper visible={section.visible}>
-                {/* <SectionInput
-                    full
-                    size={32}
-                    value={section.title}
-                    readOnly={!store.editing}
-                    placeholder="Titel für diesen Abschnitt"
-                    onChange={newValue =>
-                        dispatch({
-                            type: "SECTION_TITLE_CHANGE",
-                            payload: {
-                                sectionId: section.id,
-                                title: newValue,
-                            },
-                        })
-                    }
-                /> */}
                 <Editor
+                    key={section.id}
                     docValue={section.docValue}
+                    id={section.id}
                     index={index}
                     editing={store.editing}
                     dispatchChange={collectDocValue => {
@@ -96,13 +100,6 @@ const Section = ({ section, isLast, index }) => {
                     }}
                 />
             </Wrapper>
-            <Separator
-                isLast={isLast}
-                dispatch={dispatch}
-                index={index}
-                lessonId={store.lesson.id}
-                editing={store.editing}
-            />
         </StyledSection>
     )
 }
