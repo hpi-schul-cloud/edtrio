@@ -9,7 +9,7 @@ export const initialState = {
     activeSectionId: "",
     bootstrapFinished: false,
     saveStatus: "",
-    showSectionOverview: false,
+    sectionOverviewExpanded: false,
 }
 function reducer(state, { type, payload }) {
     switch (type) {
@@ -28,10 +28,10 @@ function reducer(state, { type, payload }) {
         case "TOGGLE_SECTION_OVERVIEW":
             return {
                 ...state,
-                showSectionOverview:
+                sectionOverviewExpanded:
                     payload !== undefined
                         ? payload
-                        : !state.showSectionOverview,
+                        : !state.sectionOverviewExpanded,
             }
 
         case "BOOTSTRAP":
@@ -139,6 +139,7 @@ function reducer(state, { type, payload }) {
 
             return {
                 ...state,
+                activeSectionId: payload.tempId,
                 lesson: {
                     ...state.lesson,
                     sections: newSections,
@@ -148,6 +149,10 @@ function reducer(state, { type, payload }) {
         case "REPLACE_ADDED_SECTION_ID": {
             return {
                 ...state,
+                activeSectionId:
+                    state.activeSectionId === payload.tempId
+                        ? payload.backendId
+                        : state.activeSectionId,
                 lesson: {
                     ...state.lesson,
                     sections: state.lesson.sections.map(section => {

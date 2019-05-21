@@ -9,6 +9,7 @@ import Text from "~/components/Text"
 import Container from "~/components/Container"
 
 import Editor from "./Editor"
+import Controls from "./Controls"
 
 const StyledSection = styled(Flex)`
     transition: 250ms all ease-in-out;
@@ -98,6 +99,16 @@ const Section = ({ store, dispatch }) => {
                             },
                         })
                     }}
+                />
+                <Controls
+                    dispatch={dispatch}
+                    prevId={
+                        index - 1 >= 0 && store.lesson.sections[index - 1].id
+                    }
+                    nextId={
+                        index + 1 < store.lesson.sections.length &&
+                        store.lesson.sections[index + 1].id
+                    }
                 />
             </Wrapper>
         </StyledSection>

@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import { Editor as Edtr } from "@edtr-io/core"
 
-import { plugins } from "../Section/Editor"
+import { plugins } from "~/workspace/Lesson/Section/Editor"
 
 const EditorWrapper = styled.div`
     width: 850px;
