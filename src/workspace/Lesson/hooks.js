@@ -182,7 +182,7 @@ export function useChangeListener(store, dispatch) {
 }
 
 export function useFullScreenListener(store, dispatch) {
-    useInterval(() => {
+    /*useInterval(() => {
         if (
             document.body.classList.value.includes("loaded") &&
             !document.body.classList.value.includes("fullscreen")
@@ -194,7 +194,7 @@ export function useFullScreenListener(store, dispatch) {
             dispatch({ type: "FULL_SCREEN", payload: true })
         }
     }, 2500) // TODO maybe think of another way than an interval
-
+*/
     useEffect(() => {
         document.body.classList.add("edtr")
         const fullscreenBtn = document.querySelector(".btn-fullscreen")

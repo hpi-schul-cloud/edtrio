@@ -44,15 +44,17 @@ export function useGroupState(startValue, state) {
 
     function addWorkingPackage(title) {
         const newWorkingPackages = Array.from(workingPackages)
+        const newId = uuid()
         newWorkingPackages.push({
             title,
-            id: uuid(),
+            id: newId,
         })
         state.workingPackages.insert(state.workingPackages.items.length, {
             plugin: "rows",
             state: [{ plugin: "text" }],
         })
         setWorkingPackages(newWorkingPackages)
+        addGroup(newId, "Gruppe " + (groups.length +1) )
     }
 
     function findGroupWithDroppableId(droppableId) {

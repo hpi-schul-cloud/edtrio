@@ -29,8 +29,9 @@ export const groupsOverviewPlugin = {
         return <GroupsOverview {...props} />
     },
     state: groupOverviewState,
-    title: "Gruppenübersicht",
-    description: "TODO!",
+    title: "Gruppenarbeit",
+    description:
+        "Erlaubt die Umsetzung von verschiedenen Arten von Gruppenarbeiten.",
     icon: () => <PluginIcon />,
 }
 

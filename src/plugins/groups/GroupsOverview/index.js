@@ -3,7 +3,14 @@ import styled from "styled-components"
 
 import Text from "../../../components/Text"
 import Button from "../../../components/Button"
-import { JigsawIcon, IterationIcon, QuickGroupIcon, GroupIcon } from "./Icons"
+import {
+    JigsawIcon,
+    IterationIcon,
+    QuickGroupIcon,
+    GroupIcon,
+    TPSIcon,
+    QuestionIcon,
+} from "./Icons"
 
 const StyledRoot = styled.div`
     display: flex;
@@ -30,6 +37,11 @@ const StyledOption = styled.div`
     min-width: 200px;
     padding: 8px;
     align-items: center;
+    cursor: pointer;
+`
+
+const StyledUnclickableOption = styled(StyledOption)`
+    cursor: auto;
 `
 
 const StyledDescription = styled.div`
@@ -38,6 +50,20 @@ const StyledDescription = styled.div`
     flex-direction: column;
     justify-content: space-between;
     margin-top: 10px;
+`
+
+const StyledDisabledButton = styled(Button)`
+    background-color: gray;
+    border-color: gray;
+    opacity: 0.5;
+    cursor: auto;
+    &:hover {
+        background-color: gray;
+    }
+
+    &:active {
+        background-color: gray;
+    }
 `
 
 function setChild(state, plugin) {
@@ -66,7 +92,7 @@ export function GroupsOverview(props) {
                 besonders flexibel einsetzbar.
             </Text>
             <StyledOptions>
-                <StyledOption>
+                <StyledOption onClick={() => setChild(state, "group")}>
                     <h4>Gruppenarbeit</h4>
                     <GroupIcon />
                     <StyledDescription>
@@ -80,7 +106,7 @@ export function GroupsOverview(props) {
                         </Button>
                     </StyledDescription>
                 </StyledOption>
-                <StyledOption>
+                <StyledOption onClick={() => setChild(state, "quickGroup")}>
                     <h4>Einheitliche Gruppenarbeit</h4>
                     <QuickGroupIcon />
                     <StyledDescription>
@@ -94,7 +120,7 @@ export function GroupsOverview(props) {
                         </Button>
                     </StyledDescription>
                 </StyledOption>
-                <StyledOption>
+                <StyledOption onClick={() => setChild(state, "groupIteration")}>
                     <h4>Gruppen wieder verwenden</h4>
                     <IterationIcon />
                     <StyledDescription>
@@ -117,8 +143,8 @@ export function GroupsOverview(props) {
                 über mehrere Stufen gehen.
             </Text>
             <StyledOptions>
-                <StyledOption>
-                    <h4>Gruppenpuzzle!</h4>
+                <StyledOption onClick={() => setChild(state, "jigsaw")}>
+                    <h4>Gruppenpuzzle</h4>
                     <JigsawIcon />
                     <StyledDescription>
                         <Text>
@@ -133,6 +159,30 @@ export function GroupsOverview(props) {
                         </Button>
                     </StyledDescription>
                 </StyledOption>
+                <StyledUnclickableOption>
+                    <h4>Think-Pair-Share</h4>
+                    <TPSIcon />
+                    <StyledDescription>
+                        <Text>
+                            Diese Methode wird bald zur Verfügung stehen.
+                        </Text>
+                        <StyledDisabledButton disabled>
+                            Wählen
+                        </StyledDisabledButton>
+                    </StyledDescription>
+                </StyledUnclickableOption>
+                <StyledUnclickableOption>
+                    <h4>Welche Methode fehlt hier?</h4>
+                    <QuestionIcon />
+                    <StyledDescription>
+                        <Text>
+                            Wenn du dir eine Methode wünscht, gib uns Bescheid
+                            und wir werden uns bemühen, deine Methode ebenfalls
+                            zu unterstützen!
+                        </Text>
+                    </StyledDescription>
+                    <Button>Gib uns Feedback!</Button>
+                </StyledUnclickableOption>
             </StyledOptions>
         </StyledRoot>
     )

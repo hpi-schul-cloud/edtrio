@@ -2,8 +2,8 @@ import React from "react"
 import styled from "styled-components"
 
 const StyledSVG = styled.svg`
-    height: 160px;
-    width: 160px;
+    height: 120px;
+    width: 120px;
 `
 
 export function JigsawIcon() {

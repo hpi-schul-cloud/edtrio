@@ -8,9 +8,12 @@ import GroupsContext from "~/Contexts/Groups"
 
 import { useGroupState } from "./useGroupStatev2"
 import Button, { Toggle } from "../../../components/Button"
+import Text from "../../../components/Text"
+
+import { GroupIcon } from "../GroupsOverview/Icons"
+
 import { WorkingPackages } from "./WorkingPackages"
 import { GroupSelection } from "./GroupSelection"
-import { GroupSelectionIntro } from "./GroupSelectionIntro"
 import { students } from "./mockData"
 import { PreviousGroups } from "./PreviousGroups"
 
@@ -23,20 +26,18 @@ const StyledGroupSelection = styled(GroupSelection)`
 const StyledRoot = styled.div`
     display: flex;
     flex-direction: column;
-    ${({ editable }) =>
-        editable
-            ? "border: 2px solid rgba(175, 4, 55, 1);"
-            : "border: 2px solid #00640030;"}
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+    padding: 24px;
 `
 
 const StyledWorkingPackages = styled(WorkingPackages)`
     border-top: 2px solid rgba(0, 0, 0, 0.125);
-    padding: 20px 16px;
 `
 
 const StyledTopPanel = styled.div`
     display: flex;
     padding-bottom: 8px;
+    flex-direction: column;
 `
 
 const StyledPreviousGroups = styled(PreviousGroups)`
@@ -45,6 +46,19 @@ const StyledPreviousGroups = styled(PreviousGroups)`
 
 const StyledFirstHalf = styled.div`
     ${({ editable }) => (editable ? null : "background: #00640030;")}
+`
+
+const StyledHeadline = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+`
+
+const StyledGroupIcon = styled(GroupIcon)`
+    width: 50px;
+    height: 50px;
+    margin-left: 16px;
 `
 
 // ({ editable, focused, state })
@@ -98,7 +112,6 @@ export function GroupEditor(props) {
         addWorkingPackage("Aufgabenpaket 1")
     }
 
-
     // Save the group to localStorage
 
     useEffect(() => {
@@ -150,23 +163,43 @@ export function GroupEditor(props) {
 
     return (
         <StyledRoot editable={editable}>
+            <StyledHeadline>
+                <h2>
+                    Gruppenarbeit (
+                    {groups.length === 1
+                        ? "1 Gruppe"
+                        : `${groups.length} Gruppen`}
+                    )
+                </h2>
+                <StyledGroupIcon />
+            </StyledHeadline>
+            <Text size={14}>
+                {!editable && (
+                    <span>
+                        {teacherAssignsStudents
+                            ? `Die ${
+                                  groups.length
+                              } Gruppen stehen fest. Sie können jedoch live Anpassungen via Drag and Drop vornehmen.`
+                            : `Schüler wählen eine der ${
+                                  groups.length
+                              } Gruppen selbst. Sie können jedoch Schüler umordnen oder zuweisen, sollte es zu lange dauern.`}
+                    </span>
+                )}
+            </Text>
+            <StyledWorkingPackages
+                workingPackages={workingPackages}
+                state={state}
+                addWorkingPackage={addWorkingPackage}
+                editable={editable}
+            />
+            {editable && (
+                <StyledPreviousGroups
+                    groupState={groupState}
+                    setId={setId}
+                    previewId={previewId}
+                />
+            )}
             <StyledFirstHalf editable={editable}>
-                <StyledTopPanel>
-                    <GroupSelectionIntro
-                        teacherAssignsStudents={teacherAssignsStudents}
-                        setTeacherAssignsStudents={setTeacherAssignsStudents}
-                        groups={groups}
-                        editable={editable}
-                        setId={setId}
-                    />
-                    {editable && (
-                        <StyledPreviousGroups
-                            groupState={groupState}
-                            setId={setId}
-                            previewId={previewId}
-                        />
-                    )}
-                </StyledTopPanel>
                 <DragDropContext onDragEnd={onDragEnd}>
                     <StyledGroupSelection
                         unassignedStudents={unassignedStudents}
@@ -179,13 +212,11 @@ export function GroupEditor(props) {
                         editable={editable}
                         changeGroupName={changeGroupName}
                         students={students}
+                        setTeacherAssignsStudents={setTeacherAssignsStudents}
+                        setId={setId}
                     />
                 </DragDropContext>
             </StyledFirstHalf>
-            <StyledWorkingPackages
-                workingPackages={workingPackages}
-                state={state}
-            />
         </StyledRoot>
     )
 }

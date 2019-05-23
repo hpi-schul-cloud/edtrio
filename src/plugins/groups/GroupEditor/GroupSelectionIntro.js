@@ -8,7 +8,6 @@ const StyledIntroPanel = styled.div`
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding-right: 24px;
 `
 
 const StyledPreferences = styled.div`
@@ -18,13 +17,7 @@ const StyledPreferences = styled.div`
     margin-left: 16px;
 `
 
-const StyledHeader = styled.h2`
-    margin-left: 16px;
-`
-
-const StyledExplanation = styled(Text)`
-    margin-left: 16px;
-`
+const StyledExplanation = styled(Text)``
 
 const StyledInputGroup = styled.div`
     position: relative;
@@ -92,6 +85,10 @@ const StyledRadioGroupHeadline = styled(Text)`
 `
 const StyledRadioInput = styled.input``
 
+const StyledDetails = styled.details`
+    margin--
+`
+
 export function GroupSelectionIntro(props) {
     const {
         teacherAssignsStudents,
@@ -103,28 +100,6 @@ export function GroupSelectionIntro(props) {
 
     return (
         <StyledIntroPanel>
-            <StyledHeader>Komplexe Gruppenarbeit</StyledHeader>
-            <StyledExplanation size={14}>
-                {editable ? (
-                    <span>
-                        Diese Gruppenarbeit ermöglicht eine umfangreiche
-                        Gruppenbildung. Mehrere Aufgabenpakete können auf
-                        beliebig viele Gruppen aufgeteilt werden. Für einfachere
-                        Gruppenszenarien kann die <i>Einfache Gruppenarbeit</i>{" "}
-                        genutzt werden.
-                    </span>
-                ) : (
-                    <span>
-                        {teacherAssignsStudents
-                            ? `Die ${
-                                  groups.length
-                              } Gruppen stehen fest. Sie können jedoch live Anpassungen via Drag and Drop vornehmen.`
-                            : `Schüler wählen eine der ${
-                                  groups.length
-                              } Gruppen selbst. Sie können jedoch Schüler umordnen oder zuweisen, sollte es zu lange dauern.`}
-                    </span>
-                )}
-            </StyledExplanation>
             {editable && (
                 <StyledPreferences>
                     <StyledRadioGroup>

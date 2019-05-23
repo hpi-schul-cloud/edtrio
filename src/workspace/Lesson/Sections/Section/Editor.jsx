@@ -53,6 +53,12 @@ const uploadConfig = {
 }
 
 const plugins = {
+    // group work changes
+    quickGroup: quickGroupPlugin,
+    group: groupPlugin,
+    groupIteration: advancedGroupPlugin,
+    groupsOverview: groupsOverviewPlugin,
+    jigsaw: jigsawPlugin,
     text: textPlugin,
     notes: notesPlugin,
     rows: rowsPlugin,
@@ -67,13 +73,6 @@ const plugins = {
     geogebra: geogebraPlugin,
     inputExercise: inputExercisePlugin,
     video: videoPlugin,
-    // group work changes
-    quickGroup: quickGroupPlugin,
-    Abgabe: assignmentPlugin,
-    group: groupPlugin,
-    groupIteration: advancedGroupPlugin,
-    groupsOverview: groupsOverviewPlugin,
-    jigsaw: jigsawPlugin,
     // h5p: h5pPlugin,
 }
 

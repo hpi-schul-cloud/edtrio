@@ -18,10 +18,6 @@ const StyledPreferences = styled.div`
     margin-left: 16px;
 `
 
-const StyledHeader = styled.h2`
-    margin-left: 16px;
-`
-
 const StyledExplanation = styled(Text)`
     margin-left: 16px;
 `
@@ -69,8 +65,9 @@ const StyledLabelText = styled(Text)`
 const StyledInput = styled.input`
     width: 35px;
     border: none;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    border-bottom: 1px solid rgba(175, 4, 55, 1);
     text-align: center;
+    color: rgba(175, 4, 55, 1);
 `
 
 const StyledToggle = styled(Toggle)`
@@ -111,20 +108,14 @@ export function QuickGroupSelection(props) {
     } = props
 
     const [numberOfStudentsInGroup, setNumberOfStudentsInGroup] = useState(2)
-    const [numberOfGroupsInInput, setNumberOfGroupsInInput] = useState(5)
+    const [numberOfGroupsInInput, setNumberOfGroupsInInput] = useState(
+        numberOfGroups,
+    )
 
     return (
         <StyledIntroPanel>
-            <StyledHeader>Einfache Gruppenarbeit</StyledHeader>
             <StyledExplanation size={14}>
-                {editable ? (
-                    <span>
-                        Diese Gruppenarbeit ermöglicht eine sehr schnelle
-                        Gruppenbildung, erlaubt aber nur ein Aufgabenpaket für
-                        alle Gruppen. Für umfangreichere Gruppenszenarien bitte
-                        die <i>Komplexe Gruppenarbeit</i> benutzen.
-                    </span>
-                ) : (
+                {!editable && (
                     <span>
                         {randomlyAssignStudents
                             ? `Die ${numberOfGroups} Gruppen stehen fest. Sie können jedoch live Anpassungen via Drag and Drop vornehmen.`
@@ -205,18 +196,19 @@ export function QuickGroupSelection(props) {
                                     type="number"
                                     min="2"
                                     onChange={event => {
+                                        let value = event.target.value
+                                        if (value < 2) {
+                                            value = 2
+                                        }
                                         if (!isGroupWork) {
                                             setNumberOfGroups(
                                                 Math.ceil(
-                                                    students.length /
-                                                        event.target.value,
+                                                    students.length / value,
                                                 ),
                                             )
                                         }
 
-                                        setNumberOfStudentsInGroup(
-                                            event.target.value,
-                                        )
+                                        setNumberOfStudentsInGroup(value)
                                     }}
                                     defaultValue={numberOfStudentsInGroup}
                                     placeholder="Wie viele Schüler sollen in einer Gruppe sein?"

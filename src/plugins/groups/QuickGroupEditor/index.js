@@ -17,12 +17,9 @@ import {
 } from "./UnassignedStudentList"
 import { QuickGroupSelection } from "./QuickGroupSelection"
 import { Group } from "../Group"
+import { QuickGroupIcon } from "../GroupsOverview/Icons"
 
-const StyledWorkingPackages = styled.div`
-    margin: 16px;
-    padding-top: 16px;
-    border-top: 2px solid rgba(0, 0, 0, 0.125);
-`
+const StyledWorkingPackages = styled.div``
 
 const StyledGroup = styled(Group)`
     flex: 1;
@@ -39,11 +36,8 @@ const StyledGroupList = styled.div`
 const StyledRoot = styled.div`
     display: flex;
     flex-direction: column;
-    ${({ editable }) =>
-        editable
-            ? "border: 2px solid rgba(175, 4, 55, 1);"
-            : "border: 2px solid #00640030;"}
-    border-radius: 3px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+    padding: 24px;
 `
 
 const StyledGroupSelection = styled.div`
@@ -61,16 +55,33 @@ const StyledSubHeadline = styled(Text)`
 `
 
 const StyledGroups = styled.div`
-    margin: 16px;
     padding-top: 16px;
-    border-top: 2px solid rgba(0, 0, 0, 0.125);
 `
 
 const StyledTeacherView = styled.div`
     ${({ editable }) => (!editable ? "background: #00640030;" : null)}
 `
 const StyledWorkingPackageContainer = styled.div`
-    padding-left: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 3px;
+    min-height: 115px;
+`
+
+const StyledHeadline = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+`
+
+const StyledQuickGroupIcon = styled(QuickGroupIcon)`
+    width: 50px;
+    height: 50px;
+    margin-left: 16px;
+`
+
+const StyledDetails = styled.details`
+    margin: 12px 8px;
 `
 
 // ({ editable, focused, state })
@@ -160,7 +171,7 @@ export function QuickGroupEditor(props) {
         }
     }, [unassignedStudents])
 
-    const [numberOfGroups, setNumberOfGroups] = useState(5)
+    const [numberOfGroups, setNumberOfGroups] = useState(3)
     useEffect(() => {
         state.StudentsChooseGroup.set(!randomlyAssignStudents)
     }, [randomlyAssignStudents])
@@ -177,103 +188,132 @@ export function QuickGroupEditor(props) {
         setCounter(counter + 1)
     }, [numberOfGroups, randomlyAssignStudents])
 
+    // fill groups in the beginning
+    useEffect(() => {
+        createAndFillGroups(numberOfGroups)
+    }, [])
+
     return (
         <StyledRoot editable={editable}>
-            <DragDropContext onDragEnd={onDragEnd}>
-                <StyledTeacherView editable={editable}>
-                    <StyledGroupSelection>
-                        <QuickGroupSelection
-                            randomlyAssignStudents={randomlyAssignStudents}
-                            setRandomlyAssignStudents={
-                                setRandomlyAssignStudents
-                            }
-                            removeStudentsFromAllGroups={
-                                removeStudentsFromAllGroups
-                            }
-                            isGroupWork={isGroupWork}
-                            setIsGroupWork={setIsGroupWork}
-                            setNumberOfGroups={setNumberOfGroups}
-                            createAndFillGroups={createAndFillGroups}
-                            groups={groups}
-                            numberOfGroups={numberOfGroups}
-                            editable={editable}
-                            students={students}
-                            onDragEnd={onDragEnd}
-                            state={state}
-                            setId={setId}
-                        />
-                        {editable && (
-                            <StyledUnassignedStudentList students={students} />
-                        )}
-                    </StyledGroupSelection>
-                    {!editable && !randomlyAssignStudents && (
-                        <LiveUnassignedStudentList
-                            moveStudentsToRandomGroups={
-                                moveStudentsToRandomGroups
-                            }
-                            students={unassignedStudents}
-                        />
-                    )}
-                    <StyledGroups>
-                        <StyledSubHeadline>Gruppen:</StyledSubHeadline>
-
-                        <div>
-                            {randomlyAssignStudents && editable && (
-                                <Button
-                                    onClick={() =>
-                                        createAndFillGroups(numberOfGroups)
-                                    }>
-                                    Gruppen neu durchmischen
-                                </Button>
-                            )}
-                            {groups.length > 0 && (
-                                <div>
-                                    <StyledGroupList>
-                                        {groups.map((group, index) => {
-                                            return (
-                                                <StyledGroup
-                                                    key={`group-droppable-${index}`}
-                                                    studentList={group.students}
-                                                    droppableId={
-                                                        group.droppableId
-                                                    }
-                                                    name={group.name}
-                                                    teacherAssignsStudents={
-                                                        randomlyAssignStudents
-                                                    }
-                                                    maxStudents={Math.ceil(
-                                                        students.length /
-                                                            numberOfGroups,
-                                                    )}
-                                                    editable={
-                                                        randomlyAssignStudents
-                                                            ? editable
-                                                            : false
-                                                    }
-                                                    changeGroupName={
-                                                        changeGroupName
-                                                    }
-                                                    index={index}
-                                                />
-                                            )
-                                        })}
-                                    </StyledGroupList>
-                                </div>
-                            )}
-                        </div>
-                    </StyledGroups>
-                </StyledTeacherView>
-            </DragDropContext>
+            <StyledHeadline>
+                <h2>
+                    Einheitliche Gruppenarbeit (
+                    {groups.length === 1
+                        ? "1 Gruppe"
+                        : `${groups.length} Gruppen`}
+                    )
+                </h2>
+                <StyledQuickGroupIcon />
+            </StyledHeadline>
 
             <StyledWorkingPackages>
-                <StyledSubHeadline>
-                    Aufgaben der Gruppenarbeit:
-                </StyledSubHeadline>
+                <h3>Aufgabenpaket</h3>
+                {editable && (
+                    <Text>
+                        Erstelle hier das Aufgabenpaket, das die verschiedenen
+                        Gruppen bearbeiten sollen.
+                    </Text>
+                )}
                 <StyledWorkingPackageContainer>
                     {state.workingPackages.items.length > 0 &&
                         state.workingPackages.items[0].render()}
                 </StyledWorkingPackageContainer>
             </StyledWorkingPackages>
+
+            <StyledDetails open={true}>
+                <summary>
+                    {editable ? "Gruppen zusammenstellen" : "Gruppen"}
+                </summary>
+                <DragDropContext onDragEnd={onDragEnd}>
+                    <StyledTeacherView editable={editable}>
+                        <StyledGroupSelection>
+                            <QuickGroupSelection
+                                randomlyAssignStudents={randomlyAssignStudents}
+                                setRandomlyAssignStudents={
+                                    setRandomlyAssignStudents
+                                }
+                                removeStudentsFromAllGroups={
+                                    removeStudentsFromAllGroups
+                                }
+                                isGroupWork={isGroupWork}
+                                setIsGroupWork={setIsGroupWork}
+                                setNumberOfGroups={setNumberOfGroups}
+                                createAndFillGroups={createAndFillGroups}
+                                groups={groups}
+                                numberOfGroups={numberOfGroups}
+                                editable={editable}
+                                students={students}
+                                onDragEnd={onDragEnd}
+                                state={state}
+                                setId={setId}
+                            />
+                            {editable && (
+                                <StyledUnassignedStudentList
+                                    students={students}
+                                />
+                            )}
+                        </StyledGroupSelection>
+                        {!editable && !randomlyAssignStudents && (
+                            <LiveUnassignedStudentList
+                                moveStudentsToRandomGroups={
+                                    moveStudentsToRandomGroups
+                                }
+                                students={unassignedStudents}
+                            />
+                        )}
+                        <StyledGroups>
+                            <StyledSubHeadline>Gruppen:</StyledSubHeadline>
+
+                            <div>
+                                {randomlyAssignStudents && editable && (
+                                    <Button
+                                        onClick={() =>
+                                            createAndFillGroups(numberOfGroups)
+                                        }>
+                                        Gruppen neu durchmischen
+                                    </Button>
+                                )}
+                                {groups.length > 0 && (
+                                    <div>
+                                        <StyledGroupList>
+                                            {groups.map((group, index) => {
+                                                return (
+                                                    <StyledGroup
+                                                        key={`group-droppable-${index}`}
+                                                        studentList={
+                                                            group.students
+                                                        }
+                                                        droppableId={
+                                                            group.droppableId
+                                                        }
+                                                        name={group.name}
+                                                        teacherAssignsStudents={
+                                                            randomlyAssignStudents
+                                                        }
+                                                        maxStudents={Math.ceil(
+                                                            students.length /
+                                                                numberOfGroups,
+                                                        )}
+                                                        editable={
+                                                            randomlyAssignStudents
+                                                                ? editable
+                                                                : false
+                                                        }
+                                                        changeGroupName={
+                                                            changeGroupName
+                                                        }
+                                                        index={index}
+                                                    />
+                                                )
+                                            })}
+                                        </StyledGroupList>
+                                    </div>
+                                )}
+                            </div>
+                        </StyledGroups>
+                    </StyledTeacherView>
+                </DragDropContext>
+            </StyledDetails>
         </StyledRoot>
     )
 }

@@ -20,10 +20,11 @@ const StyledGroupedStudentList = styled.div`
     flex-direction: row;
     flex: 2;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start;
     padding: 6px;
     min-height: 75px;
     border-radius: 3px;
+    max-width: 200px;
 `
 
 const StyledRoot = styled.div`
@@ -33,13 +34,17 @@ const StyledRoot = styled.div`
 const StudentWrapper = styled.div`
     display: flex;
     margin: 4px;
-    justify-content: center;
+    justify-content: flex-start;
     flex-shrink: 0;
 `
 
 const StyledStudentNumber = styled.div`
     display: flex;
     justify-content: center;
+`
+
+const StyledInput = styled(Input)`
+    width: 180px;
 `
 
 export function Group(props) {
@@ -57,7 +62,7 @@ export function Group(props) {
     } = props
     return (
         <StyledRoot className={className}>
-            <Input
+            <StyledInput
                 onChange={input => changeGroupName(index, input)}
                 value={name}
             />
