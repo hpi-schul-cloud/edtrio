@@ -87,18 +87,6 @@ function reducer(state, { type, payload }) {
                 },
             }
 
-        case "UPDATE_SECTION_DOC_VALUE":
-            return {
-                ...state,
-                lesson: {
-                    ...state.lesson,
-                    sections: state.lesson.sections.map(section => {
-                        if (section.id !== payload.id) return section
-                        return { ...section, docValue: payload.docValue }
-                    }),
-                },
-            }
-
         case "LESSON_SAVED":
             state.lesson.changed.clear()
             return state
@@ -181,8 +169,19 @@ function reducer(state, { type, payload }) {
             }
 
         case "PREPARE_DELETE_SECTION":
+            let activeSectionId = state.activeSectionId
+            if (activeSectionId === payload) {
+                const deleteIndex = state.lesson.sections.findIndex(
+                    el => el.id === payload,
+                )
+                const newIndex =
+                    deleteIndex === 0 ? deleteIndex + 1 : deleteIndex - 1
+                activeSectionId = state.lesson.sections[newIndex].id
+            }
+
             return {
                 ...state,
+                activeSectionId,
                 lesson: {
                     ...state.lesson,
                     sections: state.lesson.sections.map(section => {
@@ -229,7 +228,7 @@ function reducer(state, { type, payload }) {
                         section.changed.add("docValue")
                         return {
                             ...section,
-                            collectDocValue: payload.collectDocValue,
+                            docValue: payload.docValue,
                         }
                     }),
                 },

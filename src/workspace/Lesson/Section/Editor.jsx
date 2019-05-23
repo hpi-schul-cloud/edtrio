@@ -76,9 +76,7 @@ export default class Editor extends React.Component {
 function ChangeListener({ dispatchChange }) {
     const store = useContext(EditorContext)
     useEffect(() => {
-        dispatchChange(function() {
-            return serializeDocument(store.state)
-        })
+        dispatchChange(serializeDocument(store.state))
     }, [store.state])
     return null
 }

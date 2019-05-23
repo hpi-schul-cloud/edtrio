@@ -11,7 +11,7 @@ const Wrapper = styled.div`
     left: 0;
     position: fixed;
     top: 62px;
-    width: ${props => (props.expanded ? 250 : 54)}px;
+    width: ${props => (props.expanded ? 250 : 50)}px;
     height: calc(100vh - 62px);
     overflow: hidden;
     transition: 250ms all ease-in-out;
@@ -24,7 +24,12 @@ const Wrapper = styled.div`
 `
 
 const Previews = styled.div`
-    padding: 15px;
+    padding: ${props =>
+        props.editing && props.expanded
+            ? "15px 5px"
+            : !props.expanded
+            ? "15px 10px"
+            : "15px"};
     width: 100%;
     height: calc(100vh - 62px);
     overflow: auto;
@@ -59,9 +64,13 @@ const SectionOverview = ({ store, dispatch }) => {
     const expanded = store.sectionOverviewExpanded
     const sections = store.lesson.sections
 
+    function moveSection(fromIndex, toIndex) {
+        dispatch({ type: "SWAP_SECTIONS", payload: [fromIndex, toIndex] })
+    }
+
     return (
-        <Wrapper expanded={expanded}>
-            <Previews>
+        <Wrapper expanded={expanded} editing={store.editing}>
+            <Previews editing={store.editing} expanded={expanded}>
                 {sections
                     .filter((section, index) => {
                         if (store.editing) return true
@@ -76,6 +85,7 @@ const SectionOverview = ({ store, dispatch }) => {
                             <Preview
                                 k={editorKey}
                                 store={store}
+                                moveSection={moveSection}
                                 dispatch={dispatch}
                                 section={section}
                                 index={index}

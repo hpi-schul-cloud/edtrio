@@ -7,7 +7,8 @@ import { plugins } from "~/workspace/Lesson/Section/Editor"
 const EditorWrapper = styled.div`
     width: 850px;
     transform-origin: left top;
-    transform: scale(0.25);
+    transform: ${props =>
+        props.expanded && props.editing ? "scale(0.22)" : "scale(0.235)"};
     overflow: hidden;
     user-select: none;
     * {
@@ -28,7 +29,9 @@ export default class Editor extends React.Component {
 
     render() {
         return (
-            <EditorWrapper>
+            <EditorWrapper
+                expanded={this.props.expanded}
+                editing={this.props.editing}>
                 <Edtr
                     plugins={plugins}
                     defaultPlugin={"text"}

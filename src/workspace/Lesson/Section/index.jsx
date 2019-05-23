@@ -90,12 +90,12 @@ const Section = ({ store, dispatch }) => {
                     id={section.id}
                     index={index}
                     editing={store.editing}
-                    dispatchChange={collectDocValue => {
+                    dispatchChange={docValue => {
                         dispatch({
                             type: "SECTION_DOCVALUE_CHANGE",
                             payload: {
                                 sectionId: section.id,
-                                collectDocValue,
+                                docValue,
                             },
                         })
                     }}

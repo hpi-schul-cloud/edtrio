@@ -1,9 +1,19 @@
-import React from "react"
+import React, { useRef, useImperativeHandle } from "react"
 import styled, { css } from "styled-components"
 
-import Editor from "./Editor"
+import Flex from "~/components/Flex"
 
 import theme from "~/theme"
+
+import DnDHOC from "./DnDHOC"
+import Editor from "./Editor"
+import Controls from "./Controls"
+
+const OuterMost = styled(Flex)`
+    width: 100%;
+    transition: 250ms all ease-in-out;
+    transform: ${props => props.delete && "translateX(100%)"};
+`
 
 const Outer = styled.div`
     padding: 3px;
@@ -12,6 +22,9 @@ const Outer = styled.div`
     border-radius: 3px;
     background: transparent;
     margin-bottom: 25px;
+    width: ${props => {
+        return props.expanded && props.editing ? "calc(100% - 30px)" : "100%"
+    }};
 
     ${props =>
         !props.expanded &&
@@ -50,40 +63,91 @@ const Wrapper = styled.div`
         box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.3);
     }
 
-    &::after {
-        height: 100%;
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        content: "";
-    }
+    ${({ visible }) => {
+        return (
+            !visible &&
+            css`
+                opacity: 0.7;
+            `
+        )
+    }}
+
+    display: ${({ hidden }) => hidden && "none"};
+
 `
 
-const Preview = ({ store, k, dispatch, section, index }) => {
-    const expanded = store.sectionOverviewExpanded
+/* eslint-disable */
+const Preview = React.forwardRef(
+    (
+        {
+            store,
+            k,
+            dispatch,
+            section,
+            index,
+            isDragging,
+            connectDragSource,
+            connectDropTarget,
+            connectDragPreview,
+        },
+        ref,
+    ) => {
+        const expanded = store.sectionOverviewExpanded
 
-    const activeSectionIndex = store.lesson.sections.findIndex(
-        el => el.id === store.activeSectionId,
-    )
+        const activeSectionIndex = store.lesson.sections.findIndex(
+            el => el.id === store.activeSectionId,
+        )
 
-    return (
-        <Outer
-            active={store.activeSectionId === section.id}
-            expanded={expanded}>
-            <Wrapper
-                expanded={expanded}
-                isDone={index <= activeSectionIndex}
-                onClick={() => {
-                    dispatch({
-                        type: "SET_ACTIVE_SECTION",
-                        payload: { id: section.id },
-                    })
-                }}>
-                {expanded && <Editor key={k} docValue={section.docValue} />}
-            </Wrapper>
-        </Outer>
-    )
-}
+        // DnD
+        const previewRef = useRef(null)
+        if (connectDragSource) {
+            connectDragPreview(previewRef)
+            connectDropTarget(previewRef)
+            // const opacity = isDragging ? 0 : 1
+            useImperativeHandle(ref, () => ({
+                getNode: () => previewRef.current,
+            }))
+        }
 
-export default Preview
+        return (
+            <OuterMost noWrap ref={previewRef} delete={section.delete}>
+                <Controls
+                    connectDragSource={connectDragSource}
+                    sectionId={section.id}
+                    store={store}
+                    index={index}
+                    dispatch={dispatch}
+                    visible={section.visible}
+                    sectionTitle={section.title}
+                />
+                <Outer
+                    active={store.activeSectionId === section.id}
+                    expanded={expanded}
+                    editing={store.editing}>
+                    <Wrapper
+                        visible={section.visible}
+                        hidden={!section.visible && !store.editing}
+                        expanded={expanded}
+                        isDone={index <= activeSectionIndex}
+                        onClick={() => {
+                            dispatch({
+                                type: "SET_ACTIVE_SECTION",
+                                payload: { id: section.id },
+                            })
+                        }}>
+                        {expanded && (
+                            <Editor
+                                key={k}
+                                expanded={expanded}
+                                editing={store.editing}
+                                docValue={section.docValue}
+                            />
+                        )}
+                    </Wrapper>
+                </Outer>
+            </OuterMost>
+        )
+    },
+)
+
+export default DnDHOC(Preview)

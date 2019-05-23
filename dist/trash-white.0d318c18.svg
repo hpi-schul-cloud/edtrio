@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+    <g fill="#fff" stroke="#fff" stroke-linecap="square" stroke-linejoin="miter" stroke-width="4" class="nc-icon-wrapper">
+        <path fill="none" stroke="#fff" stroke-miterlimit="10" d="M54,19V56a5,5,0,0,1-5,5H15a5,5,0,0,1-5-5V19"/>
+        <line x1="32" x2="32" y1="27" y2="49" fill="none" stroke-miterlimit="10" data-color="color-2"/>
+        <line x1="22" x2="22" y1="27" y2="49" fill="none" stroke-miterlimit="10" data-color="color-2"/>
+        <line x1="42" x2="42" y1="27" y2="49" fill="none" stroke-miterlimit="10" data-color="color-2"/>
+        <polyline fill="none" stroke="#fff" stroke-miterlimit="10" points="22 13 22 3 42 3 42 13"/>
+        <line x1="60" x2="4" y1="13" y2="13" fill="none" stroke="#fff" stroke-miterlimit="10"/>
+    </g>
+</svg>

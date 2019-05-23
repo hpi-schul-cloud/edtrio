@@ -120,17 +120,7 @@ export async function saveLesson(store, dispatch, override) {
         const sectionChanges = {}
         section.changed.forEach(key => {
             if (key === "docValue") {
-                const updatedDocValue = section.collectDocValue()
-                dispatch({
-                    type: "UPDATE_SECTION_DOC_VALUE",
-                    payload: { id: section.id, docValue: updatedDocValue },
-                })
-                if (
-                    JSON.stringify(section[key]) !==
-                    JSON.stringify(updatedDocValue)
-                ) {
-                    sectionChanges.state = updatedDocValue
-                }
+                sectionChanges.state = section.docValue
             } else if (key === "notes") {
                 sectionChanges.note = section.notes
             } else {
