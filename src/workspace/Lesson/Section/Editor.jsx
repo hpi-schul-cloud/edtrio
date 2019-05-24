@@ -6,7 +6,6 @@ import {
     serializeDocument,
     StateType,
 } from "@edtr-io/core"
-import { CustomTheme, ThemeProvider } from "@edtr-io/ui"
 import { rowsPlugin } from "@edtr-io/plugin-rows"
 // import { rowsPlugin } from "~/plugins/rows"
 import { anchorPlugin } from "@edtr-io/plugin-anchor"
@@ -82,18 +81,17 @@ export default class Editor extends React.Component {
                 style={{
                     minHeight: "50px",
                 }}>
-                <ThemeProvider theme={editorTheme}>
-                    <Edtr
-                        plugins={plugins}
-                        defaultPlugin={"text"}
-                        editable={this.props.editing}
-                        omitDragDropContext
-                        initialState={this.docValue}>
-                        <ChangeListener
-                            dispatchChange={this.props.dispatchChange}
-                        />
-                    </Edtr>
-                </ThemeProvider>
+                <Edtr
+                    plugins={plugins}
+                    defaultPlugin={"text"}
+                    editable={this.props.editing}
+                    omitDragDropContext
+                    initialState={this.docValue}
+                    theme={editorTheme}>
+                    <ChangeListener
+                        dispatchChange={this.props.dispatchChange}
+                    />
+                </Edtr>
             </div>
         )
     }
