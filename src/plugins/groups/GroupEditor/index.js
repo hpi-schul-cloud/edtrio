@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react"
+import React, { useState, useEffect, useContext, useMemo } from "react"
 import styled from "styled-components"
 import { DragDropContext } from "react-beautiful-dnd"
 import uuid from "uuid/v4"
@@ -10,12 +10,13 @@ import { useGroupState } from "./useGroupStatev2"
 import Button, { Toggle } from "../../../components/Button"
 import Text from "../../../components/Text"
 
-import { GroupIcon } from "../GroupsOverview/Icons"
+import { GroupIcon, JigsawIcon } from "../GroupsOverview/Icons"
 
 import { WorkingPackages } from "./WorkingPackages"
 import { GroupSelection } from "./GroupSelection"
 import { students } from "./mockData"
 import { PreviousGroups } from "./PreviousGroups"
+import { Group } from "../Group"
 
 const StyledGroupSelection = styled(GroupSelection)`
     padding-top: 20px;
@@ -61,9 +62,32 @@ const StyledGroupIcon = styled(GroupIcon)`
     margin-left: 16px;
 `
 
+const StyledJigsawIcon = styled(JigsawIcon)`
+    width: 50px;
+    height: 50px;
+    margin-left: 16px;
+`
+
+const StyledGroups = styled.div`
+    padding-top: 16px;
+`
+
+const StyledGroup = styled(Group)`
+    flex: 1;
+    flex-grow: 0;
+    margin: 0px 8px;
+`
+const StyledGroupList = styled.div`
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+`
+
 // ({ editable, focused, state })
 export function GroupEditor(props) {
     const { state, startValues, previewId, setId: propsSetId } = props
+    const isPartOfJigsaw = state.isPartOfJigsaw()
+
     const { store } = useContext(LessonContext)
     const editable = store.editing
 
@@ -109,7 +133,7 @@ export function GroupEditor(props) {
     ] = useGroupState(realStartValues, state)
 
     if (workingPackages.length === 0) {
-        addWorkingPackage("Aufgabenpaket 1")
+        addWorkingPackage(isPartOfJigsaw ? "Paket 1" : "Aufgabenpaket 1")
     }
 
     // Save the group to localStorage
@@ -161,18 +185,84 @@ export function GroupEditor(props) {
         setCounter(counter + 1)
     }, [teacherAssignsStudents])
 
+    const coupledToId = state.coupledToId()
+
+    let coupledGroupState = groupState[coupledToId]
+    let newGroups = []
+
+    newGroups = useMemo(() => {
+        const groups = []
+
+        if (isPartOfJigsaw && groupState[coupledToId]) {
+            // get coupledGroupState
+            coupledGroupState = groupState[coupledToId]
+
+            // jigsaw those groups
+
+            // DO JIGSAW magic
+            // minimal group size = new group number
+            const newGroupNumber = coupledGroupState.groups
+                .map(group => group.students.length)
+                .reduce(function(a, b) {
+                    return Math.min(a, b)
+                })
+
+            // create work packages, if necessary
+            if (workingPackages.length < newGroupNumber) {
+                addWorkingPackage(`Paket ${workingPackages.length + 1}`)
+            }
+
+            // create groups
+            for (let i = 1; i <= newGroupNumber; i++) {
+                if (workingPackages[i - 1]) {
+                    groups.push({
+                        students: [],
+                        name: `Gruppe ${i}`,
+                        droppableId: `group ${i}`,
+                        workingPackageId: workingPackages[i - 1].id,
+                    })
+                }
+            }
+
+            // fill new groups
+            if (groups.length === newGroupNumber) {
+                coupledGroupState.groups.forEach((group, groupIndex) => {
+                    group.students.forEach((student, studentIndex) => {
+                        groups[studentIndex % newGroupNumber].students.push(
+                            student,
+                        )
+                    })
+                })
+            }
+        }
+        console.log(groups)
+        return groups
+    }, [workingPackages.length, groupState, isPartOfJigsaw])
+
     return (
         <StyledRoot editable={editable}>
             <StyledHeadline>
                 <h2>
-                    Gruppenarbeit (
+                    {isPartOfJigsaw
+                        ? "Gruppenpuzzle - Phase Zwei:"
+                        : "Gruppenarbeit"}{" "}
+                    (
                     {groups.length === 1
                         ? "1 Gruppe"
                         : `${groups.length} Gruppen`}
                     )
                 </h2>
-                <StyledGroupIcon />
+                {isPartOfJigsaw ? <StyledJigsawIcon /> : <StyledGroupIcon />}
             </StyledHeadline>
+            {isPartOfJigsaw && (
+                <Text>
+                    Dies ist die zweite Phase des Gruppenpuzzles. Hier können
+                    die Arbeitsaufträge und Materialien für die Expertengruppen
+                    eingefügt werden, auf die die Schüler zufällig zugeteilt
+                    wurden. Die Gruppen können daher nicht mehr manuell
+                    verändert werden.
+                </Text>
+            )}
             <Text size={14}>
                 {!editable && (
                     <span>
@@ -187,36 +277,99 @@ export function GroupEditor(props) {
                 )}
             </Text>
             <StyledWorkingPackages
-                workingPackages={workingPackages}
+                workingPackages={
+                    isPartOfJigsaw
+                        ? workingPackages.slice(0, newGroups.length)
+                        : workingPackages
+                }
                 state={state}
                 addWorkingPackage={addWorkingPackage}
                 editable={editable}
+                staticNumberOfWorkingPackages={true}
             />
-            {editable && (
-                <StyledPreviousGroups
-                    groupState={groupState}
-                    setId={setId}
-                    previewId={previewId}
-                />
-            )}
-            <StyledFirstHalf editable={editable}>
+            {isPartOfJigsaw ? (
                 <DragDropContext onDragEnd={onDragEnd}>
-                    <StyledGroupSelection
-                        unassignedStudents={unassignedStudents}
-                        addGroup={addGroup}
-                        addWorkingPackage={addWorkingPackage}
-                        moveStudentsToRandomGroups={moveStudentsToRandomGroups}
-                        workingPackages={workingPackages}
-                        groups={groups}
-                        teacherAssignsStudents={teacherAssignsStudents}
-                        editable={editable}
-                        changeGroupName={changeGroupName}
-                        students={students}
-                        setTeacherAssignsStudents={setTeacherAssignsStudents}
-                        setId={setId}
-                    />
+                    <div>
+                        {coupledGroupState && newGroups && (
+                            <StyledGroups>
+                                <div>
+                                    {newGroups.length > 0 && (
+                                        <div>
+                                            <StyledGroupList>
+                                                {newGroups.map(
+                                                    (group, index) => {
+                                                        return (
+                                                            <StyledGroup
+                                                                key={`group-droppable-${index}`}
+                                                                studentList={
+                                                                    group.students
+                                                                }
+                                                                droppableId={
+                                                                    group.droppableId
+                                                                }
+                                                                name={
+                                                                    group.name
+                                                                }
+                                                                teacherAssignsStudents={
+                                                                    true
+                                                                }
+                                                                maxStudents={Math.ceil(
+                                                                    students.length /
+                                                                        newGroups.length,
+                                                                )}
+                                                                editable={false}
+                                                                changeGroupName={
+                                                                    changeGroupName
+                                                                }
+                                                                index={index}
+                                                                disableDND={
+                                                                    true
+                                                                }
+                                                            />
+                                                        )
+                                                    },
+                                                )}
+                                            </StyledGroupList>
+                                        </div>
+                                    )}
+                                </div>
+                            </StyledGroups>
+                        )}
+                    </div>
                 </DragDropContext>
-            </StyledFirstHalf>
+            ) : (
+                <>
+                    {editable && (
+                        <StyledPreviousGroups
+                            groupState={groupState}
+                            setId={setId}
+                            previewId={previewId}
+                        />
+                    )}
+                    <StyledFirstHalf editable={editable}>
+                        <DragDropContext onDragEnd={onDragEnd}>
+                            <StyledGroupSelection
+                                unassignedStudents={unassignedStudents}
+                                addGroup={addGroup}
+                                addWorkingPackage={addWorkingPackage}
+                                moveStudentsToRandomGroups={
+                                    moveStudentsToRandomGroups
+                                }
+                                workingPackages={workingPackages}
+                                groups={groups}
+                                teacherAssignsStudents={teacherAssignsStudents}
+                                editable={editable}
+                                changeGroupName={changeGroupName}
+                                students={students}
+                                setTeacherAssignsStudents={
+                                    setTeacherAssignsStudents
+                                }
+                                setId={setId}
+                            />
+                        </DragDropContext>
+                    </StyledFirstHalf>
+                </>
+            )}
         </StyledRoot>
     )
 }

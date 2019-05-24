@@ -14,7 +14,7 @@ const StyledWorkingPackages = styled.div`
 `
 
 const StyledAddTab = styled(Tab)`
-    ${({ editable }) => (!editable ? "display: none" : "")}
+    ${({ isEditable }) => (!isEditable ? "display: none" : "")}
 `
 
 export function WorkingPackages(props) {
@@ -24,6 +24,7 @@ export function WorkingPackages(props) {
         state,
         addWorkingPackage,
         editable,
+        staticNumberOfWorkingPackages = false,
     } = props
 
     return (
@@ -48,7 +49,9 @@ export function WorkingPackages(props) {
                             <Tab key={id}>{workingPackage.title}</Tab>
                         ))}
                         <StyledAddTab
-                            editable={editable}
+                            isEditable={
+                                editable && !staticNumberOfWorkingPackages
+                            }
                             key={"add_work_package"}>
                             +
                         </StyledAddTab>

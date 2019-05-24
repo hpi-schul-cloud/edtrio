@@ -18,24 +18,42 @@ export function Jigsaw(props) {
         if (state.children.items.length === 0) {
             const setId = uuid()
             state.children.insert(state.children.items.length, {
-                plugin: "group",
+                plugin: "quickGroup",
                 state: {
                     workingPackages: [],
                     startValues: null,
                     setId,
                     StudentsChooseGroup: false,
+                    coupledToId: null,
+                    isPartOfJigsaw: true,
                 },
             })
             state.children.insert(state.children.items.length + 1, {
-                plugin: "groupIteration",
+                plugin: "rows",
+            })
+            state.children.insert(state.children.items.length + 2, {
+                plugin: "group",
                 state: {
-                    groupState: {
-                        workingPackages: [],
-                        startValues: null,
-                        setId: uuid(),
-                        StudentsChooseGroup: false,
-                    },
-                    jigsawGroupId: setId,
+                    workingPackages: [],
+                    startValues: null,
+                    setId: uuid(),
+                    StudentsChooseGroup: false,
+                    coupledToId: setId,
+                    isPartOfJigsaw: true,
+                },
+            })
+            state.children.insert(state.children.items.length + 3, {
+                plugin: "rows",
+            })
+            state.children.insert(state.children.items.length + 4, {
+                plugin: "quickGroup",
+                state: {
+                    workingPackages: [],
+                    startValues: null,
+                    setId,
+                    StudentsChooseGroup: false,
+                    coupledToId: setId,
+                    isPartOfJigsaw: true,
                 },
             })
         }

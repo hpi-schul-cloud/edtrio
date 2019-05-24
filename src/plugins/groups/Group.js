@@ -59,6 +59,7 @@ export function Group(props) {
         maxStudents,
         changeGroupName,
         direction = "vertical",
+        disableDND = false,
     } = props
     return (
         <StyledRoot className={className}>
@@ -81,7 +82,7 @@ export function Group(props) {
             <Droppable
                 droppableId={droppableId}
                 direction={direction}
-                isDropDisabled={false}>
+                isDropDisabled={disableDND}>
                 {(provided, snapshot) => {
                     return (
                         <StyledGroupedStudentList
@@ -93,6 +94,7 @@ export function Group(props) {
                             <InnerList
                                 studentList={studentList}
                                 editable={editable}
+                                disableDND={disableDND}
                             />
                             {provided.placeholder}
                         </StyledGroupedStudentList>
@@ -107,12 +109,12 @@ class InnerList extends PureComponent {
     // do not re-render if the students list has not changed
 
     render() {
-        const { editable, studentList } = this.props
+        const { editable, studentList, disableDND } = this.props
         return studentList.map((studentName, index) => (
             <Draggable
                 key={studentName}
                 draggableId={studentName}
-                isDragDisabled={false}
+                isDragDisabled={disableDND}
                 index={index}>
                 {(provided, snapshot) => (
                     <StudentWrapper

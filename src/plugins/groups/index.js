@@ -12,6 +12,8 @@ const groupState = StateType.object({
     startValues: StateType.scalar(null),
     setId: StateType.string(),
     StudentsChooseGroup: StateType.scalar(false),
+    coupledToId: StateType.scalar(null),
+    isPartOfJigsaw: StateType.scalar(null),
 })
 
 const advancedGroupState = StateType.object({
