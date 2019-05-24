@@ -6,8 +6,9 @@ import {
     serializeDocument,
     StateType,
 } from "@edtr-io/core"
-// import { rowsPlugin } from "@edtr-io/plugin-rows"
-import { rowsPlugin } from "~/plugins/rows"
+import { CustomTheme, ThemeProvider } from "@edtr-io/ui"
+import { rowsPlugin } from "@edtr-io/plugin-rows"
+// import { rowsPlugin } from "~/plugins/rows"
 import { anchorPlugin } from "@edtr-io/plugin-anchor"
 import { blockquotePlugin } from "@edtr-io/plugin-blockquote"
 // import { highlightPlugin } from "@edtr-io/plugin-highlight"
@@ -23,6 +24,8 @@ import { inputExercisePlugin } from "@edtr-io/plugin-input-exercise"
 import nexboardPlugin from "~/plugins/nexboard"
 import etherpadPlugin from "~/plugins/etherpad"
 import notesPlugin from "~/plugins/notes"
+
+import theme from "~/theme"
 
 export const plugins = {
     text: textPlugin,
@@ -42,6 +45,26 @@ export const plugins = {
     // h5p: h5pPlugin,
 }
 
+export const editorTheme = {
+    editor: {
+        color: "#eeeeee",
+        backgroundColor: "red",
+        primary: {
+            background: theme.primaryColor,
+        },
+    },
+    plugins: {
+        rows: {
+            menu: {
+                highlightColor: theme.primaryColor,
+                dropzone: {
+                    highlightColor: theme.primaryColor,
+                },
+            },
+        },
+    },
+}
+
 export default class Editor extends React.Component {
     constructor(props) {
         super(props)
@@ -59,15 +82,18 @@ export default class Editor extends React.Component {
                 style={{
                     minHeight: "50px",
                 }}>
-                <Edtr
-                    plugins={plugins}
-                    defaultPlugin={"text"}
-                    editable={this.props.editing}
-                    initialState={this.docValue}>
-                    <ChangeListener
-                        dispatchChange={this.props.dispatchChange}
-                    />
-                </Edtr>
+                <ThemeProvider theme={editorTheme}>
+                    <Edtr
+                        plugins={plugins}
+                        defaultPlugin={"text"}
+                        editable={this.props.editing}
+                        omitDragDropContext
+                        initialState={this.docValue}>
+                        <ChangeListener
+                            dispatchChange={this.props.dispatchChange}
+                        />
+                    </Edtr>
+                </ThemeProvider>
             </div>
         )
     }

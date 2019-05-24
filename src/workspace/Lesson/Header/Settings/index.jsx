@@ -47,7 +47,7 @@ const Settings = ({ store, dispatch }) => {
                     setExpanded(!expanded)
                 }}
             />
-            <Content visible={expanded} />
+            <Content store={store} visible={expanded} />
         </StyledSettings>
     )
 }

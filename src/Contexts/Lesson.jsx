@@ -1,11 +1,15 @@
 import React, { useReducer } from "react"
+import qs from "qs"
+
+const q = qs.parse(window.location.search, { ignoreQueryPrefix: true })
 
 export const initialState = {
     loading: true,
     error: "",
     lesson: {},
     course: {},
-    editing: true,
+    studentView: !!q.student_view,
+    editing: q.student_view ? false : true,
     activeSectionId: "",
     bootstrapFinished: false,
     saveStatus: "",
@@ -14,6 +18,7 @@ export const initialState = {
 function reducer(state, { type, payload }) {
     switch (type) {
         case "SET_EDITING":
+            if (state.studentView) return state
             return {
                 ...state,
                 editing: payload,

@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from "react"
 import styled, { css } from "styled-components"
+import qs from "qs"
 
+import Action from "~/components/Action"
 import Flex from "~/components/Flex"
 
 const Wrapper = styled(Flex)`
@@ -19,21 +21,47 @@ const Wrapper = styled(Flex)`
     border-radius: 5px 0px 0px 5px;
 `
 
-const StyledIcon = styled.img`
-    width: 24px;
+const ActionWrapper = styled.div`
     margin-bottom: 10px;
-    cursor: pointer;
 
     &:last-child {
-        margin-bottom: 0;
+        margin: 0;
     }
 `
 
-const Settings = ({ visible }) => {
+const StyledAction = styled(Action)`
+    display: flex;
+    align-items: center;
+`
+
+const StyledIcon = styled.img`
+    width: 24px;
+    cursor: pointer;
+    margin-left: 10px;
+`
+
+const Settings = ({ store, visible }) => {
+    const q = qs.parse(window.location.search, { ignoreQueryPrefix: true })
+
+    const studentQuery = qs.stringify({ ...q, student_view: true })
+
     return (
-        <Wrapper column visible={visible}>
-            <StyledIcon src={require("~/assets/share-red.svg")} />
-            <StyledIcon src={require("~/assets/eye-red.svg")} />
+        <Wrapper column visible={visible} alignEnd>
+            <ActionWrapper>
+                <StyledAction>
+                    Teilen
+                    <StyledIcon src={require("~/assets/share-red.svg")} />
+                </StyledAction>
+            </ActionWrapper>
+            {!store.studentView && (
+                <ActionWrapper>
+                    <StyledAction
+                        to={`${window.location.pathname}?${studentQuery}`}>
+                        Schüleransicht
+                        <StyledIcon src={require("~/assets/eye-red.svg")} />
+                    </StyledAction>
+                </ActionWrapper>
+            )}
         </Wrapper>
     )
 }

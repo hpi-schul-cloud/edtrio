@@ -71,14 +71,16 @@ const Header = () => {
                     }}>
                     {store.saveStatus}
                 </SaveStatus>
-                <Toggle
-                    caption="Präsentieren"
-                    activeCaption="Bearbeiten"
-                    active={store.editing}
-                    onChange={newValue => {
-                        dispatch({ type: "SET_EDITING", payload: newValue })
-                    }}
-                />
+                {!store.studentView && (
+                    <Toggle
+                        caption="Präsentieren"
+                        activeCaption="Bearbeiten"
+                        active={store.editing}
+                        onChange={newValue => {
+                            dispatch({ type: "SET_EDITING", payload: newValue })
+                        }}
+                    />
+                )}
                 <Settings store={store} dispatch={dispatch} />
             </Flex>
         </StyledHeader>

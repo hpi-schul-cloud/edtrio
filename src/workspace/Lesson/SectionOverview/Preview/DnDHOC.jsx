@@ -1,5 +1,5 @@
 import React from "react"
-import { DragSource, DropTarget } from "react-dnd"
+import { DragSource, DropTarget, DragDropContext } from "react-dnd"
 
 export default comp =>
     DropTarget(

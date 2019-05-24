@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64">
+    <g fill="none" stroke="#fff" stroke-linecap="square" stroke-miterlimit="10" stroke-width="4" class="nc-icon-wrapper">
+        <path stroke-linecap="butt" d="M16.69 47.31A52.12 52.12 0 0 1 2.537 33.673a2.9 2.9 0 0 1-.008-3.353C5.921 25.507 16.793 12 32 12a29.018 29.018 0 0 1 15.309 4.687" data-cap="butt"/>
+        <path d="M51.909 20a55.426 55.426 0 0 1 9.554 10.311 2.9 2.9 0 0 1-.008 3.373C57.992 38.5 46.96 52 32 52a26.869 26.869 0 0 1-10.033-2"/>
+        <path d="M5 59L59 5M43.321 28A12.009 12.009 0 0 1 28 43.316" data-color="color-2"/>
+        <path stroke-linecap="butt" d="M23.519 40.485a12 12 0 0 1 16.968-16.972" data-cap="butt" data-color="color-2"/>
+    </g>
+</svg>
