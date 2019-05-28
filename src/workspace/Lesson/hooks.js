@@ -6,6 +6,7 @@ import { lessonFakeData } from "~/utils/fake"
 import { setCookie } from "~/utils/cookie"
 import { useInterval } from "~/utils/hooks"
 import { loadEditorData, saveEditorData } from "~/utils/cache"
+import { docValueDiff } from "~/utils/diff"
 
 export function useBootstrap(id, dispatch, dispatchUserAction) {
     async function fetchData() {
@@ -118,9 +119,19 @@ export async function saveLesson(store, dispatch, override) {
     // save sections
     store.lesson.sections.forEach(section => {
         const sectionChanges = {}
+        let savedDocValue = JSON.parse(JSON.stringify(section.docValue))
         section.changed.forEach(key => {
             if (key === "docValue") {
-                sectionChanges.state = section.docValue
+                savedDocValue =
+                    typeof section.docValue === "object" &&
+                    JSON.parse(JSON.stringify(section.docValue))
+
+                sectionChanges.state = docValueDiff(
+                    section.savedDocValue,
+                    section.docValue,
+                )
+
+                dispatch({ type: "SECTION_SAVE_DOCVALUE", payload: section.id })
             } else if (key === "notes") {
                 sectionChanges.note = section.notes
             } else {
@@ -139,10 +150,27 @@ export async function saveLesson(store, dispatch, override) {
                     const backendResult = await api.patch(
                         `/editor/sections/${section.id}`,
                         sectionChanges,
+                        null,
+                        null,
+                        {
+                            success: true,
+                        },
                     )
                     dispatch({ type: "SECTION_SAVED", payload: section.id })
                     resolve(backendResult)
                 } catch (err) {
+                    if (
+                        sectionChanges.hasOwnProperty("state") &&
+                        savedDocValue
+                    ) {
+                        dispatch({
+                            type: "SECTION_SAVE_DOCVALUE_FAILED",
+                            payload: {
+                                id: section.id,
+                                lastSavedDocValue: savedDocValue,
+                            },
+                        })
+                    }
                     resolve("error")
                 }
             }),
@@ -156,10 +184,8 @@ export async function saveLesson(store, dispatch, override) {
             ...store.lesson,
             sections: store.lesson.sections.map(section => ({
                 ...section,
-                docValue:
-                    typeof section.collectDocValue === "function"
-                        ? section.collectDocValue()
-                        : section.docValue,
+                savedDocValue: undefined,
+                docValue: section.docValue,
             })),
         },
     }

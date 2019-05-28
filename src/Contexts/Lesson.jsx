@@ -239,6 +239,36 @@ function reducer(state, { type, payload }) {
                 },
             }
 
+        case "SECTION_SAVE_DOCVALUE":
+            return {
+                ...state,
+                lesson: {
+                    ...state.lesson,
+                    sections: state.lesson.sections.map(section => {
+                        if (section.id !== payload) return section
+                        return {
+                            ...section,
+                            savedDocValue: section.docValue,
+                        }
+                    }),
+                },
+            }
+
+        case "SECTION_SAVE_DOCVALUE_FAILED":
+            return {
+                ...state,
+                lesson: {
+                    ...state.lesson,
+                    sections: state.lesson.sections.map(section => {
+                        if (section.id !== payload.id) return section
+                        return {
+                            ...section,
+                            savedDocValue: payload.lastSavedDocValue,
+                        }
+                    }),
+                },
+            }
+
         case "SECTION_SAVED":
             state.lesson.sections.forEach(section => {
                 if (section.id === payload) section.changed.clear()
