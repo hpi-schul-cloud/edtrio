@@ -9,7 +9,8 @@
         "storybook": "start-storybook -p 9001 -c .storybook",
         "build": "node build/index.js && parcel build src/index.js",
         "build:storybook": "build-storybook -c .storybook -o dist/storybook",
-        "test": "clear && ava"
+        "test": "ava --verbose",
+        "test:watch": "ava --watch --verbose"
     },
     "dependencies": {
         "@babel/polyfill": "^7.4.4",
@@ -140,25 +141,13 @@
         "concurrency": 5,
         "failFast": true,
         "failWithoutAssertions": false,
-        "tap": true,
+        "tap": false,
         "verbose": true,
         "compileEnhancements": false,
         "require": [
             "@babel/register",
             "@babel/polyfill"
         ],
-        "modules": false,
-        "babel": {
-            "testOptions": {
-                "presets": [
-                    [
-                        "module:ava/stage-4",
-                        {
-                            "modules": false
-                        }
-                    ]
-                ]
-            }
-        }
+        "modules": false
     }
 }

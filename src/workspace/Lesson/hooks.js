@@ -6,7 +6,7 @@ import { lessonFakeData } from "~/utils/fake"
 import { setCookie } from "~/utils/cookie"
 import { useInterval } from "~/utils/hooks"
 import { loadEditorData, saveEditorData } from "~/utils/cache"
-import { docValueDiff } from "~/utils/diff"
+import { buildDiff } from "~/utils/diff"
 
 export function useBootstrap(id, dispatch, dispatchUserAction) {
     async function fetchData() {
@@ -126,7 +126,7 @@ export async function saveLesson(store, dispatch, override) {
                     typeof section.docValue === "object" &&
                     JSON.parse(JSON.stringify(section.docValue))
 
-                sectionChanges.state = docValueDiff(
+                sectionChanges.state = buildDiff(
                     section.savedDocValue,
                     section.docValue,
                 )

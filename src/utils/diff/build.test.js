@@ -1,11 +1,11 @@
 import test from "ava"
 
-import { docValueDiff, arrayToObject } from "./index"
+import { buildDiff } from "./index"
 import { connectDatabase } from "~/utils/test"
 
 test.before(async t => {
     const { db, client } = await connectDatabase()
-    t.context.db = db.collection("diff")
+    t.context.db = db.collection("diff-build")
     t.context.dbClient = client
     try {
         await t.context.db.drop()
@@ -14,16 +14,6 @@ test.before(async t => {
 
 test.after.always("close db connection", async t => {
     await t.context.dbClient.close()
-})
-
-test("correctly transform array to object", t => {
-    const transformed = arrayToObject([1, { a: 1, b: 2 }, [1, 2, 3]])
-
-    t.deepEqual(transformed, {
-        "0": 1,
-        "1": { a: 1, b: 2 },
-        "2": [1, 2, 3],
-    })
 })
 
 test("keep same values", async t => {
@@ -37,7 +27,7 @@ test("keep same values", async t => {
         b: { c: 2, d: ["a", 1] },
     }
 
-    const diff = docValueDiff(baseDocValue, newDocValue)
+    const diff = buildDiff(baseDocValue, newDocValue)
 
     t.deepEqual(diff, {})
 })
@@ -49,7 +39,7 @@ test("return whole object if no base doc value is present", async t => {
         c: [{ d: 1 }],
     }
 
-    const diff = docValueDiff(undefined, newDocValue)
+    const diff = buildDiff(undefined, newDocValue)
 
     t.deepEqual(diff, newDocValue)
 })
@@ -63,7 +53,7 @@ test("add new primitive value", async t => {
         a: 1,
         b: 1,
     }
-    const diff = docValueDiff(baseDocValue, newDocValue)
+    const diff = buildDiff(baseDocValue, newDocValue)
     t.deepEqual(diff, { b: 1 })
 
     await t.context.db.insertOne({
@@ -93,7 +83,7 @@ test("remove primitive values", async t => {
         a: 1,
     }
 
-    const diff = docValueDiff(baseDocValue, newDocValue)
+    const diff = buildDiff(baseDocValue, newDocValue)
 
     t.deepEqual(diff, { b: undefined }) // TODO maybe null instead?
 
@@ -125,7 +115,7 @@ test("remove object and array values", async t => {
         a: 1,
     }
 
-    const diff = docValueDiff(baseDocValue, newDocValue)
+    const diff = buildDiff(baseDocValue, newDocValue)
 
     t.deepEqual(diff, { b: undefined, d: undefined }) // TODO maybe null instead?
 
@@ -155,7 +145,7 @@ test("replace primitive value with other primitive value", async t => {
         a: "bye",
     }
 
-    const diff = docValueDiff(baseDocValue, newDocValue)
+    const diff = buildDiff(baseDocValue, newDocValue)
     t.deepEqual(diff, { a: "bye" })
 
     await t.context.db.insertOne({
@@ -184,7 +174,7 @@ test("replace primitive value with object", async t => {
         a: { b: "bye" },
     }
 
-    const diff = docValueDiff(baseDocValue, newDocValue)
+    const diff = buildDiff(baseDocValue, newDocValue)
     t.deepEqual(diff, { a: { b: "bye" } })
 
     await t.context.db.insertOne({
@@ -213,7 +203,7 @@ test("replace object with primitive value", async t => {
         a: { b: "bye" },
     }
 
-    const diff = docValueDiff(baseDocValue, newDocValue)
+    const diff = buildDiff(baseDocValue, newDocValue)
     t.deepEqual(diff, { a: { b: "bye" } })
 
     await t.context.db.insertOne({
@@ -240,7 +230,7 @@ test("replace primitive value with array", async t => {
         b: [1, 2, 3],
     }
 
-    const diff = docValueDiff(baseDocValue, newDocValue)
+    const diff = buildDiff(baseDocValue, newDocValue)
 
     t.deepEqual(diff, { b: [1, 2, 3] })
 
@@ -268,7 +258,7 @@ test("replace object with array", async t => {
         b: [1, 2, 3],
     }
 
-    const diff = docValueDiff(baseDocValue, newDocValue)
+    const diff = buildDiff(baseDocValue, newDocValue)
 
     t.deepEqual(diff, { b: [1, 2, 3] })
 
@@ -287,6 +277,34 @@ test("replace object with array", async t => {
     t.deepEqual(updatedDoc, newDocValue)
 })
 
+test("replace array with object", async t => {
+    const baseDocValue = {
+        b: ["a", "b", "c"],
+    }
+
+    const newDocValue = {
+        b: { a: 1, b: 2, c: 3 },
+    }
+
+    const diff = buildDiff(baseDocValue, newDocValue)
+
+    t.deepEqual(diff, { b: { a: 1, b: 2, c: 3 } })
+
+    await t.context.db.insertOne({
+        ...baseDocValue,
+        _id: 9,
+    })
+
+    const { value: updatedDoc } = await t.context.db.findOneAndUpdate(
+        { _id: 9 },
+        { $set: diff },
+        { returnOriginal: false },
+    )
+
+    delete updatedDoc._id
+    t.deepEqual(updatedDoc, newDocValue)
+})
+
 test("handle nested objects correctly", async t => {
     const baseDocValue = {
         b: { c: "hello", a: 5 },
@@ -296,7 +314,7 @@ test("handle nested objects correctly", async t => {
         b: { c: 1, a: 5 },
     }
 
-    const diff = docValueDiff(baseDocValue, newDocValue)
+    const diff = buildDiff(baseDocValue, newDocValue)
     t.deepEqual(diff, { b: { c: 1 } })
 })
 
@@ -309,7 +327,7 @@ test("change simple array value", t => {
         arr: ["bye"],
     }
 
-    const diff = docValueDiff(baseDocValue, newDocValue)
+    const diff = buildDiff(baseDocValue, newDocValue)
 
     t.deepEqual(diff, {
         arr: {
@@ -327,7 +345,7 @@ test("change simple array value #2", t => {
         arr: ["hello", "servus", "ciao"],
     }
 
-    const diff = docValueDiff(baseDocValue, newDocValue)
+    const diff = buildDiff(baseDocValue, newDocValue)
 
     t.deepEqual(diff, {
         arr: {
@@ -345,7 +363,7 @@ test("change array values with different sizes", t => {
         arr: ["hello", "servus"],
     }
 
-    const diff = docValueDiff(baseDocValue, newDocValue)
+    const diff = buildDiff(baseDocValue, newDocValue)
 
     t.deepEqual(diff, {
         arr: {
@@ -364,7 +382,7 @@ test("change array values with nested objects", t => {
         arr: [{ a: "hello", b: "bye", d: "bona sera" }, { c: "ciao" }],
     }
 
-    const diff = docValueDiff(baseDocValue, newDocValue)
+    const diff = buildDiff(baseDocValue, newDocValue)
 
     t.deepEqual(diff, {
         arr: {
@@ -418,7 +436,7 @@ test("fully nested structures", t => {
         },
     }
 
-    const diff = docValueDiff(baseDocValue, newDocValue)
+    const diff = buildDiff(baseDocValue, newDocValue)
 
     t.deepEqual(diff, {
         city: {
