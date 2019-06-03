@@ -11,28 +11,44 @@ const Wrapper = styled.div`
     left: 0;
     position: fixed;
     top: 62px;
-    width: ${props => (props.expanded ? 250 : 50)}px;
+    width: ${props => (props.expanded ? 275 : 50)}px;
     height: calc(100vh - 62px);
     overflow: hidden;
     transition: 250ms all ease-in-out;
-    background-color: ${theme.colorDarkerGrey};
+    background-color: rgba(221, 221, 221, 1);
     padding-bottom: 100px;
     z-index: 100;
     box-shadow: inset -3px 0px 6px rgba(0, 0, 0, 0.1),
         inset -3px 0px 6px rgba(0, 0, 0, 0.18);
     border-radius: 0;
+
+    ${props =>
+        !props.expanded &&
+        css`
+            box-shadow: none;
+            background-color: #fff;
+        `}
 `
 
 const Previews = styled.div`
     padding: ${props =>
         props.editing && props.expanded
-            ? "15px 5px"
+            ? "15px 30px 15px 5px"
             : !props.expanded
             ? "15px 10px"
             : "15px"};
     width: 100%;
     height: calc(100vh - 62px);
     overflow: auto;
+
+    ${props =>
+        !props.expanded &&
+        css`
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding-bottom: 150px;
+        `}
 `
 
 function useResizeListener(store, dispatch) {

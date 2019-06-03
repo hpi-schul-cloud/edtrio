@@ -3,10 +3,10 @@ import styled, { css } from "styled-components"
 
 import api from "~/utils/api"
 
-import dragIcon from "~/assets/drag-handle-white.svg"
-import previewIcon from "~/assets/preview-white.svg"
-import noPreviewIcon from "~/assets/no-preview-white.svg"
-import trashIcon from "~/assets/trash-white.svg"
+import dragIcon from "~/assets/drag-handle.svg"
+import previewIcon from "~/assets/preview.svg"
+import noPreviewIcon from "~/assets/no-preview.svg"
+import trashIcon from "~/assets/trash.svg"
 
 import Flex from "~/components/Flex"
 
@@ -70,11 +70,13 @@ const Icon = styled.img`
 `
 
 const DragHandle = ({ connectDragSource, ...props }) => {
-    return connectDragSource(
+    const dh = (
         <span style={{ height: 30 }}>
-            <Icon src={dragIcon} drag {...props} visible onClick={() => {}} />,
-        </span>,
+            <Icon src={dragIcon} drag {...props} visible onClick={() => {}} />
+        </span>
     )
+
+    return connectDragSource(dh)
 }
 
 const Controls = ({

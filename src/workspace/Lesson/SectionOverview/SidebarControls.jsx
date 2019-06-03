@@ -1,5 +1,5 @@
 import React from "react"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import uuid from "uuid/v4"
 
 import api from "~/utils/api"
@@ -10,8 +10,9 @@ import { getFakeSection } from "~/utils/fake"
 import Flex from "~/components/Flex"
 
 const Wrapper = styled(Flex)`
-    width: calc(100% - 5px);
-    background-color: ${theme.colorDarkerGrey};
+    width: calc(100%);
+    background-color: ${props =>
+        props.expanded ? theme.primaryColor : "transparent"};
     position: absolute;
     bottom: 0;
     left: 0;
@@ -60,18 +61,46 @@ async function addNewSection(store, dispatch) {
     })
 }
 
+const AddWrapper = styled.div`
+    ${props =>
+        props.visible &&
+        css`
+            width: 36px;
+            height: 36px;
+            border-radius: 18px;
+            background-color: ${theme.primaryColor};
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px;
+        `}
+`
+
 const SidebarControls = ({ store, dispatch }) => {
     const expanded = store.sectionOverviewExpanded
     return (
-        <Wrapper justifyBetween>
+        <Wrapper
+            justifyBetween={store.editing}
+            justifyEnd={!store.editing}
+            expanded={expanded}>
+            {store.editing && (
+                <AddWrapper visible={!expanded}>
+                    <StyledIcon
+                        onClick={() => {
+                            addNewSection(store, dispatch)
+                        }}
+                        src={require("~/assets/plus-white.svg")}
+                        redRound={!expanded}
+                    />
+                </AddWrapper>
+            )}
+
             <StyledIcon
-                onClick={() => {
-                    addNewSection(store, dispatch)
-                }}
-                src={require("~/assets/plus-white.svg")}
-            />
-            <StyledIcon
-                src={require("~/assets/double-arrow-left-white.svg")}
+                src={
+                    !expanded
+                        ? require("~/assets/double-arrow-left-red.svg")
+                        : require("~/assets/double-arrow-left-white.svg")
+                }
                 expanded={expanded}
                 onClick={() => {
                     dispatch({
