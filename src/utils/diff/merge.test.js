@@ -27,8 +27,7 @@ test("correctly update primitive value", t => {
 
 test("correctly unset values", t => {
     const base = { a: 1, b: 2 }
-    const diff = { a: undefined }
-
+    const diff = { a: null }
     const updated = mergeDiff(base, diff)
 
     t.deepEqual(updated, { b: 2 })
@@ -54,7 +53,7 @@ test("leave unchanged values untouched", t => {
 
 test("change primitive value to object", t => {
     const base = { a: 1, b: 2 }
-    const diff = { a: { c: 3 } }
+    const diff = { a: { c: 3, "x-new": true } }
 
     const updated = mergeDiff(base, diff)
 
@@ -90,7 +89,7 @@ test("update array", t => {
 
 test("remove array elements", t => {
     const base = { a: [1, 2, 3] }
-    const diff = { a: { "2": undefined } }
+    const diff = { a: { "2": null } }
 
     const updated = mergeDiff(base, diff)
 
@@ -99,7 +98,7 @@ test("remove array elements", t => {
 
 test("change array to object", t => {
     const base = { a: [1, 2, 3] }
-    const diff = { a: { b: 1, c: 2 } }
+    const diff = { a: { b: 1, c: 2, "x-new": true } }
 
     const updated = mergeDiff(base, diff)
 
@@ -126,7 +125,7 @@ test("change nested values", t => {
 
 test("remove nested values", t => {
     const base = { a: [{ a: 1, b: 2 }, { c: 3, d: 4 }] }
-    const diff = { a: { "0": { a: 5, b: undefined }, "1": undefined } }
+    const diff = { a: { "0": { a: 5, b: null }, "1": null } }
 
     const updated = mergeDiff(base, diff)
 

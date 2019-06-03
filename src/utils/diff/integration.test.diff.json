@@ -10,12 +10,14 @@
                                     "leaves": {
                                         "0": {
                                             "text": ":)"
-                                        }
+                                        },
+                                        "1": null
                                     }
                                 }
                             }
                         },
                         "1": {
+                            "x-new": true,
                             "object": "block",
                             "type": "paragraph",
                             "data": {},
@@ -37,6 +39,7 @@
             }
         },
         "1": {
+            "x-new": true,
             "plugin": "text",
             "state": {
                 "object": "value",

@@ -1,6 +1,6 @@
 import test from "ava"
 
-import { buildDiff } from "./index"
+import { buildDiff, diffToPathNotation } from "./index"
 import { connectDatabase } from "~/utils/test"
 
 test.before(async t => {
@@ -39,7 +39,7 @@ test("return whole object if no base doc value is present", async t => {
         c: [{ d: 1 }],
     }
 
-    const diff = buildDiff(undefined, newDocValue)
+    const diff = buildDiff(null, newDocValue)
 
     t.deepEqual(diff, newDocValue)
 })
@@ -85,7 +85,7 @@ test("remove primitive values", async t => {
 
     const diff = buildDiff(baseDocValue, newDocValue)
 
-    t.deepEqual(diff, { b: undefined }) // TODO maybe null instead?
+    t.deepEqual(diff, { b: null }) // TODO maybe null instead?
 
     await t.context.db.insertOne({
         ...baseDocValue,
@@ -101,7 +101,7 @@ test("remove primitive values", async t => {
     )
 
     delete updatedDoc._id
-    t.deepEqual(updatedDoc, { ...newDocValue, b: null }) // TODO mongo turns undefined into null
+    t.deepEqual(updatedDoc, { ...newDocValue, b: null }) // TODO mongo turns null into null
 })
 
 test("remove object and array values", async t => {
@@ -117,7 +117,7 @@ test("remove object and array values", async t => {
 
     const diff = buildDiff(baseDocValue, newDocValue)
 
-    t.deepEqual(diff, { b: undefined, d: undefined }) // TODO maybe null instead?
+    t.deepEqual(diff, { b: null, d: null }) // TODO maybe null instead?
 
     await t.context.db.insertOne({
         ...baseDocValue,
@@ -133,7 +133,7 @@ test("remove object and array values", async t => {
     )
 
     delete updatedDoc._id
-    t.deepEqual(updatedDoc, { ...newDocValue, b: null, d: null }) // TODO mongo turns undefined into null
+    t.deepEqual(updatedDoc, { ...newDocValue, b: null, d: null }) // TODO mongo turns null into null
 })
 
 test("replace primitive value with other primitive value", async t => {
@@ -175,36 +175,22 @@ test("replace primitive value with object", async t => {
     }
 
     const diff = buildDiff(baseDocValue, newDocValue)
-    t.deepEqual(diff, { a: { b: "bye" } })
-
-    await t.context.db.insertOne({
-        ...baseDocValue,
-        _id: 5,
-    })
-
-    const { value: updatedDoc } = await t.context.db.findOneAndUpdate(
-        { _id: 5 },
-        { $set: diff },
-        { returnOriginal: false },
-    )
-
-    delete updatedDoc._id
-    t.deepEqual(updatedDoc, newDocValue)
+    t.deepEqual(diff, { a: { b: "bye", "x-new": true } })
 })
 
 test("replace object with primitive value", async t => {
     const baseDocValue = {
         l: 1,
-        a: "hello",
+        a: { b: "bye" },
     }
 
     const newDocValue = {
         l: 1,
-        a: { b: "bye" },
+        a: "hello",
     }
 
     const diff = buildDiff(baseDocValue, newDocValue)
-    t.deepEqual(diff, { a: { b: "bye" } })
+    t.deepEqual(diff, { a: "hello" })
 
     await t.context.db.insertOne({
         ...baseDocValue,
@@ -288,21 +274,7 @@ test("replace array with object", async t => {
 
     const diff = buildDiff(baseDocValue, newDocValue)
 
-    t.deepEqual(diff, { b: { a: 1, b: 2, c: 3 } })
-
-    await t.context.db.insertOne({
-        ...baseDocValue,
-        _id: 9,
-    })
-
-    const { value: updatedDoc } = await t.context.db.findOneAndUpdate(
-        { _id: 9 },
-        { $set: diff },
-        { returnOriginal: false },
-    )
-
-    delete updatedDoc._id
-    t.deepEqual(updatedDoc, newDocValue)
+    t.deepEqual(diff, { b: { "x-new": true, a: 1, b: 2, c: 3 } })
 })
 
 test("handle nested objects correctly", async t => {
@@ -368,7 +340,7 @@ test("change array values with different sizes", t => {
     t.deepEqual(diff, {
         arr: {
             "1": "servus",
-            "2": undefined,
+            "2": null,
         },
     })
 })
@@ -386,8 +358,46 @@ test("change array values with nested objects", t => {
 
     t.deepEqual(diff, {
         arr: {
-            "0": { c: undefined, d: "bona sera" },
-            "1": { c: "ciao" },
+            "0": { c: null, d: "bona sera" },
+            "1": { c: "ciao", "x-new": true },
+        },
+    })
+})
+
+test("mark newly created objects", t => {
+    const baseDocValue = {
+        a: {
+            b: {
+                c: 1,
+                d: 2,
+            },
+        },
+    }
+
+    const newDocValue = {
+        a: {
+            b: {
+                c: 1,
+                d: 2,
+                e: {
+                    f: 1,
+                    g: 2,
+                },
+            },
+        },
+    }
+
+    const diff = buildDiff(baseDocValue, newDocValue)
+
+    t.deepEqual(diff, {
+        a: {
+            b: {
+                e: {
+                    f: 1,
+                    g: 2,
+                    "x-new": true,
+                },
+            },
         },
     })
 })
@@ -447,15 +457,59 @@ test("fully nested structures", t => {
             year: 1949,
             states: {
                 Brandenburg: {
-                    cities: { "0": "Potsdam", "1": undefined },
+                    cities: { "0": "Potsdam", "1": null },
                     population: 2500000,
                 },
-                Pommern: undefined,
+                Pommern: null,
                 Saxony: {
+                    "x-new": true,
                     cities: ["Dresden"],
                     population: 4500000,
                 },
             },
+        },
+    })
+})
+
+test("path notation", t => {
+    const diff = {
+        city: {
+            districts: { "0": "Friedrichshain" },
+        },
+        country: {
+            name: "East Germany",
+            year: 1949,
+            states: {
+                Brandenburg: {
+                    cities: { "0": "Potsdam", "1": null },
+                    population: 2500000,
+                },
+                Pommern: null,
+                Saxony: {
+                    "x-new": true,
+                    cities: ["Dresden"],
+                    population: 4500000,
+                },
+            },
+        },
+    }
+
+    const pathDiff = diffToPathNotation(diff)
+    t.deepEqual(pathDiff, {
+        $set: {
+            "city.districts.0": "Friedrichshain",
+            "country.name": "East Germany",
+            "country.year": 1949,
+            "country.states.Brandenburg.cities.0": "Potsdam",
+            "country.states.Brandenburg.population": 2500000,
+            "country.states.Saxony": {
+                cities: ["Dresden"],
+                population: 4500000,
+            },
+        },
+        $unset: {
+            "country.states.Brandenburg.cities.1": 1,
+            "country.states.Pommern": 1,
         },
     })
 })
