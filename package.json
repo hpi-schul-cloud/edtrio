@@ -8,6 +8,7 @@
         "dev": "parcel src/index.html -d dist/dev --open",
         "storybook": "start-storybook -p 9001 -c .storybook",
         "build": "node build/index.js && parcel build src/index.js",
+        "build:standalone": "parcel build src/index.html",
         "build:storybook": "build-storybook -c .storybook -o dist/storybook",
         "test": "ava --verbose",
         "test:watch": "ava --watch --verbose"
