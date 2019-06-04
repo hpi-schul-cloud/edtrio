@@ -14,6 +14,7 @@ export const initialState = {
     bootstrapFinished: false,
     saveStatus: "",
     sectionOverviewExpanded: false,
+    showSectionSettings: false,
 }
 function reducer(state, { type, payload }) {
     switch (type) {
@@ -37,6 +38,15 @@ function reducer(state, { type, payload }) {
                     payload !== undefined
                         ? payload
                         : !state.sectionOverviewExpanded,
+            }
+
+        case "TOGGLE_SECTION_SETTINGS":
+            return {
+                ...state,
+                showSectionSettings:
+                    payload !== undefined
+                        ? payload
+                        : !state.showSectionSettings,
             }
 
         case "BOOTSTRAP":

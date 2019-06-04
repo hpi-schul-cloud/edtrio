@@ -26,7 +26,12 @@ const Outer = styled.div`
     width: ${props => {
         return props.expanded && props.editing ? "calc(100% - 30px)" : "100%"
     }};
-
+    ${props =>
+        !props.active &&
+        css`
+            border-color: transparent;
+            background: transparent;
+        `}
     ${props =>
         !props.expanded &&
         css`
@@ -52,6 +57,11 @@ const Wrapper = styled.div`
                   border-radius: 3px;
                   background-color: #fff;
                   border: 3px solid rgba(68, 68, 68, 1);
+                  ${props =>
+                      !props.active &&
+                      css`
+                          border-color: #fff;
+                      `}
               `
             : css`
                   border: 3px solid transparent;

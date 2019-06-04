@@ -2,6 +2,8 @@ import React, { useEffect } from "react"
 import Lesson from "./Lesson"
 import Feedback from "./Feedback"
 
+import SectionSettings from "./Lesson/SectionOverview/Settings"
+
 const Workspace = () => {
     useEffect(() => {
         const savedColor = document.body.style.backgroundColor

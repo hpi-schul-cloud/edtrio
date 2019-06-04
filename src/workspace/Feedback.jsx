@@ -27,10 +27,11 @@ const anim = keyframes`
 `
 
 const FeedbackBtn = styled(Button)`
+    animation-name: ${anim};
     position: fixed;
     bottom: 50px;
     right: 50px;
-    animation-name: ${anim};
+    z-index: 9999999;
     animation-play-state: running;
     animation-duration: 1000ms;
     animation-iteration-count: 5;

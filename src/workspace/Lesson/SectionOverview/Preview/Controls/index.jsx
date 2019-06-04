@@ -7,6 +7,7 @@ import dragIcon from "~/assets/drag-handle.svg"
 import previewIcon from "~/assets/preview.svg"
 import noPreviewIcon from "~/assets/no-preview.svg"
 import trashIcon from "~/assets/trash.svg"
+import settingsIcon from "~/assets/settings.svg"
 
 import Flex from "~/components/Flex"
 
@@ -120,6 +121,13 @@ const Controls = ({
             hide={!store.editing || !store.sectionOverviewExpanded}>
             <DragHandle connectDragSource={connectDragSource} isOnly={isOnly} />
             <Icon
+                src={settingsIcon}
+                visible
+                onClick={() => {
+                    dispatch({ type: "TOGGLE_SECTION_SETTINGS" })
+                }}
+            />
+            {/* <Icon
                 src={visible ? previewIcon : noPreviewIcon}
                 visible
                 onClick={() => {
@@ -139,7 +147,7 @@ const Controls = ({
                         />
                     )
                 }}
-            />
+            /> */}
         </StyledControls>
     )
 }

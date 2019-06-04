@@ -21,7 +21,7 @@ const StyledAction = styled(Action)`
 
 const Controls = ({ dispatch, prevId, nextId }) => {
     return (
-        <Container full style={{ marginTop: 150 }}>
+        <Container full style={{ marginTop: 150, width: "100%" }}>
             <Flex justifyBetween>
                 <StyledAction
                     clickable

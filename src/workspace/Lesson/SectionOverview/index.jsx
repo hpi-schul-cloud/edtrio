@@ -5,6 +5,7 @@ import Heading from "~/components/Heading"
 import theme from "~/theme"
 
 import Preview from "./Preview"
+import Settings from "./Settings"
 import SidebarControls from "./SidebarControls"
 
 const Wrapper = styled.div`
@@ -85,33 +86,36 @@ const SectionOverview = ({ store, dispatch }) => {
     }
 
     return (
-        <Wrapper expanded={expanded} editing={store.editing}>
-            <Previews editing={store.editing} expanded={expanded}>
-                {sections
-                    .filter((section, index) => {
-                        if (store.editing) return true
-                        return section.visible
-                    })
-                    .map((section, index) => {
-                        const editorKey =
-                            section.id +
-                            "-" +
-                            Math.round(new Date().getTime() / 5000)
-                        return (
-                            <Preview
-                                k={editorKey}
-                                store={store}
-                                moveSection={moveSection}
-                                dispatch={dispatch}
-                                section={section}
-                                index={index}
-                                key={section.id}
-                            />
-                        )
-                    })}
-            </Previews>
-            <SidebarControls store={store} dispatch={dispatch} />
-        </Wrapper>
+        <React.Fragment>
+            <Wrapper expanded={expanded} editing={store.editing}>
+                <Previews editing={store.editing} expanded={expanded}>
+                    {sections
+                        .filter((section, index) => {
+                            if (store.editing) return true
+                            return section.visible
+                        })
+                        .map((section, index) => {
+                            const editorKey =
+                                section.id +
+                                "-" +
+                                Math.round(new Date().getTime() / 5000)
+                            return (
+                                <Preview
+                                    k={editorKey}
+                                    store={store}
+                                    moveSection={moveSection}
+                                    dispatch={dispatch}
+                                    section={section}
+                                    index={index}
+                                    key={section.id}
+                                />
+                            )
+                        })}
+                </Previews>
+                <SidebarControls store={store} dispatch={dispatch} />
+            </Wrapper>
+            <Settings />
+        </React.Fragment>
     )
 }
 
