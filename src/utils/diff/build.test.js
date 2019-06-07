@@ -1,6 +1,6 @@
 import test from "ava"
 
-import { buildDiff, diffToPathNotation } from "./index"
+import { buildDiff, diffToMongo } from "./index"
 import { connectDatabase } from "~/utils/test"
 
 test.before(async t => {
@@ -85,8 +85,7 @@ test("remove primitive values", async t => {
 
     const diff = buildDiff(baseDocValue, newDocValue)
 
-    t.deepEqual(diff, { b: null }) // TODO maybe null instead?
-
+    t.deepEqual(diff, { b: null })
     await t.context.db.insertOne({
         ...baseDocValue,
         _id: 2,
@@ -101,7 +100,7 @@ test("remove primitive values", async t => {
     )
 
     delete updatedDoc._id
-    t.deepEqual(updatedDoc, { ...newDocValue, b: null }) // TODO mongo turns null into null
+    t.deepEqual(updatedDoc, { ...newDocValue, b: null })
 })
 
 test("remove object and array values", async t => {
@@ -117,7 +116,7 @@ test("remove object and array values", async t => {
 
     const diff = buildDiff(baseDocValue, newDocValue)
 
-    t.deepEqual(diff, { b: null, d: null }) // TODO maybe null instead?
+    t.deepEqual(diff, { b: null, d: null })
 
     await t.context.db.insertOne({
         ...baseDocValue,
@@ -133,7 +132,7 @@ test("remove object and array values", async t => {
     )
 
     delete updatedDoc._id
-    t.deepEqual(updatedDoc, { ...newDocValue, b: null, d: null }) // TODO mongo turns null into null
+    t.deepEqual(updatedDoc, { ...newDocValue, b: null, d: null })
 })
 
 test("replace primitive value with other primitive value", async t => {
@@ -471,7 +470,7 @@ test("fully nested structures", t => {
     })
 })
 
-test("path notation", t => {
+test("mongo diff", async t => {
     const diff = {
         city: {
             districts: { "0": "Friedrichshain" },
@@ -481,7 +480,7 @@ test("path notation", t => {
             year: 1949,
             states: {
                 Brandenburg: {
-                    cities: { "0": "Potsdam", "1": null },
+                    cities: { "0": "Potsdam", "x-pull": ["Stettin"] },
                     population: 2500000,
                 },
                 Pommern: null,
@@ -494,8 +493,8 @@ test("path notation", t => {
         },
     }
 
-    const pathDiff = diffToPathNotation(diff)
-    t.deepEqual(pathDiff, {
+    const mongoDiff = diffToMongo(diff)
+    t.deepEqual(mongoDiff, {
         $set: {
             "city.districts.0": "Friedrichshain",
             "country.name": "East Germany",
@@ -507,9 +506,36 @@ test("path notation", t => {
                 population: 4500000,
             },
         },
+        $pull: {
+            "country.states.Brandenburg.cities": "Stettin",
+        },
         $unset: {
-            "country.states.Brandenburg.cities.1": 1,
-            "country.states.Pommern": 1,
+            "country.states.Pommern": "",
         },
     })
+
+    await t.context.db.insertOne({
+        _id: 12,
+        city: {
+            name: "Berlin",
+            disctricts: ["Kreuzberg", "Neukölln", "more"],
+        },
+        country: {
+            name: "Germany",
+            year: 1918,
+            states: {
+                Pommern: {
+                    borderState: true,
+                    population: 6000000,
+                    cities: ["Kolberg"],
+                },
+                Brandenburg: {
+                    cities: ["Stettin", "Potsdam"],
+                    population: 4000000,
+                },
+            },
+        },
+    })
+
+    await t.context.db.findOneAndUpdate({ _id: 12 }, mongoDiff)
 })

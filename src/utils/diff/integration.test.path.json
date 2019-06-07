@@ -48,7 +48,8 @@
             }
         }
     },
-    "$unset": {
+    "$pull": {
         "state.0.state.document.nodes.0.nodes.0.leaves.1": 1
-    }
+    },
+    "$unset": {}
 }

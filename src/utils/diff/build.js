@@ -1,4 +1,4 @@
-import { arrayToObject, isObject } from "./helper"
+import { arrayToObject, isObject, isArrayLike } from "./helper"
 
 export function buildDiff(base, update, depth = 0) {
     // returns a partial tree that includes all the changes (in mongo notation)
@@ -14,7 +14,13 @@ export function buildDiff(base, update, depth = 0) {
     for (let key of baseKeys) {
         if (!update.hasOwnProperty(key)) {
             // set to null if the new doc Value no longer has that key
-            diff[key] = null // TODO maybe null instead?
+            if (Array.isArray(base)) {
+                if (Array.isArray(diff["x-pull"])) {
+                    diff["x-pull"].push([base[key]])
+                } else {
+                    diff["x-pull"] = [base[key]]
+                }
+            } else diff[key] = null
         }
     }
 
@@ -49,48 +55,54 @@ export function buildDiff(base, update, depth = 0) {
     return diff
 }
 
-export function diffToPathNotation(diff) {
+export function diffToMongo(diff, path = "") {
     diff = JSON.parse(JSON.stringify(diff))
-    function buildPaths(diff, paths = {}, path = "") {
+    const setObj = {}
+    const unsetObj = {}
+    const pullObj = {}
+
+    function buildPaths(diff, path) {
         const keys = Object.keys(diff)
         for (let key of keys) {
             const diffValue = diff[key]
             const prefix = path.length ? "." : ""
-
-            if (isObject(diffValue) && diffValue.hasOwnProperty("x-new")) {
-                delete diffValue["x-new"]
-                paths[`${path}${prefix}${key}`] = diffValue
+            if (key === "x-pull") {
+                for (const pullValue of diffValue) {
+                    pullObj[path] = pullValue
+                }
             } else if (
-                typeof diffValue !== "object" ||
-                Array.isArray(diffValue) ||
-                diffValue === null
+                isObject(diffValue) &&
+                diffValue.hasOwnProperty("x-new")
             ) {
-                paths[`${path}${prefix}${key}`] = diffValue
-            } else {
-                buildPaths(diffValue, paths, `${path}${prefix}${key}`)
+                // new objects
+                delete diffValue["x-new"]
+                setObj[`${path}${prefix}${key}`] = diffValue
+            } else if (Array.isArray(diffValue)) {
+                // new array
+                setObj[`${path}${prefix}${key}`] = diffValue
+            } else if (
+                typeof diffValue === "string" ||
+                typeof diffValue === "boolean" ||
+                typeof diffValue === "number"
+            ) {
+                // normal value
+                setObj[`${path}${prefix}${key}`] = diffValue
+            } else if (diffValue === null) {
+                // null -> removed value
+                unsetObj[`${path}${prefix}${key}`] = ""
+            } else if (isObject(diffValue)) {
+                buildPaths(diffValue, `${path}${prefix}${key}`)
             }
         }
-
-        return paths
     }
 
-    const paths = buildPaths(diff)
+    buildPaths(diff, path)
 
-    const setObj = {}
-    const unsetObj = {}
+    const mongoDiff = {}
 
-    Object.keys(paths).forEach(key => {
-        const val = paths[key]
+    if (Object.keys(setObj).length) mongoDiff.$set = setObj
+    if (Object.keys(pullObj).length) mongoDiff.$pull = pullObj
+    if (Object.keys(unsetObj).length) mongoDiff.$unset = unsetObj
 
-        if (val === null) {
-            unsetObj[key] = 1
-        } else {
-            setObj[key] = val
-        }
-    })
-
-    return {
-        $set: setObj,
-        $unset: unsetObj,
-    }
+    return mongoDiff
 }
