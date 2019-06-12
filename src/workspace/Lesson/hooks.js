@@ -69,8 +69,17 @@ export function useBootstrap(id, dispatch, dispatchUserAction) {
         })
     }
 
+    async function fetchCourse() {
+        try {
+            const courseId = window.location.pathname.split("/")[2]
+            const course = await api.get(`/courses/${courseId}`)
+            dispatch({ type: "SET_COURSE", payload: course })
+        } catch (err) {}
+    }
+
     useEffect(() => {
         fetchData()
+        fetchCourse()
     }, [])
 }
 
@@ -111,13 +120,7 @@ export async function saveLesson(store, dispatch, override) {
         const sectionChanges = {}
         section.changed.forEach(key => {
             if (key === "docValue") {
-                const updatedDocValue = section.collectDocValue()
-                if (
-                    JSON.stringify(section[key]) !==
-                    JSON.stringify(updatedDocValue)
-                ) {
-                    sectionChanges.state = updatedDocValue
-                }
+                sectionChanges.state = section.docValue
             } else if (key === "notes") {
                 sectionChanges.note = section.notes
             } else {
@@ -182,31 +185,5 @@ export function useChangeListener(store, dispatch) {
 }
 
 export function useFullScreenListener(store, dispatch) {
-    useInterval(() => {
-        if (
-            document.body.classList.value.includes("loaded") &&
-            !document.body.classList.value.includes("fullscreen")
-        ) {
-            if (store.isFullScreen) {
-                dispatch({ type: "FULL_SCREEN", payload: false })
-            }
-        } else if (!store.isFullScreen) {
-            dispatch({ type: "FULL_SCREEN", payload: true })
-        }
-    }, 2500) // TODO maybe think of another way than an interval
-
-    useEffect(() => {
-        document.body.classList.add("edtr")
-        const fullscreenBtn = document.querySelector(".btn-fullscreen")
-        // if (store.isFullScreen) {
-        //     document.querySelector("body").style.paddingTop = 0
-        //     if (fullscreenBtn) fullscreenBtn.style.top = "83px"
-        // } else {
-        //     document.querySelector("body").style.paddingTop = "75px"
-        //     if (fullscreenBtn) fullscreenBtn.style.top = "8px"
-        // }
-        return () => document.body.classList.remove("edtr")
-    }, [])
-
-    return store.isFullScreen
+    return true
 }

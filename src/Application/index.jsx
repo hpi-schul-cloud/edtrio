@@ -1,4 +1,5 @@
 import React from "react"
+import { hot } from "react-hot-loader"
 
 import Workspace from "~/workspace"
 import GlobalStyle from "./GlobalStyle"
@@ -16,4 +17,4 @@ const Application = () => {
     )
 }
 
-export default Application
+export default hot(module)(Application)

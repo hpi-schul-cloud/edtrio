@@ -1,7 +1,7 @@
 import React, { useContext } from "react"
 import styled, { css } from "styled-components"
 
-import { ThemeContext, theme as defaultTheme } from "~/Contexts/Theme"
+import theme from "~/theme"
 
 const baseStyles = css`
     max-width: 100%;
@@ -12,8 +12,8 @@ const baseStyles = css`
     }};
 
     color: ${props => {
-        if (props.primary) return props.theme.colors.red
-        return props.theme.colors.text
+        if (props.primary) return theme.primaryColor
+        return theme.textColor
     }};
 
     font-weight: ${props => {
@@ -61,11 +61,8 @@ const StyledSpan = styled.span`
  */
 
 const Text = ({ inline, ...props }) => {
-    const context = useContext(ThemeContext)
-    const theme = context && context.theme ? context.theme : defaultTheme
-
-    if (inline) return <StyledSpan {...props} theme={theme} />
-    return <StyledParagraph {...props} theme={theme} />
+    if (inline) return <StyledSpan {...props} />
+    return <StyledParagraph {...props} />
 }
 
 export default Text

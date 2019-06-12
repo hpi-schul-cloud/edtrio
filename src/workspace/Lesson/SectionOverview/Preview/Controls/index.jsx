@@ -1,0 +1,145 @@
+import React, { useContext, useRef } from "react"
+import styled, { css } from "styled-components"
+
+import api from "~/utils/api"
+
+import dragIcon from "~/assets/drag-handle-white.svg"
+import previewIcon from "~/assets/preview-white.svg"
+import noPreviewIcon from "~/assets/no-preview-white.svg"
+import trashIcon from "~/assets/trash-white.svg"
+
+import Flex from "~/components/Flex"
+
+import DeleteModal from "./DeleteModal"
+
+const StyledControls = styled(Flex)`
+    width: 30px;
+    padding: 0;
+    overflow: hidden;
+    flex-shrink: 0;
+
+    transition: 250ms all ease-in-out;
+    ${props =>
+        props.hide &&
+        css`
+            opacity: 0;
+            width: 0;
+            height: 0;
+            pointer-events: none;
+        `}
+`
+
+const Icon = styled.img`
+    cursor: pointer;
+    margin: 5px;
+    width: 20px;
+
+    ${props =>
+        !props.visible &&
+        css`
+            display: none;
+        `}
+
+    ${props => {
+        return (
+            props.drag &&
+            css`
+                cursor: grab;
+                user-select: none;
+
+                &:active {
+                    cursor: grabbing;
+                }
+            `
+        )
+    }}
+
+    ${props => {
+        return (
+            props.isOnly &&
+            css`
+                cursor: not-allowed;
+                user-select: none;
+                opacity: 0.5;
+                &:active {
+                    cursor: not-allowed;
+                }
+            `
+        )
+    }}
+`
+
+const DragHandle = ({ connectDragSource, ...props }) => {
+    return connectDragSource(
+        <span style={{ height: 30 }}>
+            <Icon src={dragIcon} drag {...props} visible onClick={() => {}} />,
+        </span>,
+    )
+}
+
+const Controls = ({
+    sectionId,
+    store,
+    index,
+    dispatch,
+    visible,
+    sectionTitle,
+    connectDragSource,
+}) => {
+    function handleOrderChange(down) {
+        dispatch({
+            type: "SWAP_SECTIONS",
+            payload: [index, down === true ? index + 1 : index - 1],
+        })
+    }
+
+    async function confirmDelete() {
+        dispatch({
+            type: "PREPARE_DELETE_SECTION",
+            payload: sectionId,
+        })
+
+        setTimeout(() => {
+            dispatch({
+                type: "DELETE_SECTION",
+                payload: sectionId,
+            })
+        }, 250)
+
+        await api.delete(`/editor/sections/${sectionId}`)
+    }
+
+    const isOnly = store.lesson.sections.length === 1
+
+    return (
+        <StyledControls
+            column
+            alignStart
+            hide={!store.editing || !store.sectionOverviewExpanded}>
+            <DragHandle connectDragSource={connectDragSource} isOnly={isOnly} />
+            <Icon
+                src={visible ? previewIcon : noPreviewIcon}
+                visible
+                onClick={() => {
+                    dispatch({ type: "SECTION_VISIBILITY", payload: sectionId })
+                }}
+            />
+            <DeleteModal
+                sectionTitle={sectionTitle || `Abschnitt ${index + 1}`}
+                confirmDelete={confirmDelete}
+                renderIcon={openModal => {
+                    return (
+                        <Icon
+                            src={trashIcon}
+                            isOnly={isOnly}
+                            visible
+                            onClick={e => !isOnly && openModal(e)}
+                        />
+                    )
+                }}
+            />
+        </StyledControls>
+    )
+}
+
+export default Controls

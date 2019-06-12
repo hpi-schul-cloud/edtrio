@@ -1,34 +1,42 @@
 import React, { useReducer } from "react"
+import qs from "qs"
+
+const q = qs.parse(window.location.search, { ignoreQueryPrefix: true })
 
 export const initialState = {
     loading: true,
     error: "",
     lesson: {},
-    editing: true,
+    course: {},
+    studentView: !!q.student_view,
+    editing: q.student_view ? false : true,
+    activeSectionId: "",
     bootstrapFinished: false,
     saveStatus: "",
-    showSectionOverview: false,
-    isFullScreen: false,
+    sectionOverviewExpanded: false,
 }
 function reducer(state, { type, payload }) {
     switch (type) {
         case "SET_EDITING":
+            if (state.studentView) return state
             return {
                 ...state,
                 editing: payload,
             }
 
-        case "FULL_SCREEN": {
-            return { ...state, isFullScreen: payload }
-        }
+        case "SET_COURSE":
+            return {
+                ...state,
+                course: payload,
+            }
 
         case "TOGGLE_SECTION_OVERVIEW":
             return {
                 ...state,
-                showSectionOverview:
+                sectionOverviewExpanded:
                     payload !== undefined
                         ? payload
-                        : !state.showSectionOverview,
+                        : !state.sectionOverviewExpanded,
             }
 
         case "BOOTSTRAP":
@@ -49,6 +57,7 @@ function reducer(state, { type, payload }) {
                         return sectionData
                     }),
                 },
+                activeSectionId: payload.sections[0].id,
             }
 
             return newState
@@ -57,6 +66,13 @@ function reducer(state, { type, payload }) {
             return {
                 ...state,
                 bootstrapFinished: true,
+                saveStatus: "",
+            }
+
+        case "SET_ACTIVE_SECTION":
+            return {
+                ...state,
+                activeSectionId: payload.id,
                 saveStatus: "",
             }
 
@@ -116,6 +132,7 @@ function reducer(state, { type, payload }) {
 
             return {
                 ...state,
+                activeSectionId: payload.tempId,
                 lesson: {
                     ...state.lesson,
                     sections: newSections,
@@ -125,6 +142,10 @@ function reducer(state, { type, payload }) {
         case "REPLACE_ADDED_SECTION_ID": {
             return {
                 ...state,
+                activeSectionId:
+                    state.activeSectionId === payload.tempId
+                        ? payload.backendId
+                        : state.activeSectionId,
                 lesson: {
                     ...state.lesson,
                     sections: state.lesson.sections.map(section => {
@@ -153,8 +174,19 @@ function reducer(state, { type, payload }) {
             }
 
         case "PREPARE_DELETE_SECTION":
+            let activeSectionId = state.activeSectionId
+            if (activeSectionId === payload) {
+                const deleteIndex = state.lesson.sections.findIndex(
+                    el => el.id === payload,
+                )
+                const newIndex =
+                    deleteIndex === 0 ? deleteIndex + 1 : deleteIndex - 1
+                activeSectionId = state.lesson.sections[newIndex].id
+            }
+
             return {
                 ...state,
+                activeSectionId,
                 lesson: {
                     ...state.lesson,
                     sections: state.lesson.sections.map(section => {
@@ -201,7 +233,7 @@ function reducer(state, { type, payload }) {
                         section.changed.add("docValue")
                         return {
                             ...section,
-                            collectDocValue: payload.collectDocValue,
+                            docValue: payload.docValue,
                         }
                     }),
                 },

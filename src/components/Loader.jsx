@@ -1,7 +1,7 @@
 import React, { useContext } from "react"
 import styled, { keyframes } from "styled-components"
 
-import { ThemeContext, theme as defaultTheme } from "~/Contexts/Theme"
+import theme from "~/theme"
 
 const Bounce = keyframes`
   0%, 80%, 100% { 
@@ -32,10 +32,7 @@ const Dot = styled.span`
 `
 
 const Loader = ({ size = 10, ...props }) => {
-    const context = useContext(ThemeContext)
-    const theme = context && context.theme ? context.theme : defaultTheme
-
-    const color = props.white ? "#fff" : theme.colors.darkRed
+    const color = props.white ? theme.colorWhite : theme.primaryColor
 
     return (
         <StyledDotsLoader color={color} {...props}>

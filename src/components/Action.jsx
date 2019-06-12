@@ -1,7 +1,7 @@
 import React, { useContext } from "react"
 import styled, { css } from "styled-components"
 
-import { ThemeContext, theme as defaultTheme } from "~/Contexts/Theme"
+import theme from "~/theme"
 
 const baseStyles = css`
     font-size: ${props => {
@@ -9,18 +9,14 @@ const baseStyles = css`
         return "16px"
     }};
 
-    color: ${props => {
-        return props.theme.colors.red
-    }};
+    color: ${theme.primaryColor};
 
     transition: all 100ms ease-in-out;
     cursor: pointer;
     text-decoration: none;
 
     &:hover {
-        color: ${props => {
-            return props.theme.colors.darkRed
-        }};
+        color: ${theme.tintedPrimaryColor};
         text-decoration: underline;
     }
 `
@@ -54,10 +50,16 @@ const StyledClickable = styled.span`
  * }
  */
 
-const Action = ({ clickable, a, block, to, children, style, ...props }) => {
-    const context = useContext(ThemeContext)
-    const theme = context && context.theme ? context.theme : defaultTheme
-
+const Action = ({
+    clickable,
+    a,
+    block,
+    to,
+    children,
+    style,
+    target,
+    ...props
+}) => {
     if (clickable) {
         return (
             <StyledClickable
@@ -73,7 +75,7 @@ const Action = ({ clickable, a, block, to, children, style, ...props }) => {
             theme={theme}
             style={{ display: block ? "block" : "inline", ...style }}
             href={to}
-            target="_blank">
+            target={target || "_blank"}>
             <StyledContent {...props} theme={theme}>
                 {children}
             </StyledContent>

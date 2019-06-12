@@ -13,6 +13,12 @@ const GS = createGlobalStyle`
 		font-size: 16px;
 		overflow-x: hidden;
 		background-color: #F8F8F8;
+		min-height: 100vh;
+		padding: 0;
+	}
+	
+	body {
+		padding-top: 75px;
 	}
 `
 
