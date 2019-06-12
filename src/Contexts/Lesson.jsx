@@ -14,6 +14,7 @@ export const initialState = {
     bootstrapFinished: false,
     saveStatus: "",
     sectionOverviewExpanded: false,
+    showSectionSettings: false,
 }
 function reducer(state, { type, payload }) {
     switch (type) {
@@ -37,6 +38,15 @@ function reducer(state, { type, payload }) {
                     payload !== undefined
                         ? payload
                         : !state.sectionOverviewExpanded,
+            }
+
+        case "TOGGLE_SECTION_SETTINGS":
+            return {
+                ...state,
+                showSectionSettings:
+                    payload !== undefined
+                        ? payload
+                        : !state.showSectionSettings,
             }
 
         case "BOOTSTRAP":
@@ -224,6 +234,7 @@ function reducer(state, { type, payload }) {
 
         case "SECTION_DOCVALUE_CHANGE":
             if (!state.editing) return state
+            console.log(" payload.docValue :", payload.docValue)
             return {
                 ...state,
                 lesson: {
@@ -234,6 +245,36 @@ function reducer(state, { type, payload }) {
                         return {
                             ...section,
                             docValue: payload.docValue,
+                        }
+                    }),
+                },
+            }
+
+        case "SECTION_SAVE_DOCVALUE":
+            return {
+                ...state,
+                lesson: {
+                    ...state.lesson,
+                    sections: state.lesson.sections.map(section => {
+                        if (section.id !== payload) return section
+                        return {
+                            ...section,
+                            savedDocValue: section.docValue,
+                        }
+                    }),
+                },
+            }
+
+        case "SECTION_SAVE_DOCVALUE_FAILED":
+            return {
+                ...state,
+                lesson: {
+                    ...state.lesson,
+                    sections: state.lesson.sections.map(section => {
+                        if (section.id !== payload.id) return section
+                        return {
+                            ...section,
+                            savedDocValue: payload.lastSavedDocValue,
                         }
                     }),
                 },

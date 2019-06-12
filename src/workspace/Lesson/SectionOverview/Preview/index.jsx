@@ -16,29 +16,36 @@ const OuterMost = styled(Flex)`
 `
 
 const Outer = styled.div`
-    padding: 3px;
-    border: 3px solid
-        ${props => (props.active ? theme.primaryColor : "transparent")};
+    /* padding: 3px; */
+    border: 10px solid
+        ${props => (props.active ? "rgba(163, 163, 163, 1.00)" : "transparent")};
     border-radius: 3px;
-    background: transparent;
+    background: ${props =>
+        props.expanded ? "rgba(163, 163, 163, 1)" : "transparent"};
     margin-bottom: 25px;
     width: ${props => {
         return props.expanded && props.editing ? "calc(100% - 30px)" : "100%"
     }};
-
+    ${props =>
+        !props.active &&
+        css`
+            border-color: transparent;
+            background: transparent;
+        `}
     ${props =>
         !props.expanded &&
         css`
             width: 30px;
             height: 30px;
             border-radius: 15px;
+            border-color: transparent;
         `}
 `
 
 const Wrapper = styled.div`
     overflow: hidden;
     cursor: pointer;
-    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.4);
     transition: 250ms all ease-in-out;
     position: relative;
 
@@ -49,18 +56,36 @@ const Wrapper = styled.div`
                   height: 250px;
                   border-radius: 3px;
                   background-color: #fff;
+                  border: 3px solid rgba(68, 68, 68, 1);
+                  ${props =>
+                      !props.active &&
+                      css`
+                          border-color: #fff;
+                      `}
               `
             : css`
-                  border: 3px solid ${props => theme.primaryColor};
-                  background-color: ${props =>
-                      props.isDone ? theme.primaryColor : "#fff"};
+                  border: 3px solid transparent;
+                  background-color: rgba(170, 170, 170, 1);
                   width: 18px;
                   height: 18px;
                   border-radius: 9px;
+                  box-shadow: none !important;
+                  transform: scale(0.7);
+                  transform-origin: center center;
+
+                  ${props =>
+                      props.active &&
+                      css`
+                          transform: scale(1.1);
+                      `}
+
+                  &:hover {
+                      transform: scale(1.1);
+                  }
               `}
 
     &:hover {
-        box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.3);
+        box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.6);
     }
 
     ${({ visible }) => {
@@ -125,6 +150,7 @@ const Preview = React.forwardRef(
                     expanded={expanded}
                     editing={store.editing}>
                     <Wrapper
+                        active={store.activeSectionId === section.id}
                         visible={section.visible}
                         hidden={!section.visible && !store.editing}
                         expanded={expanded}

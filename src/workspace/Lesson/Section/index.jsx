@@ -19,12 +19,21 @@ const StyledSection = styled(Flex)`
             transform: translateX(500px);
             opacity: 0;
         `}
+    ${props =>
+        props.sectionOverviewExpanded
+            ? css`
+                  margin-left: 285px;
+              `
+            : css`
+                  margin-left: 55px;
+              `}
 `
 
 const Wrapper = styled.div`
     flex-shrink: 1;
     flex-grow: 1;
-    width: 850px;
+    max-width: 850px;
+    width: 100%;
 
     filter: ${props => !props.visible && "blur(2px)"};
     /* box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); */
@@ -74,6 +83,7 @@ const Section = ({ store, dispatch }) => {
             column
             delete={section.delete}
             alignCenter
+            sectionOverviewExpanded={store.sectionOverviewExpanded}
             data-section={index}
             className="lesson-section"
             ref={sectionRef}>

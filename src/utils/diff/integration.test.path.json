@@ -1,0 +1,55 @@
+{
+    "$set": {
+        "state.0.state.document.nodes.0.nodes.0.leaves.0.text": ":)",
+        "state.0.state.document.nodes.1": {
+            "object": "block",
+            "type": "paragraph",
+            "data": {},
+            "nodes": [
+                {
+                    "object": "text",
+                    "leaves": [
+                        {
+                            "object": "leaf",
+                            "text": "Yes!",
+                            "marks": []
+                        }
+                    ]
+                }
+            ]
+        },
+        "state.1": {
+            "plugin": "text",
+            "state": {
+                "object": "value",
+                "document": {
+                    "object": "document",
+                    "data": {},
+                    "nodes": [
+                        {
+                            "object": "block",
+                            "type": "paragraph",
+                            "data": {},
+                            "nodes": [
+                                {
+                                    "object": "text",
+                                    "leaves": [
+                                        {
+                                            "object": "leaf",
+                                            "text": "You did it!",
+                                            "marks": []
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "$pull": {
+        "state.0.state.document.nodes.0.nodes.0.leaves.1": 1
+    },
+    "$unset": {}
+}
