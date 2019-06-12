@@ -500,6 +500,7 @@ test("mongo diff", async t => {
             "country.name": "East Germany",
             "country.year": 1949,
             "country.states.Brandenburg.cities.0": "Potsdam",
+            "country.states.Brandenburg.cities.1": null,
             "country.states.Brandenburg.population": 2500000,
             "country.states.Saxony": {
                 cities: ["Dresden"],
@@ -507,7 +508,7 @@ test("mongo diff", async t => {
             },
         },
         $pull: {
-            "country.states.Brandenburg.cities": "Stettin",
+            "country.states.Brandenburg.cities": null,
         },
         $unset: {
             "country.states.Pommern": "",
