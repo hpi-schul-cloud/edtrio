@@ -6,6 +6,7 @@
     "homepage": "http://schul-cloud.github.io/edtrio",
     "scripts": {
         "dev": "parcel src/index.html -d dist/dev --open",
+        "dev:client": "parcel src/index.js -d dist/dev",
         "storybook": "start-storybook -p 9001 -c .storybook",
         "build": "node build/index.js && parcel build src/index.js",
         "build:standalone": "parcel build src/index.html",
@@ -19,6 +20,7 @@
         "@edtr-io/plugin-anchor": "^0.6.0",
         "@edtr-io/plugin-blockquote": "^0.6.0",
         "@edtr-io/plugin-equations": "^0.6.0",
+        "@edtr-io/plugin-files": "^0.6.0",
         "@edtr-io/plugin-geogebra": "^0.6.0",
         "@edtr-io/plugin-highlight": "^0.6.0",
         "@edtr-io/plugin-input-exercise": "^0.6.0",

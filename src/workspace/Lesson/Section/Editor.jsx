@@ -13,6 +13,7 @@ import { anchorPlugin } from "@edtr-io/plugin-anchor"
 import { blockquotePlugin } from "@edtr-io/plugin-blockquote"
 // import { highlightPlugin } from "@edtr-io/plugin-highlight"
 import { spoilerPlugin } from "@edtr-io/plugin-spoiler"
+import { filesPlugin } from "@edtr-io/plugin-files"
 import { textPlugin } from "@edtr-io/plugin-text"
 import { scMcExercisePlugin } from "@edtr-io/plugin-sc-mc-exercise"
 import { equationsPlugin } from "@edtr-io/plugin-equations"
@@ -32,8 +33,9 @@ export const plugins = {
     notes: notesPlugin,
     rows: rowsPlugin,
     // anchor: anchorPlugin,
-    // blockquote: blockquotePlugin,
+    blockquote: blockquotePlugin,
     etherpad: etherpadPlugin,
+    files: filesPlugin,
     // nexboard: nexboardPlugin,
     // singleMultipleChoice: scMcExercisePlugin,
     // highlight: highlightPlugin,
@@ -47,8 +49,6 @@ export const plugins = {
 
 export const editorTheme = {
     editor: {
-        color: "#eeeeee",
-        backgroundColor: "red",
         primary: {
             background: theme.primaryColor,
         },
@@ -81,19 +81,19 @@ export default class Editor extends React.Component {
             <div
                 style={{
                     minHeight: "50px",
+                    fontSize: "16px",
                 }}>
-                <ThemeProvider theme={editorTheme}>
-                    <Edtr
-                        plugins={plugins}
-                        defaultPlugin={"text"}
-                        editable={this.props.editing}
-                        omitDragDropContext
-                        initialState={this.docValue}>
-                        <ChangeListener
-                            dispatchChange={this.props.dispatchChange}
-                        />
-                    </Edtr>
-                </ThemeProvider>
+                <Edtr
+                    theme={editorTheme}
+                    plugins={plugins}
+                    defaultPlugin={"text"}
+                    editable={this.props.editing}
+                    omitDragDropContext
+                    initialState={this.docValue}>
+                    <ChangeListener
+                        dispatchChange={this.props.dispatchChange}
+                    />
+                </Edtr>
             </div>
         )
     }

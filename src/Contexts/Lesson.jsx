@@ -234,7 +234,6 @@ function reducer(state, { type, payload }) {
 
         case "SECTION_DOCVALUE_CHANGE":
             if (!state.editing) return state
-            console.log(" payload.docValue :", payload.docValue)
             return {
                 ...state,
                 lesson: {
