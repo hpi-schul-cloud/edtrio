@@ -62,6 +62,7 @@ export const editorTheme = {
                 },
             },
         },
+        text: {},
     },
 }
 
@@ -81,7 +82,8 @@ export default class Editor extends React.Component {
             <div
                 style={{
                     minHeight: "50px",
-                    fontSize: "16px",
+                    fontSize: "20px",
+                    lineHeight: 1.42,
                 }}>
                 <Edtr
                     theme={editorTheme}

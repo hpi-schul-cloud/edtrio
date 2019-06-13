@@ -13,7 +13,7 @@ const GS = createGlobalStyle`
 		font-family: 'PT Sans', sans-serif;
 		font-size: 16px;
 		overflow-x: hidden;
-		background-color: #F8F8F8;
+		background-color: #fff;
 		min-height: 100vh;
 		padding: 0;
 	}

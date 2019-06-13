@@ -4,6 +4,7 @@ import styled, { css } from "styled-components"
 import Flex from "~/components/Flex"
 import Action from "~/components/Action"
 import Container from "~/components/Container"
+import Button from "~/components/Button"
 
 const StyledAction = styled(Action)`
     ${props =>
@@ -33,7 +34,7 @@ const Controls = ({ dispatch, prevId, nextId }) => {
                                 payload: { id: prevId },
                             })
                     }}>
-                    Vorheriger Abschnitt
+                    <Button small>Vorheriger Abschnitt</Button>
                 </StyledAction>
                 <StyledAction
                     clickable
@@ -45,7 +46,7 @@ const Controls = ({ dispatch, prevId, nextId }) => {
                                 payload: { id: nextId },
                             })
                     }}>
-                    Nächster Abschnitt
+                    <Button small>Nächster Abschnitt</Button>
                 </StyledAction>
             </Flex>
         </Container>

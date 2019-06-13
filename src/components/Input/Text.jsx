@@ -11,6 +11,8 @@ const StyledTextInput = styled.input`
     outline: none;
     width: ${props => props.full && "100%"};
     max-width: 100%;
+    -webkit-appearance: none;
+    border-radius: 0;
 
     margin-bottom: ${props => !props.noMargin && props.size / 1.6}px;
 

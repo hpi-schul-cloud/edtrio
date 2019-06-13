@@ -11,13 +11,14 @@ import SidebarControls from "./SidebarControls"
 const Wrapper = styled.div`
     left: 0;
     position: fixed;
-    top: 62px;
+    bottom: 0;
     width: ${props => (props.expanded ? 275 : 50)}px;
     height: calc(100vh - 62px);
     overflow: hidden;
     transition: 250ms all ease-in-out;
     background-color: rgba(221, 221, 221, 1);
     padding-bottom: 100px;
+    padding-top: 20px;
     z-index: 100;
     box-shadow: inset -3px 0px 6px rgba(0, 0, 0, 0.1),
         inset -3px 0px 6px rgba(0, 0, 0, 0.18);
@@ -71,8 +72,8 @@ function useResizeListener(store, dispatch) {
             dispatch({ type: "TOGGLE_SECTION_OVERVIEW", payload: true })
         }
 
-        window.addEventListener("resize", resizeListener)
-        return () => window.removeEventListener("resize", resizeListener)
+        // window.addEventListener("resize", resizeListener)
+        // return () => window.removeEventListener("resize", resizeListener)
     }, [store.sectionOverviewExpanded])
 }
 

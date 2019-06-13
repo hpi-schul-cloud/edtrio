@@ -29,8 +29,8 @@ function useResizeListener(visible, setVisible, store) {
             setVisible(true)
         }
 
-        window.addEventListener("resize", resizeListener)
-        return () => window.removeEventListener("resize", resizeListener)
+        // window.addEventListener("resize", resizeListener)
+        // return () => window.removeEventListener("resize", resizeListener)
     }, [visible])
 }
 
