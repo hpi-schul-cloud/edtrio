@@ -7,45 +7,10 @@ import {
     StateType,
 } from "@edtr-io/core"
 import { CustomTheme, ThemeProvider } from "@edtr-io/ui"
-import { rowsPlugin } from "@edtr-io/plugin-rows"
-// import { rowsPlugin } from "~/plugins/rows"
-import { anchorPlugin } from "@edtr-io/plugin-anchor"
-import { blockquotePlugin } from "@edtr-io/plugin-blockquote"
-// import { highlightPlugin } from "@edtr-io/plugin-highlight"
-import { spoilerPlugin } from "@edtr-io/plugin-spoiler"
-import { filesPlugin } from "@edtr-io/plugin-files"
-import { textPlugin } from "@edtr-io/plugin-text"
-import { scMcExercisePlugin } from "@edtr-io/plugin-sc-mc-exercise"
-import { equationsPlugin } from "@edtr-io/plugin-equations"
-import { geogebraPlugin } from "@edtr-io/plugin-geogebra"
-import { videoPlugin } from "@edtr-io/plugin-video"
-import { inputExercisePlugin } from "@edtr-io/plugin-input-exercise"
-// import { h5pPlugin } from "@edtr-io/plugin-h5p"
-
-import nexboardPlugin from "~/plugins/nexboard"
-import etherpadPlugin from "~/plugins/etherpad"
-import notesPlugin from "~/plugins/notes"
 
 import theme from "~/theme"
-
-export const plugins = {
-    text: textPlugin,
-    notes: notesPlugin,
-    rows: rowsPlugin,
-    // anchor: anchorPlugin,
-    blockquote: blockquotePlugin,
-    etherpad: etherpadPlugin,
-    files: filesPlugin,
-    // nexboard: nexboardPlugin,
-    // singleMultipleChoice: scMcExercisePlugin,
-    // highlight: highlightPlugin,
-    spoiler: spoilerPlugin,
-    equations: equationsPlugin,
-    geogebra: geogebraPlugin,
-    inputExercise: inputExercisePlugin,
-    video: videoPlugin,
-    // h5p: h5pPlugin,
-}
+import plugins from "./plugins"
+export { default as plugins } from "./plugins"
 
 export const editorTheme = {
     editor: {
