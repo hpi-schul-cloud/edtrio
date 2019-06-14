@@ -9,6 +9,10 @@
 </p>
 <br/>
 
+## Demo
+
+You can find a live demo at [https://schul-cloud-edtr.web.app/](https://schul-cloud-edtr.web.app)
+
 ## Getting started
 
 ```shell
