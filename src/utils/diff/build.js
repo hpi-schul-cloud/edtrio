@@ -14,11 +14,11 @@ export function buildDiff(base, update, depth = 0) {
     for (let key of baseKeys) {
         if (!update.hasOwnProperty(key)) {
             // set to null if the new doc Value no longer has that key
-            if (Array.isArray(base)) {
+            if (isArrayLike(base)) {
                 if (Array.isArray(diff["x-pull"])) {
-                    diff["x-pull"].push([base[key]])
+                    diff["x-pull"].push(key)
                 } else {
-                    diff["x-pull"] = [base[key]]
+                    diff["x-pull"] = [key]
                 }
             } else diff[key] = null
         }
@@ -67,9 +67,12 @@ export function diffToMongo(diff, path = "") {
             const diffValue = diff[key]
             const prefix = path.length ? "." : ""
             if (key === "x-pull") {
-                for (const pullValue of diffValue) {
-                    pullObj[path] = pullValue
+                for (const pullIndex of diffValue) {
+                    // e.g. diffValue would be ["1", "5"]
+                    setObj[`${path}.${pullIndex}`] = null
                 }
+
+                pullObj[path] = null
             } else if (
                 isObject(diffValue) &&
                 diffValue.hasOwnProperty("x-new")

@@ -9,7 +9,9 @@ export function arrayToObject(arr) {
 }
 
 export function isArrayLike(obj) {
-    return !Object.keys(obj).find((el, i) => isNaN(parseInt(el)))
+    return !Object.keys(obj).find((el, i) => {
+        return isNaN(parseInt(el)) && el !== "x-pull"
+    })
 }
 
 export function isObject(o) {

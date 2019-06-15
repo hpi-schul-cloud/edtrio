@@ -36,3 +36,8 @@ test("appearingly array like, but has different keys as well", t => {
     const obj = { "0": 1, "1": 3, "2": 4, "3": 5, b: 6 }
     t.false(isArrayLike(obj))
 })
+
+test("array like that has values pulled", t => {
+    const obj = { "1": -1, "x-pull": ["0", "3"] }
+    t.true(isArrayLike(obj))
+})

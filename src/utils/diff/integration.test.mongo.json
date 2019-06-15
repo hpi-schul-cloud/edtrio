@@ -1,6 +1,7 @@
 {
     "$set": {
         "state.0.state.document.nodes.0.nodes.0.leaves.0.text": ":)",
+        "state.0.state.document.nodes.0.nodes.0.leaves.1": null,
         "state.0.state.document.nodes.1": {
             "object": "block",
             "type": "paragraph",
@@ -49,7 +50,6 @@
         }
     },
     "$pull": {
-        "state.0.state.document.nodes.0.nodes.0.leaves.1": 1
-    },
-    "$unset": {}
+        "state.0.state.document.nodes.0.nodes.0.leaves": null
+    }
 }

@@ -9,6 +9,12 @@ export function mergeDiff(base, diff, depth = 0) {
 
     const diffKeys = Object.keys(diff)
 
+    let xPull = []
+    if (diff.hasOwnProperty("x-pull")) {
+        xPull = diff["x-pull"]
+        delete diff["x-pull"]
+    }
+
     for (let key of diffKeys) {
         const baseValue = base[key]
         const diffValue = diff[key]
@@ -35,5 +41,8 @@ export function mergeDiff(base, diff, depth = 0) {
             } else base[key] = diffValue
         }
     }
-    return Array.isArray(base) ? base.filter(el => el !== null) : base
+
+    return Array.isArray(base)
+        ? base.filter((el, index) => !xPull.includes(index.toString()))
+        : base
 }

@@ -339,7 +339,7 @@ test("change array values with different sizes", t => {
     t.deepEqual(diff, {
         arr: {
             "1": "servus",
-            "2": null,
+            "x-pull": ["2"],
         },
     })
 })
@@ -405,7 +405,7 @@ test("fully nested structures", t => {
     const baseDocValue = {
         city: {
             name: "Berlin",
-            disctricts: ["Kreuzberg", "Neukölln", "more"],
+            districts: ["Kreuzberg", "Neukölln", "more"],
         },
         country: {
             name: "Germany",
@@ -427,7 +427,7 @@ test("fully nested structures", t => {
     const newDocValue = {
         city: {
             name: "Berlin",
-            disctricts: ["Friedrichshain", "Neukölln", "more"],
+            districts: ["Friedrichshain", "Neukölln", "more"],
         },
         country: {
             name: "East Germany",
@@ -449,14 +449,14 @@ test("fully nested structures", t => {
 
     t.deepEqual(diff, {
         city: {
-            disctricts: { "0": "Friedrichshain" },
+            districts: { "0": "Friedrichshain" },
         },
         country: {
             name: "East Germany",
             year: 1949,
             states: {
                 Brandenburg: {
-                    cities: { "0": "Potsdam", "1": null },
+                    cities: { "0": "Potsdam", "x-pull": ["1"] },
                     population: 2500000,
                 },
                 Pommern: null,
@@ -480,7 +480,7 @@ test("mongo diff", async t => {
             year: 1949,
             states: {
                 Brandenburg: {
-                    cities: { "0": "Potsdam", "x-pull": ["Stettin"] },
+                    cities: { "0": "Potsdam", "x-pull": ["1"] },
                     population: 2500000,
                 },
                 Pommern: null,
@@ -519,7 +519,7 @@ test("mongo diff", async t => {
         _id: 12,
         city: {
             name: "Berlin",
-            disctricts: ["Kreuzberg", "Neukölln", "more"],
+            districts: ["Kreuzberg", "Neukölln", "more"],
         },
         country: {
             name: "Germany",
@@ -538,5 +538,51 @@ test("mongo diff", async t => {
         },
     })
 
-    await t.context.db.findOneAndUpdate({ _id: 12 }, mongoDiff)
+    await t.context.db.findOneAndUpdate(
+        { _id: 12 },
+        { $set: mongoDiff.$set, $unset: mongoDiff.$unset },
+    )
+    const updated = await t.context.db.findOneAndUpdate(
+        { _id: 12 },
+        { $pull: mongoDiff.$pull },
+        { returnOriginal: false },
+    )
+
+    t.deepEqual(updated.value, {
+        _id: 12,
+        city: {
+            name: "Berlin",
+            districts: ["Friedrichshain", "Neukölln", "more"],
+        },
+        country: {
+            name: "East Germany",
+            year: 1949,
+            states: {
+                Saxony: {
+                    cities: ["Dresden"],
+                    population: 4500000,
+                },
+                Brandenburg: {
+                    cities: ["Potsdam"],
+                    population: 2500000,
+                },
+            },
+        },
+    })
+})
+
+test("allow mongo diff to prepend path", async t => {
+    const diff = {
+        city: {
+            districts: { "0": "Friedrichshain" },
+        },
+    }
+
+    const mongoDiff = diffToMongo(diff, "some.path")
+
+    t.deepEqual(mongoDiff, {
+        $set: {
+            "some.path.city.districts.0": "Friedrichshain",
+        },
+    })
 })

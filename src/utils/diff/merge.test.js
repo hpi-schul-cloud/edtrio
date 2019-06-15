@@ -89,11 +89,20 @@ test("update array", t => {
 
 test("remove array elements", t => {
     const base = { a: [1, 2, 3] }
-    const diff = { a: { "2": null } }
+    const diff = { a: { "x-pull": ["2"] } }
 
     const updated = mergeDiff(base, diff)
 
     t.deepEqual(updated, { a: [1, 2] })
+})
+
+test("remove array elements that are not at the end", t => {
+    const base = { a: [1, 2, 3, 4, 5] }
+    const diff = { a: { "x-pull": ["0", "3"], "1": -1 } }
+
+    const updated = mergeDiff(base, diff)
+
+    t.deepEqual(updated, { a: [-1, 3, 5] })
 })
 
 test("change array to object", t => {
