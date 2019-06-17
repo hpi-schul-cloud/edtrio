@@ -11,7 +11,6 @@ import { inputExercisePlugin } from "@edtr-io/plugin-input-exercise"
 import { createFilePlugin, parseFileType } from "@edtr-io/plugin-files"
 import { createImagePlugin } from "@edtr-io/plugin-image"
 // import { highlightPlugin } from "@edtr-io/plugin-highlight"
-// import { h5pPlugin } from "@edtr-io/plugin-h5p"
 
 import nexboardPlugin from "~/plugins/nexboard"
 import etherpadPlugin from "~/plugins/etherpad"
@@ -96,7 +95,6 @@ const plugins = {
     // nexboard: nexboardPlugin,
     // singleMultipleChoice: scMcExercisePlugin,
     // highlight: highlightPlugin,
-    // h5p: h5pPlugin,
 }
 
 export default plugins

@@ -121,7 +121,6 @@ const EditorPreview = ({
                             wrapperRef.current.offsetTop}px)`
                       : "",
               }
-
     return (
         <Outer
             ref={previewRef}

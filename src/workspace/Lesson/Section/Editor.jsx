@@ -1,11 +1,5 @@
 import React, { useContext, useEffect } from "react"
-import {
-    createDocument,
-    Editor as Edtr,
-    EditorContext,
-    serializeDocument,
-    StateType,
-} from "@edtr-io/core"
+import * as core from "@edtr-io/core"
 import { CustomTheme, ThemeProvider } from "@edtr-io/ui"
 
 import theme from "~/theme"
@@ -50,7 +44,7 @@ export default class Editor extends React.Component {
                     fontSize: "20px",
                     lineHeight: 1.42,
                 }}>
-                <Edtr
+                <core.Editor
                     theme={editorTheme}
                     plugins={plugins}
                     defaultPlugin={"text"}
@@ -60,16 +54,17 @@ export default class Editor extends React.Component {
                     <ChangeListener
                         dispatchChange={this.props.dispatchChange}
                     />
-                </Edtr>
+                </core.Editor>
             </div>
         )
     }
 }
 
 function ChangeListener({ dispatchChange }) {
-    const store = useContext(EditorContext)
+    const { store, dispatch } = useContext(core.EditorContext)
+    const editorState = store.getState()
     useEffect(() => {
-        dispatchChange(serializeDocument(store.state))
-    }, [store.state])
+        dispatchChange(core.selectors.serializeRootDocument(editorState))
+    }, [editorState])
     return null
 }
