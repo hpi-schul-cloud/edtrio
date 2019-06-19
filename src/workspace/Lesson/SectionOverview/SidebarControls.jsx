@@ -22,6 +22,8 @@ const StyledIcon = styled.img`
     cursor: pointer;
     margin: 15px;
     width: 24px;
+    height: 24px;
+    flex-shrink: 0;
     transform: ${props => !props.expanded && "rotate(180deg)"};
     transition: 250ms all ease-in-out;
 `

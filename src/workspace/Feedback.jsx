@@ -54,7 +54,7 @@ const FeedbackBtn = styled(Button)`
 const Feedback = () => {
     return (
         <React.Fragment>
-            <StyledLink href="mailto:konstantin.kaiser@schul-cloud.org@hpi.de?subject=Mein%20Feedback%20zum%20neuen%20Themen-Werkzeug&amp;body=Liebes%20Schul-Cloud-Team%2C%0A%0AHier%20kommt%20mein%20Feedback%20zum%20neuen%20Editor.%0A%0ADas%20hat%20gut%20funktioniert%3A%0A%0A%0AHier%20hatte%20ich%20Probleme%3A%0A%0A%0ADiese%20Funktion%20w%C3%BCnsche%20ich%20mir%20am%20meisten%3A%0A%0A%0A">
+            <StyledLink href="mailto:feedback@schul-cloud.org?subject=Mein%20Feedback%20zum%20neuen%20Themen-Werkzeug&amp;body=Liebes%20Schul-Cloud-Team%2C%0A%0AHier%20kommt%20mein%20Feedback%20zum%20neuen%20Editor.%0A%0ADas%20hat%20gut%20funktioniert%3A%0A%0A%0AHier%20hatte%20ich%20Probleme%3A%0A%0A%0ADiese%20Funktion%20w%C3%BCnsche%20ich%20mir%20am%20meisten%3A%0A%0A%0A">
                 <FeedbackBtn>Gib uns Feedback!</FeedbackBtn>
             </StyledLink>
         </React.Fragment>

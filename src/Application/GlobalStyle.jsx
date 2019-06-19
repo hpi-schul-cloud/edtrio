@@ -23,12 +23,12 @@ const GS = createGlobalStyle`
 	}
 
 	blockquote {
-		margin: 0;
+		margin: 0 0 0 24px;
 		padding-left: 16px;
 		border-left: 4px solid rgba(217, 217, 217, 1.00);
-		color: #000;
+		color: #505050;
 		font-style: italic;
-		font-weight: bold;
+		font-weight: 300;
 	}
 `
 

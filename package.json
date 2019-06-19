@@ -11,6 +11,7 @@
         "build": "node build/index.js && parcel build src/index.js",
         "build:standalone": "parcel build src/index.html",
         "build:storybook": "build-storybook -c .storybook -o dist/storybook",
+        "dist:demo": "rm -rf dist && npm run build:standalone && npm run build:storybook && firebase deploy",
         "test": "ava --verbose",
         "test:watch": "ava --watch --verbose"
     },
