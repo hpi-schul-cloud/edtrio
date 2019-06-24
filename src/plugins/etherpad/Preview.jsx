@@ -8,7 +8,7 @@ const etherpadPlugin = {
                 justifyCenter
                 alignCenter
                 style={{
-                    minHeight: 400,
+                    minHeight: 800,
                     backgroundColor: "rgba(240, 240, 240)",
                 }}>
                 <h1>Etherpad</h1>

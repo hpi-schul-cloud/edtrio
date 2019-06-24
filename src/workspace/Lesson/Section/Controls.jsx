@@ -34,7 +34,7 @@ const Controls = ({ dispatch, prevId, nextId }) => {
                                 payload: { id: prevId },
                             })
                     }}>
-                    <Button small>Vorheriger Abschnitt</Button>
+                    ❮&nbsp;&nbsp;Vorheriger Abschnitt
                 </StyledAction>
                 <StyledAction
                     clickable
@@ -46,7 +46,7 @@ const Controls = ({ dispatch, prevId, nextId }) => {
                                 payload: { id: nextId },
                             })
                     }}>
-                    <Button small>Nächster Abschnitt</Button>
+                    Nächster Abschnitt&nbsp;&nbsp;❯
                 </StyledAction>
             </Flex>
         </Container>

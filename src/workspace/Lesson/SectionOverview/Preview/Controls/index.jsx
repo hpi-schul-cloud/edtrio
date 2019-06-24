@@ -32,7 +32,7 @@ const StyledControls = styled(Flex)`
 
 const Icon = styled.img`
     cursor: pointer;
-    margin: 5px;
+    margin: 18px 5px;
     width: 20px;
 
     ${props =>

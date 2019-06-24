@@ -12,11 +12,11 @@ const Wrapper = styled.div`
     left: 0;
     position: fixed;
     bottom: 0;
-    width: ${props => (props.expanded ? 275 : 50)}px;
+    width: ${props => (props.expanded ? 220 : 50)}px;
     height: calc(100vh - 62px);
     overflow: hidden;
     transition: 250ms all ease-in-out;
-    background-color: rgba(221, 221, 221, 1);
+    background-color: rgba(69, 91, 106, 0.25);
     padding-bottom: 100px;
     padding-top: 20px;
     z-index: 100;

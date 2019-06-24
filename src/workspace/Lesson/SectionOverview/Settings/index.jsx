@@ -18,7 +18,7 @@ import closeIcon from "~/assets/close-white.svg"
 import DeleteModal from "./DeleteModal"
 
 const Wrapper = styled(Flex)`
-    background-color: rgba(68, 68, 68, 1);
+    background-color: #455b6a;
     width: 100vw;
     position: fixed;
     left: 0;

@@ -18,16 +18,22 @@ const Outer = styled.div`
     border-radius: 3px;
     background: ${props =>
         props.expanded ? "rgba(163, 163, 163, 1)" : "transparent"};
-    margin-bottom: 25px;
+
+    margin: 8px 0;
     width: ${props => {
         return props.expanded && props.editing ? "calc(100% - 30px)" : "100%"
     }};
+    transition: 250ms all ease-in-out;
+
     ${props =>
-        !props.active &&
-        css`
-            border-color: transparent;
-            background: transparent;
-        `}
+        !props.active
+            ? css`
+                  border-color: transparent;
+                  background: transparent;
+              `
+            : css`
+                  margin: 24px 0;
+              `}
     ${props =>
         !props.expanded &&
         css`
@@ -51,7 +57,7 @@ const Wrapper = styled.div`
         props.expanded
             ? css`
                   padding: 15px 0;
-                  height: 250px;
+                  height: 98px;
                   border-radius: 3px;
                   background-color: #fff;
                   border: 3px solid rgba(68, 68, 68, 1);
@@ -68,17 +74,17 @@ const Wrapper = styled.div`
                   height: 18px;
                   border-radius: 9px;
                   box-shadow: none !important;
-                  transform: scale(0.7);
+                  transform: scale(0.5);
                   transform-origin: center center;
 
                   ${props =>
                       props.active &&
                       css`
-                          transform: scale(1.1);
+                          transform: scale(1);
                       `}
 
                   &:hover {
-                      transform: scale(1.1);
+                      transform: scale(1);
                   }
               `}
 

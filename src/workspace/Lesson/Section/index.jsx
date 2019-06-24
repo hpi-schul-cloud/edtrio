@@ -22,7 +22,7 @@ const StyledSection = styled(Flex)`
     ${props =>
         props.sectionOverviewExpanded
             ? css`
-                  margin-left: 285px;
+                  margin-left: 250px;
               `
             : css`
                   margin-left: 55px;

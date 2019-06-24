@@ -10,9 +10,8 @@ import { getFakeSection } from "~/utils/fake"
 import Flex from "~/components/Flex"
 
 const Wrapper = styled(Flex)`
-    width: calc(100%);
-    background-color: ${props =>
-        props.expanded ? theme.primaryColor : "transparent"};
+    width: 100%;
+    background-color: ${props => (props.expanded ? "#455B6A" : "transparent")};
     position: absolute;
     bottom: 0;
     left: 0;
@@ -64,39 +63,43 @@ async function addNewSection(store, dispatch) {
 }
 
 const AddWrapper = styled.div`
+    height: 24px;
+    background-color: #fff;
+    width: 40px;
+    height: 40px;
+    border-radius: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     ${props =>
-        props.visible &&
-        css`
-            width: 36px;
-            height: 36px;
-            border-radius: 18px;
-            background-color: ${theme.primaryColor};
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 10px;
-        `}
+        props.visible
+            ? css`
+                  margin: 10px;
+              `
+            : css`
+                  position: absolute;
+                  top: 0;
+                  left: 50%;
+                  transform: translate(-50%, -50%);
+              `}
 `
 
 const SidebarControls = ({ store, dispatch }) => {
     const expanded = store.sectionOverviewExpanded
     return (
-        <Wrapper
-            justifyBetween={store.editing}
-            justifyEnd={!store.editing}
-            expanded={expanded}>
+        <Wrapper justifyEnd column={!expanded} alignCenter expanded={expanded}>
             {store.editing && (
                 <AddWrapper visible={!expanded}>
                     <StyledIcon
                         onClick={() => {
                             addNewSection(store, dispatch)
                         }}
-                        src={require("~/assets/plus-white.svg")}
+                        style={{ width: 40, height: 40 }}
+                        src={require("~/assets/plus-red-round.svg")}
                         redRound={!expanded}
                     />
                 </AddWrapper>
             )}
-
             <StyledIcon
                 src={
                     !expanded

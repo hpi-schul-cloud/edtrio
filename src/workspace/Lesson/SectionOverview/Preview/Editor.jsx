@@ -10,7 +10,7 @@ const EditorWrapper = styled.div`
     width: 850px;
     transform-origin: left top;
     transform: ${props =>
-        props.expanded && props.editing ? "scale(0.22)" : "scale(0.235)"};
+        props.expanded && props.editing ? "scale(0.15)" : "scale(0.195)"};
     overflow: hidden;
     user-select: none;
     * {

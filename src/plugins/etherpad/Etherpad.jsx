@@ -26,7 +26,7 @@ const Etherpad = ({ focused, state }) => {
                 }`}
                 style={{
                     width: "100%",
-                    height: 400,
+                    height: 800,
                     resize: "vertical",
                     overflow: "auto",
                 }}
