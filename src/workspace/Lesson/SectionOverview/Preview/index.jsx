@@ -52,8 +52,8 @@ const Preview = React.forwardRef(
             }))
         }
 
-        return (
-            <React.Fragment>
+        const p = (
+            <div>
                 <OuterMost noWrap ref={wrapperRef} delete={section.delete}>
                     <Controls
                         connectDragSource={connectDragSource}
@@ -69,6 +69,7 @@ const Preview = React.forwardRef(
                         section={section}
                         expanded={expanded}
                         index={index}
+                        connectDragSource={connectDragSource}
                         activeSectionIndex={activeSectionIndex}
                         dispatch={dispatch}
                         wrapperRef={wrapperRef}
@@ -77,8 +78,9 @@ const Preview = React.forwardRef(
                         k={k}
                     />
                 </OuterMost>
-            </React.Fragment>
+            </div>
         )
+        return connectDragSource(p)
     },
 )
 

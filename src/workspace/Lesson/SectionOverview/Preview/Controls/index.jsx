@@ -21,13 +21,20 @@ const StyledControls = styled(Flex)`
 
     transition: 250ms all ease-in-out;
     ${props =>
-        props.hide &&
-        css`
-            opacity: 0;
-            width: 0;
-            height: 0;
-            pointer-events: none;
-        `}
+        !props.expanded
+            ? css`
+                  width: 0;
+                  opacity: 0;
+                  height: 0;
+                  pointer-events: none;
+              `
+            : !props.editing &&
+              css`
+                  opacity: 0;
+                  width: 30px;
+                  height: 0;
+                  pointer-events: none;
+              `}
 `
 
 const Icon = styled.img`
@@ -118,7 +125,8 @@ const Controls = ({
         <StyledControls
             column
             alignStart
-            hide={!store.editing || !store.sectionOverviewExpanded}>
+            editing={store.editing}
+            expanded={store.sectionOverviewExpanded}>
             <DragHandle connectDragSource={connectDragSource} isOnly={isOnly} />
             <Icon
                 src={settingsIcon}

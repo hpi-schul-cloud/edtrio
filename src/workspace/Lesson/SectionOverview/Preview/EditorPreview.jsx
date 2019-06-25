@@ -18,11 +18,11 @@ const Outer = styled.div`
     border-radius: 3px;
     background: ${props =>
         props.expanded ? "rgba(163, 163, 163, 1)" : "transparent"};
-
+    flex-shrink: 0;
     margin: 8px 0;
-    width: ${props => {
-        return props.expanded && props.editing ? "calc(100% - 30px)" : "100%"
-    }};
+    width: 155px;
+    height: 118px;
+    flex-shrink: 0;
     transition: 250ms all ease-in-out;
 
     ${props =>
@@ -52,6 +52,9 @@ const Wrapper = styled.div`
     position: relative;
     font-size: 20px;
     line-height: 1.42;
+    width: 135px;
+    height: 98px;
+    flex-shrink: 0;
 
     ${props =>
         props.expanded

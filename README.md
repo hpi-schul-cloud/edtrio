@@ -31,7 +31,7 @@ The project is set up with React.js (>16.8) and is mostly used without external 
 
 The `workspace` is the main entry point for the application. Everything else is abstracted logic, utilies, boilerplate, reusable components or state handling. In theory, the `workspace` should reproduce the route handling of the application.
 
-Currently, the route handling is done with `react-router`, but it is not clear how or if route handling is necessary in the future. Having the lesson as entry point might not require advanced route handling.
+Currently, there is no route handling needed.
 
 #### imports
 
@@ -117,7 +117,9 @@ const MyComponent = () => {
 
 ### API
 
-The api connection is done through REST with a feathers backend. The backend endpoint is the schul-cloud server. Making an API call has to be done in a react component, since async operations inside a reducer are not permitted (in case you wanted to do that in a global context). The API util can be found in 'src/utils/api'. Here are a couple example use cases:
+The api connection is done through REST with a feathers backend. The backend endpoint is the schul-cloud server. Making an API call has to be done in a react component, since async operations inside a reducer are not permitted (in case you wanted to do that in a global context). The API util can be found in 'src/utils/api'. Currently the communication with the backend is disabled. To enable it change `DISABLE_BACKEND` in `src/config.js`.
+
+Here are a couple example use cases:
 
 ```
 // 1. normal get request
@@ -148,7 +150,7 @@ api.post('/editor/sections/456', { name: 'Whatever' }, { picture: store.picture 
 )
 ```
 
-Authentication etc will be handled automatically.
+Authentication etc will be handled automatically. The token will be extracted from the localStorage (only available through the schul-clud client).
 
 ### Error handling
 
@@ -168,7 +170,7 @@ The editor used is [edtr-io](https://github.com/edtr-io/edtr-io). The API for th
 
 #### Plugins
 
-Internal plugins will lie in `src/plugins` and should be completely isolated.
+Internal plugins will lie in `src/plugins` and should be mostly isolated, although sometimes it is necessary to access the `LessonContext` inside plugins. This might also be necessary for group handling. To get an insight on how to build plugins, please refer to [edtr-io](https://github.com/edtr-io/edtr-io).
 
 #### Build
 

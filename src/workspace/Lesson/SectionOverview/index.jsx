@@ -17,8 +17,6 @@ const Wrapper = styled.div`
     overflow: hidden;
     transition: 250ms all ease-in-out;
     background-color: rgba(69, 91, 106, 0.25);
-    padding-bottom: 100px;
-    padding-top: 20px;
     z-index: 100;
     box-shadow: inset -3px 0px 6px rgba(0, 0, 0, 0.1),
         inset -3px 0px 6px rgba(0, 0, 0, 0.18);
@@ -38,11 +36,11 @@ const Previews = styled.div`
             ? "15px 30px 15px 5px"
             : !props.expanded
             ? "15px 10px"
-            : "15px"};
+            : "15px 30px 15px 0"};
     width: 100%;
     height: calc(100vh - 62px);
     overflow: auto;
-
+    padding-bottom: 100px;
     ${props =>
         !props.expanded &&
         css`

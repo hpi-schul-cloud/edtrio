@@ -9,8 +9,7 @@ import { plugins } from "~/workspace/Lesson/Section/Editor"
 const EditorWrapper = styled.div`
     width: 850px;
     transform-origin: left top;
-    transform: ${props =>
-        props.expanded && props.editing ? "scale(0.15)" : "scale(0.195)"};
+    transform: ${props => props.expanded && "scale(0.15)"};
     overflow: hidden;
     user-select: none;
     * {

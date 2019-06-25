@@ -27,7 +27,9 @@ export const editorTheme = {
                 },
             },
         },
-        text: {},
+        text: {
+            hoverColor: "#B6B6B6",
+        },
     },
 }
 
