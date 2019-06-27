@@ -6,8 +6,13 @@ import theme from "~/theme"
 const baseStyle = css`
     margin-top: 0;
     color: ${props => {
-        if (props.primary) return theme.primaryColory
-        return theme.textColor
+        if (props.primary) return theme.colors.primary
+        if (props.secondary) return theme.colors.secondary
+        if (props.disabled) return theme.colors.disabledBackground
+        if (props.success) return theme.colors.success
+        if (props.danger) return theme.colors.danger
+        if (props.tertiary) return theme.colors.tertiary
+        return theme.colors.text
     }};
     font-family: "PT Sans Narrow", sans-serif;
     font-weight: bold;

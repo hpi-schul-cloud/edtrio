@@ -73,6 +73,11 @@ stories.add("Interactive Example", () => (
             right={boolean("right", false)}
             center={boolean("center", false)}
             primary={boolean("primary", false)}
+            secondary={boolean("secondary", false)}
+            tertiary={boolean("tertiary", false)}
+            disabled={boolean("disabled", false)}
+            success={boolean("success", false)}
+            danger={boolean("danger", false)}
             inline={boolean("inline", false)}
             noMargin={boolean("noMargin", false)}>
             Go to the Knobs Panel to change this text interactively :)

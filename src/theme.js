@@ -1,17 +1,22 @@
 export default {
-    primaryColor: "#b10438",
-    tintedPrimaryColor: "#660220",
-    darkPrimaryColor: "#5b011c",
-    secondaryColor: "#e2661d",
-    accentColor: "#f8a41b",
-    textColor: "#373a3c",
+    colors: {
+        primary: "rgb(177, 6, 58)",
+        secondary: "rgb(233, 132, 4)",
+        tertiary: "rgb(69, 91, 106)",
+        accent: "#f8a41b",
+        disabledBackground: "rgb(217, 217, 217)",
+        disabledForegorund: "rgb(158, 158, 158)",
+        success: "rgb(19, 186, 152)",
+        danger: "rgb(255, 17, 52)",
+        text: "#373a3c",
+        white: "#fff",
+
+        beige: "#e6e2e2",
+        grey: "rgba(160, 160, 160, 1)",
+        lightGrey: "rgba(0,0,0,0.1)",
+        darkerGrey: "#555555",
+        darkGrey: "#333",
+    },
 
     logoGradient: "linear-gradient(35deg, #b1063a 35%, #f6a800)",
-
-    colorBeige: "#e6e2e2",
-    colorGrey: "rgba(160, 160, 160, 1)",
-    colorLightGrey: "rgba(0,0,0,0.1)",
-    colorDarkerGrey: "#555555",
-    colorDarkGrey: "#333",
-    colorWhite: "#fff",
 }

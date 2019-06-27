@@ -32,7 +32,7 @@ const Dot = styled.span`
 `
 
 const Loader = ({ size = 10, ...props }) => {
-    const color = props.white ? theme.colorWhite : theme.primaryColor
+    const color = props.white ? theme.colors.white : theme.colors.primary
 
     return (
         <StyledDotsLoader color={color} {...props}>

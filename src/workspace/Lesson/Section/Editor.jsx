@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from "react"
+import styled from "styled-components"
 import {
     createDocument,
     Editor as Edtr,
@@ -12,18 +13,36 @@ import theme from "~/theme"
 import plugins from "./plugins"
 export { default as plugins } from "./plugins"
 
+export const EditorWrapper = styled.div`
+    min-height: 50px;
+    font-size: 20px;
+    line-height: 1.4;
+
+    @media (max-width: 991px) {
+        font-size: 18px;
+    }
+
+    @media (max-width: 768px) {
+        font-size: 18px;
+    }
+
+    @media (max-width: 575px) {
+        font-size: 16px;
+    }
+`
+
 export const editorTheme = {
     editor: {
         primary: {
-            background: theme.primaryColor,
+            background: theme.colors.primary,
         },
     },
     plugins: {
         rows: {
             menu: {
-                highlightColor: theme.primaryColor,
+                highlightColor: theme.colors.primary,
                 dropzone: {
-                    highlightColor: theme.primaryColor,
+                    highlightColor: theme.colors.primary,
                 },
             },
         },
@@ -46,12 +65,7 @@ export default class Editor extends React.Component {
 
     render() {
         return (
-            <div
-                style={{
-                    minHeight: "50px",
-                    fontSize: "20px",
-                    lineHeight: 1.42,
-                }}>
+            <EditorWrapper>
                 <Edtr
                     theme={editorTheme}
                     plugins={plugins}
@@ -63,7 +77,7 @@ export default class Editor extends React.Component {
                         dispatchChange={this.props.dispatchChange}
                     />
                 </Edtr>
-            </div>
+            </EditorWrapper>
         )
     }
 }

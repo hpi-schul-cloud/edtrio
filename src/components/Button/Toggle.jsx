@@ -41,7 +41,7 @@ const StyledToggle = styled.span`
     ${props =>
         props.active &&
         css`
-            background-color: ${theme.primaryColor};
+            background-color: ${theme.colors.primary};
             &::after {
                 left: 32px;
             }
@@ -66,7 +66,7 @@ const Caption = styled(Text)`
     ${props =>
         props.active &&
         css`
-            color: ${props => props.active && theme.primaryColor};
+            color: ${props => props.active && theme.colors.primary};
         `}
     ${props =>
         props.small &&

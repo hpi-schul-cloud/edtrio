@@ -4,7 +4,31 @@ import Container from "~/components/Container"
 import Action from "~/components/Action"
 import Text from "~/components/Text"
 
-storiesOf("Action", module)
+import { withKnobs, text, boolean, number } from "@storybook/addon-knobs"
+
+const stories = storiesOf("Action", module)
+stories.addDecorator(withKnobs)
+
+stories
+    .add("Interactive", () => (
+        <Container>
+            <Text noMargin style={{ backgroundColor: "#DDBDD5" }}>
+                Placeholder
+            </Text>
+            <Action
+                to=""
+                secondary={boolean("secondary", false)}
+                success={boolean("success", false)}
+                danger={boolean("danger", false)}
+                disabled={boolean("disabled", false)}
+                block={boolean("block", false)}
+                noMargin={boolean("noMargin", false)}
+                onClick={() => console.log("Yess!")}>
+                Interactive Action
+            </Action>
+            <Text style={{ backgroundColor: "#DDBDD5" }}>Placeholder</Text>
+        </Container>
+    ))
     .add("standard Action", () => (
         <Container>
             <Action to="">Standard Action</Action>

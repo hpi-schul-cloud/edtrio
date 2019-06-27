@@ -12,7 +12,14 @@ stories.add("Interactive", () => {
     return (
         <Container>
             <Button
+                primary={boolean("primary", false)}
                 secondary={boolean("secondary", false)}
+                success={boolean("success", false)}
+                danger={boolean("danger", false)}
+                disabled={boolean("disabled", false)}
+                outline={boolean("outline", false)}
+                small={boolean("small", false)}
+                large={boolean("large", false)}
                 block={boolean("block", false)}
                 full={boolean("full", false)}
                 noMargin={boolean("noMargin", false)}
