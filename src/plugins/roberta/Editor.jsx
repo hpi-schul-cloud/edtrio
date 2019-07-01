@@ -1,24 +1,18 @@
 import React, { useState, useEffect, useContext } from "react"
 import Roberta from "./Roberta"
-import PrimarySettings from "./PrimarySettings"
+import Settings from "./PrimarySettings"
+import { PrimarySettings } from "@edtr-io/editor-ui/"
 
-class Editor extends React.Component {
-
-    render() {
-        
-        let {PrimarySettingsWrapper} = this.props
-        return (
-            
-            <React.Fragment>
-                <Roberta {...this.props} fullscreen={false}></Roberta>
-                <PrimarySettingsWrapper key="robertaEditor">
-                    <PrimarySettings {...this.props} />
-                </PrimarySettingsWrapper>
-            </React.Fragment>
-
-        )
-
-    }
+function Editor(props) {
+    let { PrimarySettingsWrapper } = props
+    return (
+        <React.Fragment>
+            <Roberta {...props} />
+            <PrimarySettings key="robertaEditor">
+                <Settings {...props} />
+            </PrimarySettings>
+        </React.Fragment>
+    )
 }
 
 export default Editor

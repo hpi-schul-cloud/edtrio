@@ -11,7 +11,11 @@ const robertaPlugin = {
                     minHeight: 400,
                     backgroundColor: "rgba(240, 240, 240)",
                 }}>
-                <img src={require("./assets/logo.svg")} style={{ height: 50 }} alt="" />
+                <img
+                    src={require("./assets/logo.svg")}
+                    style={{ height: 50 }}
+                    alt=""
+                />
             </Flex>
         )
     },

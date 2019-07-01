@@ -40,7 +40,7 @@ export default class Editor extends React.Component {
                         ...plugins,
                         etherpad: etherpadPluginPreview,
                         nexboard: nexboardPluginPreview,
-                        roberta: robertaPluginPreview
+                        roberta: robertaPluginPreview,
                     }}
                     defaultPlugin={"text"}
                     editable={false}
