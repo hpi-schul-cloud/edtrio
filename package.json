@@ -5,8 +5,8 @@
     "main": "dist/index.js",
     "homepage": "http://schul-cloud.github.io/edtrio",
     "scripts": {
-        "dev": "parcel src/index.html -d dist/dev --open",
-        "dev:client": "parcel src/index.js -d dist/dev",
+        "dev": "parcel src/index.html -p 1234 -d dist/dev --open",
+        "dev:client": "parcel src/index.js -p 1234 -d dist/dev",
         "storybook": "start-storybook -p 9001 -c .storybook",
         "build": "node build/index.js && parcel build src/index.js",
         "build:standalone": "parcel build src/index.html",

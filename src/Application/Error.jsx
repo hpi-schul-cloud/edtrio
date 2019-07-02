@@ -21,6 +21,7 @@ const ErrorWrapper = styled.div`
     background-color: #ffcccc;
     padding: 7px 10px;
     position: fixed;
+    z-index: 999;
     top: 75px;
     left: 50%;
     transform: translateX(-50%);
