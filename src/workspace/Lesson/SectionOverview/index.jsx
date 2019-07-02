@@ -84,6 +84,8 @@ const SectionOverview = ({ store, dispatch }) => {
         dispatch({ type: "SWAP_SECTIONS", payload: [fromIndex, toIndex] })
     }
 
+    if (store.isTask) return null
+
     return (
         <React.Fragment>
             <Wrapper expanded={expanded} editing={store.editing}>

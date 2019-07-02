@@ -7,6 +7,8 @@ import Action from "~/components/Action"
 import Flex from "~/components/Flex"
 import Input from "~/components/Input"
 
+import TaskTitle from "./TaskTitle"
+
 const TitleInput = styled(Input)`
     font-weight: 700;
     width: 150px;
@@ -52,6 +54,8 @@ const BreadCrumbs = ({ store, dispatch }) => {
             }),
         })
     }, [store.course.name])
+
+    if (store.isTask) return <TaskTitle store={store} dispatch={dispatch} />
 
     return (
         <Flex alignCenter noWrap style={{ paddingLeft: 25 }}>

@@ -4,11 +4,17 @@ import qs from "qs"
 const q = qs.parse(window.location.search, { ignoreQueryPrefix: true })
 
 export const initialState = {
+    isTask: !!q.task,
+    studentView: !!q.student_view,
     loading: true,
     error: "",
     lesson: {},
     course: {},
-    studentView: !!q.student_view,
+    task: {
+        title: "Meine Aufgabe",
+        dueDate: null,
+        shareDate: null,
+    },
     editing: q.student_view ? false : true,
     activeSectionId: "",
     bootstrapFinished: false,
@@ -30,6 +36,13 @@ function reducer(state, { type, payload }) {
                 ...state,
                 course: payload,
             }
+
+        case "EDIT_TASK": {
+            return {
+                ...state,
+                task: { ...state.task, ...payload },
+            }
+        }
 
         case "TOGGLE_SECTION_OVERVIEW":
             return {

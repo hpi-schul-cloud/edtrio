@@ -10,6 +10,7 @@ import Container from "~/components/Container"
 
 import Editor from "./Editor"
 import Controls from "./Controls"
+import Task from "./Task"
 
 const StyledSection = styled(Flex)`
     transition: 250ms all ease-in-out;
@@ -20,7 +21,11 @@ const StyledSection = styled(Flex)`
             opacity: 0;
         `}
     ${props =>
-        props.sectionOverviewExpanded
+        props.isTask
+            ? css`
+                  margin-left: 0;
+              `
+            : props.sectionOverviewExpanded
             ? css`
                   margin-left: 250px;
               `
@@ -81,6 +86,7 @@ const Section = ({ store, dispatch }) => {
     return (
         <StyledSection
             column
+            isTask={store.isTask}
             delete={section.delete}
             alignCenter
             sectionOverviewExpanded={store.sectionOverviewExpanded}
@@ -94,6 +100,7 @@ const Section = ({ store, dispatch }) => {
                 </Warning>
             </Flex>
             <Wrapper visible={section.visible}>
+                <Task store={store} dispatch={dispatch} />
                 <Editor
                     key={section.id}
                     docValue={section.docValue}

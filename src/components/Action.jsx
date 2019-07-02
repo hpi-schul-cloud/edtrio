@@ -50,7 +50,8 @@ const baseStyles = css`
                 .rgb()
                 .string()
         }};
-        text-decoration: ${props => !props.disabled && "underline"};
+        text-decoration: ${props =>
+            !props.disabled && !props.noStyling && "underline"};
     }
 `
 
