@@ -109,8 +109,7 @@ const EditorPreview = ({
     previewRef,
     wrapperRef,
     isDragging,
-    sourceOffset,
-    k,
+    sourceOffset
 }) => {
     const dragStyle =
         !isDragging || !isTouchDevice()
@@ -142,7 +141,8 @@ const EditorPreview = ({
                 }}>
                 {expanded && (
                     <Editor
-                        key={k}
+                        id={section.id}
+                        key={section.id}
                         expanded={expanded}
                         editing={store.editing}
                         docValue={section.docValue}

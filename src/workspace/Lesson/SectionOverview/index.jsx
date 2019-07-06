@@ -96,13 +96,8 @@ const SectionOverview = ({ store, dispatch }) => {
                             return section.visible
                         })
                         .map((section, index) => {
-                            const editorKey =
-                                section.id +
-                                "-" +
-                                Math.round(new Date().getTime() / 5000)
                             return (
                                 <Preview
-                                    k={editorKey}
                                     store={store}
                                     moveSection={moveSection}
                                     dispatch={dispatch}

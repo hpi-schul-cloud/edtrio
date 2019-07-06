@@ -43,28 +43,27 @@ export default class Editor extends React.Component {
                     minHeight: "50px",
                     fontSize: "20px",
                     lineHeight: 1.42,
+                    display: this.props.visible ? "block" : "none",
                 }}>
-                <core.Editor
+                <core.Document
+                    onChange={this.props.dispatchChange}
+                    scope={this.props.id}
                     theme={editorTheme}
                     plugins={plugins}
                     defaultPlugin={"text"}
                     editable={this.props.editing}
-                    omitDragDropContext
-                    initialState={this.docValue}>
-                    <ChangeListener
-                        dispatchChange={this.props.dispatchChange}
-                    />
-                </core.Editor>
+                    initialState={this.docValue}
+                />
             </div>
         )
     }
 }
 
-function ChangeListener({ dispatchChange }) {
-    const { store, dispatch } = useContext(core.EditorContext)
-    const editorState = store.getState()
-    useEffect(() => {
-        dispatchChange(core.selectors.serializeRootDocument(editorState))
-    }, [editorState])
-    return null
-}
+// function ChangeListener({ dispatchChange }) {
+//     const { store, dispatch } = useContext(core.EditorContext)
+//     const editorState = store.getState()
+//     useEffect(() => {
+//         dispatchChange(core.selectors.serializeRootDocument(editorState))
+//     }, [editorState])
+//     return null
+// }

@@ -1,6 +1,6 @@
+import { Document } from "@edtr-io/core"
 import React from "react"
 import styled from "styled-components"
-import { Editor as Edtr } from "@edtr-io/core"
 
 import etherpadPluginPreview from "~/plugins/etherpad/Preview"
 import nexboardPluginPreview from "~/plugins/nexboard/Preview"
@@ -34,15 +34,16 @@ export default class Editor extends React.Component {
             <EditorWrapper
                 expanded={this.props.expanded}
                 editing={this.props.editing}>
-                <Edtr
+                <Document
+                    scope={this.props.id}
                     plugins={{
                         ...plugins,
                         etherpad: etherpadPluginPreview,
                         nexboard: nexboardPluginPreview,
                     }}
                     defaultPlugin={"text"}
-                    editable={false}
                     initialState={this.docValue}
+                    mirror
                 />
             </EditorWrapper>
         )

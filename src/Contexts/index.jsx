@@ -1,3 +1,4 @@
+import { EditorProvider } from "@edtr-io/core"
 import React from "react"
 import { DragDropContextProvider } from "react-dnd"
 import HTML5Backend from "react-dnd-html5-backend"
@@ -13,7 +14,11 @@ const Contexts = ({ children }) => {
         <DragDropContextProvider
             backend={isTouchDevice() ? TouchBackend : HTML5Backend}>
             <UserContextProvider>
-                <LessonContextProvider>{children}</LessonContextProvider>
+                <LessonContextProvider>
+                    <EditorProvider omitDragDropContext>
+                        {children}
+                    </EditorProvider>
+                </LessonContextProvider>
             </UserContextProvider>
         </DragDropContextProvider>
     )

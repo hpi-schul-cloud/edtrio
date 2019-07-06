@@ -22,7 +22,6 @@ const Preview = React.forwardRef(
     (
         {
             store,
-            k,
             dispatch,
             section,
             index,
@@ -74,7 +73,6 @@ const Preview = React.forwardRef(
                         wrapperRef={wrapperRef}
                         previewRef={previewRef}
                         isDragging={isDragging}
-                        k={k}
                     />
                 </OuterMost>
             </React.Fragment>

@@ -10,6 +10,7 @@ import Container from "~/components/Container"
 
 import Editor from "./Editor"
 import Controls from "./Controls"
+import Preview from "../SectionOverview/Preview"
 
 const StyledSection = styled(Flex)`
     transition: 250ms all ease-in-out;
@@ -94,22 +95,33 @@ const Section = ({ store, dispatch }) => {
                 </Warning>
             </Flex>
             <Wrapper visible={section.visible}>
-                <Editor
-                    key={section.id}
-                    docValue={section.docValue}
-                    id={section.id}
-                    index={index}
-                    editing={store.editing}
-                    dispatchChange={docValue => {
-                        dispatch({
-                            type: "SECTION_DOCVALUE_CHANGE",
-                            payload: {
-                                sectionId: section.id,
-                                docValue,
-                            },
-                        })
-                    }}
-                />
+                {store.lesson.sections
+                    .filter(s => {
+                        return s.visible
+                    })
+                    .map((s, index) => {
+                        return (
+                            <Editor
+                                key={s.id}
+                                id={s.id}
+                                docValue={s.docValue}
+                                index={index}
+                                editing={
+                                    s.id === section.id ? store.editing : false
+                                }
+                                dispatchChange={({ getDocument }) => {
+                                    dispatch({
+                                        type: "SECTION_DOCVALUE_CHANGE",
+                                        payload: {
+                                            sectionId: s.id,
+                                            docValue: getDocument(),
+                                        },
+                                    })
+                                }}
+                                visible={s.id === section.id}
+                            />
+                        )
+                    })}
                 <Controls
                     dispatch={dispatch}
                     prevId={
