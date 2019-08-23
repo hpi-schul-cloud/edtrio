@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 
 import api from "~/utils/api"
+import { socket } from "~/utils/socket"
 
 import Action from "~/components/Action"
 import Flex from "~/components/Flex"
@@ -32,6 +33,26 @@ const Crumb = ({ to, caption }) => {
     )
 }
 
+/*
+const updateTitle = async (value) => {
+/*
+    try{
+        const message = await socket.emit(
+            'patch',
+            `course/59a3c657a2049554a93fec3a/lessons`,
+            '5d5fe33ca0182f013660a853',
+            {
+                title: value
+            }
+        )
+    } catch (err) {
+        console.log(err)
+    }
+
+}
+*/
+
+
 const BreadCrumbs = ({ store, dispatch }) => {
     const courseId = window.location.pathname.split("/")[2]
     const [crumbData, setCrumbData] = useState({
@@ -43,6 +64,28 @@ const BreadCrumbs = ({ store, dispatch }) => {
             },
         ],
     })
+
+    const updateTitle = async (value) => {
+
+        dispatch({
+            type: "LESSON_TITLE_CHANGE",
+            payload: value,
+        })
+
+        try{
+            const message = await socket.emit(
+                'patch',
+                `course/59a3c657a2049554a93fec3a/lessons`,
+                '5d5fe33ca0182f013660a853',
+                {
+                    title: value
+                }
+            )
+        } catch (err) {
+            console.log(err)
+        }
+
+    }
 
     useEffect(() => {
         setCrumbData({
@@ -64,12 +107,7 @@ const BreadCrumbs = ({ store, dispatch }) => {
                 value={store.lesson.title}
                 readOnly={!store.editing}
                 placeholder="Titel für das Thema"
-                onChange={newValue =>
-                    dispatch({
-                        type: "LESSON_TITLE_CHANGE",
-                        payload: newValue,
-                    })
-                }
+                onChange={ updateTitle }
             />
         </Flex>
     )
