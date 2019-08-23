@@ -34,13 +34,20 @@ const Lesson = props => {
     )
 
     let id = "TEST"
+    let courseId = "TEST_COURSE"
     try {
         const location = window.location.pathname
-        const topicId = location.split("/topics/")[1]
-        if (topicId && !config.DISABLE_BACKEND) id = topicId
+        const regex = /courses[\/]([a-f0-9]{24})\/topics[\/]([a-f0-9]{24})/i
+        const [, _courseId, topicId] = regex.compile(location)
+        console.log(location)
+        console.log(regex.compile(location))
+        if (topicId && courseId){
+            id = topicId
+            courseId = _courseId
+        }
     } catch (err) {}
 
-    useBootstrap(id, dispatch, dispatchUserAction)
+    useBootstrap(id, courseId, dispatch, dispatchUserAction)
     useChangeListener(store, dispatch)
     useInterval(() => saveLesson(store, dispatch), 10000)
 

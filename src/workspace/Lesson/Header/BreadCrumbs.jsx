@@ -33,28 +33,8 @@ const Crumb = ({ to, caption }) => {
     )
 }
 
-/*
-const updateTitle = async (value) => {
-/*
-    try{
-        const message = await socket.emit(
-            'patch',
-            `course/59a3c657a2049554a93fec3a/lessons`,
-            '5d5fe33ca0182f013660a853',
-            {
-                title: value
-            }
-        )
-    } catch (err) {
-        console.log(err)
-    }
-
-}
-*/
-
-
 const BreadCrumbs = ({ store, dispatch }) => {
-    const courseId = window.location.pathname.split("/")[2]
+    const { _id: lessonId, courseId } = store.lesson
     const [crumbData, setCrumbData] = useState({
         crumbs: [
             { caption: "Meine Kurse", to: "/courses" },
@@ -75,12 +55,13 @@ const BreadCrumbs = ({ store, dispatch }) => {
         try{
             const message = await socket.emit(
                 'patch',
-                `course/59a3c657a2049554a93fec3a/lessons`,
-                '5d5fe33ca0182f013660a853',
+                `course/${courseId}/lessons`,
+                lessonId,
                 {
                     title: value
                 }
             )
+            console.log(message)
         } catch (err) {
             console.log(err)
         }

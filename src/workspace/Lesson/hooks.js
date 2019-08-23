@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 
 import api from "~/utils/api"
+import socket from "~/utils/socket"
 import config from "~/config"
 import { lessonFakeData } from "~/utils/fake"
 import { setCookie } from "~/utils/cookie"
@@ -8,7 +9,7 @@ import { useInterval } from "~/utils/hooks"
 import { loadEditorData, saveEditorData } from "~/utils/cache"
 import { buildDiff } from "~/utils/diff"
 
-export function useBootstrap(id, dispatch, dispatchUserAction) {
+export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
     async function fetchData() {
         try {
             const user = await api.get("/me")
@@ -19,6 +20,9 @@ export function useBootstrap(id, dispatch, dispatchUserAction) {
 
         try {
             const cacheData = loadEditorData(id)
+            console.log(cacheData)
+            console.log(id)
+            console.log(courseId)
             let lesson
             if (
                 cacheData &&
@@ -27,7 +31,12 @@ export function useBootstrap(id, dispatch, dispatchUserAction) {
             ) {
                 lesson = cacheData.lesson
             } else {
-                lesson = await api.get(`/editor/lessons/${id}`, lessonFakeData)
+                //lesson = await api.get(`/editor/lessons/${id}`, lessonFakeData)
+                lesson = await socket.emit(
+                    'get',
+                    `course/${courseId}/lessons`,
+                    id
+                )
                 if (lesson.sections.length === 0) {
                     const section = await api.post(`/editor/sections/`, {
                         lesson: lesson._id,
