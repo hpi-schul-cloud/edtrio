@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react"
 
-import api from "~/utils/api"
-import socket from "~/utils/socket"
+import { courseApi, editorApi } from "~/utils/api"
+import { editor } from "~/utils/socket"
 import config from "~/config"
 import { lessonFakeData } from "~/utils/fake"
 import { setCookie } from "~/utils/cookie"
 import { useInterval } from "~/utils/hooks"
 import { loadEditorData, saveEditorData } from "~/utils/cache"
 import { buildDiff } from "~/utils/diff"
+import reject from "ramda/es/reject"
 
 export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
     async function fetchData() {
         try {
-            const user = await api.get("/me")
+            const user = await courseApi.get("/me")
             dispatchUserAction({ type: "BOOTSTRAP_USER", payload: user })
         } catch (err) {
             console.warn("Could not fetch user data")
@@ -20,9 +21,6 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
 
         try {
             const cacheData = loadEditorData(id)
-            console.log(cacheData)
-            console.log(id)
-            console.log(courseId)
             let lesson
             if (
                 cacheData &&
@@ -31,16 +29,18 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
             ) {
                 lesson = cacheData.lesson
             } else {
-                //lesson = await api.get(`/editor/lessons/${id}`, lessonFakeData)
-                lesson = await socket.emit(
+                //lesson = await editorApi.get(`course/${courseId}/lessons/${id}`)
+
+                lesson = await editor.emit(
                     'get',
                     `course/${courseId}/lessons`,
                     id
                 )
                 if (lesson.sections.length === 0) {
-                    const section = await api.post(`/editor/sections/`, {
+                    /*const section = await editorApi.post(`/sections/`, {
                         lesson: lesson._id,
-                    })
+                    })*/
+                    const section = { lesson: lesson._id, _id: '5d5fe33ca0482e013660a853' } //TODO: replace with result of section creaction (post)
                     lesson.sections = [section]
                 }
 
@@ -52,9 +52,9 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
                     notes: section.note,
                 }))
             }
-
             dispatch({ type: "BOOTSTRAP", payload: lesson })
         } catch (err) {
+            console.debug(err)
             dispatch({ type: "ERROR" })
             dispatch({
                 type: "BOOTSTRAP",
@@ -81,15 +81,15 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
 
     async function fetchCourse() {
         try {
-            const courseId = window.location.pathname.split("/")[2]
-            const course = await api.get(`/courses/${courseId}`)
+            //const courseId = window.location.pathname.split("/")[2]
+            const course = await courseApi.get(`/courses/${courseId}`)
             dispatch({ type: "SET_COURSE", payload: course })
         } catch (err) {}
     }
 
     useEffect(() => {
-        fetchData()
         fetchCourse()
+        fetchData()
     }, [])
 }
 
@@ -97,7 +97,6 @@ export async function saveLesson(store, dispatch, override) {
     if (!store.editing && !override) return
     dispatch({ type: "SAVE_STATUS", payload: "Sichern..." })
     const savePromises = []
-
     const lessonChanges = {}
     store.lesson.changed.forEach(key => {
         if (key === "order") {
@@ -110,16 +109,19 @@ export async function saveLesson(store, dispatch, override) {
     })
     if (store.lesson.changed.size !== 0)
         savePromises.push(
-            new Promise(async resolve => {
-                try {
-                    const lessonResult = await api.patch(
-                        `/editor/lessons/${store.lesson.id}`,
-                        lessonChanges,
+            new Promise(async (resolve, reject) => {
+                try{
+                    const { lesson: { courseId, id: lessonId } } = store
+                    const message = await editor.emit(
+                        'patch',
+                        `course/${courseId}/lessons`,
+                        lessonId,
+                        lessonChanges
                     )
                     dispatch({ type: "LESSON_SAVED" })
-                    resolve(lessonResult)
+                    resolve( message )
                 } catch (err) {
-                    resolve("error")
+                    reject(err)
                 }
             }),
         )
@@ -154,9 +156,9 @@ export async function saveLesson(store, dispatch, override) {
         }
 
         savePromises.push(
-            new Promise(async resolve => {
+            new Promise(async (resolve, reject) => {
                 try {
-                    const backendResult = await api.patch(
+                    const backendResult = await courseApi.patch(
                         `/editor/sections/${section.id}`,
                         sectionChanges,
                         null,
@@ -180,13 +182,12 @@ export async function saveLesson(store, dispatch, override) {
                             },
                         })
                     }
-                    resolve("error")
+                    reject(err)
                 }
             }),
         )
     })
 
-    const results = await Promise.all(savePromises)
     const cacheData = {
         savedToBackend: true,
         lesson: {
@@ -198,12 +199,14 @@ export async function saveLesson(store, dispatch, override) {
             })),
         },
     }
-    if (results.includes("error")) {
+
+    try{
+        await Promise.all(savePromises)
+    } catch (err) {
         cacheData.savedToBackend = false
     }
 
     saveEditorData(cacheData, store.lesson.id)
-
     dispatch({
         type: "SAVE_STATUS",
         payload: !cacheData.savedToBackend
@@ -213,9 +216,16 @@ export async function saveLesson(store, dispatch, override) {
 }
 
 export function useChangeListener(store, dispatch) {
+    const [timeout, setTimeoutState] = useState(null)
     useEffect(() => {
         if (!store.bootstrapFinished) return
         dispatch({ type: "SAVE_STATUS", payload: "Ungesicherte Änderungen" })
+
+        if(timeout) clearTimeout(timeout)
+        setTimeoutState(setTimeout(() => {
+                saveLesson(store, dispatch)
+            }, 500)
+        )
     }, [store.lesson])
 }
 

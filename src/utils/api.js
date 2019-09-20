@@ -1,6 +1,7 @@
 import axios from "axios"
 import { getCookie } from "~/utils/cookie"
 import config from "~/config"
+import { jwt } from "./jwt"
 
 // EXAMPLE:
 // 1. normal get request
@@ -30,10 +31,16 @@ import config from "~/config"
 //     }
 // )
 
-const BACKEND_URL = BACKEND_URL || ""
+
+axios.defaults.headers.common['Authorization'] = jwt
+axios.defaults.headers.common['Content-Type'] = 'application/json'
+
+const COURSE_API_URL = COURSE_API_URL || ""
+const EDITOR_API_URL = EDITOR_API_URL || ""
 
 const bodyRequest = (
     type,
+    baseURL,
     endpoint,
     body,
     files,
@@ -62,14 +69,9 @@ const bodyRequest = (
         } else {
             data = body
         }
+
         axios[type](endpoint, data, {
-            baseURL: BACKEND_URL || "http://localhost:3030", // TODO include test system? staging?
-            headers: {
-                "Content-Type": "application/json",
-                Authorization:
-                    (getCookie("jwt").startsWith("Bearer ") ? "" : "Bearer ") +
-                    getCookie("jwt"),
-            },
+            baseURL, // TODO include test system? staging?‚
             onUploadProgress:
                 uploadProgress && typeof uploadProgress === "function"
                     ? uploadProgress
@@ -94,8 +96,13 @@ const bodyRequest = (
     })
 }
 
-const api = {
-    get: (endpoint, fakeResponse) => {
+class Api {
+
+    constructor( baseURL ) {
+        this.baseURL = baseURL
+    }
+
+    get (endpoint, fakeResponse) {
         if (fakeResponse && config.DISABLE_BACKEND) {
             return new Promise(resolve =>
                 setTimeout(() => resolve(fakeResponse), 250),
@@ -105,13 +112,7 @@ const api = {
         return new Promise((resolve, reject) => {
             axios
                 .get(endpoint, {
-                    baseURL: BACKEND_URL || "http://localhost:3030", // TODO include test system? staging?
-                    headers: {
-                        Authorization:
-                            (getCookie("jwt").startsWith("Bearer ")
-                                ? ""
-                                : "Bearer ") + getCookie("jwt"),
-                    },
+                    baseURL: this.baseURL,
                 })
                 .then(result => resolve(result.data))
                 .catch(err => {
@@ -128,29 +129,34 @@ const api = {
                     }
                 })
         })
-    },
+    }
 
-    post: (endpoint, body, files, uploadProgress, fakeResponse) =>
-        bodyRequest(
+    post (endpoint, body, files, uploadProgress, fakeResponse) {
+        return bodyRequest(
             "post",
+            this.baseURL,
             endpoint,
             body,
             files,
             uploadProgress,
             fakeResponse,
-        ),
-    put: (endpoint, body, files, uploadProgress, fakeResponse) =>
-        bodyRequest("put", endpoint, body, files, uploadProgress, fakeResponse),
-    patch: (endpoint, body, files, uploadProgress, fakeResponse) =>
-        bodyRequest(
+        )
+    }
+    put (endpoint, body, files, uploadProgress, fakeResponse) {
+        return bodyRequest("put", this.baseURL, endpoint, body, files, uploadProgress, fakeResponse)
+    }
+    patch (endpoint, body, files, uploadProgress, fakeResponse){
+        return bodyRequest(
             "patch",
+            this.baseURL,
             endpoint,
             body,
             files,
             uploadProgress,
             fakeResponse,
-        ),
-    delete: (endpoint, fakeResponse) => {
+        )
+    }
+    delete (endpoint, fakeResponse) {
         if (fakeResponse && process.env.NODE_ENV !== "production") {
             return new Promise(resolve =>
                 setTimeout(() => resolve(fakeResponse), 250),
@@ -160,7 +166,7 @@ const api = {
         return new Promise((resolve, reject) => {
             axios
                 .delete(endpoint, {
-                    baseURL: BACKEND_URL || "http://localhost:3030", // TODO include test system? staging?
+                    baseURL: this.baseURL, // TODO include test system? staging?
                     headers: {
                         Authorization:
                             (getCookie("jwt").startsWith("Bearer ")
@@ -183,7 +189,10 @@ const api = {
                     }
                 })
         })
-    },
+    }
 }
 
-export default api
+export default Api
+
+export const courseApi = new Api( COURSE_API_URL || "http://localhost:3030")
+export const editorApi = new Api( EDITOR_API_URL || "http://localhost:4001")

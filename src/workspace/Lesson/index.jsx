@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react"
+import React, { useEffect, useContext, useState, useRef } from "react"
 import styled from "styled-components"
 
 import config from "~/config"
@@ -37,19 +37,20 @@ const Lesson = props => {
     let courseId = "TEST_COURSE"
     try {
         const location = window.location.pathname
-        const regex = /courses[\/]([a-f0-9]{24})\/topics[\/]([a-f0-9]{24})/i
-        const [, _courseId, topicId] = regex.compile(location)
-        console.log(location)
-        console.log(regex.compile(location))
-        if (topicId && courseId){
+        const regex = /courses[\/]([a-f0-9]{24})\/topics[\/]([a-f0-9]{24})/
+        const [, _courseId, topicId] = regex.exec(location.toString())
+
+        if (topicId && _courseId){
             id = topicId
             courseId = _courseId
         }
-    } catch (err) {}
+    } catch (err) {
+        console.log('invalid url: have to look like /courses/:courseId/topics/:topicId')
+    }
 
     useBootstrap(id, courseId, dispatch, dispatchUserAction)
     useChangeListener(store, dispatch)
-    useInterval(() => saveLesson(store, dispatch), 10000)
+    //useInterval(() => saveLesson(store, dispatch), 10000)
 
     useEffect(() => {
         if (store.bootstrapFinished && store.editing === false)
