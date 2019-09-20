@@ -93,6 +93,15 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
     }, [])
 }
 
+export async function registerLessonSocket(id, courseId, dispatch){
+    editor.on(`course/${courseId}/lesson patched`, (data) => {
+        dispatch({
+            type: "LESSON_UPDATED",
+            data
+        })
+    })
+}
+
 export async function saveLesson(store, dispatch, override) {
     if (!store.editing && !override) return
     dispatch({ type: "SAVE_STATUS", payload: "Sichern..." })

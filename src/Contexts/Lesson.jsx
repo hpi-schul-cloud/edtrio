@@ -93,7 +93,14 @@ function reducer(state, { type, payload }) {
                 ...state,
                 saveStatus: payload,
             }
-
+        case "LESSON_UPDATED":
+            return {
+                ...state,
+                lesson: {
+                    ...state.lesson,
+                    ...payload,
+                }
+            }
         case "LESSON_TITLE_CHANGE":
             state.lesson.changed.add("title")
             return {
