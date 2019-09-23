@@ -8,7 +8,7 @@ import { useInterval } from "~/utils/hooks"
 import { loadEditorData, saveEditorData } from "~/utils/cache"
 import { buildDiff } from "~/utils/diff"
 
-export function useBootstrap(id, dispatch, dispatchUserAction) {
+export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
     async function fetchData() {
         try {
             const user = await api.get("/me")

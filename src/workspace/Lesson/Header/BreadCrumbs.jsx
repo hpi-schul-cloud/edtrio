@@ -71,20 +71,6 @@ const BreadCrumbs = ({ store, dispatch }) => {
             type: "LESSON_TITLE_CHANGE",
             payload: value,
         })
-
-        try{
-            const message = await socket.emit(
-                'patch',
-                `course/59a3c657a2049554a93fec3a/lessons`,
-                '5d5fe33ca0182f013660a853',
-                {
-                    title: value
-                }
-            )
-        } catch (err) {
-            console.log(err)
-        }
-
     }
 
     useEffect(() => {
