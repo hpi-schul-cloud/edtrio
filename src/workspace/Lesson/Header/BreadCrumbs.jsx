@@ -53,7 +53,6 @@ const BreadCrumbs = ({ store, dispatch }) => {
             type: "LESSON_TITLE_CHANGE",
             payload: value,
         })
-
     }
 
     useEffect(() => {

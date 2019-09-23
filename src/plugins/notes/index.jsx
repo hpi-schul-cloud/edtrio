@@ -1,16 +1,16 @@
 import React from "react"
-import { StateType } from "@edtr-io/core"
+import { object, string, scalar } from "@edtr-io/plugin"
 
 import Notes from "./Notes"
 import PrimarySettings from "./PrimarySettings"
 import ExtendedSettings from "./ExtendedSettings"
-export const notesState = StateType.object({
-    text: StateType.string(),
-    extendedSettings: StateType.object({
-        extraFunky: StateType.scalar(false),
+export const notesState = object({
+    text: string(),
+    extendedSettings: object({
+        extraFunky: scalar(false),
     }),
-    primarySettings: StateType.object({
-        funky: StateType.scalar(false),
+    primarySettings: object({
+        funky: scalar(false),
     }),
 })
 

@@ -1,9 +1,9 @@
 import React from "react"
-import { StateType } from "@edtr-io/core"
+import { object, string } from "@edtr-io/plugin"
 
 import Nexboard from "./Nexboard"
-export const nexboardState = StateType.object({
-    id: StateType.string(),
+export const nexboardState = object({
+    id: string(),
 })
 
 const nexboardPlugin = {
