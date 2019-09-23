@@ -4,9 +4,10 @@ import {
     createDocument,
     Editor as Edtr,
     EditorContext,
-    selectors,
-    StateType,
 } from "@edtr-io/core"
+
+import { serializeDocument } from "@edtr-io/store"
+
 import { CustomTheme, ThemeProvider } from "@edtr-io/ui"
 
 import theme from "~/theme"
@@ -85,7 +86,7 @@ export default class Editor extends React.Component {
 function ChangeListener({ dispatchChange }) {
     const store = useContext(EditorContext)
     useEffect(() => {
-        dispatchChange(selectors.serializeDocument(store.state))
+        dispatchChange(serializeDocument(store.state))
     }, [store.state])
     return null
 }
