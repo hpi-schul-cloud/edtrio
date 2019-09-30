@@ -40,7 +40,10 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
                     /*const section = await editorApi.post(`/sections/`, {
                         lesson: lesson._id,
                     })*/
-                    const section = { lesson: lesson._id, _id: '5d5fe33ca0482e013660a853' } //TODO: replace with result of section creaction (post)
+                    const section = {
+                        lesson: lesson._id,
+                        visible: true,
+                        _id: '5d5fe33ca0482e013660a853' } //TODO: replace with result of section creaction (post)
                     lesson.sections = [section]
                 }
 
@@ -87,20 +90,31 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
         } catch (err) {}
     }
 
+    async function registerHandler(){
+        console.log('onHandler')
+        editor.on(`course/:courseId/lessons patched`, (data) => {
+            dispatch({
+                type: "LESSON_UPDATED",
+                payload: data
+            })
+        })
+
+        editor.on(`course/:courseId/lessons updated`, (data) => {
+            dispatch({
+                type: "LESSON_UPDATED",
+                payload: data
+            })
+        })
+
+    }
+
     useEffect(() => {
         fetchCourse()
         fetchData()
+        registerHandler()
     }, [])
 }
 
-export async function registerLessonSocket(id, courseId, dispatch){
-    editor.on(`course/${courseId}/lesson patched`, (data) => {
-        dispatch({
-            type: "LESSON_UPDATED",
-            data
-        })
-    })
-}
 
 export async function saveLesson(store, dispatch, override) {
     if (!store.editing && !override) return

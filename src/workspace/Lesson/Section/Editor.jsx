@@ -1,12 +1,12 @@
 import React, { useContext, useEffect } from "react"
 import styled from "styled-components"
 import {
-    createDocument,
     Editor as Edtr,
     EditorContext,
+    useScopedSelector,
 } from "@edtr-io/core"
 
-import { serializeDocument } from "@edtr-io/store"
+import { serializeDocument, getPendingChanges } from "@edtr-io/store"
 
 import { CustomTheme, ThemeProvider } from "@edtr-io/ui"
 
@@ -84,9 +84,11 @@ export default class Editor extends React.Component {
 }
 
 function ChangeListener({ dispatchChange }) {
-    const store = useContext(EditorContext)
+    const { store } = useContext(EditorContext)
+    const pendingChanges = useScopedSelector(getPendingChanges())
+    console.log(pendingChanges)
     useEffect(() => {
-        dispatchChange(serializeDocument(store.state))
-    }, [store.state])
+        dispatchChange(serializeDocument(store.getState()))
+    }, [pendingChanges])
     return null
 }
