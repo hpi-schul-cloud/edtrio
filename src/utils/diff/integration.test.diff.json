@@ -1,0 +1,74 @@
+{
+    "state": {
+        "0": {
+            "state": {
+                "document": {
+                    "nodes": {
+                        "0": {
+                            "nodes": {
+                                "0": {
+                                    "leaves": {
+                                        "0": {
+                                            "text": ":)"
+                                        },
+                                        "x-pull": [
+                                            "1"
+                                        ]
+                                    }
+                                }
+                            }
+                        },
+                        "1": {
+                            "object": "block",
+                            "type": "paragraph",
+                            "data": {},
+                            "nodes": [
+                                {
+                                    "object": "text",
+                                    "leaves": [
+                                        {
+                                            "object": "leaf",
+                                            "text": "Yes!",
+                                            "marks": []
+                                        }
+                                    ]
+                                }
+                            ],
+                            "x-new": true
+                        }
+                    }
+                }
+            }
+        },
+        "1": {
+            "plugin": "text",
+            "state": {
+                "object": "value",
+                "document": {
+                    "object": "document",
+                    "data": {},
+                    "nodes": [
+                        {
+                            "object": "block",
+                            "type": "paragraph",
+                            "data": {},
+                            "nodes": [
+                                {
+                                    "object": "text",
+                                    "leaves": [
+                                        {
+                                            "object": "leaf",
+                                            "text": "You did it!",
+                                            "marks": []
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            "x-new": true
+        }
+    }
+}

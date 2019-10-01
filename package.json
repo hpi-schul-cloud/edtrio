@@ -1,102 +1,170 @@
 {
-  "name": "edtrio",
-  "version": "2.2.0",
-  "author": {
-    "name": "Florian Wirtz",
-    "email": "florian.wirtz@hpi-alumni.de",
-    "url": "https://github.com/FWirtz"
-  },
-  "homepage": "http://schul-cloud.github.io/edtrio",
-  "contributors": [
-    {
-      "name": "Paul Arndt",
-      "email": "paul.arndt@student.hpi.de",
-      "url": "https://github.com/Atyanar"
+    "private": true,
+    "name": "edtrio",
+    "version": "0.1.0",
+    "main": "dist/index.js",
+    "homepage": "http://schul-cloud.github.io/edtrio",
+    "scripts": {
+        "dev": "parcel src/index.html -d dist/dev --hmr-port=1235",
+        "dev:client": "parcel src/index.js -d dist/dev",
+        "storybook": "start-storybook -p 9001 -c .storybook",
+        "build": "node build/index.js && parcel build src/index.js",
+        "build:standalone": "parcel build src/index.html",
+        "build:storybook": "build-storybook -c .storybook -o dist/storybook",
+        "dist:demo": "rm -rf dist && npm run build:standalone && npm run build:storybook && firebase deploy",
+        "test": "ava --verbose",
+        "test:watch": "ava --watch --verbose"
     },
-    {
-      "name": "Adrian Jost",
-      "email": "adrian.jost@student.hpi.de",
-      "url": "https://github.com/adrianjost"
+    "dependencies": {
+        "@edtr-io/core": "^0.11.3",
+        "@edtr-io/editor-ui": "^0.11.3",
+        "@edtr-io/plugin": "^0.11.3",
+        "@edtr-io/plugin-anchor": "^0.11.3",
+        "@edtr-io/plugin-blockquote": "^0.11.3",
+        "@edtr-io/plugin-equations": "^0.11.3",
+        "@edtr-io/plugin-files": "^0.11.3",
+        "@edtr-io/plugin-geogebra": "^0.11.3",
+        "@edtr-io/plugin-image": "^0.11.3",
+        "@edtr-io/plugin-input-exercise": "^0.11.3",
+        "@edtr-io/plugin-rows": "^0.11.3",
+        "@edtr-io/plugin-sc-mc-exercise": "^0.11.3",
+        "@edtr-io/plugin-spoiler": "^0.11.3",
+        "@edtr-io/plugin-text": "^0.11.3",
+        "@edtr-io/plugin-video": "^0.11.3",
+        "@edtr-io/renderer-ui": "^0.11.3",
+        "@edtr-io/store": "^0.11.0",
+        "@edtr-io/ui": "^0.11.3",
+        "@emotion/is-prop-valid": "^0.8.2",
+        "@emotion/memoize": "^0.7.2",
+        "@emotion/unitless": "^0.7.4",
+        "@fortawesome/fontawesome-svg-core": "^1.2.25",
+        "@fortawesome/free-solid-svg-icons": "^5.11.2",
+        "@fortawesome/react-fontawesome": "^0.1.5",
+        "@types/slate": "^0.47.1",
+        "axios": "^0.19.0",
+        "curl": "^0.1.4",
+        "react": "^16.10.1",
+        "react-dnd": "^9.4.0",
+        "react-dnd-html5-backend": "^9.4.0",
+        "react-dnd-touch-backend": "^9.4.0",
+        "react-dom": "^16.10.1",
+        "react-portal": "^4.2.0",
+        "shortid": "^2.2.14",
+        "socket.io-client": "^2.2.0",
+        "styled-components": "^4.4.0",
+        "uuid": "^3.3.3"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.6.2",
+        "@babel/preset-env": "^7.6.2",
+        "@babel/preset-react": "^7.0.0",
+        "@babel/register": "^7.6.2",
+        "@storybook/addon-knobs": "^4.1.18",
+        "@storybook/addon-storysource": "^4.1.18",
+        "@storybook/react": "^4.1.18",
+        "ava": "^1.4.1",
+        "babel-eslint": "^10.0.2",
+        "babel-loader": "^8.0.6",
+        "babel-plugin-module-resolver": "^3.2.0",
+        "babel-plugin-styled-components": "^1.10.6",
+        "eslint": "^5.16.0",
+        "eslint-config-prettier": "^3.6.0",
+        "eslint-config-standard": "^12.0.0",
+        "eslint-plugin-babel": "^5.2.1",
+        "eslint-plugin-import": "^2.18.2",
+        "eslint-plugin-node": "^8.0.1",
+        "eslint-plugin-prettier": "^3.1.0",
+        "eslint-plugin-promise": "^4.2.1",
+        "eslint-plugin-react": "^7.14.3",
+        "eslint-plugin-react-hooks": "^1.7.0",
+        "eslint-plugin-standard": "^4.0.1",
+        "eslint-plugin-styled-components": "0.0.0",
+        "eslint-plugin-styled-components-config": "0.0.2",
+        "fs-extra": "^7.0.1",
+        "gh-pages": "^2.1.1",
+        "lint-staged": "^7.3.0",
+        "mongodb": "^3.3.0",
+        "parcel-bundler": "^1.12.3",
+        "parcel-plugin-bundle-visualiser": "^1.2.0",
+        "parcel-plugin-url-loader": "^1.3.1",
+        "prettier": "^1.18.2",
+        "react-hot-loader": "^4.12.11"
+    },
+    "lint-staged": {
+        "linters": {
+            "edtrio-client/src/**/*.{js,jsx}": [
+                "./node_modules/.bin/eslint --ext .jsx --ext .js ./",
+                "prettier",
+                "git add"
+            ],
+            "edtrio-client/src/**/*.{ts,tsx}": [
+                "./node_modules/.bin/tslint -c tslint.json --project edtrio-client/tsconfig.json",
+                "prettier",
+                "git add"
+            ],
+            "edtrio-server/src/**/*.{js,jsx}": [
+                "./node_modules/.bin/eslint --ext .jsx --ext .js ./",
+                "prettier",
+                "git add"
+            ],
+            "edtrio-server/src/**/*{ts,tsx}": [
+                "./node_modules/.bin/tslint -c tslint.json --project edtrio-server/tsconfig.json",
+                "prettier",
+                "git add"
+            ]
+        },
+        "ignore": [
+            "**/generated/**/*.{ts,tsx}"
+        ]
+    },
+    "browserslist": [
+        ">0.2%",
+        "not dead",
+        "not ie <= 11",
+        "not op_mini all"
+    ],
+    "author": {
+        "name": "Florian Wirtz",
+        "email": "florian.wirtz@hpi-alumni.de",
+        "url": "https://github.com/FWirtz"
+    },
+    "contributors": [
+        {
+            "name": "Paul Arndt",
+            "email": "paul.arndt@student.hpi.de",
+            "url": "https://github.com/Atyanar"
+        },
+        {
+            "name": "Sebastian Serth",
+            "email": "sebastian.serth@student.hpi.de",
+            "url": "https://github.com/MrSerth"
+        },
+        {
+            "name": "Adrian Jost",
+            "email": "adrian.jost@student.hpi.de",
+            "url": "https://github.com/adrianjost"
+        },
+        {
+            "name": "Lukas Gisder-Dubé",
+            "email": "lukas@dube.io",
+            "url": "https://github.com/gisderdube"
+        }
+    ],
+    "ava": {
+        "files": [
+            "src/**/*.test.js"
+        ],
+        "cache": true,
+        "concurrency": 5,
+        "failFast": true,
+        "failWithoutAssertions": false,
+        "tap": false,
+        "verbose": true,
+        "compileEnhancements": false,
+        "require": [
+            "@babel/register",
+            "@babel/polyfill"
+        ],
+        "modules": false
     }
-  ],
-  "private": true,
-  "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.6",
-    "@fortawesome/free-brands-svg-icons": "^5.4.1",
-    "@fortawesome/free-solid-svg-icons": "^5.4.1",
-    "@fortawesome/react-fontawesome": "^0.1.3",
-    "@types/jest": "^23.3.9",
-    "@types/node": "^10.12.2",
-    "@types/react": "^16.4.18",
-    "@types/react-dom": "^16.0.9",
-    "@types/slate": "^0.43.1",
-    "@types/slate-react": "^0.20.1",
-    "@types/styled-components": "^4.0.3",
-    "@uppy/core": "^0.27.0",
-    "@uppy/react": "^0.27.1",
-    "@uppy/tus": "^0.27.1",
-    "browser-media-mime-type": "^1.0.0",
-    "bulma": "^0.7.1",
-    "bulma-tooltip": "^2.0.2",
-    "immutable": "^3.8.2",
-    "is-hotkey": "^0.1.2",
-    "is-url": "^1.2.4",
-    "material-icons": "^0.2.3",
-    "moment": "^2.22.2",
-    "node-sass": "^4.9.3",
-    "react": "^16.4.2",
-    "react-dom": "^16.4.2",
-    "react-scripts": "2.1.1",
-    "slate": "^0.41.1",
-    "slate-instant-replace": "^0.1.8",
-    "slate-react": "^0.18.9",
-    "styled-components": "^4.0.3"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "predeploy": "yarn run build",
-    "deploy": "gh-pages -d build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "docz:dev": "docz dev",
-    "docz:build": "docz build",
-    "lint": "./node_modules/.bin/eslint --ext .jsx ./",
-    "tslint": "./node_modules/.bin/tslint -c tslint.json --project './'"
-  },
-  "devDependencies": {
-    "docz": "^0.11.2",
-    "docz-theme-default": "^0.11.2",
-    "eslint-config-prettier": "^3.1.0",
-    "eslint-plugin-babel": "^5.2.1",
-    "eslint-plugin-prettier": "^3.0.0",
-    "gh-pages": "^2.0.1",
-    "husky": "^1.0.0-rc.15",
-    "lint-staged": "^7.3.0",
-    "prettier": "^1.14.3",
-    "react-test-renderer": "^16.6.1",
-    "tslint": "^5.11.0",
-    "tslint-config-prettier": "^1.15.0",
-    "tslint-react": "^3.6.0",
-    "typescript": "^3.1.6"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "src/**/*.{js,jsx,json,css}": [
-      "./node_modules/.bin/eslint --ext .jsx ./",
-      "./node_modules/.bin/tslint -c tslint.json --project './'",
-      "prettier",
-      "git add"
-    ]
-  },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
 }

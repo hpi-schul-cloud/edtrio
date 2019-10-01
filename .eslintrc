@@ -1,23 +1,37 @@
 {
-  "env": {
-    "browser": true,
-    "es6": true,
-    "node": true
-  },
-  "extends": ["eslint:recommended", "react-app", "prettier"],
-  "parserOptions": {
-    "ecmaVersion": 9,
-    "ecmaFeatures": {
-      "jsx": true
+    "env": {
+        "browser": true,
+        "es6": true,
+        "node": false
     },
-    "sourceType": "module"
-  },
-  "plugins": ["react", "prettier", "babel"],
-  "rules": {
-    "prettier/prettier": "error",
-    "linebreak-style": [2, "unix"],
-    "semi": [2, "always"],
-    "no-unused-vars": [0],
-    "unicode-bom": ["error", "never"]
-  }
+    "globals": {
+        "process": true
+    },
+    "extends": [
+        "standard",
+        "eslint:recommended",
+        "prettier",
+        "prettier/react",
+        "plugin:react/recommended"
+    ],
+    "parser": "babel-eslint",
+    "parserOptions": {
+        "ecmaVersion": 9,
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "sourceType": "module"
+    },
+    "plugins": ["standard", "react-hooks"],
+    "rules": {
+        "linebreak-style": [2, "unix"],
+        "semi": [2, "never"],
+        "no-unused-vars": [0],
+        "unicode-bom": ["error", "never"],
+        "react-hooks/rules-of-hooks": 2,
+        "react-hooks/exhaustive-deps": 0,
+        "no-console": 1,
+        "react/prop-types": 0,
+        "no-case-declarations": 0
+    }
 }
