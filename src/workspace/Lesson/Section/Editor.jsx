@@ -87,11 +87,3 @@ export default class Editor extends React.Component {
         )
     }
 }
-
-function ChangeListener({ dispatchChange }) {
-    const store = useContext(EditorContext)
-    useEffect(() => {
-        dispatchChange(serializeDocument(store.state))
-    }, [store.state])
-    return null
-}

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 
 import api from "~/utils/api"
-import { socket } from "~/utils/socket"
 
 import Action from "~/components/Action"
 import Flex from "~/components/Flex"
