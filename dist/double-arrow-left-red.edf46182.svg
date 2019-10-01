@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
-    <g fill="#b00b39" stroke="#b00b39" stroke-linecap="square" stroke-linejoin="miter" stroke-width="4" class="nc-icon-wrapper">
-        <polyline fill="none" stroke="#b00b39" stroke-miterlimit="10" points="54,60 26,32 54,4 "/>
-        <polyline fill="none" stroke="#b00b39" stroke-miterlimit="10" points="38,60 10,32 38,4 "/>
-    </g>
-</svg>
