@@ -8,7 +8,7 @@ import { useInterval } from "~/utils/hooks"
 import { loadEditorData, saveEditorData } from "~/utils/cache"
 import { buildDiff } from "~/utils/diff"
 
-export function useBootstrap(id, dispatch, dispatchUserAction) {
+export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
     async function fetchData() {
         try {
             const user = await api.get("/me")
@@ -31,6 +31,7 @@ export function useBootstrap(id, dispatch, dispatchUserAction) {
                 if (lesson.sections.length === 0) {
                     const section = await api.post(`/editor/sections/`, {
                         lesson: lesson._id,
+                        visible: true,
                     })
                     lesson.sections = [section]
                 }
@@ -189,6 +190,7 @@ export async function saveLesson(store, dispatch, override) {
             })),
         },
     }
+
     if (results.includes("error")) {
         cacheData.savedToBackend = false
     }

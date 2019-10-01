@@ -32,6 +32,7 @@ const Crumb = ({ to, caption }) => {
     )
 }
 
+
 const BreadCrumbs = ({ store, dispatch }) => {
     const courseId = window.location.pathname.split("/")[2]
     const [crumbData, setCrumbData] = useState({
@@ -43,6 +44,14 @@ const BreadCrumbs = ({ store, dispatch }) => {
             },
         ],
     })
+
+    const updateTitle = async (value) => {
+
+        dispatch({
+            type: "LESSON_TITLE_CHANGE",
+            payload: value,
+        })
+    }
 
     useEffect(() => {
         setCrumbData({
@@ -64,12 +73,7 @@ const BreadCrumbs = ({ store, dispatch }) => {
                 value={store.lesson.title}
                 readOnly={!store.editing}
                 placeholder="Titel für das Thema"
-                onChange={newValue =>
-                    dispatch({
-                        type: "LESSON_TITLE_CHANGE",
-                        payload: newValue,
-                    })
-                }
+                onChange={ updateTitle }
             />
         </Flex>
     )

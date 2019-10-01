@@ -1,12 +1,14 @@
 import React, { useContext, useEffect } from "react"
 import styled from "styled-components"
 import {
-    createDocument,
     Editor as Edtr,
     EditorContext,
-    serializeDocument,
-    StateType,
+    useScopedSelector,
+    getPendingChanges,
 } from "@edtr-io/core"
+
+import { serializeRootDocument } from "@edtr-io/store"
+
 import { CustomTheme, ThemeProvider } from "@edtr-io/ui"
 
 import theme from "~/theme"
@@ -61,6 +63,12 @@ export default class Editor extends React.Component {
                 : {
                       plugin: "rows",
                   }
+
+        this.onChange = this.onChange.bind(this)
+    }
+
+    onChange({changed, getDocument}){
+        this.props.dispatchChange(getDocument())
     }
 
     render() {
@@ -72,20 +80,10 @@ export default class Editor extends React.Component {
                     defaultPlugin={"text"}
                     editable={this.props.editing}
                     omitDragDropContext
-                    initialState={this.docValue}>
-                    <ChangeListener
-                        dispatchChange={this.props.dispatchChange}
-                    />
+                    initialState={this.docValue}
+                    onChange={this.onChange}>
                 </Edtr>
             </EditorWrapper>
         )
     }
-}
-
-function ChangeListener({ dispatchChange }) {
-    const store = useContext(EditorContext)
-    useEffect(() => {
-        dispatchChange(serializeDocument(store.state))
-    }, [store.state])
-    return null
 }

@@ -1,11 +1,11 @@
 import React from "react"
-import { StateType } from "@edtr-io/core"
+import { object, string } from "@edtr-io/plugin"
 
 import Etherpad from "./Etherpad"
-export const etherpadState = StateType.object({
-    id: StateType.string(),
-    title: StateType.string(),
-    description: StateType.string(),
+export const etherpadState = object({
+    id: string(),
+    title: string(),
+    description: string(),
 })
 
 const etherpadPlugin = {

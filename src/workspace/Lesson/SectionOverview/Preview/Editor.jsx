@@ -41,6 +41,7 @@ export default class Editor extends React.Component {
                     }}
                     defaultPlugin={"text"}
                     editable={false}
+                    omitDragDropContext
                     initialState={this.docValue}
                 />
             </EditorWrapper>

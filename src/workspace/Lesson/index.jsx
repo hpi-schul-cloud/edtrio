@@ -34,13 +34,21 @@ const Lesson = props => {
     )
 
     let id = "TEST"
+    let courseId = "TEST_COURSE"
     try {
         const location = window.location.pathname
-        const topicId = location.split("/topics/")[1]
-        if (topicId && !config.DISABLE_BACKEND) id = topicId
-    } catch (err) {}
+        const regex = /courses[\/]([a-f0-9]{24})\/topics[\/]([a-f0-9]{24})/
+        const [, _courseId, topicId] = regex.exec(location.toString())
 
-    useBootstrap(id, dispatch, dispatchUserAction)
+        if (topicId && _courseId){
+            id = topicId
+            courseId = _courseId
+        }
+    } catch (err) {
+        //console.log('invalid url: have to look like /courses/:courseId/topics/:topicId')
+    }
+
+    useBootstrap(id, courseId, dispatch, dispatchUserAction)
     useChangeListener(store, dispatch)
     useInterval(() => saveLesson(store, dispatch), 10000)
 
