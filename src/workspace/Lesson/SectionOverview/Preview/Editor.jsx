@@ -2,8 +2,6 @@ import React from "react"
 import styled from "styled-components"
 import { Editor as Edtr } from "@edtr-io/core"
 
-import etherpadPluginPreview from "~/plugins/etherpad/Preview"
-import nexboardPluginPreview from "~/plugins/nexboard/Preview"
 import { plugins } from "~/workspace/Lesson/Section/Editor"
 
 const EditorWrapper = styled.div`
@@ -34,13 +32,10 @@ export default class Editor extends React.Component {
                 expanded={this.props.expanded}
                 editing={this.props.editing}>
                 <Edtr
-                    plugins={{
-                        ...plugins,
-                        etherpad: etherpadPluginPreview,
-                        nexboard: nexboardPluginPreview,
-                    }}
+                    plugins={plugins}
                     defaultPlugin={"text"}
                     editable={false}
+                    omitDragDropContext
                     initialState={this.docValue}
                 />
             </EditorWrapper>

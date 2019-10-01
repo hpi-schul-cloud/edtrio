@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState, useRef } from "react"
+import React, { useEffect, useContext, useState } from "react"
 import styled from "styled-components"
 
 import config from "~/config"
@@ -50,7 +50,7 @@ const Lesson = props => {
 
     useBootstrap(id, courseId, dispatch, dispatchUserAction)
     useChangeListener(store, dispatch)
-    //useInterval(() => saveLesson(store, dispatch), 10000)
+    useInterval(() => saveLesson(store, dispatch), 10000)
 
     useEffect(() => {
         if (store.bootstrapFinished && store.editing === false)
