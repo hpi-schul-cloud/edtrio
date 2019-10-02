@@ -32,6 +32,7 @@ const Crumb = ({ to, caption }) => {
     )
 }
 
+
 const BreadCrumbs = ({ store, dispatch }) => {
     const {
         lesson: { _id: lessonId }, 
