@@ -1,4 +1,4 @@
-# Edtr.io [![Version](https://img.shields.io/badge/version-2.2.0-black.svg?style=flat-square)](https://github.com/schul-cloud/edtrio/releases) [![Gitmoji](https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg?style=flat-square)](https://gitmoji.carloscuesta.me)
+# Edtr.io [![Version](https://img.shields.io/badge/version-2.2.0-black.svg?style=flat-square)](https://github.com/schul-cloud/edtrio/releases) [![Gitmoji](https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg?style=flat-square)](https://gitmoji.carloscuesta.me) [![Greenkeeper badge](https://badges.greenkeeper.io/schul-cloud/edtrio.svg)](https://greenkeeper.io/)
 
 <p align="center">
   <a href="#"><img src="./public/logo.png" /></a>
