@@ -2,16 +2,18 @@ import io from 'socket.io-client'
 import { jwt } from './jwt'
 import { useContext } from 'react'
 import LessonContext from "~/Contexts/Lesson"
+import config from "~/config"
 
-const EDITOR_SOCKET_URL = EDITOR_SOCKET_URL || ""
+const EDITOR_SOCKET_URL = config.EDITOR_SOCKET_URL || ""
 
-//const { store, dispatch } = useContext(LessonContext)
+
+// const { store, dispatch } = useContext(LessonContext)
 
 class Socket {
 
 	constructor(url, authorization){
 		this.url = url
-		this.socket = io('ws://api.edtr.l')
+		this.socket = io(url)
 
 		this.socket.on('connect', () => {
 			console.log(EDITOR_SOCKET_URL)
@@ -26,10 +28,10 @@ class Socket {
 		this.socket.on('error', (error) => {
 			console.log("Socket error")
 			console.log(error)
-			/*dispatch({
+			/* dispatch({
 				type: 'ERROR',
 				payload: 'Die Verbindung zum Server konnte nicht aufrecht erhalten werden'
-			})*/
+			}) */
 		})
 	}
 
@@ -42,10 +44,10 @@ class Socket {
 			console.log('is authoriztated')
 		} catch (err) {
 			console.log('authentication failed', err)
-			/*dispatch({
+			/* dispatch({
 				type: 'ERROR',
 				payload: 'Die Authentifizierung ist fehlgeschlagen. Bitte melde dich an'
-			})*/
+			}) */
 		}
 	}
 

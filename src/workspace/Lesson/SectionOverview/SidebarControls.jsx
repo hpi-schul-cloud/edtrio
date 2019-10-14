@@ -6,8 +6,9 @@ import api from "~/utils/api"
 import theme from "~/theme"
 
 import { getFakeSection } from "~/utils/fake"
-
+import { createSection } from "~/actions/lesson"
 import Flex from "~/components/Flex"
+import {editor} from "~/utils/socket"
 
 const Wrapper = styled(Flex)`
     width: 100%;
@@ -38,8 +39,8 @@ async function addNewSection(store, dispatch) {
             tempId,
         },
     })
-
-    const newSection = await api.post(
+    const newSection = await editor.emit('create', `lesson/${lessonId}/sections`)
+  /* const newSection = await api.post(
         "/editor/sections",
         {
             lesson: lessonId,
@@ -52,7 +53,7 @@ async function addNewSection(store, dispatch) {
         null,
         getFakeSection(lessonId),
     )
-
+*/
     dispatch({
         type: "REPLACE_ADDED_SECTION_ID",
         payload: {
@@ -86,13 +87,15 @@ const AddWrapper = styled.div`
 
 const SidebarControls = ({ store, dispatch }) => {
     const expanded = store.sectionOverviewExpanded
+    const {lesson} = store
     return (
         <Wrapper justifyEnd column={!expanded} alignCenter expanded={expanded}>
             {store.editing && (
                 <AddWrapper visible={!expanded}>
                     <StyledIcon
                         onClick={() => {
-                            addNewSection(store, dispatch)
+                            createSection(dispatch)(lesson.id, lesson.sections.length-1)
+                            // addNewSection(store, dispatch)
                         }}
                         style={{ width: 40, height: 40 }}
                         src={require("~/assets/plus-red-round.svg")}

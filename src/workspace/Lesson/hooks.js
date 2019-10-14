@@ -9,6 +9,8 @@ import { useInterval } from "~/utils/hooks"
 import { loadEditorData, saveEditorData } from "~/utils/cache"
 import { buildDiff } from "~/utils/diff"
 import reject from "ramda/es/reject"
+import { createSection } from "~/actions/lesson"
+import { create } from "domain"
 
 export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
     async function fetchData() {
@@ -29,23 +31,14 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
             ) {
                 lesson = cacheData.lesson
             } else {
-                //lesson = await editorApi.get(`course/${courseId}/lessons/${id}`)
+                // lesson = await editorApi.get(`course/${courseId}/lessons/${id}`)
 
                 lesson = await editor.emit(
                     'get',
                     `course/${courseId}/lessons`,
-                    id
+                    id,
+                    {all: 'true'}
                 )
-                if (lesson.sections.length === 0) {
-                    /*const section = await editorApi.post(`/sections/`, {
-                        lesson: lesson._id,
-                    })*/
-                    const section = {
-                        lesson: lesson._id,
-                        visible: true,
-                        _id: '5d5fe33ca0482e013660a853' } //TODO: replace with result of section creaction (post)
-                    lesson.sections = [section]
-                }
 
                 lesson.id = lesson._id
                 lesson.sections = lesson.sections.map(section => ({
@@ -54,10 +47,14 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
                     docValue: section.state,
                     notes: section.note,
                 }))
+                console.log(lesson.sections)
             }
             dispatch({ type: "BOOTSTRAP", payload: lesson })
+
+            if (lesson.sections.length === 0) {
+                createSection(dispatch)(lesson.id, 0)
+            }
         } catch (err) {
-            console.debug(err)
             dispatch({ type: "ERROR" })
             dispatch({
                 type: "BOOTSTRAP",
@@ -84,28 +81,45 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
 
     async function fetchCourse() {
         try {
-            //const courseId = window.location.pathname.split("/")[2]
+            // const courseId = window.location.pathname.split("/")[2]
             const course = await courseApi.get(`/courses/${courseId}`)
             dispatch({ type: "SET_COURSE", payload: course })
         } catch (err) {}
     }
 
     async function registerHandler(){
-        console.log('onHandler')
-        editor.on(`course/:courseId/lessons patched`, (data) => {
+        console.log('handler registration')
+        const dispatchLessonUpdate = (data) => {
+            console.log(data)
             dispatch({
                 type: "LESSON_UPDATED",
                 payload: data
             })
-        })
+        }
+        editor.on(`course/:courseId/lessons patched`, dispatchLessonUpdate)
+        editor.on(`course/:courseId/lessons updated`, dispatchLessonUpdate)
 
-        editor.on(`course/:courseId/lessons updated`, (data) => {
+        const dispatchSectionUpdate = (data) => {
             dispatch({
-                type: "LESSON_UPDATED",
+                type: "SECTION_UPDATED",
                 payload: data
             })
-        })
+        }
 
+        editor.on('lesson/:lessonId/sections patched', dispatchSectionUpdate)
+        editor.on('lesson/:lessonId/sections updated', dispatchSectionUpdate)
+
+
+        const dispatchSectionDiff = (data) => {
+            dispatch({
+                type: "SECTION_DOCVALUE_DIFF",
+                payload: {
+                    sectionId: data._id,
+                    diff: data.diff
+                }
+            })
+        }
+        editor.on('lesson/:lessonId/sections patched', dispatchSectionUpdate)
     }
 
     useEffect(() => {
@@ -153,62 +167,81 @@ export async function saveLesson(store, dispatch, override) {
     // save sections
     store.lesson.sections.forEach(section => {
         const sectionChanges = {}
-        let savedDocValue = JSON.parse(JSON.stringify(section.docValue))
+        let sectionDiff
+        let savedDocValue
         section.changed.forEach(key => {
             if (key === "docValue") {
                 savedDocValue =
                     typeof section.docValue === "object" &&
                     JSON.parse(JSON.stringify(section.docValue))
 
-                sectionChanges.state = buildDiff(
+                sectionDiff = buildDiff(
                     section.savedDocValue,
                     section.docValue,
                 )
 
-                dispatch({ type: "SECTION_SAVE_DOCVALUE", payload: section.id })
             } else if (key === "notes") {
                 sectionChanges.note = section.notes
             } else {
                 sectionChanges[key] = section[key]
             }
         })
+        if(sectionDiff){
+            savePromises.push(
+                new Promise(async (resolve, reject) => {
+                    try {
+                        console.log('diff')
+                        console.log(sectionDiff)
+                        const backendResult =
+                            await editor
+                                .emit(
+                                    'patch',
+                                    `lesson/${store.lesson.id}/sections/diff`,
+                                    section.id,
+                                    {state: sectionDiff},
+                                )
+                        dispatch({ type: "SECTION_SAVED", payload: section.id })
+                        resolve(backendResult)
+                    } catch (err) {
+                       /* if (savedDocValue) {
+                            dispatch({
+                                type: "SECTION_SAVE_DOCVALUE_FAILED",
+                                payload: {
+                                    id: section.id,
+                                    lastSavedDocValue: savedDocValue,
+                                },
+                            })
+                        } */
+                        reject(err)
+                    }
+                }),
+            )
+        }
+
         if (Object.keys(sectionChanges).length === 0) {
             return savePromises.push(
                 Promise.resolve(`No changes for section ${section.id}`),
             )
-        }
-
-        savePromises.push(
-            new Promise(async (resolve, reject) => {
-                try {
-                    const backendResult = await courseApi.patch(
-                        `/editor/sections/${section.id}`,
-                        sectionChanges,
-                        null,
-                        null,
-                        {
-                            success: true,
-                        },
-                    )
-                    dispatch({ type: "SECTION_SAVED", payload: section.id })
-                    resolve(backendResult)
-                } catch (err) {
-                    if (
-                        sectionChanges.hasOwnProperty("state") &&
-                        savedDocValue
-                    ) {
-                        dispatch({
-                            type: "SECTION_SAVE_DOCVALUE_FAILED",
-                            payload: {
-                                id: section.id,
-                                lastSavedDocValue: savedDocValue,
-                            },
-                        })
+        }else {
+            savePromises.push(
+                new Promise(async (resolve, reject) => {
+                    try {
+                        const backendResult =
+                            await editor
+                                .emit(
+                                    'patch',
+                                    `lesson/${store.lesson.id}/sections`,
+                                    section.id,
+                                    sectionChanges
+                                )
+                        dispatch({ type: "SECTION_SAVED", payload: section.id })
+                        resolve(backendResult)
+                    } catch (err) {
+                        reject(err)
                     }
-                    reject(err)
-                }
-            }),
-        )
+                }),
+            )
+        }
     })
 
     const cacheData = {

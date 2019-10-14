@@ -1,5 +1,6 @@
 import React, { useReducer } from "react"
 import qs from "qs"
+import { mergeDiff } from "~/utils/diff"
 
 const q = qs.parse(window.location.search, { ignoreQueryPrefix: true })
 
@@ -9,7 +10,7 @@ export const initialState = {
     lesson: {},
     course: {},
     studentView: !!q.student_view,
-    editing: q.student_view ? false : true,
+    editing: !q.student_view,
     activeSectionId: "",
     bootstrapFinished: false,
     saveStatus: "",
@@ -242,6 +243,20 @@ function reducer(state, { type, payload }) {
                 },
             }
 
+        case "SECTION_DOCVALUE_DIFF":
+            return {
+                ...state,
+                lesson: {
+                    ...state.lesson,
+                    sections: state.lesson.sections.map(section => {
+                        if (section.id !== payload.sectionId) return section
+                        return {
+                            ...section,
+                            docValue: mergeDiff(section.docValue, payload.diff)
+                        }
+                    }),
+                }
+            }
         case "SECTION_DOCVALUE_CHANGE":
             if (!state.editing) return state
             return {
@@ -258,8 +273,8 @@ function reducer(state, { type, payload }) {
                     }),
                 },
             }
-
-        case "SECTION_SAVE_DOCVALUE":
+/*
+        case "SECTION_SAVED_DOCVALUE":
             return {
                 ...state,
                 lesson: {
@@ -288,12 +303,24 @@ function reducer(state, { type, payload }) {
                     }),
                 },
             }
-
+*/
         case "SECTION_SAVED":
             state.lesson.sections.forEach(section => {
                 if (section.id === payload) section.changed.clear()
             })
-            return state
+            return {
+                ...state,
+                lesson: {
+                    ...state.lesson,
+                    sections: state.lesson.sections.map(section => {
+                        if (section.id !== payload) return section
+                        return {
+                            ...section,
+                            savedDocValue: section.docValue,
+                        }
+                    }),
+                },
+            }
 
         case "ERROR":
             return {

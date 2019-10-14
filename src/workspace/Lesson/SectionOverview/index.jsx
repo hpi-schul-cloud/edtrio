@@ -106,7 +106,7 @@ const SectionOverview = ({ store, dispatch }) => {
                                     dispatch={dispatch}
                                     section={section}
                                     index={index}
-                                    key={section.id}
+                                    key={section._id}
                                 />
                             )
                         })}
