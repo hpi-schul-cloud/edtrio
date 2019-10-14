@@ -27,7 +27,7 @@
         "@edtr-io/plugin-image": "^0.11.3",
         "@edtr-io/plugin-input-exercise": "^0.11.3",
         "@edtr-io/plugin-rows": "^0.11.3",
-        "@edtr-io/plugin-sc-mc-exercise": "^0.11.3",
+        "@edtr-io/plugin-sc-mc-exercise": "^0.12.0",
         "@edtr-io/plugin-spoiler": "^0.11.3",
         "@edtr-io/plugin-text": "^0.11.3",
         "@edtr-io/plugin-video": "^0.11.3",
