@@ -22,7 +22,7 @@ function readFile(file) {
         const reader = new FileReader()
         reader.onload = function(e) {
             const dataUrl = e.target.result
-            //simulate uploadtime
+            // simulate uploadtime
             setTimeout(() => resolve({ file, dataUrl }), 1000)
         }
 
@@ -85,7 +85,7 @@ const plugins = {
     rows: rowsPlugin,
     blockquote: blockquotePlugin,
     etherpad: etherpadPlugin,
-    image: imagePlugin,
+    image: imagePlugin, // has to be implemented before files
     files: filesPlugin,
     spoiler: spoilerPlugin,
     geogebra: geogebraPlugin,

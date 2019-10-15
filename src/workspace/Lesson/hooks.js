@@ -27,7 +27,7 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
             if (
                 cacheData &&
                 cacheData.hasOwnProperty("lesson") &&
-                (cacheData.savedToBackend === false || config.DISABLE_BACKEND)
+                (cacheData.savedToBackend === false)
             ) {
                 lesson = cacheData.lesson
             } else {
@@ -46,8 +46,8 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
                     id: section._id,
                     docValue: section.state,
                     notes: section.note,
+                    visible: true, // TODO: remove should be set by server and blur mode should removed
                 }))
-                console.log(lesson.sections)
             }
             dispatch({ type: "BOOTSTRAP", payload: lesson })
 
@@ -96,8 +96,8 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
                 payload: data
             })
         }
-        editor.on(`course/:courseId/lessons patched`, dispatchLessonUpdate)
-        editor.on(`course/:courseId/lessons updated`, dispatchLessonUpdate)
+        editor.on('course/:courseId/lessons patched', dispatchLessonUpdate)
+        editor.on('course/:courseId/lessons updated', dispatchLessonUpdate)
 
         const dispatchSectionUpdate = (data) => {
             dispatch({
@@ -119,7 +119,8 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
                 }
             })
         }
-        editor.on('lesson/:lessonId/sections patched', dispatchSectionUpdate)
+
+        editor.on('lesson/:lessonId/sections/diff patched', dispatchSectionDiff)
     }
 
     useEffect(() => {

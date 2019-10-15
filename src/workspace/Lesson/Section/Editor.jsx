@@ -73,7 +73,7 @@ export default class Editor extends React.Component {
 
     render() {
         return (
-            <EditorWrapper>
+            <EditorWrapper editing={true}>
                 <Edtr
                     theme={editorTheme}
                     plugins={plugins}
