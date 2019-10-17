@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react"
 import shortid from "shortid"
 
+import config from "~/config"
 import LessonContext from "~/Contexts/Lesson"
 
 import Input from "~/components/Input"
@@ -20,8 +21,7 @@ const Etherpad = ({ focused, state }) => {
     if (state.id.value) {
         etherpadFrame = (
             <iframe
-                src={`https://etherpad.schul-cloud.org/etherpad/p/${
-                    // TODO maybe make this variable?
+                src={`${config.etherpad}etherpad/p/${
                     state.id.value
                 }`}
                 style={{

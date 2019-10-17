@@ -1,7 +1,5 @@
 const config = {
-    GRAPHQL_HTTP_URL:
-        process.env.GRAPHQL_HTTP_URL || "http://localhost:4000/graphql",
-    GRAPHQL_WS_URL: process.env.GRAPHQL_WS_URL || "ws://localhost:4000",
+    etherpad: 'https://etherpad.schul-cloud.org',
     DISABLE_BACKEND: true,
 }
 
