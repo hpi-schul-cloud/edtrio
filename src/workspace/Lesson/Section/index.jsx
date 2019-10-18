@@ -77,7 +77,6 @@ const Section = ({ store, dispatch }) => {
     )
     const section = store.lesson.sections[index]
     const isLast = store.lesson.sections.length - 1 === index
-
     return (
         <StyledSection
             column

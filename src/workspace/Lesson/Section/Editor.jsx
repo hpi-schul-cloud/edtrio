@@ -1,15 +1,20 @@
-import React, { useContext, useEffect } from "react"
+import React, {useCallback} from "react"
 import styled from "styled-components"
 import {
     Editor as Edtr,
-    EditorContext,
-    useScopedSelector,
-    getPendingChanges,
+    useScopedDispatch,
+    useScopedSelector
 } from "@edtr-io/core"
 
-import { serializeRootDocument } from "@edtr-io/store"
-
-import { CustomTheme, ThemeProvider } from "@edtr-io/ui"
+import {
+    focusNext,
+    focusPrevious,
+    persist,
+    redo,
+    reset,
+    undo,
+    hasPendingChanges as hasPendingChangesSelector
+  } from '@edtr-io/store'
 
 import theme from "~/theme"
 import plugins from "./plugins"
@@ -54,36 +59,115 @@ export const editorTheme = {
     },
 }
 
-export default class Editor extends React.Component {
-    constructor(props) {
-        super(props)
-        this.docValue =
-            this.props.docValue && Object.keys(this.props.docValue).length
-                ? this.props.docValue
-                : {
-                      plugin: "rows",
-                  }
 
-        this.onChange = this.onChange.bind(this)
+export const Editor = (props) => {
+
+
+    const children = React.useCallback(
+        document => {
+          return (
+            <PlainEditorContainerInner editable={props.editable}>
+              {document}
+            </PlainEditorContainerInner>
+          )
+        },
+        [props.editable]
+    )
+  
+
+    const docValue =
+        props.docValue && Object.keys(props.docValue).length
+            ? props.docValue
+            : {
+                    plugin: "rows",
+                }
+
+
+    const onChange = ({changed, getDocument}) => {
+        props.dispatchChange(getDocument())
     }
 
-    onChange({changed, getDocument}){
-        this.props.dispatchChange(getDocument())
-    }
 
-    render() {
-        return (
-            <EditorWrapper editing={true}>
-                <Edtr
-                    theme={editorTheme}
-                    plugins={plugins}
-                    defaultPlugin={"text"}
-                    editable={this.props.editing}
-                    omitDragDropContext
-                    initialState={this.docValue}
-                    onChange={this.onChange}>
-                </Edtr>
-            </EditorWrapper>
-        )
-    }
+    return (
+        <EditorWrapper editing={true}>
+            <Edtr
+                theme={editorTheme}
+                plugins={plugins}
+                defaultPlugin={"text"}
+                editable={props.editing}
+                omitDragDropContext
+                initialState={docValue}
+                onChange={onChange}>
+                    {children}
+            </Edtr>
+        </EditorWrapper>
+    )
+
 }
+export default Editor
+
+
+
+function PlainEditorContainerInner(props) {
+    const dispatch = useScopedDispatch()
+    const hasPendingChanges = useScopedSelector(hasPendingChangesSelector())
+    const [editable, setEditable] = React.useState(
+      props.editable === undefined ? true : props.editable
+    )
+    return (
+      <React.Fragment>
+        <div style={{ margin: '20px 0' }}>{props.children}</div>
+        <button
+          onClick={() => {
+            dispatch(undo())
+          }}
+        >
+          Undo
+        </button>
+        <button
+          onClick={() => {
+            dispatch(redo())
+          }}
+        >
+          Redo
+        </button>
+        <button
+          onClick={() => {
+            dispatch(persist())
+          }}
+          disabled={!hasPendingChanges}
+        >
+          Mark persisted
+        </button>
+        <button
+          onClick={() => {
+            dispatch(reset())
+          }}
+          disabled={!hasPendingChanges}
+        >
+          Reset
+        </button>
+        <button
+          onClick={() => {
+            dispatch(focusPrevious())
+          }}
+        >
+          Focus Previous
+        </button>
+        <button
+          onClick={() => {
+            dispatch(focusNext())
+          }}
+        >
+          FocusNext
+        </button>
+        <button
+          onClick={() => {
+            setEditable(!editable)
+          }}
+        >
+          Switch to {editable ? 'render' : 'edit'} mode
+        </button>
+      </React.Fragment>
+    )
+  }

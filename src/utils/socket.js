@@ -14,16 +14,23 @@ class Socket {
 	constructor(url, authorization){
 		this.url = url
 		this.socket = io(url)
+		this.connected = false
 
 		this.socket.on('connect', () => {
 			console.log(EDITOR_SOCKET_URL)
 			console.log('Socket is connected: ' + this.socket.connected) // true
 			this.authorization(authorization)
+			this.connected = this.socket.connected
 		})
 
 		this.socket.on('reconnect', () => {
 			this.authorization(authorization)
+			this.connected = this.socket.connected
 		})
+
+		this.socket.on('disconnect', () => {
+			this.connected = this.socket.connected
+		 })
 
 		this.socket.on('error', (error) => {
 			console.log("Socket error")
@@ -34,6 +41,7 @@ class Socket {
 			}) */
 		})
 	}
+
 
 	async authorization(token){
 		try {

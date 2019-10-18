@@ -27,11 +27,10 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
             if (
                 cacheData &&
                 cacheData.hasOwnProperty("lesson") &&
-                (cacheData.savedToBackend === false)
+                (cacheData.savedToBackend === false || editor.connected)
             ) {
                 lesson = cacheData.lesson
             } else {
-                // lesson = await editorApi.get(`course/${courseId}/lessons/${id}`)
 
                 lesson = await editor.emit(
                     'get',
@@ -45,6 +44,7 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
                     ...section,
                     id: section._id,
                     docValue: section.state,
+                    savedDocValue: section.state,
                     notes: section.note,
                     visible: true, // TODO: remove should be set by server and blur mode should removed
                 }))
@@ -191,8 +191,6 @@ export async function saveLesson(store, dispatch, override) {
             savePromises.push(
                 new Promise(async (resolve, reject) => {
                     try {
-                        console.log('diff')
-                        console.log(sectionDiff)
                         const backendResult =
                             await editor
                                 .emit(
@@ -251,7 +249,7 @@ export async function saveLesson(store, dispatch, override) {
             ...store.lesson,
             sections: store.lesson.sections.map(section => ({
                 ...section,
-                savedDocValue: undefined,
+                savedDocValue: undefined, // TODO: do not set to undefined, because needed for first diff
                 docValue: section.docValue,
             })),
         },
