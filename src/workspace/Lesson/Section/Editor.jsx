@@ -1,4 +1,4 @@
-import React, {useCallback} from "react"
+import React, {useCallback, useEffect} from "react"
 import styled from "styled-components"
 import {
     Editor as Edtr,
@@ -63,17 +63,8 @@ export const editorTheme = {
 export const Editor = (props) => {
 
 
-    const children = React.useCallback(
-        document => {
-          return (
-            <PlainEditorContainerInner editable={props.editable}>
-              {document}
-            </PlainEditorContainerInner>
-          )
-        },
-        [props.editable]
-    )
-  
+    
+
 
     const docValue =
         props.docValue && Object.keys(props.docValue).length
@@ -82,12 +73,20 @@ export const Editor = (props) => {
                     plugin: "rows",
                 }
 
+                const children = React.useCallback(
+                    document => {
+                      return (
+                        <PlainEditorContainerInner
+                            docValue={docValue}>
+                          {document}
+                        </PlainEditorContainerInner>
+                      )
+                    }
+                )
 
     const onChange = ({changed, getDocument}) => {
         props.dispatchChange(getDocument())
     }
-
-
     return (
         <EditorWrapper editing={true}>
             <Edtr
@@ -114,6 +113,17 @@ function PlainEditorContainerInner(props) {
     const [editable, setEditable] = React.useState(
       props.editable === undefined ? true : props.editable
     )
+    
+    useEffect(() => {
+        if(props.docValue && props.docValue.state){
+            dispatch((scope) => ({
+                type: 'SetPartialState',
+                scope,
+                payload: props.docValue
+            }))
+        }
+    }, [props.docValue])
+
     return (
       <React.Fragment>
         <div style={{ margin: '20px 0' }}>{props.children}</div>
@@ -146,27 +156,6 @@ function PlainEditorContainerInner(props) {
           disabled={!hasPendingChanges}
         >
           Reset
-        </button>
-        <button
-          onClick={() => {
-            dispatch(focusPrevious())
-          }}
-        >
-          Focus Previous
-        </button>
-        <button
-          onClick={() => {
-            dispatch(focusNext())
-          }}
-        >
-          FocusNext
-        </button>
-        <button
-          onClick={() => {
-            setEditable(!editable)
-          }}
-        >
-          Switch to {editable ? 'render' : 'edit'} mode
         </button>
       </React.Fragment>
     )
