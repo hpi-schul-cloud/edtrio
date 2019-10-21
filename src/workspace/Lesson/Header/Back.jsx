@@ -12,19 +12,8 @@ const StyledBack = styled(Flex)`
 
 const Back = () => {
     const currentUrl = window.location.href
-    const currentBaseURL = (/^((https|http):\/\/[\w\d:.-]+)/.exec(currentUrl) || [])[0]
-    const last = window.history.length - 1
-
-    const posibleUrls = window.history.slice(-10, 10).filter((url) => (new RegExp(`^${currentBaseURL}`).test(url)))
-
-    let jumpUrl = 'https://schul-cloud.org'
-
-    if(posibleUrls.length === 0){
-        const regexResult = /courses\/([a-f0-9]{24})\/topics\/([a-f0-9]{24})/.exec(currentUrl)
-        jumpUrl = regexResult[1] || jumpUrl
-    }else{
-        jumpUrl = posibleUrls[posibleUrls.length-1]
-    }
+    const regexResult = /courses\/([a-f0-9]{24})\/topics\/([a-f0-9]{24})/.exec(currentUrl)
+    const jumpUrl = regexResult[1] || 'https://schul-cloud.org'
 
     return (
         <StyledBack
