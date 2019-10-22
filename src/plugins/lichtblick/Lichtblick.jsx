@@ -19,10 +19,12 @@ const Lichtblick = ({ focused, state }) => {
         lichtblickFrame = (
             <iframe
                 src={`https://nwdl.eu/lichtblick/dist/`}
+                allowFullScreen={true}
                 style={{
                     width: "100%",
                     height: 800,
                     resize: "vertical",
+    
                     overflow: "auto",
                 }}
                 data-identifier="iframe-0"
