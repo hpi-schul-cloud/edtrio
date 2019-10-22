@@ -6,6 +6,7 @@ import { textPlugin } from "@edtr-io/plugin-text"
 import { scMcExercisePlugin } from "@edtr-io/plugin-sc-mc-exercise"
 import { equationsPlugin } from "@edtr-io/plugin-equations"
 import { geogebraPlugin } from "@edtr-io/plugin-geogebra"
+import { lichtblickPlugin } from "@edtr-io/plugin-lichtblick"
 import { videoPlugin } from "@edtr-io/plugin-video"
 import { inputExercisePlugin } from "@edtr-io/plugin-input-exercise"
 import { createFilePlugin, parseFileType } from "@edtr-io/plugin-files"
@@ -89,6 +90,7 @@ const plugins = {
     files: filesPlugin,
     spoiler: spoilerPlugin,
     geogebra: geogebraPlugin,
+    lichtblick: lichtblickPlugin,
     // inputExercise: inputExercisePlugin,
     video: videoPlugin,
     // equations: equationsPlugin,
