@@ -22,4 +22,4 @@ const lichtblickPlugin = {
     description: "Medienanalyse rocks.",
 }
 
-export default lichtbvlickPlugin
+export default lichtblickPlugin
