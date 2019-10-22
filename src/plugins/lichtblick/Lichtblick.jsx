@@ -7,6 +7,7 @@ import Input from "~/components/Input"
 import Flex from "~/components/Flex"
 
 import { createBoard } from "./utils"
+import none from "ramda/es/none"
 
 const Lichtblick = ({ focused, state }) => {
     useEffect(() => {
@@ -23,11 +24,11 @@ const Lichtblick = ({ focused, state }) => {
                 style={{
                     width: "100%",
                     height: 800,
+                    border: 0,
                     resize: "vertical",
-    
                     overflow: "auto",
                 }}
-                data-identifier="iframe-0"
+                data-identifier="iframe-lichtblick"
             />
         )
     
