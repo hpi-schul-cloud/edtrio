@@ -15,7 +15,7 @@ import { createImagePlugin } from "@edtr-io/plugin-image"
 
 import nexboardPlugin from "~/plugins/nexboard"
 import etherpadPlugin from "~/plugins/etherpad"
-import lichblickPlugin from "~/plugins/lichtblick"
+import lichtblickPlugin from "~/plugins/lichtblick"
 import notesPlugin from "~/plugins/notes"
 
 function readFile(file) {
