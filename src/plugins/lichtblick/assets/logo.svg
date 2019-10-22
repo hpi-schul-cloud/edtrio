@@ -1,61 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
-<svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   version="1.1"
-   width="62.5"
-   height="62.5"
-   viewBox="0 0 60.818816 60.818816"
-   id="svg2">
-  <title
-     id="title3033">Etherpad</title>
-  <metadata
-     id="metadata9">
-    <rdf:RDF>
-      <cc:Work
-         rdf:about="">
-        <dc:format>image/svg+xml</dc:format>
-        <dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title>Etherpad</dc:title>
-        <dc:date>2012-11-20</dc:date>
-        <dc:creator>
-          <cc:Agent>
-            <dc:title>Marcel Klehr</dc:title>
-          </cc:Agent>
-        </dc:creator>
-        <cc:license
-           rdf:resource="http://creativecommons.org/licenses/by-sa/3.0/" />
-      </cc:Work>
-      <cc:License
-         rdf:about="http://creativecommons.org/licenses/by-sa/3.0/">
-        <cc:permits
-           rdf:resource="http://creativecommons.org/ns#Reproduction" />
-        <cc:permits
-           rdf:resource="http://creativecommons.org/ns#Distribution" />
-        <cc:requires
-           rdf:resource="http://creativecommons.org/ns#Notice" />
-        <cc:requires
-           rdf:resource="http://creativecommons.org/ns#Attribution" />
-        <cc:permits
-           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
-        <cc:requires
-           rdf:resource="http://creativecommons.org/ns#ShareAlike" />
-      </cc:License>
-    </rdf:RDF>
-  </metadata>
-  <path
-     d="m 45.953277,48.842636 -13.76749,-9.370078 -18.010202,8.570208 m 5.236235,-10.276004 10.613265,6.343524 10.755253,-5.749067 m -16.132879,-10.293644 5.377626,3.10269 5.443554,-3.348981 M 29.747573,15.946027 32.233411,39.472556 M 29.838272,16.44373 13.688126,48.16853 29.508012,57.45699 29.820402,10.225937 29.772772,16.34803 45.95327,48.842636 29.508003,57.269219 M 21.553773,9.1091165 C 22.743554,-0.86550773 35.946656,-2.7841873 38.218887,8.8403001"
-     id="path01"
-     style="fill:none;stroke:#123f0f;stroke-width:1.82456446;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-  <path
-     d="m 7.5244331,10.032578 a 0.34835339,0.37477049 0 1 1 -0.6967067,0 0.34835339,0.37477049 0 1 1 0.6967067,0 z"
-     transform="matrix(3.1221913,0,0,2.972881,7.3844024,-20.305626)"
-     id="path3756"
-     style="fill:#b3b3b3;fill-opacity:1;stroke:#123f0f;stroke-width:0.79850829;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 141 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(0.389979,0,0,0.392826,69.5098,25.0277)">
+        <g transform="matrix(1,0,0,1,-180.625,-61.875)">
+            <g transform="matrix(0.125,0,0,-0.125,-85,150)">
+                <rect x="2029.52" y="318.891" width="779.531" height="779.531" style="fill:rgb(245,124,20);fill-rule:nonzero;"/>
+                <path d="M3123.61,514.59L3158.33,514.59L3032.33,898.188L2990.33,898.188L2864.33,514.59L2897.93,514.59L2930.97,618.188L3090.57,618.188L3123.61,514.59ZM3010.49,868.508L3011.61,868.508L3081.61,646.188L2939.93,646.188L3010.49,868.508ZM3459.61,866.27C3431.61,891.469 3401.93,904.348 3353.21,904.348C3272.01,904.348 3194.73,837.707 3194.73,706.668C3194.73,573.949 3258.01,508.43 3347.05,508.43C3392.41,508.43 3432.73,520.746 3466.33,539.789L3466.33,722.348L3351.53,722.348L3355.45,694.348L3433.85,694.348L3433.85,557.148C3410.33,544.27 3382.89,536.988 3348.73,536.988C3277.61,536.988 3229.45,589.629 3229.45,706.668C3229.45,827.629 3289.93,875.789 3353.77,875.789C3389.61,875.789 3415.93,866.27 3439.45,845.547L3459.61,866.27" style="fill:rgb(63,97,171);fill-rule:nonzero;"/>
+                <path d="M2465.06,514.59L2433.14,900.43L2360.9,900.43L2279.14,618.746L2276.9,618.746L2192.34,900.43L2120.66,900.43L2088.74,514.59L2139.14,514.59L2154.26,712.27C2158.18,762.109 2159.3,827.629 2159.3,840.508L2161.54,840.508L2251.14,555.469L2302.1,555.469L2388.34,840.508L2390.58,840.508C2390.58,828.188 2392.26,766.59 2396.74,712.27L2413.54,514.59L2465.06,514.59ZM2731.06,720.109C2731.06,780.027 2698.58,816.43 2623.54,816.43C2594.42,816.43 2561.38,810.828 2524.98,797.387L2538.42,759.309C2568.66,769.949 2596.1,774.43 2615.7,774.43C2658.82,774.43 2679.54,758.746 2679.54,717.309L2679.54,694.348L2641.46,694.348C2551.86,694.348 2502.58,660.188 2502.58,599.148C2502.58,544.27 2538.98,507.867 2598.34,507.867C2634.18,507.867 2665.54,521.309 2686.26,549.309C2695.22,522.988 2714.26,511.227 2740.58,507.867L2752.9,543.707C2737.78,549.309 2731.06,557.707 2731.06,581.227L2731.06,720.109ZM2612.34,546.508C2575.38,546.508 2559.14,564.988 2559.14,601.387C2559.14,637.227 2580.98,660.188 2644.26,660.188L2679.54,660.188L2679.54,587.387C2662.74,561.629 2640.34,546.508 2612.34,546.508" style="fill:white;fill-rule:nonzero;"/>
+                <path d="M1047.16,514.59L1103.16,514.59L978.277,900.43L911.078,900.43L785.637,514.59L839.398,514.59L869.078,611.469L1017.48,611.469L1047.16,514.59ZM942.438,852.27L944.676,852.27L1004.6,654.59L881.957,654.59L942.438,852.27ZM1523.15,514.59L1491.23,900.43L1418.99,900.43L1337.23,618.746L1334.99,618.746L1250.43,900.43L1178.75,900.43L1146.83,514.59L1197.23,514.59L1212.35,712.27C1216.27,762.109 1217.39,827.629 1217.39,840.508L1219.63,840.508L1309.23,555.469L1360.19,555.469L1446.43,840.508L1448.67,840.508C1448.67,828.188 1450.35,766.59 1454.83,712.27L1471.63,514.59L1523.15,514.59ZM1963.31,514.59L1931.39,900.43L1859.15,900.43L1777.39,618.746L1775.15,618.746L1690.59,900.43L1618.91,900.43L1586.99,514.59L1637.39,514.59L1652.51,712.27C1656.43,762.109 1657.55,827.629 1657.55,840.508L1659.79,840.508L1749.39,555.469L1800.35,555.469L1886.59,840.508L1888.83,840.508C1888.83,828.188 1890.51,766.59 1894.99,712.27L1911.79,514.59L1963.31,514.59" style="fill:rgb(63,97,171);fill-rule:nonzero;"/>
+            </g>
+        </g>
+    </g>
 </svg>
