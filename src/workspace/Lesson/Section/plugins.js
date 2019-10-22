@@ -6,7 +6,6 @@ import { textPlugin } from "@edtr-io/plugin-text"
 import { scMcExercisePlugin } from "@edtr-io/plugin-sc-mc-exercise"
 import { equationsPlugin } from "@edtr-io/plugin-equations"
 import { geogebraPlugin } from "@edtr-io/plugin-geogebra"
-import { lichtblickPlugin } from "@edtr-io/plugin-lichtblick"
 import { videoPlugin } from "@edtr-io/plugin-video"
 import { inputExercisePlugin } from "@edtr-io/plugin-input-exercise"
 import { createFilePlugin, parseFileType } from "@edtr-io/plugin-files"
@@ -16,6 +15,7 @@ import { createImagePlugin } from "@edtr-io/plugin-image"
 
 import nexboardPlugin from "~/plugins/nexboard"
 import etherpadPlugin from "~/plugins/etherpad"
+import lichblickPlugin from "~/plugins/lichtblick"
 import notesPlugin from "~/plugins/notes"
 
 function readFile(file) {
@@ -23,7 +23,7 @@ function readFile(file) {
         const reader = new FileReader()
         reader.onload = function(e) {
             const dataUrl = e.target.result
-            //simulate uploadtime
+            // simulate uploadtime
             setTimeout(() => resolve({ file, dataUrl }), 1000)
         }
 
