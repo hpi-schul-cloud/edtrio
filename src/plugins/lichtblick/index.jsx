@@ -1,11 +1,10 @@
 import React from "react"
-import { object, string } from "@edtr-io/plugin"
+import { object, string, boolean } from "@edtr-io/plugin"
 
 import Lichtblick from "./Lichtblick"
 export const lichtblickState = object({
-    id: string(),
-    title: string(),
-    description: string(),
+    data: object(),
+    changed: boolean(),
 })
 
 const lichtblickPlugin = {

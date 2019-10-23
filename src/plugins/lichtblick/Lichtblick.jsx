@@ -33,10 +33,7 @@ const Lichtblick = ({ focused, state }) => {
     // `http://localhost:3060/index.html?src=${encodeURI(videoUrl)}&id=${uuid}`
     const src = `http://localhost:3060/index.html?src=${encodeURI(videoUrl)}&id=${uuid}` 
     
-    const [lichtblickState, setState] = useState({
-        data: {},
-        changed: false
-    })
+    const [height, setHeight] = useState(500)
 
     useEffect(() => {
         const iframeContent = document.getElementById(uuid).contentWindow
@@ -51,7 +48,7 @@ const Lichtblick = ({ focused, state }) => {
                 allowFullScreen={true}
                 style={{
                     width: '100%',
-                    height: 500,
+                    height: height,
                     border: 0,
                     overflow: "none",
                 }}
@@ -63,7 +60,7 @@ const Lichtblick = ({ focused, state }) => {
         window.addEventListener('message', (e) => {
             if(e.origin === src){
                 if (e.data.action && e.data.action === 'resize') {
-                    lichtblickFrame.style.height = e.data.height
+                     setHeight(e.data.height)
                 } else if (e.data.action && e.data.action === 'getState') {
                     const iframeContent = document.getElementById(uuid).contentWindow
                     iframeContent.postMessage({
@@ -71,10 +68,7 @@ const Lichtblick = ({ focused, state }) => {
                         data: lichtblickState
                     }, '*')
                 } else {
-                    setState({
-                        ...lichtblickState,
-                        data: e.data
-                    })
+                    state.data.set(e.data)
                 }
             }
         })
