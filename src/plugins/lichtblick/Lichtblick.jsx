@@ -34,14 +34,14 @@ const Lichtblick = ({ focused, state }) => {
     // page to iframe https://robertnyman.com/html5/postMessage/postMessage.html
     const src = `/lichtblick/index.html?src=${encodeURI(videoUrl)}&id=${uuid}` 
     
-    const [state, setState] = useState({
+    const [lichtblickState, setState] = useState({
         data: {},
         changed: false
     })
 
     useEffect(() => {
         const iframeContent = document.getElementById(uuid).contentWindow
-        iframeContent.postMessage(state.data, '*')
+        iframeContent.postMessage(lichtblickState.data, '*')
     }, [])
 
 
@@ -65,7 +65,7 @@ const Lichtblick = ({ focused, state }) => {
         window.addEventListener('message', (e) => {
             if(e.origin === src){
                 setState({
-                    ...state,
+                    ...lichtblickState,
                     data: e.data
                 })
             }
