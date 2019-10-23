@@ -13,10 +13,7 @@ import none from "ramda/es/none"
 
 
 export const LichtblickWrapper = styled.div`
-    position: relative; 
-    padding-bottom: 56.25%; /* ratio 16x9 */
     height: 0; 
-    overflow: hidden; 
     width: 100%;
     height: auto;
 `
@@ -32,6 +29,8 @@ const Lichtblick = ({ focused, state }) => {
     // http://pbojinov.github.io/iframe-communication/iframe.html
     // https://nwdl.eu/lichtblick/dist/
     // page to iframe https://robertnyman.com/html5/postMessage/postMessage.html
+    // `/lichtblick/index.html?src=${encodeURI(videoUrl)}&id=${uuid}` 
+    // `http://localhost:3060/index.html?src=${encodeURI(videoUrl)}&id=${uuid}`
     const src = `/lichtblick/index.html?src=${encodeURI(videoUrl)}&id=${uuid}` 
     
     const [lichtblickState, setState] = useState({
@@ -51,11 +50,10 @@ const Lichtblick = ({ focused, state }) => {
                 src={src}
                 allowFullScreen={true}
                 style={{
-                    width: 544,
-                    height: 800,
+                    width: '100%',
+                    height: 500,
                     border: 0,
-                    resize: "vertical",
-                    overflow: "auto",
+                    overflow: "none",
                 }}
                 scrolling="0"
                 data-identifier="iframe-lichtblick"
@@ -64,10 +62,14 @@ const Lichtblick = ({ focused, state }) => {
 
         window.addEventListener('message', (e) => {
             if(e.origin === src){
-                setState({
-                    ...lichtblickState,
-                    data: e.data
-                })
+                if (e.data.action && e.data.action === 'resize') {
+                    lichtblickFrame.style.height = e.data.height
+                } else {
+                    setState({
+                        ...lichtblickState,
+                        data: e.data
+                    })
+                }
             }
         })
 
