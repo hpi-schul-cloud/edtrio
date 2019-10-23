@@ -25,12 +25,13 @@ const Lichtblick = ({ focused, state }) => {
     const { store, dispatch } = useContext(LessonContext)
     const uuid = uuidv5()
 
-    const videoUrl = 'https://www10-fms.hpi.uni-potsdam.de/vod/media/SCHUL-CLOUD/explainer2018/hd/video.mp4'
+    const videoUrl = '/demo_content/video.mp4'
+
     // testmovie: https://www10-fms.hpi.uni-potsdam.de/vod/media/SCHUL-CLOUD/explainer2018/hd/video.mp4
     // http://pbojinov.github.io/iframe-communication/iframe.html
     // https://nwdl.eu/lichtblick/dist/
     // page to iframe https://robertnyman.com/html5/postMessage/postMessage.html
-    const src = `https://nwdl.eu/lichtblick.upload/dist/?src=${encodeURI(videoUrl)}&id=${uuid}` 
+    const src = `/lichtblick/index.html?src=${encodeURI(videoUrl)}&id=${uuid}` 
     
 
     useEffect(() => {

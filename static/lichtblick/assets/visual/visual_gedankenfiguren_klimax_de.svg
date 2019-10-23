@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" [
+	<!ENTITY ns_extend "http://ns.adobe.com/Extensibility/1.0/">
+	<!ENTITY ns_ai "http://ns.adobe.com/AdobeIllustrator/10.0/">
+	<!ENTITY ns_graphs "http://ns.adobe.com/Graphs/1.0/">
+	<!ENTITY ns_vars "http://ns.adobe.com/Variables/1.0/">
+	<!ENTITY ns_imrep "http://ns.adobe.com/ImageReplacement/1.0/">
+	<!ENTITY ns_sfw "http://ns.adobe.com/SaveForWeb/1.0/">
+	<!ENTITY ns_custom "http://ns.adobe.com/GenericCustomNamespace/1.0/">
+	<!ENTITY ns_adobe_xpath "http://ns.adobe.com/XPath/1.0/">
+]>
+<svg version="1.1" id="Ebene_1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="300px" height="300px"
+	 viewBox="0 0 300 300" enable-background="new 0 0 300 300" xml:space="preserve">
+<metadata>
+	<sfw  xmlns="&ns_sfw;">
+		<slices></slices>
+		<sliceSourceBounds  height="307.582" width="300" x="-50.5" y="-57.082" bottomLeftOrigin="true"></sliceSourceBounds>
+	</sfw>
+</metadata>
+<path fill="#248CBA" d="M228,300H72c-39.603,0-72-16.9-72-56.5V60C0,20.4,32.398,0,72,0h156c39.602,0,72,20.9,72,60.5V244
+	C300,283.6,267.6,300,228,300z"/>
+<rect x="0.758" y="228.086" fill="none" width="298.483" height="79.496"/>
+<g enable-background="new    ">
+	<path fill="#FFFFFF" d="M86.425,229.812h4.176v15.601h0.144c0.864-1.248,1.728-2.399,2.544-3.456l9.889-12.145h5.185L96.65,243.54
+		l12.625,18.626h-4.944l-10.657-15.89l-3.072,3.553v12.337h-4.176V229.812z"/>
+	<path fill="#FFFFFF" d="M112.776,228.083H117v34.083h-4.224V228.083z"/>
+	<path fill="#FFFFFF" d="M128.808,232.403c0.048,1.44-1.008,2.593-2.688,2.593c-1.488,0-2.544-1.152-2.544-2.593
+		c0-1.488,1.104-2.64,2.641-2.64C127.801,229.764,128.808,230.915,128.808,232.403z M124.104,262.166v-23.234h4.224v23.234H124.104z
+		"/>
+	<path fill="#FFFFFF" d="M135.336,245.221c0-2.4-0.048-4.368-0.192-6.289h3.696l0.192,3.745h0.144
+		c1.296-2.209,3.456-4.272,7.296-4.272c3.168,0,5.569,1.92,6.577,4.656h0.096c0.721-1.296,1.633-2.305,2.593-3.024
+		c1.392-1.056,2.929-1.632,5.136-1.632c3.072,0,7.633,2.016,7.633,10.08v13.682h-4.128v-13.153c0-4.464-1.632-7.152-5.04-7.152
+		c-2.4,0-4.273,1.776-4.992,3.84c-0.193,0.576-0.337,1.345-0.337,2.112v14.354h-4.128v-13.921c0-3.696-1.632-6.385-4.849-6.385
+		c-2.64,0-4.561,2.112-5.232,4.225c-0.24,0.624-0.336,1.344-0.336,2.063v14.018h-4.128V245.221z"/>
+	<path fill="#FFFFFF" d="M188.233,262.166l-0.336-2.929h-0.144c-1.297,1.824-3.793,3.457-7.104,3.457
+		c-4.705,0-7.105-3.313-7.105-6.673c0-5.616,4.992-8.688,13.97-8.641v-0.48c0-1.92-0.528-5.376-5.28-5.376
+		c-2.16,0-4.416,0.672-6.049,1.728l-0.96-2.784c1.92-1.248,4.704-2.063,7.633-2.063c7.104,0,8.833,4.848,8.833,9.505v8.688
+		c0,2.016,0.096,3.984,0.384,5.568H188.233z M187.609,250.309c-4.608-0.096-9.841,0.721-9.841,5.232
+		c0,2.736,1.824,4.033,3.984,4.033c3.024,0,4.944-1.921,5.616-3.889c0.145-0.432,0.24-0.912,0.24-1.344V250.309z"/>
+	<path fill="#FFFFFF" d="M200.472,238.932l3.313,4.993c0.863,1.296,1.584,2.496,2.352,3.792h0.145
+		c0.768-1.393,1.536-2.592,2.304-3.841l3.265-4.944h4.561l-7.921,11.233l8.16,12.001h-4.8l-3.408-5.232
+		c-0.912-1.344-1.681-2.641-2.496-4.032h-0.097c-0.768,1.392-1.584,2.64-2.448,4.032l-3.36,5.232h-4.656l8.257-11.857l-7.873-11.377
+		H200.472z"/>
+</g>
+<g>
+	<ellipse opacity="0.4" fill="#FFFFFF" enable-background="new    " cx="147.04" cy="109.499" rx="84.333" ry="83"/>
+	<g>
+		<g>
+			
+				<line fill="none" stroke="#FFFFFF" stroke-width="12" stroke-miterlimit="10" x1="143.645" y1="131.078" x2="248.627" y2="131.078"/>
+			
+				<line fill="none" stroke="#FFFFFF" stroke-width="12" stroke-miterlimit="10" x1="143.645" y1="154.576" x2="223.518" y2="154.576"/>
+			<line fill="none" stroke="#FFFFFF" stroke-width="12" stroke-miterlimit="10" x1="143.645" y1="84.08" x2="234.932" y2="84.08"/>
+			
+				<line fill="none" stroke="#FFFFFF" stroke-width="12" stroke-miterlimit="10" x1="143.645" y1="107.579" x2="191.75" y2="107.579"/>
+		</g>
+	</g>
+	<circle opacity="0.4" fill="#FFFFFF" enable-background="new    " cx="72.707" cy="170.166" r="9"/>
+	<circle opacity="0.4" fill="#FFFFFF" enable-background="new    " cx="58.04" cy="183.165" r="6.666"/>
+</g>
+</svg>

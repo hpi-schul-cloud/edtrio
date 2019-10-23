@@ -1,0 +1,958 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<index>
+  <marker name="Filmsprache">
+    <marker name="Einstellung/Kinematografie">
+      <marker name="Mise-en-Scène">
+        <entry image="Images/visual_long_take_de.png" lex="lex_long_take.html" name="Lange Einstellung"></entry>
+        <entry image="Images/visual_two_shot_de.png" lex="lex_two_shot.html" name="Zweiereinstellung"></entry>
+        <entry image="Images/visual_three_shot_de.png" lex="lex_three_shot.html" name="Dreiereinstellung"></entry>
+        <entry image="Images/visual_over_shoulder_de.png" lex="lex_over_the_shoulder_shot.html" name="Über-die-Schulter-Einstellung"></entry>
+        <entry image="Images/visual_establishing_shot_de.png" lex="lex_establishing_shot.html" name="Einführungseinstellung"></entry>
+        <entry image="Images/visual_set_de.png" lex="lex_set.html" name="Kulisse"></entry>
+        <entry image="Images/visual_location_de.png" lex="lex_location.html" name="Originaldrehort"></entry>
+        <entry image="Images/visual_realistic_setting_de.png" lex="lex_realistic_setting.html" name="Realistischer Schauplatz"></entry>
+        <entry image="Images/visual_nonrealistic_setting_de.png" lex="lex_nonrealistic_setting.html" name="Unrealistischer Schauplatz"></entry>
+        <entry image="Images/visual_limbo_de.png" lex="lex_limbo.html" name="Limbo"></entry>
+        <entry image="Images/visual_loose_framing_de.png" lex="lex_loose_framing.html" name="Freie Kadrage"></entry>
+        <entry image="Images/visual_tight_framing_de.png" lex="lex_tight_framing.html" name="Enge Kadrage"></entry>
+        <entry image="Images/visual_deep_space_de.png" lex="lex_deep_space.html" name="Tiefe"></entry>
+        <entry image="Images/visual_flat_space_de.png" lex="lex_flat_space.html" name="Untiefe"></entry>
+        <entry image="Images/visual_ambiguous_space_de.png" lex="lex_ambiguous_space.html" name="Mehrdeutiger Raum"></entry>
+        <entry image="Images/visual_balance_de.png" lex="lex_balance.html" name="Gleichgewicht (Balance)"></entry>
+        <entry image="Images/visual_imbalance_de.png" lex="lex_imbalance.html" name="Ungleichgewicht"></entry>
+      </marker>
+      <marker name="Beleuchtung">
+        <entry image="Images/visual_high_key_de.png" lex="lex_high_key_lighting.html" name="High-Key-Stil"></entry>
+        <entry image="Images/visual_low_key_de.png" lex="lex_low_key_lighting.html" name="Low-Key-Stil"></entry>
+        <entry image="Images/visual_available_light_de.png" lex="lex_available_light.html" name="Vorhandenes Licht"></entry>
+        <entry image="Images/visual_exterior_light_de.png" lex="lex_exterior_light.html" name="Externes Licht"></entry>
+      </marker>
+      <marker name="Objektiv">
+        <entry image="Images/visual_fisheye_de.png" lex="lex_fisheye_lens.html" name="Fischaugenobjektiv"></entry>
+        <entry image="Images/visual_wide_angle_de.png" lex="lex_wide_angle_lens.html" name="Weitwinkelobjektiv"></entry>
+        <entry image="Images/visual_normal_lens_de.png" lex="lex_normal_lens.html" name="Normalobjektiv"></entry>
+        <entry image="Images/visual_telephoto_de.png" lex="lex_telephoto_lens.html" name="Teleobjektiv"></entry>
+      </marker>
+      <marker name="Fokus">
+        <entry image="Images/visual_shallow_focus_de.png" lex="lex_shallow_focus.html" name="Geringe Tiefenschärfe"></entry>
+        <entry image="Images/visual_deep_focus_de.png" lex="lex_deep_focus.html" name="Große Tiefenschärfe"></entry>
+        <entry image="Images/visual_rack_focus_de.png" lex="lex_rack_focus.html" name="Schärfeverlagerung"></entry>
+        <entry image="Images/visual_out_of_focus_de.png" lex="lex_out_of_focus.html" name="Unschärfe"></entry>
+      </marker>
+      <marker name="Einstellungsgröße">
+        <entry image="Images/visual_ecu_de.png" lex="lex_extreme_close_up.html" name="Detail"></entry>
+        <entry image="Images/visual_cu_de.png" lex="lex_close_up.html" name="Großaufnahme"></entry>
+        <entry image="Images/visual_mcu_de.png" lex="lex_medium_close_up.html" name="Nah"></entry>
+        <entry image="Images/visual_ms_de.png" lex="lex_medium_shot.html" name="Halbnah"></entry>
+        <entry image="Images/visual_mls_de.png" lex="lex_medium_long_shot.html" name="Halbtotale"></entry>
+        <entry image="Images/visual_ls_de.png" lex="lex_long_shot.html" name="Totale"></entry>
+        <entry image="Images/visual_els_de.png" lex="lex_extreme_long_shot.html" name="Weit/Panorama"></entry>
+      </marker>
+      <marker name="Kameraperspektive">
+        <entry image="Images/visual_overhead_de.png" lex="lex_overhead_angle.html" name="Extreme Aufsicht (Vogelperspektive)"></entry>
+        <entry image="Images/visual_high_de.png" lex="lex_high_angle.html" name="Aufsicht"></entry>
+        <entry image="Images/visual_eye-level_de.png" lex="lex_eye_level_angle.html" name="Augenhöhe/Normalsicht"></entry>
+        <entry image="Images/visual_canted_angle_de.png" lex="lex_canted_angle.html" name="Gekippter Winkel"></entry>
+        <entry image="Images/visual_low_de.png" lex="lex_low_angle.html" name="Untersicht"></entry>
+        <entry image="Images/visual_below_de.png" lex="lex_below_angle.html" name="Extreme Untersicht (Froschperspektive)"></entry>
+      </marker>
+      <marker name="Kamerabewegung">
+        <marker name="Fixierte Kamera">
+          <entry image="Images/visual_static_de.png" lex="lex_static.html" name="Statische Einstellung"></entry>
+          <entry image="Images/visual_pan_de.png" lex="lex_panning.html" name="Schwenk"></entry>
+          <entry image="Images/visual_swish_pan_de.png" lex="lex_swish_pan.html" name="Reißschwenk"></entry>
+          <entry image="Images/visual_360_pan_de.png" lex="lex_360_degree_pan.html" name="360-Grad-Schwenk"></entry>
+          <entry image="Images/visual_tilt_de.png" lex="lex_tilting.html" name="Kippen/Neigen"></entry>
+          <entry image="Images/visual_rot_de.png" lex="lex_rotate.html" name="Rotieren/Rollen"></entry>
+        </marker>
+        <marker name="Mobile Kamera">
+          <entry image="Images/visual_hand_de.png" lex="lex_handheld.html" name="Handkamera"></entry>
+          <entry image="Images/visual_steadicam_de.png" lex="lex_steadicam.html" name="Steadicam"></entry>
+          <entry image="Images/visual_track_de.png" lex="lex_track.html" name="Kamerafahrt"></entry>
+          <entry image="Images/visual_track_in_de.png" lex="lex_track_in.html" name="Hinfahrt"></entry>
+          <entry image="Images/visual_track_out_de.png" lex="lex_track_out.html" name="Rückfahrt"></entry>
+          <entry image="Images/visual_crane_de.png" lex="lex_crane.html" name="Kran"></entry>
+          <entry image="Images/visual_circle_shot_de.png" lex="lex_circle_shot.html" name="Kreisfahrt"></entry>
+          <entry image="Images/visual_aerial_shot_de.png" lex="lex_aerial_shot.html" name="Luftbild"></entry>
+          <entry image="Images/visual_follow_shot_de.png" lex="lex_following_shot.html" name="Verfolgungsfahrt"></entry>
+        </marker>
+        <marker name="Scheinbare Kamerabewegung">
+          <entry image="Images/visual_zoom_in_de.png" lex="lex_zoom_in.html" name="Heranzoomen"></entry>
+          <entry image="Images/visual_zoom_out_de.png" lex="lex_zoom_out.html" name="Herauszoomen"></entry>
+        </marker>
+      </marker>
+      <marker name="Erzählperspektive">
+        <entry image="Images/visual_objective_camera_de.png" lex="lex_objective_camera.html" name="Objektive Kamera"></entry>
+        <entry image="Images/visual_omniscient_camera_de.png" lex="lex_omniscient_camera.html" name="Allwissende Kamera"></entry>
+        <entry image="Images/visual_subjective_camera_de.png" lex="lex_subjective_camera.html" name="Subjektive Kamera"></entry>
+        <entry image="Images/visual_point_of_view_shot_de.png" lex="lex_point_of_view_shot.html" name="Subjektive Einstellung"></entry>
+        <entry image="Images/visual_mindscreen_blue_de.png" lex="lex_mind_screen.html" name="Mindscreen"></entry>
+      </marker>
+    </marker>
+    <marker name="Schnitt/Postproduktion">
+      <marker name="Schnitt">
+        <entry image="Images/visual_montage_de.png" lex="lex_montage.html" name="Montage"></entry>
+        <entry image="Images/visual_point_of_view_cut_de.png" lex="lex_point_of_view_shot.html" name="Subjektive Einstellung"></entry>
+        <entry image="Images/visual_mindscreen_red_de.png" lex="lex_mind_screen.html" name="Mindscreen"></entry>
+        <entry image="Images/visual_reaction_shot_de.png" lex="lex_reaction_shot.html" name="Reaktionseinstellung"></entry>
+        <entry image="Images/visual_cutaway_shot_de.png" lex="lex_cutaway.html" name="Zwischenschnitt"></entry>
+        <entry image="Images/visual_superimposition_de.png" lex="lex_superimposition.html" name="Doppelbelichtung"></entry>
+      </marker>
+      <marker name="Kontinuitätsprinzip">
+        <entry image="Images/visual_180_de.png" lex="lex_180_degree_system.html" name="180-Grad-Regel"></entry>
+        <entry image="Images/visual_non_180_de.png" lex="lex_180_degree_system.html" name="Bruch der 180-Grad-Regel"></entry>
+        <entry image="Images/visual_30_de.png" lex="lex_30_degree_system.html" name="30-Grad-Regel"></entry>
+        <entry image="Images/visual_non_30_de.png" lex="lex_30_degree_system.html" name="Bruch der 30-Grad-Regel"></entry>
+        <entry image="Images/visual_cutting_on_action_de.png" lex="lex_cutting_on_action.html" name="Bewegungsschnitt"></entry>
+        <entry image="Images/visual_eyeline_match_de.png" lex="lex_eyeline_match.html" name="Blickachsenanschluss"></entry>
+        <entry image="Images/visual_establishing_shot_red_de.png" lex="lex_establishing_shot.html" name="Einführungseinstellung"></entry>
+        <entry image="Images/visual_shot_reverse_shot_de.png" lex="lex_shot_reverse_shot.html" name="Schuss-Gegenschuss-Verfahren"></entry>
+      </marker>
+      <marker name="Überblendung">
+        <entry image="Images/visual_straight_cut_de.png" lex="lex_straight_cut.html" name="Harter Schnitt"></entry>
+        <entry image="Images/visual_dissolve_de.png" lex="lex_lap_dissolve.html" name="Weiche Blende"></entry>
+        <entry image="Images/visual_fade_out_de.png" lex="lex_fade_out.html" name="Abblende"></entry>
+        <entry image="Images/visual_fade_in_de.png" lex="lex_fade_in.html" name="Aufblende"></entry>
+        <entry image="Images/visual_match_cut_de.png" lex="lex_match_cut.html" name="Anschlussschnitt"></entry>
+        <entry image="Images/visual_jump_cut_de.png" lex="lex_jump_cut.html" name="Jump Cut"></entry>
+        <entry image="Images/visual_wipe_de.png" lex="lex_wipe.html" name="Wischblende"></entry>
+      </marker>
+      <marker name="Tempo und Zeit">
+        <entry image="Images/visual_freeze_frame_de.png" lex="lex_freeze_frame.html" name="Standbild/Einfrieren"></entry>
+        <entry image="Images/visual_slow_motion_de.png" lex="lex_slow_motion.html" name="Zeitlupe"></entry>
+        <entry image="Images/visual_fast_motion_de.png" lex="lex_fast_motion.html" name="Zeitraffer"></entry>
+        <entry image="Images/visual_flashback_de.png" lex="lex_flashback.html" name="Rückblende"></entry>
+        <entry image="Images/visual_flash_forward_de.png" lex="lex_flash_forward.html" name="Vorausschau"></entry>
+        <entry image="Images/visual_elliptical_editing_de.png" lex="lex_elliptical_editing.html" name="Elliptische Montage"></entry>
+        <entry image="Images/visual_cross_cutting_de.png" lex="lex_cross_cut.html" name="Kreuzschnitt"></entry>
+        <entry image="Images/visual_overlapping_action_de.png" lex="lex_overlapping_action.html" name="Überlappende Bewegung/Überlappende Montage"></entry>
+      </marker>
+    </marker>
+    <marker name="Ton (Geräusche und Musik)">
+      <marker name="Atmo">
+        <entry image="Images/visual_ambient_de.png" lex="lex_ambient_sound.html" name="Atmo"></entry>
+        <entry image="Images/visual_ambient_on_de.png" lex="lex_ambient_sound.html" name="Onscreen Atmo"></entry>
+        <entry image="Images/visual_ambient_off_de.png" lex="lex_ambient_sound.html" name="Offscreen Atmo"></entry>
+      </marker>
+      <marker name="Toneffekt">
+        <entry image="Images/visual_soundeffect_de.png" lex="lex_sound_effect.html" name="Toneffekt"></entry>
+        <entry image="Images/visual_soundeffect_on_de.png" lex="lex_sound_effect.html" name="Onscreen Toneffekt"></entry>
+        <entry image="Images/visual_soundeffect_off_de.png" lex="lex_sound_effect.html" name="Offscreen Toneffekt"></entry>
+        <entry image="Images/visual_soundeffect_diegetic_de.png" lex="lex_sound_effect.html" name="Diegetischer Toneffekt"></entry>
+        <entry image="Images/visual_soundeffect_non_diegetic_de.png" lex="lex_sound_effect.html" name="Nicht-diegetischer Toneffekt"></entry>
+      </marker>
+      <marker name="Musik">
+        <entry image="Images/visual_music_de.png" lex="lex_film_score.html" name="Musik"></entry>
+        <entry image="Images/visual_music_on_de.png" lex="lex_film_score.html" name="Onscreen Musik"></entry>
+        <entry image="Images/visual_music_off_de.png" lex="lex_film_score.html" name="Offscreen Musik"></entry>
+        <entry image="Images/visual_music_diegetic_de.png" lex="lex_film_score.html" name="Diegetische Musik"></entry>
+        <entry image="Images/visual_music_non_diegetic_de.png" lex="lex_film_score.html" name="Nicht-diegetische Musik"></entry>
+      </marker>
+      <marker name="Sprache">
+        <entry image="Images/visual_voice_de.png" lex="lex_sound_music.html" name="Sprache"></entry>
+        <entry image="Images/visual_voice_on_de.png" lex="lex_sound_music.html" name="Onscreen Sprache"></entry>
+        <entry image="Images/visual_voice_off_de.png" lex="lex_sound_music.html" name="Offscreen Sprache"></entry>
+        <entry image="Images/visual_voice_diegetic_de.png" lex="lex_sound_music.html" name="Diegetische Sprache"></entry>
+        <entry image="Images/visual_voice_non_diegetic_de.png" lex="lex_sound_music.html" name="Nicht-diegetische Sprache"></entry>
+      </marker>
+    </marker>
+  </marker>
+<marker name="Dramaturgie">
+    <marker name="3-Akt-Struktur">
+      <entry image="Images/visual_dreiaktstruktur_de.svg" lex="lex_dreiaktstruktur.html" name="Dreiaktstruktur"></entry>
+      <entry image="Images/visual_drei_exposition_de.svg" lex="lex_drama_exposition.html" name="Exposition"></entry>
+      <entry image="Images/visual_drei_klimax_de.svg" lex="lex_klimax_hoehepunkt.html" name="Klimax/Höhepunkt"></entry>
+      <entry image="Images/visual_drei_aufloesung_de.svg" lex="lex_katastrophe_verklaerung.html" name="Auflösung/Katastrophe oder Verklärung"></entry>
+      <entry image="Images/visual_mid_point_de.svg" lex="lex_mid_point.html" name="Mid Point"></entry>
+      <entry image="Images/visual_plot_point_1_de.svg" lex="lex_plot_point.html" name="Plot Point 1"></entry>
+      <entry image="Images/visual_plot_point_2_de.svg" lex="lex_plot_point.html" name="Plot Point 2"></entry>
+    </marker>
+    <marker name="5-Akt-Struktur">
+      <entry image="Images/visual_fuenfaktstruktur_de.svg" lex="lex_fuenfaktstruktur.html" name="Fünfaktstruktur"></entry>
+      <entry image="Images/visual_fuenf_exposition_de.svg" lex="lex_drama_exposition.html" name="Exposition"></entry>
+      <entry image="Images/visual_fuenf_steigerung_de.svg" lex="lex_fuenf_steigerung.html" name="Steigerung"></entry>
+      <entry image="Images/visual_fuenf_hoehepunkt_de.svg" lex="lex_klimax_hoehepunkt.html" name="Klimax/Höhepunkt"></entry>
+      <entry image="Images/visual_fuenf_fall_de.svg" lex="lex_fuenf_fall_umkehr.html" name="Fall/Umkehr"></entry>
+      <entry image="Images/visual_fuenf_katastrophe_de.svg" lex="lex_katastrophe_verklaerung.html" name="Auflösung/Katastrophe oder Verklärung"></entry>
+      <entry image="Images/visual_fuenf_absteigend_de.svg" lex="lex_fuenf_absteigend.html" name="absteigende Handlung"></entry>
+      <entry image="Images/visual_fuenf_aufsteigend_de.svg" lex="lex_fuenf_aufsteigend.html" name="aufsteigende Handlung"></entry>
+    </marker>
+    <marker name="Heldenreise">
+      <entry image="Images/visual_heldenreise_de.svg" lex="lex_heldenreise.html" name="Heldenreise"></entry>
+      <entry image="Images/visual_arch_held_de.svg" lex="lex_held.html" name="Held"></entry>
+      <entry image="Images/visual_arch_herold_de.svg" lex="lex_herold.html" name="Herold"></entry>
+      <entry image="Images/visual_arch_mentor_de.svg" lex="lex_mentor.html" name="Mentor"></entry>
+      <entry image="Images/visual_arch_trickster_de.svg" lex="lex_trickster.html" name="Trickster"></entry>
+      <entry image="Images/visual_arch_gestaltwandler_de.svg" lex="lex_gestaltwandler.html" name="Gestaltwandler"></entry>
+      <entry image="Images/visual_arch_schwellenhueter_de.svg" lex="lex_schwellenhueter.html" name="Schwellenhüter"></entry>
+      <entry image="Images/visual_arch_schatten_de.svg" lex="lex_schatten.html" name="Schatten"></entry>
+    </marker>
+    <marker name="Figurenkonstellation">
+      <entry image="Images/visual_hauptfigur_de.svg" lex="lex_hauptfigur.html" name="Hauptfigur"></entry>
+      <entry image="Images/visual_nebenfigur_de.svg" lex="lex_nebenfigur.html" name="Nebenfigur"></entry>
+    </marker>
+     <marker name="Arten von Expositionen">
+      <entry image="Images/visual_induktiv_de.svg" lex="lex_induktiv.html" name="Induktive Exposition"></entry>
+      <entry image="Images/visual_deduktiv_de.svg" lex="lex_deduktiv.html" name="Deduktive Exposition"></entry>
+    </marker>
+
+
+  </marker><marker name="Eintauchmethode">
+    <entry image="Images/1_inhalt_de.svg" lex="lex_eintauchen_inhalt.html" name="Inhalt des Films"></entry>
+    <entry image="Images/2_datenherkunft_de.svg" lex="lex_eintauchen_datenherkunft.html" name="Datenherkunft"></entry>
+    <entry image="Images/3_datenverarbeitung_de.svg" lex="lex_eintauchen_datenverarbeitung.html" name="Datenverarbeitung"></entry>
+    <entry image="Images/4_datenvorfuehrung_de.svg" lex="lex_eintauchen_datenvorfuehrung.html" name="Datenvorführung"></entry>
+    <entry image="Images/5_datenverbreitung_de.svg" lex="lex_eintauchen_datenverbreitung.html" name="Datenverbreitung"></entry>
+    <entry image="Images/6_erkenntnisgewinn_de.svg" lex="lex_eintauchen_erkenntnisgewinn.html" name="Erkenntnisgewinn"></entry>
+  </marker><marker name="Historisch-kritische Filmanalyse">
+      <entry image="Images/bezugsrealitaet_de.svg" lex="lex_bezugsrealitaet_de.html" name="Bezugsrealität"></entry>
+      <entry image="Images/bedingungsrealitaet_de.svg" lex="lex_bedingungsrealitaet_de.html" name="Bedingungsrealität"></entry>
+      <entry image="Images/filmrealitaet_de.svg" lex="lex_filmrealitaet_de.html" name="Filmrealität"></entry>
+      <entry image="Images/wirkungsrealitaet_de.svg" lex="lex_wirkungsrealitaet_de.html" name="Wirkungsrealität"></entry>
+  </marker><marker name="Fake News Check">
+      <entry image="Images/1_meldung_de.svg" lex="lex_1_meldung_de.html" name="Die Meldung auf einen Blick"></entry>
+      <entry image="Images/2_bilder_de.svg" lex="lex_2_bilder_de.html" name="Bilder und Videoclips"></entry>
+      <entry image="Images/3_quelle_de.svg" lex="lex_3_quelle_de.html" name="Quelle"></entry>
+      <entry image="Images/4_datum_de.svg" lex="lex_4_datum_de.html" name="Datum"></entry>
+      <entry image="Images/5_verfasser_de.svg" lex="lex_5_verfasser_de.html" name="Verfasser"></entry>
+      <entry image="Images/6_website_de.svg" lex="lex_6_website_de.html" name="Website"></entry>
+      <entry image="Images/7_impressum_de.svg" lex="lex_7_impressum_de.html" name="Impressum"></entry>
+  </marker><marker name="Filmgenres">
+    <entry image="Images/genre_abenteuerfilm_de.svg" lex="lex_genre_abenteuerfilm.html" name="Abenteuerfilm"></entry>
+    <entry image="Images/genre_actionfilm_de.svg" lex="lex_genre_actionfilm.html" name="Actionfilm"></entry>
+    <entry image="Images/genre_animationsfilm_de.svg" lex="lex_genre_animationsfilm.html" name="Animationsfilm"></entry>
+    <entry image="Images/genre_biografiefilm_de.svg" lex="lex_genre_biografiefilm.html" name="Biografiefilm"></entry>
+    <entry image="Images/genre_dokumentarfilm_de.svg" lex="lex_genre_dokumentarfilm.html" name="Dokumentarfilm"></entry>
+    <entry image="Images/genre_drama_de.svg" lex="lex_genre_drama.html" name="Drama"></entry>
+    <entry image="Images/genre_experimentalfilm_de.svg" lex="lex_genre_experimentalfilm.html" name="Experimentalfilm"></entry>
+    <entry image="Images/genre_familienfilm_de.svg" lex="lex_genre_familienfilm.html" name="Familienfilm"></entry>
+    <entry image="Images/genre_fantasy_de.svg" lex="lex_genre_fantasy.html" name="Fantasy"></entry>
+    <entry image="Images/genre_historienfilm_de.svg" lex="lex_genre_historienfilm.html" name="Historienfilm"></entry>
+    <entry image="Images/genre_horrorfilm_de.svg" lex="lex_genre_horrorfilm.html" name="Horrorfilm"></entry>
+    <entry image="Images/genre_kriegsfilm_de.svg" lex="lex_genre_kriegsfilm.html" name="Kriegsfilm"></entry>
+    <entry image="Images/genre_kriminalfilm_de.svg" lex="lex_genre_kriminalfilm.html" name="Kriminalfilm"></entry>
+    <entry image="Images/genre_liebesfilm_de.svg" lex="lex_genre_liebesfilm.html" name="Liebesfilm"></entry>
+    <entry image="Images/genre_literaturverfilmung_de.svg" lex="lex_genre_literaturverfilmung.html" name="Literaturverfilmung"></entry>
+    <entry image="Images/genre_maerchenfilm_de.svg" lex="lex_genre_maerchenfilm.html" name="Märchenfilm"></entry>
+    <entry image="Images/genre_musikfilm_de.svg" lex="lex_genre_musikfilm.html" name="Musikfilm"></entry>
+    <entry image="Images/genre_sportfilm_de.svg" lex="lex_genre_sportfilm.html" name="Sportfilm"></entry>
+    <entry image="Images/genre_thriller_de.svg" lex="lex_genre_thriller.html" name="Thriller"></entry>
+    <entry image="Images/genre_western_de.svg" lex="lex_genre_western.html" name="Western"></entry>
+    <entry image="Images/genre_science-fiction_de.svg" lex="lex_genre_science-fiction.html" name="Science-fiction"></entry>
+  </marker><marker name="Influencer Marketing">
+    <marker name="Reichweite">
+      <entry image="Images/reichweite_nano-de.svg" lex="lex_reichweite_nano_de.html" name="Nano-Influencer"></entry>
+      <entry image="Images/reichweite_micro-de.svg" lex="lex_reichweite_micro_de.html" name="Micro-Influencer"></entry>
+      <entry image="Images/reichweite_macro-de.svg" lex="lex_reichweite_macro_de.html" name="Macro-Influencer"></entry>
+      <entry image="Images/reichweite_mega-de.svg" lex="lex_reichweite_mega_de.html" name="Mega-Influencer"></entry>
+    </marker>
+    <marker name="Influencer-Typ">
+      <entry image="Images/typ_agitator-de.svg" lex="lex_typ_agitator_de.html" name="Agitator"></entry>
+      <entry image="Images/typ_aktivist-de.svg" lex="lex_typ_aktivist_de.html" name="Aktivist"></entry>
+      <entry image="Images/typ_analyst-de.svg" lex="lex_typ_analyst_de.html" name="Analyst"></entry>
+      <entry image="Images/typ_autoritaet-de.svg" lex="lex_typ_autoritaet_de.html" name="Autorität"></entry>
+      <entry image="Images/typ_beruehmtheit-de.svg" lex="lex_typ_beruehmtheit_de.html" name="Berühmtheit"></entry>
+      <entry image="Images/typ_coach-de.svg" lex="lex_typ_coach_de.html" name="Coach"></entry>
+      <entry image="Images/typ_entertainer-de.svg" lex="lex_typ_entertainer_de.html" name="Entertainer"></entry>
+      <entry image="Images/typ_experte-de.svg" lex="lex_typ_experte_de.html" name="Experte"></entry>
+      <entry image="Images/typ_insider-de.svg" lex="lex_typ_insider_de.html" name="Insider"></entry>
+      <entry image="Images/typ_journalist-de.svg" lex="lex_typ_journalist_de.html" name="Journalist"></entry>
+      <entry image="Images/typ_netzwerker-de.svg" lex="lex_typ_netzwerker_de.html" name="Netzwerker"></entry>
+      <entry image="Images/typ_selbstvermarkter-de.svg" lex="lex_typ_selbstvermarkter_de.html" name="Selbstvermarkter"></entry>
+    </marker>
+    <marker name="Kategorie">
+      <entry image="Images/werbetyp_haul-de.svg" lex="lex_werbetyp_haul_de.html" name="Haul"></entry>
+      <entry image="Images/werbetyp_letsplay-de.svg" lex="lex_werbetyp_letsplay_de.html" name="Let’s Play"></entry>
+      <entry image="Images/werbetyp_rezension-de.svg" lex="lex_werbetyp_rezension_de.html" name="Rezension"></entry>
+      <entry image="Images/werbetyp_story-de.svg" lex="lex_werbetyp_story_de.html" name="Kreativ/Story"></entry>F
+      <entry image="Images/werbetyp_tutorial-de.svg" lex="lex_werbetyp_tutorial_de.html" name="Tutorial"></entry>
+      <entry image="Images/werbetyp_unboxing-de.svg" lex="lex_werbetyp_unboxing_de.html" name="Unboxing"></entry>
+     
+      <entry image="Images/werbetyp_leak-de.svg" lex="lex_werbetyp_leak_de.html" name="Leak"></entry>
+    </marker>
+    <marker name="Glaubwürdigkeit">
+      <entry image="Images/ethik_authentizitaet-de.svg" lex="lex_ethik_authentizitaet_de.html" name="authentisch"></entry>
+      <entry image="Images/ethik_wahrhaftigkeit-de.svg" lex="lex_ethik_wahrhaftigkeit_de.html" name="wahrhaftig"></entry>
+      <entry image="Images/ethik_transparenz-de.svg" lex="lex_ethik_transparenz_de.html" name="transparent"></entry>
+      <entry image="Images/ethik_authentizitaet_nicht-de.svg" lex="lex_ethik_authentizitaet_de.html" name="Nicht authentisch"></entry>
+      <entry image="Images/ethik_wahrhaftigkeit_nicht-de.svg" lex="lex_ethik_wahrhaftigkeit_de.html" name="Nicht wahrhaftig"></entry>
+      <entry image="Images/ethik_transparenz_nicht-de.svg" lex="lex_ethik_transparenz_de.html" name="Nicht transparent"></entry>
+    </marker>
+    <marker name="Erkennbarkeit von Werbung">
+      <entry image="Images/werbung_sponsoring-de.svg" lex="lex_werbung_sponsoring_de.html" name="Sponsoring"></entry>
+      <entry image="Images/werbung_geschenk-de.svg" lex="lex_werbung_geschenk_de.html" name="Kostenlose Produkte"></entry>
+      <entry image="Images/werbung_product_placement-de.svg" lex="lex_werbung_product_placement_de.html" name="Product Placement"></entry>
+      <entry image="Images/werbung_keine-de.svg" lex="lex_werbung_keine_de.html" name="Keine Werbung"></entry>
+    </marker>
+    <marker name="Filmsprache">
+      <entry image="Images/filmsprache_schnitt-de.svg" lex="lex_filmsprache_schnitt_de.html" name="Schnitt"></entry>
+      <entry image="Images/filmsprache_statische_kamera-de.svg" lex="lex_filmsprache_bewegung_de.html" name="Statische Kamera"></entry>
+      <entry image="Images/filmsprache_bewegte_kamera-de.svg" lex="lex_filmsprache_bewegung_de.html" name="Bewegte Kamera"></entry>
+      <entry image="Images/filmsprache_herauszoomen-de.svg" lex="lex_filmsprache_bewegung_de.html" name="Herauszoomen"></entry>
+      <entry image="Images/filmsprache_heranzoomen-de.svg" lex="lex_filmsprache_bewegung_de.html" name="Heranzoomen"></entry>
+      <entry image="Images/filmsprache_musik-de.svg" lex="lex_filmsprache_ton_de.html" name="Musik"></entry>
+      <entry image="Images/filmsprache_offscreen_ton-de.svg" lex="lex_filmsprache_ton_de.html" name="Offscreen Ton"></entry>
+      <entry image="Images/filmsprache_onscreen_ton-de.svg" lex="lex_filmsprache_ton_de.html" name="Onscreen Ton"></entry>
+      <entry image="Images/filmsprache_els-de.svg" lex="lex_filmsprache_einstellungsgroesse_de.html" name="Weite/Panorama"></entry>
+      <entry image="Images/filmsprache_ls-de.svg" lex="lex_filmsprache_einstellungsgroesse_de.html" name="Totale"></entry>
+      <entry image="Images/filmsprache_mls-de.svg" lex="lex_filmsprache_einstellungsgroesse_de.html" name="Halbtotale"></entry>
+      <entry image="Images/filmsprache_ms-de.svg" lex="lex_filmsprache_einstellungsgroesse_de.html" name="Halbnahe"></entry>
+      <entry image="Images/filmsprache_mcu-de.svg" lex="lex_filmsprache_einstellungsgroesse_de.html" name="Nahe"></entry>
+      <entry image="Images/filmsprache_cu-de.svg" lex="lex_filmsprache_einstellungsgroesse_de.html" name="Große"></entry>
+      <entry image="Images/filmsprache_ecu-de.svg" lex="lex_filmsprache_einstellungsgroesse_de.html" name="Detail"></entry>
+      <entry image="Images/filmsprache_overhead-de.svg" lex="lex_filmsprache_kameraperspektive_de.html" name="Vogelperspektive"></entry>
+      <entry image="Images/filmsprache_high-de.svg" lex="lex_filmsprache_kameraperspektive_de.html" name="Aufsicht"></entry>
+      <entry image="Images/filmsprache_eye-level-de.svg" lex="lex_filmsprache_kameraperspektive_de.html" name="Augenhöhe"></entry>
+      <entry image="Images/filmsprache_low-de.svg" lex="lex_filmsprache_kameraperspektive_de.html" name="Untersicht"></entry>
+      <entry image="Images/filmsprache_below-de.svg" lex="lex_filmsprache_kameraperspektive_de.html" name="Froschperspektive"></entry>
+      <entry image="Images/filmsprache_canted_angle-de.svg" lex="lex_filmsprache_kameraperspektive_de.html" name="Gekippter Winkel"></entry>
+    </marker>
+  </marker><marker name="Basiskonzepte der Biologie">
+      <entry image="Images/1_kompartimentierung_de.svg" lex="lex_kompartimentierung_de.html" name="Kompartimentierung"></entry>
+      <entry image="Images/2_struktur_de.svg" lex="lex_struktur_de.html" name="Struktur und Funktion"></entry>
+      <entry image="Images/3_steuerung_de.svg" lex="lex_steuerung_de.html" name="Steuerung und Regelung"></entry>
+      <entry image="Images/4_geschichte_de.svg" lex="lex_geschichte_de.html" name="Verwandtschaft und Geschichte"></entry>
+      <entry image="Images/5_variabilitaet_de.svg" lex="lex_variabilitaet_de.html" name="Angepasstheit und Variabilität"></entry>
+      <entry image="Images/6_umwandlung_de.svg" lex="lex_umwandlung_de.html" name="Stoff- und Energieumwandlung"></entry>
+      <entry image="Images/7_kommunikation_de.svg" lex="lex_kommunikation_de.html" name="Kommunikation und Information"></entry>
+      <entry image="Images/8_reproduktion_de.svg" lex="lex_reproduktion_de.html" name="Reproduktion"></entry>
+  </marker><marker name="Rhetorische Figuren">
+    <marker lex="lex_klangfiguren_de.html" name="Klangfiguren">
+      <entry image="Images/visual_klangfiguren_alliteration_de.svg" lex="lex_alliteration_de.html" name="Alliteration/Stabreim"></entry>
+      <entry image="Images/visual_klangfiguren_anapher_de.svg" lex="lex_anapher_de.html" name="Anapher"></entry>
+      <entry image="Images/visual_klangfiguren_epipher_de.svg" lex="lex_epipher_de.html" name="Epipher"></entry>
+      <entry image="Images/visual_klangfiguren_onomatopoesie_de.svg" lex="lex_onomatopoesie_de.html" name="Onomatopoesie"></entry>
+      <entry image="Images/visual_klangfiguren_paronomasie_de.svg" lex="lex_paronomasie_de.html" name="Paronomasie"></entry>
+    </marker>
+    <marker lex="lex_wortfiguren_de.html" name="Wortfiguren">
+      <entry image="Images/visual_wortfiguren_anapher_de.svg" lex="lex_anapher_de.html" name="Anapher"></entry>
+      <entry image="Images/visual_wortfiguren_anastrophe_de.svg" lex="lex_anastrophe_de.html" name="Anastrophe"></entry>
+      <entry image="Images/visual_wortfiguren_akkumulation_de.svg" lex="lex_akkumulation_de.html" name="Akkumulation"></entry>
+      <entry image="Images/visual_wortfiguren_correctio_de.svg" lex="lex_correctio_de.html" name="Correctio"></entry>
+      <entry image="Images/visual_wortfiguren_euphemismus_de.svg" lex="lex_euphemismus_de.html" name="Euphemismus"></entry>
+      <entry image="Images/visual_wortfiguren_litotes_de.svg" lex="lex_litotes_de.html" name="Litotes"></entry>
+      <entry image="Images/visual_wortfiguren_metapher_de.svg" lex="lex_metapher_de.html" name="Metapher"></entry>
+      <entry image="Images/visual_wortfiguren_metonymie_de.svg" lex="lex_metonymie_de.html" name="Metonymie"></entry>
+      <entry image="Images/visual_wortfiguren_neologismus_de.svg" lex="lex_neologismus_de.html" name="Neologismus"></entry>
+      <entry image="Images/visual_wortfiguren_periphrase_de.svg" lex="lex_periphrase_de.html" name="Periphrase"></entry>
+      <entry image="Images/visual_wortfiguren_pleonasmus_de.svg" lex="lex_pleonasmus_de.html" name="Pleonasmus"></entry>
+      <entry image="Images/visual_wortfiguren_synekdoche_de.svg" lex="lex_synekdoche_de.html" name="Synekdoche"></entry>
+      <entry image="Images/visual_wortfiguren_tautologie_de.svg" lex="lex_tautologie_de.html" name="Tautologie"></entry>
+    </marker>
+    <marker lex="lex_satzfiguren_de.html" name="Satzfiguren">
+      <entry image="Images/visual_satzfiguren_asyndeton_de.svg" lex="lex_asyndeton_de.html" name="Asyndeton"></entry>
+      <entry image="Images/visual_satzfiguren_apostrophe_de.svg" lex="lex_apostrophe_de.html" name="Apostrophe"></entry>
+      <entry image="Images/visual_satzfiguren_chiasmus_de.svg" lex="lex_chiasmus_de.html" name="Chiasmus"></entry>
+      <entry image="Images/visual_satzfiguren_ellipse_de.svg" lex="lex_ellipse_de.html" name="Ellipse"></entry>
+      <entry image="Images/visual_satzfiguren_inversion_de.svg" lex="lex_inversion_de.html" name="Inversion"></entry>F
+      <entry image="Images/visual_satzfiguren_parallelismus_de.svg" lex="lex_parallelismus_de.html" name="Parallelismus"></entry>
+      <entry image="Images/visual_satzfiguren_polysyndeton_de.svg" lex="lex_polysyndeton_de.html" name="Polysyndeton"></entry>
+      <entry image="Images/visual_satzfiguren_rhetorische-frage_de.svg" lex="lex_rhetorische-frage_de.html" name="Rhetorische Frage"></entry>
+      <entry image="Images/visual_satzfiguren_zeugma_de.svg" lex="lex_zeugma_de.html" name="Zeugma"></entry>
+    </marker>
+    <marker lex="lex_gedankenfiguren_de.html" name="Gedankenfiguren">
+      <entry image="Images/visual_gedankenfiguren_allegorie_de.svg" lex="lex_allegorie_de.html" name="Allegorie"></entry>
+      <entry image="Images/visual_gedankenfiguren_antiklimax_de.svg" lex="lex_antiklimax_de.html" name="Antiklimax"></entry>
+      <entry image="Images/visual_gedankenfiguren_antithese_de.svg" lex="lex_antithese_de.html" name="Antithese"></entry>
+      <entry image="Images/visual_gedankenfiguren_hyperbel_de.svg" lex="lex_hyperbel_de.html" name="Hyperbel"></entry>
+      <entry image="Images/visual_gedankenfiguren_ironie_de.svg" lex="lex_ironie_de.html" name="Ironie"></entry>
+      <entry image="Images/visual_gedankenfiguren_klimax_de.svg" lex="lex_klimax_de.html" name="Klimax"></entry>
+      <entry image="Images/visual_gedankenfiguren_metapher_de.svg" lex="lex_metapher_de.html" name="Metapher"></entry>
+      <entry image="Images/visual_gedankenfiguren_oxymoron_de.svg" lex="lex_oxymoron_de.html" name="Oxymoron"></entry>
+      <entry image="Images/visual_gedankenfiguren_paradoxon_de.svg" lex="lex_paradoxon_de.html" name="Paradoxon"></entry>
+      <entry image="Images/visual_gedankenfiguren_personifikation_de.svg" lex="lex_personifikation_de.html" name="Personifikation"></entry>
+      <entry image="Images/visual_gedankenfiguren_rhetorische-frage_de.svg" lex="lex_rhetorische-frage_de.html" name="Rhetorische Frage"></entry>
+      <entry image="Images/visual_gedankenfiguren_symbol_de.svg" lex="lex_symbol_de.html" name="Symbol"></entry>
+      <entry image="Images/visual_gedankenfiguren_synaesthesie_de.svg" lex="lex_synaesthesie_de.html" name="Synästhesie"></entry>
+      <entry image="Images/visual_gedankenfiguren_vergleich_de.svg" lex="lex_vergleich_de.html" name="Vergleich"></entry>
+    </marker>
+  </marker><marker name="Medienkompetenzrahmen NRW">
+    <marker name="1. BEDIENEN UND ANWENDEN">
+      <entry image="Images/visual_mk_medienausstattung.svg" lex="lex_mk_medienausstattung.html" name="1.1 Medienausstattung (Hardware)"></entry>
+      <entry image="Images/visual_mk_digitale-werkzeuge.svg" lex="lex_mk_digitale-werkzeuge.html" name="1.2 Digitale Werkzeuge"></entry>
+      <entry image="Images/visual_mk_datenorganisation.svg" lex="lex_mk_datenorganisation.html" name="1.3 Datenorganisation"></entry>
+      <entry image="Images/visual_mk_datenschutz.svg" lex="lex_mk_datenschutz.html" name="1.4 Datenschutz und Informationssicherheit"></entry>
+    </marker>
+    <marker name="2. INFORMIEREN UND RECHERCHIEREN">
+      <entry image="Images/visual_mk_informationsrecherche.svg" lex="lex_mk_informationsrecherche.html" name="2.1 Informationsrecherche"></entry>
+      <entry image="Images/visual_mk_informationsauswertung.svg" lex="lex_mk_informationsauswertung.html" name="2.2 Informationsauswertung"></entry>
+      <entry image="Images/visual_mk_informationsbewertung.svg" lex="lex_mk_informationsbewertung.html" name="2.3 Informationsbewertung"></entry>
+      <entry image="Images/visual_mk_informationskritik.svg" lex="lex_mk_informationskritik.html" name="2.4 Informationskritik"></entry>
+    </marker>
+    <marker name="3. KOMMUNIZIEREN UND KOOPERIEREN">
+      <entry image="Images/visual_mk_prozesse.svg" lex="lex_mk_prozesse.html" name="3.1 Kommunikations- und Kooperationsprozesse"></entry>
+      <entry image="Images/visual_mk_regeln.svg" lex="lex_mk_regeln.html" name="3.2 Kommunikations- und Kooperationsregeln"></entry>
+      <entry image="Images/visual_mk_gesellschaft.svg" lex="lex_mk_gesellschaft.html" name="3.3 Kommunikation und Kooperation in der Gesellschaft"></entry>
+      <entry image="Images/visual_mk_cybergewalt.svg" lex="lex_mk_cybergewalt.html" name="3.4 Cybergewalt und -kriminalität"></entry>
+    </marker>
+    <marker name="4. PRODUZIEREN UND PRÄSENTIEREN">
+      <entry image="Images/visual_mk_produktion.svg" lex="lex_mk_produktion.html" name="4.1 Medienproduktion und Präsentation"></entry>
+      <entry image="Images/visual_mk_gestaltungsmittel.svg" lex="lex_mk_gestaltungsmittel.html" name="4.2 Gestaltungsmittel"></entry>
+      <entry image="Images/visual_mk_quellendokumentation.svg" lex="lex_mk_quellendokumentation.html" name="4.3 Quellendokumentation"></entry>
+      <entry image="Images/visual_mk_rechtliche-grundlagen.svg" lex="lex_mk_rechtliche-grundlagen.html" name="4.4 Rechtliche Grundlagen"></entry>
+    </marker>
+    <marker name="5. ANALYSIEREN UND REFLEKTIEREN">
+      <entry image="Images/visual_mk_medienanalyse.svg" lex="lex_mk_medienanalyse.html" name="5.1 Medienanalyse"></entry>
+      <entry image="Images/visual_mk_meinungsbildung.svg" lex="lex_mk_meinungsbildung.html" name="5.2 Meinungsbildung"></entry>
+      <entry image="Images/visual_mk_identitaetsbildung.svg" lex="lex_mk_identitaetsbildung.html" name="5.3 Identitätsbildung"></entry>
+      <entry image="Images/visual_mk_mediennutzung.svg" lex="lex_mk_mediennutzung.html" name="5.4 Selbstregulierte Mediennutzung"></entry>
+    </marker>
+    <marker name="6. PROBLEMLÖSEN UND MODELLIEREN">
+      <entry image="Images/visual_mk_digitale-welt.svg" lex="lex_mk_digitale-welt.html" name="6.1 Prinzipien der digitalen Welt"></entry>
+      <entry image="Images/visual_mk_algorithmen.svg" lex="lex_mk_algorithmen.html" name="6.2 Algorithmen erkennen"></entry>
+      <entry image="Images/visual_mk_modellieren.svg" lex="lex_mk_modellieren.html" name="6.3 Modellieren und Programmieren"></entry>
+      <entry image="Images/visual_mk_bedeutung.svg" lex="lex_mk_bedeutung.html" name="6.4 Bedeutung von Algorithmen"></entry>
+    </marker>
+  </marker><marker name="Kompetenzorientiertes Konzept Filmbildung (AK Filmbildung der LKM Medienbildung)">
+    <marker name="Filmproduktion und Präsentation">
+      <entry image="Images/kompetenz_produktionsplanung_de.svg" lex="lex_kompetenz_produktionsplanung.html" name="Produktionsplanung"></entry>
+      <entry image="Images/kompetenz_produktion_de.svg" lex="lex_kompetenz_produktion.html" name="Produktion"></entry>
+      <entry image="Images/kompetenz_bildtonbearbeitung_de.svg" lex="lex_kompetenz_bildtonbearbeitung.html" name="Bild- und Tonbearbeitung"></entry>
+      <entry image="Images/kompetenz_praesentation_de.svg" lex="lex_kompetenz_praesentation.html" name="Präsentation"></entry>
+    </marker>
+    <marker name="Filmanalyse">
+      <entry image="Images/kompetenz_filmaesthetik_de.svg" lex="lex_kompetenz_filmaesthetik.html" name="Filmästhetik"></entry>
+      <entry image="Images/kompetenz_filmsprache_de.svg" lex="lex_kompetenz_filmsprache.html" name="Filmsprache und Gestaltung"></entry>
+      <entry image="Images/kompetenz_filmkontexte_de.svg" lex="lex_kompetenz_filmkontexte.html" name="Filmkontexte"></entry>
+      <entry image="Images/kompetenz_filmgeschichte_de.svg" lex="lex_kompetenz_filmgeschichte.html" name="Filmgeschichte und -theorie"></entry>
+    </marker>
+    <marker name="Filmnutzung">
+      <entry image="Images/kompetenz_gebrauch_de.svg" lex="lex_kompetenz_gebrauch.html" name="Gebrauch"></entry>
+      <entry image="Images/kompetenz_wirkung_de.svg" lex="lex_kompetenz_wirkung.html" name="Wirkung und Einfluss"></entry>
+      <entry image="Images/kompetenz_geschmack_de.svg" lex="lex_kompetenz_geschmack.html" name="Geschmack- und Urteilsbildung"></entry>
+    </marker>
+    <marker name="Film in der Mediengesellschaft">
+      <entry image="Images/kompetenz_wirtschaftsfaktor_de.svg" lex="lex_kompetenz_wirtschaftsfaktor.html" name="Film als Wirtschaftsfaktor"></entry>
+      <entry image="Images/kompetenz_politik_de.svg" lex="lex_kompetenz_politik.html" name="Politische Funktion, gesellschaftliche und kulturelle Wirkung"></entry>
+      <entry image="Images/kompetenz_recht_de.svg" lex="lex_kompetenz_recht.html" name="Rechtliche Rahmenbedingungen, Jugendmedienschutz"></entry>
+    </marker>
+  </marker><marker name="Ziele für Nachhaltige Entwicklung">
+      <entry image="Images/visual_goal1_de.svg" lex="lex_goal1_de.html" name="Keine Armut"></entry>
+      <entry image="Images/visual_goal2_de.svg" lex="lex_goal2_de.html" name="Kein Hunger"></entry>
+      <entry image="Images/visual_goal3_de.svg" lex="lex_goal3_de.html" name="Gesundheit und Wohlergehen"></entry>
+      <entry image="Images/visual_goal4_de.svg" lex="lex_goal4_de.html" name="Hochwertige Bildung"></entry>
+      <entry image="Images/visual_goal5_de.svg" lex="lex_goal5_de.html" name="Geschlechtergleichheit"></entry>
+      <entry image="Images/visual_goal6_de.svg" lex="lex_goal6_de.html" name="Sauberes Wasser und Sanitär-Einrichtungen"></entry>
+      <entry image="Images/visual_goal7_de.svg" lex="lex_goal7_de.html" name="Bezahlbare und saubere Energie"></entry>
+      <entry image="Images/visual_goal8_de.svg" lex="lex_goal8_de.html" name="Menschenwürdige Arbeit und Wirtschaftswachstum"></entry>
+      <entry image="Images/visual_goal9_de.svg" lex="lex_goal9_de.html" name="Industrie, Innovation und Infrastruktur"></entry>
+      <entry image="Images/visual_goal10_de.svg" lex="lex_goal10_de.html" name="Weniger Ungleichheiten"></entry>
+      <entry image="Images/visual_goal11_de.svg" lex="lex_goal11_de.html" name="Nachhaltige Städte und Gemeinden"></entry>
+      <entry image="Images/visual_goal12_de.svg" lex="lex_goal12_de.html" name="Nachhaltige/r Konsum und Produktion"></entry>
+      <entry image="Images/visual_goal13_de.svg" lex="lex_goal13_de.html" name="Maßnahmen zum Klimaschutz"></entry>
+      <entry image="Images/visual_goal14_de.svg" lex="lex_goal14_de.html" name="Leben unter Wasser"></entry>
+      <entry image="Images/visual_goal15_de.svg" lex="lex_goal15_de.html" name="Leben an Land"></entry>
+      <entry image="Images/visual_goal16_de.svg" lex="lex_goal16_de.html" name="Frieden, Gerechtigkeit und starke Institutionen"></entry>
+      <entry image="Images/visual_goal17_de.svg" lex="lex_goal17_de.html" name="Partnerschaften zur Erreichung der Ziele"></entry>
+  </marker><marker name="Rhetorischer Lug und logischer Trug">
+    <marker name="Geistige Manipulationen">
+      <entry image="Images/visual_anonymous_authority_de.svg" lex="lex_anonymous_authority_de.html" name="Beleg per anonymer Autorität"></entry>
+      <entry image="Images/visual_authority_de.svg" lex="lex_authority_de.html" name="Beleg per fragwürdiger Autorität"></entry>
+      <entry image="Images/visual_common_practice_de.svg" lex="lex_common_practice_de.html" name="Das machen alle so!"></entry>
+      <entry image="Images/visual_ignorance_de.svg" lex="lex_ignorance_de.html" name="Ignoranzappell"></entry>
+      <entry image="Images/visual_incredulity_de.svg" lex="lex_incredulity_de.html" name="Geht nicht, gibt&apos;s also nicht!"></entry>
+      <entry image="Images/visual_money_de.svg" lex="lex_money_de.html" name="Reich ist besser!"></entry>
+      <entry image="Images/visual_novelty_de.svg" lex="lex_novelty_de.html" name="Neu ist besser!"></entry>
+      <entry image="Images/visual_popular_belief_de.svg" lex="lex_popular_belief_de.html" name="Volksglauben aufgreifen"></entry>
+      <entry image="Images/visual_probability_de.svg" lex="lex_probability_de.html" name="Wahrscheinlichkeit erhöhen"></entry>
+      <entry image="Images/visual_tradition_de.svg" lex="lex_tradition_de.html" name="Tradition als Beleg"></entry>
+    </marker>
+    <marker name="Bedienung von Emotionen">
+      <entry image="Images/visual_consequences_de.svg" lex="lex_consequences_de.html" name="Angst vor den Konsequenzen schüren"></entry>
+      <entry image="Images/visual_fear_de.svg" lex="lex_fear_de.html" name="Furchtappell"></entry>
+      <entry image="Images/visual_flattery_de.svg" lex="lex_flattery_de.html" name="Schmeichelei"></entry>
+      <entry image="Images/visual_nature_de.svg" lex="lex_nature_de.html" name="Natürlichkeit"></entry>
+      <entry image="Images/visual_pity_de.svg" lex="lex_pity_de.html" name="Mitleid erregen"></entry>
+      <entry image="Images/visual_ridicule_de.svg" lex="lex_ridicule_de.html" name="Karikatur"></entry>
+      <entry image="Images/visual_spite_de.svg" lex="lex_spite_de.html" name="Klischees bedienen"></entry>
+      <entry image="Images/visual_wishful_thinking_de.svg" lex="lex_wishful_thinking_de.html" name="Wunschdenken"></entry>
+    </marker>
+    <marker name="Fehlerhafte Herleitung">
+      <entry image="Images/visual_anecdotal_evidence_de.svg" lex="lex_anecdotal_evidence_de.html" name="Anekdokten statt Beweise"></entry>
+      <entry image="Images/visual_composition_de.svg" lex="lex_composition_de.html" name="Kollektivierung"></entry>
+      <entry image="Images/visual_division_de.svg" lex="lex_division_de.html" name="Vom Ganzen aufs Einzelne"></entry>
+      <entry image="Images/visual_design_fallacy_de.svg" lex="lex_design_fallacy_de.html" name="Fehlschluss per Aussehen"></entry>
+      <entry image="Images/visual_gamblers_fallacy_de.svg" lex="lex_gamblers_fallacy_de.html" name="Fehlschluss des Spielers"></entry>F
+      <entry image="Images/visual_generalization_de.svg" lex="lex_generalization_de.html" name="Übereilte Verallgemeinerung"></entry>
+      <entry image="Images/visual_conclusion_de.svg" lex="lex_conclusions_de.html" name="Schnellschuss-Schlussfolgerung"></entry>
+      <entry image="Images/visual_middle_ground_de.svg" lex="lex_middle_ground_de.html" name="Irgendwo dazwischen"></entry>
+      <entry image="Images/visual_perfectionist_de.svg" lex="lex_perfectionist_de.html" name="Fehlschluss des Perfektionisten"></entry>
+      <entry image="Images/visual_relativist_de.svg" lex="lex_relativist_de.html" name="Relative Wahrheit"></entry>
+      <entry image="Images/visual_spotlight_de.svg" lex="lex_spotlight_de.html" name="Scheinwerfer"></entry>
+      <entry image="Images/visual_sweeping_generalisation_de.svg" lex="lex_sweeping_generalisation_de.html" name="Rasende Verallgemeinerung"></entry>
+      <entry image="Images/visual_undistributed_middle_de.svg" lex="lex_undistributed_middle_de.html" name="Ungeteilte Mitte"></entry>
+    </marker>
+    <marker name="Materialmanipulation">
+      <entry image="Images/visual_ad_hoc_rescue_de.svg" lex="lex_ad_hoc_rescue_de.html" name="Ad-Hoc-Rettung"></entry>
+      <entry image="Images/visual_biased_generalization_de.svg" lex="lex_biased_generalization_de.html" name="Verfälschte Verallgemeinerung"></entry>
+      <entry image="Images/visual_confirmation_bias_de.svg" lex="lex_confirmation_bias_de.html" name="Tendenziöse Untermauerung"></entry>
+      <entry image="Images/visual_false_dilemma_de.svg" lex="lex_false_dilemma_de.html" name="Falsche Alternativlosigkeit"></entry>
+      <entry image="Images/visual_lie_de.svg" lex="lex_lie_de.html" name="Lüge"></entry>
+      <entry image="Images/visual_misleading_vividness_de.svg" lex="lex_misleading_vividness_de.html" name="Trügerische Lebhaftigkeit"></entry>
+      <entry image="Images/visual_red_herring_de.svg" lex="lex_red_herring_de.html" name="Nebelkerze"></entry>
+      <entry image="Images/visual_slippery_slope_de.svg" lex="lex_slippery_slope_de.html" name="Rutschiger Abhang"></entry>
+      <entry image="Images/visual_suppressed_evidence_de.svg" lex="lex_suppressed_evidence_de.html" name="Gegenbeweise verschweigen"></entry>
+      <entry image="Images/visual_unfalsifiability_de.svg" lex="lex_unfalsifiability_de.html" name="Unwiderlegbarkeit"></entry>
+    </marker>
+    <marker name="Verwechslung von Ursache und Wirkung">
+      <entry image="Images/visual_affirming_consequent_de.svg" lex="lex_affirming_consequent_de.html" name="Unlogische Umkehrung"></entry>
+      <entry image="Images/visual_circular_logic_de.svg" lex="lex_circular_logic_de.html" name="Zirkelschluss"></entry>
+      <entry image="Images/visual_ergo_propter_de.svg" lex="lex_ergo_propter_de.html" name="Cum Hoc Ergo Propter Hoc"></entry>
+      <entry image="Images/visual_denying_antecedent_de.svg" lex="lex_denying_antecedent_de.html" name="Vergessene Vorgeschichte"></entry>
+      <entry image="Images/visual_ignoring_common_cause_de.svg" lex="lex_ignoring_common_cause_de.html" name="Gemeinsame Ursache unterschlagen"></entry>
+      <entry image="Images/visual_post_hoc_de.svg" lex="lex_post_hoc_de.html" name="Post Hoc Ergo Propter Hoc"></entry>
+      <entry image="Images/visual_two_wrongs_de.svg" lex="lex_two_wrongs_de.html" name="Minus mal Minus ist Plus"></entry>
+    </marker>
+    <marker name="Im Angriff">
+      <entry image="Images/visual_ad_hominem_de.svg" lex="lex_ad_hominem_de.html" name="Ad Hominem"></entry>
+      <entry image="Images/visual_burden_of_proof_de.svg" lex="lex_burden_of_proof_de.html" name="Beweislastverlagerung"></entry>
+      <entry image="Images/visual_circumstance_de.svg" lex="lex_circumstance_de.html" name="Verwicklung verdammen"></entry>
+      <entry image="Images/visual_genetic_de.svg" lex="lex_genetic_de.html" name="Fehlschluss per Herkunft"></entry>
+      <entry image="Images/visual_guilt_de.svg" lex="lex_guilt_de.html" name="Kollektivpranger"></entry>
+      <entry image="Images/visual_straw_man_de.svg" lex="lex_straw_man_de.html" name="Strohmann"></entry>
+    </marker>
+  </marker><marker name="Argumentationsstrategien erkennen">
+    <entry image="Images/visual_rq_themenwechsel_de.svg" lex="lex_rq_themenwechsel_de.html" name="Themenwechsel"></entry>
+    <entry image="Images/visual_rq_totschlagargument_de.svg" lex="lex_rq_totschlagargument_de.html" name="Totschlagargument"></entry>
+    <entry image="Images/visual_rq_chewbacca_de.svg" lex="lex_rq_chewbacca_de.html" name="Chewbacca-Verteidigung"></entry>
+    <entry image="Images/visual_rq_fallbeispiel_de.svg" lex="lex_rq_fallbeispiel_de.html" name="Fallbeispiel"></entry>
+    <entry image="Images/visual_rq_strohmann_de.svg" lex="lex_rq_strohmann_de.html" name="Strohmann"></entry>
+    <entry image="Images/visual_rq_emotionale_erpressung_de.svg" lex="lex_rq_emotionale_erpressung_de.html" name="Emotionale Erpressung"></entry>
+    <entry image="Images/visual_rq_tu_quoque_de.svg" lex="lex_rq_tu_quoque_de.html" name="Tu Quoque"></entry>
+    <entry image="Images/visual_rq_ad_hominem_de.svg" lex="lex_rq_ad_hominem_de.html" name="Ad Hominem"></entry>
+    <entry image="Images/visual_rq_luege_de.svg" lex="lex_rq_luege_de.html" name="Lüge"></entry>
+    <entry image="Images/visual_rq_ad_nauseam_de.svg" lex="lex_rq_ad_nauseam_de.html" name="Ad Nauseam"></entry>
+    <entry image="Images/visual_rq_angstargument_de.svg" lex="lex_rq_angstargument_de.html" name="Angstargument"></entry>
+    <entry image="Images/visual_rq_missgunstargument_de.svg" lex="lex_rq_missgunstargument_de.html" name="Missgunstargument"></entry>
+    <entry image="Images/visual_rq_mitlaeufereffekt_de.svg" lex="lex_rq_mitlaeufereffekt_de.html" name="Mitläufereffekt"></entry>
+    <entry image="Images/visual_rq_kein_wahrer_schotte_de.svg" lex="lex_rq_kein_wahrer_schotte_de.html" name="Kein wahrer Schotte"></entry>
+    <entry image="Images/visual_rq_autoritaetsargument_de.svg" lex="lex_rq_autoritaetsargument_de.html" name="Autoritätsargument"></entry>
+    <entry image="Images/visual_rq_traditionsargument_de.svg" lex="lex_rq_traditionsargument_de.html" name="Traditionsargument"></entry>
+    <entry image="Images/visual_rq_designargument_de.svg" lex="lex_rq_designargument_de.html" name="Designargument"></entry>
+    <entry image="Images/visual_rq_karma_de.svg" lex="lex_rq_karma_de.html" name="Karma"></entry>
+    <entry image="Images/visual_rq_moralischer_pragmatismus_de.svg" lex="lex_rq_moralischer_pragmatismus_de.html" name="Moralischer Pragmatismus"></entry>
+    <entry image="Images/visual_rq_perfektionismus_de.svg" lex="lex_rq_perfektionismus_de.html" name="Perfektionismus"></entry>
+    <entry image="Images/visual_rq_wunschdenken_de.svg" lex="lex_rq_wunschdenken_de.html" name="Wunschdenken"></entry>
+    <entry image="Images/visual_rq_ausrede_de.svg" lex="lex_rq_ausrede_de.html" name="Ausrede"></entry>
+    <entry image="Images/visual_rq_unfalsifizierbarkeit_de.svg" lex="lex_rq_unfalsifizierbarkeit_de.html" name="Unfalsifizierbarkeit"></entry>
+    <entry image="Images/visual_rq_verschwoerungstheorie_de.svg" lex="lex_rq_verschwoerungstheorie_de.html" name="Verschwörungstheorie"></entry>
+    <entry image="Images/visual_rq_deutungshoheit_de.svg" lex="lex_rq_deutungshoheit_de.html" name="Deutungshoheit"></entry>
+    <entry image="Images/visual_rq_brunnen_vergiften_de.svg" lex="lex_rq_brunnen_vergiften_de.html" name="Brunnen vergiften"></entry>
+    <entry image="Images/visual_rq_spielerfehlschluss_de.svg" lex="lex_rq_spielerfehlschluss_de.html" name="Spielerfehlschluss"></entry>
+  </marker><marker name="Language of Film">
+    <marker name="shot">
+      <marker name="mise en scène">
+        <entry image="Images/visual_long_take_en.png" lex="lex_long_take_en.html" name="long take"></entry>
+        <entry image="Images/visual_two_shot_en.png" lex="lex_two_shot_en.html" name="two shot"></entry>
+        <entry image="Images/visual_three_shot_en.png" lex="lex_three_shot_en.html" name="three shot"></entry>
+        <entry image="Images/visual_over_shoulder_en.png" lex="lex_over_the_shoulder_shot_en.html" name="over-the-shoulder shot"></entry>
+        <entry image="Images/visual_establishing_shot_en.png" lex="lex_establishing_shot_en.html" name="establishing shot"></entry>
+        <entry image="Images/visual_set_en.png" lex="lex_set_en.html" name="set"></entry>
+        <entry image="Images/visual_location_en.png" lex="lex_location_en.html" name="location"></entry>
+        <entry image="Images/visual_realistic_setting_en.png" lex="lex_realistic_setting_en.html" name="realistic setting"></entry>
+        <entry image="Images/visual_nonrealistic_setting_en.png" lex="lex_nonrealistic_setting_en.html" name="nonrealistic setting"></entry>
+        <entry image="Images/visual_limbo_en.png" lex="lex_limbo_en.html" name="limbo"></entry>
+        <entry image="Images/visual_loose_framing_en.png" lex="lex_loose_framing_en.html" name="loose framing"></entry>
+        <entry image="Images/visual_tight_framing_en.png" lex="lex_tight_framing_en.html" name="tight framing"></entry>
+        <entry image="Images/visual_deep_space_en.png" lex="lex_deep_space_en.html" name="deep space"></entry>
+        <entry image="Images/visual_flat_space_en.png" lex="lex_flat_space_en.html" name="flat space"></entry>
+        <entry image="Images/visual_ambiguous_space_en.png" lex="lex_ambiguous_space_en.html" name="ambiguous space"></entry>
+        <entry image="Images/visual_balance_en.png" lex="lex_balance_en.html" name="balance"></entry>
+        <entry image="Images/visual_imbalance_en.png" lex="lex_imbalance_en.html" name="imbalance"></entry>
+      </marker>
+      <marker name="lighting style">
+        <entry image="Images/visual_high_key_en.png" lex="lex_high_key_lighting_en.html" name="high-key lighting"></entry>
+        <entry image="Images/visual_low_key_en.png" lex="lex_low_key_lighting_en.html" name="low-key lighting"></entry>
+        <entry image="Images/visual_available_light_en.png" lex="lex_available_light_en.html" name="available light"></entry>
+        <entry image="Images/visual_exterior_light_en.png" lex="lex_exterior_light_en.html" name="exterior light"></entry>
+      </marker>
+      <marker name="lens type">
+        <entry image="Images/visual_fisheye_en.png" lex="lex_fisheye_lens_en.html" name="fisheye lens"></entry>
+        <entry image="Images/visual_wide_angle_en.png" lex="lex_wide_angle_lens_en.html" name="wide-angle lens"></entry>
+        <entry image="Images/visual_normal_lens_en.png" lex="lex_normal_lens_en.html" name="normal lens"></entry>
+        <entry image="Images/visual_telephoto_en.png" lex="lex_telephoto_lens_en.html" name="telephoto lens"></entry>
+      </marker>
+      <marker name="focus">
+        <entry image="Images/visual_shallow_focus_en.png" lex="lex_shallow_focus_en.html" name="shallow focus"></entry>
+        <entry image="Images/visual_deep_focus_en.png" lex="lex_deep_focus_en.html" name="deep focus"></entry>
+        <entry image="Images/visual_rack_focus_en.png" lex="lex_rack_focus_en.html" name="rack focus"></entry>
+        <entry image="Images/visual_out_of_focus_en.png" lex="lex_out_of_focus_en.html" name="out of focus"></entry>
+      </marker>
+      <marker name="camera distance">
+        <entry image="Images/visual_ecu_en.png" lex="lex_extreme_close_up_en.html" name="extreme close-up"></entry>
+        <entry image="Images/visual_cu_en.png" lex="lex_close_up_en.html" name="close-up"></entry>
+        <entry image="Images/visual_mcu_en.png" lex="lex_medium_close_up_en.html" name="medium close-up"></entry>
+        <entry image="Images/visual_ms_en.png" lex="lex_medium_shot_en.html" name="medium shot"></entry>
+        <entry image="Images/visual_mls_en.png" lex="lex_medium_long_shot_en.html" name="medium long shot"></entry>
+        <entry image="Images/visual_ls_en.png" lex="lex_long_shot_en.html" name="long shot"></entry>
+        <entry image="Images/visual_els_en.png" lex="lex_extreme_long_shot_en.html" name="extreme long shot"></entry>
+      </marker>
+      <marker name="camera angle">
+        <entry image="Images/visual_overhead_en.png" lex="lex_overhead_angle_en.html" name="overhead (god&apos;s-eye-view)"></entry>
+        <entry image="Images/visual_high_en.png" lex="lex_high_angle_en.html" name="high angle"></entry>
+        <entry image="Images/visual_eye-level_en.png" lex="lex_eye_level_angle_en.html" name="eye-level angle (straight-on angle)"></entry>
+        <entry image="Images/visual_canted_angle_en.png" lex="lex_canted_angle_en.html" name="canted angle (oblique angle)"></entry>
+        <entry image="Images/visual_low_en.png" lex="lex_low_angle_en.html" name="low angle"></entry>
+        <entry image="Images/visual_below_en.png" lex="lex_below_angle_en.html" name="below angle"></entry>
+      </marker>
+      <marker name="camera movement">
+        <marker name="fixed camera">
+          <entry image="Images/visual_static_en.png" lex="lex_static_en.html" name="static shot"></entry>
+          <entry image="Images/visual_pan_en.png" lex="lex_panning_en.html" name="panning"></entry>
+          <entry image="Images/visual_swish_pan_en.png" lex="lex_swish_pan_en.html" name="swish pan"></entry>
+          <entry image="Images/visual_360_pan_en.png" lex="lex_360_degree_pan_en.html" name="360-degree pan"></entry>
+          <entry image="Images/visual_tilt_en.png" lex="lex_tilting_en.html" name="tilting"></entry>
+          <entry image="Images/visual_rot_en.png" lex="lex_rotate_en.html" name="rotate"></entry>
+        </marker>
+        <marker name="moveable camera">
+          <entry image="Images/visual_hand_en.png" lex="lex_handheld_en.html" name="handheld"></entry>
+          <entry image="Images/visual_steadicam_en.png" lex="lex_steadicam_en.html" name="steadicam"></entry>
+          <entry image="Images/visual_track_en.png" lex="lex_track_en.html" name="track"></entry>
+          <entry image="Images/visual_track_in_en.png" lex="lex_track_in_en.html" name="track in"></entry>
+          <entry image="Images/visual_track_out_en.png" lex="lex_track_out_en.html" name="track out"></entry>
+          <entry image="Images/visual_crane_en.png" lex="lex_crane_en.html" name="crane"></entry>
+          <entry image="Images/visual_circle_shot_en.png" lex="lex_circle_shot_en.html" name="circle shot"></entry>
+          <entry image="Images/visual_aerial_shot_en.png" lex="lex_aerial_shot_en.html" name="aerial shot"></entry>
+          <entry image="Images/visual_follow_shot_en.png" lex="lex_following_shot_en.html" name="following shot"></entry>
+        </marker>
+        <marker name="apparent camera movement">
+          <entry image="Images/visual_zoom_in_en.png" lex="lex_zoom_in_en.html" name="zoom in"></entry>
+          <entry image="Images/visual_zoom_out_en.png" lex="lex_zoom_out_en.html" name="zoom out"></entry>
+        </marker>
+      </marker>
+      <marker name="point of view">
+        <entry image="Images/visual_objective_camera_en.png" lex="lex_objective_camera_en.html" name="objective camera"></entry>
+        <entry image="Images/visual_omniscient_camera_en.png" lex="lex_omniscient_camera_en.html" name="omniscient camera"></entry>
+        <entry image="Images/visual_subjective_camera_en.png" lex="lex_subjective_camera_en.html" name="subjective camera"></entry>
+        <entry image="Images/visual_point_of_view_shot_en.png" lex="lex_point_of_view_shot_en.html" name="point-of-view shot"></entry>
+        <entry image="Images/visual_mindscreen_blue_en.png" lex="lex_mind_screen_en.html" name="mindscreen"></entry>
+      </marker>
+    </marker>
+    <marker name="cut/editing">
+      <marker name="editing">
+        <entry image="Images/visual_montage_en.png" lex="lex_montage_en.html" name="montage"></entry>
+        <entry image="Images/visual_point_of_view_cut_en.png" lex="lex_point_of_view_shot_en.html" name="point-of-view shot"></entry>
+        <entry image="Images/visual_mindscreen_red_en.png" lex="lex_mind_screen_en.html" name="mindscreen"></entry>
+        <entry image="Images/visual_reaction_shot_en.png" lex="lex_reaction_shot_en.html" name="reaction shot"></entry>
+        <entry image="Images/visual_cutaway_shot_en.png" lex="lex_cutaway_en.html" name="cutaway (shot)"></entry>
+        <entry image="Images/visual_superimposition_en.png" lex="lex_superimposition_en.html" name="superimposition"></entry>
+      </marker>
+      <marker name="continuity editing">
+        <entry image="Images/visual_180_en.png" lex="lex_180_degree_system_en.html" name="180 degree rule"></entry>
+        <entry image="Images/visual_non_180_en.png" lex="lex_180_degree_system_en.html" name="violation of 180 degree rule"></entry>
+        <entry image="Images/visual_30_en.png" lex="lex_30_degree_system_en.html" name="30 degree rule"></entry>
+        <entry image="Images/visual_non_30_en.png" lex="lex_30_degree_system_en.html" name="violation of 30 degree rule"></entry>
+        <entry image="Images/visual_cutting_on_action_en.png" lex="lex_cutting_on_action_en.html" name="cutting on action"></entry>
+        <entry image="Images/visual_eyeline_match_en.png" lex="lex_eyeline_match_en.html" name="eyeline match"></entry>
+        <entry image="Images/visual_establishing_shot_red_en.png" lex="lex_establishing_shot_en.html" name="establishing shot"></entry>
+        <entry image="Images/visual_shot_reverse_shot_en.png" lex="lex_shot_reverse_shot_en.html" name="shot/reverse shot"></entry>
+      </marker>
+      <marker name="transitions">
+        <entry image="Images/visual_straight_cut_en.png" lex="lex_straight_cut_en.html" name="straight cut"></entry>
+        <entry image="Images/visual_dissolve_en.png" lex="lex_lap_dissolve_en.html" name="lap dissolve"></entry>
+        <entry image="Images/visual_fade_out_en.png" lex="lex_fade_out_en.html" name="fade-out"></entry>
+        <entry image="Images/visual_fade_in_en.png" lex="lex_fade_in_en.html" name="fade-in"></entry>
+        <entry image="Images/visual_match_cut_en.png" lex="lex_match_cut_en.html" name="match cut"></entry>
+        <entry image="Images/visual_jump_cut_en.png" lex="lex_jump_cut_en.html" name="jump cut"></entry>
+      </marker>
+      <marker name="pace and time">
+        <entry image="Images/visual_freeze_frame_en.png" lex="lex_freeze_frame_en.html" name="freeze frame"></entry>
+        <entry image="Images/visual_slow_motion_en.png" lex="lex_slow_motion_en.html" name="slow motion"></entry>
+        <entry image="Images/visual_fast_motion_en.png" lex="lex_fast_motion_en.html" name="fast motion"></entry>
+        <entry image="Images/visual_flashback_en.png" lex="lex_flashback_en.html" name="flashback"></entry>
+        <entry image="Images/visual_flash_forward_en.png" lex="lex_flash_forward_en.html" name="flash-forward"></entry>
+        <entry image="Images/visual_elliptical_editing_en.png" lex="lex_elliptical_editing_en.html" name="elliptical editing"></entry>
+        <entry image="Images/visual_cross_cutting_en.png" lex="lex_cross_cut_en.html" name="cross-cutting"></entry>
+        <entry image="Images/visual_overlapping_action_en.png" lex="lex_overlapping_action_en.html" name="overlapping action"></entry>
+      </marker>
+    </marker>
+    <marker name="sound and music">
+    <marker name="ambient sound">
+      <entry image="Images/visual_ambient_en.png" lex="lex_ambient_sound_en.html" name="ambient sound"></entry>
+      <entry image="Images/visual_ambient_on_en.png" lex="lex_ambient_sound_en.html" name="onscreen ambient sound"></entry>
+      <entry image="Images/visual_ambient_off_en.png" lex="lex_ambient_sound_en.html" name="offscreen ambient sound"></entry>
+    </marker>
+    <marker name="sound effect">
+      <entry image="Images/visual_soundeffect_en.png" lex="lex_sound_effect_en.html" name="sound effect"></entry>
+      <entry image="Images/visual_soundeffect_on_en.png" lex="lex_sound_effect_en.html" name="onscreen sound effect"></entry>
+      <entry image="Images/visual_soundeffect_off_en.png" lex="lex_sound_effect_en.html" name="offscreen sound effect"></entry>
+      <entry image="Images/visual_soundeffect_diegetic_en.png" lex="lex_sound_effect_en.html" name="diegetic sound effect"></entry>
+      <entry image="Images/visual_soundeffect_non_diegetic_en.png" lex="lex_sound_effect_en.html" name="non-diegetic sound effect"></entry>
+    </marker>
+      <marker name="music">
+      <entry image="Images/visual_music_en.png" lex="lex_film_score_en.html" name="music"></entry>
+      <entry image="Images/visual_music_on_en.png" lex="lex_film_score_en.html" name="onscreen music"></entry>
+      <entry image="Images/visual_music_off_en.png" lex="lex_film_score_en.html" name="offscreen music"></entry>
+      <entry image="Images/visual_music_diegetic_en.png" lex="lex_film_score_en.html" name="diegetic music"></entry>
+      <entry image="Images/visual_music_non_diegetic_en.png" lex="lex_film_score_en.html" name="non-diegetic music"></entry>
+    </marker>
+      <marker name="voice">
+      <entry image="Images/visual_voice_en.png" lex="lex_sound_music_en.html" name="voice"></entry>
+      <entry image="Images/visual_voice_on_en.png" lex="lex_sound_music_en.html" name="onscreen voice"></entry>
+      <entry image="Images/visual_voice_off_en.png" lex="lex_sound_music_en.html" name="offscreen voice"></entry>
+      <entry image="Images/visual_voice_diegetic_en.png" lex="lex_sound_music_en.html" name="diegetic voice"></entry>
+      <entry image="Images/visual_voice_non_diegetic_en.png" lex="lex_sound_music_en.html" name="non-diegetic voice"></entry>
+    </marker>
+    </marker>
+  </marker><marker name="Interaktionsanalyse von Lehr-/Lernsituationen">
+   <marker name="Elemente kindzentrierter Gesprachsstrategien">
+      <entry image="Images/kiz_initiative.svg" lex="lex_kiz_initiative.html" name="Initiative des Kindes folgen"></entry>
+      <entry image="Images/kiz_nachfragen.svg" lex="lex_kiz_nachfragen.html" name="Nachfragen"></entry>
+      <entry image="Images/kiz_abwarten.svg" lex="lex_kiz_abwarten.html" name="Abwarten"></entry>
+      <entry image="Images/kiz_rueckmeldung.svg" lex="lex_kiz_rueckmeldung.html" name="Positive Rückmeldung"></entry>
+      <entry image="Images/kiz_ideen.svg" lex="lex_kiz_ideen.html" name="Nicht zu viele eigene Beitrage/ldeen"></entry>
+      <entry image="Images/kiz_antreiben.svg" lex="lex_kiz_antreiben.html" name="Kein zu starkes Antreiben"></entry>
+      <entry image="Images/kiz_unterbrechungen.svg" lex="lex_kiz_unterbrechungen.html" name="Keine frühzeitigen Unterbrechungen"></entry>
+    </marker>
+    <marker name="Interaktionsfördernde Elemente">
+      <entry image="Images/ife_fragen.svg" lex="lex_ife_fragen.html" name="Offene Fragen"></entry>
+      <entry image="Images/ife_erweitern.svg" lex="lex_ife_erweitern.html" name="Erweiternde W-Fragen"></entry>
+      <entry image="Images/ife_ermutigung.svg" lex="lex_ife_ermutigung.html" name="Ermutigung zu Dialogen"></entry>
+      <entry image="Images/ife_interesse.svg" lex="lex_ife_interesse.html" name="Interesse an Themen des Kindes"></entry>
+    </marker>
+    <marker name="Sprachfördernde Gesprächsstrategien">
+      <entry image="Images/sfg_feedback.svg" lex="lex_sfg_feedback.html" name="Korrektives Feedback"></entry>
+      <entry image="Images/sfg_ergaenzungen.svg" lex="lex_sfg_ergaenzungen.html" name="Gezielte Ergänzungen"></entry>
+      <entry image="Images/sfg_nachfragen.svg" lex="lex_sfg_nachfragen.html" name="Nachfragen zu Vorherigem"></entry>
+      <entry image="Images/sfg_fragen.svg" lex="lex_sfg_fragen.html" name="Offene und W-Fragen"></entry>
+      <entry image="Images/sfg_wiederholungen.svg" lex="lex_sfg_wiederholungen.html" name="Lobende Wiederholungen"></entry>
+    </marker>
+    <marker name="Kognitiv aktivierende Gesprächsstrategien">
+      <entry image="Images/kag_vorwissen.svg" lex="lex_kag_vorwissen.html" name="Aktivierung von Vorwissen"></entry>
+      <entry image="Images/kag_einfordern.svg" lex="lex_kag_einfordern.html" name="Einfordern von Erwartungen"></entry>
+      <entry image="Images/kag_anregen.svg" lex="lex_kag_anregen.html" name="Anregen von Vergleichen"></entry>
+      <entry image="Images/kag_erklaerungen.svg" lex="lex_kag_erklaerungen.html" name="Einfordern von Erklärungen"></entry>
+      <entry image="Images/kag_hinweis.svg" lex="lex_kag_hinweis.html" name="Hinweis auf Unstimmigkeiten"></entry>
+      <entry image="Images/kag_sprechen.svg" lex="lex_kag_sprechen.html" name="Handlungsbegleitendes Sprechen"></entry>
+      <entry image="Images/kag_shared.svg" lex="lex_kag_shared.html" name="„Sustained shared thinking“"></entry>
+    </marker>
+  </marker><marker name="Modi des Dokumentarfilms">
+      <entry image="Images/visual_poetic_mode_de.svg" lex="lex_poetic_mode_de.html" name="Poetischer Modus"></entry>
+      <entry image="Images/visual_expository_mode_de.svg" lex="lex_expository_mode_de.html" name="Erklärender Modus"></entry>
+      <entry image="Images/visual_observational_mode_de.svg" lex="lex_observational_mode_de.html" name="Beobachtender Modus"></entry>
+      <entry image="Images/visual_participatory_mode_de.svg" lex="lex_participatory_mode_de.html" name="Interaktiver Modus"></entry>
+      <entry image="Images/visual_reflexive_mode_de.svg" lex="lex_reflexive_mode_de.html" name="Reflexiver Modus"></entry>
+      <entry image="Images/visual_performative_mode_de.svg" lex="lex_performative_mode_de.html" name="Performativer Modus"></entry>
+  </marker><marker name="Global Goals">
+    <marker name="No Poverty">
+      <entry image="Images/GOAL_1.svg" lex="lex_goal_1.html" name="No Poverty"></entry>
+      <entry image="Images/GOAL_1_1.svg" lex="lex_goal_1_1.html" name="Eradicate Extreme Poverty"></entry>
+      <entry image="Images/GOAL_1_2.svg" lex="lex_goal_1_2.html" name="Reduce Poverty by at Least 50%"></entry>
+      <entry image="Images/GOAL_1_3.svg" lex="lex_goal_1_3.html" name="Implement Social Protection Systems"></entry>
+      <entry image="Images/GOAL_1_4.svg" lex="lex_goal_1_4.html" name="Equal Rights to Ownership, Basic Services, Technology and Economic Resources"></entry>
+      <entry image="Images/GOAL_1_5.svg" lex="lex_goal_1_5.html" name="Build Resilience to Environmental, Economic and Social Disasters"></entry>
+      <entry image="Images/GOAL_1_A.svg" lex="lex_goal_1_A.html" name="Mobilize Resources to Implement Policies to End Poverty"></entry>
+      <entry image="Images/GOAL_1_B.svg" lex="lex_goal_1_B.html" name="Create pro-poor and gender-sensitive policy frameworks"></entry>
+    </marker>
+    <marker name="Zero Hunger">
+      <entry image="Images/GOAL_2.svg" lex="lex_goal_2.html" name="Zero Hunger"></entry>
+      <entry image="Images/GOAL_2_1.svg" lex="lex_goal_2_1.html" name="Universal Access to Safe and Nutritious Food"></entry>
+      <entry image="Images/GOAL_2_2.svg" lex="lex_goal_2_2.html" name="End All Forms of Malnutrition"></entry>
+      <entry image="Images/GOAL_2_3.svg" lex="lex_goal_2_3.html" name="Double the Productivity and Incomes of Small-Scale Food Producers"></entry>
+      <entry image="Images/GOAL_2_4.svg" lex="lex_goal_2_4.html" name="Sustainable Food Production and Resilient Agricultural Practices"></entry>
+      <entry image="Images/GOAL_2_5.svg" lex="lex_goal_2_5.html" name="Maintain the Genetic Diversity in Food Production"></entry>
+      <entry image="Images/GOAL_2_A.svg" lex="lex_goal_2_A.html" name="Invest in Rural Infrastructure, Agricultural Research, Technology and Gene Banks"></entry>
+      <entry image="Images/GOAL_2_B.svg" lex="lex_goal_2_B.html" name="Prevent Agricultural Trade Restrictions, Market Distortions and Export Subsidies"></entry>
+      <entry image="Images/GOAL_2_C.svg" lex="lex_goal_2_C.html" name="Ensure Stable Food Commodity Markets and Timely Access to Information"></entry>
+    </marker>
+    <marker name="Good Health and Well-being">
+      <entry image="Images/GOAL_3.svg" lex="lex_goal_3.html" name="Good Health and Well-being"></entry>
+      <entry image="Images/GOAL_3_1.svg" lex="lex_goal_3_1.html" name="Reduce Maternal Mortality"></entry>
+      <entry image="Images/GOAL_3_2.svg" lex="lex_goal_3_2.html" name="End All Preventable Deaths Under 5 Years of Age"></entry>
+      <entry image="Images/GOAL_3_3.svg" lex="lex_goal_3_3.html" name="Fight Communicable Diseases"></entry>
+      <entry image="Images/GOAL_3_4.svg" lex="lex_goal_3_4.html" name="Reduce Mortality from Non-Communicable Diseases and Promote Mental Health"></entry>
+      <entry image="Images/GOAL_3_5.svg" lex="lex_goal_3_5.html" name="Prevent and Treat Substance Abuse"></entry>
+      <entry image="Images/GOAL_3_6.svg" lex="lex_goal_3_6.html" name="Reduce Road Injuries and Deaths"></entry>
+      <entry image="Images/GOAL_3_7.svg" lex="lex_goal_3_7.html" name="Universal Access to Sexual and Reproductive Care, Family Planning and Education"></entry>
+      <entry image="Images/GOAL_3_8.svg" lex="lex_goal_3_8.html" name="Achieve Universal Health Coverage"></entry>
+      <entry image="Images/GOAL_3_9.svg" lex="lex_goal_3_9.html" name="Reduce Illnesses and Death from Hazardous Chemicals and Pollution"></entry>
+      <entry image="Images/GOAL_3_A.svg" lex="lex_goal_3_A.html" name="Implement the WHO Framework Convention on Tobacco Control"></entry>
+      <entry image="Images/GOAL_3_B.svg" lex="lex_goal_3_B.html" name="Support Research, Development and Universal Access to Affordable Vaccines and Medicines"></entry>
+      <entry image="Images/GOAL_3_C.svg" lex="lex_goal_3_C.html" name="Increase Health Financing and Support Health Workforce in Developing Countries"></entry>
+      <entry image="Images/GOAL_3_D.svg" lex="lex_goal_3_D.html" name="Improve Early Warning Systems for Global Health Risks"></entry>
+    </marker>
+    <marker name="Quality Education">
+      <entry image="Images/GOAL_4.svg" lex="lex_goal_4.html" name="Quality Education"></entry>
+      <entry image="Images/GOAL_4_1.svg" lex="lex_goal_4_1.html" name="Free Primary and Secondary Education"></entry>
+      <entry image="Images/GOAL_4_2.svg" lex="lex_goal_4_2.html" name="Equal Access to Quality Pre-Primary Education"></entry>
+      <entry image="Images/GOAL_4_3.svg" lex="lex_goal_4_3.html" name="Equal Access to Affordable Technical, Vocational and Higher Education"></entry>
+      <entry image="Images/GOAL_4_4.svg" lex="lex_goal_4_4.html" name="Increase the Number of People with Relevant Skills for Financial Success"></entry>
+      <entry image="Images/GOAL_4_5.svg" lex="lex_goal_4_5.html" name="Eliminate All Discrimination in Education"></entry>
+      <entry image="Images/GOAL_4_6.svg" lex="lex_goal_4_6.html" name="Universal Literacy and Numeracy"></entry>
+      <entry image="Images/GOAL_4_7.svg" lex="lex_goal_4_7.html" name="Education for Sustainable Development and Global Citizenship"></entry>
+      <entry image="Images/GOAL_4_A.svg" lex="lex_goal_4_A.html" name="Build and Upgrade Inclusive and Safe Schools"></entry>
+      <entry image="Images/GOAL_4_B.svg" lex="lex_goal_4_B.html" name="Expand Higher Education Scholarships for Developing Countries"></entry>
+      <entry image="Images/GOAL_4_C.svg" lex="lex_goal_4_C.html" name="Increase the supply of qualified teachers In Developing Countries"></entry>
+    </marker>
+    <marker name="Gender Equality">
+      <entry image="Images/GOAL_5.svg" lex="lex_goal_5.html" name="Gender Equality"></entry>
+      <entry image="Images/GOAL_5_1.svg" lex="lex_goal_5_1.html" name="End Discrimination Against Women and Girls"></entry>
+      <entry image="Images/GOAL_5_2.svg" lex="lex_goal_5_2.html" name="End All Violence Against and Exploitation of Women and Girls"></entry>
+      <entry image="Images/GOAL_5_3.svg" lex="lex_goal_5_3.html" name="Eliminate Forced Marriages and Genital Mutilation"></entry>
+      <entry image="Images/GOAL_5_4.svg" lex="lex_goal_5_4.html" name="Value Unpaid Care and Promote Shared Domestic Responsibilities"></entry>
+      <entry image="Images/GOAL_5_5.svg" lex="lex_goal_5_5.html" name="Ensure Full Participation in Leadership and Decision-Making"></entry>
+      <entry image="Images/GOAL_5_6.svg" lex="lex_goal_5_6.html" name="Universal Access to Reproductive Health and Rights"></entry>
+      <entry image="Images/GOAL_5_A.svg" lex="lex_goal_5_A.html" name="Equal Rights to Economic Resources, Property Ownership and Financial Services"></entry>
+      <entry image="Images/GOAL_5_B.svg" lex="lex_goal_5_B.html" name="Promote Empowerment of Women through Technology"></entry>
+      <entry image="Images/GOAL_5_C.svg" lex="lex_goal_5_C.html" name="Adopt and Strengthen Policies and Enforceable Legislation for Gender Equality"></entry>
+    </marker>
+    <marker name="Clean Water and Sanitation">
+      <entry image="Images/GOAL_6.svg" lex="lex_goal_6.html" name="Clean Water and Sanitation"></entry>
+      <entry image="Images/GOAL_6_1.svg" lex="lex_goal_6_1.html" name="Safe and Affordable Drinking Water"></entry>
+      <entry image="Images/GOAL_6_2.svg" lex="lex_goal_6_2.html" name="End Open Defecation and Provide Access to Sanitation and Hygiene"></entry>
+      <entry image="Images/GOAL_6_3.svg" lex="lex_goal_6_3.html" name="Improve Water Quality, Wastewater Treatment and Safe Reuse"></entry>
+      <entry image="Images/GOAL_6_4.svg" lex="lex_goal_6_4.html" name="Increase Water-Use Efficiency and Ensure Freshwater Supplies"></entry>
+      <entry image="Images/GOAL_6_5.svg" lex="lex_goal_6_5.html" name="Implement Integrated Water Resources Management"></entry>
+      <entry image="Images/GOAL_6_6.svg" lex="lex_goal_6_6.html" name="Protect and Restore Water-Related Ecosystems"></entry>
+      <entry image="Images/GOAL_6_A.svg" lex="lex_goal_6_A.html" name="Expand Water and Sanitation Support to Developing Countries"></entry>
+      <entry image="Images/GOAL_6_B.svg" lex="lex_goal_6_B.html" name="Support Local Engagement in Water and Sanitation Management"></entry>
+    </marker>
+    <marker name="Affordable and Clean Energy">
+      <entry image="Images/GOAL_7.svg" lex="lex_goal_7.html" name="Affordable and Clean Energy"></entry>
+      <entry image="Images/GOAL_7_1.svg" lex="lex_goal_7_1.html" name="Universal Access to Modern Energy"></entry>
+      <entry image="Images/GOAL_7_2.svg" lex="lex_goal_7_2.html" name="Increase Global Percentage of Renewable Energy"></entry>
+      <entry image="Images/GOAL_7_3.svg" lex="lex_goal_7_3.html" name="Double the Improvement in Energy Efficiency"></entry>
+      <entry image="Images/GOAL_7_A.svg" lex="lex_goal_7_A.html" name="Promote Access to Research, Technology and Investments in Clean Energy"></entry>
+      <entry image="Images/GOAL_7_B.svg" lex="lex_goal_7_B.html" name="Expand and Upgrade Energy Services for Developing Countries"></entry>
+    </marker>
+    <marker name="Decent Work and Economic Growth">
+      <entry image="Images/GOAL_8.svg" lex="lex_goal_8.html" name="Decent Work and Economic Growth"></entry>
+      <entry image="Images/GOAL_8_1.svg" lex="lex_goal_8_1.html" name="Sustainable Economic Growth"></entry>
+      <entry image="Images/GOAL_8_2.svg" lex="lex_goal_8_2.html" name="Diversify, Innovate and Upgrade for Economic Productivity"></entry>
+      <entry image="Images/GOAL_8_3.svg" lex="lex_goal_8_3.html" name="Promote Policies to Support Job Creation and Growing Enterprises"></entry>
+      <entry image="Images/GOAL_8_4.svg" lex="lex_goal_8_4.html" name="Improve Resource Efficiency in Consumption and Production"></entry>
+      <entry image="Images/GOAL_8_5.svg" lex="lex_goal_8_5.html" name="Full Employment and Decent Work with Equal Pay"></entry>
+      <entry image="Images/GOAL_8_6.svg" lex="lex_goal_8_6.html" name="Promote Youth Employment, Education and Training"></entry>
+      <entry image="Images/GOAL_8_7.svg" lex="lex_goal_8_7.html" name="End Modern Slavery, Trafficking and Child Labour"></entry>
+      <entry image="Images/GOAL_8_8.svg" lex="lex_goal_8_8.html" name="Protect Labour Rights and Promote Safe Working Environments"></entry>
+      <entry image="Images/GOAL_8_9.svg" lex="lex_goal_8_9.html" name="Promote Beneficial and Sustainable Tourism"></entry>
+      <entry image="Images/GOAL_8_10.svg" lex="lex_goal_8_10.html" name="Universal Access to Banking, Insurance and Financial Services"></entry>
+      <entry image="Images/GOAL_8_A.svg" lex="lex_goal_8_B.html" name="Increase Aid for Trade Support"></entry>
+      <entry image="Images/GOAL_8_B.svg" lex="lex_goal_8_A.html" name="Develop a Global Youth Employment Strategy"></entry>
+    </marker>
+    <marker name="Industry, Innovation and Infrastructure">
+      <entry image="Images/GOAL_9.svg" lex="lex_goal_9.html" name="Industry, Innovation and Infrastructure"></entry>
+      <entry image="Images/GOAL_9_1.svg" lex="lex_goal_9_1.html" name="Develop Sustainable, Resilient and Inclusive Infrastructures"></entry>
+      <entry image="Images/GOAL_9_2.svg" lex="lex_goal_9_2.html" name="Promote Inclusive and Sustainable Industrialization"></entry>
+      <entry image="Images/GOAL_9_3.svg" lex="lex_goal_9_3.html" name="Increase Access to Financial Services and Markets"></entry>
+      <entry image="Images/GOAL_9_4.svg" lex="lex_goal_9_4.html" name="Upgrade All Industries and Infrastructures for Sustainability"></entry>
+      <entry image="Images/GOAL_9_5.svg" lex="lex_goal_9_5.html" name="Enhance Research and Upgrade Industrial Technologies"></entry>
+      <entry image="Images/GOAL_9_A.svg" lex="lex_goal_9_A.html" name="Facilitate Sustainable Infrastructure Development for Developing Countries"></entry>
+      <entry image="Images/GOAL_9_B.svg" lex="lex_goal_9_B.html" name="Support Domestic Technology Development and Industrial Diversification"></entry>
+      <entry image="Images/GOAL_9_C.svg" lex="lex_goal_9_C.html" name="Universal Access to Information and Communications Technology"></entry>
+    </marker>
+    <marker name="Reduced Inequalities">
+      <entry image="Images/GOAL_10.svg" lex="lex_goal_10.html" name="Reduced Inequalities"></entry>
+      <entry image="Images/GOAL_10_1.svg" lex="lex_goal_10_1.html" name="Reduce Income Inequalities"></entry>
+      <entry image="Images/GOAL_10_2.svg" lex="lex_goal_10_2.html" name="Promote Universal Social, Economic and Political Inclusion"></entry>
+      <entry image="Images/GOAL_10_3.svg" lex="lex_goal_10_3.html" name="Ensure Equal Opportunities and End Discrimination"></entry>
+      <entry image="Images/GOAL_10_4.svg" lex="lex_goal_10_4.html" name="Adopt Fiscal and Social Policies that Promotes Equality"></entry>
+      <entry image="Images/GOAL_10_5.svg" lex="lex_goal_10_5.html" name="Improved Regulation of Global Financial Markets and Institutions"></entry>
+      <entry image="Images/GOAL_10_6.svg" lex="lex_goal_10_6.html" name="Enhanced Representation for Developing Countries in Financial Institutions"></entry>
+      <entry image="Images/GOAL_10_7.svg" lex="lex_goal_10_7.html" name="Responsible and Well-Managed Migration Policies"></entry>
+      <entry image="Images/GOAL_10_A.svg" lex="lex_goal_10_A.html" name="Special and Differential Treatment for Developing Countries"></entry>
+      <entry image="Images/GOAL_10_B.svg" lex="lex_goal_10_B.html" name="Encourage Development Assistance and Investment in Least Developed Countries"></entry>
+      <entry image="Images/GOAL_10_C.svg" lex="lex_goal_10_C.html" name="Reduce Transaction Costs for Migrant Remittances"></entry>
+    </marker>
+    <marker name="Sustainable Cities and Communities">
+      <entry image="Images/GOAL_11.svg" lex="lex_goal_11.html" name="Sustainable Cities and Communities"></entry>
+      <entry image="Images/GOAL_11_1.svg" lex="lex_goal_11_1.html" name="Safe and Affordable Housing"></entry>
+      <entry image="Images/GOAL_11_2.svg" lex="lex_goal_11_2.html" name="Affordable and Sustainable Transport Systems"></entry>
+      <entry image="Images/GOAL_11_3.svg" lex="lex_goal_11_3.html" name="Inclusive and Sustainable Urbanization"></entry>
+      <entry image="Images/GOAL_11_4.svg" lex="lex_goal_11_4.html" name="Protect the World’s Cultural and Natural Heritage"></entry>
+      <entry image="Images/GOAL_11_5.svg" lex="lex_goal_11_5.html" name="Reduce the Adverse Effects of Natural Disasters"></entry>
+      <entry image="Images/GOAL_11_6.svg" lex="lex_goal_11_6.html" name="Reduce the Environmental Impact of Cities"></entry>
+      <entry image="Images/GOAL_11_7.svg" lex="lex_goal_11_7.html" name="Provide Access to Safe and Inclusive Green and Public Spaces"></entry>
+      <entry image="Images/GOAL_11_A.svg" lex="lex_goal_11_A.html" name="Strong National and Regional Development Planning"></entry>
+      <entry image="Images/GOAL_11_B.svg" lex="lex_goal_11_B.html" name="Implement Policies for Inclusion, Resource Efficiency and Disaster Risk Reduction"></entry>
+      <entry image="Images/GOAL_11_C.svg" lex="lex_goal_11_C.html" name="Support Least Developed Countries in Sustainable and Resilient Building"></entry>
+    </marker>
+    <marker name="Responsible Consumption and Production">
+      <entry image="Images/GOAL_12.svg" lex="lex_goal_12.html" name="Responsible Consumption and Production"></entry>
+      <entry image="Images/GOAL_12_1.svg" lex="lex_goal_12_1.html" name="Implement the 10-Year Sustainable Consumption and Production Framework"></entry>
+      <entry image="Images/GOAL_12_2.svg" lex="lex_goal_12_2.html" name="Sustainable Management and Use of Natural Resources"></entry>
+      <entry image="Images/GOAL_12_3.svg" lex="lex_goal_12_3.html" name="Halve Global Per Capita Food Waste"></entry>
+      <entry image="Images/GOAL_12_4.svg" lex="lex_goal_12_4.html" name="Responsible Management of Chemicals and Waste"></entry>
+      <entry image="Images/GOAL_12_5.svg" lex="lex_goal_12_5.html" name="Substantially Reduce Waste Generation"></entry>
+      <entry image="Images/GOAL_12_6.svg" lex="lex_goal_12_6.html" name="Encourage Companies to Adopt Sustainable Practices and Sustainability Reporting"></entry>
+      <entry image="Images/GOAL_12_7.svg" lex="lex_goal_12_7.html" name="Promote Sustainable Public Procurement Practices"></entry>
+      <entry image="Images/GOAL_12_8.svg" lex="lex_goal_12_8.html" name="Promote Universal Understanding of Sustainable Lifestyles"></entry>
+      <entry image="Images/GOAL_12_A.svg" lex="lex_goal_12_A.html" name="Support Developing Countries&apos; Scientific and Technological Capacity for Sustainable Consumption and Production"></entry>
+      <entry image="Images/GOAL_12_B.svg" lex="lex_goal_12_B.html" name="Develop and Implement Tools to Monitor Sustainable Tourism"></entry>
+      <entry image="Images/GOAL_12_C.svg" lex="lex_goal_12_C.html" name="Remove Market Distortions that Encourage Wasteful Consumption"></entry>
+    </marker>
+    <marker name="Climate Action">
+      <entry image="Images/GOAL_13.svg" lex="lex_goal_13.html" name="Climate Action"></entry>
+      <entry image="Images/GOAL_13_1.svg" lex="lex_goal_13_1.html" name="Strengthen resilience and Adaptive Capacity to Climate Related Disasters"></entry>
+      <entry image="Images/GOAL_13_2.svg" lex="lex_goal_13_2.html" name="Integrate Climate Change Measures into Policies and Planning"></entry>
+      <entry image="Images/GOAL_13_3.svg" lex="lex_goal_13_3.html" name="Build Knowledge and Capacity to Meet Climate Change"></entry>
+      <entry image="Images/GOAL_13_A.svg" lex="lex_goal_13_A.html" name="Implement the UN Framework Convention on Climate Change"></entry>
+      <entry image="Images/GOAL_13_B.svg" lex="lex_goal_13_B.html" name="Promote Mechanisms to Raise Capacity for Planning and Management"></entry>
+    </marker>
+    <marker name="Life Below Water">
+      <entry image="Images/GOAL_14.svg" lex="lex_goal_14.html" name="Life Below Water"></entry>
+      <entry image="Images/GOAL_14_1.svg" lex="lex_goal_14_1.html" name="Reduce Marine Pollution"></entry>
+      <entry image="Images/GOAL_14_2.svg" lex="lex_goal_14_2.html" name="Protect and Restore Ecosystems"></entry>
+      <entry image="Images/GOAL_14_3.svg" lex="lex_goal_14_3.html" name="Reduce Ocean Acidification"></entry>
+      <entry image="Images/GOAL_14_4.svg" lex="lex_goal_14_4.html" name="Sustainable Fishing"></entry>
+      <entry image="Images/GOAL_14_5.svg" lex="lex_goal_14_5.html" name="Conserve Coastal and Marine Areas"></entry>
+      <entry image="Images/GOAL_14_6.svg" lex="lex_goal_14_6.html" name="End Subsidies Contributing to Overfishing"></entry>
+      <entry image="Images/GOAL_14_7.svg" lex="lex_goal_14_7.html" name="Increase the Economic Benefits from Sustainable Use of Marine Resources"></entry>
+      <entry image="Images/GOAL_14_A.svg" lex="lex_goal_14_A.html" name="Increase Scientific Knowledge, Research and Technology for Ocean Health"></entry>
+      <entry image="Images/GOAL_14_B.svg" lex="lex_goal_14_B.html" name="Support Small Scale Fishers"></entry>
+      <entry image="Images/GOAL_14_C.svg" lex="lex_goal_14_C.html" name="Implement and Enforce International Sea Law"></entry>
+    </marker>
+    <marker name="Life on Land">
+      <entry image="Images/GOAL_15.svg" lex="lex_goal_15.html" name="Life on Land"></entry>
+      <entry image="Images/GOAL_15_1.svg" lex="lex_goal_15_1.html" name="Conserve and Restore Terrestrial and Freshwater Ecosystems"></entry>
+      <entry image="Images/GOAL_15_2.svg" lex="lex_goal_15_2.html" name="End Deforestation and Restore Degraded Forests"></entry>
+      <entry image="Images/GOAL_15_3.svg" lex="lex_goal_15_3.html" name="End Desertification and Restore Degraded Land"></entry>
+      <entry image="Images/GOAL_15_4.svg" lex="lex_goal_15_4.html" name="Ensure Conservation of Mountain Ecosystems"></entry>
+      <entry image="Images/GOAL_15_5.svg" lex="lex_goal_15_5.html" name="Protect Biodiversity and Natural Habitats"></entry>
+      <entry image="Images/GOAL_15_6.svg" lex="lex_goal_15_6.html" name="Promote Access to Genetic Resources and Fair Sharing of the Benefits"></entry>
+      <entry image="Images/GOAL_15_7.svg" lex="lex_goal_15_7.html" name="Eliminate Poaching and Trafficking of Protected Species"></entry>
+      <entry image="Images/GOAL_15_8.svg" lex="lex_goal_15_8.html" name="Prevent Invasive Alien Species on Land and in Water Ecosystems"></entry>
+      <entry image="Images/GOAL_15_9.svg" lex="lex_goal_15_9.html" name="Integrate Ecosystem and Biodiversity in Governmental Planning"></entry>
+      <entry image="Images/GOAL_15_A.svg" lex="lex_goal_15_A.html" name="Increase Financial Resources to Conserve and Sustainably Use Ecosystem and Biodiversity"></entry>
+      <entry image="Images/GOAL_15_B.svg" lex="lex_goal_15_B.html" name="Finance and Incentivize Sustainable Forest Management"></entry>
+      <entry image="Images/GOAL_15_C.svg" lex="lex_goal_15_C.html" name="Combat Global Poaching and Trafficking"></entry>
+    </marker>
+    <marker name="Peace, Justice and Strong Institutions">
+      <entry image="Images/GOAL_16.svg" lex="lex_goal_16.html" name="Peace, Justice and Strong Institutions"></entry>
+      <entry image="Images/GOAL_16_1.svg" lex="lex_goal_16_1.html" name="Reduce Violence Everywhere"></entry>
+      <entry image="Images/GOAL_16_2.svg" lex="lex_goal_16_2.html" name="Protect Children from Abuse, Exploitation, Trafficking and Violence"></entry>
+      <entry image="Images/GOAL_16_3.svg" lex="lex_goal_16_3.html" name="Promote the Rule of Law And Ensure Equal Access to Justice"></entry>
+      <entry image="Images/GOAL_16_4.svg" lex="lex_goal_16_4.html" name="Combat Organized Crime and Illicit Financial and Arms Flows"></entry>
+      <entry image="Images/GOAL_16_5.svg" lex="lex_goal_16_5.html" name="Substantially Reduce Corruption and Bribery"></entry>
+      <entry image="Images/GOAL_16_6.svg" lex="lex_goal_16_6.html" name="Develop Effective, Accountable and Transparent Institutions"></entry>
+      <entry image="Images/GOAL_16_7.svg" lex="lex_goal_16_7.html" name="Ensure Responsive, Inclusive and Representative Decision-Making"></entry>
+      <entry image="Images/GOAL_16_8.svg" lex="lex_goal_16_8.html" name="Strengthen the Participation in Global Governance"></entry>
+      <entry image="Images/GOAL_16_9.svg" lex="lex_goal_16_9.html" name="Provide Universal Legal Identity"></entry>
+      <entry image="Images/GOAL_16_10.svg" lex="lex_goal_16_10.html" name="Ensure Public Access to Information and Protect Fundamental Freedoms"></entry>
+      <entry image="Images/GOAL_16_A.svg" lex="lex_goal_16_A.html" name="Strengthen National Institutions to Prevent Violence and Combat Terrorism and Crime"></entry>
+      <entry image="Images/GOAL_16_B.svg" lex="lex_goal_16_B.html" name="Promote and Enforce Non-Discriminatory Laws and Policies"></entry>
+    </marker>
+    <marker name="Partnerships for the Goals">
+      <entry image="Images/GOAL_17.svg" lex="lex_goal_17.html" name="Partnerships for the Goals"></entry>
+      <entry image="Images/GOAL_17_1.svg" lex="lex_goal_17_1.html" name="Mobilize Resources to Improve Domestic Revenue Collection"></entry>
+      <entry image="Images/GOAL_17_2.svg" lex="lex_goal_17_2.html" name="Implement All Development Assistance Commitments"></entry>
+      <entry image="Images/GOAL_17_3.svg" lex="lex_goal_17_3.html" name="Mobilize Financial Resources for Developing Countries"></entry>
+      <entry image="Images/GOAL_17_4.svg" lex="lex_goal_17_4.html" name="Assist Developing Countries in Attaining Debt Sustainability"></entry>
+      <entry image="Images/GOAL_17_5.svg" lex="lex_goal_17_5.html" name="Invest in Least Developed Countries"></entry>
+      <entry image="Images/GOAL_17_6.svg" lex="lex_goal_17_6.html" name="Knowledge Sharing and Cooperation for Access to Science, Technology and Innovation"></entry>
+      <entry image="Images/GOAL_17_7.svg" lex="lex_goal_17_7.html" name="Promote Sustainable Technologies to Developing Countries"></entry>
+      <entry image="Images/GOAL_17_8.svg" lex="lex_goal_17_8.html" name="Strengthen the Science, Technology and Innovation Capacity for Least Developed Countries"></entry>
+      <entry image="Images/GOAL_17_9.svg" lex="lex_goal_17_9.html" name="Enhance SDG Capacity in Developing Countries"></entry>
+      <entry image="Images/GOAL_17_10.svg" lex="lex_goal_17_10.html" name="Promote a Universal Trading System under the WTO"></entry>
+      <entry image="Images/GOAL_17_11.svg" lex="lex_goal_17_11.html" name="Increase the Exports of Developing Countries"></entry>
+      <entry image="Images/GOAL_17_12.svg" lex="lex_goal_17_12.html" name="Remove Trade Barriers for Least Developed Countries"></entry>
+      <entry image="Images/GOAL_17_13.svg" lex="lex_goal_17_13.html" name="Enhance Global Macroeconomic Stability"></entry>
+      <entry image="Images/GOAL_17_14.svg" lex="lex_goal_17_14.html" name="Enhance Policy Coherence for Sustainable Development"></entry>
+      <entry image="Images/GOAL_17_15.svg" lex="lex_goal_17_15.html" name="Respect National Leadership to Implement Policies for the Sustainable Development Goals"></entry>
+      <entry image="Images/GOAL_17_16.svg" lex="lex_goal_17_16.html" name="Enhance the Global Partnership for Sustainable Development"></entry>
+      <entry image="Images/GOAL_17_17.svg" lex="lex_goal_17_17.html" name="Encourage Effective Partnerships"></entry>
+      <entry image="Images/GOAL_17_18.svg" lex="lex_goal_17_18.html" name="Enhance Availability of Reliable Data"></entry>
+      <entry image="Images/GOAL_17_19.svg" lex="lex_goal_17_19.html" name="Further Develop Measurements of Progress"></entry>
+    </marker>
+  </marker></index>
+
