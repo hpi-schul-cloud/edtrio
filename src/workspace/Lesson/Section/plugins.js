@@ -13,10 +13,20 @@ import { createImagePlugin } from "@edtr-io/plugin-image"
 // import { highlightPlugin } from "@edtr-io/plugin-highlight"
 // import { h5pPlugin } from "@edtr-io/plugin-h5p"
 
+
 import nexboardPlugin from "~/plugins/nexboard"
 import etherpadPlugin from "~/plugins/etherpad"
 import notesPlugin from "~/plugins/notes"
+import homeworkPlugin from "~/plugins/homework"
 
+/*
+import { 
+    nexboardPlugin, 
+    etherpadPlugin, 
+    notesPlugin, 
+    homeworkPlugin,
+} from '~/plugins'
+*/
 function readFile(file) {
     return new Promise(resolve => {
         const reader = new FileReader()
@@ -97,6 +107,7 @@ const plugins = {
     // singleMultipleChoice: scMcExercisePlugin,
     // highlight: highlightPlugin,
     // h5p: h5pPlugin,
+    homework: homeworkPlugin,
 }
 
 export default plugins

@@ -8,8 +8,8 @@ export const initialState = {
     error: "",
     lesson: {},
     course: {},
-    studentView: !!q.student_view,
-    editing: q.student_view ? false : true,
+    studentView: !!q.student_view,  // todo wrong workflow
+    editing: q.student_view ? false : true, // todo wrong workflow
     activeSectionId: "",
     bootstrapFinished: false,
     saveStatus: "",
