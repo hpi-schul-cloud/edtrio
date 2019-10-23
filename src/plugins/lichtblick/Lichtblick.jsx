@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react"
 import styled from "styled-components"
 import shortid from "shortid"
-import uuidv5 from 'uuid/v5'
+import uuidv4 from 'uuid/v4'
 
 import LessonContext from "~/Contexts/Lesson"
 
@@ -24,7 +24,7 @@ export const LichtblickWrapper = styled.div`
 const Lichtblick = ({ focused, state }) => {
     
     const { store, dispatch } = useContext(LessonContext)
-    const uuid = uuidv5()
+    const uuid = uuidv4()
 
     const videoUrl = '/demo_content/video.mp4'
 
