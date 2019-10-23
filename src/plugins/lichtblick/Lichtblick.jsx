@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react"
+import styled from "styled-components"
 import shortid from "shortid"
 import uuidv5 from 'uuid/v5'
 
@@ -33,10 +34,14 @@ const Lichtblick = ({ focused, state }) => {
     // page to iframe https://robertnyman.com/html5/postMessage/postMessage.html
     const src = `/lichtblick/index.html?src=${encodeURI(videoUrl)}&id=${uuid}` 
     
+    const [state, setState] = useState({
+        data: {},
+        changed: false
+    })
 
     useEffect(() => {
         const iframeContent = document.getElementById(uuid).contentWindow
-        iframeContent.postMessage('')
+        iframeContent.postMessage(state.data, '*')
     }, [])
 
 
@@ -59,10 +64,13 @@ const Lichtblick = ({ focused, state }) => {
 
         window.addEventListener('message', (e) => {
             if(e.origin === src){
-                
+                setState({
+                    ...state,
+                    data: e.data
+                })
             }
         })
-    
+
     return (
         <LichtblickWrapper>
             {lichtblickFrame}
