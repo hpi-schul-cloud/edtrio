@@ -32,13 +32,13 @@ const Lichtblick = ({ focused, state }) => {
     // `/lichtblick/index.html?src=${encodeURI(videoUrl)}&id=${uuid}` 
     // `http://localhost:3060/index.html?src=${encodeURI(videoUrl)}&id=${uuid}`
     const src = `http://localhost:3060/index.html?src=${encodeURI(videoUrl)}&id=${uuid}` 
-    
+
     const [height, setHeight] = useState(500)
 
     useEffect(() => {
         const iframeContent = document.getElementById(uuid).contentWindow
-        iframeContent.postMessage(lichtblickState.data, '*')
-    }, [])
+        iframeContent.postMessage(state.data, '*')
+    }, [state.changed])
 
 
     const lichtblickFrame = (
@@ -65,7 +65,7 @@ const Lichtblick = ({ focused, state }) => {
                     const iframeContent = document.getElementById(uuid).contentWindow
                     iframeContent.postMessage({
                         action: 'init',
-                        data: lichtblickState
+                        data: state.data
                     }, '*')
                 } else {
                     state.data.set(e.data)

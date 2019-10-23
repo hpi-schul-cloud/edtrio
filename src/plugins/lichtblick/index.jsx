@@ -3,8 +3,8 @@ import { object, string, boolean } from "@edtr-io/plugin"
 
 import Lichtblick from "./Lichtblick"
 export const lichtblickState = object({
-    data: object(),
-    changed: boolean(),
+    data: object({}),
+    changed: boolean(false),
 })
 
 const lichtblickPlugin = {
