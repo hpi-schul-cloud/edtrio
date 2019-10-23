@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" [
+	<!ENTITY ns_extend "http://ns.adobe.com/Extensibility/1.0/">
+	<!ENTITY ns_ai "http://ns.adobe.com/AdobeIllustrator/10.0/">
+	<!ENTITY ns_graphs "http://ns.adobe.com/Graphs/1.0/">
+	<!ENTITY ns_vars "http://ns.adobe.com/Variables/1.0/">
+	<!ENTITY ns_imrep "http://ns.adobe.com/ImageReplacement/1.0/">
+	<!ENTITY ns_sfw "http://ns.adobe.com/SaveForWeb/1.0/">
+	<!ENTITY ns_custom "http://ns.adobe.com/GenericCustomNamespace/1.0/">
+	<!ENTITY ns_adobe_xpath "http://ns.adobe.com/XPath/1.0/">
+]>
+<svg version="1.1" id="Ebene_1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="300px" height="300px"
+	 viewBox="0 0 300 300" enable-background="new 0 0 300 300" xml:space="preserve">
+<metadata>
+	<sfw  xmlns="&ns_sfw;">
+		<slices></slices>
+		<sliceSourceBounds  height="307.582" width="300" x="-50.5" y="-57.082" bottomLeftOrigin="true"></sliceSourceBounds>
+	</sfw>
+</metadata>
+<path fill="#248CBA" d="M228,300H72c-39.603,0-72-16.9-72-56.5V60C0,20.4,32.398,0,72,0h156c39.602,0,72,20.9,72,60.5V244
+	C300,283.6,267.6,300,228,300z"/>
+<rect x="0.758" y="228.086" fill="none" width="298.483" height="79.496"/>
+<g enable-background="new    ">
+	<path fill="#FFFFFF" d="M100.105,229.812v32.354h-4.176v-32.354H100.105z"/>
+	<path fill="#FFFFFF" d="M107.737,246.181c0-2.736-0.048-5.089-0.192-7.249h3.696l0.144,4.561h0.192
+		c1.056-3.12,3.6-5.088,6.433-5.088c0.48,0,0.816,0.048,1.2,0.144v3.984c-0.432-0.096-0.864-0.144-1.44-0.144
+		c-2.976,0-5.088,2.256-5.665,5.424c-0.096,0.576-0.192,1.248-0.192,1.969v12.385h-4.176V246.181z"/>
+	<path fill="#FFFFFF" d="M143.979,250.357c0,8.593-5.953,12.337-11.569,12.337c-6.289,0-11.137-4.608-11.137-11.953
+		c0-7.776,5.088-12.337,11.521-12.337C139.466,238.404,143.979,243.252,143.979,250.357z M125.545,250.597
+		c0,5.089,2.928,8.929,7.057,8.929c4.032,0,7.057-3.792,7.057-9.024c0-3.937-1.968-8.929-6.961-8.929
+		C127.705,241.572,125.545,246.181,125.545,250.597z"/>
+	<path fill="#FFFFFF" d="M149.304,245.221c0-2.4-0.048-4.368-0.192-6.289h3.744l0.24,3.841h0.096
+		c1.152-2.208,3.841-4.368,7.681-4.368c3.217,0,8.209,1.92,8.209,9.889v13.873h-4.225v-13.394c0-3.744-1.393-6.864-5.377-6.864
+		c-2.783,0-4.943,1.968-5.664,4.32c-0.191,0.528-0.288,1.248-0.288,1.969v13.969h-4.224V245.221z"/>
+	<path fill="#FFFFFF" d="M180.649,232.403c0.048,1.44-1.008,2.593-2.688,2.593c-1.488,0-2.544-1.152-2.544-2.593
+		c0-1.488,1.104-2.64,2.641-2.64C179.641,229.764,180.649,230.915,180.649,232.403z M175.944,262.166v-23.234h4.225v23.234H175.944z
+		"/>
+	<path fill="#FFFFFF" d="M189.528,251.317c0.096,5.712,3.744,8.064,7.969,8.064c3.024,0,4.849-0.528,6.433-1.2l0.72,3.024
+		c-1.488,0.672-4.032,1.44-7.729,1.44c-7.152,0-11.425-4.705-11.425-11.714c0-7.008,4.128-12.528,10.896-12.528
+		c7.585,0,9.602,6.672,9.602,10.944c0,0.864-0.097,1.536-0.145,1.969H189.528z M201.912,248.293
+		c0.049-2.688-1.104-6.865-5.856-6.865c-4.272,0-6.144,3.937-6.48,6.865H201.912z"/>
+</g>
+<g>
+	<ellipse opacity="0.4" fill="#FFFFFF" enable-background="new    " cx="147.04" cy="109.499" rx="84.333" ry="83"/>
+	<g>
+		<g>
+			
+				<line fill="none" stroke="#FFFFFF" stroke-width="12" stroke-miterlimit="10" x1="143.645" y1="131.078" x2="248.627" y2="131.078"/>
+			
+				<line fill="none" stroke="#FFFFFF" stroke-width="12" stroke-miterlimit="10" x1="143.645" y1="154.576" x2="223.518" y2="154.576"/>
+			<line fill="none" stroke="#FFFFFF" stroke-width="12" stroke-miterlimit="10" x1="143.645" y1="84.08" x2="234.932" y2="84.08"/>
+			
+				<line fill="none" stroke="#FFFFFF" stroke-width="12" stroke-miterlimit="10" x1="143.645" y1="107.579" x2="191.75" y2="107.579"/>
+		</g>
+	</g>
+	<circle opacity="0.4" fill="#FFFFFF" enable-background="new    " cx="72.707" cy="170.166" r="9"/>
+	<circle opacity="0.4" fill="#FFFFFF" enable-background="new    " cx="58.04" cy="183.165" r="6.666"/>
+</g>
+</svg>

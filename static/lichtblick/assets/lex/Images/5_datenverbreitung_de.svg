@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" [
+	<!ENTITY ns_extend "http://ns.adobe.com/Extensibility/1.0/">
+	<!ENTITY ns_ai "http://ns.adobe.com/AdobeIllustrator/10.0/">
+	<!ENTITY ns_graphs "http://ns.adobe.com/Graphs/1.0/">
+	<!ENTITY ns_vars "http://ns.adobe.com/Variables/1.0/">
+	<!ENTITY ns_imrep "http://ns.adobe.com/ImageReplacement/1.0/">
+	<!ENTITY ns_sfw "http://ns.adobe.com/SaveForWeb/1.0/">
+	<!ENTITY ns_custom "http://ns.adobe.com/GenericCustomNamespace/1.0/">
+	<!ENTITY ns_adobe_xpath "http://ns.adobe.com/XPath/1.0/">
+]>
+<svg version="1.1" id="Ebene_1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100px" height="100px"
+	 viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
+<metadata>
+	<sfw  xmlns="&ns_sfw;">
+		<slices></slices>
+		<sliceSourceBounds  height="100" width="100" x="65" y="-307" bottomLeftOrigin="true"></sliceSourceBounds>
+	</sfw>
+</metadata>
+<rect fill="#3399CC" width="100" height="100"/>
+<g>
+	<rect x="35" y="35" fill="#FFFFFF" width="30" height="30"/>
+	<g>
+		<polyline fill="#FFFFFF" points="54,30 54,16 46,16 46,30 		"/>
+		<polygon fill="#FFFFFF" points="59.682,19 50.333,2.811 40.984,19 		"/>
+		<polyline fill="#FFFFFF" points="35.943,29.949 26.277,20.283 20.754,25.807 30.42,35.473 		"/>
+		<polygon fill="#FFFFFF" points="32.061,18.368 14.002,13.531 18.839,31.59 		"/>
+		<polyline fill="#FFFFFF" points="30,46 16,46 16,54 30,54 		"/>
+		<polygon fill="#FFFFFF" points="19,40.319 2.811,49.668 19,59.017 		"/>
+		<polyline fill="#FFFFFF" points="29.95,64.058 20.285,73.723 25.809,79.246 35.474,69.581 		"/>
+		<polygon fill="#FFFFFF" points="18.37,67.939 13.533,85.998 31.592,81.161 		"/>
+		<polyline fill="#FFFFFF" points="46,70 46,84 54,84 54,70 		"/>
+		<polygon fill="#FFFFFF" points="40.32,81 49.67,97.189 59.019,81 		"/>
+		<polyline fill="#FFFFFF" points="64.059,70.051 73.725,79.716 79.248,74.192 69.582,64.527 		"/>
+		<polygon fill="#FFFFFF" points="67.941,81.631 86,86.467 81.162,68.408 		"/>
+		<polyline fill="#FFFFFF" points="70,54 84,54 84,46 70,46 		"/>
+		<polygon fill="#FFFFFF" points="81,59.681 97.189,50.33 81,40.982 		"/>
+		<polyline fill="#FFFFFF" points="70.053,35.941 79.717,26.276 74.193,20.753 64.529,30.418 		"/>
+		<polygon fill="#FFFFFF" points="81.632,32.059 86.468,14 68.409,18.839 		"/>
+	</g>
+</g>
+</svg>

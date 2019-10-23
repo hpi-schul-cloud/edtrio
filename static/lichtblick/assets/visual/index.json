@@ -1,0 +1,4287 @@
+{
+  "?xml": {
+    "version": "1.0",
+    "encoding": "UTF-8"
+  },
+  "index": {
+    "marker": [
+      {
+        "name": "Filmsprache",
+        "marker": [
+          {
+            "name": "Einstellung/Kinematografie",
+            "marker": [
+              {
+                "name": "Mise-en-Scène",
+                "entry": [
+                  {
+                    "image": "visual_long_take_de",
+                    "lex": "lex_long_take.html",
+                    "name": "Lange Einstellung"
+                  },
+                  {
+                    "image": "visual_two_shot_de",
+                    "lex": "lex_two_shot.html",
+                    "name": "Zweiereinstellung"
+                  },
+                  {
+                    "image": "visual_three_shot_de",
+                    "lex": "lex_three_shot.html",
+                    "name": "Dreiereinstellung"
+                  },
+                  {
+                    "image": "visual_over_shoulder_de",
+                    "lex": "lex_over_the_shoulder_shot.html",
+                    "name": "Über-die-Schulter-Einstellung"
+                  },
+                  {
+                    "image": "visual_establishing_shot_de",
+                    "lex": "lex_establishing_shot.html",
+                    "name": "Einführungseinstellung"
+                  },
+                  {
+                    "image": "visual_set_de",
+                    "lex": "lex_set.html",
+                    "name": "Kulisse"
+                  },
+                  {
+                    "image": "visual_location_de",
+                    "lex": "lex_location.html",
+                    "name": "Originaldrehort"
+                  },
+                  {
+                    "image": "visual_realistic_setting_de",
+                    "lex": "lex_realistic_setting.html",
+                    "name": "Realistischer Schauplatz"
+                  },
+                  {
+                    "image": "visual_nonrealistic_setting_de",
+                    "lex": "lex_nonrealistic_setting.html",
+                    "name": "Unrealistischer Schauplatz"
+                  },
+                  {
+                    "image": "visual_limbo_de",
+                    "lex": "lex_limbo.html",
+                    "name": "Limbo"
+                  },
+                  {
+                    "image": "visual_loose_framing_de",
+                    "lex": "lex_loose_framing.html",
+                    "name": "Freie Kadrage"
+                  },
+                  {
+                    "image": "visual_tight_framing_de",
+                    "lex": "lex_tight_framing.html",
+                    "name": "Enge Kadrage"
+                  },
+                  {
+                    "image": "visual_deep_space_de",
+                    "lex": "lex_deep_space.html",
+                    "name": "Tiefe"
+                  },
+                  {
+                    "image": "visual_flat_space_de",
+                    "lex": "lex_flat_space.html",
+                    "name": "Untiefe"
+                  },
+                  {
+                    "image": "visual_ambiguous_space_de",
+                    "lex": "lex_ambiguous_space.html",
+                    "name": "Mehrdeutiger Raum"
+                  },
+                  {
+                    "image": "visual_balance_de",
+                    "lex": "lex_balance.html",
+                    "name": "Gleichgewicht (Balance)"
+                  },
+                  {
+                    "image": "visual_imbalance_de",
+                    "lex": "lex_imbalance.html",
+                    "name": "Ungleichgewicht"
+                  }
+                ]
+              },
+              {
+                "name": "Beleuchtung",
+                "entry": [
+                  {
+                    "image": "visual_high_key_de",
+                    "lex": "lex_high_key_lighting.html",
+                    "name": "High-Key-Stil"
+                  },
+                  {
+                    "image": "visual_low_key_de",
+                    "lex": "lex_low_key_lighting.html",
+                    "name": "Low-Key-Stil"
+                  },
+                  {
+                    "image": "visual_available_light_de",
+                    "lex": "lex_available_light.html",
+                    "name": "Vorhandenes Licht"
+                  },
+                  {
+                    "image": "visual_exterior_light_de",
+                    "lex": "lex_exterior_light.html",
+                    "name": "Externes Licht"
+                  }
+                ]
+              },
+              {
+                "name": "Objektiv",
+                "entry": [
+                  {
+                    "image": "visual_fisheye_de",
+                    "lex": "lex_fisheye_lens.html",
+                    "name": "Fischaugenobjektiv"
+                  },
+                  {
+                    "image": "visual_wide_angle_de",
+                    "lex": "lex_wide_angle_lens.html",
+                    "name": "Weitwinkelobjektiv"
+                  },
+                  {
+                    "image": "visual_normal_lens_de",
+                    "lex": "lex_normal_lens.html",
+                    "name": "Normalobjektiv"
+                  },
+                  {
+                    "image": "visual_telephoto_de",
+                    "lex": "lex_telephoto_lens.html",
+                    "name": "Teleobjektiv"
+                  }
+                ]
+              },
+              {
+                "name": "Fokus",
+                "entry": [
+                  {
+                    "image": "visual_shallow_focus_de",
+                    "lex": "lex_shallow_focus.html",
+                    "name": "Geringe Tiefenschärfe"
+                  },
+                  {
+                    "image": "visual_deep_focus_de",
+                    "lex": "lex_deep_focus.html",
+                    "name": "Große Tiefenschärfe"
+                  },
+                  {
+                    "image": "visual_rack_focus_de",
+                    "lex": "lex_rack_focus.html",
+                    "name": "Schärfeverlagerung"
+                  },
+                  {
+                    "image": "visual_out_of_focus_de",
+                    "lex": "lex_out_of_focus.html",
+                    "name": "Unschärfe"
+                  }
+                ]
+              },
+              {
+                "name": "Einstellungsgröße",
+                "entry": [
+                  {
+                    "image": "visual_ecu_de",
+                    "lex": "lex_extreme_close_up.html",
+                    "name": "Detail"
+                  },
+                  {
+                    "image": "visual_cu_de",
+                    "lex": "lex_close_up.html",
+                    "name": "Großaufnahme"
+                  },
+                  {
+                    "image": "visual_mcu_de",
+                    "lex": "lex_medium_close_up.html",
+                    "name": "Nah"
+                  },
+                  {
+                    "image": "visual_ms_de",
+                    "lex": "lex_medium_shot.html",
+                    "name": "Halbnah"
+                  },
+                  {
+                    "image": "visual_mls_de",
+                    "lex": "lex_medium_long_shot.html",
+                    "name": "Halbtotale"
+                  },
+                  {
+                    "image": "visual_ls_de",
+                    "lex": "lex_long_shot.html",
+                    "name": "Totale"
+                  },
+                  {
+                    "image": "visual_els_de",
+                    "lex": "lex_extreme_long_shot.html",
+                    "name": "Weit/Panorama"
+                  }
+                ]
+              },
+              {
+                "name": "Kameraperspektive",
+                "entry": [
+                  {
+                    "image": "visual_overhead_de",
+                    "lex": "lex_overhead_angle.html",
+                    "name": "Extreme Aufsicht (Vogelperspektive)"
+                  },
+                  {
+                    "image": "visual_high_de",
+                    "lex": "lex_high_angle.html",
+                    "name": "Aufsicht"
+                  },
+                  {
+                    "image": "visual_eye-level_de",
+                    "lex": "lex_eye_level_angle.html",
+                    "name": "Augenhöhe/Normalsicht"
+                  },
+                  {
+                    "image": "visual_canted_angle_de",
+                    "lex": "lex_canted_angle.html",
+                    "name": "Gekippter Winkel"
+                  },
+                  {
+                    "image": "visual_low_de",
+                    "lex": "lex_low_angle.html",
+                    "name": "Untersicht"
+                  },
+                  {
+                    "image": "visual_below_de",
+                    "lex": "lex_below_angle.html",
+                    "name": "Extreme Untersicht (Froschperspektive)"
+                  }
+                ]
+              },
+              {
+                "name": "Kamerabewegung",
+                "marker": [
+                  {
+                    "name": "Fixierte Kamera",
+                    "entry": [
+                      {
+                        "image": "visual_static_de",
+                        "lex": "lex_static.html",
+                        "name": "Statische Einstellung"
+                      },
+                      {
+                        "image": "visual_pan_de",
+                        "lex": "lex_panning.html",
+                        "name": "Schwenk"
+                      },
+                      {
+                        "image": "visual_swish_pan_de",
+                        "lex": "lex_swish_pan.html",
+                        "name": "Reißschwenk"
+                      },
+                      {
+                        "image": "visual_360_pan_de",
+                        "lex": "lex_360_degree_pan.html",
+                        "name": "360-Grad-Schwenk"
+                      },
+                      {
+                        "image": "visual_tilt_de",
+                        "lex": "lex_tilting.html",
+                        "name": "Kippen/Neigen"
+                      },
+                      {
+                        "image": "visual_rot_de",
+                        "lex": "lex_rotate.html",
+                        "name": "Rotieren/Rollen"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "Mobile Kamera",
+                    "entry": [
+                      {
+                        "image": "visual_hand_de",
+                        "lex": "lex_handheld.html",
+                        "name": "Handkamera"
+                      },
+                      {
+                        "image": "visual_steadicam_de",
+                        "lex": "lex_steadicam.html",
+                        "name": "Steadicam"
+                      },
+                      {
+                        "image": "visual_track_de",
+                        "lex": "lex_track.html",
+                        "name": "Kamerafahrt"
+                      },
+                      {
+                        "image": "visual_track_in_de",
+                        "lex": "lex_track_in.html",
+                        "name": "Hinfahrt"
+                      },
+                      {
+                        "image": "visual_track_out_de",
+                        "lex": "lex_track_out.html",
+                        "name": "Rückfahrt"
+                      },
+                      {
+                        "image": "visual_crane_de",
+                        "lex": "lex_crane.html",
+                        "name": "Kran"
+                      },
+                      {
+                        "image": "visual_circle_shot_de",
+                        "lex": "lex_circle_shot.html",
+                        "name": "Kreisfahrt"
+                      },
+                      {
+                        "image": "visual_aerial_shot_de",
+                        "lex": "lex_aerial_shot.html",
+                        "name": "Luftbild"
+                      },
+                      {
+                        "image": "visual_follow_shot_de",
+                        "lex": "lex_following_shot.html",
+                        "name": "Verfolgungsfahrt"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "Scheinbare Kamerabewegung",
+                    "entry": [
+                      {
+                        "image": "visual_zoom_in_de",
+                        "lex": "lex_zoom_in.html",
+                        "name": "Heranzoomen"
+                      },
+                      {
+                        "image": "visual_zoom_out_de",
+                        "lex": "lex_zoom_out.html",
+                        "name": "Herauszoomen"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "Erzählperspektive",
+                "entry": [
+                  {
+                    "image": "visual_objective_camera_de",
+                    "lex": "lex_objective_camera.html",
+                    "name": "Objektive Kamera"
+                  },
+                  {
+                    "image": "visual_omniscient_camera_de",
+                    "lex": "lex_omniscient_camera.html",
+                    "name": "Allwissende Kamera"
+                  },
+                  {
+                    "image": "visual_subjective_camera_de",
+                    "lex": "lex_subjective_camera.html",
+                    "name": "Subjektive Kamera"
+                  },
+                  {
+                    "image": "visual_point_of_view_shot_de",
+                    "lex": "lex_point_of_view_shot.html",
+                    "name": "Subjektive Einstellung"
+                  },
+                  {
+                    "image": "visual_mindscreen_blue_de",
+                    "lex": "lex_mind_screen.html",
+                    "name": "Mindscreen"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Schnitt/Postproduktion",
+            "marker": [
+              {
+                "name": "Schnitt",
+                "entry": [
+                  {
+                    "image": "visual_montage_de",
+                    "lex": "lex_montage.html",
+                    "name": "Montage"
+                  },
+                  {
+                    "image": "visual_point_of_view_cut_de",
+                    "lex": "lex_point_of_view_shot.html",
+                    "name": "Subjektive Einstellung"
+                  },
+                  {
+                    "image": "visual_mindscreen_red_de",
+                    "lex": "lex_mind_screen.html",
+                    "name": "Mindscreen"
+                  },
+                  {
+                    "image": "visual_reaction_shot_de",
+                    "lex": "lex_reaction_shot.html",
+                    "name": "Reaktionseinstellung"
+                  },
+                  {
+                    "image": "visual_cutaway_shot_de",
+                    "lex": "lex_cutaway.html",
+                    "name": "Zwischenschnitt"
+                  },
+                  {
+                    "image": "visual_superimposition_de",
+                    "lex": "lex_superimposition.html",
+                    "name": "Doppelbelichtung"
+                  }
+                ]
+              },
+              {
+                "name": "Kontinuitätsprinzip",
+                "entry": [
+                  {
+                    "image": "visual_180_de",
+                    "lex": "lex_180_degree_system.html",
+                    "name": "180-Grad-Regel"
+                  },
+                  {
+                    "image": "visual_non_180_de",
+                    "lex": "lex_180_degree_system.html",
+                    "name": "Bruch der 180-Grad-Regel"
+                  },
+                  {
+                    "image": "visual_30_de",
+                    "lex": "lex_30_degree_system.html",
+                    "name": "30-Grad-Regel"
+                  },
+                  {
+                    "image": "visual_non_30_de",
+                    "lex": "lex_30_degree_system.html",
+                    "name": "Bruch der 30-Grad-Regel"
+                  },
+                  {
+                    "image": "visual_cutting_on_action_de",
+                    "lex": "lex_cutting_on_action.html",
+                    "name": "Bewegungsschnitt"
+                  },
+                  {
+                    "image": "visual_eyeline_match_de",
+                    "lex": "lex_eyeline_match.html",
+                    "name": "Blickachsenanschluss"
+                  },
+                  {
+                    "image": "visual_establishing_shot_red_de",
+                    "lex": "lex_establishing_shot.html",
+                    "name": "Einführungseinstellung"
+                  },
+                  {
+                    "image": "visual_shot_reverse_shot_de",
+                    "lex": "lex_shot_reverse_shot.html",
+                    "name": "Schuss-Gegenschuss-Verfahren"
+                  }
+                ]
+              },
+              {
+                "name": "Überblendung",
+                "entry": [
+                  {
+                    "image": "visual_straight_cut_de",
+                    "lex": "lex_straight_cut.html",
+                    "name": "Harter Schnitt"
+                  },
+                  {
+                    "image": "visual_dissolve_de",
+                    "lex": "lex_lap_dissolve.html",
+                    "name": "Weiche Blende"
+                  },
+                  {
+                    "image": "visual_fade_out_de",
+                    "lex": "lex_fade_out.html",
+                    "name": "Abblende"
+                  },
+                  {
+                    "image": "visual_fade_in_de",
+                    "lex": "lex_fade_in.html",
+                    "name": "Aufblende"
+                  },
+                  {
+                    "image": "visual_match_cut_de",
+                    "lex": "lex_match_cut.html",
+                    "name": "Anschlussschnitt"
+                  },
+                  {
+                    "image": "visual_jump_cut_de",
+                    "lex": "lex_jump_cut.html",
+                    "name": "Jump Cut"
+                  },
+                  {
+                    "image": "visual_wipe_de",
+                    "lex": "lex_wipe.html",
+                    "name": "Wischblende"
+                  }
+                ]
+              },
+              {
+                "name": "Tempo und Zeit",
+                "entry": [
+                  {
+                    "image": "visual_freeze_frame_de",
+                    "lex": "lex_freeze_frame.html",
+                    "name": "Standbild/Einfrieren"
+                  },
+                  {
+                    "image": "visual_slow_motion_de",
+                    "lex": "lex_slow_motion.html",
+                    "name": "Zeitlupe"
+                  },
+                  {
+                    "image": "visual_fast_motion_de",
+                    "lex": "lex_fast_motion.html",
+                    "name": "Zeitraffer"
+                  },
+                  {
+                    "image": "visual_flashback_de",
+                    "lex": "lex_flashback.html",
+                    "name": "Rückblende"
+                  },
+                  {
+                    "image": "visual_flash_forward_de",
+                    "lex": "lex_flash_forward.html",
+                    "name": "Vorausschau"
+                  },
+                  {
+                    "image": "visual_elliptical_editing_de",
+                    "lex": "lex_elliptical_editing.html",
+                    "name": "Elliptische Montage"
+                  },
+                  {
+                    "image": "visual_cross_cutting_de",
+                    "lex": "lex_cross_cut.html",
+                    "name": "Kreuzschnitt"
+                  },
+                  {
+                    "image": "visual_overlapping_action_de",
+                    "lex": "lex_overlapping_action.html",
+                    "name": "Überlappende Bewegung/Überlappende Montage"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Ton (Geräusche und Musik)",
+            "marker": [
+              {
+                "name": "Atmo",
+                "entry": [
+                  {
+                    "image": "visual_ambient_de",
+                    "lex": "lex_ambient_sound.html",
+                    "name": "Atmo"
+                  },
+                  {
+                    "image": "visual_ambient_on_de",
+                    "lex": "lex_ambient_sound.html",
+                    "name": "Onscreen Atmo"
+                  },
+                  {
+                    "image": "visual_ambient_off_de",
+                    "lex": "lex_ambient_sound.html",
+                    "name": "Offscreen Atmo"
+                  }
+                ]
+              },
+              {
+                "name": "Toneffekt",
+                "entry": [
+                  {
+                    "image": "visual_soundeffect_de",
+                    "lex": "lex_sound_effect.html",
+                    "name": "Toneffekt"
+                  },
+                  {
+                    "image": "visual_soundeffect_on_de",
+                    "lex": "lex_sound_effect.html",
+                    "name": "Onscreen Toneffekt"
+                  },
+                  {
+                    "image": "visual_soundeffect_off_de",
+                    "lex": "lex_sound_effect.html",
+                    "name": "Offscreen Toneffekt"
+                  },
+                  {
+                    "image": "visual_soundeffect_diegetic_de",
+                    "lex": "lex_sound_effect.html",
+                    "name": "Diegetischer Toneffekt"
+                  },
+                  {
+                    "image": "visual_soundeffect_non_diegetic_de",
+                    "lex": "lex_sound_effect.html",
+                    "name": "Nicht-diegetischer Toneffekt"
+                  }
+                ]
+              },
+              {
+                "name": "Musik",
+                "entry": [
+                  {
+                    "image": "visual_music_de",
+                    "lex": "lex_film_score.html",
+                    "name": "Musik"
+                  },
+                  {
+                    "image": "visual_music_on_de",
+                    "lex": "lex_film_score.html",
+                    "name": "Onscreen Musik"
+                  },
+                  {
+                    "image": "visual_music_off_de",
+                    "lex": "lex_film_score.html",
+                    "name": "Offscreen Musik"
+                  },
+                  {
+                    "image": "visual_music_diegetic_de",
+                    "lex": "lex_film_score.html",
+                    "name": "Diegetische Musik"
+                  },
+                  {
+                    "image": "visual_music_non_diegetic_de",
+                    "lex": "lex_film_score.html",
+                    "name": "Nicht-diegetische Musik"
+                  }
+                ]
+              },
+              {
+                "name": "Sprache",
+                "entry": [
+                  {
+                    "image": "visual_voice_de",
+                    "lex": "lex_sound_music.html",
+                    "name": "Sprache"
+                  },
+                  {
+                    "image": "visual_voice_on_de",
+                    "lex": "lex_sound_music.html",
+                    "name": "Onscreen Sprache"
+                  },
+                  {
+                    "image": "visual_voice_off_de",
+                    "lex": "lex_sound_music.html",
+                    "name": "Offscreen Sprache"
+                  },
+                  {
+                    "image": "visual_voice_diegetic_de",
+                    "lex": "lex_sound_music.html",
+                    "name": "Diegetische Sprache"
+                  },
+                  {
+                    "image": "visual_voice_non_diegetic_de",
+                    "lex": "lex_sound_music.html",
+                    "name": "Nicht-diegetische Sprache"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Dramaturgie",
+        "marker": [
+          {
+            "name": "3-Akt-Struktur",
+            "entry": [
+              {
+                "image": "visual_dreiaktstruktur_de.svg",
+                "lex": "lex_dreiaktstruktur.html",
+                "name": "Dreiaktstruktur"
+              },
+              {
+                "image": "visual_drei_exposition_de.svg",
+                "lex": "lex_drama_exposition.html",
+                "name": "Exposition"
+              },
+              {
+                "image": "visual_drei_klimax_de.svg",
+                "lex": "lex_klimax_hoehepunkt.html",
+                "name": "Klimax/Höhepunkt"
+              },
+              {
+                "image": "visual_drei_aufloesung_de.svg",
+                "lex": "lex_katastrophe_verklaerung.html",
+                "name": "Auflösung/Katastrophe oder Verklärung"
+              },
+              {
+                "image": "visual_mid_point_de.svg",
+                "lex": "lex_mid_point.html",
+                "name": "Mid Point"
+              },
+              {
+                "image": "visual_plot_point_1_de.svg",
+                "lex": "lex_plot_point.html",
+                "name": "Plot Point 1"
+              },
+              {
+                "image": "visual_plot_point_2_de.svg",
+                "lex": "lex_plot_point.html",
+                "name": "Plot Point 2"
+              }
+            ]
+          },
+          {
+            "name": "5-Akt-Struktur",
+            "entry": [
+              {
+                "image": "visual_fuenfaktstruktur_de.svg",
+                "lex": "lex_fuenfaktstruktur.html",
+                "name": "Fünfaktstruktur"
+              },
+              {
+                "image": "visual_fuenf_exposition_de.svg",
+                "lex": "lex_drama_exposition.html",
+                "name": "Exposition"
+              },
+              {
+                "image": "visual_fuenf_steigerung_de.svg",
+                "lex": "lex_fuenf_steigerung.html",
+                "name": "Steigerung"
+              },
+              {
+                "image": "visual_fuenf_hoehepunkt_de.svg",
+                "lex": "lex_klimax_hoehepunkt.html",
+                "name": "Klimax/Höhepunkt"
+              },
+              {
+                "image": "visual_fuenf_fall_de.svg",
+                "lex": "lex_fuenf_fall_umkehr.html",
+                "name": "Fall/Umkehr"
+              },
+              {
+                "image": "visual_fuenf_katastrophe_de.svg",
+                "lex": "lex_katastrophe_verklaerung.html",
+                "name": "Auflösung/Katastrophe oder Verklärung"
+              },
+              {
+                "image": "visual_fuenf_absteigend_de.svg",
+                "lex": "lex_fuenf_absteigend.html",
+                "name": "absteigende Handlung"
+              },
+              {
+                "image": "visual_fuenf_aufsteigend_de.svg",
+                "lex": "lex_fuenf_aufsteigend.html",
+                "name": "aufsteigende Handlung"
+              }
+            ]
+          },
+          {
+            "name": "Heldenreise",
+            "entry": [
+              {
+                "image": "visual_heldenreise_de.svg",
+                "lex": "lex_heldenreise.html",
+                "name": "Heldenreise"
+              },
+              {
+                "image": "visual_arch_held_de.svg",
+                "lex": "lex_held.html",
+                "name": "Held"
+              },
+              {
+                "image": "visual_arch_herold_de.svg",
+                "lex": "lex_herold.html",
+                "name": "Herold"
+              },
+              {
+                "image": "visual_arch_mentor_de.svg",
+                "lex": "lex_mentor.html",
+                "name": "Mentor"
+              },
+              {
+                "image": "visual_arch_trickster_de.svg",
+                "lex": "lex_trickster.html",
+                "name": "Trickster"
+              },
+              {
+                "image": "visual_arch_gestaltwandler_de.svg",
+                "lex": "lex_gestaltwandler.html",
+                "name": "Gestaltwandler"
+              },
+              {
+                "image": "visual_arch_schwellenhueter_de.svg",
+                "lex": "lex_schwellenhueter.html",
+                "name": "Schwellenhüter"
+              },
+              {
+                "image": "visual_arch_schatten_de.svg",
+                "lex": "lex_schatten.html",
+                "name": "Schatten"
+              }
+            ]
+          },
+          {
+            "name": "Figurenkonstellation",
+            "entry": [
+              {
+                "image": "visual_hauptfigur_de.svg",
+                "lex": "lex_hauptfigur.html",
+                "name": "Hauptfigur"
+              },
+              {
+                "image": "visual_nebenfigur_de.svg",
+                "lex": "lex_nebenfigur.html",
+                "name": "Nebenfigur"
+              }
+            ]
+          },
+          {
+            "name": "Arten von Expositionen",
+            "entry": [
+              {
+                "image": "visual_induktiv_de.svg",
+                "lex": "lex_induktiv.html",
+                "name": "Induktive Exposition"
+              },
+              {
+                "image": "visual_deduktiv_de.svg",
+                "lex": "lex_deduktiv.html",
+                "name": "Deduktive Exposition"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Eintauchmethode",
+        "entry": [
+          {
+            "image": "1_inhalt_de.svg",
+            "lex": "lex_eintauchen_inhalt.html",
+            "name": "Inhalt des Films"
+          },
+          {
+            "image": "2_datenherkunft_de.svg",
+            "lex": "lex_eintauchen_datenherkunft.html",
+            "name": "Datenherkunft"
+          },
+          {
+            "image": "3_datenverarbeitung_de.svg",
+            "lex": "lex_eintauchen_datenverarbeitung.html",
+            "name": "Datenverarbeitung"
+          },
+          {
+            "image": "4_datenvorfuehrung_de.svg",
+            "lex": "lex_eintauchen_datenvorfuehrung.html",
+            "name": "Datenvorführung"
+          },
+          {
+            "image": "5_datenverbreitung_de.svg",
+            "lex": "lex_eintauchen_datenverbreitung.html",
+            "name": "Datenverbreitung"
+          },
+          {
+            "image": "6_erkenntnisgewinn_de.svg",
+            "lex": "lex_eintauchen_erkenntnisgewinn.html",
+            "name": "Erkenntnisgewinn"
+          }
+        ]
+      },
+      {
+        "name": "Historisch-kritische Filmanalyse",
+        "entry": [
+          {
+            "image": "bezugsrealitaet_de.svg",
+            "lex": "lex_bezugsrealitaet_de.html",
+            "name": "Bezugsrealität"
+          },
+          {
+            "image": "bedingungsrealitaet_de.svg",
+            "lex": "lex_bedingungsrealitaet_de.html",
+            "name": "Bedingungsrealität"
+          },
+          {
+            "image": "filmrealitaet_de.svg",
+            "lex": "lex_filmrealitaet_de.html",
+            "name": "Filmrealität"
+          },
+          {
+            "image": "wirkungsrealitaet_de.svg",
+            "lex": "lex_wirkungsrealitaet_de.html",
+            "name": "Wirkungsrealität"
+          }
+        ]
+      },
+      {
+        "name": "Fake News Check",
+        "entry": [
+          {
+            "image": "1_meldung_de.svg",
+            "lex": "lex_1_meldung_de.html",
+            "name": "Die Meldung auf einen Blick"
+          },
+          {
+            "image": "2_bilder_de.svg",
+            "lex": "lex_2_bilder_de.html",
+            "name": "Bilder und Videoclips"
+          },
+          {
+            "image": "3_quelle_de.svg",
+            "lex": "lex_3_quelle_de.html",
+            "name": "Quelle"
+          },
+          {
+            "image": "4_datum_de.svg",
+            "lex": "lex_4_datum_de.html",
+            "name": "Datum"
+          },
+          {
+            "image": "5_verfasser_de.svg",
+            "lex": "lex_5_verfasser_de.html",
+            "name": "Verfasser"
+          },
+          {
+            "image": "6_website_de.svg",
+            "lex": "lex_6_website_de.html",
+            "name": "Website"
+          },
+          {
+            "image": "7_impressum_de.svg",
+            "lex": "lex_7_impressum_de.html",
+            "name": "Impressum"
+          }
+        ]
+      },
+      {
+        "name": "Filmgenres",
+        "entry": [
+          {
+            "image": "genre_abenteuerfilm_de.svg",
+            "lex": "lex_genre_abenteuerfilm.html",
+            "name": "Abenteuerfilm"
+          },
+          {
+            "image": "genre_actionfilm_de.svg",
+            "lex": "lex_genre_actionfilm.html",
+            "name": "Actionfilm"
+          },
+          {
+            "image": "genre_animationsfilm_de.svg",
+            "lex": "lex_genre_animationsfilm.html",
+            "name": "Animationsfilm"
+          },
+          {
+            "image": "genre_biografiefilm_de.svg",
+            "lex": "lex_genre_biografiefilm.html",
+            "name": "Biografiefilm"
+          },
+          {
+            "image": "genre_dokumentarfilm_de.svg",
+            "lex": "lex_genre_dokumentarfilm.html",
+            "name": "Dokumentarfilm"
+          },
+          {
+            "image": "genre_drama_de.svg",
+            "lex": "lex_genre_drama.html",
+            "name": "Drama"
+          },
+          {
+            "image": "genre_experimentalfilm_de.svg",
+            "lex": "lex_genre_experimentalfilm.html",
+            "name": "Experimentalfilm"
+          },
+          {
+            "image": "genre_familienfilm_de.svg",
+            "lex": "lex_genre_familienfilm.html",
+            "name": "Familienfilm"
+          },
+          {
+            "image": "genre_fantasy_de.svg",
+            "lex": "lex_genre_fantasy.html",
+            "name": "Fantasy"
+          },
+          {
+            "image": "genre_historienfilm_de.svg",
+            "lex": "lex_genre_historienfilm.html",
+            "name": "Historienfilm"
+          },
+          {
+            "image": "genre_horrorfilm_de.svg",
+            "lex": "lex_genre_horrorfilm.html",
+            "name": "Horrorfilm"
+          },
+          {
+            "image": "genre_kriegsfilm_de.svg",
+            "lex": "lex_genre_kriegsfilm.html",
+            "name": "Kriegsfilm"
+          },
+          {
+            "image": "genre_kriminalfilm_de.svg",
+            "lex": "lex_genre_kriminalfilm.html",
+            "name": "Kriminalfilm"
+          },
+          {
+            "image": "genre_liebesfilm_de.svg",
+            "lex": "lex_genre_liebesfilm.html",
+            "name": "Liebesfilm"
+          },
+          {
+            "image": "genre_literaturverfilmung_de.svg",
+            "lex": "lex_genre_literaturverfilmung.html",
+            "name": "Literaturverfilmung"
+          },
+          {
+            "image": "genre_maerchenfilm_de.svg",
+            "lex": "lex_genre_maerchenfilm.html",
+            "name": "Märchenfilm"
+          },
+          {
+            "image": "genre_musikfilm_de.svg",
+            "lex": "lex_genre_musikfilm.html",
+            "name": "Musikfilm"
+          },
+          {
+            "image": "genre_sportfilm_de.svg",
+            "lex": "lex_genre_sportfilm.html",
+            "name": "Sportfilm"
+          },
+          {
+            "image": "genre_thriller_de.svg",
+            "lex": "lex_genre_thriller.html",
+            "name": "Thriller"
+          },
+          {
+            "image": "genre_western_de.svg",
+            "lex": "lex_genre_western.html",
+            "name": "Western"
+          },
+          {
+            "image": "genre_science-fiction_de.svg",
+            "lex": "lex_genre_science-fiction.html",
+            "name": "Science-fiction"
+          }
+        ]
+      },
+      {
+        "name": "Influencer Marketing",
+        "marker": [
+          {
+            "name": "Reichweite",
+            "entry": [
+              {
+                "image": "reichweite_nano-de.svg",
+                "lex": "lex_reichweite_nano_de.html",
+                "name": "Nano-Influencer"
+              },
+              {
+                "image": "reichweite_micro-de.svg",
+                "lex": "lex_reichweite_micro_de.html",
+                "name": "Micro-Influencer"
+              },
+              {
+                "image": "reichweite_macro-de.svg",
+                "lex": "lex_reichweite_macro_de.html",
+                "name": "Macro-Influencer"
+              },
+              {
+                "image": "reichweite_mega-de.svg",
+                "lex": "lex_reichweite_mega_de.html",
+                "name": "Mega-Influencer"
+              }
+            ]
+          },
+          {
+            "name": "Influencer-Typ",
+            "entry": [
+              {
+                "image": "typ_agitator-de.svg",
+                "lex": "lex_typ_agitator_de.html",
+                "name": "Agitator"
+              },
+              {
+                "image": "typ_aktivist-de.svg",
+                "lex": "lex_typ_aktivist_de.html",
+                "name": "Aktivist"
+              },
+              {
+                "image": "typ_analyst-de.svg",
+                "lex": "lex_typ_analyst_de.html",
+                "name": "Analyst"
+              },
+              {
+                "image": "typ_autoritaet-de.svg",
+                "lex": "lex_typ_autoritaet_de.html",
+                "name": "Autorität"
+              },
+              {
+                "image": "typ_beruehmtheit-de.svg",
+                "lex": "lex_typ_beruehmtheit_de.html",
+                "name": "Berühmtheit"
+              },
+              {
+                "image": "typ_coach-de.svg",
+                "lex": "lex_typ_coach_de.html",
+                "name": "Coach"
+              },
+              {
+                "image": "typ_entertainer-de.svg",
+                "lex": "lex_typ_entertainer_de.html",
+                "name": "Entertainer"
+              },
+              {
+                "image": "typ_experte-de.svg",
+                "lex": "lex_typ_experte_de.html",
+                "name": "Experte"
+              },
+              {
+                "image": "typ_insider-de.svg",
+                "lex": "lex_typ_insider_de.html",
+                "name": "Insider"
+              },
+              {
+                "image": "typ_journalist-de.svg",
+                "lex": "lex_typ_journalist_de.html",
+                "name": "Journalist"
+              },
+              {
+                "image": "typ_netzwerker-de.svg",
+                "lex": "lex_typ_netzwerker_de.html",
+                "name": "Netzwerker"
+              },
+              {
+                "image": "typ_selbstvermarkter-de.svg",
+                "lex": "lex_typ_selbstvermarkter_de.html",
+                "name": "Selbstvermarkter"
+              }
+            ]
+          },
+          {
+            "name": "Kategorie",
+            "entry": [
+              {
+                "image": "werbetyp_haul-de.svg",
+                "lex": "lex_werbetyp_haul_de.html",
+                "name": "Haul"
+              },
+              {
+                "image": "werbetyp_letsplay-de.svg",
+                "lex": "lex_werbetyp_letsplay_de.html",
+                "name": "Let’s Play"
+              },
+              {
+                "image": "werbetyp_rezension-de.svg",
+                "lex": "lex_werbetyp_rezension_de.html",
+                "name": "Rezension"
+              },
+              {
+                "image": "werbetyp_story-de.svg",
+                "lex": "lex_werbetyp_story_de.html",
+                "name": "Kreativ/Story"
+              },
+              {
+                "image": "werbetyp_tutorial-de.svg",
+                "lex": "lex_werbetyp_tutorial_de.html",
+                "name": "Tutorial"
+              },
+              {
+                "image": "werbetyp_unboxing-de.svg",
+                "lex": "lex_werbetyp_unboxing_de.html",
+                "name": "Unboxing"
+              },
+              {
+                "image": "werbetyp_leak-de.svg",
+                "lex": "lex_werbetyp_leak_de.html",
+                "name": "Leak"
+              }
+            ],
+            "#text": "F\r\n      "
+          },
+          {
+            "name": "Glaubwürdigkeit",
+            "entry": [
+              {
+                "image": "ethik_authentizitaet-de.svg",
+                "lex": "lex_ethik_authentizitaet_de.html",
+                "name": "authentisch"
+              },
+              {
+                "image": "ethik_wahrhaftigkeit-de.svg",
+                "lex": "lex_ethik_wahrhaftigkeit_de.html",
+                "name": "wahrhaftig"
+              },
+              {
+                "image": "ethik_transparenz-de.svg",
+                "lex": "lex_ethik_transparenz_de.html",
+                "name": "transparent"
+              },
+              {
+                "image": "ethik_authentizitaet_nicht-de.svg",
+                "lex": "lex_ethik_authentizitaet_de.html",
+                "name": "Nicht authentisch"
+              },
+              {
+                "image": "ethik_wahrhaftigkeit_nicht-de.svg",
+                "lex": "lex_ethik_wahrhaftigkeit_de.html",
+                "name": "Nicht wahrhaftig"
+              },
+              {
+                "image": "ethik_transparenz_nicht-de.svg",
+                "lex": "lex_ethik_transparenz_de.html",
+                "name": "Nicht transparent"
+              }
+            ]
+          },
+          {
+            "name": "Erkennbarkeit von Werbung",
+            "entry": [
+              {
+                "image": "werbung_sponsoring-de.svg",
+                "lex": "lex_werbung_sponsoring_de.html",
+                "name": "Sponsoring"
+              },
+              {
+                "image": "werbung_geschenk-de.svg",
+                "lex": "lex_werbung_geschenk_de.html",
+                "name": "Kostenlose Produkte"
+              },
+              {
+                "image": "werbung_product_placement-de.svg",
+                "lex": "lex_werbung_product_placement_de.html",
+                "name": "Product Placement"
+              },
+              {
+                "image": "werbung_keine-de.svg",
+                "lex": "lex_werbung_keine_de.html",
+                "name": "Keine Werbung"
+              }
+            ]
+          },
+          {
+            "name": "Filmsprache",
+            "entry": [
+              {
+                "image": "filmsprache_schnitt-de.svg",
+                "lex": "lex_filmsprache_schnitt_de.html",
+                "name": "Schnitt"
+              },
+              {
+                "image": "filmsprache_statische_kamera-de.svg",
+                "lex": "lex_filmsprache_bewegung_de.html",
+                "name": "Statische Kamera"
+              },
+              {
+                "image": "filmsprache_bewegte_kamera-de.svg",
+                "lex": "lex_filmsprache_bewegung_de.html",
+                "name": "Bewegte Kamera"
+              },
+              {
+                "image": "filmsprache_herauszoomen-de.svg",
+                "lex": "lex_filmsprache_bewegung_de.html",
+                "name": "Herauszoomen"
+              },
+              {
+                "image": "filmsprache_heranzoomen-de.svg",
+                "lex": "lex_filmsprache_bewegung_de.html",
+                "name": "Heranzoomen"
+              },
+              {
+                "image": "filmsprache_musik-de.svg",
+                "lex": "lex_filmsprache_ton_de.html",
+                "name": "Musik"
+              },
+              {
+                "image": "filmsprache_offscreen_ton-de.svg",
+                "lex": "lex_filmsprache_ton_de.html",
+                "name": "Offscreen Ton"
+              },
+              {
+                "image": "filmsprache_onscreen_ton-de.svg",
+                "lex": "lex_filmsprache_ton_de.html",
+                "name": "Onscreen Ton"
+              },
+              {
+                "image": "filmsprache_els-de.svg",
+                "lex": "lex_filmsprache_einstellungsgroesse_de.html",
+                "name": "Weite/Panorama"
+              },
+              {
+                "image": "filmsprache_ls-de.svg",
+                "lex": "lex_filmsprache_einstellungsgroesse_de.html",
+                "name": "Totale"
+              },
+              {
+                "image": "filmsprache_mls-de.svg",
+                "lex": "lex_filmsprache_einstellungsgroesse_de.html",
+                "name": "Halbtotale"
+              },
+              {
+                "image": "filmsprache_ms-de.svg",
+                "lex": "lex_filmsprache_einstellungsgroesse_de.html",
+                "name": "Halbnahe"
+              },
+              {
+                "image": "filmsprache_mcu-de.svg",
+                "lex": "lex_filmsprache_einstellungsgroesse_de.html",
+                "name": "Nahe"
+              },
+              {
+                "image": "filmsprache_cu-de.svg",
+                "lex": "lex_filmsprache_einstellungsgroesse_de.html",
+                "name": "Große"
+              },
+              {
+                "image": "filmsprache_ecu-de.svg",
+                "lex": "lex_filmsprache_einstellungsgroesse_de.html",
+                "name": "Detail"
+              },
+              {
+                "image": "filmsprache_overhead-de.svg",
+                "lex": "lex_filmsprache_kameraperspektive_de.html",
+                "name": "Vogelperspektive"
+              },
+              {
+                "image": "filmsprache_high-de.svg",
+                "lex": "lex_filmsprache_kameraperspektive_de.html",
+                "name": "Aufsicht"
+              },
+              {
+                "image": "filmsprache_eye-level-de.svg",
+                "lex": "lex_filmsprache_kameraperspektive_de.html",
+                "name": "Augenhöhe"
+              },
+              {
+                "image": "filmsprache_low-de.svg",
+                "lex": "lex_filmsprache_kameraperspektive_de.html",
+                "name": "Untersicht"
+              },
+              {
+                "image": "filmsprache_below-de.svg",
+                "lex": "lex_filmsprache_kameraperspektive_de.html",
+                "name": "Froschperspektive"
+              },
+              {
+                "image": "filmsprache_canted_angle-de.svg",
+                "lex": "lex_filmsprache_kameraperspektive_de.html",
+                "name": "Gekippter Winkel"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Basiskonzepte der Biologie",
+        "entry": [
+          {
+            "image": "1_kompartimentierung_de.svg",
+            "lex": "lex_kompartimentierung_de.html",
+            "name": "Kompartimentierung"
+          },
+          {
+            "image": "2_struktur_de.svg",
+            "lex": "lex_struktur_de.html",
+            "name": "Struktur und Funktion"
+          },
+          {
+            "image": "3_steuerung_de.svg",
+            "lex": "lex_steuerung_de.html",
+            "name": "Steuerung und Regelung"
+          },
+          {
+            "image": "4_geschichte_de.svg",
+            "lex": "lex_geschichte_de.html",
+            "name": "Verwandtschaft und Geschichte"
+          },
+          {
+            "image": "5_variabilitaet_de.svg",
+            "lex": "lex_variabilitaet_de.html",
+            "name": "Angepasstheit und Variabilität"
+          },
+          {
+            "image": "6_umwandlung_de.svg",
+            "lex": "lex_umwandlung_de.html",
+            "name": "Stoff- und Energieumwandlung"
+          },
+          {
+            "image": "7_kommunikation_de.svg",
+            "lex": "lex_kommunikation_de.html",
+            "name": "Kommunikation und Information"
+          },
+          {
+            "image": "8_reproduktion_de.svg",
+            "lex": "lex_reproduktion_de.html",
+            "name": "Reproduktion"
+          }
+        ]
+      },
+      {
+        "name": "Rhetorische Figuren",
+        "marker": [
+          {
+            "lex": "lex_klangfiguren_de.html",
+            "name": "Klangfiguren",
+            "entry": [
+              {
+                "image": "visual_klangfiguren_alliteration_de.svg",
+                "lex": "lex_alliteration_de.html",
+                "name": "Alliteration/Stabreim"
+              },
+              {
+                "image": "visual_klangfiguren_anapher_de.svg",
+                "lex": "lex_anapher_de.html",
+                "name": "Anapher"
+              },
+              {
+                "image": "visual_klangfiguren_epipher_de.svg",
+                "lex": "lex_epipher_de.html",
+                "name": "Epipher"
+              },
+              {
+                "image": "visual_klangfiguren_onomatopoesie_de.svg",
+                "lex": "lex_onomatopoesie_de.html",
+                "name": "Onomatopoesie"
+              },
+              {
+                "image": "visual_klangfiguren_paronomasie_de.svg",
+                "lex": "lex_paronomasie_de.html",
+                "name": "Paronomasie"
+              }
+            ]
+          },
+          {
+            "lex": "lex_wortfiguren_de.html",
+            "name": "Wortfiguren",
+            "entry": [
+              {
+                "image": "visual_wortfiguren_anapher_de.svg",
+                "lex": "lex_anapher_de.html",
+                "name": "Anapher"
+              },
+              {
+                "image": "visual_wortfiguren_anastrophe_de.svg",
+                "lex": "lex_anastrophe_de.html",
+                "name": "Anastrophe"
+              },
+              {
+                "image": "visual_wortfiguren_akkumulation_de.svg",
+                "lex": "lex_akkumulation_de.html",
+                "name": "Akkumulation"
+              },
+              {
+                "image": "visual_wortfiguren_correctio_de.svg",
+                "lex": "lex_correctio_de.html",
+                "name": "Correctio"
+              },
+              {
+                "image": "visual_wortfiguren_euphemismus_de.svg",
+                "lex": "lex_euphemismus_de.html",
+                "name": "Euphemismus"
+              },
+              {
+                "image": "visual_wortfiguren_litotes_de.svg",
+                "lex": "lex_litotes_de.html",
+                "name": "Litotes"
+              },
+              {
+                "image": "visual_wortfiguren_metapher_de.svg",
+                "lex": "lex_metapher_de.html",
+                "name": "Metapher"
+              },
+              {
+                "image": "visual_wortfiguren_metonymie_de.svg",
+                "lex": "lex_metonymie_de.html",
+                "name": "Metonymie"
+              },
+              {
+                "image": "visual_wortfiguren_neologismus_de.svg",
+                "lex": "lex_neologismus_de.html",
+                "name": "Neologismus"
+              },
+              {
+                "image": "visual_wortfiguren_periphrase_de.svg",
+                "lex": "lex_periphrase_de.html",
+                "name": "Periphrase"
+              },
+              {
+                "image": "visual_wortfiguren_pleonasmus_de.svg",
+                "lex": "lex_pleonasmus_de.html",
+                "name": "Pleonasmus"
+              },
+              {
+                "image": "visual_wortfiguren_synekdoche_de.svg",
+                "lex": "lex_synekdoche_de.html",
+                "name": "Synekdoche"
+              },
+              {
+                "image": "visual_wortfiguren_tautologie_de.svg",
+                "lex": "lex_tautologie_de.html",
+                "name": "Tautologie"
+              }
+            ]
+          },
+          {
+            "lex": "lex_satzfiguren_de.html",
+            "name": "Satzfiguren",
+            "entry": [
+              {
+                "image": "visual_satzfiguren_asyndeton_de.svg",
+                "lex": "lex_asyndeton_de.html",
+                "name": "Asyndeton"
+              },
+              {
+                "image": "visual_satzfiguren_apostrophe_de.svg",
+                "lex": "lex_apostrophe_de.html",
+                "name": "Apostrophe"
+              },
+              {
+                "image": "visual_satzfiguren_chiasmus_de.svg",
+                "lex": "lex_chiasmus_de.html",
+                "name": "Chiasmus"
+              },
+              {
+                "image": "visual_satzfiguren_ellipse_de.svg",
+                "lex": "lex_ellipse_de.html",
+                "name": "Ellipse"
+              },
+              {
+                "image": "visual_satzfiguren_inversion_de.svg",
+                "lex": "lex_inversion_de.html",
+                "name": "Inversion"
+              },
+              {
+                "image": "visual_satzfiguren_parallelismus_de.svg",
+                "lex": "lex_parallelismus_de.html",
+                "name": "Parallelismus"
+              },
+              {
+                "image": "visual_satzfiguren_polysyndeton_de.svg",
+                "lex": "lex_polysyndeton_de.html",
+                "name": "Polysyndeton"
+              },
+              {
+                "image": "visual_satzfiguren_rhetorische-frage_de.svg",
+                "lex": "lex_rhetorische-frage_de.html",
+                "name": "Rhetorische Frage"
+              },
+              {
+                "image": "visual_satzfiguren_zeugma_de.svg",
+                "lex": "lex_zeugma_de.html",
+                "name": "Zeugma"
+              }
+            ],
+            "#text": "F\r\n      "
+          },
+          {
+            "lex": "lex_gedankenfiguren_de.html",
+            "name": "Gedankenfiguren",
+            "entry": [
+              {
+                "image": "visual_gedankenfiguren_allegorie_de.svg",
+                "lex": "lex_allegorie_de.html",
+                "name": "Allegorie"
+              },
+              {
+                "image": "visual_gedankenfiguren_antiklimax_de.svg",
+                "lex": "lex_antiklimax_de.html",
+                "name": "Antiklimax"
+              },
+              {
+                "image": "visual_gedankenfiguren_antithese_de.svg",
+                "lex": "lex_antithese_de.html",
+                "name": "Antithese"
+              },
+              {
+                "image": "visual_gedankenfiguren_hyperbel_de.svg",
+                "lex": "lex_hyperbel_de.html",
+                "name": "Hyperbel"
+              },
+              {
+                "image": "visual_gedankenfiguren_ironie_de.svg",
+                "lex": "lex_ironie_de.html",
+                "name": "Ironie"
+              },
+              {
+                "image": "visual_gedankenfiguren_klimax_de.svg",
+                "lex": "lex_klimax_de.html",
+                "name": "Klimax"
+              },
+              {
+                "image": "visual_gedankenfiguren_metapher_de.svg",
+                "lex": "lex_metapher_de.html",
+                "name": "Metapher"
+              },
+              {
+                "image": "visual_gedankenfiguren_oxymoron_de.svg",
+                "lex": "lex_oxymoron_de.html",
+                "name": "Oxymoron"
+              },
+              {
+                "image": "visual_gedankenfiguren_paradoxon_de.svg",
+                "lex": "lex_paradoxon_de.html",
+                "name": "Paradoxon"
+              },
+              {
+                "image": "visual_gedankenfiguren_personifikation_de.svg",
+                "lex": "lex_personifikation_de.html",
+                "name": "Personifikation"
+              },
+              {
+                "image": "visual_gedankenfiguren_rhetorische-frage_de.svg",
+                "lex": "lex_rhetorische-frage_de.html",
+                "name": "Rhetorische Frage"
+              },
+              {
+                "image": "visual_gedankenfiguren_symbol_de.svg",
+                "lex": "lex_symbol_de.html",
+                "name": "Symbol"
+              },
+              {
+                "image": "visual_gedankenfiguren_synaesthesie_de.svg",
+                "lex": "lex_synaesthesie_de.html",
+                "name": "Synästhesie"
+              },
+              {
+                "image": "visual_gedankenfiguren_vergleich_de.svg",
+                "lex": "lex_vergleich_de.html",
+                "name": "Vergleich"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Medienkompetenzrahmen NRW",
+        "marker": [
+          {
+            "name": "1. BEDIENEN UND ANWENDEN",
+            "entry": [
+              {
+                "image": "visual_mk_medienausstattung.svg",
+                "lex": "lex_mk_medienausstattung.html",
+                "name": "1.1 Medienausstattung (Hardware)"
+              },
+              {
+                "image": "visual_mk_digitale-werkzeuge.svg",
+                "lex": "lex_mk_digitale-werkzeuge.html",
+                "name": "1.2 Digitale Werkzeuge"
+              },
+              {
+                "image": "visual_mk_datenorganisation.svg",
+                "lex": "lex_mk_datenorganisation.html",
+                "name": "1.3 Datenorganisation"
+              },
+              {
+                "image": "visual_mk_datenschutz.svg",
+                "lex": "lex_mk_datenschutz.html",
+                "name": "1.4 Datenschutz und Informationssicherheit"
+              }
+            ]
+          },
+          {
+            "name": "2. INFORMIEREN UND RECHERCHIEREN",
+            "entry": [
+              {
+                "image": "visual_mk_informationsrecherche.svg",
+                "lex": "lex_mk_informationsrecherche.html",
+                "name": "2.1 Informationsrecherche"
+              },
+              {
+                "image": "visual_mk_informationsauswertung.svg",
+                "lex": "lex_mk_informationsauswertung.html",
+                "name": "2.2 Informationsauswertung"
+              },
+              {
+                "image": "visual_mk_informationsbewertung.svg",
+                "lex": "lex_mk_informationsbewertung.html",
+                "name": "2.3 Informationsbewertung"
+              },
+              {
+                "image": "visual_mk_informationskritik.svg",
+                "lex": "lex_mk_informationskritik.html",
+                "name": "2.4 Informationskritik"
+              }
+            ]
+          },
+          {
+            "name": "3. KOMMUNIZIEREN UND KOOPERIEREN",
+            "entry": [
+              {
+                "image": "visual_mk_prozesse.svg",
+                "lex": "lex_mk_prozesse.html",
+                "name": "3.1 Kommunikations- und Kooperationsprozesse"
+              },
+              {
+                "image": "visual_mk_regeln.svg",
+                "lex": "lex_mk_regeln.html",
+                "name": "3.2 Kommunikations- und Kooperationsregeln"
+              },
+              {
+                "image": "visual_mk_gesellschaft.svg",
+                "lex": "lex_mk_gesellschaft.html",
+                "name": "3.3 Kommunikation und Kooperation in der Gesellschaft"
+              },
+              {
+                "image": "visual_mk_cybergewalt.svg",
+                "lex": "lex_mk_cybergewalt.html",
+                "name": "3.4 Cybergewalt und -kriminalität"
+              }
+            ]
+          },
+          {
+            "name": "4. PRODUZIEREN UND PRÄSENTIEREN",
+            "entry": [
+              {
+                "image": "visual_mk_produktion.svg",
+                "lex": "lex_mk_produktion.html",
+                "name": "4.1 Medienproduktion und Präsentation"
+              },
+              {
+                "image": "visual_mk_gestaltungsmittel.svg",
+                "lex": "lex_mk_gestaltungsmittel.html",
+                "name": "4.2 Gestaltungsmittel"
+              },
+              {
+                "image": "visual_mk_quellendokumentation.svg",
+                "lex": "lex_mk_quellendokumentation.html",
+                "name": "4.3 Quellendokumentation"
+              },
+              {
+                "image": "visual_mk_rechtliche-grundlagen.svg",
+                "lex": "lex_mk_rechtliche-grundlagen.html",
+                "name": "4.4 Rechtliche Grundlagen"
+              }
+            ]
+          },
+          {
+            "name": "5. ANALYSIEREN UND REFLEKTIEREN",
+            "entry": [
+              {
+                "image": "visual_mk_medienanalyse.svg",
+                "lex": "lex_mk_medienanalyse.html",
+                "name": "5.1 Medienanalyse"
+              },
+              {
+                "image": "visual_mk_meinungsbildung.svg",
+                "lex": "lex_mk_meinungsbildung.html",
+                "name": "5.2 Meinungsbildung"
+              },
+              {
+                "image": "visual_mk_identitaetsbildung.svg",
+                "lex": "lex_mk_identitaetsbildung.html",
+                "name": "5.3 Identitätsbildung"
+              },
+              {
+                "image": "visual_mk_mediennutzung.svg",
+                "lex": "lex_mk_mediennutzung.html",
+                "name": "5.4 Selbstregulierte Mediennutzung"
+              }
+            ]
+          },
+          {
+            "name": "6. PROBLEMLÖSEN UND MODELLIEREN",
+            "entry": [
+              {
+                "image": "visual_mk_digitale-welt.svg",
+                "lex": "lex_mk_digitale-welt.html",
+                "name": "6.1 Prinzipien der digitalen Welt"
+              },
+              {
+                "image": "visual_mk_algorithmen.svg",
+                "lex": "lex_mk_algorithmen.html",
+                "name": "6.2 Algorithmen erkennen"
+              },
+              {
+                "image": "visual_mk_modellieren.svg",
+                "lex": "lex_mk_modellieren.html",
+                "name": "6.3 Modellieren und Programmieren"
+              },
+              {
+                "image": "visual_mk_bedeutung.svg",
+                "lex": "lex_mk_bedeutung.html",
+                "name": "6.4 Bedeutung von Algorithmen"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Kompetenzorientiertes Konzept Filmbildung (AK Filmbildung der LKM Medienbildung)",
+        "marker": [
+          {
+            "name": "Filmproduktion und Präsentation",
+            "entry": [
+              {
+                "image": "kompetenz_produktionsplanung_de.svg",
+                "lex": "lex_kompetenz_produktionsplanung.html",
+                "name": "Produktionsplanung"
+              },
+              {
+                "image": "kompetenz_produktion_de.svg",
+                "lex": "lex_kompetenz_produktion.html",
+                "name": "Produktion"
+              },
+              {
+                "image": "kompetenz_bildtonbearbeitung_de.svg",
+                "lex": "lex_kompetenz_bildtonbearbeitung.html",
+                "name": "Bild- und Tonbearbeitung"
+              },
+              {
+                "image": "kompetenz_praesentation_de.svg",
+                "lex": "lex_kompetenz_praesentation.html",
+                "name": "Präsentation"
+              }
+            ]
+          },
+          {
+            "name": "Filmanalyse",
+            "entry": [
+              {
+                "image": "kompetenz_filmaesthetik_de.svg",
+                "lex": "lex_kompetenz_filmaesthetik.html",
+                "name": "Filmästhetik"
+              },
+              {
+                "image": "kompetenz_filmsprache_de.svg",
+                "lex": "lex_kompetenz_filmsprache.html",
+                "name": "Filmsprache und Gestaltung"
+              },
+              {
+                "image": "kompetenz_filmkontexte_de.svg",
+                "lex": "lex_kompetenz_filmkontexte.html",
+                "name": "Filmkontexte"
+              },
+              {
+                "image": "kompetenz_filmgeschichte_de.svg",
+                "lex": "lex_kompetenz_filmgeschichte.html",
+                "name": "Filmgeschichte und -theorie"
+              }
+            ]
+          },
+          {
+            "name": "Filmnutzung",
+            "entry": [
+              {
+                "image": "kompetenz_gebrauch_de.svg",
+                "lex": "lex_kompetenz_gebrauch.html",
+                "name": "Gebrauch"
+              },
+              {
+                "image": "kompetenz_wirkung_de.svg",
+                "lex": "lex_kompetenz_wirkung.html",
+                "name": "Wirkung und Einfluss"
+              },
+              {
+                "image": "kompetenz_geschmack_de.svg",
+                "lex": "lex_kompetenz_geschmack.html",
+                "name": "Geschmack- und Urteilsbildung"
+              }
+            ]
+          },
+          {
+            "name": "Film in der Mediengesellschaft",
+            "entry": [
+              {
+                "image": "kompetenz_wirtschaftsfaktor_de.svg",
+                "lex": "lex_kompetenz_wirtschaftsfaktor.html",
+                "name": "Film als Wirtschaftsfaktor"
+              },
+              {
+                "image": "kompetenz_politik_de.svg",
+                "lex": "lex_kompetenz_politik.html",
+                "name": "Politische Funktion, gesellschaftliche und kulturelle Wirkung"
+              },
+              {
+                "image": "kompetenz_recht_de.svg",
+                "lex": "lex_kompetenz_recht.html",
+                "name": "Rechtliche Rahmenbedingungen, Jugendmedienschutz"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Ziele für Nachhaltige Entwicklung",
+        "entry": [
+          {
+            "image": "visual_goal1_de.svg",
+            "lex": "lex_goal1_de.html",
+            "name": "Keine Armut"
+          },
+          {
+            "image": "visual_goal2_de.svg",
+            "lex": "lex_goal2_de.html",
+            "name": "Kein Hunger"
+          },
+          {
+            "image": "visual_goal3_de.svg",
+            "lex": "lex_goal3_de.html",
+            "name": "Gesundheit und Wohlergehen"
+          },
+          {
+            "image": "visual_goal4_de.svg",
+            "lex": "lex_goal4_de.html",
+            "name": "Hochwertige Bildung"
+          },
+          {
+            "image": "visual_goal5_de.svg",
+            "lex": "lex_goal5_de.html",
+            "name": "Geschlechtergleichheit"
+          },
+          {
+            "image": "visual_goal6_de.svg",
+            "lex": "lex_goal6_de.html",
+            "name": "Sauberes Wasser und Sanitär-Einrichtungen"
+          },
+          {
+            "image": "visual_goal7_de.svg",
+            "lex": "lex_goal7_de.html",
+            "name": "Bezahlbare und saubere Energie"
+          },
+          {
+            "image": "visual_goal8_de.svg",
+            "lex": "lex_goal8_de.html",
+            "name": "Menschenwürdige Arbeit und Wirtschaftswachstum"
+          },
+          {
+            "image": "visual_goal9_de.svg",
+            "lex": "lex_goal9_de.html",
+            "name": "Industrie, Innovation und Infrastruktur"
+          },
+          {
+            "image": "visual_goal10_de.svg",
+            "lex": "lex_goal10_de.html",
+            "name": "Weniger Ungleichheiten"
+          },
+          {
+            "image": "visual_goal11_de.svg",
+            "lex": "lex_goal11_de.html",
+            "name": "Nachhaltige Städte und Gemeinden"
+          },
+          {
+            "image": "visual_goal12_de.svg",
+            "lex": "lex_goal12_de.html",
+            "name": "Nachhaltige/r Konsum und Produktion"
+          },
+          {
+            "image": "visual_goal13_de.svg",
+            "lex": "lex_goal13_de.html",
+            "name": "Maßnahmen zum Klimaschutz"
+          },
+          {
+            "image": "visual_goal14_de.svg",
+            "lex": "lex_goal14_de.html",
+            "name": "Leben unter Wasser"
+          },
+          {
+            "image": "visual_goal15_de.svg",
+            "lex": "lex_goal15_de.html",
+            "name": "Leben an Land"
+          },
+          {
+            "image": "visual_goal16_de.svg",
+            "lex": "lex_goal16_de.html",
+            "name": "Frieden, Gerechtigkeit und starke Institutionen"
+          },
+          {
+            "image": "visual_goal17_de.svg",
+            "lex": "lex_goal17_de.html",
+            "name": "Partnerschaften zur Erreichung der Ziele"
+          }
+        ]
+      },
+      {
+        "name": "Rhetorischer Lug und logischer Trug",
+        "marker": [
+          {
+            "name": "Geistige Manipulationen",
+            "entry": [
+              {
+                "image": "visual_anonymous_authority_de.svg",
+                "lex": "lex_anonymous_authority_de.html",
+                "name": "Beleg per anonymer Autorität"
+              },
+              {
+                "image": "visual_authority_de.svg",
+                "lex": "lex_authority_de.html",
+                "name": "Beleg per fragwürdiger Autorität"
+              },
+              {
+                "image": "visual_common_practice_de.svg",
+                "lex": "lex_common_practice_de.html",
+                "name": "Das machen alle so!"
+              },
+              {
+                "image": "visual_ignorance_de.svg",
+                "lex": "lex_ignorance_de.html",
+                "name": "Ignoranzappell"
+              },
+              {
+                "image": "visual_incredulity_de.svg",
+                "lex": "lex_incredulity_de.html",
+                "name": "Geht nicht, gibt's also nicht!"
+              },
+              {
+                "image": "visual_money_de.svg",
+                "lex": "lex_money_de.html",
+                "name": "Reich ist besser!"
+              },
+              {
+                "image": "visual_novelty_de.svg",
+                "lex": "lex_novelty_de.html",
+                "name": "Neu ist besser!"
+              },
+              {
+                "image": "visual_popular_belief_de.svg",
+                "lex": "lex_popular_belief_de.html",
+                "name": "Volksglauben aufgreifen"
+              },
+              {
+                "image": "visual_probability_de.svg",
+                "lex": "lex_probability_de.html",
+                "name": "Wahrscheinlichkeit erhöhen"
+              },
+              {
+                "image": "visual_tradition_de.svg",
+                "lex": "lex_tradition_de.html",
+                "name": "Tradition als Beleg"
+              }
+            ]
+          },
+          {
+            "name": "Bedienung von Emotionen",
+            "entry": [
+              {
+                "image": "visual_consequences_de.svg",
+                "lex": "lex_consequences_de.html",
+                "name": "Angst vor den Konsequenzen schüren"
+              },
+              {
+                "image": "visual_fear_de.svg",
+                "lex": "lex_fear_de.html",
+                "name": "Furchtappell"
+              },
+              {
+                "image": "visual_flattery_de.svg",
+                "lex": "lex_flattery_de.html",
+                "name": "Schmeichelei"
+              },
+              {
+                "image": "visual_nature_de.svg",
+                "lex": "lex_nature_de.html",
+                "name": "Natürlichkeit"
+              },
+              {
+                "image": "visual_pity_de.svg",
+                "lex": "lex_pity_de.html",
+                "name": "Mitleid erregen"
+              },
+              {
+                "image": "visual_ridicule_de.svg",
+                "lex": "lex_ridicule_de.html",
+                "name": "Karikatur"
+              },
+              {
+                "image": "visual_spite_de.svg",
+                "lex": "lex_spite_de.html",
+                "name": "Klischees bedienen"
+              },
+              {
+                "image": "visual_wishful_thinking_de.svg",
+                "lex": "lex_wishful_thinking_de.html",
+                "name": "Wunschdenken"
+              }
+            ]
+          },
+          {
+            "name": "Fehlerhafte Herleitung",
+            "entry": [
+              {
+                "image": "visual_anecdotal_evidence_de.svg",
+                "lex": "lex_anecdotal_evidence_de.html",
+                "name": "Anekdokten statt Beweise"
+              },
+              {
+                "image": "visual_composition_de.svg",
+                "lex": "lex_composition_de.html",
+                "name": "Kollektivierung"
+              },
+              {
+                "image": "visual_division_de.svg",
+                "lex": "lex_division_de.html",
+                "name": "Vom Ganzen aufs Einzelne"
+              },
+              {
+                "image": "visual_design_fallacy_de.svg",
+                "lex": "lex_design_fallacy_de.html",
+                "name": "Fehlschluss per Aussehen"
+              },
+              {
+                "image": "visual_gamblers_fallacy_de.svg",
+                "lex": "lex_gamblers_fallacy_de.html",
+                "name": "Fehlschluss des Spielers"
+              },
+              {
+                "image": "visual_generalization_de.svg",
+                "lex": "lex_generalization_de.html",
+                "name": "Übereilte Verallgemeinerung"
+              },
+              {
+                "image": "visual_conclusion_de.svg",
+                "lex": "lex_conclusions_de.html",
+                "name": "Schnellschuss-Schlussfolgerung"
+              },
+              {
+                "image": "visual_middle_ground_de.svg",
+                "lex": "lex_middle_ground_de.html",
+                "name": "Irgendwo dazwischen"
+              },
+              {
+                "image": "visual_perfectionist_de.svg",
+                "lex": "lex_perfectionist_de.html",
+                "name": "Fehlschluss des Perfektionisten"
+              },
+              {
+                "image": "visual_relativist_de.svg",
+                "lex": "lex_relativist_de.html",
+                "name": "Relative Wahrheit"
+              },
+              {
+                "image": "visual_spotlight_de.svg",
+                "lex": "lex_spotlight_de.html",
+                "name": "Scheinwerfer"
+              },
+              {
+                "image": "visual_sweeping_generalisation_de.svg",
+                "lex": "lex_sweeping_generalisation_de.html",
+                "name": "Rasende Verallgemeinerung"
+              },
+              {
+                "image": "visual_undistributed_middle_de.svg",
+                "lex": "lex_undistributed_middle_de.html",
+                "name": "Ungeteilte Mitte"
+              }
+            ],
+            "#text": "F\r\n      "
+          },
+          {
+            "name": "Materialmanipulation",
+            "entry": [
+              {
+                "image": "visual_ad_hoc_rescue_de.svg",
+                "lex": "lex_ad_hoc_rescue_de.html",
+                "name": "Ad-Hoc-Rettung"
+              },
+              {
+                "image": "visual_biased_generalization_de.svg",
+                "lex": "lex_biased_generalization_de.html",
+                "name": "Verfälschte Verallgemeinerung"
+              },
+              {
+                "image": "visual_confirmation_bias_de.svg",
+                "lex": "lex_confirmation_bias_de.html",
+                "name": "Tendenziöse Untermauerung"
+              },
+              {
+                "image": "visual_false_dilemma_de.svg",
+                "lex": "lex_false_dilemma_de.html",
+                "name": "Falsche Alternativlosigkeit"
+              },
+              {
+                "image": "visual_lie_de.svg",
+                "lex": "lex_lie_de.html",
+                "name": "Lüge"
+              },
+              {
+                "image": "visual_misleading_vividness_de.svg",
+                "lex": "lex_misleading_vividness_de.html",
+                "name": "Trügerische Lebhaftigkeit"
+              },
+              {
+                "image": "visual_red_herring_de.svg",
+                "lex": "lex_red_herring_de.html",
+                "name": "Nebelkerze"
+              },
+              {
+                "image": "visual_slippery_slope_de.svg",
+                "lex": "lex_slippery_slope_de.html",
+                "name": "Rutschiger Abhang"
+              },
+              {
+                "image": "visual_suppressed_evidence_de.svg",
+                "lex": "lex_suppressed_evidence_de.html",
+                "name": "Gegenbeweise verschweigen"
+              },
+              {
+                "image": "visual_unfalsifiability_de.svg",
+                "lex": "lex_unfalsifiability_de.html",
+                "name": "Unwiderlegbarkeit"
+              }
+            ]
+          },
+          {
+            "name": "Verwechslung von Ursache und Wirkung",
+            "entry": [
+              {
+                "image": "visual_affirming_consequent_de.svg",
+                "lex": "lex_affirming_consequent_de.html",
+                "name": "Unlogische Umkehrung"
+              },
+              {
+                "image": "visual_circular_logic_de.svg",
+                "lex": "lex_circular_logic_de.html",
+                "name": "Zirkelschluss"
+              },
+              {
+                "image": "visual_ergo_propter_de.svg",
+                "lex": "lex_ergo_propter_de.html",
+                "name": "Cum Hoc Ergo Propter Hoc"
+              },
+              {
+                "image": "visual_denying_antecedent_de.svg",
+                "lex": "lex_denying_antecedent_de.html",
+                "name": "Vergessene Vorgeschichte"
+              },
+              {
+                "image": "visual_ignoring_common_cause_de.svg",
+                "lex": "lex_ignoring_common_cause_de.html",
+                "name": "Gemeinsame Ursache unterschlagen"
+              },
+              {
+                "image": "visual_post_hoc_de.svg",
+                "lex": "lex_post_hoc_de.html",
+                "name": "Post Hoc Ergo Propter Hoc"
+              },
+              {
+                "image": "visual_two_wrongs_de.svg",
+                "lex": "lex_two_wrongs_de.html",
+                "name": "Minus mal Minus ist Plus"
+              }
+            ]
+          },
+          {
+            "name": "Im Angriff",
+            "entry": [
+              {
+                "image": "visual_ad_hominem_de.svg",
+                "lex": "lex_ad_hominem_de.html",
+                "name": "Ad Hominem"
+              },
+              {
+                "image": "visual_burden_of_proof_de.svg",
+                "lex": "lex_burden_of_proof_de.html",
+                "name": "Beweislastverlagerung"
+              },
+              {
+                "image": "visual_circumstance_de.svg",
+                "lex": "lex_circumstance_de.html",
+                "name": "Verwicklung verdammen"
+              },
+              {
+                "image": "visual_genetic_de.svg",
+                "lex": "lex_genetic_de.html",
+                "name": "Fehlschluss per Herkunft"
+              },
+              {
+                "image": "visual_guilt_de.svg",
+                "lex": "lex_guilt_de.html",
+                "name": "Kollektivpranger"
+              },
+              {
+                "image": "visual_straw_man_de.svg",
+                "lex": "lex_straw_man_de.html",
+                "name": "Strohmann"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Argumentationsstrategien erkennen",
+        "entry": [
+          {
+            "image": "visual_rq_themenwechsel_de.svg",
+            "lex": "lex_rq_themenwechsel_de.html",
+            "name": "Themenwechsel"
+          },
+          {
+            "image": "visual_rq_totschlagargument_de.svg",
+            "lex": "lex_rq_totschlagargument_de.html",
+            "name": "Totschlagargument"
+          },
+          {
+            "image": "visual_rq_chewbacca_de.svg",
+            "lex": "lex_rq_chewbacca_de.html",
+            "name": "Chewbacca-Verteidigung"
+          },
+          {
+            "image": "visual_rq_fallbeispiel_de.svg",
+            "lex": "lex_rq_fallbeispiel_de.html",
+            "name": "Fallbeispiel"
+          },
+          {
+            "image": "visual_rq_strohmann_de.svg",
+            "lex": "lex_rq_strohmann_de.html",
+            "name": "Strohmann"
+          },
+          {
+            "image": "visual_rq_emotionale_erpressung_de.svg",
+            "lex": "lex_rq_emotionale_erpressung_de.html",
+            "name": "Emotionale Erpressung"
+          },
+          {
+            "image": "visual_rq_tu_quoque_de.svg",
+            "lex": "lex_rq_tu_quoque_de.html",
+            "name": "Tu Quoque"
+          },
+          {
+            "image": "visual_rq_ad_hominem_de.svg",
+            "lex": "lex_rq_ad_hominem_de.html",
+            "name": "Ad Hominem"
+          },
+          {
+            "image": "visual_rq_luege_de.svg",
+            "lex": "lex_rq_luege_de.html",
+            "name": "Lüge"
+          },
+          {
+            "image": "visual_rq_ad_nauseam_de.svg",
+            "lex": "lex_rq_ad_nauseam_de.html",
+            "name": "Ad Nauseam"
+          },
+          {
+            "image": "visual_rq_angstargument_de.svg",
+            "lex": "lex_rq_angstargument_de.html",
+            "name": "Angstargument"
+          },
+          {
+            "image": "visual_rq_missgunstargument_de.svg",
+            "lex": "lex_rq_missgunstargument_de.html",
+            "name": "Missgunstargument"
+          },
+          {
+            "image": "visual_rq_mitlaeufereffekt_de.svg",
+            "lex": "lex_rq_mitlaeufereffekt_de.html",
+            "name": "Mitläufereffekt"
+          },
+          {
+            "image": "visual_rq_kein_wahrer_schotte_de.svg",
+            "lex": "lex_rq_kein_wahrer_schotte_de.html",
+            "name": "Kein wahrer Schotte"
+          },
+          {
+            "image": "visual_rq_autoritaetsargument_de.svg",
+            "lex": "lex_rq_autoritaetsargument_de.html",
+            "name": "Autoritätsargument"
+          },
+          {
+            "image": "visual_rq_traditionsargument_de.svg",
+            "lex": "lex_rq_traditionsargument_de.html",
+            "name": "Traditionsargument"
+          },
+          {
+            "image": "visual_rq_designargument_de.svg",
+            "lex": "lex_rq_designargument_de.html",
+            "name": "Designargument"
+          },
+          {
+            "image": "visual_rq_karma_de.svg",
+            "lex": "lex_rq_karma_de.html",
+            "name": "Karma"
+          },
+          {
+            "image": "visual_rq_moralischer_pragmatismus_de.svg",
+            "lex": "lex_rq_moralischer_pragmatismus_de.html",
+            "name": "Moralischer Pragmatismus"
+          },
+          {
+            "image": "visual_rq_perfektionismus_de.svg",
+            "lex": "lex_rq_perfektionismus_de.html",
+            "name": "Perfektionismus"
+          },
+          {
+            "image": "visual_rq_wunschdenken_de.svg",
+            "lex": "lex_rq_wunschdenken_de.html",
+            "name": "Wunschdenken"
+          },
+          {
+            "image": "visual_rq_ausrede_de.svg",
+            "lex": "lex_rq_ausrede_de.html",
+            "name": "Ausrede"
+          },
+          {
+            "image": "visual_rq_unfalsifizierbarkeit_de.svg",
+            "lex": "lex_rq_unfalsifizierbarkeit_de.html",
+            "name": "Unfalsifizierbarkeit"
+          },
+          {
+            "image": "visual_rq_verschwoerungstheorie_de.svg",
+            "lex": "lex_rq_verschwoerungstheorie_de.html",
+            "name": "Verschwörungstheorie"
+          },
+          {
+            "image": "visual_rq_deutungshoheit_de.svg",
+            "lex": "lex_rq_deutungshoheit_de.html",
+            "name": "Deutungshoheit"
+          },
+          {
+            "image": "visual_rq_brunnen_vergiften_de.svg",
+            "lex": "lex_rq_brunnen_vergiften_de.html",
+            "name": "Brunnen vergiften"
+          },
+          {
+            "image": "visual_rq_spielerfehlschluss_de.svg",
+            "lex": "lex_rq_spielerfehlschluss_de.html",
+            "name": "Spielerfehlschluss"
+          }
+        ]
+      },
+      {
+        "name": "Language of Film",
+        "marker": [
+          {
+            "name": "shot",
+            "marker": [
+              {
+                "name": "mise en scène",
+                "entry": [
+                  {
+                    "image": "visual_long_take_en",
+                    "lex": "lex_long_take_en.html",
+                    "name": "long take"
+                  },
+                  {
+                    "image": "visual_two_shot_en",
+                    "lex": "lex_two_shot_en.html",
+                    "name": "two shot"
+                  },
+                  {
+                    "image": "visual_three_shot_en",
+                    "lex": "lex_three_shot_en.html",
+                    "name": "three shot"
+                  },
+                  {
+                    "image": "visual_over_shoulder_en",
+                    "lex": "lex_over_the_shoulder_shot_en.html",
+                    "name": "over-the-shoulder shot"
+                  },
+                  {
+                    "image": "visual_establishing_shot_en",
+                    "lex": "lex_establishing_shot_en.html",
+                    "name": "establishing shot"
+                  },
+                  {
+                    "image": "visual_set_en",
+                    "lex": "lex_set_en.html",
+                    "name": "set"
+                  },
+                  {
+                    "image": "visual_location_en",
+                    "lex": "lex_location_en.html",
+                    "name": "location"
+                  },
+                  {
+                    "image": "visual_realistic_setting_en",
+                    "lex": "lex_realistic_setting_en.html",
+                    "name": "realistic setting"
+                  },
+                  {
+                    "image": "visual_nonrealistic_setting_en",
+                    "lex": "lex_nonrealistic_setting_en.html",
+                    "name": "nonrealistic setting"
+                  },
+                  {
+                    "image": "visual_limbo_en",
+                    "lex": "lex_limbo_en.html",
+                    "name": "limbo"
+                  },
+                  {
+                    "image": "visual_loose_framing_en",
+                    "lex": "lex_loose_framing_en.html",
+                    "name": "loose framing"
+                  },
+                  {
+                    "image": "visual_tight_framing_en",
+                    "lex": "lex_tight_framing_en.html",
+                    "name": "tight framing"
+                  },
+                  {
+                    "image": "visual_deep_space_en",
+                    "lex": "lex_deep_space_en.html",
+                    "name": "deep space"
+                  },
+                  {
+                    "image": "visual_flat_space_en",
+                    "lex": "lex_flat_space_en.html",
+                    "name": "flat space"
+                  },
+                  {
+                    "image": "visual_ambiguous_space_en",
+                    "lex": "lex_ambiguous_space_en.html",
+                    "name": "ambiguous space"
+                  },
+                  {
+                    "image": "visual_balance_en",
+                    "lex": "lex_balance_en.html",
+                    "name": "balance"
+                  },
+                  {
+                    "image": "visual_imbalance_en",
+                    "lex": "lex_imbalance_en.html",
+                    "name": "imbalance"
+                  }
+                ]
+              },
+              {
+                "name": "lighting style",
+                "entry": [
+                  {
+                    "image": "visual_high_key_en",
+                    "lex": "lex_high_key_lighting_en.html",
+                    "name": "high-key lighting"
+                  },
+                  {
+                    "image": "visual_low_key_en",
+                    "lex": "lex_low_key_lighting_en.html",
+                    "name": "low-key lighting"
+                  },
+                  {
+                    "image": "visual_available_light_en",
+                    "lex": "lex_available_light_en.html",
+                    "name": "available light"
+                  },
+                  {
+                    "image": "visual_exterior_light_en",
+                    "lex": "lex_exterior_light_en.html",
+                    "name": "exterior light"
+                  }
+                ]
+              },
+              {
+                "name": "lens type",
+                "entry": [
+                  {
+                    "image": "visual_fisheye_en",
+                    "lex": "lex_fisheye_lens_en.html",
+                    "name": "fisheye lens"
+                  },
+                  {
+                    "image": "visual_wide_angle_en",
+                    "lex": "lex_wide_angle_lens_en.html",
+                    "name": "wide-angle lens"
+                  },
+                  {
+                    "image": "visual_normal_lens_en",
+                    "lex": "lex_normal_lens_en.html",
+                    "name": "normal lens"
+                  },
+                  {
+                    "image": "visual_telephoto_en",
+                    "lex": "lex_telephoto_lens_en.html",
+                    "name": "telephoto lens"
+                  }
+                ]
+              },
+              {
+                "name": "focus",
+                "entry": [
+                  {
+                    "image": "visual_shallow_focus_en",
+                    "lex": "lex_shallow_focus_en.html",
+                    "name": "shallow focus"
+                  },
+                  {
+                    "image": "visual_deep_focus_en",
+                    "lex": "lex_deep_focus_en.html",
+                    "name": "deep focus"
+                  },
+                  {
+                    "image": "visual_rack_focus_en",
+                    "lex": "lex_rack_focus_en.html",
+                    "name": "rack focus"
+                  },
+                  {
+                    "image": "visual_out_of_focus_en",
+                    "lex": "lex_out_of_focus_en.html",
+                    "name": "out of focus"
+                  }
+                ]
+              },
+              {
+                "name": "camera distance",
+                "entry": [
+                  {
+                    "image": "visual_ecu_en",
+                    "lex": "lex_extreme_close_up_en.html",
+                    "name": "extreme close-up"
+                  },
+                  {
+                    "image": "visual_cu_en",
+                    "lex": "lex_close_up_en.html",
+                    "name": "close-up"
+                  },
+                  {
+                    "image": "visual_mcu_en",
+                    "lex": "lex_medium_close_up_en.html",
+                    "name": "medium close-up"
+                  },
+                  {
+                    "image": "visual_ms_en",
+                    "lex": "lex_medium_shot_en.html",
+                    "name": "medium shot"
+                  },
+                  {
+                    "image": "visual_mls_en",
+                    "lex": "lex_medium_long_shot_en.html",
+                    "name": "medium long shot"
+                  },
+                  {
+                    "image": "visual_ls_en",
+                    "lex": "lex_long_shot_en.html",
+                    "name": "long shot"
+                  },
+                  {
+                    "image": "visual_els_en",
+                    "lex": "lex_extreme_long_shot_en.html",
+                    "name": "extreme long shot"
+                  }
+                ]
+              },
+              {
+                "name": "camera angle",
+                "entry": [
+                  {
+                    "image": "visual_overhead_en",
+                    "lex": "lex_overhead_angle_en.html",
+                    "name": "overhead (god's-eye-view)"
+                  },
+                  {
+                    "image": "visual_high_en",
+                    "lex": "lex_high_angle_en.html",
+                    "name": "high angle"
+                  },
+                  {
+                    "image": "visual_eye-level_en",
+                    "lex": "lex_eye_level_angle_en.html",
+                    "name": "eye-level angle (straight-on angle)"
+                  },
+                  {
+                    "image": "visual_canted_angle_en",
+                    "lex": "lex_canted_angle_en.html",
+                    "name": "canted angle (oblique angle)"
+                  },
+                  {
+                    "image": "visual_low_en",
+                    "lex": "lex_low_angle_en.html",
+                    "name": "low angle"
+                  },
+                  {
+                    "image": "visual_below_en",
+                    "lex": "lex_below_angle_en.html",
+                    "name": "below angle"
+                  }
+                ]
+              },
+              {
+                "name": "camera movement",
+                "marker": [
+                  {
+                    "name": "fixed camera",
+                    "entry": [
+                      {
+                        "image": "visual_static_en",
+                        "lex": "lex_static_en.html",
+                        "name": "static shot"
+                      },
+                      {
+                        "image": "visual_pan_en",
+                        "lex": "lex_panning_en.html",
+                        "name": "panning"
+                      },
+                      {
+                        "image": "visual_swish_pan_en",
+                        "lex": "lex_swish_pan_en.html",
+                        "name": "swish pan"
+                      },
+                      {
+                        "image": "visual_360_pan_en",
+                        "lex": "lex_360_degree_pan_en.html",
+                        "name": "360-degree pan"
+                      },
+                      {
+                        "image": "visual_tilt_en",
+                        "lex": "lex_tilting_en.html",
+                        "name": "tilting"
+                      },
+                      {
+                        "image": "visual_rot_en",
+                        "lex": "lex_rotate_en.html",
+                        "name": "rotate"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "moveable camera",
+                    "entry": [
+                      {
+                        "image": "visual_hand_en",
+                        "lex": "lex_handheld_en.html",
+                        "name": "handheld"
+                      },
+                      {
+                        "image": "visual_steadicam_en",
+                        "lex": "lex_steadicam_en.html",
+                        "name": "steadicam"
+                      },
+                      {
+                        "image": "visual_track_en",
+                        "lex": "lex_track_en.html",
+                        "name": "track"
+                      },
+                      {
+                        "image": "visual_track_in_en",
+                        "lex": "lex_track_in_en.html",
+                        "name": "track in"
+                      },
+                      {
+                        "image": "visual_track_out_en",
+                        "lex": "lex_track_out_en.html",
+                        "name": "track out"
+                      },
+                      {
+                        "image": "visual_crane_en",
+                        "lex": "lex_crane_en.html",
+                        "name": "crane"
+                      },
+                      {
+                        "image": "visual_circle_shot_en",
+                        "lex": "lex_circle_shot_en.html",
+                        "name": "circle shot"
+                      },
+                      {
+                        "image": "visual_aerial_shot_en",
+                        "lex": "lex_aerial_shot_en.html",
+                        "name": "aerial shot"
+                      },
+                      {
+                        "image": "visual_follow_shot_en",
+                        "lex": "lex_following_shot_en.html",
+                        "name": "following shot"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "apparent camera movement",
+                    "entry": [
+                      {
+                        "image": "visual_zoom_in_en",
+                        "lex": "lex_zoom_in_en.html",
+                        "name": "zoom in"
+                      },
+                      {
+                        "image": "visual_zoom_out_en",
+                        "lex": "lex_zoom_out_en.html",
+                        "name": "zoom out"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "point of view",
+                "entry": [
+                  {
+                    "image": "visual_objective_camera_en",
+                    "lex": "lex_objective_camera_en.html",
+                    "name": "objective camera"
+                  },
+                  {
+                    "image": "visual_omniscient_camera_en",
+                    "lex": "lex_omniscient_camera_en.html",
+                    "name": "omniscient camera"
+                  },
+                  {
+                    "image": "visual_subjective_camera_en",
+                    "lex": "lex_subjective_camera_en.html",
+                    "name": "subjective camera"
+                  },
+                  {
+                    "image": "visual_point_of_view_shot_en",
+                    "lex": "lex_point_of_view_shot_en.html",
+                    "name": "point-of-view shot"
+                  },
+                  {
+                    "image": "visual_mindscreen_blue_en",
+                    "lex": "lex_mind_screen_en.html",
+                    "name": "mindscreen"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "cut/editing",
+            "marker": [
+              {
+                "name": "editing",
+                "entry": [
+                  {
+                    "image": "visual_montage_en",
+                    "lex": "lex_montage_en.html",
+                    "name": "montage"
+                  },
+                  {
+                    "image": "visual_point_of_view_cut_en",
+                    "lex": "lex_point_of_view_shot_en.html",
+                    "name": "point-of-view shot"
+                  },
+                  {
+                    "image": "visual_mindscreen_red_en",
+                    "lex": "lex_mind_screen_en.html",
+                    "name": "mindscreen"
+                  },
+                  {
+                    "image": "visual_reaction_shot_en",
+                    "lex": "lex_reaction_shot_en.html",
+                    "name": "reaction shot"
+                  },
+                  {
+                    "image": "visual_cutaway_shot_en",
+                    "lex": "lex_cutaway_en.html",
+                    "name": "cutaway (shot)"
+                  },
+                  {
+                    "image": "visual_superimposition_en",
+                    "lex": "lex_superimposition_en.html",
+                    "name": "superimposition"
+                  }
+                ]
+              },
+              {
+                "name": "continuity editing",
+                "entry": [
+                  {
+                    "image": "visual_180_en",
+                    "lex": "lex_180_degree_system_en.html",
+                    "name": "180 degree rule"
+                  },
+                  {
+                    "image": "visual_non_180_en",
+                    "lex": "lex_180_degree_system_en.html",
+                    "name": "violation of 180 degree rule"
+                  },
+                  {
+                    "image": "visual_30_en",
+                    "lex": "lex_30_degree_system_en.html",
+                    "name": "30 degree rule"
+                  },
+                  {
+                    "image": "visual_non_30_en",
+                    "lex": "lex_30_degree_system_en.html",
+                    "name": "violation of 30 degree rule"
+                  },
+                  {
+                    "image": "visual_cutting_on_action_en",
+                    "lex": "lex_cutting_on_action_en.html",
+                    "name": "cutting on action"
+                  },
+                  {
+                    "image": "visual_eyeline_match_en",
+                    "lex": "lex_eyeline_match_en.html",
+                    "name": "eyeline match"
+                  },
+                  {
+                    "image": "visual_establishing_shot_red_en",
+                    "lex": "lex_establishing_shot_en.html",
+                    "name": "establishing shot"
+                  },
+                  {
+                    "image": "visual_shot_reverse_shot_en",
+                    "lex": "lex_shot_reverse_shot_en.html",
+                    "name": "shot/reverse shot"
+                  }
+                ]
+              },
+              {
+                "name": "transitions",
+                "entry": [
+                  {
+                    "image": "visual_straight_cut_en",
+                    "lex": "lex_straight_cut_en.html",
+                    "name": "straight cut"
+                  },
+                  {
+                    "image": "visual_dissolve_en",
+                    "lex": "lex_lap_dissolve_en.html",
+                    "name": "lap dissolve"
+                  },
+                  {
+                    "image": "visual_fade_out_en",
+                    "lex": "lex_fade_out_en.html",
+                    "name": "fade-out"
+                  },
+                  {
+                    "image": "visual_fade_in_en",
+                    "lex": "lex_fade_in_en.html",
+                    "name": "fade-in"
+                  },
+                  {
+                    "image": "visual_match_cut_en",
+                    "lex": "lex_match_cut_en.html",
+                    "name": "match cut"
+                  },
+                  {
+                    "image": "visual_jump_cut_en",
+                    "lex": "lex_jump_cut_en.html",
+                    "name": "jump cut"
+                  }
+                ]
+              },
+              {
+                "name": "pace and time",
+                "entry": [
+                  {
+                    "image": "visual_freeze_frame_en",
+                    "lex": "lex_freeze_frame_en.html",
+                    "name": "freeze frame"
+                  },
+                  {
+                    "image": "visual_slow_motion_en",
+                    "lex": "lex_slow_motion_en.html",
+                    "name": "slow motion"
+                  },
+                  {
+                    "image": "visual_fast_motion_en",
+                    "lex": "lex_fast_motion_en.html",
+                    "name": "fast motion"
+                  },
+                  {
+                    "image": "visual_flashback_en",
+                    "lex": "lex_flashback_en.html",
+                    "name": "flashback"
+                  },
+                  {
+                    "image": "visual_flash_forward_en",
+                    "lex": "lex_flash_forward_en.html",
+                    "name": "flash-forward"
+                  },
+                  {
+                    "image": "visual_elliptical_editing_en",
+                    "lex": "lex_elliptical_editing_en.html",
+                    "name": "elliptical editing"
+                  },
+                  {
+                    "image": "visual_cross_cutting_en",
+                    "lex": "lex_cross_cut_en.html",
+                    "name": "cross-cutting"
+                  },
+                  {
+                    "image": "visual_overlapping_action_en",
+                    "lex": "lex_overlapping_action_en.html",
+                    "name": "overlapping action"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "sound and music",
+            "marker": [
+              {
+                "name": "ambient sound",
+                "entry": [
+                  {
+                    "image": "visual_ambient_en",
+                    "lex": "lex_ambient_sound_en.html",
+                    "name": "ambient sound"
+                  },
+                  {
+                    "image": "visual_ambient_on_en",
+                    "lex": "lex_ambient_sound_en.html",
+                    "name": "onscreen ambient sound"
+                  },
+                  {
+                    "image": "visual_ambient_off_en",
+                    "lex": "lex_ambient_sound_en.html",
+                    "name": "offscreen ambient sound"
+                  }
+                ]
+              },
+              {
+                "name": "sound effect",
+                "entry": [
+                  {
+                    "image": "visual_soundeffect_en",
+                    "lex": "lex_sound_effect_en.html",
+                    "name": "sound effect"
+                  },
+                  {
+                    "image": "visual_soundeffect_on_en",
+                    "lex": "lex_sound_effect_en.html",
+                    "name": "onscreen sound effect"
+                  },
+                  {
+                    "image": "visual_soundeffect_off_en",
+                    "lex": "lex_sound_effect_en.html",
+                    "name": "offscreen sound effect"
+                  },
+                  {
+                    "image": "visual_soundeffect_diegetic_en",
+                    "lex": "lex_sound_effect_en.html",
+                    "name": "diegetic sound effect"
+                  },
+                  {
+                    "image": "visual_soundeffect_non_diegetic_en",
+                    "lex": "lex_sound_effect_en.html",
+                    "name": "non-diegetic sound effect"
+                  }
+                ]
+              },
+              {
+                "name": "music",
+                "entry": [
+                  {
+                    "image": "visual_music_en",
+                    "lex": "lex_film_score_en.html",
+                    "name": "music"
+                  },
+                  {
+                    "image": "visual_music_on_en",
+                    "lex": "lex_film_score_en.html",
+                    "name": "onscreen music"
+                  },
+                  {
+                    "image": "visual_music_off_en",
+                    "lex": "lex_film_score_en.html",
+                    "name": "offscreen music"
+                  },
+                  {
+                    "image": "visual_music_diegetic_en",
+                    "lex": "lex_film_score_en.html",
+                    "name": "diegetic music"
+                  },
+                  {
+                    "image": "visual_music_non_diegetic_en",
+                    "lex": "lex_film_score_en.html",
+                    "name": "non-diegetic music"
+                  }
+                ]
+              },
+              {
+                "name": "voice",
+                "entry": [
+                  {
+                    "image": "visual_voice_en",
+                    "lex": "lex_sound_music_en.html",
+                    "name": "voice"
+                  },
+                  {
+                    "image": "visual_voice_on_en",
+                    "lex": "lex_sound_music_en.html",
+                    "name": "onscreen voice"
+                  },
+                  {
+                    "image": "visual_voice_off_en",
+                    "lex": "lex_sound_music_en.html",
+                    "name": "offscreen voice"
+                  },
+                  {
+                    "image": "visual_voice_diegetic_en",
+                    "lex": "lex_sound_music_en.html",
+                    "name": "diegetic voice"
+                  },
+                  {
+                    "image": "visual_voice_non_diegetic_en",
+                    "lex": "lex_sound_music_en.html",
+                    "name": "non-diegetic voice"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Interaktionsanalyse von Lehr-/Lernsituationen",
+        "marker": [
+          {
+            "name": "Elemente kindzentrierter Gesprachsstrategien",
+            "entry": [
+              {
+                "image": "kiz_initiative.svg",
+                "lex": "lex_kiz_initiative.html",
+                "name": "Initiative des Kindes folgen"
+              },
+              {
+                "image": "kiz_nachfragen.svg",
+                "lex": "lex_kiz_nachfragen.html",
+                "name": "Nachfragen"
+              },
+              {
+                "image": "kiz_abwarten.svg",
+                "lex": "lex_kiz_abwarten.html",
+                "name": "Abwarten"
+              },
+              {
+                "image": "kiz_rueckmeldung.svg",
+                "lex": "lex_kiz_rueckmeldung.html",
+                "name": "Positive Rückmeldung"
+              },
+              {
+                "image": "kiz_ideen.svg",
+                "lex": "lex_kiz_ideen.html",
+                "name": "Nicht zu viele eigene Beitrage/ldeen"
+              },
+              {
+                "image": "kiz_antreiben.svg",
+                "lex": "lex_kiz_antreiben.html",
+                "name": "Kein zu starkes Antreiben"
+              },
+              {
+                "image": "kiz_unterbrechungen.svg",
+                "lex": "lex_kiz_unterbrechungen.html",
+                "name": "Keine frühzeitigen Unterbrechungen"
+              }
+            ]
+          },
+          {
+            "name": "Interaktionsfördernde Elemente",
+            "entry": [
+              {
+                "image": "ife_fragen.svg",
+                "lex": "lex_ife_fragen.html",
+                "name": "Offene Fragen"
+              },
+              {
+                "image": "ife_erweitern.svg",
+                "lex": "lex_ife_erweitern.html",
+                "name": "Erweiternde W-Fragen"
+              },
+              {
+                "image": "ife_ermutigung.svg",
+                "lex": "lex_ife_ermutigung.html",
+                "name": "Ermutigung zu Dialogen"
+              },
+              {
+                "image": "ife_interesse.svg",
+                "lex": "lex_ife_interesse.html",
+                "name": "Interesse an Themen des Kindes"
+              }
+            ]
+          },
+          {
+            "name": "Sprachfördernde Gesprächsstrategien",
+            "entry": [
+              {
+                "image": "sfg_feedback.svg",
+                "lex": "lex_sfg_feedback.html",
+                "name": "Korrektives Feedback"
+              },
+              {
+                "image": "sfg_ergaenzungen.svg",
+                "lex": "lex_sfg_ergaenzungen.html",
+                "name": "Gezielte Ergänzungen"
+              },
+              {
+                "image": "sfg_nachfragen.svg",
+                "lex": "lex_sfg_nachfragen.html",
+                "name": "Nachfragen zu Vorherigem"
+              },
+              {
+                "image": "sfg_fragen.svg",
+                "lex": "lex_sfg_fragen.html",
+                "name": "Offene und W-Fragen"
+              },
+              {
+                "image": "sfg_wiederholungen.svg",
+                "lex": "lex_sfg_wiederholungen.html",
+                "name": "Lobende Wiederholungen"
+              }
+            ]
+          },
+          {
+            "name": "Kognitiv aktivierende Gesprächsstrategien",
+            "entry": [
+              {
+                "image": "kag_vorwissen.svg",
+                "lex": "lex_kag_vorwissen.html",
+                "name": "Aktivierung von Vorwissen"
+              },
+              {
+                "image": "kag_einfordern.svg",
+                "lex": "lex_kag_einfordern.html",
+                "name": "Einfordern von Erwartungen"
+              },
+              {
+                "image": "kag_anregen.svg",
+                "lex": "lex_kag_anregen.html",
+                "name": "Anregen von Vergleichen"
+              },
+              {
+                "image": "kag_erklaerungen.svg",
+                "lex": "lex_kag_erklaerungen.html",
+                "name": "Einfordern von Erklärungen"
+              },
+              {
+                "image": "kag_hinweis.svg",
+                "lex": "lex_kag_hinweis.html",
+                "name": "Hinweis auf Unstimmigkeiten"
+              },
+              {
+                "image": "kag_sprechen.svg",
+                "lex": "lex_kag_sprechen.html",
+                "name": "Handlungsbegleitendes Sprechen"
+              },
+              {
+                "image": "kag_shared.svg",
+                "lex": "lex_kag_shared.html",
+                "name": "„Sustained shared thinking“"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Modi des Dokumentarfilms",
+        "entry": [
+          {
+            "image": "visual_poetic_mode_de.svg",
+            "lex": "lex_poetic_mode_de.html",
+            "name": "Poetischer Modus"
+          },
+          {
+            "image": "visual_expository_mode_de.svg",
+            "lex": "lex_expository_mode_de.html",
+            "name": "Erklärender Modus"
+          },
+          {
+            "image": "visual_observational_mode_de.svg",
+            "lex": "lex_observational_mode_de.html",
+            "name": "Beobachtender Modus"
+          },
+          {
+            "image": "visual_participatory_mode_de.svg",
+            "lex": "lex_participatory_mode_de.html",
+            "name": "Interaktiver Modus"
+          },
+          {
+            "image": "visual_reflexive_mode_de.svg",
+            "lex": "lex_reflexive_mode_de.html",
+            "name": "Reflexiver Modus"
+          },
+          {
+            "image": "visual_performative_mode_de.svg",
+            "lex": "lex_performative_mode_de.html",
+            "name": "Performativer Modus"
+          }
+        ]
+      },
+      {
+        "name": "Global Goals",
+        "marker": [
+          {
+            "name": "No Poverty",
+            "entry": [
+              {
+                "image": "GOAL_1.svg",
+                "lex": "lex_goal_1.html",
+                "name": "No Poverty"
+              },
+              {
+                "image": "GOAL_1_1.svg",
+                "lex": "lex_goal_1_1.html",
+                "name": "Eradicate Extreme Poverty"
+              },
+              {
+                "image": "GOAL_1_2.svg",
+                "lex": "lex_goal_1_2.html",
+                "name": "Reduce Poverty by at Least 50%"
+              },
+              {
+                "image": "GOAL_1_3.svg",
+                "lex": "lex_goal_1_3.html",
+                "name": "Implement Social Protection Systems"
+              },
+              {
+                "image": "GOAL_1_4.svg",
+                "lex": "lex_goal_1_4.html",
+                "name": "Equal Rights to Ownership, Basic Services, Technology and Economic Resources"
+              },
+              {
+                "image": "GOAL_1_5.svg",
+                "lex": "lex_goal_1_5.html",
+                "name": "Build Resilience to Environmental, Economic and Social Disasters"
+              },
+              {
+                "image": "GOAL_1_A.svg",
+                "lex": "lex_goal_1_A.html",
+                "name": "Mobilize Resources to Implement Policies to End Poverty"
+              },
+              {
+                "image": "GOAL_1_B.svg",
+                "lex": "lex_goal_1_B.html",
+                "name": "Create pro-poor and gender-sensitive policy frameworks"
+              }
+            ]
+          },
+          {
+            "name": "Zero Hunger",
+            "entry": [
+              {
+                "image": "GOAL_2.svg",
+                "lex": "lex_goal_2.html",
+                "name": "Zero Hunger"
+              },
+              {
+                "image": "GOAL_2_1.svg",
+                "lex": "lex_goal_2_1.html",
+                "name": "Universal Access to Safe and Nutritious Food"
+              },
+              {
+                "image": "GOAL_2_2.svg",
+                "lex": "lex_goal_2_2.html",
+                "name": "End All Forms of Malnutrition"
+              },
+              {
+                "image": "GOAL_2_3.svg",
+                "lex": "lex_goal_2_3.html",
+                "name": "Double the Productivity and Incomes of Small-Scale Food Producers"
+              },
+              {
+                "image": "GOAL_2_4.svg",
+                "lex": "lex_goal_2_4.html",
+                "name": "Sustainable Food Production and Resilient Agricultural Practices"
+              },
+              {
+                "image": "GOAL_2_5.svg",
+                "lex": "lex_goal_2_5.html",
+                "name": "Maintain the Genetic Diversity in Food Production"
+              },
+              {
+                "image": "GOAL_2_A.svg",
+                "lex": "lex_goal_2_A.html",
+                "name": "Invest in Rural Infrastructure, Agricultural Research, Technology and Gene Banks"
+              },
+              {
+                "image": "GOAL_2_B.svg",
+                "lex": "lex_goal_2_B.html",
+                "name": "Prevent Agricultural Trade Restrictions, Market Distortions and Export Subsidies"
+              },
+              {
+                "image": "GOAL_2_C.svg",
+                "lex": "lex_goal_2_C.html",
+                "name": "Ensure Stable Food Commodity Markets and Timely Access to Information"
+              }
+            ]
+          },
+          {
+            "name": "Good Health and Well-being",
+            "entry": [
+              {
+                "image": "GOAL_3.svg",
+                "lex": "lex_goal_3.html",
+                "name": "Good Health and Well-being"
+              },
+              {
+                "image": "GOAL_3_1.svg",
+                "lex": "lex_goal_3_1.html",
+                "name": "Reduce Maternal Mortality"
+              },
+              {
+                "image": "GOAL_3_2.svg",
+                "lex": "lex_goal_3_2.html",
+                "name": "End All Preventable Deaths Under 5 Years of Age"
+              },
+              {
+                "image": "GOAL_3_3.svg",
+                "lex": "lex_goal_3_3.html",
+                "name": "Fight Communicable Diseases"
+              },
+              {
+                "image": "GOAL_3_4.svg",
+                "lex": "lex_goal_3_4.html",
+                "name": "Reduce Mortality from Non-Communicable Diseases and Promote Mental Health"
+              },
+              {
+                "image": "GOAL_3_5.svg",
+                "lex": "lex_goal_3_5.html",
+                "name": "Prevent and Treat Substance Abuse"
+              },
+              {
+                "image": "GOAL_3_6.svg",
+                "lex": "lex_goal_3_6.html",
+                "name": "Reduce Road Injuries and Deaths"
+              },
+              {
+                "image": "GOAL_3_7.svg",
+                "lex": "lex_goal_3_7.html",
+                "name": "Universal Access to Sexual and Reproductive Care, Family Planning and Education"
+              },
+              {
+                "image": "GOAL_3_8.svg",
+                "lex": "lex_goal_3_8.html",
+                "name": "Achieve Universal Health Coverage"
+              },
+              {
+                "image": "GOAL_3_9.svg",
+                "lex": "lex_goal_3_9.html",
+                "name": "Reduce Illnesses and Death from Hazardous Chemicals and Pollution"
+              },
+              {
+                "image": "GOAL_3_A.svg",
+                "lex": "lex_goal_3_A.html",
+                "name": "Implement the WHO Framework Convention on Tobacco Control"
+              },
+              {
+                "image": "GOAL_3_B.svg",
+                "lex": "lex_goal_3_B.html",
+                "name": "Support Research, Development and Universal Access to Affordable Vaccines and Medicines"
+              },
+              {
+                "image": "GOAL_3_C.svg",
+                "lex": "lex_goal_3_C.html",
+                "name": "Increase Health Financing and Support Health Workforce in Developing Countries"
+              },
+              {
+                "image": "GOAL_3_D.svg",
+                "lex": "lex_goal_3_D.html",
+                "name": "Improve Early Warning Systems for Global Health Risks"
+              }
+            ]
+          },
+          {
+            "name": "Quality Education",
+            "entry": [
+              {
+                "image": "GOAL_4.svg",
+                "lex": "lex_goal_4.html",
+                "name": "Quality Education"
+              },
+              {
+                "image": "GOAL_4_1.svg",
+                "lex": "lex_goal_4_1.html",
+                "name": "Free Primary and Secondary Education"
+              },
+              {
+                "image": "GOAL_4_2.svg",
+                "lex": "lex_goal_4_2.html",
+                "name": "Equal Access to Quality Pre-Primary Education"
+              },
+              {
+                "image": "GOAL_4_3.svg",
+                "lex": "lex_goal_4_3.html",
+                "name": "Equal Access to Affordable Technical, Vocational and Higher Education"
+              },
+              {
+                "image": "GOAL_4_4.svg",
+                "lex": "lex_goal_4_4.html",
+                "name": "Increase the Number of People with Relevant Skills for Financial Success"
+              },
+              {
+                "image": "GOAL_4_5.svg",
+                "lex": "lex_goal_4_5.html",
+                "name": "Eliminate All Discrimination in Education"
+              },
+              {
+                "image": "GOAL_4_6.svg",
+                "lex": "lex_goal_4_6.html",
+                "name": "Universal Literacy and Numeracy"
+              },
+              {
+                "image": "GOAL_4_7.svg",
+                "lex": "lex_goal_4_7.html",
+                "name": "Education for Sustainable Development and Global Citizenship"
+              },
+              {
+                "image": "GOAL_4_A.svg",
+                "lex": "lex_goal_4_A.html",
+                "name": "Build and Upgrade Inclusive and Safe Schools"
+              },
+              {
+                "image": "GOAL_4_B.svg",
+                "lex": "lex_goal_4_B.html",
+                "name": "Expand Higher Education Scholarships for Developing Countries"
+              },
+              {
+                "image": "GOAL_4_C.svg",
+                "lex": "lex_goal_4_C.html",
+                "name": "Increase the supply of qualified teachers In Developing Countries"
+              }
+            ]
+          },
+          {
+            "name": "Gender Equality",
+            "entry": [
+              {
+                "image": "GOAL_5.svg",
+                "lex": "lex_goal_5.html",
+                "name": "Gender Equality"
+              },
+              {
+                "image": "GOAL_5_1.svg",
+                "lex": "lex_goal_5_1.html",
+                "name": "End Discrimination Against Women and Girls"
+              },
+              {
+                "image": "GOAL_5_2.svg",
+                "lex": "lex_goal_5_2.html",
+                "name": "End All Violence Against and Exploitation of Women and Girls"
+              },
+              {
+                "image": "GOAL_5_3.svg",
+                "lex": "lex_goal_5_3.html",
+                "name": "Eliminate Forced Marriages and Genital Mutilation"
+              },
+              {
+                "image": "GOAL_5_4.svg",
+                "lex": "lex_goal_5_4.html",
+                "name": "Value Unpaid Care and Promote Shared Domestic Responsibilities"
+              },
+              {
+                "image": "GOAL_5_5.svg",
+                "lex": "lex_goal_5_5.html",
+                "name": "Ensure Full Participation in Leadership and Decision-Making"
+              },
+              {
+                "image": "GOAL_5_6.svg",
+                "lex": "lex_goal_5_6.html",
+                "name": "Universal Access to Reproductive Health and Rights"
+              },
+              {
+                "image": "GOAL_5_A.svg",
+                "lex": "lex_goal_5_A.html",
+                "name": "Equal Rights to Economic Resources, Property Ownership and Financial Services"
+              },
+              {
+                "image": "GOAL_5_B.svg",
+                "lex": "lex_goal_5_B.html",
+                "name": "Promote Empowerment of Women through Technology"
+              },
+              {
+                "image": "GOAL_5_C.svg",
+                "lex": "lex_goal_5_C.html",
+                "name": "Adopt and Strengthen Policies and Enforceable Legislation for Gender Equality"
+              }
+            ]
+          },
+          {
+            "name": "Clean Water and Sanitation",
+            "entry": [
+              {
+                "image": "GOAL_6.svg",
+                "lex": "lex_goal_6.html",
+                "name": "Clean Water and Sanitation"
+              },
+              {
+                "image": "GOAL_6_1.svg",
+                "lex": "lex_goal_6_1.html",
+                "name": "Safe and Affordable Drinking Water"
+              },
+              {
+                "image": "GOAL_6_2.svg",
+                "lex": "lex_goal_6_2.html",
+                "name": "End Open Defecation and Provide Access to Sanitation and Hygiene"
+              },
+              {
+                "image": "GOAL_6_3.svg",
+                "lex": "lex_goal_6_3.html",
+                "name": "Improve Water Quality, Wastewater Treatment and Safe Reuse"
+              },
+              {
+                "image": "GOAL_6_4.svg",
+                "lex": "lex_goal_6_4.html",
+                "name": "Increase Water-Use Efficiency and Ensure Freshwater Supplies"
+              },
+              {
+                "image": "GOAL_6_5.svg",
+                "lex": "lex_goal_6_5.html",
+                "name": "Implement Integrated Water Resources Management"
+              },
+              {
+                "image": "GOAL_6_6.svg",
+                "lex": "lex_goal_6_6.html",
+                "name": "Protect and Restore Water-Related Ecosystems"
+              },
+              {
+                "image": "GOAL_6_A.svg",
+                "lex": "lex_goal_6_A.html",
+                "name": "Expand Water and Sanitation Support to Developing Countries"
+              },
+              {
+                "image": "GOAL_6_B.svg",
+                "lex": "lex_goal_6_B.html",
+                "name": "Support Local Engagement in Water and Sanitation Management"
+              }
+            ]
+          },
+          {
+            "name": "Affordable and Clean Energy",
+            "entry": [
+              {
+                "image": "GOAL_7.svg",
+                "lex": "lex_goal_7.html",
+                "name": "Affordable and Clean Energy"
+              },
+              {
+                "image": "GOAL_7_1.svg",
+                "lex": "lex_goal_7_1.html",
+                "name": "Universal Access to Modern Energy"
+              },
+              {
+                "image": "GOAL_7_2.svg",
+                "lex": "lex_goal_7_2.html",
+                "name": "Increase Global Percentage of Renewable Energy"
+              },
+              {
+                "image": "GOAL_7_3.svg",
+                "lex": "lex_goal_7_3.html",
+                "name": "Double the Improvement in Energy Efficiency"
+              },
+              {
+                "image": "GOAL_7_A.svg",
+                "lex": "lex_goal_7_A.html",
+                "name": "Promote Access to Research, Technology and Investments in Clean Energy"
+              },
+              {
+                "image": "GOAL_7_B.svg",
+                "lex": "lex_goal_7_B.html",
+                "name": "Expand and Upgrade Energy Services for Developing Countries"
+              }
+            ]
+          },
+          {
+            "name": "Decent Work and Economic Growth",
+            "entry": [
+              {
+                "image": "GOAL_8.svg",
+                "lex": "lex_goal_8.html",
+                "name": "Decent Work and Economic Growth"
+              },
+              {
+                "image": "GOAL_8_1.svg",
+                "lex": "lex_goal_8_1.html",
+                "name": "Sustainable Economic Growth"
+              },
+              {
+                "image": "GOAL_8_2.svg",
+                "lex": "lex_goal_8_2.html",
+                "name": "Diversify, Innovate and Upgrade for Economic Productivity"
+              },
+              {
+                "image": "GOAL_8_3.svg",
+                "lex": "lex_goal_8_3.html",
+                "name": "Promote Policies to Support Job Creation and Growing Enterprises"
+              },
+              {
+                "image": "GOAL_8_4.svg",
+                "lex": "lex_goal_8_4.html",
+                "name": "Improve Resource Efficiency in Consumption and Production"
+              },
+              {
+                "image": "GOAL_8_5.svg",
+                "lex": "lex_goal_8_5.html",
+                "name": "Full Employment and Decent Work with Equal Pay"
+              },
+              {
+                "image": "GOAL_8_6.svg",
+                "lex": "lex_goal_8_6.html",
+                "name": "Promote Youth Employment, Education and Training"
+              },
+              {
+                "image": "GOAL_8_7.svg",
+                "lex": "lex_goal_8_7.html",
+                "name": "End Modern Slavery, Trafficking and Child Labour"
+              },
+              {
+                "image": "GOAL_8_8.svg",
+                "lex": "lex_goal_8_8.html",
+                "name": "Protect Labour Rights and Promote Safe Working Environments"
+              },
+              {
+                "image": "GOAL_8_9.svg",
+                "lex": "lex_goal_8_9.html",
+                "name": "Promote Beneficial and Sustainable Tourism"
+              },
+              {
+                "image": "GOAL_8_10.svg",
+                "lex": "lex_goal_8_10.html",
+                "name": "Universal Access to Banking, Insurance and Financial Services"
+              },
+              {
+                "image": "GOAL_8_A.svg",
+                "lex": "lex_goal_8_B.html",
+                "name": "Increase Aid for Trade Support"
+              },
+              {
+                "image": "GOAL_8_B.svg",
+                "lex": "lex_goal_8_A.html",
+                "name": "Develop a Global Youth Employment Strategy"
+              }
+            ]
+          },
+          {
+            "name": "Industry, Innovation and Infrastructure",
+            "entry": [
+              {
+                "image": "GOAL_9.svg",
+                "lex": "lex_goal_9.html",
+                "name": "Industry, Innovation and Infrastructure"
+              },
+              {
+                "image": "GOAL_9_1.svg",
+                "lex": "lex_goal_9_1.html",
+                "name": "Develop Sustainable, Resilient and Inclusive Infrastructures"
+              },
+              {
+                "image": "GOAL_9_2.svg",
+                "lex": "lex_goal_9_2.html",
+                "name": "Promote Inclusive and Sustainable Industrialization"
+              },
+              {
+                "image": "GOAL_9_3.svg",
+                "lex": "lex_goal_9_3.html",
+                "name": "Increase Access to Financial Services and Markets"
+              },
+              {
+                "image": "GOAL_9_4.svg",
+                "lex": "lex_goal_9_4.html",
+                "name": "Upgrade All Industries and Infrastructures for Sustainability"
+              },
+              {
+                "image": "GOAL_9_5.svg",
+                "lex": "lex_goal_9_5.html",
+                "name": "Enhance Research and Upgrade Industrial Technologies"
+              },
+              {
+                "image": "GOAL_9_A.svg",
+                "lex": "lex_goal_9_A.html",
+                "name": "Facilitate Sustainable Infrastructure Development for Developing Countries"
+              },
+              {
+                "image": "GOAL_9_B.svg",
+                "lex": "lex_goal_9_B.html",
+                "name": "Support Domestic Technology Development and Industrial Diversification"
+              },
+              {
+                "image": "GOAL_9_C.svg",
+                "lex": "lex_goal_9_C.html",
+                "name": "Universal Access to Information and Communications Technology"
+              }
+            ]
+          },
+          {
+            "name": "Reduced Inequalities",
+            "entry": [
+              {
+                "image": "GOAL_10.svg",
+                "lex": "lex_goal_10.html",
+                "name": "Reduced Inequalities"
+              },
+              {
+                "image": "GOAL_10_1.svg",
+                "lex": "lex_goal_10_1.html",
+                "name": "Reduce Income Inequalities"
+              },
+              {
+                "image": "GOAL_10_2.svg",
+                "lex": "lex_goal_10_2.html",
+                "name": "Promote Universal Social, Economic and Political Inclusion"
+              },
+              {
+                "image": "GOAL_10_3.svg",
+                "lex": "lex_goal_10_3.html",
+                "name": "Ensure Equal Opportunities and End Discrimination"
+              },
+              {
+                "image": "GOAL_10_4.svg",
+                "lex": "lex_goal_10_4.html",
+                "name": "Adopt Fiscal and Social Policies that Promotes Equality"
+              },
+              {
+                "image": "GOAL_10_5.svg",
+                "lex": "lex_goal_10_5.html",
+                "name": "Improved Regulation of Global Financial Markets and Institutions"
+              },
+              {
+                "image": "GOAL_10_6.svg",
+                "lex": "lex_goal_10_6.html",
+                "name": "Enhanced Representation for Developing Countries in Financial Institutions"
+              },
+              {
+                "image": "GOAL_10_7.svg",
+                "lex": "lex_goal_10_7.html",
+                "name": "Responsible and Well-Managed Migration Policies"
+              },
+              {
+                "image": "GOAL_10_A.svg",
+                "lex": "lex_goal_10_A.html",
+                "name": "Special and Differential Treatment for Developing Countries"
+              },
+              {
+                "image": "GOAL_10_B.svg",
+                "lex": "lex_goal_10_B.html",
+                "name": "Encourage Development Assistance and Investment in Least Developed Countries"
+              },
+              {
+                "image": "GOAL_10_C.svg",
+                "lex": "lex_goal_10_C.html",
+                "name": "Reduce Transaction Costs for Migrant Remittances"
+              }
+            ]
+          },
+          {
+            "name": "Sustainable Cities and Communities",
+            "entry": [
+              {
+                "image": "GOAL_11.svg",
+                "lex": "lex_goal_11.html",
+                "name": "Sustainable Cities and Communities"
+              },
+              {
+                "image": "GOAL_11_1.svg",
+                "lex": "lex_goal_11_1.html",
+                "name": "Safe and Affordable Housing"
+              },
+              {
+                "image": "GOAL_11_2.svg",
+                "lex": "lex_goal_11_2.html",
+                "name": "Affordable and Sustainable Transport Systems"
+              },
+              {
+                "image": "GOAL_11_3.svg",
+                "lex": "lex_goal_11_3.html",
+                "name": "Inclusive and Sustainable Urbanization"
+              },
+              {
+                "image": "GOAL_11_4.svg",
+                "lex": "lex_goal_11_4.html",
+                "name": "Protect the World’s Cultural and Natural Heritage"
+              },
+              {
+                "image": "GOAL_11_5.svg",
+                "lex": "lex_goal_11_5.html",
+                "name": "Reduce the Adverse Effects of Natural Disasters"
+              },
+              {
+                "image": "GOAL_11_6.svg",
+                "lex": "lex_goal_11_6.html",
+                "name": "Reduce the Environmental Impact of Cities"
+              },
+              {
+                "image": "GOAL_11_7.svg",
+                "lex": "lex_goal_11_7.html",
+                "name": "Provide Access to Safe and Inclusive Green and Public Spaces"
+              },
+              {
+                "image": "GOAL_11_A.svg",
+                "lex": "lex_goal_11_A.html",
+                "name": "Strong National and Regional Development Planning"
+              },
+              {
+                "image": "GOAL_11_B.svg",
+                "lex": "lex_goal_11_B.html",
+                "name": "Implement Policies for Inclusion, Resource Efficiency and Disaster Risk Reduction"
+              },
+              {
+                "image": "GOAL_11_C.svg",
+                "lex": "lex_goal_11_C.html",
+                "name": "Support Least Developed Countries in Sustainable and Resilient Building"
+              }
+            ]
+          },
+          {
+            "name": "Responsible Consumption and Production",
+            "entry": [
+              {
+                "image": "GOAL_12.svg",
+                "lex": "lex_goal_12.html",
+                "name": "Responsible Consumption and Production"
+              },
+              {
+                "image": "GOAL_12_1.svg",
+                "lex": "lex_goal_12_1.html",
+                "name": "Implement the 10-Year Sustainable Consumption and Production Framework"
+              },
+              {
+                "image": "GOAL_12_2.svg",
+                "lex": "lex_goal_12_2.html",
+                "name": "Sustainable Management and Use of Natural Resources"
+              },
+              {
+                "image": "GOAL_12_3.svg",
+                "lex": "lex_goal_12_3.html",
+                "name": "Halve Global Per Capita Food Waste"
+              },
+              {
+                "image": "GOAL_12_4.svg",
+                "lex": "lex_goal_12_4.html",
+                "name": "Responsible Management of Chemicals and Waste"
+              },
+              {
+                "image": "GOAL_12_5.svg",
+                "lex": "lex_goal_12_5.html",
+                "name": "Substantially Reduce Waste Generation"
+              },
+              {
+                "image": "GOAL_12_6.svg",
+                "lex": "lex_goal_12_6.html",
+                "name": "Encourage Companies to Adopt Sustainable Practices and Sustainability Reporting"
+              },
+              {
+                "image": "GOAL_12_7.svg",
+                "lex": "lex_goal_12_7.html",
+                "name": "Promote Sustainable Public Procurement Practices"
+              },
+              {
+                "image": "GOAL_12_8.svg",
+                "lex": "lex_goal_12_8.html",
+                "name": "Promote Universal Understanding of Sustainable Lifestyles"
+              },
+              {
+                "image": "GOAL_12_A.svg",
+                "lex": "lex_goal_12_A.html",
+                "name": "Support Developing Countries' Scientific and Technological Capacity for Sustainable Consumption and Production"
+              },
+              {
+                "image": "GOAL_12_B.svg",
+                "lex": "lex_goal_12_B.html",
+                "name": "Develop and Implement Tools to Monitor Sustainable Tourism"
+              },
+              {
+                "image": "GOAL_12_C.svg",
+                "lex": "lex_goal_12_C.html",
+                "name": "Remove Market Distortions that Encourage Wasteful Consumption"
+              }
+            ]
+          },
+          {
+            "name": "Climate Action",
+            "entry": [
+              {
+                "image": "GOAL_13.svg",
+                "lex": "lex_goal_13.html",
+                "name": "Climate Action"
+              },
+              {
+                "image": "GOAL_13_1.svg",
+                "lex": "lex_goal_13_1.html",
+                "name": "Strengthen resilience and Adaptive Capacity to Climate Related Disasters"
+              },
+              {
+                "image": "GOAL_13_2.svg",
+                "lex": "lex_goal_13_2.html",
+                "name": "Integrate Climate Change Measures into Policies and Planning"
+              },
+              {
+                "image": "GOAL_13_3.svg",
+                "lex": "lex_goal_13_3.html",
+                "name": "Build Knowledge and Capacity to Meet Climate Change"
+              },
+              {
+                "image": "GOAL_13_A.svg",
+                "lex": "lex_goal_13_A.html",
+                "name": "Implement the UN Framework Convention on Climate Change"
+              },
+              {
+                "image": "GOAL_13_B.svg",
+                "lex": "lex_goal_13_B.html",
+                "name": "Promote Mechanisms to Raise Capacity for Planning and Management"
+              }
+            ]
+          },
+          {
+            "name": "Life Below Water",
+            "entry": [
+              {
+                "image": "GOAL_14.svg",
+                "lex": "lex_goal_14.html",
+                "name": "Life Below Water"
+              },
+              {
+                "image": "GOAL_14_1.svg",
+                "lex": "lex_goal_14_1.html",
+                "name": "Reduce Marine Pollution"
+              },
+              {
+                "image": "GOAL_14_2.svg",
+                "lex": "lex_goal_14_2.html",
+                "name": "Protect and Restore Ecosystems"
+              },
+              {
+                "image": "GOAL_14_3.svg",
+                "lex": "lex_goal_14_3.html",
+                "name": "Reduce Ocean Acidification"
+              },
+              {
+                "image": "GOAL_14_4.svg",
+                "lex": "lex_goal_14_4.html",
+                "name": "Sustainable Fishing"
+              },
+              {
+                "image": "GOAL_14_5.svg",
+                "lex": "lex_goal_14_5.html",
+                "name": "Conserve Coastal and Marine Areas"
+              },
+              {
+                "image": "GOAL_14_6.svg",
+                "lex": "lex_goal_14_6.html",
+                "name": "End Subsidies Contributing to Overfishing"
+              },
+              {
+                "image": "GOAL_14_7.svg",
+                "lex": "lex_goal_14_7.html",
+                "name": "Increase the Economic Benefits from Sustainable Use of Marine Resources"
+              },
+              {
+                "image": "GOAL_14_A.svg",
+                "lex": "lex_goal_14_A.html",
+                "name": "Increase Scientific Knowledge, Research and Technology for Ocean Health"
+              },
+              {
+                "image": "GOAL_14_B.svg",
+                "lex": "lex_goal_14_B.html",
+                "name": "Support Small Scale Fishers"
+              },
+              {
+                "image": "GOAL_14_C.svg",
+                "lex": "lex_goal_14_C.html",
+                "name": "Implement and Enforce International Sea Law"
+              }
+            ]
+          },
+          {
+            "name": "Life on Land",
+            "entry": [
+              {
+                "image": "GOAL_15.svg",
+                "lex": "lex_goal_15.html",
+                "name": "Life on Land"
+              },
+              {
+                "image": "GOAL_15_1.svg",
+                "lex": "lex_goal_15_1.html",
+                "name": "Conserve and Restore Terrestrial and Freshwater Ecosystems"
+              },
+              {
+                "image": "GOAL_15_2.svg",
+                "lex": "lex_goal_15_2.html",
+                "name": "End Deforestation and Restore Degraded Forests"
+              },
+              {
+                "image": "GOAL_15_3.svg",
+                "lex": "lex_goal_15_3.html",
+                "name": "End Desertification and Restore Degraded Land"
+              },
+              {
+                "image": "GOAL_15_4.svg",
+                "lex": "lex_goal_15_4.html",
+                "name": "Ensure Conservation of Mountain Ecosystems"
+              },
+              {
+                "image": "GOAL_15_5.svg",
+                "lex": "lex_goal_15_5.html",
+                "name": "Protect Biodiversity and Natural Habitats"
+              },
+              {
+                "image": "GOAL_15_6.svg",
+                "lex": "lex_goal_15_6.html",
+                "name": "Promote Access to Genetic Resources and Fair Sharing of the Benefits"
+              },
+              {
+                "image": "GOAL_15_7.svg",
+                "lex": "lex_goal_15_7.html",
+                "name": "Eliminate Poaching and Trafficking of Protected Species"
+              },
+              {
+                "image": "GOAL_15_8.svg",
+                "lex": "lex_goal_15_8.html",
+                "name": "Prevent Invasive Alien Species on Land and in Water Ecosystems"
+              },
+              {
+                "image": "GOAL_15_9.svg",
+                "lex": "lex_goal_15_9.html",
+                "name": "Integrate Ecosystem and Biodiversity in Governmental Planning"
+              },
+              {
+                "image": "GOAL_15_A.svg",
+                "lex": "lex_goal_15_A.html",
+                "name": "Increase Financial Resources to Conserve and Sustainably Use Ecosystem and Biodiversity"
+              },
+              {
+                "image": "GOAL_15_B.svg",
+                "lex": "lex_goal_15_B.html",
+                "name": "Finance and Incentivize Sustainable Forest Management"
+              },
+              {
+                "image": "GOAL_15_C.svg",
+                "lex": "lex_goal_15_C.html",
+                "name": "Combat Global Poaching and Trafficking"
+              }
+            ]
+          },
+          {
+            "name": "Peace, Justice and Strong Institutions",
+            "entry": [
+              {
+                "image": "GOAL_16.svg",
+                "lex": "lex_goal_16.html",
+                "name": "Peace, Justice and Strong Institutions"
+              },
+              {
+                "image": "GOAL_16_1.svg",
+                "lex": "lex_goal_16_1.html",
+                "name": "Reduce Violence Everywhere"
+              },
+              {
+                "image": "GOAL_16_2.svg",
+                "lex": "lex_goal_16_2.html",
+                "name": "Protect Children from Abuse, Exploitation, Trafficking and Violence"
+              },
+              {
+                "image": "GOAL_16_3.svg",
+                "lex": "lex_goal_16_3.html",
+                "name": "Promote the Rule of Law And Ensure Equal Access to Justice"
+              },
+              {
+                "image": "GOAL_16_4.svg",
+                "lex": "lex_goal_16_4.html",
+                "name": "Combat Organized Crime and Illicit Financial and Arms Flows"
+              },
+              {
+                "image": "GOAL_16_5.svg",
+                "lex": "lex_goal_16_5.html",
+                "name": "Substantially Reduce Corruption and Bribery"
+              },
+              {
+                "image": "GOAL_16_6.svg",
+                "lex": "lex_goal_16_6.html",
+                "name": "Develop Effective, Accountable and Transparent Institutions"
+              },
+              {
+                "image": "GOAL_16_7.svg",
+                "lex": "lex_goal_16_7.html",
+                "name": "Ensure Responsive, Inclusive and Representative Decision-Making"
+              },
+              {
+                "image": "GOAL_16_8.svg",
+                "lex": "lex_goal_16_8.html",
+                "name": "Strengthen the Participation in Global Governance"
+              },
+              {
+                "image": "GOAL_16_9.svg",
+                "lex": "lex_goal_16_9.html",
+                "name": "Provide Universal Legal Identity"
+              },
+              {
+                "image": "GOAL_16_10.svg",
+                "lex": "lex_goal_16_10.html",
+                "name": "Ensure Public Access to Information and Protect Fundamental Freedoms"
+              },
+              {
+                "image": "GOAL_16_A.svg",
+                "lex": "lex_goal_16_A.html",
+                "name": "Strengthen National Institutions to Prevent Violence and Combat Terrorism and Crime"
+              },
+              {
+                "image": "GOAL_16_B.svg",
+                "lex": "lex_goal_16_B.html",
+                "name": "Promote and Enforce Non-Discriminatory Laws and Policies"
+              }
+            ]
+          },
+          {
+            "name": "Partnerships for the Goals",
+            "entry": [
+              {
+                "image": "GOAL_17.svg",
+                "lex": "lex_goal_17.html",
+                "name": "Partnerships for the Goals"
+              },
+              {
+                "image": "GOAL_17_1.svg",
+                "lex": "lex_goal_17_1.html",
+                "name": "Mobilize Resources to Improve Domestic Revenue Collection"
+              },
+              {
+                "image": "GOAL_17_2.svg",
+                "lex": "lex_goal_17_2.html",
+                "name": "Implement All Development Assistance Commitments"
+              },
+              {
+                "image": "GOAL_17_3.svg",
+                "lex": "lex_goal_17_3.html",
+                "name": "Mobilize Financial Resources for Developing Countries"
+              },
+              {
+                "image": "GOAL_17_4.svg",
+                "lex": "lex_goal_17_4.html",
+                "name": "Assist Developing Countries in Attaining Debt Sustainability"
+              },
+              {
+                "image": "GOAL_17_5.svg",
+                "lex": "lex_goal_17_5.html",
+                "name": "Invest in Least Developed Countries"
+              },
+              {
+                "image": "GOAL_17_6.svg",
+                "lex": "lex_goal_17_6.html",
+                "name": "Knowledge Sharing and Cooperation for Access to Science, Technology and Innovation"
+              },
+              {
+                "image": "GOAL_17_7.svg",
+                "lex": "lex_goal_17_7.html",
+                "name": "Promote Sustainable Technologies to Developing Countries"
+              },
+              {
+                "image": "GOAL_17_8.svg",
+                "lex": "lex_goal_17_8.html",
+                "name": "Strengthen the Science, Technology and Innovation Capacity for Least Developed Countries"
+              },
+              {
+                "image": "GOAL_17_9.svg",
+                "lex": "lex_goal_17_9.html",
+                "name": "Enhance SDG Capacity in Developing Countries"
+              },
+              {
+                "image": "GOAL_17_10.svg",
+                "lex": "lex_goal_17_10.html",
+                "name": "Promote a Universal Trading System under the WTO"
+              },
+              {
+                "image": "GOAL_17_11.svg",
+                "lex": "lex_goal_17_11.html",
+                "name": "Increase the Exports of Developing Countries"
+              },
+              {
+                "image": "GOAL_17_12.svg",
+                "lex": "lex_goal_17_12.html",
+                "name": "Remove Trade Barriers for Least Developed Countries"
+              },
+              {
+                "image": "GOAL_17_13.svg",
+                "lex": "lex_goal_17_13.html",
+                "name": "Enhance Global Macroeconomic Stability"
+              },
+              {
+                "image": "GOAL_17_14.svg",
+                "lex": "lex_goal_17_14.html",
+                "name": "Enhance Policy Coherence for Sustainable Development"
+              },
+              {
+                "image": "GOAL_17_15.svg",
+                "lex": "lex_goal_17_15.html",
+                "name": "Respect National Leadership to Implement Policies for the Sustainable Development Goals"
+              },
+              {
+                "image": "GOAL_17_16.svg",
+                "lex": "lex_goal_17_16.html",
+                "name": "Enhance the Global Partnership for Sustainable Development"
+              },
+              {
+                "image": "GOAL_17_17.svg",
+                "lex": "lex_goal_17_17.html",
+                "name": "Encourage Effective Partnerships"
+              },
+              {
+                "image": "GOAL_17_18.svg",
+                "lex": "lex_goal_17_18.html",
+                "name": "Enhance Availability of Reliable Data"
+              },
+              {
+                "image": "GOAL_17_19.svg",
+                "lex": "lex_goal_17_19.html",
+                "name": "Further Develop Measurements of Progress"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
