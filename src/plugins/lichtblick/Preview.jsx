@@ -8,7 +8,7 @@ const lichtblickPlugin = {
                 justifyCenter
                 alignCenter
                 style={{
-                    minHeight: 800,
+                    minHeight: 500,
                     backgroundColor: "rgba(240, 240, 240)",
                 }}>
                 <h1>Lichtblick</h1>
