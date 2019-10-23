@@ -31,7 +31,7 @@ const Lichtblick = ({ focused, state }) => {
     // page to iframe https://robertnyman.com/html5/postMessage/postMessage.html
     // `/lichtblick/index.html?src=${encodeURI(videoUrl)}&id=${uuid}` 
     // `http://localhost:3060/index.html?src=${encodeURI(videoUrl)}&id=${uuid}`
-    const src = `/lichtblick/index.html?src=${encodeURI(videoUrl)}&id=${uuid}` 
+    const src = `http://localhost:3060/index.html?src=${encodeURI(videoUrl)}&id=${uuid}` 
     
     const [lichtblickState, setState] = useState({
         data: {},
@@ -64,6 +64,12 @@ const Lichtblick = ({ focused, state }) => {
             if(e.origin === src){
                 if (e.data.action && e.data.action === 'resize') {
                     lichtblickFrame.style.height = e.data.height
+                } else if (e.data.action && e.data.action === 'getState') {
+                    const iframeContent = document.getElementById(uuid).contentWindow
+                    iframeContent.postMessage({
+                        action: 'init',
+                        data: lichtblickState
+                    }, '*')
                 } else {
                     setState({
                         ...lichtblickState,
