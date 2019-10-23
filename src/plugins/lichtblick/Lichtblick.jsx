@@ -14,7 +14,7 @@ const Lichtblick = ({ focused, state }) => {
     }, [])
 
     const { store, dispatch } = useContext(LessonContext)
-    let videoUrl = 'https://www10-fms.hpi.uni-potsdam.de/vod/media/SCHUL-CLOUD/explainer2018/hd/video.mp4'
+    let videoUrl = '/demo_content/video.mp4'
     let lichtblickFrame
     // testmovie: https://www10-fms.hpi.uni-potsdam.de/vod/media/SCHUL-CLOUD/explainer2018/hd/video.mp4
     // http://pbojinov.github.io/iframe-communication/iframe.html
@@ -22,7 +22,7 @@ const Lichtblick = ({ focused, state }) => {
     // page to iframe https://robertnyman.com/html5/postMessage/postMessage.html
         lichtblickFrame = (
             <iframe
-                src={'https://nwdl.eu/lichtblick.upload/dist/?src='+ encodeURI(videoUrl)}
+                src={'/lichtblick/index.html?src='+ encodeURI(videoUrl)}
                 allowFullScreen={true}
                 style={{
                     width: "100%",
