@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect} from "react"
+import React, {useCallback, useEffect, useState} from "react"
 import styled from "styled-components"
 import {
     Editor as Edtr,
@@ -87,6 +87,8 @@ export const Editor = (props) => {
     const onChange = ({changed, getDocument}) => {
         props.dispatchChange(getDocument())
     }
+
+    const [initialState] = useState(docValue)
     return (
         <EditorWrapper editing={true}>
             <Edtr
@@ -95,7 +97,7 @@ export const Editor = (props) => {
                 defaultPlugin={"text"}
                 editable={props.editing}
                 omitDragDropContext
-                initialState={docValue}
+                initialState={initialState}
                 onChange={onChange}>
                     {children}
             </Edtr>
@@ -115,7 +117,10 @@ function PlainEditorContainerInner(props) {
     )
     
     useEffect(() => {
+        
         if(props.docValue && props.docValue.state){
+            console.log('I am updated')
+            console.log(props.docValue)
             dispatch((scope) => ({
                 type: 'SetPartialState',
                 scope,
