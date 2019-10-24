@@ -2,15 +2,9 @@ import React, { useEffect, useState } from "react"
 
 import { serverApi, editorApi } from "~/utils/api"
 import { editor } from "~/utils/socket"
-import config from "~/config"
-import { lessonFakeData } from "~/utils/fake"
-import { setCookie } from "~/utils/cookie"
-import { useInterval } from "~/utils/hooks"
 import { loadEditorData, saveEditorData } from "~/utils/cache"
 import { buildDiff } from "~/utils/diff"
-import reject from "ramda/es/reject"
 import { createSection } from "~/actions/lesson"
-import { create } from "domain"
 
 export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
     async function fetchData() {
