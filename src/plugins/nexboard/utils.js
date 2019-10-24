@@ -1,16 +1,16 @@
-import { courseApi } from "~/utils/api"
+import { serverApi } from "~/utils/api"
 
 export const createBoard = async (lessonId, title) => {
-    let nexboardAttachment = await courseApi.get(
+    let nexboardAttachment = await serverApi.get(
         `/editor/attachments?key=nexboard&lesson=${lessonId}`,
     )
 
     if (!nexboardAttachment.length) {
-        const nexboardProject = await courseApi.post(`/nexboard/projects`, {
+        const nexboardProject = await serverApi.post(`/nexboard/projects`, {
             // title,
         })
 
-        nexboardAttachment = await courseApi.post("/editor/attachments", {
+        nexboardAttachment = await serverApi.post("/editor/attachments", {
             key: "nexboard",
             value: nexboardProject.id,
             lesson: lessonId,
@@ -19,7 +19,7 @@ export const createBoard = async (lessonId, title) => {
         nexboardAttachment = nexboardAttachment[0]
     }
 
-    const board = await courseApi.post(`/nexboard/boards`, {
+    const board = await serverApi.post(`/nexboard/boards`, {
         title,
         projectId: nexboardAttachment.value,
         // description,
@@ -28,5 +28,5 @@ export const createBoard = async (lessonId, title) => {
 }
 
 export const getBoard = id => {
-    return courseApi.get(`/nexboard/boards/${id}`)
+    return serverApi.get(`/nexboard/boards/${id}`)
 }

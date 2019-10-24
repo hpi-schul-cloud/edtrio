@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 
-import { courseApi, editorApi } from "~/utils/api"
+import { serverApi, editorApi } from "~/utils/api"
 import { editor } from "~/utils/socket"
 import config from "~/config"
 import { lessonFakeData } from "~/utils/fake"
@@ -15,7 +15,7 @@ import { create } from "domain"
 export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
     async function fetchData() {
         try {
-            const user = await courseApi.get("/me")
+            const user = await serverApi.get("/me")
             dispatchUserAction({ type: "BOOTSTRAP_USER", payload: user })
         } catch (err) {
             console.warn("Could not fetch user data")
@@ -82,7 +82,7 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
     async function fetchCourse() {
         try {
             // const courseId = window.location.pathname.split("/")[2]
-            const course = await courseApi.get(`/courses/${courseId}`)
+            const course = await serverApi.get(`/courses/${courseId}`)
             dispatch({ type: "SET_COURSE", payload: course })
         } catch (err) {}
     }

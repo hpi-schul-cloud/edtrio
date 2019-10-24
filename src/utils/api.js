@@ -194,5 +194,5 @@ class Api {
 
 export default Api
 
-export const courseApi = new Api( COURSE_API_URL || "http://localhost:3030")
+export const serverApi = new Api( COURSE_API_URL || "http://localhost:3030")
 export const editorApi = new Api( EDITOR_API_URL || "http://localhost:4001")
