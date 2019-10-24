@@ -2,7 +2,7 @@ import uuid from "uuid/v4"
 
 export const lessonFakeData = {
     _id: "5d6010ab2e10bd00131e2e71",
-    title: "vhkodft22",
+    title: "Nur ein Test",
     courseId: "5d513167807ca90013ebcd22",
     note: "",
     sections: [
