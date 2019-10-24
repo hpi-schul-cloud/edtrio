@@ -1,5 +1,5 @@
 export function saveEditorData(data, lessonId) {
-    console.log(data)
+    
     localStorage.setItem("EDITOR_DATA-" + lessonId, JSON.stringify(data))
 }
 

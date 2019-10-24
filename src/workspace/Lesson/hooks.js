@@ -88,9 +88,9 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
     }
 
     async function registerHandler(){
-        console.log('handler registration')
+        
         const dispatchLessonUpdate = (data) => {
-            console.log(data)
+            
             dispatch({
                 type: "LESSON_UPDATED",
                 payload: data

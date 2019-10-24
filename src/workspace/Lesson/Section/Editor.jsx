@@ -119,8 +119,8 @@ function PlainEditorContainerInner(props) {
     useEffect(() => {
         
         if(props.docValue && props.docValue.state){
-            console.log('I am updated')
-            console.log(props.docValue)
+            
+            
             dispatch((scope) => ({
                 type: 'SetPartialState',
                 scope,

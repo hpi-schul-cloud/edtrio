@@ -17,8 +17,8 @@ class Socket {
 		this.connected = false
 
 		this.socket.on('connect', () => {
-			console.log(EDITOR_SOCKET_URL)
-			console.log('Socket is connected: ' + this.socket.connected) // true
+			
+			
 			this.authorization(authorization)
 			this.connected = this.socket.connected
 		})
@@ -33,8 +33,8 @@ class Socket {
 		 })
 
 		this.socket.on('error', (error) => {
-			console.log("Socket error")
-			console.log(error)
+			
+			
 			/* dispatch({
 				type: 'ERROR',
 				payload: 'Die Verbindung zum Server konnte nicht aufrecht erhalten werden'
@@ -45,13 +45,13 @@ class Socket {
 
 	async authorization(token){
 		try {
-			console.log('start authorization')
+			
 			await this.emit('authorization', {
 				token,
 			})
-			console.log('is authoriztated')
+			
 		} catch (err) {
-			console.log('authentication failed', err)
+			
 			/* dispatch({
 				type: 'ERROR',
 				payload: 'Die Authentifizierung ist fehlgeschlagen. Bitte melde dich an'
