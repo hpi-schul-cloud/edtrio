@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 
-import api from "~/utils/api"
+import { editor } from "~/utils/socket"
 
 import Action from "~/components/Action"
 import Flex from "~/components/Flex"
@@ -34,13 +34,16 @@ const Crumb = ({ to, caption }) => {
 
 
 const BreadCrumbs = ({ store, dispatch }) => {
-    const courseId = window.location.pathname.split("/")[2]
+    const {
+        lesson: { _id: lessonId }, 
+        course,
+    } = store
     const [crumbData, setCrumbData] = useState({
         crumbs: [
             { caption: "Meine Kurse", to: "/courses" },
             {
                 caption: store.course.name || "Kurs",
-                to: `/courses/${courseId}`,
+                to: `/courses/${course._id}`,
             },
         ],
     })
