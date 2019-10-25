@@ -11,15 +11,17 @@ const StyledBack = styled(Flex)`
 `
 
 const Back = () => {
+    const currentUrl = window.location.href
+    const currentBaseURL = (/^((https|http):\/\/[\w\d:.-]+)/.exec(currentUrl) || [])[0]
+    const regexResult = /courses\/([a-f0-9]{24})\/topics\/([a-f0-9]{24})/.exec(currentUrl)
+    const jumpUrl = `${currentBaseURL}/courses/${regexResult[1]}` || 'https://schul-cloud.org'
+
     return (
         <StyledBack
             alignCenter
             justifyCenter
             onClick={() => {
-                window.location.href = window.location.href.replace(
-                    "?edtr=true",
-                    "",
-                )
+                window.location.href = jumpUrl
             }}>
             <img
                 src={require("~/assets/arrow-back.svg")}
