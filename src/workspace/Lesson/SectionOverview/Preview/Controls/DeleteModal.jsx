@@ -32,7 +32,8 @@ function DeleteModal({ confirmDelete, renderIcon, sectionTitle }) {
     return (
         <PortalWithState closeOnOutsideClick closeOnEsc>
             {({ openPortal, closePortal, isOpen, portal }) => (
-                <React.Fragment>
+               // <React.Fragment>
+               <div>
                     {renderIcon(openPortal)}
                     {portal(
                         <Wrapper>
@@ -58,7 +59,8 @@ function DeleteModal({ confirmDelete, renderIcon, sectionTitle }) {
                             </Content>
                         </Wrapper>,
                     )}
-                </React.Fragment>
+                </div>
+               // </React.Fragment>
             )}
         </PortalWithState>
     )

@@ -7,7 +7,8 @@ export const homeworkState = object({
     id: string(),
     title: string('Aufgabe'),
 	description: string(),
-	selected: number(0),	// todo map to id
+	selected: number(0),	// todo map to id ?
+	link: string(),
 })
 
 const homeworkPlugin = {

@@ -85,7 +85,8 @@ const SectionOverview = ({ store, dispatch }) => {
     }
 
     return (
-        <React.Fragment>
+        // <React.Fragment>
+        <div>
             <Wrapper expanded={expanded} editing={store.editing}>
                 <Previews editing={store.editing} expanded={expanded}>
                     {sections
@@ -114,7 +115,8 @@ const SectionOverview = ({ store, dispatch }) => {
                 <SidebarControls store={store} dispatch={dispatch} />
             </Wrapper>
             <Settings />
-        </React.Fragment>
+        </div>
+        // </React.Fragment>
     )
 }
 

@@ -1,4 +1,6 @@
 import React from "react"
+import { VueWrapper  } from 'vuera'
+import CustomButton from 'sc-component-lib'
 
 const error = (err = '') => {
 	return <div>  
@@ -7,9 +9,14 @@ const error = (err = '') => {
 }
 
 const edit = (array) => {
-	return <div><ul>
-		{array.map(h => <li key={h.name}> {h.name}></li>)}
-	</ul></div>
+	return <div>
+		<VueWrapper
+			component={CustomButton}
+		></VueWrapper>
+		<ul>
+			{array.map(h => <li key={h.name}> {h.name}></li>)}
+		</ul>
+	</div>
 }
 
 const show = (element = {}) => {

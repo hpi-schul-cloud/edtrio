@@ -1,7 +1,7 @@
 {
     "private": true,
     "name": "edtrio",
-    "version": "0.1.0",
+    "version": "0.12.0",
     "main": "dist/index.js",
     "homepage": "http://schul-cloud.github.io/edtrio",
     "scripts": {
@@ -49,10 +49,15 @@
         "react-dnd-touch-backend": "^9.4.0",
         "react-dom": "^16.10.1",
         "react-portal": "^4.2.0",
+        "sc-component-lib": "file:../sc-component-lib-dummy",
         "shortid": "^2.2.14",
         "socket.io-client": "^2.2.0",
         "styled-components": "^4.4.0",
-        "uuid": "^3.3.3"
+        "uuid": "^3.3.3",
+        "vue": "^2.6.10",
+        "vue-hot-reload-api": "^2.3.4",
+        "vue-multiselect": "^2.1.6",
+        "vuera": "^0.2.6"
     },
     "devDependencies": {
         "@babel/core": "^7.6.2",
@@ -62,6 +67,7 @@
         "@storybook/addon-knobs": "^5.2.1",
         "@storybook/addon-storysource": "^5.2.1",
         "@storybook/react": "^5.2.1",
+        "@vue/component-compiler-utils": "^3.0.0",
         "ava": "^2.4.0",
         "babel-eslint": "^10.0.2",
         "babel-loader": "^8.0.6",
@@ -88,7 +94,9 @@
         "parcel-plugin-bundle-visualiser": "^1.2.0",
         "parcel-plugin-url-loader": "^1.3.1",
         "prettier": "^1.18.2",
-        "react-hot-loader": "^4.12.11"
+        "react-hot-loader": "^4.12.11",
+        "sass": "^1.23.0",
+        "vue-template-compiler": "^2.6.10"
     },
     "lint-staged": {
         "linters": {
@@ -123,26 +131,16 @@
         "not ie <= 11",
         "not op_mini all"
     ],
-    "author": {
-        "name": "Florian Wirtz",
-        "email": "florian.wirtz@hpi-alumni.de",
-        "url": "https://github.com/FWirtz"
-    },
     "contributors": [
         {
-            "name": "Paul Arndt",
-            "email": "paul.arndt@student.hpi.de",
-            "url": "https://github.com/Atyanar"
+            "name": "Cedric Evers",
+            "email": "cedric.evers@it-4d.de",
+            "url": "https://github.com/CeEv"
         },
         {
-            "name": "Sebastian Serth",
-            "email": "sebastian.serth@student.hpi.de",
-            "url": "https://github.com/MrSerth"
-        },
-        {
-            "name": "Adrian Jost",
-            "email": "adrian.jost@student.hpi.de",
-            "url": "https://github.com/adrianjost"
+            "name": "Wolfgang Rathgeb",
+            "email": "wolfgang.rathgeb@hpi.de",
+            "url": "https://github.com/CordlessWool"
         },
         {
             "name": "Lukas Gisder-Dubé",

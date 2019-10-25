@@ -70,7 +70,8 @@ const NotesEditor = ({
     }
 
     return (
-        <React.Fragment>
+       // <React.Fragment>
+       <div>
             <Wrapper
                 funky={state.primarySettings.funky.value}
                 extraFunky={state.extendedSettings.extraFunky.value}>
@@ -90,7 +91,8 @@ const NotesEditor = ({
                 <PrimarySettings state={state} />
             </PrimarySettingsWrapper>
             {renderIntoExtendedSettings(<ExtendedSettings state={state} />)}
-        </React.Fragment>
+        </div>
+    //</React.Fragment>
     )
 }
 

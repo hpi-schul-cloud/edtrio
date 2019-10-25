@@ -15,6 +15,9 @@ import Header from "./Header"
 import Section from "./Section"
 import SectionOverview from "./SectionOverview"
 
+import { VueInReact, VueWrapper  } from 'vuera'
+import CustomButton from 'sc-component-lib'
+
 import {
     useBootstrap,
     useChangeListener,
@@ -69,11 +72,10 @@ const Lesson = props => {
 
     return (
         <Wrapper>
-            <Header title={store.lesson.title} dispatch={dispatch} />
+            <Header title={store.lesson.title} dispatch={dispatch} />   
             <Section store={store} dispatch={dispatch} />
             <SectionOverview store={store} dispatch={dispatch} />
         </Wrapper>
     )
 }
-
 export default Lesson
