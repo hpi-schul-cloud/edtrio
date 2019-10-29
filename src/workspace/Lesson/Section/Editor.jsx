@@ -88,7 +88,14 @@ export const Editor = (props) => {
         props.dispatchChange(getDocument())
     }
 
-    const [initialState] = useState(docValue)
+    const [initialState, setInitialState] = useState(docValue)
+
+    useEffect(() => {
+      if(!props.editing){
+        setInitialState(docValue)
+      }
+    }, [props.docValue])
+
     return (
         <EditorWrapper editing={true}>
             <Edtr
