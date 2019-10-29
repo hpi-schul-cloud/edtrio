@@ -55,9 +55,9 @@
         "uuid": "^3.3.3"
     },
     "devDependencies": {
-        "@babel/core": "^7.6.2",
-        "@babel/preset-env": "^7.6.2",
-        "@babel/preset-react": "^7.0.0",
+        "@babel/core": "^7.6.4",
+        "@babel/preset-env": "^7.6.3",
+        "@babel/preset-react": "^7.6.3",
         "@babel/register": "^7.6.2",
         "@storybook/react": "^5.2.5",
         "@storybook/addon-storysource": "^5.2.5",
