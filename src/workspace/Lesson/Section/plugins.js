@@ -16,6 +16,11 @@ import { createImagePlugin } from "@edtr-io/plugin-image"
 import nexboardPlugin from "~/plugins/nexboard"
 import etherpadPlugin from "~/plugins/etherpad"
 import notesPlugin from "~/plugins/notes"
+import LessonContext from "~/Contexts/Lesson"
+
+import { serverApi } from '~/utils/api'
+
+const { store, dispatch } = useContext(LessonContext)
 
 function readFile(file) {
     return new Promise(resolve => {
@@ -23,7 +28,14 @@ function readFile(file) {
         reader.onload = function(e) {
             const dataUrl = e.target.result
             // simulate uploadtime
-            setTimeout(() => resolve({ file, dataUrl }), 1000)
+            // setTimeout(() => resolve({ file, dataUrl }), 1000)
+
+            serverApi.post('/fileStorage/signedUrl', {
+                fileName: file.name,
+                fileType: file.type,
+                parent: store.lesson.folderId,
+
+            })
         }
 
         reader.readAsDataURL(file)
@@ -31,7 +43,9 @@ function readFile(file) {
 }
 
 const mockUploadFileHandler = file => {
+    console.log(file)
     return readFile(file).then(loaded => {
+        console.log(loaded)
         return {
             location: loaded.dataUrl,
             name: loaded.file.name,

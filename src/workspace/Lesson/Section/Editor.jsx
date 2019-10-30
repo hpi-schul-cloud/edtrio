@@ -62,10 +62,6 @@ export const editorTheme = {
 
 export const Editor = (props) => {
 
-
-    
-
-
     const docValue =
         props.docValue && Object.keys(props.docValue).length
             ? props.docValue
