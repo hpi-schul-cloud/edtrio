@@ -2,8 +2,9 @@ import { editor } from "~/utils/socket"
 import { serverApi } from "~/utils/api"
 import uuid from "uuid/v4"
 
-export const createSection = async (lessonId, position) => ({dispatch}) => {
+export const createSection = (position) => async ({dispatch, state}) => {
 	const tempId = uuid()
+	const {lesson} = state
 	dispatch({
 		type: "ADD_SECTION",
 		payload: {
@@ -12,7 +13,7 @@ export const createSection = async (lessonId, position) => ({dispatch}) => {
 		},
 	})
 
-	const section = await editor.emit('create', `lesson/${lessonId}/sections`, {})
+	const section = await editor.emit('create', `lesson/${lesson.id}/sections`, {position})
 
 	dispatch({
 		type: "REPLACE_ADDED_SECTION_ID",
@@ -25,8 +26,8 @@ export const createSection = async (lessonId, position) => ({dispatch}) => {
 
 }
 
-export const removeSection = async (lessonId, sectionId) => () => {
-	const section = await editor.emit('delete', `lesson/${lessonId}/sections`)
+export const removeSection = (sectionId) => async ({state}) => {
+	const section = await editor.emit('delete', `lesson/${state.lesson.id}/sections/${sectionId}`)
 	return section
 }
 
