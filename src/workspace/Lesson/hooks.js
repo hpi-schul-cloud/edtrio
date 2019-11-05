@@ -46,7 +46,7 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
             dispatch({ type: "BOOTSTRAP", payload: lesson })
 
             if (lesson.sections.length === 0) {
-                createSection(dispatch)(lesson.id, 0)
+                dispatch(createSection(lesson.id, 0))
             }
         } catch (err) {
             dispatch({ type: "ERROR" })

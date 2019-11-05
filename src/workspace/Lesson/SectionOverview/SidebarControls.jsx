@@ -94,7 +94,7 @@ const SidebarControls = ({ store, dispatch }) => {
                 <AddWrapper visible={!expanded}>
                     <StyledIcon
                         onClick={() => {
-                            createSection(dispatch)(lesson.id, lesson.sections.length-1)
+                            dispatch(createSection(lesson.id, lesson.sections.length-1))
                             // addNewSection(store, dispatch)
                         }}
                         style={{ width: 40, height: 40 }}
