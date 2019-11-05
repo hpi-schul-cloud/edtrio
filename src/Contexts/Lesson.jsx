@@ -18,7 +18,7 @@ export const initialState = {
     showSectionSettings: false,
 }
 function reducer(state, { type, payload }) {
-    
+
     switch (type) {
         case "SET_EDITING":
             // switch between editing and view mode

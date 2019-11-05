@@ -1,3 +1,5 @@
+import axios from "axios"
+import { useContext } from "react"
 import { rowsPlugin } from "@edtr-io/plugin-rows"
 import { anchorPlugin } from "@edtr-io/plugin-anchor"
 import { blockquotePlugin } from "@edtr-io/plugin-blockquote"
@@ -17,25 +19,38 @@ import nexboardPlugin from "~/plugins/nexboard"
 import etherpadPlugin from "~/plugins/etherpad"
 import notesPlugin from "~/plugins/notes"
 import LessonContext from "~/Contexts/Lesson"
+import { createFolder } from "~/actions/lesson"
 
 import { serverApi } from '~/utils/api'
 
 const { store, dispatch } = useContext(LessonContext)
 
-function readFile(file) {
+async function readFile(file) {
     return new Promise(resolve => {
         const reader = new FileReader()
-        reader.onload = function(e) {
+        reader.onload = async function(e) {
+            console.log(e.target)
             const dataUrl = e.target.result
             // simulate uploadtime
             // setTimeout(() => resolve({ file, dataUrl }), 1000)
 
-            serverApi.post('/fileStorage/signedUrl', {
+            const folderId = store.lesson.folderId || await createFolder(store.lesson.title)({dispatch, store})
+
+            const signedUrl = serverApi.post('/fileStorage/signedUrl', {
                 fileName: file.name,
                 fileType: file.type,
-                parent: store.lesson.folderId,
-
+                parent: folderId,
             })
+
+            axios({
+                method: 'put',
+                url: signedUrl,
+                headers: {
+                    'content-type': file.mimeType
+                },
+                dataUrl
+            })
+
         }
 
         reader.readAsDataURL(file)
