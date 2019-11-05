@@ -1,6 +1,7 @@
 import React, { useReducer } from "react"
 import qs from "qs"
 import { mergeDiff } from "~/utils/diff"
+import { createDispatch, thunkMiddleware } from "~/utils/dispatch"
 
 const q = qs.parse(window.location.search, { ignoreQueryPrefix: true })
 
@@ -347,10 +348,10 @@ function reducer(state, { type, payload }) {
 
 const LessonContext = React.createContext()
 
-export function LessonContextProvider({ children }) {
+export function LessonContextProvider({ children, dispatchMiddleware = [] }) {
     const [state, dispatch] = useReducer(reducer, initialState)
 
-    const value = { store: state, dispatch }
+    const value = { store: state, dispatch: createDispatch([thunkMiddleware], dispatch, state) }
 
     return (
         <LessonContext.Provider value={value}>
