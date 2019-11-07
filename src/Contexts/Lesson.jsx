@@ -18,7 +18,6 @@ export const initialState = {
     showSectionSettings: false,
 }
 function reducer(state, { type, payload }) {
-    
     switch (type) {
         case "SET_EDITING":
             // switch between editing and view mode
@@ -70,7 +69,7 @@ function reducer(state, { type, payload }) {
                         return sectionData
                     }),
                 },
-                activeSectionId: payload.sections[0].id,
+                // activeSectionId: payload.sections[0].id,
             }
 
             return newState

@@ -25,7 +25,6 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
             ) {
                 lesson = cacheData.lesson
             } else {
-
                 lesson = await editor.emit(
                     'get',
                     `course/${courseId}/lessons`,
@@ -34,6 +33,10 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
                 )
 
                 lesson.id = lesson._id
+                if(lesson.sections.length === 0){
+                    const section = await editor.emit('create', `lesson/${id}/sections`, {})
+                    lesson.sections.push(section)
+                }
                 lesson.sections = lesson.sections.map(section => ({
                     ...section,
                     id: section._id,
@@ -44,10 +47,6 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
                 }))
             }
             dispatch({ type: "BOOTSTRAP", payload: lesson })
-
-            if (lesson.sections.length === 0) {
-                createSection(dispatch)(lesson.id, 0)
-            }
         } catch (err) {
             dispatch({ type: "ERROR" })
             dispatch({
@@ -78,7 +77,9 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
             // const courseId = window.location.pathname.split("/")[2]
             const course = await serverApi.get(`/courses/${courseId}`)
             dispatch({ type: "SET_COURSE", payload: course })
-        } catch (err) {}
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     async function registerHandler(){
