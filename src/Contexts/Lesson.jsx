@@ -69,7 +69,7 @@ function reducer(state, { type, payload }) {
                         return sectionData
                     }),
                 },
-                // activeSectionId: payload.sections[0].id,
+                activeSectionId: payload.sections[0].id,
             }
 
             return newState
