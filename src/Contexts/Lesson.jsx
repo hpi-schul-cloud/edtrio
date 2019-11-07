@@ -53,13 +53,15 @@ function reducer(state, { type, payload }) {
             }
 
         case "BOOTSTRAP": {
-            const sections = Array.from(payload.sections);
-            const activatedSection = sections[0] || {};
-            const activeSectionId = activatedSection._id || '';
+            // TODO: please remove
+            const sections = Array.from(payload.sections)
+            const activatedSection = sections[0] || {}
+            const activeSectionId = activatedSection._id || ''
 
             if (sections.length <= 0) {
-                console.log('Error no section exists.');
+                console.log('Error no section exists.')
             }
+            // TODO: end of to removed part
             const newState = {
                 ...state,
                 loading: false,
