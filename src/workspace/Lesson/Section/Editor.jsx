@@ -62,10 +62,6 @@ export const editorTheme = {
 
 export const Editor = (props) => {
 
-
-    
-
-
     const docValue =
         props.docValue && Object.keys(props.docValue).length
             ? props.docValue
@@ -88,7 +84,14 @@ export const Editor = (props) => {
         props.dispatchChange(getDocument())
     }
 
-    const [initialState] = useState(docValue)
+    const [initialState, setInitialState] = useState(docValue)
+
+    useEffect(() => {
+      if(!props.editing){
+        setInitialState(docValue)
+      }
+    }, [props.docValue])
+
     return (
         <EditorWrapper editing={true}>
             <Edtr
