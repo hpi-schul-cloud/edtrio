@@ -52,7 +52,14 @@ function reducer(state, { type, payload }) {
                         : !state.showSectionSettings,
             }
 
-        case "BOOTSTRAP":
+        case "BOOTSTRAP": {
+            const sections = Array.from(payload.sections);
+            const activatedSection = sections[0] || {};
+            const activeSectionId = activatedSection._id || '';
+
+            if (sections.length <= 0) {
+                console.log('Error no section exists.');
+            }
             const newState = {
                 ...state,
                 loading: false,
@@ -60,21 +67,20 @@ function reducer(state, { type, payload }) {
                 lesson: {
                     ...payload,
                     changed: new Set(),
-                    sections: payload.sections.map(section => {
+                    sections: sections.map(section => {
                         const sectionData = { ...section, changed: new Set() }
                         if (section.new) {
                             sectionData.new = undefined
                             sectionData.changed.add("")
                         }
-
-                        return sectionData
+                        return sectionData 
                     }),
                 },
-                activeSectionId: payload.sections[0].id,
+                activeSectionId,
             }
 
             return newState
-
+        }
         case "BOOTSTRAP_FINISH":
             return {
                 ...state,
