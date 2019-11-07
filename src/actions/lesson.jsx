@@ -68,10 +68,10 @@ export const createFolder = (name) => async ({dispatch, store}) => {
 
 }
 
-export const renameFolder = (folderId, name) => async () => {
+export const renameFolder = (name) => async ({state}) => {
 	try {
 		await serverApi.post('/fileStorage/directories/rename', {
-			id: folderId,
+			id: state.lesson.folderId,
 			newName: name,
 		})
 	} catch (err){
