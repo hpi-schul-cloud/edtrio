@@ -35,8 +35,8 @@ import { jwt } from "./jwt"
 axios.defaults.headers.common['Authorization'] = jwt
 axios.defaults.headers.common['Content-Type'] = 'application/json'
 
-const COURSE_API_URL = COURSE_API_URL || ""
-const EDITOR_API_URL = EDITOR_API_URL || ""
+const SERVER_API_URL = config.SERVER_API_URL || ""
+const EDITOR_API_URL = config.EDITOR_API_URL || ""
 
 const bodyRequest = (
     type,
@@ -194,5 +194,5 @@ class Api {
 
 export default Api
 
-export const serverApi = new Api( COURSE_API_URL || "http://localhost:3030")
-export const editorApi = new Api( EDITOR_API_URL || "http://localhost:4001")
+export const serverApi = new Api( SERVER_API_URL)
+export const editorApi = new Api( EDITOR_API_URL)
