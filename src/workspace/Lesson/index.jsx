@@ -48,12 +48,12 @@ const Lesson = props => {
             courseId = _courseId
         }
     } catch (err) {
-        //console.log('invalid url: have to look like /courses/:courseId/topics/:topicId')
+        console.log('invalid url: has to look like /courses/:courseId/topics/:topicId')
     }
 
     useBootstrap(id, courseId, dispatch, dispatchUserAction)
     useChangeListener(store, dispatch)
-    useInterval(() => saveLesson(store, dispatch), 10000)
+    // useInterval(() => saveLesson(store, dispatch), 10000)
 
     useEffect(() => {
         if (store.bootstrapFinished && store.editing === false)

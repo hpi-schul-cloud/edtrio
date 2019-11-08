@@ -16,6 +16,7 @@ import infoIcon from "~/assets/info-white.svg"
 import closeIcon from "~/assets/close-white.svg"
 
 import DeleteModal from "./DeleteModal"
+import { editor } from "~/utils/socket"
 
 const Wrapper = styled(Flex)`
     background-color: #455b6a;
@@ -76,14 +77,14 @@ const Settings = () => {
             payload: activeSectionId,
         })
 
-        setTimeout(() => {
+        try {
+            await editor.emit('remove', `lesson/${store.lesson.id}/sections`, activeSectionId)
             dispatch({
                 type: "DELETE_SECTION",
                 payload: activeSectionId,
             })
-        }, 250)
+        } catch (err) {}
 
-        await api.delete(`/editor/sections/${activeSectionId}`)
     }
 
     if (!store.showSectionSettings) return null
