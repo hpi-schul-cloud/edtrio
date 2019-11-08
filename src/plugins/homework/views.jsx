@@ -1,6 +1,6 @@
 import React from "react"
 import { VueWrapper  } from 'vuera'
-import CustomButton from 'sc-component-lib'
+import BaseSelect from 'sc-component-lib'
 
 const error = (err = '') => {
 	return <div>  
@@ -9,9 +9,16 @@ const error = (err = '') => {
 }
 
 const edit = (array) => {
-	return <div>
+	console.log('BaseSelect', BaseSelect);
+	return <div>		
 		<VueWrapper
-			component={CustomButton}
+			component={BaseSelect} 
+			options={[
+				{value: '1', label: 'a'},
+				{value: '2', label: 'b'},
+				{value: '3', label: 'c'}
+			]}
+			label='abc'
 		></VueWrapper>
 		<ul>
 			{array.map(h => <li key={h.name}> {h.name}></li>)}
