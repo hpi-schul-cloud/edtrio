@@ -17,8 +17,6 @@ class Socket {
 		this.connected = false
 
 		this.socket.on('connect', () => {
-			
-			
 			this.authorization(authorization)
 			this.connected = this.socket.connected
 		})
@@ -45,13 +43,10 @@ class Socket {
 
 	async authorization(token){
 		try {
-			
 			await this.emit('authorization', {
 				token,
 			})
-			
 		} catch (err) {
-			
 			/* dispatch({
 				type: 'ERROR',
 				payload: 'Die Authentifizierung ist fehlgeschlagen. Bitte melde dich an'
@@ -74,6 +69,6 @@ class Socket {
 	}
 }
 
-export const editor = new Socket(EDITOR_SOCKET_URL, jwt)
+export const editorWS = new Socket(EDITOR_SOCKET_URL, jwt)
 
 export default Socket

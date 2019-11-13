@@ -1,6 +1,4 @@
-import {editor} from "~/utils/socket"
-import { useContext } from "react"
-import LessonContext from "~/Contexts/Lesson"
+import {editorWS} from "~/utils/socket"
 import uuid from "uuid/v4"
 
 export const createSection = (dispatch) => async (lessonId, position) => {
@@ -13,7 +11,7 @@ export const createSection = (dispatch) => async (lessonId, position) => {
 		},
 	})
 
-	const section = await editor.emit('create', `lesson/${lessonId}/sections`, {})
+	const section = await editorWS.emit('create', `lesson/${lessonId}/sections`, {})
 
 	dispatch({
 		type: "REPLACE_ADDED_SECTION_ID",
@@ -27,6 +25,6 @@ export const createSection = (dispatch) => async (lessonId, position) => {
 }
 
 export const removeSection = async (lessonId, sectionId) => {
-	const section = await editor.emit('delete', `lesson/${lessonId}/sections`)
+	const section = await editorWS.emit('delete', `lesson/${lessonId}/sections`)
 	return section
 }
