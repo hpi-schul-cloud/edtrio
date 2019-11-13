@@ -88,8 +88,7 @@ const Section = ({ store, dispatch }) => {
             ref={sectionRef}>
             <Flex justifyCenter>
                 <Warning center bold>
-                    +++ Alpha-Testversion +++ ohne Speicherfunktion +++ wir
-                    freuen uns über Feedback 🙂 +++
+                    +++ Beta-Testversion +++ wir freuen uns über Feedback 🙂 +++
                 </Warning>
             </Flex>
             <Wrapper visible={section.visible}>
