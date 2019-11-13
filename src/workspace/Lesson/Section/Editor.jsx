@@ -118,12 +118,9 @@ function PlainEditorContainerInner(props) {
     const [editable, setEditable] = React.useState(
       props.editable === undefined ? true : props.editable
     )
-    
     useEffect(() => {
-        
         if(props.docValue && props.docValue.state){
-            
-            
+
             dispatch((scope) => ({
                 type: 'SetPartialState',
                 scope,
@@ -135,7 +132,7 @@ function PlainEditorContainerInner(props) {
     return (
       <React.Fragment>
         <div style={{ margin: '20px 0' }}>{props.children}</div>
-        <button
+        {/* <button
           onClick={() => {
             dispatch(undo())
           }}
@@ -164,7 +161,7 @@ function PlainEditorContainerInner(props) {
           disabled={!hasPendingChanges}
         >
           Reset
-        </button>
+        </button> */}
       </React.Fragment>
     )
   }
