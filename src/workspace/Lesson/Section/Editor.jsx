@@ -22,19 +22,24 @@ export { default as plugins } from "./plugins"
 
 export const EditorWrapper = styled.div`
     min-height: 50px;
-    font-size: 20px;
+    padding: 0 10px;
+    font-size: 1.3rem;
     line-height: 1.4;
 
+    .fa-4x{
+      font-size: 3rem;
+    }
+
     @media (max-width: 991px) {
-        font-size: 18px;
+        font-size: 1.2rem;
     }
 
     @media (max-width: 768px) {
-        font-size: 18px;
+        font-size: 1.2rem;
     }
 
     @media (max-width: 575px) {
-        font-size: 16px;
+        font-size: 1.1rem;
     }
 `
 
