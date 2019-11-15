@@ -1,6 +1,4 @@
-import {editor} from "~/utils/socket"
-import { useContext } from "react"
-import LessonContext from "~/Contexts/Lesson"
+import {editorWS} from "~/utils/socket"
 import uuid from "uuid/v4"
 
 export const createSection = (position) => async ({dispatch, state}) => {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 
 import { serverApi, editorApi } from "~/utils/api"
-import { editor } from "~/utils/socket"
+import { editorWS } from "~/utils/socket"
 import { loadEditorData, saveEditorData } from "~/utils/cache"
 import { buildDiff } from "~/utils/diff"
 import { createSection } from "~/actions/lesson"
@@ -21,12 +21,11 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
             if (
                 cacheData &&
                 cacheData.hasOwnProperty("lesson") &&
-                (cacheData.savedToBackend === false || editor.connected)
+                (cacheData.savedToBackend === false || editorWS.connected)
             ) {
                 lesson = cacheData.lesson
             } else {
-
-                lesson = await editor.emit(
+                lesson = await editorWS.emit(
                     'get',
                     `course/${courseId}/lessons`,
                     id,
@@ -34,6 +33,10 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
                 )
 
                 lesson.id = lesson._id
+                if(lesson.sections.length === 0){
+                    const section = await editorWS.emit('create', `lesson/${id}/sections`, {})
+                    lesson.sections.push(section)
+                }
                 lesson.sections = lesson.sections.map(section => ({
                     ...section,
                     id: section._id,
@@ -44,10 +47,6 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
                 }))
             }
             dispatch({ type: "BOOTSTRAP", payload: lesson })
-
-            if (lesson.sections.length === 0) {
-                dispatch(createSection(0))
-            }
         } catch (err) {
             dispatch({ type: "ERROR" })
             dispatch({
@@ -78,7 +77,9 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
             // const courseId = window.location.pathname.split("/")[2]
             const course = await serverApi.get(`/courses/${courseId}`)
             dispatch({ type: "SET_COURSE", payload: course })
-        } catch (err) {}
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     async function registerHandler(){
@@ -90,8 +91,8 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
                 payload: data
             })
         }
-        editor.on('course/:courseId/lessons patched', dispatchLessonUpdate)
-        editor.on('course/:courseId/lessons updated', dispatchLessonUpdate)
+        editorWS.on('course/:courseId/lessons patched', dispatchLessonUpdate)
+        editorWS.on('course/:courseId/lessons updated', dispatchLessonUpdate)
 
         const dispatchSectionUpdate = (data) => {
             dispatch({
@@ -100,8 +101,8 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
             })
         }
 
-        editor.on('lesson/:lessonId/sections patched', dispatchSectionUpdate)
-        editor.on('lesson/:lessonId/sections updated', dispatchSectionUpdate)
+        editorWS.on('lesson/:lessonId/sections patched', dispatchSectionUpdate)
+        editorWS.on('lesson/:lessonId/sections updated', dispatchSectionUpdate)
 
 
         const dispatchSectionDiff = (data) => {
@@ -114,7 +115,7 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
             })
         }
 
-        editor.on('lesson/:lessonId/sections/diff patched', dispatchSectionDiff)
+        editorWS.on('lesson/:lessonId/sections/diff patched', dispatchSectionDiff)
     }
 
     useEffect(() => {
@@ -144,7 +145,7 @@ export async function saveLesson(store, dispatch, override) {
             new Promise(async (resolve, reject) => {
                 try{
                     const { lesson: { courseId, id: lessonId } } = store
-                    const message = await editor.emit(
+                    const message = await editorWS.emit(
                         'patch',
                         `course/${courseId}/lessons`,
                         lessonId,
@@ -186,7 +187,7 @@ export async function saveLesson(store, dispatch, override) {
                 new Promise(async (resolve, reject) => {
                     try {
                         const backendResult =
-                            await editor
+                            await editorWS
                                 .emit(
                                     'patch',
                                     `lesson/${store.lesson.id}/sections/diff`,
@@ -220,7 +221,7 @@ export async function saveLesson(store, dispatch, override) {
                 new Promise(async (resolve, reject) => {
                     try {
                         const backendResult =
-                            await editor
+                            await editorWS
                                 .emit(
                                     'patch',
                                     `lesson/${store.lesson.id}/sections`,

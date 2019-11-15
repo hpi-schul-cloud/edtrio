@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 
-import { editor } from "~/utils/socket"
-
 import Action from "~/components/Action"
 import Flex from "~/components/Flex"
 import Input from "~/components/Input"

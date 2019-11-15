@@ -8,7 +8,7 @@ import theme from "~/theme"
 import { getFakeSection } from "~/utils/fake"
 import { createSection } from "~/actions/lesson"
 import Flex from "~/components/Flex"
-import {editor} from "~/utils/socket"
+import {editorWS} from "~/utils/socket"
 
 const Wrapper = styled(Flex)`
     width: 100%;
@@ -39,7 +39,7 @@ async function addNewSection(store, dispatch) {
             tempId,
         },
     })
-    const newSection = await editor.emit('create', `lesson/${lessonId}/sections`)
+    const newSection = await editorWS.emit('create', `lesson/${lessonId}/sections`)
   /* const newSection = await api.post(
         "/editor/sections",
         {

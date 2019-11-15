@@ -19,7 +19,6 @@ export const initialState = {
     showSectionSettings: false,
 }
 function reducer(state, { type, payload }) {
-    
     switch (type) {
         case "SET_EDITING":
             // switch between editing and view mode
@@ -53,7 +52,7 @@ function reducer(state, { type, payload }) {
                         : !state.showSectionSettings,
             }
 
-        case "BOOTSTRAP":
+        case "BOOTSTRAP": {
             const newState = {
                 ...state,
                 loading: false,
@@ -67,7 +66,6 @@ function reducer(state, { type, payload }) {
                             sectionData.new = undefined
                             sectionData.changed.add("")
                         }
-
                         return sectionData
                     }),
                 },
@@ -75,7 +73,7 @@ function reducer(state, { type, payload }) {
             }
 
             return newState
-
+        }
         case "BOOTSTRAP_FINISH":
             return {
                 ...state,

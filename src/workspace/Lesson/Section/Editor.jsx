@@ -22,19 +22,24 @@ export { default as plugins } from "./plugins"
 
 export const EditorWrapper = styled.div`
     min-height: 50px;
-    font-size: 20px;
+    padding: 0 10px;
+    font-size: 1.3rem;
     line-height: 1.4;
 
+    .fa-4x{
+      font-size: 3rem;
+    }
+
     @media (max-width: 991px) {
-        font-size: 18px;
+        font-size: 1.2rem;
     }
 
     @media (max-width: 768px) {
-        font-size: 18px;
+        font-size: 1.2rem;
     }
 
     @media (max-width: 575px) {
-        font-size: 16px;
+        font-size: 1.1rem;
     }
 `
 
@@ -62,10 +67,6 @@ export const editorTheme = {
 
 export const Editor = (props) => {
 
-
-    
-
-
     const docValue =
         props.docValue && Object.keys(props.docValue).length
             ? props.docValue
@@ -88,7 +89,14 @@ export const Editor = (props) => {
         props.dispatchChange(getDocument())
     }
 
-    const [initialState] = useState(docValue)
+    const [initialState, setInitialState] = useState(docValue)
+
+    useEffect(() => {
+      if(!props.editing){
+        setInitialState(docValue)
+      }
+    }, [props.docValue])
+
     return (
         <EditorWrapper editing={true}>
             <Edtr
@@ -115,12 +123,9 @@ function PlainEditorContainerInner(props) {
     const [editable, setEditable] = React.useState(
       props.editable === undefined ? true : props.editable
     )
-    
     useEffect(() => {
-        
         if(props.docValue && props.docValue.state){
-            
-            
+
             dispatch((scope) => ({
                 type: 'SetPartialState',
                 scope,
@@ -132,7 +137,7 @@ function PlainEditorContainerInner(props) {
     return (
       <React.Fragment>
         <div style={{ margin: '20px 0' }}>{props.children}</div>
-        <button
+        {/* <button
           onClick={() => {
             dispatch(undo())
           }}
@@ -161,7 +166,7 @@ function PlainEditorContainerInner(props) {
           disabled={!hasPendingChanges}
         >
           Reset
-        </button>
+        </button> */}
       </React.Fragment>
     )
   }

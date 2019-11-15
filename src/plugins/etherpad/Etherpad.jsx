@@ -20,7 +20,7 @@ const Etherpad = ({ focused, state }) => {
     if (state.id.value) {
         etherpadFrame = (
             <iframe
-                src={`https://etherpad.schul-cloud.org/etherpad/p/${
+                src={`https://etherpad.schul-cloud.org/p/${
                     // TODO maybe make this variable?
                     state.id.value
                 }`}
