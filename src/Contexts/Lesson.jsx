@@ -349,7 +349,7 @@ const LessonContext = React.createContext()
 export function LessonContextProvider({ children, dispatchMiddleware = [] }) {
     const [state, dispatch] = useReducer(reducer, initialState)
 
-    const value = { store: state, dispatch: createDispatch([thunkMiddleware], dispatch, state) }
+    const value = { store: state, dispatch: createDispatch(dispatch, state, thunkMiddleware()) }
 
     return (
         <LessonContext.Provider value={value}>

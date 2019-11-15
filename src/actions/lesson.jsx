@@ -12,7 +12,7 @@ export const createSection = (position) => async ({dispatch, state}) => {
 		},
 	})
 
-	const section = await editor.emit('create', `lesson/${lesson.id}/sections`, {position})
+	const section = await editorWS.emit('create', `lesson/${lesson.id}/sections`, {position})
 
 	dispatch({
 		type: "REPLACE_ADDED_SECTION_ID",
@@ -26,6 +26,6 @@ export const createSection = (position) => async ({dispatch, state}) => {
 }
 
 export const removeSection = (sectionId) => async ({state}) => {
-	const section = await editor.emit('delete', `lesson/${state.lesson.id}/sections/${sectionId}`)
+	const section = await editorWS.emit('delete', `lesson/${state.lesson.id}/sections/${sectionId}`)
 	return section
 }

@@ -1,4 +1,4 @@
-export const createDispatch = (middlewares = [], dispatch, state) => {
+export const createDispatch = (dispatch, state, ...middlewares) => {
 	if(middlewares.length === 0){
 		return dispatch
 	} else {
@@ -17,7 +17,6 @@ export const thunkMiddleware = () => {
 		if(typeof action === 'function'){
 			return action({state, dispatch})
 		}
-
 		return next(action)
 	}
 }
