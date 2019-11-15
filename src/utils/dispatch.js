@@ -1,7 +1,5 @@
-import { type } from "os"
-
 export const createDispatch = (middlewares = [], dispatch, state) => {
-	if(middlewares === 0){
+	if(middlewares.length === 0){
 		return dispatch
 	} else {
 		middlewares.push((() => action => dispatch(action)))
