@@ -4,7 +4,7 @@ import { serverApi, editorApi } from "~/utils/api"
 import { editorWS } from "~/utils/socket"
 import { loadEditorData, saveEditorData } from "~/utils/cache"
 import { buildDiff } from "~/utils/diff"
-import { createSection } from "~/actions/lesson"
+import { createSection } from "~/actions/section"
 
 export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
     async function fetchData() {

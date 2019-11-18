@@ -346,7 +346,7 @@ function reducer(state, { type, payload }) {
 
 const LessonContext = React.createContext()
 
-export function LessonContextProvider({ children, dispatchMiddleware = [] }) {
+export function LessonContextProvider({ children}) {
     const [state, dispatch] = useReducer(reducer, initialState)
 
     const value = { store: state, dispatch: createDispatch(dispatch, state, thunkMiddleware()) }
