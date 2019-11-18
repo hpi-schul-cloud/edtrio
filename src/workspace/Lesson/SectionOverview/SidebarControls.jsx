@@ -6,7 +6,7 @@ import api from "~/utils/api"
 import theme from "~/theme"
 
 import { getFakeSection } from "~/utils/fake"
-import { createSection } from "~/actions/lesson"
+import { createSection } from "~/actions/section"
 import Flex from "~/components/Flex"
 import {editorWS} from "~/utils/socket"
 
@@ -94,7 +94,7 @@ const SidebarControls = ({ store, dispatch }) => {
                 <AddWrapper visible={!expanded}>
                     <StyledIcon
                         onClick={() => {
-                            createSection(dispatch)(lesson.id, lesson.sections.length-1)
+                            dispatch(createSection(lesson.sections.length-1))
                             // addNewSection(store, dispatch)
                         }}
                         style={{ width: 40, height: 40 }}
