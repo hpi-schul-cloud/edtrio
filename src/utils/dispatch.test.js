@@ -1,4 +1,4 @@
-import React, { useReducer, createContext } from 'react'
+import React, { useReducer, createContext, useEffect } from 'react'
 import test from 'ava'
 import renderer from 'react-test-renderer'
 
@@ -39,10 +39,11 @@ const reducer = (state, {type, payload}) => {
 				test: payload
 			}
 		case 'SWITCH':
-			return {
+			const newState = {
 				...state,
-				test: payload.test
+				...payload
 			}
+			return newState
 		default:
 			return state
 	}
@@ -85,16 +86,26 @@ test('test thunkMiddleware', async t => {
 	const Context = createContext()
 
 	const asyncFu = (test) => async ({dispatch, state}) => {
-		await dispatch({
-			type: 'SWITCH',
-			payload:{
-				switch: !state.switch,
-				test
-			}
+
+		const payload = await new Promise((resolve, reject) => {
+			setTimeout(() => {
+				resolve({
+					test,
+					switch: !state.switch,
+				})
+			}, 1000)
 		})
+
+		dispatch({
+			type: 'SWITCH',
+			payload
+		})
+
+		return payload
 	}
 
-	function TestComponent(){
+	function TestComponent({state}){
+
 		return (
 			<div></div>
 		)
@@ -116,11 +127,10 @@ test('test thunkMiddleware', async t => {
 	const {state, dispatch} = comp.props
 
 	const switchState = state.switch
-	dispatch(asyncFu('Affenmesserkampf!'))
-	// dispatch do not run synchronously, so timeout close this gap
-	setTimeout(() => {
-		t.is(comp.props.state.switch, !switchState)
-		t.is(comp.props.state.test, 'Affenmesserkampf!')
-	}, 10)
+	const data = await dispatch(asyncFu('Affenmesserkampf!'))
+	t.is(data.switch, !switchState)
+	t.is(data.test, 'Affenmesserkampf!')
+	t.is(comp.props.state.switch, !switchState)
+	t.is(comp.props.state.test, 'Affenmesserkampf!')
 
 })
