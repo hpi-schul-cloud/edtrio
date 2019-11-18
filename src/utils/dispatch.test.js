@@ -33,7 +33,7 @@ const reducer = (state, {type, payload}) => {
 				...state,
 				test: payload
 			}
-		case 'DEFAULT':
+		case 'SOME_OTHER':
 			return {
 				...state,
 				test: payload
@@ -75,7 +75,7 @@ test('add dispatch middleware and execute', t => {
 
 	comp.props.dispatch({type: 'TEST'})
 	t.is(comp.props.state.test, 'success')
-	comp.props.dispatch({type: 'DEFAULT', payload: 'haha'})
+	comp.props.dispatch({type: 'SOME_OTHER', payload: 'haha'})
 	t.is(comp.props.state.test, 'haha')
 
 
@@ -117,6 +117,7 @@ test('test thunkMiddleware', async t => {
 
 	const switchState = state.switch
 	dispatch(asyncFu('Affenmesserkampf!'))
+	// dispatch do not run synchronously, so timeout close this gap
 	setTimeout(() => {
 		t.is(comp.props.state.switch, !switchState)
 		t.is(comp.props.state.test, 'Affenmesserkampf!')

@@ -6,7 +6,7 @@ import api from "~/utils/api"
 import theme from "~/theme"
 
 import { getFakeSection } from "~/utils/fake"
-import { createSection } from "~/actions/lesson"
+import { createSection } from "~/actions/section"
 import Flex from "~/components/Flex"
 import {editorWS} from "~/utils/socket"
 
