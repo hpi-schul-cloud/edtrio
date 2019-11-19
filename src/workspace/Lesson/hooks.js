@@ -4,7 +4,8 @@ import { serverApi, editorApi } from "~/utils/api"
 import { editorWS } from "~/utils/socket"
 import { loadEditorData, saveEditorData } from "~/utils/cache"
 import { buildDiff } from "~/utils/diff"
-import { createSection } from "~/actions/section"
+import { createSection } from "~/actions/section.actions"
+import { fetchCourse } from "~/Contexts/course.actions"
 
 export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
     async function fetchData() {
@@ -70,16 +71,6 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
         requestAnimationFrame(() => {
             dispatch({ type: "BOOTSTRAP_FINISH" })
         })
-    }
-
-    async function fetchCourse() {
-        try {
-            // const courseId = window.location.pathname.split("/")[2]
-            const course = await serverApi.get(`/courses/${courseId}`)
-            dispatch({ type: "SET_COURSE", payload: course })
-        } catch (err) {
-            console.log(err)
-        }
     }
 
     async function registerHandler(){
