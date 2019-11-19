@@ -13,6 +13,7 @@ import { ViewContextProvider } from './View'
 
 
 const Contexts = ({ children }) => {
+
     return (
         <DndProvider
             backend={isTouchDevice() ? TouchBackend : HTML5Backend}>

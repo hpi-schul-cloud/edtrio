@@ -5,16 +5,17 @@ import { createDispatch, thunkMiddleware } from "~/utils/dispatch"
 
 const q = qs.parse(window.location.search, { ignoreQueryPrefix: true })
 
-export const initialState = {
+export const initialState = [{
     studentView: !!q.student_view,
     editing: !q.student_view,
     activeSectionId: "",
     bootstrapFinished: false,
     saveStatus: "",
     sectionOverviewExpanded: false,
-    showSectionSettings: false,
-}
-function reducer(state, { type, payload }) {
+	showSectionSettings: false,
+	position: 0
+}]
+export function sectionReducer(state = sectionReducer, { type, payload }) {
     switch (type) {
 
         case "BOOTSTRAP": {
@@ -266,19 +267,3 @@ function reducer(state, { type, payload }) {
             return state
     }
 }
-
-const SectionsContext = React.createContext()
-
-export function LessonContextProvider({ children}) {
-    const [state, dispatch] = useReducer(reducer, initialState)
-
-    const value = { store: state, dispatch: createDispatch(dispatch, state, thunkMiddleware()) }
-
-    return (
-        <SectionsContext.Provider value={value}>
-            {children}
-        </SectionsContext.Provider>
-    )
-}
-
-export default SectionsContext

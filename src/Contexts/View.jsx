@@ -13,7 +13,7 @@ export const initialState = {
     sectionOverviewExpanded: false,
     showSectionSettings: false,
 }
-function reducer(state, { type, payload }) {
+export function viewReducer(state, { type, payload }) {
     switch (type) {
         case "SET_EDITING":
             // switch between editing and view mode
@@ -62,19 +62,3 @@ function reducer(state, { type, payload }) {
             return state
     }
 }
-
-const ViewContext = React.createContext()
-
-export function ViewContextProvider({ children}) {
-    const [state, dispatch] = useReducer(reducer, initialState)
-
-    const value = { store: state, dispatch: createDispatch(dispatch, state, thunkMiddleware()) }
-
-    return (
-        <ViewContext.Provider value={value}>
-            {children}
-        </ViewContext.Provider>
-    )
-}
-
-export default ViewContext

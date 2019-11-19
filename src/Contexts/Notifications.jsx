@@ -10,7 +10,7 @@ export const initialState = {
     error: "",
     saveStatus: "",
 }
-function reducer(state, { type, payload }) {
+export function notificationReducer(state = initialState, { type, payload }) {
     switch (type) {
         case "ERROR":
             return {
@@ -40,19 +40,3 @@ function reducer(state, { type, payload }) {
             return state
     }
 }
-
-const NotificationsContext = React.createContext()
-
-export function NotificationsContextProvider({ children}) {
-    const [state, dispatch] = useReducer(reducer, initialState)
-
-    const value = { store: state, dispatch: createDispatch(dispatch, state, thunkMiddleware()) }
-
-    return (
-        <NotificationsContext.Provider value={value}>
-            {children}
-        </NotificationsContext.Provider>
-    )
-}
-
-export default NotificationsContext
