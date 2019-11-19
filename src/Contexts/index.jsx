@@ -5,7 +5,7 @@ import TouchBackend from "react-dnd-touch-backend"
 
 import { isTouchDevice } from "~/utils/device"
 
-import { LessonContextProvider } from "./Lesson"
+import { LessonContextProvider } from "./Lesson.context"
 import { UserContextProvider } from "./User"
 
 

@@ -8,8 +8,6 @@ import { courseReducer } from "./course.reducer"
 import { lessonReducer } from './lesson.reducer'
 
 
-
-
 const combinedReducer = combineReducers({
     lesson: lessonReducer,
     sections: sectionReducer,

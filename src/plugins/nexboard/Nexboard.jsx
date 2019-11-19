@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react"
-import LessonContext from "~/Contexts/Lesson"
+import LessonContext from "~/Contexts/Lesson.context"
 import UserContext from "~/Contexts/User"
 import { createBoard, getBoard } from "./utils"
 import Action from "~/components/Action"

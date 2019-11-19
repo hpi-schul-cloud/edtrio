@@ -2,7 +2,7 @@ import React, { useContext } from "react"
 import { Portal } from "react-portal"
 import styled, { css } from "styled-components"
 
-import LessonContext from "~/Contexts/Lesson"
+import LessonContext from "~/Contexts/Lesson.context"
 
 import Flex from "~/components/Flex"
 

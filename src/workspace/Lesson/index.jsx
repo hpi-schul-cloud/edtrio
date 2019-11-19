@@ -3,7 +3,7 @@ import styled from "styled-components"
 
 import config from "~/config"
 
-import LessonContext from "~/Contexts/Lesson"
+import LessonContext from "~/Contexts/Lesson.context"
 import UserContext from "~/Contexts/User"
 import { useInterval } from "~/utils/hooks"
 

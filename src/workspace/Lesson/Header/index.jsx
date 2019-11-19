@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react"
 import styled, { css } from "styled-components"
 
-import LessonContext from "~/Contexts/Lesson"
+import LessonContext from "~/Contexts/Lesson.context"
 
 import Flex from "~/components/Flex"
 import Text from "~/components/Text"

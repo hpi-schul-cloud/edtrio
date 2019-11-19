@@ -74,9 +74,7 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
     }
 
     async function registerHandler(){
-        
         const dispatchLessonUpdate = (data) => {
-            
             dispatch({
                 type: "LESSON_UPDATED",
                 payload: data

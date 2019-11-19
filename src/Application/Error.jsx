@@ -3,7 +3,7 @@ import styled, { keyframes } from "styled-components"
 
 import Flex from "~/components/Flex"
 
-import LessonContext from "~/Contexts/Lesson"
+import LessonContext from "~/Contexts/Lesson.context"
 
 const slideIn = keyframes`
     from {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react"
 import shortid from "shortid"
 
-import LessonContext from "~/Contexts/Lesson"
+import LessonContext from "~/Contexts/Lesson.context"
 
 import Input from "~/components/Input"
 import Flex from "~/components/Flex"

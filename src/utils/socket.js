@@ -1,7 +1,7 @@
 import io from 'socket.io-client'
 import { jwt } from './jwt'
 import { useContext } from 'react'
-import LessonContext from "~/Contexts/Lesson"
+import LessonContext from "~/Contexts/Lesson.context"
 import config from "~/config"
 
 const EDITOR_SOCKET_URL = config.EDITOR_SOCKET_URL || ""
