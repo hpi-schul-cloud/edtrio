@@ -7,14 +7,24 @@ import { isTouchDevice } from "~/utils/device"
 
 import { LessonContextProvider } from "./Lesson"
 import { UserContextProvider } from "./User"
+import { SectionsContextProvider } from './Sections'
+import { NoficatonsContextProvider , NotificationsContextProvider } from './Notifications'
+import { ViewContextProvider } from './View'
+
 
 const Contexts = ({ children }) => {
     return (
         <DndProvider
             backend={isTouchDevice() ? TouchBackend : HTML5Backend}>
-            <UserContextProvider>
-                <LessonContextProvider>{children}</LessonContextProvider>
-            </UserContextProvider>
+            <ViewContextProvider>
+                <UserContextProvider>
+                    <LessonContextProvider>
+                        <SectionsContextProvider>
+                            {children}
+                        </SectionsContextProvider>
+                    </LessonContextProvider>
+                </UserContextProvider>
+            </ViewContextProvider>
         </DndProvider>
     )
 }

@@ -6,10 +6,6 @@ import { createDispatch, thunkMiddleware } from "~/utils/dispatch"
 const q = qs.parse(window.location.search, { ignoreQueryPrefix: true })
 
 export const initialState = {
-    loading: true,
-    error: "",
-    lesson: {},
-    course: {},
     studentView: !!q.student_view,
     editing: !q.student_view,
     activeSectionId: "",
@@ -20,37 +16,6 @@ export const initialState = {
 }
 function reducer(state, { type, payload }) {
     switch (type) {
-        case "SET_EDITING":
-            // switch between editing and view mode
-            if (state.studentView) return state
-            return {
-                ...state,
-                editing: payload,
-            }
-
-        case "SET_COURSE":
-            return {
-                ...state,
-                course: payload,
-            }
-
-        case "TOGGLE_SECTION_OVERVIEW":
-            return {
-                ...state,
-                sectionOverviewExpanded:
-                    payload !== undefined
-                        ? payload
-                        : !state.sectionOverviewExpanded,
-            }
-
-        case "TOGGLE_SECTION_SETTINGS":
-            return {
-                ...state,
-                showSectionSettings:
-                    payload !== undefined
-                        ? payload
-                        : !state.showSectionSettings,
-            }
 
         case "BOOTSTRAP": {
             const newState = {
@@ -88,28 +53,6 @@ function reducer(state, { type, payload }) {
                 saveStatus: "",
             }
 
-        case "LESSON_UPDATED":
-            return {
-                ...state,
-                saveStatus: "Aktuallisiert",
-                lesson: {
-                    ...state.lesson,
-                    ...payload,
-                }
-            }
-        case "LESSON_TITLE_CHANGE":
-            state.lesson.changed.add("title")
-            return {
-                ...state,
-                lesson: {
-                    ...state.lesson,
-                    title: payload,
-                },
-            }
-
-        case "LESSON_SAVED":
-            state.lesson.changed.clear()
-            return state
 
         case "SWAP_SECTIONS":
             state.lesson.changed.add("order")
@@ -324,7 +267,7 @@ function reducer(state, { type, payload }) {
     }
 }
 
-const LessonContext = React.createContext()
+const SectionsContext = React.createContext()
 
 export function LessonContextProvider({ children}) {
     const [state, dispatch] = useReducer(reducer, initialState)
@@ -332,10 +275,10 @@ export function LessonContextProvider({ children}) {
     const value = { store: state, dispatch: createDispatch(dispatch, state, thunkMiddleware()) }
 
     return (
-        <LessonContext.Provider value={value}>
+        <SectionsContext.Provider value={value}>
             {children}
-        </LessonContext.Provider>
+        </SectionsContext.Provider>
     )
 }
 
-export default LessonContext
+export default SectionsContext
