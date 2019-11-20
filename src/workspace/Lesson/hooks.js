@@ -21,11 +21,11 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
 		if (
 			cacheData &&
 			cacheData.hasOwnProperty("lesson") &&
-			(cacheData.savedToBackend === false || !editorWS.connected)
+			(cacheData.savedToBackend === false || !editorWS.isConnected)
 		) {
 			lesson = cacheData.lesson
 		} else {
-            dispatch(fetchLessonWithSections(id, courseId))
+            await dispatch(fetchLessonWithSections(id, courseId))
         }
 
         requestAnimationFrame(() => {

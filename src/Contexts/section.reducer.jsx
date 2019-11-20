@@ -2,43 +2,18 @@ import React, { useReducer } from "react"
 import qs from "qs"
 import { mergeDiff } from "~/utils/diff"
 import { createDispatch, thunkMiddleware } from "~/utils/dispatch"
+import { SET_SECTIONS , ADD_SECTION , REPLACE_ADDED_SECTION_ID } from "./section.actions"
+
+
 
 const q = qs.parse(window.location.search, { ignoreQueryPrefix: true })
 
-export const sectionInitialState = [{
-    studentView: !!q.student_view,
-    editing: !q.student_view,
-    activeSectionId: "",
-    saveStatus: "",
-    sectionOverviewExpanded: false,
-	showSectionSettings: false,
-	position: 0
-}]
+export const sectionInitialState = []
 export function sectionReducer(state = sectionInitialState, { type, payload }) {
     switch (type) {
 
-        case "BOOTSTRAP": {
-            const newState = {
-                ...state,
-                loading: false,
-                error: "",
-                lesson: {
-                    ...payload,
-                    changed: new Set(),
-                    sections: payload.sections.map(section => {
-                        const sectionData = { ...section, changed: new Set() }
-                        if (section.new) {
-                            sectionData.new = undefined
-                            sectionData.changed.add("")
-                        }
-                        return sectionData
-                    }),
-                },
-                activeSectionId: payload.sections[0].id,
-            }
-
-            return newState
-        }
+        case SET_SECTIONS:
+            return payload
 
         case "SET_ACTIVE_SECTION":
             return {
@@ -66,8 +41,8 @@ export function sectionReducer(state = sectionInitialState, { type, payload }) {
                 },
             }
 
-        case "ADD_SECTION":
-            const newSection = {
+        case ADD_SECTION:
+            /* const newSection = {
                 title: "",
                 id: payload.tempId,
                 visible: true,
@@ -77,37 +52,27 @@ export function sectionReducer(state = sectionInitialState, { type, payload }) {
             const newSections = []
             if (payload.position === -1) newSections.push(newSection)
 
-            state.lesson.sections.forEach((section, index) => {
+            state.sections.forEach((section, index) => {
                 newSections.push(section)
                 if (index === payload.position) newSections.push(newSection)
-            })
+            }) */
 
             return {
-                ...state,
-                activeSectionId: payload.tempId,
-                lesson: {
-                    ...state.lesson,
-                    sections: newSections,
-                },
+                ...state.splice(payload, 0, {
+                    title: "",
+                    id: payload.tempId,
+                    visible: true,
+                    docValue: {},
+                    changed: new Set(),
+                })
             }
 
-        case "REPLACE_ADDED_SECTION_ID": {
-            return {
-                ...state,
-                activeSectionId:
-                    state.activeSectionId === payload.tempId
-                        ? payload.backendId
-                        : state.activeSectionId,
-                lesson: {
-                    ...state.lesson,
-                    sections: state.lesson.sections.map(section => {
-                        if (section.id === payload.tempId) {
-                            return { ...section, id: payload.backendId }
-                        }
-                        return section
-                    }),
-                },
-            }
+        case REPLACE_ADDED_SECTION_ID: {
+            return state.sections.map(section =>
+                section.id === payload.tempId
+                ? {...section, id: payload.backendId}
+                : section
+            )
         }
 
         case "SECTION_VISIBILITY":

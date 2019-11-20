@@ -3,9 +3,12 @@ import { SET_LESSON } from "./lesson.actions"
 export const lessonInitialState = {
 }
 export function lessonReducer(state = lessonInitialState, { type, payload }) {
+    console.log(type)
     switch (type) {
         case SET_LESSON:
-            return payload
+            return {
+                ...payload
+            }
 /*
         case "BOOTSTRAP": {
             const newState = {

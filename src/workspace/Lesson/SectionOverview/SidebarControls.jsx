@@ -27,40 +27,6 @@ const StyledIcon = styled.img`
     transition: 250ms all ease-in-out;
 `
 
-async function addNewSection(store, dispatch) {
-    const tempId = uuid()
-    const lessonId = store.lesson.id
-    const position = store.sections.length - 1
-    dispatch({
-        type: "ADD_SECTION",
-        payload: {
-            position,
-            tempId,
-        },
-    })
-    const newSection = await editorWS.emit('create', `lesson/${lessonId}/sections`)
-  /* const newSection = await api.post(
-        "/editor/sections",
-        {
-            lesson: lessonId,
-            visible: true,
-            position,
-            notes: "",
-            title: "",
-        },
-        null,
-        null,
-        getFakeSection(lessonId),
-    )
-*/
-    dispatch({
-        type: "REPLACE_ADDED_SECTION_ID",
-        payload: {
-            tempId,
-            backendId: newSection._id,
-        },
-    })
-}
 
 const AddWrapper = styled.div`
     height: 24px;
@@ -94,7 +60,6 @@ const SidebarControls = ({ store, dispatch }) => {
                     <StyledIcon
                         onClick={() => {
                             dispatch(createSection(lesson.sections.length-1))
-                            // addNewSection(store, dispatch)
                         }}
                         style={{ width: 40, height: 40 }}
                         src={require("~/assets/plus-red-round.svg")}

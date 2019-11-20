@@ -35,11 +35,6 @@ const LessonContext = React.createContext()
 export function LessonContextProvider({ children}) {
     const [state, dispatch] = useReducer(combinedReducer, combinedInitalState)
     // needed for initial of all default states, should not match any case
-    console.log(state)
-    useEffect(() => {
-        dispatch({type: 'DUMMY_INIT'})
-        console.log(state)
-    }, [])
     const value = { store: state, dispatch: createDispatch(dispatch, state, thunkMiddleware()) }
     return (
         <LessonContext.Provider value={value}>

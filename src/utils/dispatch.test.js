@@ -208,10 +208,11 @@ const asyncFu = (test) => async ({dispatch, state}) => {
 	return payload
 }
 
-const otherAsyncFu = (test) => async ({dispatch}) => {
+const asyncOnlyLastChar = (test) => async ({dispatch}) => {
 	const payload = await new Promise((resolve) => {
 		setTimeout(async () => {
-			const payload = await dispatch(asyncFu(test))
+			const sliced = test.slice(-1)
+			const payload = await dispatch(asyncFu(sliced))
 			resolve(payload)
 		}, 10)
 	})
@@ -279,10 +280,10 @@ test('test thunkMiddleware async function call in async function', async t => {
 	const {state, dispatch} = comp.props
 
 	const switchState = state.switch
-	const data = await dispatch(otherAsyncFu('Affenmesserkampf!'))
+	const data = await dispatch(asyncOnlyLastChar('Affenmesserkampf!'))
 	t.is(data.switch, !switchState)
-	t.is(data.test, 'Affenmesserkampf!')
+	t.is(data.test, '!')
 	t.is(comp.props.state.switch, !switchState)
-	t.is(comp.props.state.test, 'Affenmesserkampf!')
+	t.is(comp.props.state.test, '!')
 
 })
