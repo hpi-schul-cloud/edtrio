@@ -174,27 +174,53 @@ test('test adding 4 middlewares', t => {
 	t.is(comp.props.state.test, 'blub')
 })
 
+
+/**
+ *
+ ****************************************
+ * **
+ * **
+ * **	Test for thunk middleware
+ * **
+ * **
+ ****************************************
+ *
+ *  */
+
+
+
+const asyncFu = (test) => async ({dispatch, state}) => {
+
+	const payload = await new Promise((resolve, reject) => {
+		setTimeout(() => {
+			resolve({
+				test,
+				switch: !state.switch,
+			})
+		}, 10)
+	})
+
+	dispatch({
+		type: 'SWITCH',
+		payload
+	})
+
+	return payload
+}
+
+const otherAsyncFu = (test) => async ({dispatch}) => {
+	const payload = await new Promise((resolve) => {
+		setTimeout(async () => {
+			const payload = await dispatch(asyncFu(test))
+			resolve(payload)
+		}, 10)
+	})
+
+	return payload
+}
+
 test('test thunkMiddleware', async t => {
 	const Context = createContext()
-
-	const asyncFu = (test) => async ({dispatch, state}) => {
-
-		const payload = await new Promise((resolve, reject) => {
-			setTimeout(() => {
-				resolve({
-					test,
-					switch: !state.switch,
-				})
-			}, 10)
-		})
-
-		dispatch({
-			type: 'SWITCH',
-			payload
-		})
-
-		return payload
-	}
 
 	function TestComponent({state}){
 
@@ -229,36 +255,6 @@ test('test thunkMiddleware', async t => {
 
 test('test thunkMiddleware async function call in async function', async t => {
 	const Context = createContext()
-
-	const asyncFu = (test) => async ({dispatch, state}) => {
-
-		const payload = await new Promise((resolve, reject) => {
-			setTimeout(() => {
-				resolve({
-					test,
-					switch: !state.switch,
-				})
-			}, 10)
-		})
-
-		dispatch({
-			type: 'SWITCH',
-			payload
-		})
-
-		return payload
-	}
-
-	const otherAsyncFu = (test) => async ({dispatch}) => {
-		const payload = await new Promise((resolve) => {
-			setTimeout(async () => {
-				const payload = await dispatch(asyncFu(test))
-				resolve(payload)
-			}, 10)
-		})
-
-		return payload
-	}
 
 	function TestComponent({state}){
 
