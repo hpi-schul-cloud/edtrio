@@ -3,7 +3,7 @@ import test from 'ava'
 import renderer from 'react-test-renderer'
 
 import {createDispatch, thunkMiddleware} from './dispatch'
-import { async, reject } from 'q'
+import { timeout } from 'q'
 
 const middleware = () => {
 	return ({state, dispatch}) => {
@@ -17,6 +17,43 @@ const middleware = () => {
 				}
 				return next(action)
 			}
+		}
+	}
+}
+
+const preMiddleware = (type) => {
+	return ({state, dispatch}) => next => action => {
+			if(action.type === type){
+				return dispatch({
+					type: 'TEST'
+				})
+			}
+
+			return next(action)
+	}
+}
+
+const postMiddleware = (payload) => {
+	return ({state, dispatch}) => next =>
+		{
+			return action => {
+				if(action.type === 'MIDDLEWARE'){
+					return dispatch({
+						type: 'SOME_OTHER',
+						payload: payload
+					})
+				}
+
+				return next(action)
+		}
+	}
+}
+
+const someOtherMiddleware = () => {
+	return ({state, dispatch}) => next =>
+		{
+			return action => {
+				return next(action)
 		}
 	}
 }
@@ -82,6 +119,61 @@ test('add dispatch middleware and execute', t => {
 
 })
 
+test('test dispatch is everytime looped through middlewares', t => {
+	const Context = createContext()
+
+	function TestComponent(){
+		return (
+			<div></div>
+		)
+	}
+	function Provider(){
+		const [state, reactDispatch] = useReducer(reducer, initState)
+		const dispatch = createDispatch(reactDispatch, state, preMiddleware('HUNZ'), middleware())
+		return (
+				<Context.Provider value={{state, dispatch}}>
+					<TestComponent dispatch={dispatch} state={state}/>
+				</Context.Provider>
+			)
+	}
+
+	const rendered = renderer.create(<Provider />)
+	const renderedInstance = rendered.root
+
+	const comp = renderedInstance.findByType(TestComponent)
+
+	comp.props.dispatch({type: 'HUNZ'})
+	t.is(comp.props.state.test, 'success')
+
+})
+
+test('test adding 4 middlewares', t => {
+	const Context = createContext()
+
+	function TestComponent(){
+		return (
+			<div></div>
+		)
+	}
+	function Provider(){
+		const [state, reactDispatch] = useReducer(reducer, initState)
+		const dispatch = createDispatch(reactDispatch, state, preMiddleware('HUNZ'), middleware(), someOtherMiddleware(), postMiddleware('blub'))
+		return (
+				<Context.Provider value={{state, dispatch}}>
+					<TestComponent dispatch={dispatch} state={state}/>
+				</Context.Provider>
+			)
+	}
+
+	const rendered = renderer.create(<Provider />)
+	const renderedInstance = rendered.root
+
+	const comp = renderedInstance.findByType(TestComponent)
+
+	comp.props.dispatch({type: 'HUNZ'})
+	t.is(comp.props.state.test, 'blub')
+})
+
 test('test thunkMiddleware', async t => {
 	const Context = createContext()
 
@@ -93,7 +185,7 @@ test('test thunkMiddleware', async t => {
 					test,
 					switch: !state.switch,
 				})
-			}, 1000)
+			}, 10)
 		})
 
 		dispatch({
@@ -128,6 +220,70 @@ test('test thunkMiddleware', async t => {
 
 	const switchState = state.switch
 	const data = await dispatch(asyncFu('Affenmesserkampf!'))
+	t.is(data.switch, !switchState)
+	t.is(data.test, 'Affenmesserkampf!')
+	t.is(comp.props.state.switch, !switchState)
+	t.is(comp.props.state.test, 'Affenmesserkampf!')
+
+})
+
+test('test thunkMiddleware async function call in async function', async t => {
+	const Context = createContext()
+
+	const asyncFu = (test) => async ({dispatch, state}) => {
+
+		const payload = await new Promise((resolve, reject) => {
+			setTimeout(() => {
+				resolve({
+					test,
+					switch: !state.switch,
+				})
+			}, 10)
+		})
+
+		dispatch({
+			type: 'SWITCH',
+			payload
+		})
+
+		return payload
+	}
+
+	const otherAsyncFu = (test) => async ({dispatch}) => {
+		const payload = await new Promise((resolve) => {
+			setTimeout(async () => {
+				const payload = await dispatch(asyncFu(test))
+				resolve(payload)
+			}, 10)
+		})
+
+		return payload
+	}
+
+	function TestComponent({state}){
+
+		return (
+			<div></div>
+		)
+	}
+	function Provider(){
+		const [state, reactDispatch] = useReducer(reducer, initState)
+		const dispatch = createDispatch(reactDispatch, state, thunkMiddleware())
+		return (
+				<Context.Provider value={{state, dispatch}}>
+					<TestComponent dispatch={dispatch} state={state}/>
+				</Context.Provider>
+			)
+	}
+
+	const rendered = renderer.create(<Provider />)
+	const renderedInstance = rendered.root
+
+	const comp = renderedInstance.findByType(TestComponent)
+	const {state, dispatch} = comp.props
+
+	const switchState = state.switch
+	const data = await dispatch(otherAsyncFu('Affenmesserkampf!'))
 	t.is(data.switch, !switchState)
 	t.is(data.test, 'Affenmesserkampf!')
 	t.is(comp.props.state.switch, !switchState)

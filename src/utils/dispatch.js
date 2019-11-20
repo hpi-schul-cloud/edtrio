@@ -21,13 +21,27 @@ export const createDispatch = (dispatch, state, ...middlewares) => {
 	if(middlewares.length === 0){
 		return dispatch
 	} else {
-		middlewares.push((() => action => dispatch(action)))
-		const chain = middlewares
-			.map((a) => a({state, dispatch}))
-			.reduce((a,b) => a(b))
-		return (action) => {
-			return chain(action)
+		const oldDispatch = dispatch
+		dispatch = () => {
+			throw new Error(
+				'Dispatching while constructing your middleware is not allowed. ' +
+				  'Other middleware would not be applied to this dispatch.'
+			  )
 		}
+
+		const middlewareAPI = {
+			state: state,
+			dispatch: (action) => dispatch(action)
+		}
+
+		dispatch = middlewares
+			// maps state and dispatch to every Middleware
+			// this is important to give every middleware the new dispatcher and not the old one
+			.map((a) => a(middlewareAPI))
+			// returns a function where each calls a(b(...args)), when called the chian will build and
+			// the last function get the argument, the function is called with... here it is the original dispatcher
+			.reduce((a,b) => (...args) => a(b(...args)))(oldDispatch)
+		return middlewareAPI.dispatch
 	}
 }
 
