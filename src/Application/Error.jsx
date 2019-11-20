@@ -37,11 +37,11 @@ const ErrorWrapper = styled.div`
 
 const Error = () => {
     const { store, dispatch } = useContext(LessonContext)
-    if (!store.error.length) return null
+    if (!store.notifications.error.length) return null
     return (
         <ErrorWrapper onClick={() => dispatch({ type: "ERROR", payload: "" })}>
             <Flex inline alignCenter noWrap>
-                {store.error}
+                {store.notifications.error}
                 <img
                     src={require("~/assets/remove.svg")}
                     style={{ cursor: "pointer", marginLeft: 5 }}

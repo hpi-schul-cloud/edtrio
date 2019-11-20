@@ -36,7 +36,7 @@ const Preview = React.forwardRef(
     ) => {
         const expanded = store.sectionOverviewExpanded
 
-        const activeSectionIndex = store.lesson.sections.findIndex(
+        const activeSectionIndex = store.sections.findIndex(
             el => el.id === store.activeSectionId,
         )
 

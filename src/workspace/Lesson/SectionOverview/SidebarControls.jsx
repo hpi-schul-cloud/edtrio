@@ -5,8 +5,7 @@ import uuid from "uuid/v4"
 import api from "~/utils/api"
 import theme from "~/theme"
 
-import { getFakeSection } from "~/utils/fake"
-import { createSection } from "~/actions/section.actions"
+import { createSection } from "~/Contexts/section.actions"
 import Flex from "~/components/Flex"
 import {editorWS} from "~/utils/socket"
 
@@ -31,7 +30,7 @@ const StyledIcon = styled.img`
 async function addNewSection(store, dispatch) {
     const tempId = uuid()
     const lessonId = store.lesson.id
-    const position = store.lesson.sections.length - 1
+    const position = store.sections.length - 1
     dispatch({
         type: "ADD_SECTION",
         payload: {

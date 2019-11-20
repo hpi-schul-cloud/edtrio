@@ -5,7 +5,7 @@ import { createDispatch, thunkMiddleware } from "~/utils/dispatch"
 
 const q = qs.parse(window.location.search, { ignoreQueryPrefix: true })
 
-export const initialState = {
+export const viewInitialState = {
     loading: true,
     studentView: !!q.student_view,
     editing: !q.student_view,
@@ -13,7 +13,7 @@ export const initialState = {
     sectionOverviewExpanded: false,
     showSectionSettings: false,
 }
-export function viewReducer(state, { type, payload }) {
+export function viewReducer(state = viewInitialState, { type, payload }) {
     switch (type) {
         case "SET_EDITING":
             // switch between editing and view mode
@@ -56,7 +56,7 @@ export function viewReducer(state, { type, payload }) {
             }
 
         case "RESET":
-            return initialState
+            return viewInitialState
 
         default:
             return state

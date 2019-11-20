@@ -4,8 +4,8 @@ import { serverApi, editorApi } from "~/utils/api"
 import { editorWS } from "~/utils/socket"
 import { loadEditorData, saveEditorData } from "~/utils/cache"
 import { buildDiff } from "~/utils/diff"
-import { createSection } from "~/actions/section.actions"
 import { fetchCourse } from "~/Contexts/course.actions"
+import { fetchLessonWithSections } from "~/Contexts/lesson.actions"
 
 export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
     async function fetchData() {
@@ -16,58 +16,18 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
             console.warn("Could not fetch user data")
         }
 
-        try {
-            const cacheData = loadEditorData(id)
-            let lesson
-            if (
-                cacheData &&
-                cacheData.hasOwnProperty("lesson") &&
-                (cacheData.savedToBackend === false || editorWS.connected)
-            ) {
-                lesson = cacheData.lesson
-            } else {
-                lesson = await editorWS.emit(
-                    'get',
-                    `course/${courseId}/lessons`,
-                    id,
-                    {all: 'true'}
-                )
-
-                lesson.id = lesson._id
-                if(lesson.sections.length === 0){
-                    const section = await editorWS.emit('create', `lesson/${id}/sections`, {})
-                    lesson.sections.push(section)
-                }
-                lesson.sections = lesson.sections.map(section => ({
-                    ...section,
-                    id: section._id,
-                    docValue: section.state,
-                    savedDocValue: section.state,
-                    notes: section.note,
-                    visible: true, // TODO: remove should be set by server and blur mode should removed
-                }))
-            }
-            dispatch({ type: "BOOTSTRAP", payload: lesson })
-        } catch (err) {
-            dispatch({ type: "ERROR" })
-            dispatch({
-                type: "BOOTSTRAP",
-                payload: {
-                    id: new Date().getTime(),
-                    sections: [
-                        {
-                            id:
-                                new Date().getTime() +
-                                "" +
-                                Math.floor(Math.random() * 100),
-                            docValue: null,
-                            visible: true,
-                        },
-                    ],
-                    changed: new Set(),
-                },
-            })
+        const cacheData = loadEditorData(id)
+		let lesson
+		if (
+			cacheData &&
+			cacheData.hasOwnProperty("lesson") &&
+			(cacheData.savedToBackend === false || !editorWS.connected)
+		) {
+			lesson = cacheData.lesson
+		} else {
+            dispatch(fetchLessonWithSections(id, courseId))
         }
+
         requestAnimationFrame(() => {
             dispatch({ type: "BOOTSTRAP_FINISH" })
         })
@@ -122,7 +82,7 @@ export async function saveLesson(store, dispatch, override) {
     const lessonChanges = {}
     store.lesson.changed.forEach(key => {
         if (key === "order") {
-            lessonChanges.sections = store.lesson.sections.map(
+            lessonChanges.sections = store.sections.map(
                 section => section.id,
             )
         } else {
@@ -150,7 +110,7 @@ export async function saveLesson(store, dispatch, override) {
     else savePromises.push(Promise.resolve("No lesson changes"))
 
     // save sections
-    store.lesson.sections.forEach(section => {
+    store.sections.forEach(section => {
         const sectionChanges = {}
         let sectionDiff
         let savedDocValue
@@ -231,7 +191,7 @@ export async function saveLesson(store, dispatch, override) {
         savedToBackend: true,
         lesson: {
             ...store.lesson,
-            sections: store.lesson.sections.map(section => ({
+            sections: store.sections.map(section => ({
                 ...section,
                 savedDocValue: undefined, // TODO: do not set to undefined, because needed for first diff
                 docValue: section.docValue,
@@ -257,7 +217,7 @@ export async function saveLesson(store, dispatch, override) {
 export function useChangeListener(store, dispatch) {
     const [timeout, setTimeoutState] = useState(null)
     useEffect(() => {
-        if (!store.bootstrapFinished) return
+        if (!store.view.bootstrapFinished) return
         dispatch({ type: "SAVE_STATUS", payload: "Ungesicherte Änderungen" })
 
         if(timeout) clearTimeout(timeout)

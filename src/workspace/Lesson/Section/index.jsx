@@ -72,11 +72,11 @@ const Section = ({ store, dispatch }) => {
             </Container>
         )
 
-    const index = store.lesson.sections.findIndex(
+    const index = store.sections.findIndex(
         section => section.id === store.activeSectionId,
     )
-    const section = store.lesson.sections[index]
-    const isLast = store.lesson.sections.length - 1 === index
+    const section = store.sections[index]
+    const isLast = store.sections.length - 1 === index
     return (
         <StyledSection
             column
@@ -111,11 +111,11 @@ const Section = ({ store, dispatch }) => {
                 <Controls
                     dispatch={dispatch}
                     prevId={
-                        index - 1 >= 0 && store.lesson.sections[index - 1].id
+                        index - 1 >= 0 && store.sections[index - 1].id
                     }
                     nextId={
-                        index + 1 < store.lesson.sections.length &&
-                        store.lesson.sections[index + 1].id
+                        index + 1 < store.sections.length &&
+                        store.sections[index + 1].id
                     }
                 />
             </Wrapper>

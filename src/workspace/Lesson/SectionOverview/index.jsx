@@ -66,7 +66,7 @@ function useResizeListener(store, dispatch) {
     }
 
     useEffect(() => {
-        if (window.innerWidth > 1350 && !store.bootstrapFinished) {
+        if (window.innerWidth > 1350 && !store.view.bootstrapFinished) {
             dispatch({ type: "TOGGLE_SECTION_OVERVIEW", payload: true })
         }
 
@@ -78,7 +78,7 @@ function useResizeListener(store, dispatch) {
 const SectionOverview = ({ store, dispatch }) => {
     useResizeListener(store, dispatch)
     const expanded = store.sectionOverviewExpanded
-    const sections = store.lesson.sections
+    const sections = store.sections
 
     function moveSection(fromIndex, toIndex) {
         dispatch({ type: "SWAP_SECTIONS", payload: [fromIndex, toIndex] })

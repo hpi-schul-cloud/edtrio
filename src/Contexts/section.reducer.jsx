@@ -5,17 +5,16 @@ import { createDispatch, thunkMiddleware } from "~/utils/dispatch"
 
 const q = qs.parse(window.location.search, { ignoreQueryPrefix: true })
 
-export const initialState = [{
+export const sectionInitialState = [{
     studentView: !!q.student_view,
     editing: !q.student_view,
     activeSectionId: "",
-    bootstrapFinished: false,
     saveStatus: "",
     sectionOverviewExpanded: false,
 	showSectionSettings: false,
 	position: 0
 }]
-export function sectionReducer(state = sectionReducer, { type, payload }) {
+export function sectionReducer(state = sectionInitialState, { type, payload }) {
     switch (type) {
 
         case "BOOTSTRAP": {
@@ -40,12 +39,6 @@ export function sectionReducer(state = sectionReducer, { type, payload }) {
 
             return newState
         }
-        case "BOOTSTRAP_FINISH":
-            return {
-                ...state,
-                bootstrapFinished: true,
-                saveStatus: "",
-            }
 
         case "SET_ACTIVE_SECTION":
             return {
@@ -261,7 +254,7 @@ export function sectionReducer(state = sectionReducer, { type, payload }) {
             }
 
         case "RESET":
-            return initialState
+            return sectionInitialState
 
         default:
             return state

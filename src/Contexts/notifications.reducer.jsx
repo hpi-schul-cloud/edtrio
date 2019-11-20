@@ -1,16 +1,12 @@
-import React, { useReducer } from "react"
-import qs from "qs"
-import { mergeDiff } from "~/utils/diff"
-import { createDispatch, thunkMiddleware } from "~/utils/dispatch"
 
-const q = qs.parse(window.location.search, { ignoreQueryPrefix: true })
+import { BOOTSTRAP, BOOTSTRAP_FINSIHED } from "./lesson.actions"
 
-export const initialState = {
+export const notificationInitialState = {
     loading: true,
     error: "",
     saveStatus: "",
 }
-export function notificationReducer(state = initialState, { type, payload }) {
+export function notificationReducer(state = notificationInitialState, { type, payload }) {
     switch (type) {
         case "ERROR":
             return {
@@ -19,6 +15,18 @@ export function notificationReducer(state = initialState, { type, payload }) {
                     payload === undefined
                         ? "Ein Fehler ist aufgetreten..."
                         : payload,
+            }
+
+        case BOOTSTRAP:
+            return {
+                ...state,
+                loading: true
+            }
+
+        case BOOTSTRAP_FINSIHED:
+            return {
+                ...state,
+                loading: false
             }
 
         case "LOADING":
@@ -34,7 +42,7 @@ export function notificationReducer(state = initialState, { type, payload }) {
 			}
 
         case "RESET":
-            return initialState
+            return notificationInitialState
 
         default:
             return state

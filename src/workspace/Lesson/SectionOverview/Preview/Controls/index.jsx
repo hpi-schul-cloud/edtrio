@@ -119,7 +119,7 @@ const Controls = ({
         await api.delete(`/editor/sections/${sectionId}`)
     }
 
-    const isOnly = store.lesson.sections.length === 1
+    const isOnly = store.sections.length === 1
 
     return (
         <StyledControls

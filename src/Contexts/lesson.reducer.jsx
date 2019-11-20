@@ -1,40 +1,12 @@
-export const initialState = {
-    lesson: {},
-    studentView: !!q.student_view,
+import { SET_LESSON } from "./lesson.actions"
 
-    bootstrapFinished: false,
-    sectionOverviewExpanded: false,
-    showSectionSettings: false,
+export const lessonInitialState = {
 }
-export function lessonReducer(state = lessonReducer, { type, payload }) {
+export function lessonReducer(state = lessonInitialState, { type, payload }) {
     switch (type) {
-        case "SET_EDITING":
-            // switch between editing and view mode
-            if (state.studentView) return state
-            return {
-                ...state,
-                editing: payload,
-            }
-
-
-        case "TOGGLE_SECTION_OVERVIEW":
-            return {
-                ...state,
-                sectionOverviewExpanded:
-                    payload !== undefined
-                        ? payload
-                        : !state.sectionOverviewExpanded,
-            }
-
-        case "TOGGLE_SECTION_SETTINGS":
-            return {
-                ...state,
-                showSectionSettings:
-                    payload !== undefined
-                        ? payload
-                        : !state.showSectionSettings,
-            }
-
+        case SET_LESSON:
+            return payload
+/*
         case "BOOTSTRAP": {
             const newState = {
                 ...state,
@@ -70,7 +42,7 @@ export function lessonReducer(state = lessonReducer, { type, payload }) {
                 activeSectionId: payload.id,
                 saveStatus: "",
             }
-
+*/
         case "LESSON_UPDATED":
             return {
                 ...state,
@@ -96,7 +68,7 @@ export function lessonReducer(state = lessonReducer, { type, payload }) {
 
 
         case "RESET":
-            return initialState
+            return lessonInitialState
 
         default:
             return state
