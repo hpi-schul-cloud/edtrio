@@ -3,6 +3,7 @@ import qs from "qs"
 import { mergeDiff } from "~/utils/diff"
 import { createDispatch, thunkMiddleware } from "~/utils/dispatch"
 import { ADD_SECTION , REPLACE_ADDED_SECTION_ID , SET_SECTIONS } from "./section.actions"
+import { SET_ACTIVE_SECTION } from "./view.actions"
 
 
 
@@ -29,7 +30,7 @@ export function viewReducer(state = viewInitialState, { type, payload }) {
         case SET_SECTIONS:
             return {
                 ...state,
-                activeSectionId: 0
+                activeSectionId: payload[0]._id
             }
         case ADD_SECTION:
             return {
@@ -68,11 +69,10 @@ export function viewReducer(state = viewInitialState, { type, payload }) {
                 saveStatus: "",
             }
 
-        case "SET_ACTIVE_SECTION":
+        case SET_ACTIVE_SECTION:
             return {
                 ...state,
                 activeSectionId: payload.id,
-                saveStatus: "",
             }
 
         case "RESET":

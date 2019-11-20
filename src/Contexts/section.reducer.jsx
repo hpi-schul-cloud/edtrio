@@ -15,13 +15,6 @@ export function sectionReducer(state = sectionInitialState, { type, payload }) {
         case SET_SECTIONS:
             return payload
 
-        case "SET_ACTIVE_SECTION":
-            return {
-                ...state,
-                activeSectionId: payload.id,
-                saveStatus: "",
-            }
-
 
         case "SWAP_SECTIONS":
             state.lesson.changed.add("order")
@@ -91,28 +84,25 @@ export function sectionReducer(state = sectionInitialState, { type, payload }) {
             }
 
         case "PREPARE_DELETE_SECTION":
-            let activeSectionId = state.activeSectionId
+            let activeSectionId = state.view.activeSectionId
             if (activeSectionId === payload) {
                 const deleteIndex = state.lesson.sections.findIndex(
                     el => el.id === payload,
                 )
                 const newIndex =
                     deleteIndex === 0 ? deleteIndex + 1 : deleteIndex - 1
-                activeSectionId = state.lesson.sections[newIndex].id
+                activeSectionId = state.sections[newIndex].id
             }
 
-            return {
-                ...state,
-                activeSectionId,
-                lesson: {
-                    ...state.lesson,
-                    sections: state.lesson.sections.map(section => {
-                        if (section.id === payload)
-                            return { ...section, delete: true }
-                        return section
-                    }),
-                },
-            }
+            return [
+                ...state.lesson.sections.map(section => {
+                    if (section.id === payload)
+                        return { ...section, delete: true }
+                    return section
+                }),
+            ]
+                
+            
 
         case "DELETE_SECTION":
             return {

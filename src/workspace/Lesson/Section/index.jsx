@@ -63,7 +63,7 @@ const Warning = styled(Text)`
 const Section = ({ store, dispatch }) => {
     const sectionRef = useRef(null)
 
-    if (!store.activeSectionId)
+    if (!store.view.activeSectionId)
         return (
             <Container>
                 <Flex>
@@ -73,10 +73,9 @@ const Section = ({ store, dispatch }) => {
         )
 
     const index = store.sections.findIndex(
-        section => section.id === store.activeSectionId,
+        section => section.id === store.view.activeSectionId,
     )
     const section = store.sections[index]
-    const isLast = store.sections.length - 1 === index
     return (
         <StyledSection
             column
