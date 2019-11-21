@@ -1,6 +1,6 @@
 
-export const initialState = {}
-export function courseReducer(state = initialState, { type, payload }) {
+export const courseInitialState = {}
+export function courseReducer(state = courseInitialState, { type, payload }) {
     switch (type) {
 		case "SET_COURSE":
             return {

@@ -1,40 +1,15 @@
-export const initialState = {
-    lesson: {},
-    studentView: !!q.student_view,
+import { SET_LESSON } from "./lesson.actions"
 
-    bootstrapFinished: false,
-    sectionOverviewExpanded: false,
-    showSectionSettings: false,
+export const lessonInitialState = {
 }
-export function lessonReducer(state = lessonReducer, { type, payload }) {
+export function lessonReducer(state = lessonInitialState, { type, payload }) {
     switch (type) {
-        case "SET_EDITING":
-            // switch between editing and view mode
-            if (state.studentView) return state
+        case SET_LESSON:
             return {
-                ...state,
-                editing: payload,
+                ...payload,
+                changed: new Set()
             }
-
-
-        case "TOGGLE_SECTION_OVERVIEW":
-            return {
-                ...state,
-                sectionOverviewExpanded:
-                    payload !== undefined
-                        ? payload
-                        : !state.sectionOverviewExpanded,
-            }
-
-        case "TOGGLE_SECTION_SETTINGS":
-            return {
-                ...state,
-                showSectionSettings:
-                    payload !== undefined
-                        ? payload
-                        : !state.showSectionSettings,
-            }
-
+/*
         case "BOOTSTRAP": {
             const newState = {
                 ...state,
@@ -57,46 +32,27 @@ export function lessonReducer(state = lessonReducer, { type, payload }) {
 
             return newState
         }
-        case "BOOTSTRAP_FINISH":
-            return {
-                ...state,
-                bootstrapFinished: true,
-                saveStatus: "",
-            }
 
-        case "SET_ACTIVE_SECTION":
-            return {
-                ...state,
-                activeSectionId: payload.id,
-                saveStatus: "",
-            }
-
+*/
         case "LESSON_UPDATED":
             return {
                 ...state,
-                saveStatus: "Aktuallisiert",
-                lesson: {
-                    ...state.lesson,
-                    ...payload,
-                }
+                ...payload
             }
         case "LESSON_TITLE_CHANGE":
-            state.lesson.changed.add("title")
+            state.changed.add("title")
             return {
                 ...state,
-                lesson: {
-                    ...state.lesson,
-                    title: payload,
-                },
+                title: payload.title
             }
 
         case "LESSON_SAVED":
-            state.lesson.changed.clear()
+            state.changed.clear()
             return state
 
 
         case "RESET":
-            return initialState
+            return lessonInitialState
 
         default:
             return state

@@ -2,266 +2,135 @@ import React, { useReducer } from "react"
 import qs from "qs"
 import { mergeDiff } from "~/utils/diff"
 import { createDispatch, thunkMiddleware } from "~/utils/dispatch"
+import { SET_SECTIONS , ADD_SECTION , REPLACE_ADDED_SECTION_ID } from "./section.actions"
+
+
 
 const q = qs.parse(window.location.search, { ignoreQueryPrefix: true })
 
-export const initialState = [{
-    studentView: !!q.student_view,
-    editing: !q.student_view,
-    activeSectionId: "",
-    bootstrapFinished: false,
-    saveStatus: "",
-    sectionOverviewExpanded: false,
-	showSectionSettings: false,
-	position: 0
-}]
-export function sectionReducer(state = sectionReducer, { type, payload }) {
+export const sectionInitialState = []
+export function sectionReducer(state = sectionInitialState, { type, payload }) {
+    console.log(state)
     switch (type) {
-
-        case "BOOTSTRAP": {
-            const newState = {
-                ...state,
-                loading: false,
-                error: "",
-                lesson: {
-                    ...payload,
-                    changed: new Set(),
-                    sections: payload.sections.map(section => {
-                        const sectionData = { ...section, changed: new Set() }
-                        if (section.new) {
-                            sectionData.new = undefined
-                            sectionData.changed.add("")
-                        }
-                        return sectionData
-                    }),
-                },
-                activeSectionId: payload.sections[0].id,
-            }
-
-            return newState
-        }
-        case "BOOTSTRAP_FINISH":
-            return {
-                ...state,
-                bootstrapFinished: true,
-                saveStatus: "",
-            }
-
-        case "SET_ACTIVE_SECTION":
-            return {
-                ...state,
-                activeSectionId: payload.id,
-                saveStatus: "",
-            }
-
+        case SET_SECTIONS:
+            return payload.map((section) => ({
+                ...section,
+                changed: new Set()
+            }))
 
         case "SWAP_SECTIONS":
-            state.lesson.changed.add("order")
-            return {
-                ...state,
-                lesson: {
-                    ...state.lesson,
-                    sections: state.lesson.sections.map(
-                        (section, index, sections) => {
-                            if (index === payload[0])
-                                return sections[payload[1]]
-                            if (index === payload[1])
-                                return sections[payload[0]]
-                            return section
-                        },
-                    ),
+            return state.map(
+                (section, index, sections) => {
+                    if (index === payload[0]){
+                        section.changed.add('order')
+                        return sections[payload[1]]
+                    }
+                    if (index === payload[1]){
+                        section.changed.add('order')
+                        return sections[payload[0]]
+                    }
+                    return section
                 },
-            }
+            )
 
-        case "ADD_SECTION":
-            const newSection = {
-                title: "",
-                id: payload.tempId,
-                visible: true,
-                docValue: {},
-                changed: new Set(),
-            }
-            const newSections = []
-            if (payload.position === -1) newSections.push(newSection)
-
-            state.lesson.sections.forEach((section, index) => {
-                newSections.push(section)
-                if (index === payload.position) newSections.push(newSection)
-            })
-
+        case ADD_SECTION:
             return {
-                ...state,
-                activeSectionId: payload.tempId,
-                lesson: {
-                    ...state.lesson,
-                    sections: newSections,
-                },
+                ...state.splice(payload, 0, {
+                    title: "",
+                    id: payload.tempId,
+                    visible: true,
+                    docValue: {},
+                    changed: new Set(),
+                })
             }
 
-        case "REPLACE_ADDED_SECTION_ID": {
-            return {
-                ...state,
-                activeSectionId:
-                    state.activeSectionId === payload.tempId
-                        ? payload.backendId
-                        : state.activeSectionId,
-                lesson: {
-                    ...state.lesson,
-                    sections: state.lesson.sections.map(section => {
-                        if (section.id === payload.tempId) {
-                            return { ...section, id: payload.backendId }
-                        }
-                        return section
-                    }),
-                },
-            }
+        case REPLACE_ADDED_SECTION_ID: {
+            return state.map(section =>
+                section.id === payload.tempId
+                ? {...section, id: payload.backendId}
+                : section
+            )
         }
 
         case "SECTION_VISIBILITY":
-            return {
-                ...state,
-                lesson: {
-                    ...state.lesson,
-                    sections: state.lesson.sections.map(section => {
-                        if (section.id === payload) {
-                            section.changed.add("visible")
-                            return { ...section, visible: !section.visible }
-                        }
-                        return section
-                    }),
-                },
-            }
+            return state.map(section => {
+                if (section.id === payload) {
+                    section.changed.add("visible")
+                    return { ...section, visible: !section.visible }
+                }
+                return section
+            })
 
         case "PREPARE_DELETE_SECTION":
-            let activeSectionId = state.activeSectionId
+            let activeSectionId = state.view.activeSectionId
             if (activeSectionId === payload) {
-                const deleteIndex = state.lesson.sections.findIndex(
+                const deleteIndex = state.findIndex(
                     el => el.id === payload,
                 )
                 const newIndex =
                     deleteIndex === 0 ? deleteIndex + 1 : deleteIndex - 1
-                activeSectionId = state.lesson.sections[newIndex].id
+                activeSectionId = state[newIndex].id
             }
 
-            return {
-                ...state,
-                activeSectionId,
-                lesson: {
-                    ...state.lesson,
-                    sections: state.lesson.sections.map(section => {
-                        if (section.id === payload)
-                            return { ...section, delete: true }
-                        return section
-                    }),
-                },
-            }
+            return [
+                ...state.map(section => {
+                    if (section.id === payload)
+                        return { ...section, delete: true }
+                    return section
+                }),
+            ]
 
         case "DELETE_SECTION":
-            return {
-                ...state,
-                lesson: {
-                    ...state.lesson,
-                    sections: state.lesson.sections.filter(
-                        section => section.id !== payload,
-                    ),
-                },
-            }
+            return state.filter(
+                section => section.id !== payload,
+            )
 
         case "SECTION_TITLE_CHANGE":
-            return {
-                ...state,
-                lesson: {
-                    ...state.lesson,
-                    sections: state.lesson.sections.map(section => {
-                        if (section.id !== payload.sectionId) return section
+            return [
+                ...state.map(section => {
+                    if (section.id !== payload.sectionId) return section
 
-                        section.changed.add("title")
-                        return { ...section, title: payload.title }
-                    }),
-                },
-            }
+                    section.changed.add("title")
+                    return { ...section, title: payload.title }
+                }),
+            ]
 
         case "SECTION_DOCVALUE_DIFF":
-            return {
-                ...state,
-                lesson: {
-                    ...state.lesson,
-                    sections: state.lesson.sections.map(section => {
-                        if (section.id !== payload.sectionId) return section
+            return [
+                ...state.map(section => {
+                    if (section.id !== payload.sectionId) return section
                         return {
                             ...section,
                             docValue: mergeDiff(section.docValue, payload.diff)
                         }
                     }),
-                }
-            }
-        case "SECTION_DOCVALUE_CHANGE":
-            if (!state.editing) return state
-            return {
-                ...state,
-                lesson: {
-                    ...state.lesson,
-                    sections: state.lesson.sections.map(section => {
-                        if (section.id !== payload.sectionId) return section
-                        section.changed.add("docValue")
-                        return {
-                            ...section,
-                            docValue: payload.docValue,
-                        }
-                    }),
-                },
-            }
-/*
-        case "SECTION_SAVED_DOCVALUE":
-            return {
-                ...state,
-                lesson: {
-                    ...state.lesson,
-                    sections: state.lesson.sections.map(section => {
-                        if (section.id !== payload) return section
-                        return {
-                            ...section,
-                            savedDocValue: section.docValue,
-                        }
-                    }),
-                },
-            }
+            ]
 
-        case "SECTION_SAVE_DOCVALUE_FAILED":
-            return {
-                ...state,
-                lesson: {
-                    ...state.lesson,
-                    sections: state.lesson.sections.map(section => {
-                        if (section.id !== payload.id) return section
-                        return {
-                            ...section,
-                            savedDocValue: payload.lastSavedDocValue,
-                        }
-                    }),
-                },
-            }
-*/
+        case "SECTION_DOCVALUE_CHANGE":
+                if (!state.editing) return state
+                return state.section.map(section => {
+                    if(section.id !== payload.sectionId) return section
+                    section.changed.add("docValue")
+                    return {
+                        ...section,
+                        docValue: payload.docValue
+                    }
+                })
+
         case "SECTION_SAVED":
-            state.lesson.sections.forEach(section => {
+            state.forEach(section => {
                 if (section.id === payload) section.changed.clear()
             })
-            return {
-                ...state,
-                lesson: {
-                    ...state.lesson,
-                    sections: state.lesson.sections.map(section => {
-                        if (section.id !== payload) return section
-                        return {
-                            ...section,
-                            savedDocValue: section.docValue,
-                        }
-                    }),
-                },
-            }
+            return state.map(section => {
+                if (section.id !== payload) return section
+                return {
+                    ...section,
+                    savedDocValue: section.docValue,
+                }
+            })
 
         case "RESET":
-            return initialState
+            return sectionInitialState
 
         default:
             return state

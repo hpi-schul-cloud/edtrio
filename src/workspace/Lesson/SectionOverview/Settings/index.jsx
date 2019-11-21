@@ -61,14 +61,14 @@ const Icon = styled.img`
 const Settings = () => {
     const { store, dispatch } = useContext(LessonContext)
     const activeSectionId = store.activeSectionId
-    const activeSection = store.lesson.sections.find(
+    const activeSection = store.sections.find(
         el => el.id === activeSectionId,
     )
-    const activeSectionIndex = store.lesson.sections.findIndex(
+    const activeSectionIndex = store.sections.findIndex(
         el => el.id === activeSectionId,
     )
 
-    const isOnly = store.lesson.sections.length === 1
+    const isOnly = store.sections.length === 1
 
     async function confirmDelete() {
         dispatch({

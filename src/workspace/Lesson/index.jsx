@@ -53,7 +53,7 @@ const Lesson = props => {
     // useInterval(() => saveLesson(store, dispatch), 10000)
 
     useEffect(() => {
-        if (store.bootstrapFinished && store.editing === false)
+        if (store.view.bootstrapFinished && store.editing === false)
             saveLesson(store, dispatch, true)
     }, [store.editing])
 

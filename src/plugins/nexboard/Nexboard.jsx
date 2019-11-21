@@ -18,7 +18,7 @@ const Nexboard = ({ focused, state }) => {
                 board = await getBoard(state.id.value)
             } else {
                 board = await createBoard(
-                    store.lesson.id,
+                    store.lesson._id,
                     `${store.lesson.title} Nexboard`,
                 )
             }

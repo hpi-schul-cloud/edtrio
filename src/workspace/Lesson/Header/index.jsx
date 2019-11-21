@@ -10,6 +10,7 @@ import { Toggle } from "~/components/Button"
 import Back from "./Back"
 import BreadCrumbs from "./BreadCrumbs"
 import Settings from "./Settings"
+import { setEditing } from "~/Contexts/view.actions"
 
 const StyledHeader = styled(Flex)`
     position: fixed;
@@ -38,21 +39,27 @@ const Header = () => {
     const { store, dispatch } = useContext(LessonContext)
     const [showSaveStatus, setShowSaveStatus] = useState(false)
 
+    const {
+        notifications:
+            {saveStatus},
+        view  
+    } = store
+
     useEffect(() => {
         let timeout
-        if (store.saveStatus === "Ungesicherte Änderungen")
+        if (saveStatus === "Ungesicherte Änderungen")
             return setShowSaveStatus(true)
         if (
-            store.saveStatus === "Gespeichert" ||
-            store.saveStatus === "Lokal Gespeichert"
+            saveStatus === "Gespeichert" ||
+            saveStatus === "Lokal Gespeichert"
         )
             timeout = setTimeout(() => setShowSaveStatus(false), 1500)
 
         return () => clearTimeout(timeout)
-    }, [store.saveStatus])
+    }, [saveStatus])
 
     return (
-        <StyledHeader noWrap justifyBetween alignCenter editing={store.editing}>
+        <StyledHeader noWrap justifyBetween alignCenter editing={view.editing}>
             <Flex alignCenter>
                 <Back />
                 <BreadCrumbs store={store} dispatch={dispatch} />
@@ -69,15 +76,15 @@ const Header = () => {
                         opacity: showSaveStatus ? 1 : 0,
                         transition: "250ms all ease-in-out",
                     }}>
-                    {store.saveStatus}
+                    {saveStatus}
                 </SaveStatus>
-                {!store.studentView && (
+                {!view.studentView && (
                     <Toggle
                         caption="Präsentieren"
                         activeCaption="Bearbeiten"
-                        active={store.editing}
+                        active={store.view.editing}
                         onChange={newValue => {
-                            dispatch({ type: "SET_EDITING", payload: newValue })
+                            dispatch(setEditing(newValue))
                         }}
                     />
                 )}

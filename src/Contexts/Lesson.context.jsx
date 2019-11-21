@@ -1,11 +1,16 @@
-import React, { useReducer } from "react"
+import React, { useReducer, useEffect } from "react"
 import { createDispatch, thunkMiddleware } from "~/utils/dispatch"
 import { combineReducers } from "redux"
-import { sectionReducer } from "./section.reducer"
-import { viewReducer } from "./view.reducer"
-import { notificationReducer } from "./notifications.reducer"
-import { courseReducer } from "./course.reducer"
-import { lessonReducer } from './lesson.reducer'
+import { sectionReducer , sectionInitialState } from "./section.reducer"
+import { viewReducer , viewInitialState } from "./view.reducer"
+import { notificationReducer , notificationInitialState } from "./notifications.reducer"
+import { courseReducer , courseInitialState } from "./course.reducer"
+import { lessonReducer , lessonInitialState } from './lesson.reducer'
+
+
+
+
+
 
 
 const combinedReducer = combineReducers({
@@ -16,13 +21,21 @@ const combinedReducer = combineReducers({
     course: courseReducer
 })
 
+const combinedInitalState = {
+    lesson: lessonInitialState,
+    sections: sectionInitialState,
+    view: viewInitialState,
+    notifications: notificationInitialState,
+    course: courseInitialState
+}
+
+
 const LessonContext = React.createContext()
 
 export function LessonContextProvider({ children}) {
-    const [state, dispatch] = useReducer(combinedReducer)
-
+    const [state, dispatch] = useReducer(combinedReducer, combinedInitalState)
+    // needed for initial of all default states, should not match any case
     const value = { store: state, dispatch: createDispatch(dispatch, state, thunkMiddleware()) }
-
     return (
         <LessonContext.Provider value={value}>
             {children}

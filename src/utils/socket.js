@@ -14,25 +14,25 @@ class Socket {
 	constructor(url, authorization){
 		this.url = url
 		this.socket = io(url)
-		this.connected = false
+		this.isConnected = false
 
 		this.socket.on('connect', () => {
 			this.authorization(authorization)
-			this.connected = this.socket.connected
+			this.isConnected = this.socket.connected
 		})
 
 		this.socket.on('reconnect', () => {
 			this.authorization(authorization)
-			this.connected = this.socket.connected
+			this.isConnected = this.socket.connected
 		})
 
 		this.socket.on('disconnect', () => {
-			this.connected = this.socket.connected
+			this.isConnected = this.socket.connected
 		 })
 
 		this.socket.on('error', (error) => {
 			
-			
+			console.log(error)
 			/* dispatch({
 				type: 'ERROR',
 				payload: 'Die Verbindung zum Server konnte nicht aufrecht erhalten werden'
