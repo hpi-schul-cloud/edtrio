@@ -3,7 +3,8 @@ import qs from "qs"
 import { mergeDiff } from "~/utils/diff"
 import { createDispatch, thunkMiddleware } from "~/utils/dispatch"
 import { ADD_SECTION , REPLACE_ADDED_SECTION_ID , SET_SECTIONS } from "./section.actions"
-import { SET_ACTIVE_SECTION } from "./view.actions"
+import { SET_ACTIVE_SECTION , SET_EDITING } from "./view.actions"
+
 
 
 
@@ -19,7 +20,7 @@ export const viewInitialState = {
 }
 export function viewReducer(state = viewInitialState, { type, payload }) {
     switch (type) {
-        case "SET_EDITING":
+        case SET_EDITING:
             // switch between editing and view mode
             if (state.studentView) return state
             return {

@@ -49,6 +49,6 @@ export const addSection = (position) => async ({dispatch, state}) => {
  */
 export const removeSection = (sectionId) => async ({state}) => {
 	// TODO: rewrite to remove sections via dispatch in the store
-	const section = await editorWS.emit('delete', `lesson/${state.lesson.id}/sections/${sectionId}`)
+	const section = await editorWS.emit('delete', `lesson/${state.lesson._id}/sections/${sectionId}`)
 	return section
 }

@@ -3,11 +3,11 @@ import { SET_LESSON } from "./lesson.actions"
 export const lessonInitialState = {
 }
 export function lessonReducer(state = lessonInitialState, { type, payload }) {
-    console.log(type)
     switch (type) {
         case SET_LESSON:
             return {
-                ...payload
+                ...payload,
+                changed: new Set()
             }
 /*
         case "BOOTSTRAP": {
@@ -32,41 +32,22 @@ export function lessonReducer(state = lessonInitialState, { type, payload }) {
 
             return newState
         }
-        case "BOOTSTRAP_FINISH":
-            return {
-                ...state,
-                bootstrapFinished: true,
-                saveStatus: "",
-            }
 
-        case "SET_ACTIVE_SECTION":
-            return {
-                ...state,
-                activeSectionId: payload.id,
-                saveStatus: "",
-            }
 */
         case "LESSON_UPDATED":
             return {
                 ...state,
-                saveStatus: "Aktuallisiert",
-                lesson: {
-                    ...state.lesson,
-                    ...payload,
-                }
+                ...payload
             }
         case "LESSON_TITLE_CHANGE":
-            state.lesson.changed.add("title")
+            state.changed.add("title")
             return {
                 ...state,
-                lesson: {
-                    ...state.lesson,
-                    title: payload,
-                },
+                title: payload.title
             }
 
         case "LESSON_SAVED":
-            state.lesson.changed.clear()
+            state.changed.clear()
             return state
 
 
