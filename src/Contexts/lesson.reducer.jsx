@@ -27,7 +27,7 @@ export function lessonReducer(state = lessonInitialState, { type, payload }) {
                         return sectionData
                     }),
                 },
-                activeSectionId: payload.sections[0].id,
+                activeSectionId: payload.sections[0]._id,
             }
 
             return newState

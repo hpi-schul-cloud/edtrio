@@ -73,7 +73,7 @@ const Section = ({ store, dispatch }) => {
         )
 
     const index = store.sections.findIndex(
-        section => section.id === store.view.activeSectionId,
+        section => section._id === store.view.activeSectionId,
     )
     const section = store.sections[index]
     return (
@@ -92,16 +92,16 @@ const Section = ({ store, dispatch }) => {
             </Flex>
             <Wrapper visible={section.visible}>
                 <Editor
-                    key={section.id}
+                    key={section._id}
                     docValue={section.docValue}
-                    id={section.id}
+                    id={section._id}
                     index={index}
-                    editing={store.editing}
+                    editing={store.view.editing}
                     dispatchChange={docValue => {
                         dispatch({
                             type: "SECTION_DOCVALUE_CHANGE",
                             payload: {
-                                sectionId: section.id,
+                                sectionId: section._id,
                                 docValue,
                             },
                         })
@@ -110,11 +110,11 @@ const Section = ({ store, dispatch }) => {
                 <Controls
                     dispatch={dispatch}
                     prevId={
-                        index - 1 >= 0 && store.sections[index - 1].id
+                        index - 1 >= 0 && store.sections[index - 1]._id
                     }
                     nextId={
                         index + 1 < store.sections.length &&
-                        store.sections[index + 1].id
+                        store.sections[index + 1]._id
                     }
                 />
             </Wrapper>

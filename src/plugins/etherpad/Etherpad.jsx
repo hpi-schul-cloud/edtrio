@@ -10,19 +10,19 @@ import { createBoard } from "./utils"
 
 const Etherpad = ({ focused, state }) => {
     useEffect(() => {
-        if (state.id.value) return
-        state.id.set(shortid.generate())
+        if (state._id.value) return
+        state._id.set(shortid.generate())
     }, [])
 
     const { store, dispatch } = useContext(LessonContext)
 
     let etherpadFrame
-    if (state.id.value) {
+    if (state._id.value) {
         etherpadFrame = (
             <iframe
                 src={`https://etherpad.schul-cloud.org/p/${
                     // TODO maybe make this variable?
-                    state.id.value
+                    state._id.value
                 }`}
                 style={{
                     width: "100%",
@@ -43,7 +43,7 @@ const Etherpad = ({ focused, state }) => {
                     style={{ marginBottom: 15, marginRight: 15, width: 150 }}
                     onChange={state.title.set}
                     value={state.title.value}
-                    readOnly={!store.editing}
+                    readOnly={!store.view.editing}
                 />
                 <Input
                     size={16}
@@ -51,7 +51,7 @@ const Etherpad = ({ focused, state }) => {
                     placeholder="Etherpad Beschreibung"
                     onChange={state.description.set}
                     value={state.description.value}
-                    readOnly={!store.editing}
+                    readOnly={!store.view.editing}
                 />
             </Flex> */}
             {etherpadFrame}

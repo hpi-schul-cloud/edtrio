@@ -29,7 +29,7 @@ export const addSection = (position) => async ({dispatch, state}) => {
 		},
 	})
 
-	const section = await editorWS.emit('create', `lesson/${lesson.id}/sections`, {position})
+	const section = await editorWS.emit('create', `lesson/${lesson._id}/sections`, {position})
 
 	dispatch({
 		type: REPLACE_ADDED_SECTION_ID,

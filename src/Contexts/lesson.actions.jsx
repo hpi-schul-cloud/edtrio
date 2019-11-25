@@ -22,7 +22,7 @@ export const fetchLesson = (lessonId, courseId, params) => async ({dispatch}) =>
 			lessonId,
 			params
 		)
-		lesson.id = lesson._id
+		lesson._id = lesson._id
 		console.log('lesson', lesson)
 		dispatch({
 			type: SET_LESSON,
@@ -73,12 +73,12 @@ export const fetchLessonWithSections = (lessonId, courseId, params) => async ({d
 		dispatch({
 			type: SET_LESSON,
 			payload: {
-				id: new Date().getTime(),
+				_id: new Date().getTime(),
 			}
 		})
 
 		dispatch(setSections([{
-			id: new Date().getTime() +
+			_id: new Date().getTime() +
 					"" +
 					Math.floor(Math.random() * 100),
 			docValue: null,

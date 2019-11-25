@@ -5,9 +5,10 @@ import uuid from "uuid/v4"
 import api from "~/utils/api"
 import theme from "~/theme"
 
-import { createSection } from "~/Contexts/section.actions"
+import { addSection } from "~/Contexts/section.actions"
 import Flex from "~/components/Flex"
 import {editorWS} from "~/utils/socket"
+import { toggleSectionOverview } from "~/Contexts/view.actions"
 
 const Wrapper = styled(Flex)`
     width: 100%;
@@ -51,15 +52,20 @@ const AddWrapper = styled.div`
 `
 
 const SidebarControls = ({ store, dispatch }) => {
-    const expanded = store.sectionOverviewExpanded
-    const {lesson} = store
+    const {
+        lesson,
+        view: {
+            sectionOverviewExpanded: expanded,
+            editing
+        }
+    } = store
     return (
         <Wrapper justifyEnd column={!expanded} alignCenter expanded={expanded}>
-            {store.editing && (
+            {editing && (
                 <AddWrapper visible={!expanded}>
                     <StyledIcon
                         onClick={() => {
-                            dispatch(createSection(lesson.sections.length-1))
+                            dispatch(addSection(lesson.sections.length-1))
                         }}
                         style={{ width: 40, height: 40 }}
                         src={require("~/assets/plus-red-round.svg")}
@@ -75,10 +81,7 @@ const SidebarControls = ({ store, dispatch }) => {
                 }
                 expanded={expanded}
                 onClick={() => {
-                    dispatch({
-                        type: "TOGGLE_SECTION_OVERVIEW",
-                        payload: !expanded,
-                    })
+                    dispatch(toggleSectionOverview())
                 }}
             />
         </Wrapper>

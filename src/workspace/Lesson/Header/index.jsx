@@ -42,7 +42,7 @@ const Header = () => {
     const {
         notifications:
             {saveStatus},
-        view  
+        view
     } = store
 
     useEffect(() => {

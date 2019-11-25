@@ -33,7 +33,7 @@ const Crumb = ({ to, caption }) => {
 
 const BreadCrumbs = ({ store, dispatch }) => {
     const {
-        lesson: { _id: lessonId }, 
+        lesson: { _id: lessonId },
         course,
     } = store
     const [crumbData, setCrumbData] = useState({
@@ -72,7 +72,7 @@ const BreadCrumbs = ({ store, dispatch }) => {
                 noMargin
                 size={16}
                 value={store.lesson.title}
-                readOnly={!store.editing}
+                readOnly={!store.view.editing}
                 placeholder="Titel für das Thema"
                 onChange={ updateTitle }
             />

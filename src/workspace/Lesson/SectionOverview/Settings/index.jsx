@@ -60,12 +60,12 @@ const Icon = styled.img`
 
 const Settings = () => {
     const { store, dispatch } = useContext(LessonContext)
-    const activeSectionId = store.activeSectionId
+    const activeSectionId = store.view.activeSectionId
     const activeSection = store.sections.find(
-        el => el.id === activeSectionId,
+        el => el._id === activeSectionId,
     )
     const activeSectionIndex = store.sections.findIndex(
-        el => el.id === activeSectionId,
+        el => el._id === activeSectionId,
     )
 
     const isOnly = store.sections.length === 1
@@ -77,7 +77,7 @@ const Settings = () => {
         })
 
         try {
-            await editorWS.emit('remove', `lesson/${store.lesson.id}/sections`, activeSectionId)
+            await editorWS.emit('remove', `lesson/${store.lesson._id}/sections`, activeSectionId)
             dispatch({
                 type: "DELETE_SECTION",
                 payload: activeSectionId,

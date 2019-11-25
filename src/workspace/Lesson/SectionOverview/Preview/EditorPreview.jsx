@@ -4,6 +4,7 @@ import { DragLayer } from "react-dnd"
 import { isTouchDevice } from "~/utils/device"
 
 import Editor from "./Editor"
+import { setActiveSection } from "~/Contexts/view.actions"
 
 function collect(monitor) {
     return {
@@ -134,27 +135,24 @@ const EditorPreview = ({
     return (
         <Outer
             ref={previewRef}
-            active={store.activeSectionId === section.id}
+            active={store.view.activeSectionId === section._id}
             expanded={expanded}
-            editing={store.editing}
+            editing={store.view.editing}
             style={dragStyle}>
             <Wrapper
-                active={store.activeSectionId === section.id}
+                active={store.view.activeSectionId === section._id}
                 visible={section.visible}
-                hidden={!section.visible && !store.editing}
+                hidden={!section.visible && !store.view.editing}
                 expanded={expanded}
                 isDone={index <= activeSectionIndex}
                 onClick={() => {
-                    dispatch({
-                        type: "SET_ACTIVE_SECTION",
-                        payload: { id: section.id },
-                    })
+                    dispatch(setActiveSection(section._id))
                 }}>
                 {expanded && (
                     <Editor
                         key={k}
                         expanded={expanded}
-                        editing={store.editing}
+                        editing={store.view.editing}
                         docValue={section.docValue}
                     />
                 )}

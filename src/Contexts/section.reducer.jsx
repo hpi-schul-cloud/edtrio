@@ -46,7 +46,7 @@ export function sectionReducer(state = sectionInitialState, { type, payload }) {
 
         case REPLACE_ADDED_SECTION_ID: {
             return state.map(section =>
-                section.id === payload.tempId
+                section._id === payload.tempId
                 ? {...section, id: payload.backendId}
                 : section
             )
@@ -54,7 +54,7 @@ export function sectionReducer(state = sectionInitialState, { type, payload }) {
 
         case "SECTION_VISIBILITY":
             return state.map(section => {
-                if (section.id === payload) {
+                if (section._id === payload) {
                     section.changed.add("visible")
                     return { ...section, visible: !section.visible }
                 }
@@ -62,19 +62,20 @@ export function sectionReducer(state = sectionInitialState, { type, payload }) {
             })
 
         case "PREPARE_DELETE_SECTION":
+            // TODO: will not work because state.view is unknown
             let activeSectionId = state.view.activeSectionId
             if (activeSectionId === payload) {
                 const deleteIndex = state.findIndex(
-                    el => el.id === payload,
+                    el => el._id === payload,
                 )
                 const newIndex =
                     deleteIndex === 0 ? deleteIndex + 1 : deleteIndex - 1
-                activeSectionId = state[newIndex].id
+                activeSectionId = state[newIndex]._id
             }
 
             return [
                 ...state.map(section => {
-                    if (section.id === payload)
+                    if (section._id === payload)
                         return { ...section, delete: true }
                     return section
                 }),
@@ -82,13 +83,13 @@ export function sectionReducer(state = sectionInitialState, { type, payload }) {
 
         case "DELETE_SECTION":
             return state.filter(
-                section => section.id !== payload,
+                section => section._id !== payload,
             )
 
         case "SECTION_TITLE_CHANGE":
             return [
                 ...state.map(section => {
-                    if (section.id !== payload.sectionId) return section
+                    if (section._id !== payload.sectionId) return section
 
                     section.changed.add("title")
                     return { ...section, title: payload.title }
@@ -98,7 +99,7 @@ export function sectionReducer(state = sectionInitialState, { type, payload }) {
         case "SECTION_DOCVALUE_DIFF":
             return [
                 ...state.map(section => {
-                    if (section.id !== payload.sectionId) return section
+                    if (section._id !== payload.sectionId) return section
                         return {
                             ...section,
                             docValue: mergeDiff(section.docValue, payload.diff)
@@ -107,9 +108,9 @@ export function sectionReducer(state = sectionInitialState, { type, payload }) {
             ]
 
         case "SECTION_DOCVALUE_CHANGE":
-                if (!state.editing) return state
+                if (!state.view.editing) return state
                 return state.section.map(section => {
-                    if(section.id !== payload.sectionId) return section
+                    if(section._id !== payload.sectionId) return section
                     section.changed.add("docValue")
                     return {
                         ...section,
@@ -119,10 +120,10 @@ export function sectionReducer(state = sectionInitialState, { type, payload }) {
 
         case "SECTION_SAVED":
             state.forEach(section => {
-                if (section.id === payload) section.changed.clear()
+                if (section._id === payload) section.changed.clear()
             })
             return state.map(section => {
-                if (section.id !== payload) return section
+                if (section._id !== payload) return section
                 return {
                     ...section,
                     savedDocValue: section.docValue,

@@ -1,12 +1,7 @@
-import React, { useReducer } from "react"
 import qs from "qs"
-import { mergeDiff } from "~/utils/diff"
-import { createDispatch, thunkMiddleware } from "~/utils/dispatch"
+
 import { ADD_SECTION , REPLACE_ADDED_SECTION_ID , SET_SECTIONS } from "./section.actions"
-import { SET_ACTIVE_SECTION , SET_EDITING } from "./view.actions"
-
-
-
+import { TOGGLE_SECTION_SETTINGS, TOGGLE_SECTION_OVERVIEW, SET_ACTIVE_SECTION , SET_EDITING } from "./view.actions"
 
 const q = qs.parse(window.location.search, { ignoreQueryPrefix: true })
 
@@ -44,22 +39,16 @@ export function viewReducer(state = viewInitialState, { type, payload }) {
             ? { ...state, activeSectionId: payload.backendId }
             : state
 
-        case "TOGGLE_SECTION_OVERVIEW":
+        case TOGGLE_SECTION_OVERVIEW:
             return {
                 ...state,
-                sectionOverviewExpanded:
-                    payload !== undefined
-                        ? payload
-                        : !state.sectionOverviewExpanded,
+                sectionOverviewExpanded: payload
             }
 
-        case "TOGGLE_SECTION_SETTINGS":
+        case TOGGLE_SECTION_SETTINGS:
             return {
                 ...state,
-                showSectionSettings:
-                    payload !== undefined
-                        ? payload
-                        : !state.showSectionSettings,
+                showSectionSettings: payload
             }
 
 
@@ -73,7 +62,7 @@ export function viewReducer(state = viewInitialState, { type, payload }) {
         case SET_ACTIVE_SECTION:
             return {
                 ...state,
-                activeSectionId: payload.id,
+                activeSectionId: payload,
             }
 
         case "RESET":

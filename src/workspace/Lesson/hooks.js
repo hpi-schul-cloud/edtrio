@@ -76,14 +76,14 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
 
 
 export async function saveLesson(store, dispatch, override) {
-    if (!store.editing && !override) return
+    if (!store.view.editing && !override) return
     dispatch({ type: "SAVE_STATUS", payload: "Sichern..." })
     const savePromises = []
     const lessonChanges = {}
     store.lesson.changed.forEach(key => {
         if (key === "order") {
             lessonChanges.sections = store.sections.map(
-                section => section.id,
+                section => section._id,
             )
         } else {
             lessonChanges[key] = store.lesson[key]
@@ -139,18 +139,18 @@ export async function saveLesson(store, dispatch, override) {
                             await editorWS
                                 .emit(
                                     'patch',
-                                    `lesson/${store.lesson.id}/sections/diff`,
-                                    section.id,
+                                    `lesson/${store.lesson._id}/sections/diff`,
+                                    section._id,
                                     {state: sectionDiff},
                                 )
-                        dispatch({ type: "SECTION_SAVED", payload: section.id })
+                        dispatch({ type: "SECTION_SAVED", payload: section._id })
                         resolve(backendResult)
                     } catch (err) {
                        /* if (savedDocValue) {
                             dispatch({
                                 type: "SECTION_SAVE_DOCVALUE_FAILED",
                                 payload: {
-                                    id: section.id,
+                                    id: section._id,
                                     lastSavedDocValue: savedDocValue,
                                 },
                             })
@@ -163,7 +163,7 @@ export async function saveLesson(store, dispatch, override) {
 
         if (Object.keys(sectionChanges).length === 0) {
             return savePromises.push(
-                Promise.resolve(`No changes for section ${section.id}`),
+                Promise.resolve(`No changes for section ${section._id}`),
             )
         }else {
             savePromises.push(
@@ -173,11 +173,11 @@ export async function saveLesson(store, dispatch, override) {
                             await editorWS
                                 .emit(
                                     'patch',
-                                    `lesson/${store.lesson.id}/sections`,
-                                    section.id,
+                                    `lesson/${store.lesson._id}/sections`,
+                                    section._id,
                                     sectionChanges
                                 )
-                        dispatch({ type: "SECTION_SAVED", payload: section.id })
+                        dispatch({ type: "SECTION_SAVED", payload: section._id })
                         resolve(backendResult)
                     } catch (err) {
                         reject(err)
@@ -205,7 +205,7 @@ export async function saveLesson(store, dispatch, override) {
         cacheData.savedToBackend = false
     }
 
-    saveEditorData(cacheData, store.lesson.id)
+    saveEditorData(cacheData, store.lesson._id)
     dispatch({
         type: "SAVE_STATUS",
         payload: !cacheData.savedToBackend

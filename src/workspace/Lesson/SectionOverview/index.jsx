@@ -7,6 +7,7 @@ import theme from "~/theme"
 import Preview from "./Preview"
 import Settings from "./Settings"
 import SidebarControls from "./SidebarControls"
+import { hiddeSectionOverview, showSectionOverview } from "~/Contexts/view.actions"
 
 const Wrapper = styled.div`
     left: 0;
@@ -54,20 +55,20 @@ const Previews = styled.div`
 function useResizeListener(store, dispatch) {
     function resizeListener() {
         if (store.sectionOverviewExpanded && window.innerWidth < 1350) {
-            dispatch({ type: "TOGGLE_SECTION_OVERVIEW", payload: false })
+            dispatch(hiddeSectionOverview())
         }
 
         if (
             store.sectionOverviewExpanded === false &&
             window.innerWidth > 1350
         ) {
-            dispatch({ type: "TOGGLE_SECTION_OVERVIEW", payload: true })
+            dispatch(showSectionOverview())
         }
     }
 
     useEffect(() => {
         if (window.innerWidth > 1350 && !store.view.bootstrapFinished) {
-            dispatch({ type: "TOGGLE_SECTION_OVERVIEW", payload: true })
+            dispatch(showSectionOverview())
         }
 
         // window.addEventListener("resize", resizeListener)
@@ -77,8 +78,12 @@ function useResizeListener(store, dispatch) {
 
 const SectionOverview = ({ store, dispatch }) => {
     useResizeListener(store, dispatch)
-    const expanded = store.sectionOverviewExpanded
     const sections = store.sections
+    const {
+        sectionOverviewExpanded: expanded,
+        editing
+    } = store.view
+    console.log(expanded)
 
     function moveSection(fromIndex, toIndex) {
         dispatch({ type: "SWAP_SECTIONS", payload: [fromIndex, toIndex] })
@@ -86,16 +91,16 @@ const SectionOverview = ({ store, dispatch }) => {
 
     return (
         <React.Fragment>
-            <Wrapper expanded={expanded} editing={store.editing}>
-                <Previews editing={store.editing} expanded={expanded}>
+            <Wrapper expanded={expanded} editing={editing}>
+                <Previews editing={editing} expanded={expanded}>
                     {sections
                         .filter((section, index) => {
-                            if (store.editing) return true
+                            if (editing) return true
                             return section.visible
                         })
                         .map((section, index) => {
                             const editorKey =
-                                section.id +
+                                section._id +
                                 "-" +
                                 Math.round(new Date().getTime() / 5000)
                             return (
@@ -106,7 +111,7 @@ const SectionOverview = ({ store, dispatch }) => {
                                     dispatch={dispatch}
                                     section={section}
                                     index={index}
-                                    key={section.id}
+                                    key={section._id}
                                 />
                             )
                         })}
