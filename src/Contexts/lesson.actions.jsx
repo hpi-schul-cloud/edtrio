@@ -22,8 +22,6 @@ export const fetchLesson = (lessonId, courseId, params) => async ({dispatch}) =>
 			lessonId,
 			params
 		)
-		lesson._id = lesson._id
-		console.log('lesson', lesson)
 		dispatch({
 			type: SET_LESSON,
 			lesson
@@ -48,7 +46,6 @@ export const fetchLessonWithSections = (lessonId, courseId, params) => async ({d
 		)
 		let {sections, ...rest} = lesson
 		lesson = rest
-		lesson.id = lesson._id
 
 		await dispatch({
 			type: SET_LESSON,
