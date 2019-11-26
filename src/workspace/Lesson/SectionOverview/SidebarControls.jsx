@@ -1,13 +1,11 @@
 import React from "react"
 import styled, { css } from "styled-components"
-import uuid from "uuid/v4"
 
 import api from "~/utils/api"
 import theme from "~/theme"
 
-import { addSection } from "~/Contexts/section.actions"
+import { createSection } from "~/Contexts/section.actions"
 import Flex from "~/components/Flex"
-import {editorWS} from "~/utils/socket"
 import { toggleSectionOverview } from "~/Contexts/view.actions"
 
 const Wrapper = styled(Flex)`
@@ -53,7 +51,7 @@ const AddWrapper = styled.div`
 
 const SidebarControls = ({ store, dispatch }) => {
     const {
-        lesson,
+        sections,
         view: {
             sectionOverviewExpanded: expanded,
             editing
@@ -65,7 +63,7 @@ const SidebarControls = ({ store, dispatch }) => {
                 <AddWrapper visible={!expanded}>
                     <StyledIcon
                         onClick={() => {
-                            dispatch(addSection(lesson.sections.length-1))
+                            dispatch(createSection(sections.length-1))
                         }}
                         style={{ width: 40, height: 40 }}
                         src={require("~/assets/plus-red-round.svg")}

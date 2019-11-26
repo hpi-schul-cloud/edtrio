@@ -1,37 +1,18 @@
-import React, { useReducer } from "react"
-import qs from "qs"
 import { mergeDiff } from "~/utils/diff"
-import { createDispatch, thunkMiddleware } from "~/utils/dispatch"
-import { SET_SECTIONS , ADD_SECTION , REPLACE_ADDED_SECTION_ID } from "./section.actions"
+import { SWITCH_SECTION_VISIBILTY, SET_SECTIONS , ADD_SECTION , REPLACE_ADDED_SECTION_ID , PREPARE_DELETE_SECTION , DELETE_SECTION , DELETING_SECTION_FAILED } from "./section.actions"
 
 
 
-const q = qs.parse(window.location.search, { ignoreQueryPrefix: true })
+
 
 export const sectionInitialState = []
 export function sectionReducer(state = sectionInitialState, { type, payload }) {
-    console.log(state)
     switch (type) {
         case SET_SECTIONS:
             return payload.map((section) => ({
                 ...section,
                 changed: new Set()
             }))
-
-        case "SWAP_SECTIONS":
-            return state.map(
-                (section, index, sections) => {
-                    if (index === payload[0]){
-                        section.changed.add('order')
-                        return sections[payload[1]]
-                    }
-                    if (index === payload[1]){
-                        section.changed.add('order')
-                        return sections[payload[0]]
-                    }
-                    return section
-                },
-            )
 
         case ADD_SECTION:
             return {
@@ -52,7 +33,7 @@ export function sectionReducer(state = sectionInitialState, { type, payload }) {
             )
         }
 
-        case "SECTION_VISIBILITY":
+        case SWITCH_SECTION_VISIBILTY:
             return state.map(section => {
                 if (section._id === payload) {
                     section.changed.add("visible")
@@ -61,30 +42,25 @@ export function sectionReducer(state = sectionInitialState, { type, payload }) {
                 return section
             })
 
-        case "PREPARE_DELETE_SECTION":
-            // TODO: will not work because state.view is unknown
-            let activeSectionId = state.view.activeSectionId
-            if (activeSectionId === payload) {
-                const deleteIndex = state.findIndex(
-                    el => el._id === payload,
-                )
-                const newIndex =
-                    deleteIndex === 0 ? deleteIndex + 1 : deleteIndex - 1
-                activeSectionId = state[newIndex]._id
-            }
-
-            return [
-                ...state.map(section => {
+        case PREPARE_DELETE_SECTION:
+            return state.map(section => {
                     if (section._id === payload)
                         return { ...section, delete: true }
                     return section
-                }),
-            ]
+                })
 
-        case "DELETE_SECTION":
+        case DELETE_SECTION:
             return state.filter(
                 section => section._id !== payload,
             )
+
+        case DELETING_SECTION_FAILED:
+            return state.map(section => {
+                if (section._id === payload){
+                    return { ...section, delete: false}
+                }
+            })
+
 
         case "SECTION_TITLE_CHANGE":
             return [

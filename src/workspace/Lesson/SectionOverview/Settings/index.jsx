@@ -16,6 +16,8 @@ import closeIcon from "~/assets/close-white.svg"
 
 import DeleteModal from "./DeleteModal"
 import { editorWS } from "~/utils/socket"
+import { switchSectionVisibility } from "~/Contexts/section.actions"
+import { toggleSectionSettings } from "~/Contexts/view.actions"
 
 const Wrapper = styled(Flex)`
     background-color: #455b6a;
@@ -116,12 +118,7 @@ const Settings = () => {
                         src={
                             activeSection.visible ? previewIcon : noPreviewIcon
                         }
-                        onClick={() => {
-                            dispatch({
-                                type: "SECTION_VISIBILITY",
-                                payload: activeSectionId,
-                            })
-                        }}
+                        onClick={() => dispatch(switchSectionVisibility(activeSectionId))}
                         visible
                     />
                 </Flex>
@@ -129,7 +126,7 @@ const Settings = () => {
                     <Icon
                         src={closeIcon}
                         onClick={() => {
-                            dispatch({ type: "TOGGLE_SECTION_SETTINGS" })
+                            dispatch(toggleSectionSettings())
                         }}
                     />
                 </Flex>

@@ -83,7 +83,6 @@ const SectionOverview = ({ store, dispatch }) => {
         sectionOverviewExpanded: expanded,
         editing
     } = store.view
-    console.log(expanded)
 
     function moveSection(fromIndex, toIndex) {
         dispatch({ type: "SWAP_SECTIONS", payload: [fromIndex, toIndex] })

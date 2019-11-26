@@ -12,6 +12,8 @@ import settingsIcon from "~/assets/settings.svg"
 import Flex from "~/components/Flex"
 
 import DeleteModal from "./DeleteModal"
+import { removeSection } from "~/Contexts/section.actions"
+import { toggleSectionSettings } from "~/Contexts/view.actions"
 
 const StyledControls = styled(Flex)`
     width: 30px;
@@ -104,19 +106,7 @@ const Controls = ({
     }
 
     async function confirmDelete() {
-        dispatch({
-            type: "PREPARE_DELETE_SECTION",
-            payload: sectionId,
-        })
-
-        setTimeout(() => {
-            dispatch({
-                type: "DELETE_SECTION",
-                payload: sectionId,
-            })
-        }, 250)
-
-        await api.delete(`/editor/sections/${sectionId}`)
+        dispatch(removeSection(sectionId))
     }
 
     const isOnly = store.sections.length === 1
@@ -132,16 +122,10 @@ const Controls = ({
                 src={settingsIcon}
                 visible
                 onClick={() => {
-                    dispatch({ type: "TOGGLE_SECTION_SETTINGS" })
+                    dispatch(toggleSectionSettings())
                 }}
             />
-            {/* <Icon
-                src={visible ? previewIcon : noPreviewIcon}
-                visible
-                onClick={() => {
-                    dispatch({ type: "SECTION_VISIBILITY", payload: sectionId })
-                }}
-            />
+            {/*
             <DeleteModal
                 sectionTitle={sectionTitle || `Abschnitt ${index + 1}`}
                 confirmDelete={confirmDelete}

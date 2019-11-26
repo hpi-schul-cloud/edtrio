@@ -1,14 +1,81 @@
 import { editorWS } from '~/utils/socket'
-import { setSections , addSection } from './section.actions'
+import { setSections , createSection } from './section.actions'
 import { ERROR } from './notifications.actions'
+import { generateHash } from '~/utils/crypto'
 
 
 export const BOOTSTRAP = 'BOOTSTRAP'
 export const BOOTSTRAP_FINISHED = 'BOOTSTRAP_FINISHED'
 export const SET_LESSON = 'SET_LESSON'
-
+export const UPDATE_LESSON = 'UPDATE_LESSON'
+export const LESSON_UPDATED = 'LESSON_UPDATED' // triggered by server
+export const CHANGE_LESSON_TITLE = 'CHANGE_LESSON_TITLE'
+export const SAVING_LESSON = 'SAVING_LESSON'
+export const LESSON_SAVED = 'LESSON_SAVED'
+export const SAVING_LESSON_FAILED = 'SAVING_LESSON_FAILED'
+export const SWAP_SECTIONS = 'SWAP_SECTIONS'
 
 export const fetchLessonFromCache = () => {
+
+}
+
+export const updateLesson = (lesson) => ({
+	type: LESSON_UPDATED,
+	payload: lesson
+})
+
+export const changeLessonTitle = (title) => ({
+	type: CHANGE_LESSON_TITLE,
+	payload: title
+})
+
+export const saveLesson = () => async ({state, dispatch}) => {
+
+	// keep care of adding or removing something, ...lesson is to generate hash and it should include
+	// everything witch is part of lesson, compared to database
+	const {lesson: {changed, hash, timestamp, ...lesson}, course}  = state
+
+	if (changed.size === 0) return
+
+	const changes = {}
+
+	dispatch({
+		type: SAVING_LESSON
+	})
+
+	try{
+
+		lesson.changed.forEach(key => {
+			// TODO: Add reordering of sections
+			if(lesson.hasOwnPropterty(key)){
+				changes[key] = lesson[key]
+			}
+		})
+
+		const prom = editorWS.emit(
+			'patch',
+			`course/${course._id}/lessons`,
+			lesson._id,
+			changes
+		)
+
+		const newHash = generateHash(lesson)
+
+		const message = await prom
+
+		dispatch({
+			type: LESSON_SAVED,
+			payload: {
+				hash: newHash,
+				timestamp: message.updatedAt || message.insertedAt
+			}
+		})
+
+	} catch (err) {
+		dispatch({
+			type: SAVING_LESSON_FAILED
+		})
+	}
 
 }
 
@@ -46,6 +113,9 @@ export const fetchLessonWithSections = (lessonId, courseId, params) => async ({d
 		)
 		let {sections, ...rest} = lesson
 		lesson = rest
+		lesson.sections = []
+
+		lesson.id = lesson._id // needed for old version, please use _id instead
 
 		await dispatch({
 			type: SET_LESSON,
@@ -53,17 +123,26 @@ export const fetchLessonWithSections = (lessonId, courseId, params) => async ({d
 		})
 
 		if(sections.length === 0){
-			dispatch(addSection(0))
+			dispatch(createSection(0))
 		} else {
-			sections = sections.map(section => ({
-				...section,
-				id: section._id,
-				docValue: section.state,
-				savedDocValue: section.state,
-				notes: section.note,
-				visible: section.visible || true, // TODO: remove should be set by server and blur mode should removed
-			}))
+			sections = sections.map(section => {
+				lesson.sections.push(section._id)
+				return {
+					...section,
+					id: section._id, // needed for old version, please use _id instead
+					docValue: section.state,
+					savedDocValue: section.state,
+					notes: section.note,
+					visible: section.visible || true, // TODO: remove should be set by server and blur mode should removed
+				}
+			})
 			dispatch(setSections(sections))
+			dispatch({
+				type: UPDATE_LESSON,
+				payload: {
+					sections: lesson.sections
+				}
+			})
 		}
 	} catch (err) {
 		dispatch({ type: "ERROR", payload: "Es konnten keine Daten vom Server oder aus dem Speicher geladen werden" })

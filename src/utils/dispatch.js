@@ -66,3 +66,11 @@ export const thunkMiddleware = () => {
 		return next(action)
 	}
 }
+
+
+export const logger = () => {
+	return ({state, dispatch}) => (next) => action => {
+		console.log(action)
+		next(action)
+	}
+}

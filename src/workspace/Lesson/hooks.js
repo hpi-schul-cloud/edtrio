@@ -5,7 +5,8 @@ import { editorWS } from "~/utils/socket"
 import { loadEditorData, saveEditorData } from "~/utils/cache"
 import { buildDiff } from "~/utils/diff"
 import { fetchCourse } from "~/Contexts/course.actions"
-import { fetchLessonWithSections } from "~/Contexts/lesson.actions"
+import { fetchLessonWithSections , saveLesson } from "~/Contexts/lesson.actions"
+
 
 export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
     async function fetchData() {
@@ -75,11 +76,11 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
 }
 
 
-export async function saveLesson(store, dispatch, override) {
+export async function saveSections(store, dispatch, override) {
     if (!store.view.editing && !override) return
     dispatch({ type: "SAVE_STATUS", payload: "Sichern..." })
     const savePromises = []
-    const lessonChanges = {}
+    /* const lessonChanges = {}
     store.lesson.changed.forEach(key => {
         if (key === "order") {
             lessonChanges.sections = store.sections.map(
@@ -108,7 +109,7 @@ export async function saveLesson(store, dispatch, override) {
             }),
         )
     else savePromises.push(Promise.resolve("No lesson changes"))
-
+    */
     // save sections
     store.sections.forEach(section => {
         const sectionChanges = {}
@@ -222,7 +223,8 @@ export function useChangeListener(store, dispatch) {
 
         if(timeout) clearTimeout(timeout)
         setTimeoutState(setTimeout(() => {
-                saveLesson(store, dispatch)
+                dispatch(saveLesson())
+                saveSections(store, dispatch)
             }, 500)
         )
     }, [store.lesson])

@@ -1,4 +1,7 @@
-import { SET_LESSON } from "./lesson.actions"
+import { SET_LESSON, UPDATE_LESSON, LESSON_UPDATED , CHANGE_LESSON_TITLE , LESSON_SAVED, SWAP_SECTIONS } from "./lesson.actions"
+
+
+
 
 export const lessonInitialState = {
 }
@@ -34,22 +37,41 @@ export function lessonReducer(state = lessonInitialState, { type, payload }) {
         }
 
 */
-        case "LESSON_UPDATED":
+        case UPDATE_LESSON:
+        case LESSON_UPDATED:
             return {
                 ...state,
                 ...payload
             }
-        case "LESSON_TITLE_CHANGE":
+        case CHANGE_LESSON_TITLE:
             state.changed.add("title")
             return {
                 ...state,
-                title: payload.title
+                title: payload
             }
 
-        case "LESSON_SAVED":
+        case LESSON_SAVED:
             state.changed.clear()
-            return state
+            return {
+                ...state,
+                ...payload
+            }
 
+        case SWAP_SECTIONS:
+            state.changed.add('sections')
+            return {
+                ...state,
+                sections: state.sections.map((sectionId, index, sections) => {
+                    switch(index){
+                        case payload[0]:
+                            return sections[payload[1]]
+                        case payload[1]:
+                            return sections[payload[0]]
+                        default:
+                            return sectionId
+                    }
+                })
+            }
 
         case "RESET":
             return lessonInitialState

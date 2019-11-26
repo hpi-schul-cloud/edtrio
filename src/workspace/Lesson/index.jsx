@@ -19,7 +19,7 @@ import {
     useBootstrap,
     useChangeListener,
     useFullScreenListener,
-    saveLesson,
+    saveSections,
 } from "./hooks"
 
 const Wrapper = styled.div`
@@ -50,11 +50,10 @@ const Lesson = props => {
 
     useBootstrap(id, courseId, dispatch, dispatchUserAction)
     useChangeListener(store, dispatch)
-    // useInterval(() => saveLesson(store, dispatch), 10000)
 
     useEffect(() => {
         if (store.view.bootstrapFinished && store.view.editing === false)
-            saveLesson(store, dispatch, true)
+            saveSections(store, dispatch, true)
     }, [store.view.editing])
 
     if (store.loading) {

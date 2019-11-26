@@ -4,7 +4,15 @@ import uuid from "uuid/v4"
 export const SET_SECTIONS = 'SET_SECTIONS'
 export const ADD_SECTION = 'ADD_SECTION'
 export const REPLACE_ADDED_SECTION_ID = "REPLACE_ADDED_SECTION_ID"
+export const SWITCH_SECTION_VISIBILTY = 'SWITCH_SECTION_VISIBILTY'
+export const PREPARE_DELETE_SECTION = 'PREPARE_DELETE_SECTION'
+export const DELETE_SECTION = 'DELETE_SECTION'
+export const DELETING_SECTION_FAILED = 'DELETING_SECTION_FAILED'
 
+export const switchSectionVisibility = (sectionId) => ({state}) => ({
+	type: SWITCH_SECTION_VISIBILTY,
+	payload: sectionId
+})
 
 export const setSections = (sections) => ({
 	type: SET_SECTIONS,
@@ -17,7 +25,7 @@ export const setSections = (sections) => ({
  *
  * @param {int} position - positon of section
  */
-export const addSection = (position) => async ({dispatch, state}) => {
+export const createSection = (position) => async ({dispatch, state}) => {
 	const tempId = uuid()
 	const {lesson} = state
 	position = position || state.sections.length
@@ -47,8 +55,24 @@ export const addSection = (position) => async ({dispatch, state}) => {
  *
  * @param {string} sectionId - MongoId of Section
  */
-export const removeSection = (sectionId) => async ({state}) => {
-	// TODO: rewrite to remove sections via dispatch in the store
-	const section = await editorWS.emit('delete', `lesson/${state.lesson._id}/sections/${sectionId}`)
-	return section
+export const removeSection = (sectionId) => async ({state, dispatch}) => {
+	dispatch({
+		type: PREPARE_DELETE_SECTION,
+		payload: sectionId,
+	})
+	try{
+
+		const section = await editorWS.emit('delete', `lesson/${state.lesson._id}/sections/${sectionId}`)
+
+		dispatch({
+			type: DELETE_SECTION,
+			payload: sectionId,
+		})
+	} catch (err){
+		// TODO: check if connection to sever exist
+		dispatch({
+			type: DELETING_SECTION_FAILED,
+			payload: sectionId
+		})
+	}
 }
