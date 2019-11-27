@@ -2,6 +2,7 @@ import { editorWS } from '~/utils/socket'
 import { setSections , createSection } from './section.actions'
 import { ERROR } from './notifications.actions'
 import { generateHash } from '~/utils/crypto'
+import { saveLessonData } from '~/utils/cache'
 
 
 export const BOOTSTRAP = 'BOOTSTRAP'
@@ -19,7 +20,7 @@ export const fetchLessonFromCache = () => {
 
 }
 
-export const updateLesson = (lesson) => ({
+export const lessonWasUpdated = (lesson) => ({
 	type: LESSON_UPDATED,
 	payload: lesson
 })
@@ -46,7 +47,6 @@ export const saveLesson = () => async ({state, dispatch}) => {
 	try{
 
 		lesson.changed.forEach(key => {
-			// TODO: Add reordering of sections
 			if(lesson.hasOwnPropterty(key)){
 				changes[key] = lesson[key]
 			}
@@ -63,25 +63,36 @@ export const saveLesson = () => async ({state, dispatch}) => {
 
 		const message = await prom
 
+		const payload = {
+			hash: newHash,
+			timestamp: message.updatedAt || message.insertedAt
+		}
+
 		dispatch({
 			type: LESSON_SAVED,
-			payload: {
-				hash: newHash,
-				timestamp: message.updatedAt || message.insertedAt
-			}
+			payload
+		})
+
+		saveLessonData({
+			...lesson,
+			...payload,
+			savedToBackend: true
 		})
 
 	} catch (err) {
 		dispatch({
 			type: SAVING_LESSON_FAILED
 		})
+
+		saveLessonData({
+			...state.lesson,
+			savedToBackend: false
+		})
 	}
 
 }
 
 export const fetchLesson = (lessonId, courseId, params) => async ({dispatch}) => {
-	console.log('I am connected')
-	console.log('Socket is Connected', editorWS.isConnected)
 	try{
 		const lesson = await editorWS.emit(
 			'get',

@@ -10,6 +10,7 @@ import Container from "~/components/Container"
 
 import Editor from "./Editor"
 import Controls from "./Controls"
+import { updateSectionDocValue } from "~/Contexts/section.actions"
 
 const StyledSection = styled(Flex)`
     transition: 250ms all ease-in-out;
@@ -98,13 +99,7 @@ const Section = ({ store, dispatch }) => {
                     index={index}
                     editing={store.view.editing}
                     dispatchChange={docValue => {
-                        dispatch({
-                            type: "SECTION_DOCVALUE_CHANGE",
-                            payload: {
-                                sectionId: section._id,
-                                docValue,
-                            },
-                        })
+                        dispatch(updateSectionDocValue(section._id, docValue))
                     }}
                 />
                 <Controls

@@ -1,5 +1,8 @@
 import { mergeDiff } from "~/utils/diff"
-import { SWITCH_SECTION_VISIBILTY, SET_SECTIONS , ADD_SECTION , REPLACE_ADDED_SECTION_ID , PREPARE_DELETE_SECTION , DELETE_SECTION , DELETING_SECTION_FAILED } from "./section.actions"
+import { SWITCH_SECTION_VISIBILTY, SET_SECTIONS , ADD_SECTION , REPLACE_ADDED_SECTION_ID , PREPARE_DELETE_SECTION , DELETE_SECTION , DELETING_SECTION_FAILED , UPDATE_SECTION , SECTION_DOCVALUE_CHANGE , SECTION_SAVED } from "./section.actions"
+
+
+
 
 
 
@@ -15,15 +18,14 @@ export function sectionReducer(state = sectionInitialState, { type, payload }) {
             }))
 
         case ADD_SECTION:
-            return {
-                ...state.splice(payload, 0, {
+            const {position, tempId} = payload
+            return state.splice(position, 0, {
                     title: "",
-                    id: payload.tempId,
+                    id: tempId,
                     visible: true,
                     docValue: {},
                     changed: new Set(),
                 })
-            }
 
         case REPLACE_ADDED_SECTION_ID: {
             return state.map(section =>
@@ -61,32 +63,27 @@ export function sectionReducer(state = sectionInitialState, { type, payload }) {
                 }
             })
 
+        case UPDATE_SECTION:
+            return state.map(section => {
+                if(section._id === payload._id){
+                    section.changed.add(Object.keys(payload))
+                    return {...section, ...payload}
+                }
+                return section
+            })
 
-        case "SECTION_TITLE_CHANGE":
-            return [
-                ...state.map(section => {
+        /* case "SECTION_TITLE_CHANGE":
+            return state.map(section => {
                     if (section._id !== payload.sectionId) return section
 
                     section.changed.add("title")
                     return { ...section, title: payload.title }
-                }),
-            ]
+                }) */
 
-        case "SECTION_DOCVALUE_DIFF":
-            return [
-                ...state.map(section => {
-                    if (section._id !== payload.sectionId) return section
-                        return {
-                            ...section,
-                            docValue: mergeDiff(section.docValue, payload.diff)
-                        }
-                    }),
-            ]
-
-        case "SECTION_DOCVALUE_CHANGE":
+        case SECTION_DOCVALUE_CHANGE:
                 if (!state.view.editing) return state
                 return state.section.map(section => {
-                    if(section._id !== payload.sectionId) return section
+                    if(section._id !== payload._id) return section
                     section.changed.add("docValue")
                     return {
                         ...section,
@@ -94,7 +91,7 @@ export function sectionReducer(state = sectionInitialState, { type, payload }) {
                     }
                 })
 
-        case "SECTION_SAVED":
+        case SECTION_SAVED:
             state.forEach(section => {
                 if (section._id === payload) section.changed.clear()
             })

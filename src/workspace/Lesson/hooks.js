@@ -5,7 +5,10 @@ import { editorWS } from "~/utils/socket"
 import { loadEditorData, saveEditorData } from "~/utils/cache"
 import { buildDiff } from "~/utils/diff"
 import { fetchCourse } from "~/Contexts/course.actions"
-import { fetchLessonWithSections , saveLesson } from "~/Contexts/lesson.actions"
+import { fetchLessonWithSections , saveLesson , lessonWasUpdated } from "~/Contexts/lesson.actions"
+import { mergeSerloDiff, sectionWasUpdated , saveSections } from '~/Contexts/section.actions'
+
+
 
 
 export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
@@ -17,6 +20,7 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
             console.warn("Could not fetch user data")
         }
 
+        // TODO: have to be rewrite for new chache system
         const cacheData = loadEditorData(id)
 		let lesson
 		if (
@@ -35,35 +39,20 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
     }
 
     async function registerHandler(){
-        const dispatchLessonUpdate = (data) => {
-            dispatch({
-                type: "LESSON_UPDATED",
-                payload: data
-            })
-        }
+        const dispatchLessonUpdate = (data) =>
+            dispatch(lessonWasUpdated(data))
+
         editorWS.on('course/:courseId/lessons patched', dispatchLessonUpdate)
         editorWS.on('course/:courseId/lessons updated', dispatchLessonUpdate)
 
-        const dispatchSectionUpdate = (data) => {
-            dispatch({
-                type: "SECTION_UPDATED",
-                payload: data
-            })
-        }
+        const dispatchSectionUpdate = (data) =>
+            dispatch(sectionWasUpdated(data._id, data))
 
         editorWS.on('lesson/:lessonId/sections patched', dispatchSectionUpdate)
         editorWS.on('lesson/:lessonId/sections updated', dispatchSectionUpdate)
 
 
-        const dispatchSectionDiff = (data) => {
-            dispatch({
-                type: "SECTION_DOCVALUE_DIFF",
-                payload: {
-                    sectionId: data._id,
-                    diff: data.diff
-                }
-            })
-        }
+        const dispatchSectionDiff = (data) => dispatch(mergeSerloDiff(data._id, data.diff))
 
         editorWS.on('lesson/:lessonId/sections/diff patched', dispatchSectionDiff)
     }
@@ -75,146 +64,6 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
     }, [])
 }
 
-
-export async function saveSections(store, dispatch, override) {
-    if (!store.view.editing && !override) return
-    dispatch({ type: "SAVE_STATUS", payload: "Sichern..." })
-    const savePromises = []
-    /* const lessonChanges = {}
-    store.lesson.changed.forEach(key => {
-        if (key === "order") {
-            lessonChanges.sections = store.sections.map(
-                section => section._id,
-            )
-        } else {
-            lessonChanges[key] = store.lesson[key]
-        }
-    })
-    if (store.lesson.changed.size !== 0)
-        savePromises.push(
-            new Promise(async (resolve, reject) => {
-                try{
-                    const { lesson: { courseId, id: lessonId } } = store
-                    const message = await editorWS.emit(
-                        'patch',
-                        `course/${courseId}/lessons`,
-                        lessonId,
-                        lessonChanges
-                    )
-                    dispatch({ type: "LESSON_SAVED" })
-                    resolve( message )
-                } catch (err) {
-                    reject(err)
-                }
-            }),
-        )
-    else savePromises.push(Promise.resolve("No lesson changes"))
-    */
-    // save sections
-    store.sections.forEach(section => {
-        const sectionChanges = {}
-        let sectionDiff
-        let savedDocValue
-        section.changed.forEach(key => {
-            if (key === "docValue") {
-                savedDocValue =
-                    typeof section.docValue === "object" &&
-                    JSON.parse(JSON.stringify(section.docValue))
-
-                sectionDiff = buildDiff(
-                    section.savedDocValue,
-                    section.docValue,
-                )
-
-            } else if (key === "notes") {
-                sectionChanges.note = section.notes
-            } else {
-                sectionChanges[key] = section[key]
-            }
-        })
-        if(sectionDiff){
-            savePromises.push(
-                new Promise(async (resolve, reject) => {
-                    try {
-                        const backendResult =
-                            await editorWS
-                                .emit(
-                                    'patch',
-                                    `lesson/${store.lesson._id}/sections/diff`,
-                                    section._id,
-                                    {state: sectionDiff},
-                                )
-                        dispatch({ type: "SECTION_SAVED", payload: section._id })
-                        resolve(backendResult)
-                    } catch (err) {
-                       /* if (savedDocValue) {
-                            dispatch({
-                                type: "SECTION_SAVE_DOCVALUE_FAILED",
-                                payload: {
-                                    id: section._id,
-                                    lastSavedDocValue: savedDocValue,
-                                },
-                            })
-                        } */
-                        reject(err)
-                    }
-                }),
-            )
-        }
-
-        if (Object.keys(sectionChanges).length === 0) {
-            return savePromises.push(
-                Promise.resolve(`No changes for section ${section._id}`),
-            )
-        }else {
-            savePromises.push(
-                new Promise(async (resolve, reject) => {
-                    try {
-                        const backendResult =
-                            await editorWS
-                                .emit(
-                                    'patch',
-                                    `lesson/${store.lesson._id}/sections`,
-                                    section._id,
-                                    sectionChanges
-                                )
-                        dispatch({ type: "SECTION_SAVED", payload: section._id })
-                        resolve(backendResult)
-                    } catch (err) {
-                        reject(err)
-                    }
-                }),
-            )
-        }
-    })
-
-    const cacheData = {
-        savedToBackend: true,
-        lesson: {
-            ...store.lesson,
-            sections: store.sections.map(section => ({
-                ...section,
-                savedDocValue: undefined, // TODO: do not set to undefined, because needed for first diff
-                docValue: section.docValue,
-            })),
-        },
-    }
-
-    try{
-        await Promise.all(savePromises)
-    } catch (err) {
-        cacheData.savedToBackend = false
-    }
-
-    saveEditorData(cacheData, store.lesson._id)
-    dispatch({
-        type: "SAVE_STATUS",
-        payload: !cacheData.savedToBackend
-            ? "Lokal Gespeichert"
-            : "Gespeichert",
-    })
-}
-
 export function useChangeListener(store, dispatch) {
     const [timeout, setTimeoutState] = useState(null)
     useEffect(() => {
@@ -224,10 +73,10 @@ export function useChangeListener(store, dispatch) {
         if(timeout) clearTimeout(timeout)
         setTimeoutState(setTimeout(() => {
                 dispatch(saveLesson())
-                saveSections(store, dispatch)
+                dispatch(saveSections())
             }, 500)
         )
-    }, [store.lesson])
+    }, [store.lesson, store.sections])
 }
 
 export function useFullScreenListener(store, dispatch) {
