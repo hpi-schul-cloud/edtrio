@@ -54,12 +54,12 @@ const Previews = styled.div`
 
 function useResizeListener(store, dispatch) {
     function resizeListener() {
-        if (store.sectionOverviewExpanded && window.innerWidth < 1350) {
+        if (store.view.sectionOverviewExpanded && window.innerWidth < 1350) {
             dispatch(hiddeSectionOverview())
         }
 
         if (
-            store.sectionOverviewExpanded === false &&
+            store.view.sectionOverviewExpanded === false &&
             window.innerWidth > 1350
         ) {
             dispatch(showSectionOverview())
@@ -73,7 +73,7 @@ function useResizeListener(store, dispatch) {
 
         // window.addEventListener("resize", resizeListener)
         // return () => window.removeEventListener("resize", resizeListener)
-    }, [store.sectionOverviewExpanded])
+    }, [store.view.sectionOverviewExpanded])
 }
 
 const SectionOverview = ({ store, dispatch }) => {

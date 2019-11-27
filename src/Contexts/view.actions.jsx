@@ -1,5 +1,6 @@
 export const SET_ACTIVE_SECTION = "SET_ACTIVE_SECTION"
 export const SET_EDITING = "SET_EDITING"
+export const SET_LOADING = "SET_LOADING"
 export const TOGGLE_SECTION_OVERVIEW = "TOGGEL_SECTION_OVERVIEW"
 export const TOGGLE_SECTION_SETTINGS = "TOGGLE_SECTION_SETTINGS"
 
@@ -18,6 +19,16 @@ export const setActiveSection = (sectionId) => ({
 export const setEditing = (editing) => ({
 	type: SET_EDITING,
 	payload: editing
+})
+
+export const startLoading = () => ({
+	type: SET_LOADING,
+	payload: true
+})
+
+export const finishLoading = () => ({
+	type: SET_LOADING,
+	payload: false
 })
 
 export const showSectionOverview = () => ({

@@ -116,7 +116,7 @@ const Controls = ({
             column
             alignStart
             editing={store.view.editing}
-            expanded={store.sectionOverviewExpanded}>
+            expanded={store.view.sectionOverviewExpanded}>
             <DragHandle connectDragSource={connectDragSource} isOnly={isOnly} />
             <Icon
                 src={settingsIcon}

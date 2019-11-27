@@ -6,6 +6,7 @@ import { ADD_SECTION , REPLACE_ADDED_SECTION_ID } from "./section.actions"
 
 
 export const lessonInitialState = {
+    title: ''
 }
 export function lessonReducer(state = lessonInitialState, { type, payload }) {
     switch (type) {

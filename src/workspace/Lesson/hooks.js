@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from "react"
-
-import { serverApi, editorApi } from "~/utils/api"
-import { editorWS } from "~/utils/socket"
-import { loadEditorData, saveEditorData } from "~/utils/cache"
-import { buildDiff } from "~/utils/diff"
+import { useEffect, useState } from "react"
 import { fetchCourse } from "~/Contexts/course.actions"
-import { fetchLessonWithSections , saveLesson , lessonWasUpdated } from "~/Contexts/lesson.actions"
-import { mergeSerloDiff, sectionWasUpdated , saveSections } from '~/Contexts/section.actions'
+import { fetchLessonWithSections, lessonWasUpdated, saveLesson } from "~/Contexts/lesson.actions"
+import { mergeSerloDiff, saveSections, sectionWasUpdated } from '~/Contexts/section.actions'
+import { unsavedChanges } from '~/Contexts/notifications.actions'
+import { serverApi } from "~/utils/api"
+import { loadEditorData } from "~/utils/cache"
+import { editorWS } from "~/utils/socket"
+
 
 
 
 
 export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
-    async function fetchData() {
+    async function bootstrap() {
         try {
             const user = await serverApi.get("/me")
             dispatchUserAction({ type: "BOOTSTRAP_USER", payload: user })
@@ -30,7 +30,7 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
 		) {
 			lesson = cacheData.lesson
 		} else {
-            await dispatch(fetchLessonWithSections(id, courseId))
+           await dispatch(fetchLessonWithSections(id, courseId))
         }
 
         requestAnimationFrame(() => {
@@ -58,8 +58,8 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
     }
 
     useEffect(() => {
-        fetchCourse()
-        fetchData()
+        dispatch(fetchCourse(courseId))
+        bootstrap()
         registerHandler()
     }, [])
 }
@@ -68,7 +68,8 @@ export function useChangeListener(store, dispatch) {
     const [timeout, setTimeoutState] = useState(null)
     useEffect(() => {
         if (!store.view.bootstrapFinished) return
-        dispatch({ type: "SAVE_STATUS", payload: "Ungesicherte Änderungen" })
+        // dispatch({ type: "SAVE_STATUS", payload: "Ungesicherte Änderungen" })
+        dispatch(unsavedChanges())
 
         if(timeout) clearTimeout(timeout)
         setTimeoutState(setTimeout(() => {

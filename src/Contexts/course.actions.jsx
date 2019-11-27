@@ -7,7 +7,6 @@ export const SET_COURSE = 'SET_COURSE'
 
 export const fetchCourse = (courseId) => async ({dispatch}) => {
 	try {
-		// const courseId = window.location.pathname.split("/")[2]
 		const course = await serverApi.get(`/courses/${courseId}`)
 		dispatch({ type: SET_COURSE, payload: course })
 	} catch (err) {

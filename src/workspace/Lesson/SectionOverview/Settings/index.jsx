@@ -88,7 +88,7 @@ const Settings = () => {
 
     }
 
-    if (!store.showSectionSettings) return null
+    if (!store.view.showSectionSettings) return null
 
     return (
         <Portal>

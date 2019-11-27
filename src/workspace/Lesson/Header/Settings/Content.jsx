@@ -53,7 +53,7 @@ const Settings = ({ store, visible }) => {
                     <StyledIcon src={require("~/assets/share-red.svg")} />
                 </StyledAction>
             </ActionWrapper>
-            {!store.studentView && (
+            {!store.view.studentView && (
                 <ActionWrapper>
                     <StyledAction
                         to={`${window.location.pathname}?${studentQuery}`}>

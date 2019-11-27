@@ -66,7 +66,7 @@ export function sectionReducer(state = sectionInitialState, { type, payload }) {
         case UPDATE_SECTION:
             return state.map(section => {
                 if(section._id === payload._id){
-                    section.changed.add(Object.keys(payload))
+                    // section.changed.add(Object.keys(payload))
                     return {...section, ...payload}
                 }
                 return section
@@ -81,8 +81,7 @@ export function sectionReducer(state = sectionInitialState, { type, payload }) {
                 }) */
 
         case SECTION_DOCVALUE_CHANGE:
-                if (!state.view.editing) return state
-                return state.section.map(section => {
+                return state.map(section => {
                     if(section._id !== payload._id) return section
                     section.changed.add("docValue")
                     return {
@@ -95,13 +94,7 @@ export function sectionReducer(state = sectionInitialState, { type, payload }) {
             state.forEach(section => {
                 if (section._id === payload) section.changed.clear()
             })
-            return state.map(section => {
-                if (section._id !== payload) return section
-                return {
-                    ...section,
-                    savedDocValue: section.docValue,
-                }
-            })
+            return state
 
         case "RESET":
             return sectionInitialState

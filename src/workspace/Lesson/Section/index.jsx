@@ -82,7 +82,7 @@ const Section = ({ store, dispatch }) => {
             column
             delete={section.delete}
             alignCenter
-            sectionOverviewExpanded={store.sectionOverviewExpanded}
+            sectionOverviewExpanded={store.view.sectionOverviewExpanded}
             data-section={index}
             className="lesson-section"
             ref={sectionRef}>

@@ -4,6 +4,7 @@ import uuid from "uuid/v4"
 import { saveSectionData } from "~/utils/cache"
 import { generateHash } from "~/utils/crypto"
 
+
 export const SET_SECTIONS = 'SET_SECTIONS'
 export const ADD_SECTION = 'ADD_SECTION'
 export const REPLACE_ADDED_SECTION_ID = "REPLACE_ADDED_SECTION_ID"
@@ -13,10 +14,10 @@ export const DELETE_SECTION = 'DELETE_SECTION'
 export const DELETING_SECTION_FAILED = 'DELETING_SECTION_FAILED'
 export const UPDATE_SECTION = 'UPDATE_SECTION'
 export const SECTION_DOCVALUE_CHANGE = 'SECTION_DOCVALUE_CHANGE'
-export const SAVING_DOCVALUES = 'SAVING_DOCVALUE'
+export const SAVING_DOCVALUES = 'SAVING_DOCVALUES'
 export const SAVING_DOCVALUE_FAILED = 'SAVING_DOCVALUE_FAILED'
 export const DOCVALUE_SAVED = 'DOCVALUE_SAVED'
-export const SAVING_SECTIONS = 'SAVING_SECTION'
+export const SAVING_SECTIONS = 'SAVING_SECTIONS'
 export const SAVING_SECTION_FAILED = 'SAVING_SECTION_FAILED'
 export const SECTION_SAVED = 'SECTION_SAVED'
 
@@ -136,6 +137,7 @@ const saveSectionDocValue = ({ignoreChangedSet = -1}) => async ({dispatch, state
 				savedToBackend: true
 			})
 		} else {
+			console.log(res)
 			dispatch({
 				type: SAVING_DOCVALUE_FAILED,
 				payload: sectionId
@@ -170,10 +172,10 @@ export const saveSections = () => async ({dispatch, state}) => {
 			dispatch(saveSectionDocValue({ignoreChangedSet: index}))
 		}
 
-		if(changed.size === 0) return Promise.resolve()
+		if(changed.size === 0) return Promise.resolve('nothing to save')
 
 		changed.forEach(key => {
-			if(section.hasOwnPropertie(key)){
+			if(Object.prototype.hasOwnProperty.call(section, key)){
 				changes[key] = section[key]
 			}
 		})
@@ -198,14 +200,17 @@ export const saveSections = () => async ({dispatch, state}) => {
 		// everything witch is part of section, compared to database
 		const {changed, ...section} = sections[i]
 		const sectionId = section._id
+
 		if(res.status === 'fulfilled'){
-			dispatch({
-				type: SECTION_SAVED,
-				payload: sectionId
-			})
+			if(res.value !== 'nothing to save'){
+				dispatch({
+					type: SECTION_SAVED,
+					payload: sectionId
+				})
+			}
 			saveSectionData({
 				...section,
-				timestamp: res.value.updatedAt || res.value.instertedAt,
+				// timestamp: res.value.updatedAt || res.value.instertedAt,
 				hash: hashes[i],
 				savedToBackend: true
 			})
@@ -235,8 +240,10 @@ export const updateSectionDocValue = (sectionId, docValue) => ({
 
 export const sectionWasUpdated = (sectionId, section) => ({
 	type: UPDATE_SECTION,
-	_id: sectionId,
-	...section
+	payload: {
+		_id: sectionId,
+		...section
+	}
 })
 
 export const mergeSerloDiff = (sectionId, diff) => ({state, dispatch}) => {

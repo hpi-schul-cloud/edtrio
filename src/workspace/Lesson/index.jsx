@@ -56,7 +56,7 @@ const Lesson = props => {
             saveSections(store, dispatch, true)
     }, [store.view.editing])
 
-    if (store.loading) {
+    if (store.view.loading) {
         return (
             <Container>
                 <Flex justifyCenter alignCenter style={{ minHeight: "70vh" }}>

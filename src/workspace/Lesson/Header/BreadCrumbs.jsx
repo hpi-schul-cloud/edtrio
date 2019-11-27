@@ -4,6 +4,7 @@ import styled from "styled-components"
 import Action from "~/components/Action"
 import Flex from "~/components/Flex"
 import Input from "~/components/Input"
+import { changeLessonTitle } from "~/Contexts/lesson.actions"
 
 const TitleInput = styled(Input)`
     font-weight: 700;
@@ -47,11 +48,7 @@ const BreadCrumbs = ({ store, dispatch }) => {
     })
 
     const updateTitle = async (value) => {
-
-        dispatch({
-            type: "LESSON_TITLE_CHANGE",
-            payload: value,
-        })
+        dispatch(changeLessonTitle(value))
     }
 
     useEffect(() => {

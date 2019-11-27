@@ -3,7 +3,6 @@ import test from 'ava'
 import renderer from 'react-test-renderer'
 
 import {createDispatch, thunkMiddleware} from './dispatch'
-import { timeout } from 'q'
 
 const middleware = () => {
 	return ({state, dispatch}) => {
@@ -197,7 +196,7 @@ const asyncFu = (test) => async ({dispatch, state}) => {
 				test,
 				switch: !state.switch,
 			})
-		}, 10)
+		}, 100)
 	})
 
 	dispatch({

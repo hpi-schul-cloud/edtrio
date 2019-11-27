@@ -3,6 +3,8 @@ import { setSections , createSection } from './section.actions'
 import { ERROR } from './notifications.actions'
 import { generateHash } from '~/utils/crypto'
 import { saveLessonData } from '~/utils/cache'
+import { startLoading , finishLoading } from './view.actions'
+
 
 
 export const BOOTSTRAP = 'BOOTSTRAP'
@@ -46,8 +48,8 @@ export const saveLesson = () => async ({state, dispatch}) => {
 
 	try{
 
-		lesson.changed.forEach(key => {
-			if(lesson.hasOwnPropterty(key)){
+		changed.forEach(key => {
+			if(Object.prototype.hasOwnProperty.call(lesson, key)){
 				changes[key] = lesson[key]
 			}
 		})
@@ -114,6 +116,8 @@ export const fetchLesson = (lessonId, courseId, params) => async ({dispatch}) =>
 
 export const fetchLessonWithSections = (lessonId, courseId, params) => async ({dispatch, state}) => {
 
+	dispatch(startLoading())
+
 	try {
 		// const lesson = await dispatch(fetchLesson(lessonId, courseId, {...params, all: 'true'}))
 		let lesson = await editorWS.emit(
@@ -128,7 +132,7 @@ export const fetchLessonWithSections = (lessonId, courseId, params) => async ({d
 
 		lesson.id = lesson._id // needed for old version, please use _id instead
 
-		await dispatch({
+		dispatch({
 			type: SET_LESSON,
 			payload: lesson
 		})
@@ -155,6 +159,7 @@ export const fetchLessonWithSections = (lessonId, courseId, params) => async ({d
 				}
 			})
 		}
+
 	} catch (err) {
 		dispatch({ type: "ERROR", payload: "Es konnten keine Daten vom Server oder aus dem Speicher geladen werden" })
 		dispatch({
@@ -172,4 +177,7 @@ export const fetchLessonWithSections = (lessonId, courseId, params) => async ({d
 			visible: true,
 		}]))
 	}
+
+	dispatch(finishLoading())
+
 }

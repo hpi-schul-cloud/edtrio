@@ -1,7 +1,8 @@
 import qs from "qs"
 
 import { ADD_SECTION , REPLACE_ADDED_SECTION_ID , SET_SECTIONS , PREPARE_DELETE_SECTION } from "./section.actions"
-import { TOGGLE_SECTION_SETTINGS, TOGGLE_SECTION_OVERVIEW, SET_ACTIVE_SECTION , SET_EDITING } from "./view.actions"
+import { TOGGLE_SECTION_SETTINGS, TOGGLE_SECTION_OVERVIEW, SET_ACTIVE_SECTION , SET_EDITING , SET_LOADING } from "./view.actions"
+
 
 
 const q = qs.parse(window.location.search, { ignoreQueryPrefix: true })
@@ -28,6 +29,12 @@ export function viewReducer(state = viewInitialState, { type, payload }) {
             return {
                 ...state,
                 activeSectionId: payload[0]._id
+            }
+
+        case SET_LOADING:
+            return {
+                ...state,
+                loading: payload
             }
         case ADD_SECTION:
             return {

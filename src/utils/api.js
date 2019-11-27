@@ -32,7 +32,7 @@ import { jwt } from "./jwt"
 // )
 
 
-axios.defaults.headers.common['Authorization'] = jwt
+axios.defaults.headers.common.Authorization = jwt
 axios.defaults.headers.common['Content-Type'] = 'application/json'
 
 const SERVER_API_URL = config.SERVER_API_URL || ""
@@ -142,9 +142,11 @@ class Api {
             fakeResponse,
         )
     }
+
     put (endpoint, body, files, uploadProgress, fakeResponse) {
         return bodyRequest("put", this.baseURL, endpoint, body, files, uploadProgress, fakeResponse)
     }
+
     patch (endpoint, body, files, uploadProgress, fakeResponse){
         return bodyRequest(
             "patch",
@@ -156,6 +158,7 @@ class Api {
             fakeResponse,
         )
     }
+
     delete (endpoint, fakeResponse) {
         if (fakeResponse && process.env.NODE_ENV !== "production") {
             return new Promise(resolve =>
