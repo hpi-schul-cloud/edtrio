@@ -2,9 +2,9 @@ import { useEffect, useState } from "react"
 import { fetchCourse } from "~/Contexts/course.actions"
 import { fetchLessonWithSections, lessonWasUpdated, saveLesson, setLesson } from "~/Contexts/lesson.actions"
 import { unsavedChanges } from '~/Contexts/notifications.actions'
-import { mergeSerloDiff, saveSections, sectionWasUpdated } from '~/Contexts/section.actions'
+import { mergeSerloDiff, saveSections, sectionWasUpdated, setSections, fetchSection } from '~/Contexts/section.actions'
 import { serverApi } from "~/utils/api"
-import { loadEditorData, loadLessonData, loadSectionData } from "~/utils/cache"
+import { loadLessonData, loadSectionData } from "~/utils/cache"
 import { editorWS } from "~/utils/socket"
 
 
@@ -28,11 +28,18 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
 			(cachedLessonData.savedToBackend === false || !editorWS.isConnected)
 		) {
             // TODO: compare timestamps and hash with server state and save if possible or set
-            // saved to true if hash is the same
+            // saved to true if hash is the same (needs server route, to do not send all data)
             dispatch(setLesson(cachedLessonData))
 
             const sections = loadSectionData(...cachedLessonData.sections)
-            sections.filter((section) => cachedLessonData.sections.includes(section._id))
+
+            dispatch(setSections(sections))
+
+            if(sections.length !== cachedLessonData.sections.length){
+                const sectionsNotInChache = cachedLessonData.sections.filter(secId => !sections.find(section => section.id === secId))
+                dispatch(fetchSection(...sectionsNotInChache))
+            }
+
 
 		} else {
            await dispatch(fetchLessonWithSections(id, courseId))
