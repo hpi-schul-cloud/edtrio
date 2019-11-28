@@ -290,9 +290,9 @@ export const removeSection = (sectionId) => async ({state, dispatch}) => {
 		payload: newActiveSectionId
 	})
 	try{
-
-		const section = await editorWS.emit('delete', `lesson/${state.lesson._id}/sections/${sectionId}`)
-
+		console.log('section will be deleted')
+		const section = await editorWS.emit('remove', `lesson/${state.lesson._id}/sections`, sectionId)
+		console.log(section)
 		dispatch({
 			type: DELETE_SECTION,
 			payload: section._id,
