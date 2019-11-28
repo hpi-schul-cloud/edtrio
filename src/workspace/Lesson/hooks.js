@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
 import { fetchCourse } from "~/Contexts/course.actions"
-import { fetchLessonWithSections, lessonWasUpdated, saveLesson } from "~/Contexts/lesson.actions"
-import { mergeSerloDiff, saveSections, sectionWasUpdated } from '~/Contexts/section.actions'
+import { fetchLessonWithSections, lessonWasUpdated, saveLesson, setLesson } from "~/Contexts/lesson.actions"
 import { unsavedChanges } from '~/Contexts/notifications.actions'
+import { mergeSerloDiff, saveSections, sectionWasUpdated } from '~/Contexts/section.actions'
 import { serverApi } from "~/utils/api"
-import { loadEditorData } from "~/utils/cache"
+import { loadEditorData, loadLessonData, loadSectionData } from "~/utils/cache"
 import { editorWS } from "~/utils/socket"
 
 
@@ -13,6 +13,7 @@ import { editorWS } from "~/utils/socket"
 
 export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
     async function bootstrap() {
+        console.log('bootstrap')
         try {
             const user = await serverApi.get("/me")
             dispatchUserAction({ type: "BOOTSTRAP_USER", payload: user })
@@ -20,15 +21,19 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
             console.warn("Could not fetch user data")
         }
 
-        // TODO: have to be rewrite for new chache system
-        const cacheData = loadEditorData(id)
-		let lesson
+        const cachedLessonData = loadLessonData(id)
 		if (
-			cacheData &&
-			cacheData.hasOwnProperty("lesson") &&
-			(cacheData.savedToBackend === false || !editorWS.isConnected)
+			cachedLessonData &&
+			cachedLessonData.hasOwnProperty("sections") &&
+			(cachedLessonData.savedToBackend === false || !editorWS.isConnected)
 		) {
-			lesson = cacheData.lesson
+            // TODO: compare timestamps and hash with server state and save if possible or set
+            // saved to true if hash is the same
+            dispatch(setLesson(cachedLessonData))
+
+            const sections = loadSectionData(...cachedLessonData.sections)
+            sections.filter((section) => cachedLessonData.sections.includes(section._id))
+
 		} else {
            await dispatch(fetchLessonWithSections(id, courseId))
         }

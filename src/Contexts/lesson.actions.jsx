@@ -18,9 +18,10 @@ export const LESSON_SAVED = 'LESSON_SAVED'
 export const SAVING_LESSON_FAILED = 'SAVING_LESSON_FAILED'
 export const SWAP_SECTIONS = 'SWAP_SECTIONS'
 
-export const fetchLessonFromCache = () => {
-
-}
+export const setLesson = (lesson) => ({
+	type: SET_LESSON,
+	payload: lesson
+})
 
 export const lessonWasUpdated = (lesson) => ({
 	type: LESSON_UPDATED,

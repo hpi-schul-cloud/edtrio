@@ -11,6 +11,5 @@ export const fetchCourse = (courseId) => async ({dispatch}) => {
 		dispatch({ type: SET_COURSE, payload: course })
 	} catch (err) {
 		dispatch(newError('Daten zum Kurs konnten nicht geladen werden.'))
-		console.error(err)
 	}
 }

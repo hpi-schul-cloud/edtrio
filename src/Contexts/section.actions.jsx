@@ -21,6 +21,9 @@ export const DOCVALUE_SAVED = 'DOCVALUE_SAVED'
 export const SAVING_SECTIONS = 'SAVING_SECTIONS'
 export const SAVING_SECTION_FAILED = 'SAVING_SECTION_FAILED'
 export const SECTION_SAVED = 'SECTION_SAVED'
+export const FETCHING_SECTION = 'FETCHING_SECTION'
+export const SECTION_FETCHED = 'SECTION_FETCHED'
+export const FETCHING_SECTION_FAILED = 'SECTION_FETCHED'
 
 export const switchSectionVisibility = (sectionId) => ({state}) => ({
 	type: SWITCH_SECTION_VISIBILTY,
@@ -32,6 +35,53 @@ export const setSections = (sections) => ({
 	payload: sections
 })
 
+export const addSection = (section) => ({
+	type: ADD_SECTION,
+	payload: {
+		title: "",
+		_id: uuid(), // TODO: mark, so it will not be saved to backend with this id
+		visible: true,
+		docValue: {},
+		changed: new Set(),
+		position: -1, // added at last pos
+		...section
+	}
+})
+
+export const fetchSection = (...sectionIds) => ({state, dispatch}) => {
+
+	// TODO: check connection and inform user
+
+	const proms = sectionIds.map(async (_id) => {
+
+		dispatch({
+			type: FETCHING_SECTION,
+			payload: _id
+		})
+
+		return editorWS.emit(
+			'get',
+			`lesson/${state.lesson._id}/sections`,
+			_id
+		)
+	})
+
+	const resolved = Promise.allSettled(proms)
+	resolved.forEach((res, i) => {
+		if(res.status === 'fulfilled'){
+			dispatch(addSection(res.value))
+			dispatch({
+				type: SECTION_FETCHED,
+				payload: res.value._id
+			})
+		} else {
+			dispatch({
+				type: FETCHING_SECTION_FAILED,
+				payload: sectionIds[i]
+			})
+		}
+	})
+}
 
 /**
  * Creates a new Sections and persist it on the backend
@@ -42,13 +92,10 @@ export const createSection = (position) => async ({dispatch, state}) => {
 	const tempId = uuid()
 	const {lesson} = state
 	position = position || state.sections.length
-	dispatch({
-		type: ADD_SECTION,
-		payload: {
-			tempId,
-			position
-		},
-	})
+	dispatch(addSection({
+		_id: tempId,
+		position
+	}))
 	try{
 		const section = await editorWS.emit('create', `lesson/${lesson._id}/sections`, {})
 		dispatch({
@@ -290,9 +337,7 @@ export const removeSection = (sectionId) => async ({state, dispatch}) => {
 		payload: newActiveSectionId
 	})
 	try{
-		console.log('section will be deleted')
 		const section = await editorWS.emit('remove', `lesson/${state.lesson._id}/sections`, sectionId)
-		console.log(section)
 		dispatch({
 			type: DELETE_SECTION,
 			payload: section._id,
