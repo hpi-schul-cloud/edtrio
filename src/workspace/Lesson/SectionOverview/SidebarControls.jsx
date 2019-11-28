@@ -63,7 +63,7 @@ const SidebarControls = ({ store, dispatch }) => {
                 <AddWrapper visible={!expanded}>
                     <StyledIcon
                         onClick={() => {
-                            dispatch(createSection(sections.length-1))
+                            dispatch(createSection(sections.length))
                         }}
                         style={{ width: 40, height: 40 }}
                         src={require("~/assets/plus-red-round.svg")}

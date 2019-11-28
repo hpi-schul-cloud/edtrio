@@ -3,6 +3,7 @@ import { mergeDiff, buildDiff } from '~/utils/diff'
 import uuid from "uuid/v4"
 import { saveSectionData } from "~/utils/cache"
 import { generateHash } from "~/utils/crypto"
+import { SET_ACTIVE_SECTION } from "./view.actions"
 
 
 export const SET_SECTIONS = 'SET_SECTIONS'
@@ -48,18 +49,24 @@ export const createSection = (position) => async ({dispatch, state}) => {
 			position
 		},
 	})
-
-	const section = await editorWS.emit('create', `lesson/${lesson._id}/sections`, {position})
-
-	dispatch({
-		type: REPLACE_ADDED_SECTION_ID,
-		payload: {
-			tempId,
-			backendId: section._id,
-		},
-	})
-
-
+	try{
+		const section = await editorWS.emit('create', `lesson/${lesson._id}/sections`, {})
+		dispatch({
+			type: REPLACE_ADDED_SECTION_ID,
+			payload: {
+				tempId,
+				backendId: section._id,
+			},
+		})
+	} catch (err){
+		dispatch({ // TODO: Recognice it and save it later, have to be a post and not a patch
+			// trigger could be the connection, need to be sockets as component und bind do a store
+			type: SAVING_SECTION_FAILED,
+			payload: {
+				_id: tempId
+			}
+		})
+	}
 }
 
 const createDiffAndSendToBackend = (lessonId, section) => {
@@ -137,7 +144,6 @@ const saveSectionDocValue = ({ignoreChangedSet = -1}) => async ({dispatch, state
 				savedToBackend: true
 			})
 		} else {
-			console.log(res)
 			dispatch({
 				type: SAVING_DOCVALUE_FAILED,
 				payload: sectionId
@@ -267,13 +273,29 @@ export const removeSection = (sectionId) => async ({state, dispatch}) => {
 		type: PREPARE_DELETE_SECTION,
 		payload: sectionId,
 	})
+
+	let newActiveSectionId
+	let index = 0
+	while(!newActiveSectionId && index < state.sections.length){
+		if(state.sections[index]._id === sectionId){
+			const newActiveIndex = index === 0 ? index + 1 : index - 1
+			newActiveSectionId = state.sections[newActiveIndex]._id
+		}
+
+		index += 1
+	}
+
+	dispatch({
+		type: SET_ACTIVE_SECTION,
+		payload: newActiveSectionId
+	})
 	try{
 
 		const section = await editorWS.emit('delete', `lesson/${state.lesson._id}/sections/${sectionId}`)
 
 		dispatch({
 			type: DELETE_SECTION,
-			payload: sectionId,
+			payload: section._id,
 		})
 	} catch (err){
 		// TODO: check if connection to sever exist

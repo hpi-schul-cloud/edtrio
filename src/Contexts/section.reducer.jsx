@@ -3,11 +3,6 @@ import { SWITCH_SECTION_VISIBILTY, SET_SECTIONS , ADD_SECTION , REPLACE_ADDED_SE
 
 
 
-
-
-
-
-
 export const sectionInitialState = []
 export function sectionReducer(state = sectionInitialState, { type, payload }) {
     switch (type) {
@@ -18,19 +13,20 @@ export function sectionReducer(state = sectionInitialState, { type, payload }) {
             }))
 
         case ADD_SECTION:
-            const {position, tempId} = payload
-            return state.splice(position, 0, {
-                    title: "",
-                    id: tempId,
-                    visible: true,
-                    docValue: {},
-                    changed: new Set(),
-                })
+            const newArrayWithAddedSectinstate = [...state]
+            newArrayWithAddedSectinstate.splice(payload.position, 0, {
+                title: "",
+                _id: payload.tempId,
+                visible: true,
+                docValue: {},
+                changed: new Set(),
+            })
+            return newArrayWithAddedSectinstate
 
         case REPLACE_ADDED_SECTION_ID: {
             return state.map(section =>
                 section._id === payload.tempId
-                ? {...section, id: payload.backendId}
+                ? {...section, _id: payload.backendId}
                 : section
             )
         }

@@ -83,7 +83,7 @@ export function lessonReducer(state = lessonInitialState, { type, payload }) {
             }
 
         case REPLACE_ADDED_SECTION_ID:
-            state.changed.set('sections') // TODO: is this needed or is it already done on server side
+            state.changed.add('sections') // TODO: is this needed or is it already done on server side
             return {
                 ...state,
                 sections: state.sections.splice(

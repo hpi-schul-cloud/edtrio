@@ -1,6 +1,6 @@
 import qs from "qs"
 
-import { ADD_SECTION , REPLACE_ADDED_SECTION_ID , SET_SECTIONS , PREPARE_DELETE_SECTION } from "./section.actions"
+import { ADD_SECTION , REPLACE_ADDED_SECTION_ID , SET_SECTIONS } from "./section.actions"
 import { TOGGLE_SECTION_SETTINGS, TOGGLE_SECTION_OVERVIEW, SET_ACTIVE_SECTION , SET_EDITING , SET_LOADING } from "./view.actions"
 
 
@@ -71,23 +71,6 @@ export function viewReducer(state = viewInitialState, { type, payload }) {
             return {
                 ...state,
                 activeSectionId: payload,
-            }
-
-        case PREPARE_DELETE_SECTION:
-            // TODO: move part to view
-            let activeSectionId = state.activeSectionId
-            if (activeSectionId === payload) {
-                const deleteIndex = state.findIndex(
-                    el => el._id === payload,
-                )
-                const newIndex =
-                    deleteIndex === 0 ? deleteIndex + 1 : deleteIndex - 1
-                activeSectionId = state[newIndex]._id
-            }
-
-            return {
-                ...state,
-                activeSectionId
             }
 
         case "RESET":

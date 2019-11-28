@@ -16,8 +16,9 @@ import closeIcon from "~/assets/close-white.svg"
 
 import DeleteModal from "./DeleteModal"
 import { editorWS } from "~/utils/socket"
-import { switchSectionVisibility } from "~/Contexts/section.actions"
+import { switchSectionVisibility , removeSection } from "~/Contexts/section.actions"
 import { toggleSectionSettings } from "~/Contexts/view.actions"
+
 
 const Wrapper = styled(Flex)`
     background-color: #455b6a;
@@ -73,19 +74,7 @@ const Settings = () => {
     const isOnly = store.sections.length === 1
 
     async function confirmDelete() {
-        dispatch({
-            type: "PREPARE_DELETE_SECTION",
-            payload: activeSectionId,
-        })
-
-        try {
-            await editorWS.emit('remove', `lesson/${store.lesson._id}/sections`, activeSectionId)
-            dispatch({
-                type: "DELETE_SECTION",
-                payload: activeSectionId,
-            })
-        } catch (err) {}
-
+        dispatch(removeSection(activeSectionId))
     }
 
     if (!store.view.showSectionSettings) return null
