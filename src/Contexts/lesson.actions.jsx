@@ -120,17 +120,16 @@ export const fetchLessonWithSections = (lessonId, courseId, params) => async ({d
 
 	try {
 		// const lesson = await dispatch(fetchLesson(lessonId, courseId, {...params, all: 'true'}))
-		let lesson = await editorWS.emit(
+		let {sections, ...lesson} = await editorWS.emit(
 			'get',
 			`course/${courseId}/lessons`,
 			lessonId,
 			{all: 'true'}
 		)
-		let {sections, ...rest} = lesson
-		lesson = rest
+
 		lesson.sections = []
 
-		lesson.id = lesson._id // needed for old version, please use _id instead
+		// lesson.id = lesson._id // needed for old version, please use _id instead
 
 		dispatch({
 			type: SET_LESSON,
