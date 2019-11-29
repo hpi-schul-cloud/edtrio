@@ -24,7 +24,7 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
         const cachedLessonData = loadLessonData(id)
 		if (
 			cachedLessonData &&
-			cachedLessonData.hasOwnProperty("sections") &&
+			Object.prototype.hasOwnProperty.call(cachedLessonData, 'sections') &&
 			(cachedLessonData.savedToBackend === false || !editorWS.isConnected)
 		) {
             // TODO: compare timestamps and hash with server state and save if possible or set

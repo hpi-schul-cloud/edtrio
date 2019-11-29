@@ -14,13 +14,7 @@ export function sectionReducer(state = sectionInitialState, { type, payload }) {
 
         case ADD_SECTION:
             const newArrayWithAddedSectinstate = [...state]
-            newArrayWithAddedSectinstate.splice(payload.position, 0, {
-                title: "",
-                _id: payload.tempId,
-                visible: true,
-                docValue: {},
-                changed: new Set(),
-            })
+            newArrayWithAddedSectinstate.splice(payload.position, 0, payload)
             return newArrayWithAddedSectinstate
 
         case REPLACE_ADDED_SECTION_ID: {
