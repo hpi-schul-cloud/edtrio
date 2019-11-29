@@ -4,6 +4,7 @@ import { ERROR } from './notifications.actions'
 import { generateHash } from '~/utils/crypto'
 import { saveLessonData } from '~/utils/cache'
 import { startLoading , finishLoading } from './view.actions'
+import curryN from 'ramda/es/curryN'
 
 
 
@@ -54,7 +55,6 @@ export const changeLessonTitle = (title) => ({
  * Saves all changed (in changed marked) parameters to the server
  */
 export const saveLesson = () => async ({state, dispatch}) => {
-
 	// keep care of adding or removing something, ...lesson is to generate hash and it should include
 	// everything witch is part of lesson, compared to database
 	const {lesson: {changed, hash, timestamp, ...lesson}, course}  = state
@@ -95,7 +95,6 @@ export const saveLesson = () => async ({state, dispatch}) => {
 			type: LESSON_SAVED,
 			payload
 		})
-
 		saveLessonData({
 			...lesson,
 			...payload,
@@ -155,7 +154,6 @@ export const fetchLessonWithSections = (lessonId, courseId, params) => async ({d
 	dispatch(startLoading())
 
 	try {
-		// const lesson = await dispatch(fetchLesson(lessonId, courseId, {...params, all: 'true'}))
 		let {sections, ...lesson} = await editorWS.emit(
 			'get',
 			`course/${courseId}/lessons`,
@@ -166,12 +164,10 @@ export const fetchLessonWithSections = (lessonId, courseId, params) => async ({d
 		lesson.sections = []
 
 		// lesson.id = lesson._id // needed for old version, please use _id instead
-
 		dispatch({
 			type: SET_LESSON,
 			payload: lesson
 		})
-
 		if(sections.length === 0){
 			dispatch(createSection(0))
 		} else {

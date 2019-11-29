@@ -28,7 +28,7 @@ export function viewReducer(state = viewInitialState, { type, payload }) {
         case SET_SECTIONS:
             return {
                 ...state,
-                activeSectionId: payload[0]._id
+                activeSectionId: payload[0]._id || null
             }
 
         case SET_LOADING:
