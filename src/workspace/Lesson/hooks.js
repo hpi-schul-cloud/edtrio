@@ -1,24 +1,20 @@
 import { useEffect, useState } from "react"
 import { fetchCourse } from "~/Contexts/course.actions"
 import { fetchLessonWithSections, lessonWasUpdated, saveLesson, setLesson } from "~/Contexts/lesson.actions"
-import { unsavedChanges } from '~/Contexts/notifications.actions'
+import { unsavedChanges , newError } from '~/Contexts/notifications.actions'
 import { mergeSerloDiff, saveSections, sectionWasUpdated, setSections, fetchSection } from '~/Contexts/section.actions'
 import { serverApi } from "~/utils/api"
 import { loadLessonData, loadSectionData } from "~/utils/cache"
 import { editorWS } from "~/utils/socket"
 
-
-
-
-
 export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
     async function bootstrap() {
-        console.log('bootstrap')
         try {
             const user = await serverApi.get("/me")
             dispatchUserAction({ type: "BOOTSTRAP_USER", payload: user })
         } catch (err) {
             console.warn("Could not fetch user data")
+            dispatch(newError('Es konnten nicht alle Daten geladen werden, eventuell kommt es zu einschränkungen'))
         }
 
         const cachedLessonData = loadLessonData(id)

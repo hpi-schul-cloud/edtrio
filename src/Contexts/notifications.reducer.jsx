@@ -1,11 +1,11 @@
 
-import { BOOTSTRAP, BOOTSTRAP_FINSIHED , SAVING_LESSON , LESSON_SAVED } from "./lesson.actions"
+import { SAVING_LESSON , LESSON_SAVED } from "./lesson.actions"
 import { DELETING_SECTION_FAILED } from "./section.actions"
+import { SAVE_STATUS } from "./notifications.actions"
 
 
 
 export const notificationInitialState = {
-    loading: true,
     error: "",
     saveStatus: "",
     isSaving: 0,
@@ -25,25 +25,8 @@ export function notificationReducer(state = notificationInitialState, { type, pa
                 ...state,
                 error: 'Beim Löschen einer Section ist ein Fehler aufgetretten'
             }
-        case BOOTSTRAP:
-            return {
-                ...state,
-                loading: true
-            }
 
-        case BOOTSTRAP_FINSIHED:
-            return {
-                ...state,
-                loading: false
-            }
-
-        case "LOADING":
-            return {
-                ...state,
-                loading: !!payload,
-			}
-
-		case "SAVE_STATUS":
+		case SAVE_STATUS:
 			return {
 				...state,
 				saveStatus: payload,

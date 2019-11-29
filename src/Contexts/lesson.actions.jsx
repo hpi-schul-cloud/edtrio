@@ -18,21 +18,41 @@ export const LESSON_SAVED = 'LESSON_SAVED'
 export const SAVING_LESSON_FAILED = 'SAVING_LESSON_FAILED'
 export const SWAP_SECTIONS = 'SWAP_SECTIONS'
 
+
+/**
+ * Set lesson if not exist and overwrite if already setted
+ * 
+ * @param {Object} lesson 
+ */
 export const setLesson = (lesson) => ({
 	type: SET_LESSON,
 	payload: lesson
 })
 
+/**
+ * Triggers a Lesson update, should only use, if changes already save by server
+ * Will merged with existing data
+ *
+ * @param {Object} lesson - a lesson object, with updated data
+ */
 export const lessonWasUpdated = (lesson) => ({
 	type: LESSON_UPDATED,
 	payload: lesson
 })
 
+/**
+ * Sets title to lesson state and markes it as changed for later save
+ * 
+ * @param {string} title - new lesson title
+ */
 export const changeLessonTitle = (title) => ({
 	type: CHANGE_LESSON_TITLE,
 	payload: title
 })
 
+/**
+ * Saves all changed (in changed marked) parameters to the server
+ */
 export const saveLesson = () => async ({state, dispatch}) => {
 
 	// keep care of adding or removing something, ...lesson is to generate hash and it should include
@@ -95,6 +115,13 @@ export const saveLesson = () => async ({state, dispatch}) => {
 
 }
 
+/**
+ * Fetch lesson data from server and overwrite current lesson
+ * 
+ * @param {string} lessonId - ID of lesson
+ * @param {string} courseId - ID of course, lesson belong to
+ * @param {Object} params - query params for request
+ */
 export const fetchLesson = (lessonId, courseId, params) => async ({dispatch}) => {
 	try{
 		const lesson = await editorWS.emit(
@@ -115,6 +142,14 @@ export const fetchLesson = (lessonId, courseId, params) => async ({dispatch}) =>
 
 }
 
+/**
+ * Fetch lesson and section data from server and overwrite current lesson and sections.
+ * The funktion is used to bootstrap the edtior or load a other lesson with all needed data
+ * 
+ * @param {string} lessonId - ID of lesson
+ * @param {string} courseId - ID of course, lesson belong to
+ * @param {Object} params - query params for request
+ */
 export const fetchLessonWithSections = (lessonId, courseId, params) => async ({dispatch, state}) => {
 
 	dispatch(startLoading())
