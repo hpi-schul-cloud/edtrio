@@ -97,7 +97,7 @@ test('add dispatch middleware and execute', t => {
 	}
 	function Provider(){
 		const [state, reactDispatch] = useReducer(reducer, initState)
-		const dispatch = createDispatch(reactDispatch, state, middleware())
+		const dispatch = createDispatch(reactDispatch, state, 'simple', middleware())
 		return (
 				<Context.Provider value={{state, dispatch}}>
 					<TestComponent dispatch={dispatch} state={state}/>
@@ -128,7 +128,7 @@ test('test dispatch is everytime looped through middlewares', t => {
 	}
 	function Provider(){
 		const [state, reactDispatch] = useReducer(reducer, initState)
-		const dispatch = createDispatch(reactDispatch, state, preMiddleware('HUNZ'), middleware())
+		const dispatch = createDispatch(reactDispatch, state, 'looped', preMiddleware('HUNZ'), middleware())
 		return (
 				<Context.Provider value={{state, dispatch}}>
 					<TestComponent dispatch={dispatch} state={state}/>
@@ -156,7 +156,7 @@ test('test adding 4 middlewares', t => {
 	}
 	function Provider(){
 		const [state, reactDispatch] = useReducer(reducer, initState)
-		const dispatch = createDispatch(reactDispatch, state, preMiddleware('HUNZ'), middleware(), someOtherMiddleware(), postMiddleware('blub'))
+		const dispatch = createDispatch(reactDispatch, state, '4fu', preMiddleware('HUNZ'), middleware(), someOtherMiddleware(), postMiddleware('blub'))
 		return (
 				<Context.Provider value={{state, dispatch}}>
 					<TestComponent dispatch={dispatch} state={state}/>
@@ -207,7 +207,7 @@ const asyncFu = (test) => async ({dispatch, state}) => {
 	return payload
 }
 
-const asyncOnlyLastChar = (test) => async ({dispatch}) => {
+const asyncOnlyLastChar = ( test ) => async ({dispatch}) => {
 	const payload = await new Promise((resolve) => {
 		setTimeout(async () => {
 			const sliced = test.slice(-1)
@@ -230,7 +230,7 @@ test('test thunkMiddleware', async t => {
 	}
 	function Provider(){
 		const [state, reactDispatch] = useReducer(reducer, initState)
-		const dispatch = createDispatch(reactDispatch, state, thunkMiddleware())
+		const dispatch = createDispatch(reactDispatch, state, 'thunk', thunkMiddleware())
 		return (
 				<Context.Provider value={{state, dispatch}}>
 					<TestComponent dispatch={dispatch} state={state}/>
@@ -264,7 +264,7 @@ test('test thunkMiddleware async function call in async function', async t => {
 	}
 	function Provider(){
 		const [state, reactDispatch] = useReducer(reducer, initState)
-		const dispatch = createDispatch(reactDispatch, state, thunkMiddleware())
+		const dispatch = createDispatch(reactDispatch, state, '2fuThunk', thunkMiddleware())
 		return (
 				<Context.Provider value={{state, dispatch}}>
 					<TestComponent dispatch={dispatch} state={state}/>

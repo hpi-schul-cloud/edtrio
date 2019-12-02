@@ -58,6 +58,7 @@ export const saveLesson = () => async ({state, dispatch}) => {
 	// keep care of adding or removing something, ...lesson is to generate hash and it should include
 	// everything witch is part of lesson, compared to database
 	const {lesson: {changed, hash, timestamp, ...lesson}, course}  = state
+	console.log(state)
 
 	if (changed.size === 0) return
 
@@ -210,5 +211,6 @@ export const fetchLessonWithSections = (lessonId, courseId, params) => async ({d
 	}
 
 	dispatch(finishLoading())
+	dispatch({ type: "BOOTSTRAP_FINISH" })
 
 }

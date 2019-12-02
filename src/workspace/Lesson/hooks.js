@@ -7,7 +7,12 @@ import { serverApi } from "~/utils/api"
 import { loadLessonData, loadSectionData } from "~/utils/cache"
 import { editorWS } from "~/utils/socket"
 
+const HandlerDispatchObject = {
+    dispatch: undefined
+}
+
 export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
+    HandlerDispatchObject.dispatch = dispatch
     async function bootstrap() {
         try {
             const user = await serverApi.get("/me")
@@ -41,14 +46,17 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
            await dispatch(fetchLessonWithSections(id, courseId))
         }
 
-        requestAnimationFrame(() => {
-            dispatch({ type: "BOOTSTRAP_FINISH" })
-        })
+        /* requestAnimationFrame(() => {
+            // dispatch({ type: "BOOTSTRAP_FINISH" })
+        }) */
     }
 
+
+
     async function registerHandler(){
+
         const dispatchLessonUpdate = (data) =>
-            dispatch(lessonWasUpdated(data))
+            HandlerDispatchObject.dispatch(lessonWasUpdated(data))
 
         editorWS.on('course/:courseId/lessons patched', dispatchLessonUpdate)
         editorWS.on('course/:courseId/lessons updated', dispatchLessonUpdate)
@@ -58,7 +66,6 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
 
         editorWS.on('lesson/:lessonId/sections patched', dispatchSectionUpdate)
         editorWS.on('lesson/:lessonId/sections updated', dispatchSectionUpdate)
-
 
         const dispatchSectionDiff = (data) => dispatch(mergeSerloDiff(data._id, data.diff))
 
@@ -75,6 +82,7 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
 export function useChangeListener(store, dispatch) {
     const [timeout, setTimeoutState] = useState(null)
     useEffect(() => {
+        console.log(store.view.bootstrapFinished)
         if (!store.view.bootstrapFinished) return
         // dispatch({ type: "SAVE_STATUS", payload: "Ungesicherte Änderungen" })
         dispatch(unsavedChanges())

@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React, { Component, useState, useEffect, useMemo } from "react"
 import styled, { css } from "styled-components"
 import { DragLayer } from "react-dnd"
 import { isTouchDevice } from "~/utils/device"
@@ -131,6 +131,14 @@ const EditorPreview = ({
                             wrapperRef.current.offsetTop}px)`
                       : "",
               }
+
+    /* const [docValue, setDocValue] = useState(section.docValue)
+
+    useEffect(() => {
+          setDocValue(docValue)
+    }, [section.docValue]) */
+
+    // const docValue = useMemo(() => section.docValue, [section.docValue])
 
     return (
         <Outer

@@ -10,6 +10,7 @@ export const lessonInitialState = {
     title: ''
 }
 export function lessonReducer(state = lessonInitialState, { type, payload }) {
+    console.log(state)
     switch (type) {
         case SET_LESSON:
             return {

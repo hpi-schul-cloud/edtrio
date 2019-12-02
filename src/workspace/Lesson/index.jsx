@@ -19,9 +19,9 @@ import {
     useBootstrap,
     useChangeListener,
     useFullScreenListener,
-    saveSections,
 } from "./hooks"
 import { newError } from "~/Contexts/notifications.actions"
+import { saveSections } from "~/Contexts/section.actions"
 
 const Wrapper = styled.div`
     position: relative;
@@ -55,7 +55,7 @@ const Lesson = props => {
 
     useEffect(() => {
         if (store.view.bootstrapFinished && store.view.editing === false)
-            saveSections(store, dispatch, true)
+            dispatch(saveSections())
     }, [store.view.editing])
 
     if (store.view.loading) {
