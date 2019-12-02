@@ -230,7 +230,7 @@ test('test thunkMiddleware', async t => {
 	}
 	function Provider(){
 		const [state, reactDispatch] = useReducer(reducer, initState)
-		const dispatch = createDispatch(reactDispatch, state, 'thunk', thunkMiddleware())
+		const dispatch = createDispatch(reactDispatch, state, 'thunk', thunkMiddleware)
 		return (
 				<Context.Provider value={{state, dispatch}}>
 					<TestComponent dispatch={dispatch} state={state}/>
@@ -264,7 +264,7 @@ test('test thunkMiddleware async function call in async function', async t => {
 	}
 	function Provider(){
 		const [state, reactDispatch] = useReducer(reducer, initState)
-		const dispatch = createDispatch(reactDispatch, state, '2fuThunk', thunkMiddleware())
+		const dispatch = createDispatch(reactDispatch, state, '2fuThunk', thunkMiddleware)
 		return (
 				<Context.Provider value={{state, dispatch}}>
 					<TestComponent dispatch={dispatch} state={state}/>

@@ -7,12 +7,7 @@ import { serverApi } from "~/utils/api"
 import { loadLessonData, loadSectionData } from "~/utils/cache"
 import { editorWS } from "~/utils/socket"
 
-const HandlerDispatchObject = {
-    dispatch: undefined
-}
-
 export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
-    HandlerDispatchObject.dispatch = dispatch
     async function bootstrap() {
         try {
             const user = await serverApi.get("/me")
@@ -56,7 +51,7 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
     async function registerHandler(){
 
         const dispatchLessonUpdate = (data) =>
-            HandlerDispatchObject.dispatch(lessonWasUpdated(data))
+            dispatch(lessonWasUpdated(data))
 
         editorWS.on('course/:courseId/lessons patched', dispatchLessonUpdate)
         editorWS.on('course/:courseId/lessons updated', dispatchLessonUpdate)
@@ -82,7 +77,6 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
 export function useChangeListener(store, dispatch) {
     const [timeout, setTimeoutState] = useState(null)
     useEffect(() => {
-        console.log(store.view.bootstrapFinished)
         if (!store.view.bootstrapFinished) return
         // dispatch({ type: "SAVE_STATUS", payload: "Ungesicherte Änderungen" })
         dispatch(unsavedChanges())

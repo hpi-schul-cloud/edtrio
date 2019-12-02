@@ -30,8 +30,6 @@ export const createDispatch = (rdispatch, state, identifier, ...middlewares) => 
 	}
 
 	if(!knownMiddelwares[identifier]){
-
-		console.log('I run')
 		if(middlewares.length === 0){
 			return rdispatch
 		} else {
@@ -76,19 +74,9 @@ export const createDispatch = (rdispatch, state, identifier, ...middlewares) => 
  * The function is ispired by thunkMiddelware for redux
  * https://www.npmjs.com/package/redux-thunk
  */
-export const thunkMiddleware = () => {
-	return ({getState, dispatch}) => (next) => action => {
+export const thunkMiddleware = ({getState, dispatch}) => (next) => action => {
 		if(typeof action === 'function'){
 			return action({state: getState(), dispatch})
 		}
 		return next(action)
 	}
-}
-
-
-export const logger = () => {
-	return ({state, dispatch}) => (next) => action => {
-		console.log(action)
-		next(action)
-	}
-}
