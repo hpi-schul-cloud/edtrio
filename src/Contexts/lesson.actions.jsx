@@ -58,7 +58,6 @@ export const saveLesson = () => async ({state, dispatch}) => {
 	// keep care of adding or removing something, ...lesson is to generate hash and it should include
 	// everything witch is part of lesson, compared to database
 	const {lesson: {changed, hash, timestamp, ...lesson}, course}  = state
-	console.log(state)
 
 	if (changed.size === 0) return
 
@@ -117,7 +116,7 @@ export const saveLesson = () => async ({state, dispatch}) => {
 
 /**
  * Fetch lesson data from server and overwrite current lesson
- * 
+ *
  * @param {string} lessonId - ID of lesson
  * @param {string} courseId - ID of course, lesson belong to
  * @param {Object} params - query params for request
@@ -145,7 +144,7 @@ export const fetchLesson = (lessonId, courseId, params) => async ({dispatch}) =>
 /**
  * Fetch lesson and section data from server and overwrite current lesson and sections.
  * The funktion is used to bootstrap the edtior or load a other lesson with all needed data
- * 
+ *
  * @param {string} lessonId - ID of lesson
  * @param {string} courseId - ID of course, lesson belong to
  * @param {Object} params - query params for request

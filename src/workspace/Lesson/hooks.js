@@ -79,10 +79,16 @@ export function useChangeListener(store, dispatch) {
     useEffect(() => {
         if (!store.view.bootstrapFinished) return
         // dispatch({ type: "SAVE_STATUS", payload: "Ungesicherte Änderungen" })
-        dispatch(unsavedChanges())
 
-        if(timeout) clearTimeout(timeout)
+        if (timeout) {
+            clearTimeout(timeout);
+            setTimeoutState(null)
+        } else {
+            dispatch(unsavedChanges());
+        }
+
         setTimeoutState(setTimeout(() => {
+                setTimeoutState(null)
                 dispatch(saveLesson())
                 dispatch(saveSections())
             }, 500)

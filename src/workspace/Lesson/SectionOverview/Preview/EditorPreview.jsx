@@ -132,11 +132,11 @@ const EditorPreview = ({
                       : "",
               }
 
-    /* const [docValue, setDocValue] = useState(section.docValue)
+    const [docValue, setDocValue] = useState(section.docValue)
 
     useEffect(() => {
           setDocValue(docValue)
-    }, [section.docValue]) */
+    }, [section.changed.size])
 
     // const docValue = useMemo(() => section.docValue, [section.docValue])
 
@@ -161,7 +161,7 @@ const EditorPreview = ({
                         key={k}
                         expanded={expanded}
                         editing={store.view.editing}
-                        docValue={section.docValue}
+                        docValue={docValue}
                     />
                 )}
             </Wrapper>
