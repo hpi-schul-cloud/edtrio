@@ -36,7 +36,7 @@ const LessonContext = React.createContext()
 export function LessonContextProvider({ children}) {
     const [state, dispatch] = useReducer(combinedReducer, combinedInitalState)
     // needed for initial of all default states, should not match any case
-    const value = { store: state, dispatch: createDispatch(dispatch, state, logger, thunkMiddleware)}
+    const value = { store: state, dispatch: createDispatch(dispatch, state, 'lesson', logger, thunkMiddleware)}
     return (
         <LessonContext.Provider value={value}>
             {children}

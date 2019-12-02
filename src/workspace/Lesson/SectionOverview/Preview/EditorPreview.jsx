@@ -133,7 +133,6 @@ const EditorPreview = ({
               }
 
     const [docValue, setDocValue] = useState(section.docValue)
-
     useEffect(() => {
           setDocValue(docValue)
     }, [section.changed.size])

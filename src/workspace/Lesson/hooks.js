@@ -91,7 +91,7 @@ export function useChangeListener(store, dispatch) {
                 setTimeoutState(null)
                 dispatch(saveLesson())
                 dispatch(saveSections())
-            }, 500)
+            }, 1000)
         )
     }, [store.lesson, store.sections])
 }
