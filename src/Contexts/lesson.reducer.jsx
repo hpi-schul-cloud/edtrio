@@ -16,31 +16,6 @@ export function lessonReducer(state = lessonInitialState, { type, payload }) {
                 ...payload,
                 changed: new Set()
             }
-/*
-        case "BOOTSTRAP": {
-            const newState = {
-                ...state,
-                loading: false,
-                error: "",
-                lesson: {
-                    ...payload,
-                    changed: new Set(),
-                    sections: payload.sections.map(section => {
-                        const sectionData = { ...section, changed: new Set() }
-                        if (section.new) {
-                            sectionData.new = undefined
-                            sectionData.changed.add("")
-                        }
-                        return sectionData
-                    }),
-                },
-                activeSectionId: payload.sections[0]._id,
-            }
-
-            return newState
-        }
-
-*/
         case UPDATE_LESSON:
         case LESSON_UPDATED:
             return {

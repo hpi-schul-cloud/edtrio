@@ -41,12 +41,15 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
            await dispatch(fetchLessonWithSections(id, courseId))
         }
 
-        requestAnimationFrame(() => {
-            dispatch({ type: "BOOTSTRAP_FINISH" })
-        })
+        /* requestAnimationFrame(() => {
+            // dispatch({ type: "BOOTSTRAP_FINISH" })
+        }) */
     }
 
+
+
     async function registerHandler(){
+
         const dispatchLessonUpdate = (data) =>
             dispatch(lessonWasUpdated(data))
 
@@ -76,13 +79,19 @@ export function useChangeListener(store, dispatch) {
     useEffect(() => {
         if (!store.view.bootstrapFinished) return
         // dispatch({ type: "SAVE_STATUS", payload: "Ungesicherte Änderungen" })
-        dispatch(unsavedChanges())
 
-        if(timeout) clearTimeout(timeout)
+        if (timeout) {
+            clearTimeout(timeout);
+            setTimeoutState(null)
+        } else {
+            dispatch(unsavedChanges());
+        }
+
         setTimeoutState(setTimeout(() => {
+                setTimeoutState(null)
                 dispatch(saveLesson())
                 dispatch(saveSections())
-            }, 500)
+            }, 1000)
         )
     }, [store.lesson, store.sections])
 }

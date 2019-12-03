@@ -25,7 +25,6 @@
     "plugins": ["standard", "react-hooks"],
     "rules": {
         "linebreak-style": [2, "unix"],
-        "semi": [2, "never"],
         "no-unused-vars": [0],
         "unicode-bom": ["error", "never"],
         "react-hooks/rules-of-hooks": 2,

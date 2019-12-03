@@ -139,7 +139,7 @@ export const fetchLesson = (lessonId, courseId, params) => async ({dispatch}) =>
 /**
  * Fetch lesson and section data from server and overwrite current lesson and sections.
  * The funktion is used to bootstrap the edtior or load a other lesson with all needed data
- * 
+ *
  * @param {string} lessonId - ID of lesson
  * @param {string} courseId - ID of course, lesson belong to
  * @param {Object} params - query params for request
@@ -205,5 +205,6 @@ export const fetchLessonWithSections = (lessonId, courseId, params) => async ({d
 	}
 
 	dispatch(finishLoading())
+	dispatch({ type: "BOOTSTRAP_FINISH" })
 
 }

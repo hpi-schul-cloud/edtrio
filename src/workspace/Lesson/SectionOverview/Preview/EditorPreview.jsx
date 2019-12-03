@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React, { Component, useState, useEffect, useMemo } from "react"
 import styled, { css } from "styled-components"
 import { DragLayer } from "react-dnd"
 import { isTouchDevice } from "~/utils/device"
@@ -132,6 +132,13 @@ const EditorPreview = ({
                       : "",
               }
 
+    const [docValue, setDocValue] = useState(section.docValue)
+    useEffect(() => {
+          setDocValue(docValue)
+    }, [section.changed.size])
+
+    // const docValue = useMemo(() => section.docValue, [section.docValue])
+
     return (
         <Outer
             ref={previewRef}
@@ -153,7 +160,7 @@ const EditorPreview = ({
                         key={k}
                         expanded={expanded}
                         editing={store.view.editing}
-                        docValue={section.docValue}
+                        docValue={docValue}
                     />
                 )}
             </Wrapper>
