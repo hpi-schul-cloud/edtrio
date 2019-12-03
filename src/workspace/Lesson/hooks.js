@@ -53,16 +53,15 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
         editorWS.on('course/:courseId/lessons patched', dispatchLessonUpdate)
         editorWS.on('course/:courseId/lessons updated', dispatchLessonUpdate)
 
-        const dispatchSectionUpdate = (data) =>
+        const dispatchSectionUpdate = (data) => {
+            if(Object.prototype.hasOwnProperty.call(data, 'stateDiff')){
+                dispatch()
+            }
             dispatch(sectionWasUpdated(data._id, data))
+        }
 
         editorWS.on('lesson/:lessonId/sections patched', dispatchSectionUpdate)
         editorWS.on('lesson/:lessonId/sections updated', dispatchSectionUpdate)
-
-
-        const dispatchSectionDiff = (data) => dispatch(mergeSerloDiff(data._id, data.diff))
-
-        editorWS.on('lesson/:lessonId/sections/diff patched', dispatchSectionDiff)
     }
 
     useEffect(() => {
