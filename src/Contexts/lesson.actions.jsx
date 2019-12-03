@@ -1,10 +1,11 @@
 import { editorWS } from '~/utils/socket'
 import { setSections , createSection } from './section.actions'
-import { ERROR } from './notifications.actions'
+import { newError } from './notifications.actions'
 import { generateHash } from '~/utils/crypto'
 import { saveLessonData } from '~/utils/cache'
 import { startLoading , finishLoading } from './view.actions'
 import curryN from 'ramda/es/curryN'
+
 
 
 
@@ -116,7 +117,7 @@ export const saveLesson = () => async ({state, dispatch}) => {
 
 /**
  * Fetch lesson data from server and overwrite current lesson
- * 
+ *
  * @param {string} lessonId - ID of lesson
  * @param {string} courseId - ID of course, lesson belong to
  * @param {Object} params - query params for request
@@ -136,7 +137,7 @@ export const fetchLesson = (lessonId, courseId, params) => async ({dispatch}) =>
 
 		return lesson
 	}catch(error){
-		dispatch({type: ERROR})
+		dispatch(newError())
 	}
 
 }
@@ -192,7 +193,7 @@ export const fetchLessonWithSections = (lessonId, courseId, params) => async ({d
 		}
 
 	} catch (err) {
-		dispatch({ type: "ERROR", payload: "Es konnten keine Daten vom Server oder aus dem Speicher geladen werden" })
+		dispatch(newError("Es konnten keine Daten vom Server oder aus dem Speicher geladen werden"))
 		dispatch({
 			type: SET_LESSON,
 			payload: {
