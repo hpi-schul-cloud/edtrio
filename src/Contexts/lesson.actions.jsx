@@ -4,10 +4,6 @@ import { newError } from './notifications.actions'
 import { generateHash } from '~/utils/crypto'
 import { saveLessonData } from '~/utils/cache'
 import { startLoading , finishLoading } from './view.actions'
-import curryN from 'ramda/es/curryN'
-
-
-
 
 export const BOOTSTRAP = 'BOOTSTRAP'
 export const BOOTSTRAP_FINISHED = 'BOOTSTRAP_FINISHED'
@@ -76,16 +72,14 @@ export const saveLesson = () => async ({state, dispatch}) => {
 			}
 		})
 
-		const prom = editorWS.emit(
+		const newHash = generateHash(lesson)
+
+		const message = await editorWS.emit(
 			'patch',
 			`course/${course._id}/lessons`,
 			lesson._id,
 			changes
 		)
-
-		const newHash = generateHash(lesson)
-
-		const message = await prom
 
 		const payload = {
 			hash: newHash,
