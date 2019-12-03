@@ -145,7 +145,7 @@ export const fetchLesson = (lessonId, courseId, params) => async ({dispatch}) =>
  * @param {string} courseId - ID of course, lesson belong to
  * @param {Object} params - query params for request
  */
-export const fetchLessonWithSections = (lessonId, courseId, params) => async ({dispatch, state}) => {
+export const fetchLessonWithSections = (lessonId, courseId, options) => async ({dispatch, state}) => {
 
 	dispatch(startLoading())
 
@@ -199,6 +199,6 @@ export const fetchLessonWithSections = (lessonId, courseId, params) => async ({d
 	}
 
 	dispatch(finishLoading())
-	dispatch({ type: "BOOTSTRAP_FINISH" })
+	if(options.bootstrap) dispatch({ type: BOOTSTRAP_FINISHED })
 
 }

@@ -38,7 +38,7 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
 
 
 		} else {
-           await dispatch(fetchLessonWithSections(id, courseId))
+           await dispatch(fetchLessonWithSections(id, courseId, {bootstrap: true}))
         }
 
         /* requestAnimationFrame(() => {
@@ -57,7 +57,6 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
         editorWS.on('course/:courseId/lessons updated', dispatchLessonUpdate)
 
         const dispatchSectionUpdate = (data) => {
-            console.log('New', data)
             const { stateDiff, _id, ...section } = data
             if(stateDiff){
                 dispatch(mergeEditorDiff(_id, stateDiff))
@@ -86,7 +85,6 @@ export function useChangeListener(store, dispatch) {
 
         if (timeout) {
             clearTimeout(timeout);
-            setTimeoutState(null)
         } else {
             dispatch(unsavedChanges());
         }
