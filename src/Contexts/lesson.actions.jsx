@@ -4,6 +4,7 @@ import { newError } from './notifications.actions'
 import { generateHash } from '~/utils/crypto'
 import { saveLessonData } from '~/utils/cache'
 import { startLoading , finishLoading } from './view.actions'
+import { mapSection } from '~/utils/reducer'
 
 export const BOOTSTRAP = 'BOOTSTRAP'
 export const BOOTSTRAP_FINISHED = 'BOOTSTRAP_FINISHED'
@@ -168,14 +169,7 @@ export const fetchLessonWithSections = (lessonId, courseId, params) => async ({d
 		} else {
 			sections = sections.map(section => {
 				lesson.sections.push(section._id)
-				return {
-					...section,
-					id: section._id, // needed for old version, please use _id instead
-					docValue: section.state,
-					savedDocValue: section.state,
-					notes: section.note,
-					visible: section.visible || true, // TODO: remove should be set by server and blur mode should removed
-				}
+				return mapSection(section)
 			})
 			dispatch(setSections(sections))
 			dispatch({

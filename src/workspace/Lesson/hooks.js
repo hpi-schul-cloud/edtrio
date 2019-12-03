@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { fetchCourse } from "~/Contexts/course.actions"
 import { fetchLessonWithSections, lessonWasUpdated, saveLesson, setLesson } from "~/Contexts/lesson.actions"
 import { unsavedChanges , newError } from '~/Contexts/notifications.actions'
-import { mergeSerloDiff, saveSections, sectionWasUpdated, setSections, fetchSection } from '~/Contexts/section.actions'
+import { saveSections, sectionWasUpdated, setSections, fetchSection , mergeEditorDiff } from '~/Contexts/section.actions'
 import { serverApi } from "~/utils/api"
 import { loadLessonData, loadSectionData } from "~/utils/cache"
 import { editorWS } from "~/utils/socket"
@@ -57,10 +57,14 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
         editorWS.on('course/:courseId/lessons updated', dispatchLessonUpdate)
 
         const dispatchSectionUpdate = (data) => {
-            if(Object.prototype.hasOwnProperty.call(data, 'stateDiff')){
-                dispatch()
+            console.log('New', data)
+            const { stateDiff, _id, ...section } = data
+            if(stateDiff){
+                dispatch(mergeEditorDiff(_id, stateDiff))
             }
-            dispatch(sectionWasUpdated(data._id, data))
+            if(section){
+                dispatch(sectionWasUpdated(_id, section))
+            }
         }
 
         editorWS.on('lesson/:lessonId/sections patched', dispatchSectionUpdate)
