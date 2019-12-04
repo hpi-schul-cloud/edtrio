@@ -1,6 +1,6 @@
 import React, { useReducer, useEffect } from "react"
 import logger from 'redux-logger'
-import { createDispatch, thunkMiddleware } from "~/utils/dispatch"
+import { createDispatch, thunkMiddleware, sentryMiddleware } from "~/utils/dispatch"
 import { combineReducers } from "redux"
 import { sectionReducer , sectionInitialState } from "./section.reducer"
 import { viewReducer , viewInitialState } from "./view.reducer"
@@ -36,7 +36,7 @@ const LessonContext = React.createContext()
 export function LessonContextProvider({ children}) {
     const [state, dispatch] = useReducer(combinedReducer, combinedInitalState)
     // needed for initial of all default states, should not match any case
-    const value = { store: state, dispatch: createDispatch(dispatch, state, 'lesson', logger, thunkMiddleware)}
+    const value = { store: state, dispatch: createDispatch(dispatch, state, 'lesson', logger, thunkMiddleware, sentryMiddleware)}
     return (
         <LessonContext.Provider value={value}>
             {children}

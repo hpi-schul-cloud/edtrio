@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/browser'
 
 /**
  * allows to add Middleware, which exectuted before or instead the react dispatcher.
@@ -75,8 +76,22 @@ export const createDispatch = (rdispatch, state, identifier, ...middlewares) => 
  * https://www.npmjs.com/package/redux-thunk
  */
 export const thunkMiddleware = ({getState, dispatch}) => (next) => action => {
-		if(typeof action === 'function'){
-			return action({state: getState(), dispatch})
-		}
-		return next(action)
+	if(typeof action === 'function'){
+		return action({state: getState(), dispatch})
 	}
+	return next(action)
+}
+
+
+/**
+ * Check if action type contains ERROR, FAILED, FAILURE or WARNING
+ * and send a message to sentry if it does
+ */
+export const sentryMiddleware = ({getState, dispatch}) => (next) => action => {
+	if( /(ERROR|FAILED|FAILURE|WARNING)/i.test(action.type) ) {
+		Sentry.captureException(action)
+		// TODO: check if state could also send to sentry or user data has been filtered
+	}
+
+	next(action);
+}
