@@ -210,7 +210,7 @@ export const saveSections = () => async ({dispatch, state}) => {
 
 				saveSectionData({
 					...section,
-					timestamp: res.value.updatedAt || res.value.instertedAt,
+					//timestamp: res.value.updatedAt || res.value.instertedAt,
 					hash: hashes[i],
 					savedToBackend: true
 				})
