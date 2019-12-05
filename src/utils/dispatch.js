@@ -40,6 +40,10 @@ export const createDispatch = (rdispatch, state, identifier, ...middlewares) => 
 				)
 			}
 
+			// obeject given to the middleware functions, is needed to refence the current state object
+			// if the middleware calls state as ({state, dispatch}) state is not referenced to the current object
+			// and stays on the old value, for this and for compatibility with redux plugins the function getState
+			// retruns allways the current state
 			knownMiddelwares[identifier] = {
 				state: state,
 				getState: function(){return knownMiddelwares[identifier].state},
@@ -55,9 +59,9 @@ export const createDispatch = (rdispatch, state, identifier, ...middlewares) => 
 				.reduce((a,b) => (...args) => a(b(...args)))(rdispatch)
 		}
 	}
+
+	// set state on all state changes and reflect it to the middleware functions
 	knownMiddelwares[identifier].state = state
-	// dispatch = prepared(rdispatch)
-	// middlewareAPI.dispatch = (action) => dispatch(action)
 	return knownMiddelwares[identifier].dispatch
 }
 

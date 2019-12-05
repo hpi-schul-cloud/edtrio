@@ -126,18 +126,17 @@ const EditorPreview = ({
         !isDragging || !isTouchDevice()
             ? {}
             : {
-                  transform: sourceOffset
-                      ? `translate(${sourceOffset.x}px, ${sourceOffset.y -
-                            wrapperRef.current.offsetTop}px)`
-                      : "",
-              }
+                transform: sourceOffset
+                    ? `translate(${sourceOffset.x}px, ${sourceOffset.y -
+                        wrapperRef.current.offsetTop}px)`
+                    : "",
+            }
 
+    // reduzing the time a preview is rendered, added for performance reasosns
     const [docValue, setDocValue] = useState(section.docValue)
     useEffect(() => {
-          setDocValue(docValue)
+        setDocValue(docValue)
     }, [section.changed.size])
-
-    // const docValue = useMemo(() => section.docValue, [section.docValue])
 
     return (
         <Outer

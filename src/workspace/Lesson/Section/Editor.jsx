@@ -7,12 +7,12 @@ import {
 } from "@edtr-io/core"
 
 import {
-		focusNext,
+		/* focusNext,
 		focusPrevious,
 		persist,
 		redo,
 		reset,
-		undo,
+		undo, */
 		hasPendingChanges as hasPendingChangesSelector
 	} from '@edtr-io/store'
 
@@ -67,23 +67,20 @@ export const editorTheme = {
 
 export const Editor = (props) => {
 
-		const docValue =
-				props.docValue && Object.keys(props.docValue).length
-						? props.docValue
-						: {
-										plugin: "rows",
-								}
+		const docValue = (props.docValue && Object.keys(props.docValue).length)
+			? props.docValue
+			: { plugin: "rows" }
 
-								const children = React.useCallback(
-										document => {
-											return (
-												<PlainEditorContainerInner
-														docValue={docValue}>
-													{document}
-												</PlainEditorContainerInner>
-											)
-										}
-								)
+		const children = React.useCallback(
+			document => {
+				return (
+					<PlainEditorContainerInner
+							docValue={docValue}>
+						{document}
+					</PlainEditorContainerInner>
+				)
+			}
+		)
 
 
 
@@ -111,18 +108,18 @@ export const Editor = (props) => {
 		}, [props.docValue])
 
 		return (
-				<EditorWrapper editing={true}>
-						<Edtr
-								theme={editorTheme}
-								plugins={plugins}
-								defaultPlugin={"text"}
-								editable={props.editing}
-								omitDragDropContext
-								initialState={initialState}
-								onChange={onChange}>
-										{children}
-						</Edtr>
-				</EditorWrapper>
+			<EditorWrapper editing={true}>
+				<Edtr
+					theme={editorTheme}
+					plugins={plugins}
+					defaultPlugin={"text"}
+					editable={props.editing}
+					omitDragDropContext
+					initialState={initialState}
+					onChange={onChange}>
+							{children}
+				</Edtr>
+			</EditorWrapper>
 		)
 
 }
@@ -137,14 +134,14 @@ function PlainEditorContainerInner(props) {
 			props.editable === undefined ? true : props.editable
 		)
 		useEffect(() => {
-				if(props.docValue && props.docValue.state){
+			if(props.docValue && props.docValue.state){
 
-						dispatch((scope) => ({
-								type: 'SetPartialState',
-								scope,
-								payload: props.docValue
-						}))
-				}
+				dispatch((scope) => ({
+					type: 'SetPartialState',
+					scope,
+					payload: props.docValue
+				}))
+			}
 		}, [props.docValue])
 
 		return (
