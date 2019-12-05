@@ -3,12 +3,16 @@ import { ADD_SECTION , REPLACE_ADDED_SECTION_ID } from "./section.actions"
 import { splice } from "~/utils/reducer"
 
 
-
-
-
 export const lessonInitialState = {
     title: ''
 }
+
+/**
+ * Manage the lesson state, should contain nearly the same data as the backend
+ *
+ * @param {*} state - state of lesson
+ * @param {Object} param1 - object with the parameters type and payload
+ */
 export function lessonReducer(state = lessonInitialState, { type, payload }) {
     switch (type) {
         case SET_LESSON:
