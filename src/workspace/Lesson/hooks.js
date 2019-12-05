@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { fetchCourse } from "~/Contexts/course.actions"
 import { fetchLessonWithSections, lessonWasUpdated, saveLesson, setLesson } from "~/Contexts/lesson.actions"
 import { unsavedChanges , newError } from '~/Contexts/notifications.actions'
-import { mergeSerloDiff, saveSections, sectionWasUpdated, setSections, fetchSection } from '~/Contexts/section.actions'
+import { saveSections, sectionWasUpdated, setSections, fetchSection , mergeEditorDiff } from '~/Contexts/section.actions'
 import { serverApi } from "~/utils/api"
 import { loadLessonData, loadSectionData } from "~/utils/cache"
 import { editorWS } from "~/utils/socket"
@@ -38,7 +38,7 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
 
 
 		} else {
-           await dispatch(fetchLessonWithSections(id, courseId))
+           await dispatch(fetchLessonWithSections(id, courseId, {bootstrap: true}))
         }
 
         /* requestAnimationFrame(() => {
@@ -56,15 +56,18 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
         editorWS.on('course/:courseId/lessons patched', dispatchLessonUpdate)
         editorWS.on('course/:courseId/lessons updated', dispatchLessonUpdate)
 
-        const dispatchSectionUpdate = (data) =>
-            dispatch(sectionWasUpdated(data._id, data))
+        const dispatchSectionUpdate = (data) => {
+            const { stateDiff, _id, ...section } = data
+            if(stateDiff){
+                dispatch(mergeEditorDiff(_id, stateDiff))
+            }
+            if(section){
+                dispatch(sectionWasUpdated(_id, section))
+            }
+        }
 
         editorWS.on('lesson/:lessonId/sections patched', dispatchSectionUpdate)
         editorWS.on('lesson/:lessonId/sections updated', dispatchSectionUpdate)
-
-        const dispatchSectionDiff = (data) => dispatch(mergeSerloDiff(data._id, data.diff))
-
-        editorWS.on('lesson/:lessonId/sections/diff patched', dispatchSectionDiff)
     }
 
     useEffect(() => {
@@ -82,7 +85,6 @@ export function useChangeListener(store, dispatch) {
 
         if (timeout) {
             clearTimeout(timeout);
-            setTimeoutState(null)
         } else {
             dispatch(unsavedChanges());
         }

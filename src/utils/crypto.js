@@ -1,6 +1,5 @@
-import SHA1 from 'crypto-js/SHA1'
-
+import { sha1 } from 'object-hash'
 
 export const generateHash = (data) => {
-	return SHA1(data)
+	return sha1(data)
 }
