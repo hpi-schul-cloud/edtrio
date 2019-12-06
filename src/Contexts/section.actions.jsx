@@ -1,7 +1,7 @@
 import { editorWS } from "~/utils/socket"
 import { mergeDiff, buildDiff } from '~/utils/diff'
 import uuid from "uuid/v4"
-import { saveSectionData } from "~/utils/cache"
+import { saveSectionCache } from "~/utils/cache"
 import { generateHash } from "~/utils/crypto"
 import { SET_ACTIVE_SECTION } from "./view.actions"
 import { mapSection } from "~/utils/reducer"
@@ -208,9 +208,9 @@ export const saveSections = () => async ({dispatch, state}) => {
 					payload: sectionId
 				})
 
-				saveSectionData({
+				saveSectionCache({
 					...section,
-					//timestamp: res.value.updatedAt || res.value.instertedAt,
+					// timestamp: res.value.updatedAt || res.value.instertedAt,
 					hash: hashes[i],
 					savedToBackend: true
 				})
@@ -220,7 +220,7 @@ export const saveSections = () => async ({dispatch, state}) => {
 				type: SAVING_SECTION_FAILED,
 				payload: sectionId
 			})
-			saveSectionData({
+			saveSectionCache({
 				section,
 				hash: hashes[i],
 				savedToBackend: false
