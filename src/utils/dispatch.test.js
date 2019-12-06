@@ -23,36 +23,36 @@ const middleware = ({state, dispatch}) => {
 
 const preMiddleware = (type) => {
 	return ({state, dispatch}) => next => action => {
-			if(action.type === type){
-				return dispatch({
-					type: 'TEST'
-				})
-			}
+		if(action.type === type){
+			return dispatch({
+				type: 'TEST'
+			})
+		}
 
-			return next(action)
+		return next(action)
 	}
 }
 
 const postMiddleware = (payload) => {
 	return ({state, dispatch}) => next =>
-		{
-			return action => {
-				if(action.type === 'MIDDLEWARE'){
-					return dispatch({
-						type: 'SOME_OTHER',
-						payload: payload
-					})
-				}
+	{
+		return action => {
+			if(action.type === 'MIDDLEWARE'){
+				return dispatch({
+					type: 'SOME_OTHER',
+					payload: payload
+				})
+			}
 
-				return next(action)
+			return next(action)
 		}
 	}
 }
 
 const someOtherMiddleware = ({state, dispatch}) => next =>
-	{
-		return action => {
-			return next(action)
+{
+	return action => {
+		return next(action)
 	}
 }
 
@@ -129,7 +129,7 @@ test('test adding 4 middlewares', t => {
  * **
  ****************************************
  *
- *  */
+ **/
 
 
 

@@ -22,7 +22,7 @@ export function saveSectionCache(...sections) {
 
 export function loadSectionCache(...sectionIds) {
 	const sections = sectionIds.map(id => {
-		const data = localStorage.getItem("EDITOR_DATA-" + id)
+		const data = localStorage.getItem(`${EDITOR_SECTION_DATA}-${id}`)
 		if (data) {
 			return JSON.parse(data)
 		}
