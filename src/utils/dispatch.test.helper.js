@@ -9,24 +9,24 @@ const initState = {
 
 const reducer = (state, {type, payload}) => {
 	switch(type){
-		case 'MIDDLEWARE':
-			return {
-				...state,
-				test: payload
-			}
-		case 'SOME_OTHER':
-			return {
-				...state,
-				test: payload
-			}
-		case 'SWITCH':
-			const newState = {
-				...state,
-				...payload
-			}
-			return newState
-		default:
-			return state
+	case 'MIDDLEWARE':
+		return {
+			...state,
+			test: payload
+		}
+	case 'SOME_OTHER':
+		return {
+			...state,
+			test: payload
+		}
+	case 'SWITCH':
+		const newState = {
+			...state,
+			...payload
+		}
+		return newState
+	default:
+		return state
 	}
 }
 
@@ -46,9 +46,9 @@ export const createProvider = (...middlewares) => {
 		const [state, reactDispatch] = useReducer(reducer, initState)
 		const dispatch = createDispatch(reactDispatch, state)
 		return (
-				<Context.Provider value={{state, dispatch}}>
-					<TestComponent dispatch={dispatch} state={state}/>
-				</Context.Provider>
-			)
+			<Context.Provider value={{state, dispatch}}>
+				<TestComponent dispatch={dispatch} state={state}/>
+			</Context.Provider>
+		)
 	}
 }
