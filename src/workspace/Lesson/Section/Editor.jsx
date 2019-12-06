@@ -35,11 +35,11 @@ export const EditorWrapper = styled.div`
 	}
 
 	@media (max-width: 768px) {
-			font-size: 1.2rem;
+		font-size: 1.2rem;
 	}
 
 	@media (max-width: 575px) {
-			font-size: 1.1rem;
+		font-size: 1.1rem;
 	}
 `
 
