@@ -17,7 +17,7 @@ const Wrapper = styled.div`
     overflow: hidden;
     transition: 250ms all ease-in-out;
     background-color: rgba(69, 91, 106, 0.25);
-    z-index: 100;
+    z-index: 2;
     box-shadow: inset -3px 0px 6px rgba(0, 0, 0, 0.1),
         inset -3px 0px 6px rgba(0, 0, 0, 0.18);
     border-radius: 0;
