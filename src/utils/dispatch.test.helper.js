@@ -40,11 +40,11 @@ export const createProvider = (...middlewares) => {
 
 	const Context = createContext()
 
-	const middle = prepareCreateDispatch(...middlewares)
+	const createDispatch = prepareCreateDispatch(...middlewares)
 
 	return function Provider(){
 		const [state, reactDispatch] = useReducer(reducer, initState)
-		const dispatch = middle(reactDispatch, state)
+		const dispatch = createDispatch(reactDispatch, state)
 		return (
 				<Context.Provider value={{state, dispatch}}>
 					<TestComponent dispatch={dispatch} state={state}/>

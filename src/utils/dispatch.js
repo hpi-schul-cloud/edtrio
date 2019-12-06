@@ -16,12 +16,18 @@ import { isRedirect } from "@reach/router";
  *
  * As example take a look at thunkMiddleware
  *
- * @param {function} dispatch - react hook dispatcher function
- * @param {Object} state - react hook state
- * @param {string|function} [identifier] - identifier to get the spezific dispatcher and state, have to be unic and is set to default if no value is given
  * @param  {...function} middlewares - inspieret by redux middleware, for example take a lock at thunkMiddleware
+ *
+ * @return {function}
+	* @param {function} dispatch - react hook dispatcher function
+	* @param {Object} state - react hook state
  */
 export const prepareCreateDispatch = (...middlewares) => {
+
+
+	if(middlewares.length === 0){
+		return (dispatch) => dispatch
+	}
 
 	let isPreparing = true
 
@@ -56,24 +62,12 @@ export const prepareCreateDispatch = (...middlewares) => {
 		MiddlewareApi.state = state
 
 		if(isPreparing){
-			if(middlewares.length === 0){
-				MiddlewareApi.dispatch = rdispatch
-			} else {
-
-				dispatch = preparedDispatcher(rdispatch)
-			}
-
+			dispatch = preparedDispatcher(rdispatch)
 			isPreparing = false
 		}
 
 		return MiddlewareApi.dispatch
 	}
-
-}
-
-
-
-export const applyMiddleware = (...middleware) => {
 
 }
 

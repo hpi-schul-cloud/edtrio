@@ -2,7 +2,7 @@ import React, { useReducer, createContext, useEffect } from 'react'
 import test from 'ava'
 import renderer from 'react-test-renderer'
 
-import {prepareCreateDispatch, thunkMiddleware} from './dispatch'
+import { thunkMiddleware } from './dispatch'
 import { createProvider, TestComponent } from './dispatch.test.helper'
 
 
@@ -56,6 +56,23 @@ const someOtherMiddleware = ({state, dispatch}) => next =>
 	}
 }
 
+
+test('without middelware', t => {
+
+	const Provider = createProvider()
+
+	const rendered = renderer.create(<Provider />)
+	const renderedInstance = rendered.root
+
+	const comp = renderedInstance.findByType(TestComponent)
+
+	comp.props.dispatch({type: 'MIDDLEWARE', payload: 'without middleware'})
+	t.is(comp.props.state.test, 'without middleware')
+	comp.props.dispatch({type: 'SOME_OTHER', payload: 'haha'})
+	t.is(comp.props.state.test, 'haha')
+
+
+})
 
 test('add dispatch middleware and execute', t => {
 

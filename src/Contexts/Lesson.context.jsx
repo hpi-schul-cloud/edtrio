@@ -36,7 +36,7 @@ const lessonDisptachCreator = prepareCreateDispatch(logger, thunkMiddleware)
 export function LessonContextProvider({ children}) {
     const [state, dispatch] = useReducer(combinedReducer, combinedInitalState)
     // needed for initial of all default states, should not match any case
-    const value = { store: state, dispatch: prepareCreateDispatch(dispatch, state, lessonDisptachCreator(dispatch, state))}
+    const value = { store: state, dispatch: lessonDisptachCreator(dispatch, state)}
     return (
         <LessonContext.Provider value={value}>
             {children}
