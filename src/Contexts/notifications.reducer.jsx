@@ -10,6 +10,13 @@ export const notificationInitialState = {
     saveStatus: "",
     isSaving: 0,
 }
+
+/**
+ * Notifications state contains all notifications visible to the user, like errors and saveState
+ * 
+ * @param {*} state - state of lesson
+ * @param {Object} param1 - object with the parameters type and payload
+ */
 export function notificationReducer(state = notificationInitialState, { type, payload }) {
     switch (type) {
         case "ERROR":

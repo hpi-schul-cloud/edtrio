@@ -4,6 +4,7 @@ import { newError } from './notifications.actions'
 import { generateHash } from '~/utils/crypto'
 import { saveLessonData } from '~/utils/cache'
 import { startLoading , finishLoading } from './view.actions'
+import { mapSection } from '~/utils/reducer'
 
 export const BOOTSTRAP = 'BOOTSTRAP'
 export const BOOTSTRAP_FINISHED = 'BOOTSTRAP_FINISHED'
@@ -83,7 +84,7 @@ export const saveLesson = () => async ({state, dispatch}) => {
 
 		const payload = {
 			hash: newHash,
-			timestamp: message.updatedAt || message.insertedAt
+			// timestamp: message.updatedAt || message.insertedAt
 		}
 
 		dispatch({
@@ -139,12 +140,12 @@ export const fetchLesson = (lessonId, courseId, params) => async ({dispatch}) =>
 /**
  * Fetch lesson and section data from server and overwrite current lesson and sections.
  * The funktion is used to bootstrap the edtior or load a other lesson with all needed data
- * 
+ *
  * @param {string} lessonId - ID of lesson
  * @param {string} courseId - ID of course, lesson belong to
- * @param {Object} params - query params for request
+ * @param {boolean} bootstrap - dispatch bootstrap finished if true
  */
-export const fetchLessonWithSections = (lessonId, courseId, params) => async ({dispatch, state}) => {
+export const fetchLessonWithSections = (lessonId, courseId, bootstrap = false) => async ({dispatch, state}) => {
 
 	dispatch(startLoading())
 
@@ -168,14 +169,7 @@ export const fetchLessonWithSections = (lessonId, courseId, params) => async ({d
 		} else {
 			sections = sections.map(section => {
 				lesson.sections.push(section._id)
-				return {
-					...section,
-					id: section._id, // needed for old version, please use _id instead
-					docValue: section.state,
-					savedDocValue: section.state,
-					notes: section.note,
-					visible: section.visible || true, // TODO: remove should be set by server and blur mode should removed
-				}
+				return mapSection(section)
 			})
 			dispatch(setSections(sections))
 			dispatch({
@@ -205,5 +199,6 @@ export const fetchLessonWithSections = (lessonId, courseId, params) => async ({d
 	}
 
 	dispatch(finishLoading())
+	if(bootstrap === true) dispatch({ type: BOOTSTRAP_FINISHED })
 
 }

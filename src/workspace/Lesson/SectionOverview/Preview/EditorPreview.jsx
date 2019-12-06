@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React, { Component, useState, useEffect, useMemo } from "react"
 import styled, { css } from "styled-components"
 import { DragLayer } from "react-dnd"
 import { isTouchDevice } from "~/utils/device"
@@ -126,11 +126,17 @@ const EditorPreview = ({
         !isDragging || !isTouchDevice()
             ? {}
             : {
-                  transform: sourceOffset
-                      ? `translate(${sourceOffset.x}px, ${sourceOffset.y -
-                            wrapperRef.current.offsetTop}px)`
-                      : "",
-              }
+                transform: sourceOffset
+                    ? `translate(${sourceOffset.x}px, ${sourceOffset.y -
+                        wrapperRef.current.offsetTop}px)`
+                    : "",
+            }
+
+    // reduzing the time a preview is rendered, added for performance reasosns
+    const [docValue, setDocValue] = useState(section.docValue)
+    useEffect(() => {
+        setDocValue(docValue)
+    }, [section.changed.size])
 
     return (
         <Outer
@@ -153,7 +159,7 @@ const EditorPreview = ({
                         key={k}
                         expanded={expanded}
                         editing={store.view.editing}
-                        docValue={section.docValue}
+                        docValue={docValue}
                     />
                 )}
             </Wrapper>

@@ -77,18 +77,7 @@ export function sectionReducer(state = sectionInitialState, { type, payload }) {
                     section.changed.add("title")
                     return { ...section, title: payload.title }
                 }) */
-
-        case DOCVALUE_SAVED:
-            return state.map(section => {
-                if(section._id === payload){
-                    return {
-                        ...section,
-                        savedDocValue: section.docValue 
-                    }
-                }
-                return section
-            })
-
+        
         case SECTION_DOCVALUE_CHANGE:
             return state.map(section => {
                 if(section._id !== payload._id) return section
@@ -100,10 +89,16 @@ export function sectionReducer(state = sectionInitialState, { type, payload }) {
             })
 
         case SECTION_SAVED:
-            state.forEach(section => {
-                if (section._id === payload) section.changed.clear()
+            return state.map(section => {
+                if (section._id === payload){
+                    section = {
+                        ...section,
+                        savedDocValue: section.docValue
+                    }
+                    section.changed.clear()
+                }
+                return section
             })
-            return state
 
         case "RESET":
             return sectionInitialState

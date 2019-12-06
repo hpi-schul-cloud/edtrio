@@ -2,6 +2,7 @@ import qs from "qs"
 
 import { ADD_SECTION , REPLACE_ADDED_SECTION_ID , SET_SECTIONS } from "./section.actions"
 import { TOGGLE_SECTION_SETTINGS, TOGGLE_SECTION_OVERVIEW, SET_ACTIVE_SECTION , SET_EDITING , SET_LOADING } from "./view.actions"
+import { BOOTSTRAP_FINISHED } from "./lesson.actions"
 
 
 
@@ -15,6 +16,13 @@ export const viewInitialState = {
     sectionOverviewExpanded: false,
     showSectionSettings: false,
 }
+
+/**
+ * Manage all data are relvant for the view of the user, like loading and editing mode
+ *
+ * @param {*} state - state of lesson
+ * @param {Object} param1 - object with the parameters type and payload
+ */
 export function viewReducer(state = viewInitialState, { type, payload }) {
     switch (type) {
         case SET_EDITING:
@@ -39,7 +47,7 @@ export function viewReducer(state = viewInitialState, { type, payload }) {
         case ADD_SECTION:
             return {
                 ...state,
-                activeSectionId: payload.tempId
+                activeSectionId: payload._id
             }
 
         case REPLACE_ADDED_SECTION_ID:
@@ -60,7 +68,7 @@ export function viewReducer(state = viewInitialState, { type, payload }) {
             }
 
 
-        case "BOOTSTRAP_FINISH":
+        case BOOTSTRAP_FINISHED:
             return {
                 ...state,
                 bootstrapFinished: true,

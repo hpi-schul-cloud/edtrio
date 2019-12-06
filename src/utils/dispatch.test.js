@@ -2,23 +2,24 @@ import React, { useReducer, createContext, useEffect } from 'react'
 import test from 'ava'
 import renderer from 'react-test-renderer'
 
-import {createDispatch, thunkMiddleware} from './dispatch'
+import { thunkMiddleware } from './dispatch'
+import { createProvider, TestComponent } from './dispatch.test.helper'
 
-const middleware = () => {
-	return ({state, dispatch}) => {
-		return next => {
-			return action => {
-				if(action.type === 'TEST'){
-					return dispatch({
-						type: 'MIDDLEWARE',
-						payload: 'success'
-					})
-				}
-				return next(action)
+
+const middleware = ({state, dispatch}) => {
+	return next => {
+		return action => {
+			if(action.type === 'TEST'){
+				return dispatch({
+					type: 'MIDDLEWARE',
+					payload: 'success'
+				})
 			}
+			return next(action)
 		}
 	}
 }
+
 
 const preMiddleware = (type) => {
 	return ({state, dispatch}) => next => action => {
@@ -48,62 +49,34 @@ const postMiddleware = (payload) => {
 	}
 }
 
-const someOtherMiddleware = () => {
-	return ({state, dispatch}) => next =>
-		{
-			return action => {
-				return next(action)
-		}
-	}
-}
-
-const initState = {
-	test: 'failed',
-	switch: false
-}
-
-const reducer = (state, {type, payload}) => {
-	switch(type){
-		case 'MIDDLEWARE':
-			return {
-				...state,
-				test: payload
-			}
-		case 'SOME_OTHER':
-			return {
-				...state,
-				test: payload
-			}
-		case 'SWITCH':
-			const newState = {
-				...state,
-				...payload
-			}
-			return newState
-		default:
-			return state
+const someOtherMiddleware = ({state, dispatch}) => next =>
+	{
+		return action => {
+			return next(action)
 	}
 }
 
 
+test('without middelware', t => {
+
+	const Provider = createProvider()
+
+	const rendered = renderer.create(<Provider />)
+	const renderedInstance = rendered.root
+
+	const comp = renderedInstance.findByType(TestComponent)
+
+	comp.props.dispatch({type: 'MIDDLEWARE', payload: 'without middleware'})
+	t.is(comp.props.state.test, 'without middleware')
+	comp.props.dispatch({type: 'SOME_OTHER', payload: 'haha'})
+	t.is(comp.props.state.test, 'haha')
+
+
+})
 
 test('add dispatch middleware and execute', t => {
-	const Context = createContext()
 
-	function TestComponent(){
-		return (
-			<div></div>
-		)
-	}
-	function Provider(){
-		const [state, reactDispatch] = useReducer(reducer, initState)
-		const dispatch = createDispatch(reactDispatch, state, middleware())
-		return (
-				<Context.Provider value={{state, dispatch}}>
-					<TestComponent dispatch={dispatch} state={state}/>
-				</Context.Provider>
-			)
-	}
+	const Provider = createProvider(middleware)
 
 	const rendered = renderer.create(<Provider />)
 	const renderedInstance = rendered.root
@@ -119,22 +92,8 @@ test('add dispatch middleware and execute', t => {
 })
 
 test('test dispatch is everytime looped through middlewares', t => {
-	const Context = createContext()
 
-	function TestComponent(){
-		return (
-			<div></div>
-		)
-	}
-	function Provider(){
-		const [state, reactDispatch] = useReducer(reducer, initState)
-		const dispatch = createDispatch(reactDispatch, state, preMiddleware('HUNZ'), middleware())
-		return (
-				<Context.Provider value={{state, dispatch}}>
-					<TestComponent dispatch={dispatch} state={state}/>
-				</Context.Provider>
-			)
-	}
+	const Provider = createProvider(preMiddleware('HUNZ'), middleware)
 
 	const rendered = renderer.create(<Provider />)
 	const renderedInstance = rendered.root
@@ -147,22 +106,8 @@ test('test dispatch is everytime looped through middlewares', t => {
 })
 
 test('test adding 4 middlewares', t => {
-	const Context = createContext()
 
-	function TestComponent(){
-		return (
-			<div></div>
-		)
-	}
-	function Provider(){
-		const [state, reactDispatch] = useReducer(reducer, initState)
-		const dispatch = createDispatch(reactDispatch, state, preMiddleware('HUNZ'), middleware(), someOtherMiddleware(), postMiddleware('blub'))
-		return (
-				<Context.Provider value={{state, dispatch}}>
-					<TestComponent dispatch={dispatch} state={state}/>
-				</Context.Provider>
-			)
-	}
+	const Provider = createProvider(preMiddleware('HUNZ'), middleware, someOtherMiddleware, postMiddleware('blub'))
 
 	const rendered = renderer.create(<Provider />)
 	const renderedInstance = rendered.root
@@ -207,7 +152,7 @@ const asyncFu = (test) => async ({dispatch, state}) => {
 	return payload
 }
 
-const asyncOnlyLastChar = (test) => async ({dispatch}) => {
+const asyncOnlyLastChar = ( test ) => async ({dispatch}) => {
 	const payload = await new Promise((resolve) => {
 		setTimeout(async () => {
 			const sliced = test.slice(-1)
@@ -220,23 +165,8 @@ const asyncOnlyLastChar = (test) => async ({dispatch}) => {
 }
 
 test('test thunkMiddleware', async t => {
-	const Context = createContext()
 
-	function TestComponent({state}){
-
-		return (
-			<div></div>
-		)
-	}
-	function Provider(){
-		const [state, reactDispatch] = useReducer(reducer, initState)
-		const dispatch = createDispatch(reactDispatch, state, thunkMiddleware())
-		return (
-				<Context.Provider value={{state, dispatch}}>
-					<TestComponent dispatch={dispatch} state={state}/>
-				</Context.Provider>
-			)
-	}
+	const Provider = createProvider(thunkMiddleware)
 
 	const rendered = renderer.create(<Provider />)
 	const renderedInstance = rendered.root
@@ -254,23 +184,8 @@ test('test thunkMiddleware', async t => {
 })
 
 test('test thunkMiddleware async function call in async function', async t => {
-	const Context = createContext()
 
-	function TestComponent({state}){
-
-		return (
-			<div></div>
-		)
-	}
-	function Provider(){
-		const [state, reactDispatch] = useReducer(reducer, initState)
-		const dispatch = createDispatch(reactDispatch, state, thunkMiddleware())
-		return (
-				<Context.Provider value={{state, dispatch}}>
-					<TestComponent dispatch={dispatch} state={state}/>
-				</Context.Provider>
-			)
-	}
+	const Provider = createProvider(thunkMiddleware)
 
 	const rendered = renderer.create(<Provider />)
 	const renderedInstance = rendered.root

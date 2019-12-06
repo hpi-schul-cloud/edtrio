@@ -1,3 +1,7 @@
+import { initialState } from "~/Contexts/User";
+import { useReducer } from "react";
+import { isRedirect } from "@reach/router";
+
 /**
  * allows to add Middleware, which exectuted before or instead the react dispatcher.
  * Middelwares get access to state and dispatch and called in order of declaration.
@@ -12,37 +16,59 @@
  *
  * As example take a look at thunkMiddleware
  *
- * @param {function} dispatch - react hook dispatcher function
- * @param {Object} state - react hook state
  * @param  {...function} middlewares - inspieret by redux middleware, for example take a lock at thunkMiddleware
+ *
+ * @return {function}
+	* @param {function} dispatch - react hook dispatcher function
+	* @param {Object} state - react hook state
  */
+export const prepareCreateDispatch = (...middlewares) => {
 
-export const createDispatch = (dispatch, state, ...middlewares) => {
+
 	if(middlewares.length === 0){
-		return dispatch
-	} else {
-		const oldDispatch = dispatch
-		dispatch = () => {
-			throw new Error(
-				'Dispatching while constructing your middleware is not allowed. ' +
-				  'Other middleware would not be applied to this dispatch.'
-			  )
-		}
-
-		const middlewareAPI = {
-			state: state,
-			dispatch: (action) => dispatch(action)
-		}
-
-		dispatch = middlewares
-			// maps state and dispatch to every Middleware
-			// this is important to give every middleware the new dispatcher and not the old one
-			.map((a) => a(middlewareAPI))
-			// returns a function where each calls a(b(...args)), when called the chian will build and
-			// the last function get the argument, the function is called with... here it is the original dispatcher
-			.reduce((a,b) => (...args) => a(b(...args)))(oldDispatch)
-		return middlewareAPI.dispatch
+		return (dispatch) => dispatch
 	}
+
+	let isPreparing = true
+
+	let dispatch = () => {
+		throw new Error(
+			'Dispatching while constructing your middleware is not allowed. ' +
+			'Other middleware would not be applied to this dispatch.'
+		)
+	}
+
+	const MiddlewareApi = {
+		state: null,
+		getState: function(){return MiddlewareApi.state},
+		dispatch: (action) => dispatch(action)
+	}
+
+	// obeject given to the middleware functions, is needed to refence the current state object
+	// if the middleware calls state as ({state, dispatch}) state is not referenced to the current object
+	// and stays on the old value, for this and for compatibility with redux plugins the function getState
+	// retruns allways the current state
+	const preparedDispatcher = middlewares
+	// maps state and dispatch to every Middleware
+	// this is important to give every middleware the new dispatcher and not the old one
+	.map((a) => a( MiddlewareApi ))
+	// returns a function where each calls a(b(...args)), when called the chian will build and
+	// the last function get the argument, the function is called with... here it is the original dispatcher
+	.reduce((a,b) => (...args) => a(b(...args)))
+
+	return (rdispatch, state) => {
+
+		// set state on all state changes and reflect it to the middleware functions
+		MiddlewareApi.state = state
+
+		if(isPreparing){
+			dispatch = preparedDispatcher(rdispatch)
+			isPreparing = false
+		}
+
+		return MiddlewareApi.dispatch
+	}
+
 }
 
 /**
@@ -58,19 +84,9 @@ export const createDispatch = (dispatch, state, ...middlewares) => {
  * The function is ispired by thunkMiddelware for redux
  * https://www.npmjs.com/package/redux-thunk
  */
-export const thunkMiddleware = () => {
-	return ({state, dispatch}) => (next) => action => {
+export const thunkMiddleware = ({getState, dispatch}) => (next) => action => {
 		if(typeof action === 'function'){
-			return action({state, dispatch})
+			return action({state: getState(), dispatch})
 		}
 		return next(action)
 	}
-}
-
-
-export const logger = () => {
-	return ({state, dispatch}) => (next) => action => {
-		console.log(action)
-		next(action)
-	}
-}

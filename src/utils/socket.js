@@ -31,7 +31,7 @@ class Socket {
 		 })
 
 		this.socket.on('error', (error) => {
-			
+
 			console.log(error)
 			/* dispatch({
 				type: 'ERROR',
