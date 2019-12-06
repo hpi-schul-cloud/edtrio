@@ -6,6 +6,14 @@ import { splice } from "~/utils/reducer"
 
 
 export const sectionInitialState = []
+
+/**
+ * Most important part for the Edtior, handles all Section data and the Editor state itself
+ * State is an Array of sections
+ * 
+ * @param {*} state - state of lesson
+ * @param {Object} param1 - object with the parameters type and payload
+ */
 export function sectionReducer(state = sectionInitialState, { type, payload }) {
     switch (type) {
         case SET_SECTIONS:
@@ -69,7 +77,7 @@ export function sectionReducer(state = sectionInitialState, { type, payload }) {
                     section.changed.add("title")
                     return { ...section, title: payload.title }
                 }) */
-
+        
         case SECTION_DOCVALUE_CHANGE:
             return state.map(section => {
                 if(section._id !== payload._id) return section
