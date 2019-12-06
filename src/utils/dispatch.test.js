@@ -2,7 +2,7 @@ import React, { useReducer, createContext, useEffect } from 'react'
 import test from 'ava'
 import renderer from 'react-test-renderer'
 
-import {createDispatch, thunkMiddleware} from './dispatch'
+import {prepareCreateDispatch, thunkMiddleware} from './dispatch'
 import { createProvider, TestComponent } from './dispatch.test.helper'
 
 

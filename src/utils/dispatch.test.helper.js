@@ -1,5 +1,5 @@
 import React, { useReducer, createContext } from 'react'
-import { createDispatch } from '~/utils/dispatch'
+import { prepareCreateDispatch } from '~/utils/dispatch'
 
 
 const initState = {
@@ -40,7 +40,7 @@ export const createProvider = (...middlewares) => {
 
 	const Context = createContext()
 
-	const middle = createDispatch(...middlewares)
+	const middle = prepareCreateDispatch(...middlewares)
 
 	return function Provider(){
 		const [state, reactDispatch] = useReducer(reducer, initState)
