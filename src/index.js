@@ -3,7 +3,7 @@ import React from "react"
 import ReactDOM from "react-dom"
 import * as Sentry from '@sentry/browser'
 import { bindAllSettledToPromise } from '~/utils/promise'
-import { version } from '~/package.json';
+import { version } from '~/../package.json';
 
 function renderApp() {
 
