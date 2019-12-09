@@ -1,9 +1,10 @@
-import React, { Component } from "react"
+import React, { Component, useState, useEffect, useMemo } from "react"
 import styled, { css } from "styled-components"
 import { DragLayer } from "react-dnd"
 import { isTouchDevice } from "~/utils/device"
 
 import Editor from "./Editor"
+import { setActiveSection } from "~/Contexts/view.actions"
 
 function collect(monitor) {
     return {
@@ -125,37 +126,40 @@ const EditorPreview = ({
         !isDragging || !isTouchDevice()
             ? {}
             : {
-                  transform: sourceOffset
-                      ? `translate(${sourceOffset.x}px, ${sourceOffset.y -
-                            wrapperRef.current.offsetTop}px)`
-                      : "",
-              }
+                transform: sourceOffset
+                    ? `translate(${sourceOffset.x}px, ${sourceOffset.y -
+                        wrapperRef.current.offsetTop}px)`
+                    : "",
+            }
+
+    // reduzing the time a preview is rendered, added for performance reasosns
+    const [docValue, setDocValue] = useState(section.docValue)
+    useEffect(() => {
+        setDocValue(docValue)
+    }, [section.changed.size])
 
     return (
         <Outer
             ref={previewRef}
-            active={store.activeSectionId === section.id}
+            active={store.view.activeSectionId === section._id}
             expanded={expanded}
-            editing={store.editing}
+            editing={store.view.editing}
             style={dragStyle}>
             <Wrapper
-                active={store.activeSectionId === section.id}
+                active={store.view.activeSectionId === section._id}
                 visible={section.visible}
-                hidden={!section.visible && !store.editing}
+                hidden={!section.visible && !store.view.editing}
                 expanded={expanded}
                 isDone={index <= activeSectionIndex}
                 onClick={() => {
-                    dispatch({
-                        type: "SET_ACTIVE_SECTION",
-                        payload: { id: section.id },
-                    })
+                    dispatch(setActiveSection(section._id))
                 }}>
                 {expanded && (
                     <Editor
                         key={k}
                         expanded={expanded}
-                        editing={store.editing}
-                        docValue={section.docValue}
+                        editing={store.view.editing}
+                        docValue={docValue}
                     />
                 )}
             </Wrapper>

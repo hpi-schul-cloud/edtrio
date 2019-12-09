@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react"
-import LessonContext from "~/Contexts/Lesson"
+import LessonContext from "~/Contexts/Lesson.context"
 import UserContext from "~/Contexts/User"
 import { createBoard, getBoard } from "./utils"
 import Action from "~/components/Action"
@@ -14,15 +14,15 @@ const Nexboard = ({ focused, state }) => {
     async function bootstrap() {
         try {
             let board
-            if (state.id.value) {
-                board = await getBoard(state.id.value)
+            if (state._id.value) {
+                board = await getBoard(state._id.value)
             } else {
                 board = await createBoard(
-                    store.lesson.id,
+                    store.lesson._id,
                     `${store.lesson.title} Nexboard`,
                 )
             }
-            state.id.set(board.id)
+            state._id.set(board._id)
             setBoard(board)
         } catch (err) {}
 
