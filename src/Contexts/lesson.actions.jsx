@@ -2,7 +2,7 @@ import { editorWS } from '~/utils/socket'
 import { setSections , createSection } from './section.actions'
 import { newError } from './notifications.actions'
 import { generateHash } from '~/utils/crypto'
-import { saveLessonData } from '~/utils/cache'
+import { saveLessonCache } from '~/utils/cache'
 import { startLoading , finishLoading } from './view.actions'
 import { mapSection } from '~/utils/reducer'
 
@@ -84,14 +84,14 @@ export const saveLesson = () => async ({state, dispatch}) => {
 
 		const payload = {
 			hash: newHash,
-			timestamp: message.updatedAt || message.insertedAt
+			// timestamp: message.updatedAt || message.insertedAt
 		}
 
 		dispatch({
 			type: LESSON_SAVED,
 			payload
 		})
-		saveLessonData({
+		saveLessonCache({
 			...lesson,
 			...payload,
 			savedToBackend: true
@@ -102,7 +102,7 @@ export const saveLesson = () => async ({state, dispatch}) => {
 			type: SAVING_LESSON_FAILED
 		})
 
-		saveLessonData({
+		saveLessonCache({
 			...state.lesson,
 			savedToBackend: false
 		})
@@ -143,9 +143,9 @@ export const fetchLesson = (lessonId, courseId, params) => async ({dispatch}) =>
  *
  * @param {string} lessonId - ID of lesson
  * @param {string} courseId - ID of course, lesson belong to
- * @param {Object} params - query params for request
+ * @param {boolean} bootstrap - dispatch bootstrap finished if true
  */
-export const fetchLessonWithSections = (lessonId, courseId, options) => async ({dispatch, state}) => {
+export const fetchLessonWithSections = (lessonId, courseId, bootstrap = false) => async ({dispatch, state}) => {
 
 	dispatch(startLoading())
 
@@ -199,6 +199,6 @@ export const fetchLessonWithSections = (lessonId, courseId, options) => async ({
 	}
 
 	dispatch(finishLoading())
-	if(options.bootstrap) dispatch({ type: BOOTSTRAP_FINISHED })
+	if(bootstrap === true) dispatch({ type: BOOTSTRAP_FINISHED })
 
 }

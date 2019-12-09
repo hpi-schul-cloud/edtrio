@@ -41,14 +41,14 @@ const Icon = styled.img`
     }
 
     /* ${props =>
-        !props.visible &&
+		!props.visible &&
         css`
             display: none;
         `} */
 
     ${props => {
-        return (
-            props.isOnly &&
+		return (
+			props.isOnly && // only one section
             css`
                 cursor: not-allowed;
                 user-select: none;
@@ -57,71 +57,71 @@ const Icon = styled.img`
                     cursor: not-allowed;
                 }
             `
-        )
-    }}
+		)
+	}}
 `
 
 const Settings = () => {
-    const { store, dispatch } = useContext(LessonContext)
-    const activeSectionId = store.view.activeSectionId
-    const activeSection = store.sections.find(
-        el => el._id === activeSectionId,
-    )
-    const activeSectionIndex = store.sections.findIndex(
-        el => el._id === activeSectionId,
-    )
+	const { store, dispatch } = useContext(LessonContext)
+	const activeSectionId = store.view.activeSectionId
+	const activeSection = store.sections.find(
+		el => el._id === activeSectionId,
+	)
+	const activeSectionIndex = store.sections.findIndex(
+		el => el._id === activeSectionId,
+	)
 
-    const isOnly = store.sections.length === 1
+	const isOnly = store.sections.length === 1
 
-    async function confirmDelete() {
-        dispatch(removeSection(activeSectionId))
-    }
+	async function confirmDelete() {
+		dispatch(removeSection(activeSectionId))
+	}
 
-    if (!store.view.showSectionSettings) return null
+	if (!store.view.showSectionSettings) return null
 
-    return (
-        <Portal>
-            <Wrapper justifyBetween>
-                <Flex noWrap>
-                    <Icon src={duplicateIcon} />
-                    <Icon src={shareIcon} />
-                    <Icon src={infoIcon} />
-                    <DeleteModal
-                        sectionTitle={
-                            activeSection.title ||
+	return (
+		<Portal>
+			<Wrapper justifyBetween>
+				<Flex noWrap>
+					<Icon src={duplicateIcon} />
+					<Icon src={shareIcon} />
+					<Icon src={infoIcon} />
+					<DeleteModal
+						sectionTitle={
+							activeSection.title ||
                             `Abschnitt ${activeSectionIndex + 1}`
-                        }
-                        confirmDelete={confirmDelete}
-                        renderIcon={openModal => {
-                            return (
-                                <Icon
-                                    src={trashIcon}
-                                    isOnly={isOnly}
-                                    visible
-                                    onClick={e => !isOnly && openModal(e)}
-                                />
-                            )
-                        }}
-                    />
-                    <Icon
-                        src={
-                            activeSection.visible ? previewIcon : noPreviewIcon
-                        }
-                        onClick={() => dispatch(switchSectionVisibility(activeSectionId))}
-                        visible
-                    />
-                </Flex>
-                <Flex noWrap>
-                    <Icon
-                        src={closeIcon}
-                        onClick={() => {
-                            dispatch(toggleSectionSettings())
-                        }}
-                    />
-                </Flex>
-            </Wrapper>
-        </Portal>
-    )
+						}
+						confirmDelete={confirmDelete}
+						renderIcon={openModal => {
+							return (
+								<Icon
+									src={trashIcon}
+									isOnly={isOnly}
+									visible
+									onClick={e => !isOnly && openModal(e)}
+								/>
+							)
+						}}
+					/>
+					<Icon
+						src={
+							activeSection.visible ? previewIcon : noPreviewIcon
+						}
+						onClick={() => dispatch(switchSectionVisibility(activeSectionId))}
+						visible
+					/>
+				</Flex>
+				<Flex noWrap>
+					<Icon
+						src={closeIcon}
+						onClick={() => {
+							dispatch(toggleSectionSettings())
+						}}
+					/>
+				</Flex>
+			</Wrapper>
+		</Portal>
+	)
 }
 
 export default Settings

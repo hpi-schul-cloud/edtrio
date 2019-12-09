@@ -23,7 +23,7 @@ const StyledHeader = styled(Flex)`
 
     &:hover .save-status {
         ${props =>
-            props.editing &&
+		props.editing &&
             css`
                 opacity: 1 !important;
             `}
@@ -36,62 +36,65 @@ const SaveStatus = styled(Text)`
 `
 
 const Header = () => {
-    const { store, dispatch } = useContext(LessonContext)
-    const [showSaveStatus, setShowSaveStatus] = useState(false)
+	const { store, dispatch } = useContext(LessonContext)
+	const [showSaveStatus, setShowSaveStatus] = useState(false)
 
-    const {
-        notifications:
+	const {
+		notifications:
             {saveStatus},
-        view
-    } = store
+		view: {
+			editing,
+			studentView,
+		}
+	} = store
 
-    useEffect(() => {
-        let timeout
-        if (saveStatus === "Ungesicherte Änderungen")
-            return setShowSaveStatus(true)
-        if (
-            saveStatus === "Gespeichert" ||
+	useEffect(() => {
+		let timeout
+		if (saveStatus === "Ungesicherte Änderungen")
+			return setShowSaveStatus(true)
+		if (
+			saveStatus === "Gespeichert" ||
             saveStatus === "Lokal Gespeichert"
-        )
-            timeout = setTimeout(() => setShowSaveStatus(false), 1500)
+		)
+			timeout = setTimeout(() => setShowSaveStatus(false), 1500)
 
-        return () => clearTimeout(timeout)
-    }, [saveStatus])
+		return () => clearTimeout(timeout)
+	}, [saveStatus])
 
-    return (
-        <StyledHeader noWrap justifyBetween alignCenter editing={view.editing}>
-            <Flex alignCenter>
-                <Back />
-                <BreadCrumbs store={store} dispatch={dispatch} />
-            </Flex>
+	return (
+		<StyledHeader noWrap justifyBetween alignCenter editing={editing}>
+			<Flex alignCenter>
+				<Back />
+				<BreadCrumbs store={store} dispatch={dispatch} />
+			</Flex>
 
-            <Flex alignCenter noWrap>
-                <SaveStatus
-                    noMargin
-                    className="save-status"
-                    inline
-                    style={{
-                        textAlign: "right",
-                        width: "185px",
-                        opacity: showSaveStatus ? 1 : 0,
-                        transition: "250ms all ease-in-out",
-                    }}>
-                    {saveStatus}
-                </SaveStatus>
-                {!view.studentView && (
-                    <Toggle
-                        caption="Präsentieren"
-                        activeCaption="Bearbeiten"
-                        active={store.view.editing}
-                        onChange={newValue => {
-                            dispatch(setEditing(newValue))
-                        }}
-                    />
-                )}
-                <Settings store={store} dispatch={dispatch} />
-            </Flex>
-        </StyledHeader>
-    )
+			<Flex alignCenter noWrap>
+				<SaveStatus
+					noMargin
+					className="save-status"
+					inline
+					style={{
+						textAlign: "right",
+						width: "185px",
+						opacity: showSaveStatus ? 1 : 0,
+						transition: "250ms all ease-in-out",
+					}}>
+					{saveStatus}
+				</SaveStatus>
+				{!studentView && (
+					<Toggle
+						caption="Präsentieren"
+						activeCaption="Bearbeiten"
+						active={editing}
+						onChange={newValue => {
+							dispatch(setEditing(newValue))
+						}}
+					/>
+				)}
+				<Settings store={store} dispatch={dispatch} />
+			</Flex>
+		</StyledHeader>
+	)
 }
 
 export default Header

@@ -16,6 +16,13 @@ export const viewInitialState = {
     sectionOverviewExpanded: false,
     showSectionSettings: false,
 }
+
+/**
+ * Manage all data are relvant for the view of the user, like loading and editing mode
+ *
+ * @param {*} state - state of lesson
+ * @param {Object} param1 - object with the parameters type and payload
+ */
 export function viewReducer(state = viewInitialState, { type, payload }) {
     switch (type) {
         case SET_EDITING:

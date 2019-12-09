@@ -25,6 +25,7 @@
     "plugins": ["standard", "react-hooks"],
     "rules": {
         "linebreak-style": [2, "unix"],
+        "indent": ["error", "tab"],
         "no-unused-vars": [0],
         "unicode-bom": ["error", "never"],
         "react-hooks/rules-of-hooks": 2,
