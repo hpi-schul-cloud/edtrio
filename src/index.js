@@ -13,7 +13,7 @@ function renderApp() {
             environment: process.env.ENVIRONMENT,
             release: version,
             integrations: [
-                new Sentry.Integrations.Console(),
+                new Sentry.Integrations.Breadcrumbs({ console: true })
             ],
         })
     }

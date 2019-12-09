@@ -1,12 +1,20 @@
 import React, {Component} from 'react'
 import * as Sentry from '@sentry/browser'
+import { UserInformationError } from '~/utils/errors'
 
+
+const defaultMessage = 'Es ist ein schwerwiegender Fehler aufgetretten';
 class ErrorBoundary extends Component {
+
+	
+
 	constructor(props) {
 		super(props);
+
 		this.state = {
 		  	eventId: null,
-			hasError: false
+			hasError: false,
+			message: defaultMessage
 		};
 	}
 
@@ -16,6 +24,14 @@ class ErrorBoundary extends Component {
 	}
 
 	componentDidCatch(error, errorInfo) {
+		console.log(error)
+		if(error instanceof UserInformationError){
+			
+			this.setState({
+				...this.state,
+				message: error.message
+			})
+		}
 		Sentry.withScope((scope) => {
 			scope.setExtras(errorInfo);
 			const eventId = Sentry.captureException(error);
@@ -28,7 +44,7 @@ class ErrorBoundary extends Component {
             // render fallback UI
             return (
 				<React.Fragment>
-					<h1>Es ist ein schwerwiegender Fehler aufgetretten</h1>
+					<h1>{this.state.message}</h1>
 					<button onClick={() => Sentry.showReportDialog({ eventId: this.state.eventId })}>Fehler melden</button>
 				</React.Fragment>
             );

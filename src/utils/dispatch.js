@@ -89,7 +89,7 @@ export const thunkMiddleware = ({getState, dispatch}) => (next) => action => {
  */
 export const sentryMiddleware = ({getState, dispatch}) => (next) => action => {
 	if( /(ERROR|FAILED|FAILURE|WARNING)/i.test(action.type) ) {
-		Sentry.captureException(action)
+		Sentry.captureMessage(JSON.stringify(action))
 		// TODO: check if state could also send to sentry or user data has been filtered
 	}
 

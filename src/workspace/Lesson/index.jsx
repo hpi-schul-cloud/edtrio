@@ -22,6 +22,7 @@ import {
 } from "./hooks"
 import { newError } from "~/Contexts/notifications.actions"
 import { saveSections } from "~/Contexts/section.actions"
+import { UserInformationError } from "~/utils/errors"
 
 const Wrapper = styled.div`
     position: relative;
@@ -48,6 +49,7 @@ const Lesson = props => {
     } catch (err) {
         console.log('invalid url: has to look like /courses/:courseId/topics/:topicId')
         dispatch(newError('Die URL scheint nicht die nötigen Informationen zu beinhalten, bitte URL prüfen'))
+        throw new UserInformationError(err, 'Die URL scheint nicht die nötigen Informationen zu beinhalten, bitte URL prüfen')
     }
 
     useBootstrap(id, courseId, dispatch, dispatchUserAction)
