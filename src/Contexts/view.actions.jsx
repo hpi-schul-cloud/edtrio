@@ -12,7 +12,7 @@ export const setActiveSection = (sectionId) => ({
 
 
 /**
- *
+ * Set section editing mode
  *
  * @param {boolean} editing - activate or deactivate editing mode
  */
@@ -31,14 +31,13 @@ export const finishLoading = () => ({
 	payload: false
 })
 
-export const showSectionOverview = () => ({
+/**
+ * Set the visibility of the section overview
+ * @param {boolean} show - should be visible?
+ */
+export const showSectionOverview = (show = true) => ({
 	type: TOGGLE_SECTION_OVERVIEW,
-	payload: true
-})
-
-export const hiddeSectionOverview = () => ({
-	type: TOGGLE_SECTION_OVERVIEW,
-	payload: false
+	payload: show
 })
 
 export const toggleSectionOverview = () => ({state, dispatch}) =>
@@ -47,14 +46,13 @@ export const toggleSectionOverview = () => ({state, dispatch}) =>
 		payload: !state.view.sectionOverviewExpanded
 	})
 
-export const showSectionSettings= () => ({
+/**
+ * Set the visibility of the section settings
+ * @param {boolean} show - should be visible?
+ */
+export const showSectionSettings= (show = true) => ({
 	type: TOGGLE_SECTION_SETTINGS,
-	payload: true
-})
-
-export const hiddeSectionSettings = () => ({
-	type: TOGGLE_SECTION_SETTINGS,
-	payload: false
+	payload: show
 })
 
 export const toggleSectionSettings = () => ({state, dispatch}) =>

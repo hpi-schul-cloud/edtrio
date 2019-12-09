@@ -118,20 +118,13 @@ test('test adding 4 middlewares', t => {
 	t.is(comp.props.state.test, 'blub')
 })
 
-
 /**
- *
  ****************************************
- * **
  * **
  * **	Test for thunk middleware
  * **
- * **
  ****************************************
- *
  **/
-
-
 
 const asyncFu = (test) => async ({dispatch, state}) => {
 

@@ -1,7 +1,7 @@
 const EDITOR_LESSON_DATA = 'EDITOR_LESSON_DATA'
 const EDITOR_SECTION_DATA = 'EDITOR_SECTION_DATA'
 
-export function saveLessonData(lesson) {
+export function saveLessonCache(lesson) {
 	localStorage.setItem(`${EDITOR_LESSON_DATA}-${lesson._id}`, JSON.stringify(lesson))
 }
 

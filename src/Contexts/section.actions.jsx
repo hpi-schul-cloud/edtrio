@@ -6,7 +6,6 @@ import { generateHash } from "~/utils/crypto"
 import { SET_ACTIVE_SECTION } from "./view.actions"
 import { mapSection } from "~/utils/reducer"
 
-
 export const SET_SECTIONS = 'SET_SECTIONS'
 export const ADD_SECTION = 'ADD_SECTION'
 export const REPLACE_ADDED_SECTION_ID = "REPLACE_ADDED_SECTION_ID"
@@ -36,7 +35,7 @@ export const switchSectionVisibility = (sectionId) => ({
 })
 
 /**
- * Set Sections in sotre, if there are existing sections they will overwirden
+ * Set Sections in store, if there are existing sections they will overwirden
  * to add a Section use addSection
  *
  * @param {Object[]} sections - Sections to overwrite current sections
@@ -50,7 +49,7 @@ export const setSections = (sections) => ({
  * Add a section to the current state of sections, it is recommend to set an Id at least
  * But could also called with out any parameter. Sections will be set with following parametes
  * if no other value is given
- * 
+ *
  * Defaults:
  * - title: ""
  * - _id: uuid - should be set to a mongoDB id, otherwise it could not saved to server
@@ -58,7 +57,7 @@ export const setSections = (sections) => ({
  * - docValue: {} - state object of serlo editor
  * - changed: Set - have to be an Set Obejct with last changes, shouldn't be overwrite
  * - position: -1 - section will added at least positon
- * 
+ *
  * @param {Object} [section] - section object, all necesarry data are setten by default and can be overwirten
  */
 export const addSection = (section) => ({
@@ -179,18 +178,16 @@ export const saveSections = () => async ({dispatch, state}) => {
 			}
 		})
 
-		const prom = editorWS.emit(
+		// meaby a hash should be part of the server request, but not implemented write now
+		hashes[index] = generateHash(section)
+
+		return editorWS.emit(
 			'patch',
 			`lesson/${lesson._id}/sections`,
 			section._id,
 			changes,
 			{ state: 'diff' }
-		)
-
-		// meaby a hash should be part of the server request, but not implemented write now
-		hashes[index] = generateHash(section)
-
-		return prom
+		);
 	})
 
 	const resolved = await Promise.allSettled(proms)
@@ -245,7 +242,6 @@ export const updateSectionDocValue = (sectionId, docValue) => ({
 	}
 })
 
-
 /**
  * Use if section is already updated, for example by the sockets
  *
@@ -259,7 +255,6 @@ export const sectionWasUpdated = (sectionId, section) => ({
 		...section
 	}
 })
-
 
 /**
  * Merge the current docValue (Serlo state) with the diff and overwrite current docValue
@@ -290,16 +285,10 @@ export const removeSection = (sectionId) => async ({state, dispatch}) => {
 		payload: sectionId,
 	})
 
-	let newActiveSectionId
-	let index = 0
-	while(!newActiveSectionId && index < state.sections.length){
-		if(state.sections[index]._id === sectionId){
-			const newActiveIndex = index === 0 ? index + 1 : index - 1
-			newActiveSectionId = state.sections[newActiveIndex]._id
-		}
 
-		index += 1
-	}
+	const index = state.sections.findIndex((section) => section._id === sectionId)
+	const newActiveIndex = index === 0 ? index + 1 : index - 1
+	const newActiveSectionId = state.sections[newActiveIndex]._id
 
 	dispatch({
 		type: SET_ACTIVE_SECTION,
