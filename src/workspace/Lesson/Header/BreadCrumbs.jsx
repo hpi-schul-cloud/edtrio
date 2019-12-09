@@ -48,7 +48,7 @@ const BreadCrumbs = ({ store, dispatch }) => {
 	})
 
 	const updateTitle = async (title) => {
-		dispatch(changeLessonTitle(title)
+		dispatch(changeLessonTitle(title));
 	}
 
 	useEffect(() => {
