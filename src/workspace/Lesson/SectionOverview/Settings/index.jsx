@@ -87,7 +87,32 @@ const Settings = () => {
     }
 
     if (!store.showSectionSettings) return null
-
+    return (
+        <Portal>
+            <Wrapper justifyBetween>
+                <Flex noWrap>
+                    <DeleteModal
+                        sectionTitle={
+                            activeSection.title ||
+                            `Abschnitt ${activeSectionIndex + 1}`
+                        }
+                        confirmDelete={confirmDelete}
+                        renderIcon={openModal => {
+                            return (
+                                <Icon
+                                    src={trashIcon}
+                                    isOnly={isOnly}
+                                    visible
+                                    onClick={e => !isOnly && openModal(e)}
+                                />
+                            )
+                        }}
+                    />
+                </Flex>
+            </Wrapper>
+        </Portal>
+    )
+    /* code is needed later
     return (
         <Portal>
             <Wrapper justifyBetween>
@@ -135,7 +160,7 @@ const Settings = () => {
                 </Flex>
             </Wrapper>
         </Portal>
-    )
+    ) */
 }
 
 export default Settings
