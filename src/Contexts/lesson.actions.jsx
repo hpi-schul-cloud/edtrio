@@ -2,7 +2,7 @@ import { editorWS } from '~/utils/socket'
 import { setSections , createSection } from './section.actions'
 import { newError } from './notifications.actions'
 import { generateHash } from '~/utils/crypto'
-import { saveLessonData } from '~/utils/cache'
+import { saveLessonCache } from '~/utils/cache'
 import { startLoading , finishLoading } from './view.actions'
 import { mapSection } from '~/utils/reducer'
 
@@ -91,7 +91,7 @@ export const saveLesson = () => async ({state, dispatch}) => {
 			type: LESSON_SAVED,
 			payload
 		})
-		saveLessonData({
+		saveLessonCache({
 			...lesson,
 			...payload,
 			savedToBackend: true
@@ -102,7 +102,7 @@ export const saveLesson = () => async ({state, dispatch}) => {
 			type: SAVING_LESSON_FAILED
 		})
 
-		saveLessonData({
+		saveLessonCache({
 			...state.lesson,
 			savedToBackend: false
 		})
