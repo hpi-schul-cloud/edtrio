@@ -37,7 +37,7 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
 
 
 		} else {
-			await dispatch(fetchLessonWithSections(id, courseId, {bootstrap: true}))
+			await dispatch(fetchLessonWithSections(id, courseId, true))
 		}
 
 		/* requestAnimationFrame(() => {
