@@ -26,7 +26,6 @@ class ErrorBoundary extends Component {
 	componentDidCatch(error, errorInfo) {
 		console.log(error)
 		if(error instanceof UserInformationError){
-			
 			this.setState({
 				...this.state,
 				message: error.message
@@ -41,17 +40,17 @@ class ErrorBoundary extends Component {
 
 	render() {
 		if (this.state.hasError) {
-            // render fallback UI
-            return (
+			// render fallback UI
+			return (
 				<React.Fragment>
 					<h1>{this.state.message}</h1>
 					<button onClick={() => Sentry.showReportDialog({ eventId: this.state.eventId })}>Fehler melden</button>
 				</React.Fragment>
-            );
-        }
+			);
+		}
 
 	  return this.props.children;
 	}
-  }
+}
 
-  export default ErrorBoundary;
+export default ErrorBoundary;
