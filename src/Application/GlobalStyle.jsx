@@ -3,6 +3,7 @@ import React from "react"
 import theme from "~/theme"
 
 const GS = createGlobalStyle`
+	@import url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css');
 	@import url('https://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700|PT+Sans:400,400i,700|Kalam|Faster+One');
 	* {
 		box-sizing: border-box;
