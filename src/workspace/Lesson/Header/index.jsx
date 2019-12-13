@@ -19,7 +19,7 @@ const StyledHeader = styled(Flex)`
     background-color: #fff;
     width: 100vw;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.18);
-    z-index: 200;
+    z-index: 3;
 
     &:hover .save-status {
         ${props =>
