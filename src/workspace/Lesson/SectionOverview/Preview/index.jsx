@@ -34,10 +34,10 @@ const Preview = React.forwardRef(
         },
         ref,
     ) => {
-        const expanded = store.sectionOverviewExpanded
+        const expanded = store.view.sectionOverviewExpanded
 
-        const activeSectionIndex = store.lesson.sections.findIndex(
-            el => el.id === store.activeSectionId,
+        const activeSectionIndex = store.sections.findIndex(
+            el => el._id === store.view.activeSectionId,
         )
 
         // DnD
@@ -57,7 +57,7 @@ const Preview = React.forwardRef(
                 <OuterMost noWrap ref={wrapperRef} delete={section.delete}>
                     <Controls
                         connectDragSource={connectDragSource}
-                        sectionId={section.id}
+                        sectionId={section._id}
                         store={store}
                         index={index}
                         dispatch={dispatch}

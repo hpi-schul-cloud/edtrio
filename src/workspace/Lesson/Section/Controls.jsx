@@ -5,6 +5,7 @@ import Flex from "~/components/Flex"
 import Action from "~/components/Action"
 import Container from "~/components/Container"
 import Button from "~/components/Button"
+import { setActiveSection } from "~/Contexts/view.actions"
 
 const StyledAction = styled(Action)`
     ${props =>
@@ -29,10 +30,7 @@ const Controls = ({ dispatch, prevId, nextId }) => {
                     disabled={!prevId}
                     onClick={() => {
                         prevId &&
-                            dispatch({
-                                type: "SET_ACTIVE_SECTION",
-                                payload: { id: prevId },
-                            })
+                            dispatch(setActiveSection(prevId))
                     }}>
                     ❮&nbsp;&nbsp;Vorheriger Abschnitt
                 </StyledAction>
@@ -41,10 +39,7 @@ const Controls = ({ dispatch, prevId, nextId }) => {
                     disabled={!nextId}
                     onClick={() => {
                         nextId &&
-                            dispatch({
-                                type: "SET_ACTIVE_SECTION",
-                                payload: { id: nextId },
-                            })
+                            dispatch(setActiveSection(nextId))
                     }}>
                     Nächster Abschnitt&nbsp;&nbsp;❯
                 </StyledAction>
