@@ -47,6 +47,21 @@ const Settings = ({ store, visible }) => {
 
     return (
         <Wrapper column visible={visible} alignEnd>
+            {!store.studentView && (
+                <ActionWrapper>
+                    <StyledAction
+                        to={`${window.location.pathname}?${studentQuery}`}>
+                        Schüleransicht
+                        <StyledIcon src={require("~/assets/eye-red.svg")} />
+                    </StyledAction>
+                </ActionWrapper>
+            )}
+        </Wrapper>
+    )
+    // code that is uses later
+    /*
+    return (
+        <Wrapper column visible={visible} alignEnd>
             <ActionWrapper>
                 <StyledAction>
                     Teilen
@@ -64,6 +79,7 @@ const Settings = ({ store, visible }) => {
             )}
         </Wrapper>
     )
+    */
 }
 
 export default Settings

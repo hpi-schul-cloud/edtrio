@@ -1,4 +1,4 @@
-import {editorWS} from "~/utils/socket"
+import { editorWS } from "~/utils/socket"
 import uuid from "uuid/v4"
 
 /**
@@ -6,18 +6,22 @@ import uuid from "uuid/v4"
  *
  * @param {int} position - positon of section
  */
-export const createSection = (position) => async ({dispatch, state}) => {
+export const createSection = position => async ({ dispatch, state }) => {
 	const tempId = uuid()
-	const {lesson} = state
+	const { lesson } = state
 	dispatch({
 		type: "ADD_SECTION",
 		payload: {
 			tempId,
-			position
+			position,
 		},
 	})
 
-	const section = await editorWS.emit('create', `lesson/${lesson.id}/sections`, {position})
+	const section = await editorWS.emit(
+		"create",
+		`lesson/${lesson.id}/sections`,
+		{ position },
+	)
 
 	dispatch({
 		type: "REPLACE_ADDED_SECTION_ID",
@@ -26,8 +30,6 @@ export const createSection = (position) => async ({dispatch, state}) => {
 			backendId: section._id,
 		},
 	})
-
-
 }
 
 /**
@@ -35,8 +37,11 @@ export const createSection = (position) => async ({dispatch, state}) => {
  *
  * @param {string} sectionId - MongoId of Section
  */
-export const removeSection = (sectionId) => async ({state}) => {
+export const removeSection = sectionId => async ({ state }) => {
 	// TODO: rewrite to remove sections via dispatch in the store
-	const section = await editorWS.emit('delete', `lesson/${state.lesson.id}/sections/${sectionId}`)
+	const section = await editorWS.emit(
+		"delete",
+		`lesson/${state.lesson.id}/sections/${sectionId}`,
+	)
 	return section
 }
