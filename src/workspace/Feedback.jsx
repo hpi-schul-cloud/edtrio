@@ -31,7 +31,6 @@ const FeedbackBtn = styled(Button)`
     position: fixed;
     bottom: 50px;
     right: 50px;
-    z-index: 9999999;
     animation-play-state: running;
     animation-duration: 1000ms;
     animation-iteration-count: 5;
@@ -40,7 +39,7 @@ const FeedbackBtn = styled(Button)`
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2), 0 3px 6px rgba(0, 0, 0, 0.36);
     background-color: #f6a800;
     border-color: #f6a800;
-    z-index: 9999999;
+    z-index: 6;
 
     &:hover,
     &:focus,

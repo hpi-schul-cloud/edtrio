@@ -43,7 +43,7 @@ export default comp =>
 			"preview",
 			{
 				beginDrag: props => ({
-					id: props.id,
+					id: props._id,
 					index: props.index,
 				}),
 			},

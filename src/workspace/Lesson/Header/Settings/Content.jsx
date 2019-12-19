@@ -15,7 +15,7 @@ const Wrapper = styled(Flex)`
     opacity: ${props => (props.visible ? 1 : 0)};
     transition: 250ms all ease-in-out;
     background-color: #fff;
-    z-index: 100;
+    z-index: 2;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.18);
 
     border-radius: 5px 0px 0px 5px;
@@ -68,7 +68,7 @@ const Settings = ({ store, visible }) => {
                     <StyledIcon src={require("~/assets/share-red.svg")} />
                 </StyledAction>
             </ActionWrapper>
-            {!store.studentView && (
+            {!store.view.studentView && (
                 <ActionWrapper>
                     <StyledAction
                         to={`${window.location.pathname}?${studentQuery}`}>

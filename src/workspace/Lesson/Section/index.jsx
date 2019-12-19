@@ -1,7 +1,7 @@
 import React, { useContext, useRef, useEffect } from "react"
 import styled, { css } from "styled-components"
 
-import LessonContext from "~/Contexts/Lesson"
+import LessonContext from "~/Contexts/Lesson.context"
 
 import Flex from "~/components/Flex"
 import Input from "~/components/Input"
@@ -10,6 +10,7 @@ import Container from "~/components/Container"
 
 import Editor from "./Editor"
 import Controls from "./Controls"
+import { updateSectionDocValue } from "~/Contexts/section.actions"
 
 const StyledSection = styled(Flex)`
 	transition: 250ms all ease-in-out;
@@ -63,7 +64,7 @@ const Warning = styled(Text)`
 const Section = ({ store, dispatch }) => {
 	const sectionRef = useRef(null)
 
-	if (!store.activeSectionId)
+	if (!store.view.activeSectionId)
 		return (
 			<Container>
 				<Flex>
@@ -72,50 +73,43 @@ const Section = ({ store, dispatch }) => {
 			</Container>
 		)
 
-	const index = store.lesson.sections.findIndex(
-		section => section.id === store.activeSectionId,
+	const index = store.sections.findIndex(
+		section => section._id === store.view.activeSectionId,
 	)
-	const section = store.lesson.sections[index]
-	const isLast = store.lesson.sections.length - 1 === index
+	const section = store.sections[index]
 	return (
 		<StyledSection
 			column
 			delete={section.delete}
 			alignCenter
-			sectionOverviewExpanded={store.sectionOverviewExpanded}
+			sectionOverviewExpanded={store.view.sectionOverviewExpanded}
 			data-section={index}
 			className="lesson-section"
 			ref={sectionRef}>
 			<Flex justifyCenter>
 				<Warning center bold>
-					+++ Beta-Testversion +++ wir freuen uns über Feedback 🙂 +++
+                    +++ Beta-Testversion +++ wir freuen uns über Feedback 🙂 +++
 				</Warning>
 			</Flex>
 			<Wrapper visible={section.visible}>
 				<Editor
-					key={section.id}
+					key={section._id}
 					docValue={section.docValue}
-					id={section.id}
+					id={section._id}
 					index={index}
-					editing={store.editing}
+					editing={store.view.editing}
 					dispatchChange={docValue => {
-						dispatch({
-							type: "SECTION_DOCVALUE_CHANGE",
-							payload: {
-								sectionId: section.id,
-								docValue,
-							},
-						})
+						dispatch(updateSectionDocValue(section._id, docValue))
 					}}
 				/>
 				<Controls
 					dispatch={dispatch}
 					prevId={
-						index - 1 >= 0 && store.lesson.sections[index - 1].id
+						index - 1 >= 0 && store.sections[index - 1]._id
 					}
 					nextId={
-						index + 1 < store.lesson.sections.length &&
-						store.lesson.sections[index + 1].id
+						index + 1 < store.sections.length &&
+                        store.sections[index + 1]._id
 					}
 				/>
 			</Wrapper>

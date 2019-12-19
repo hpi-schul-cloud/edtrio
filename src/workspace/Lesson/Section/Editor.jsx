@@ -3,18 +3,18 @@ import styled from "styled-components"
 import {
 	Editor as Edtr,
 	useScopedDispatch,
-	useScopedSelector,
+	useScopedSelector
 } from "@edtr-io/core"
 
 import {
-	focusNext,
-	focusPrevious,
-	persist,
-	redo,
-	reset,
-	undo,
-	hasPendingChanges as hasPendingChangesSelector,
-} from "@edtr-io/store"
+	/* focusNext,
+		focusPrevious,
+		persist,
+		redo,
+		reset,
+		undo, */
+	hasPendingChanges as hasPendingChangesSelector
+} from '@edtr-io/store'
 
 import theme from "~/theme"
 import plugins from "./plugins"
@@ -26,7 +26,7 @@ export const EditorWrapper = styled.div`
 	font-size: 1.3rem;
 	line-height: 1.4;
 
-	.fa-4x {
+	.fa-4x{
 		font-size: 3rem;
 	}
 
@@ -64,30 +64,45 @@ export const editorTheme = {
 	},
 }
 
-export const Editor = props => {
-	const docValue =
-		props.docValue && Object.keys(props.docValue).length
-			? props.docValue
-			: {
-					plugin: "rows",
-			  }
 
-	const children = React.useCallback(document => {
-		return (
-			<PlainEditorContainerInner docValue={docValue}>
-				{document}
-			</PlainEditorContainerInner>
-		)
-	})
+export const Editor = (props) => {
 
-	const onChange = ({ changed, getDocument }) => {
-		props.dispatchChange(getDocument())
+	const docValue = (props.docValue && Object.keys(props.docValue).length)
+		? props.docValue
+		: { plugin: "rows" }
+
+	const children = React.useCallback(
+		document => {
+			return (
+				<PlainEditorContainerInner
+					docValue={docValue}>
+					{document}
+				</PlainEditorContainerInner>
+			)
+		}
+	)
+
+
+
+	const [timeout, setTimeoutState] = useState(null)
+
+
+	const onChange = ({changed, getDocument}) => {
+		if (timeout) {
+			clearTimeout(timeout);
+			setTimeoutState(null)
+		}
+
+		setTimeoutState(setTimeout(() => {
+			setTimeoutState(null)
+			props.dispatchChange(getDocument())
+		}, 250))
 	}
 
 	const [initialState, setInitialState] = useState(docValue)
 
 	useEffect(() => {
-		if (!props.editing) {
+		if(!props.editing){
 			setInitialState(docValue)
 		}
 	}, [props.docValue])
@@ -113,51 +128,52 @@ function PlainEditorContainerInner(props) {
 	const dispatch = useScopedDispatch()
 	const hasPendingChanges = useScopedSelector(hasPendingChangesSelector())
 	const [editable, setEditable] = React.useState(
-		props.editable === undefined ? true : props.editable,
+		props.editable === undefined ? true : props.editable
 	)
 	useEffect(() => {
-		if (props.docValue && props.docValue.state) {
-			dispatch(scope => ({
-				type: "SetPartialState",
+		if(props.docValue && props.docValue.state){
+
+			dispatch((scope) => ({
+				type: 'SetPartialState',
 				scope,
-				payload: props.docValue,
+				payload: props.docValue
 			}))
 		}
 	}, [props.docValue])
 
 	return (
 		<React.Fragment>
-			<div style={{ margin: "20px 0" }}>{props.children}</div>
+			<div style={{ margin: '20px 0' }}>{props.children}</div>
 			{/* <button
-          onClick={() => {
-            dispatch(undo())
-          }}
-        >
-          Undo
-        </button>
-        <button
-          onClick={() => {
-            dispatch(redo())
-          }}
-        >
-          Redo
-        </button>
-        <button
-          onClick={() => {
-            dispatch(persist())
-          }}
-          disabled={!hasPendingChanges}
-        >
-          Mark persisted
-        </button>
-        <button
-          onClick={() => {
-            dispatch(reset())
-          }}
-          disabled={!hasPendingChanges}
-        >
-          Reset
-        </button> */}
+					onClick={() => {
+						dispatch(undo())
+					}}
+				>
+					Undo
+				</button>
+				<button
+					onClick={() => {
+						dispatch(redo())
+					}}
+				>
+					Redo
+				</button>
+				<button
+					onClick={() => {
+						dispatch(persist())
+					}}
+					disabled={!hasPendingChanges}
+				>
+					Mark persisted
+				</button>
+				<button
+					onClick={() => {
+						dispatch(reset())
+					}}
+					disabled={!hasPendingChanges}
+				>
+					Reset
+				</button> */}
 		</React.Fragment>
 	)
 }

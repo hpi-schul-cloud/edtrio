@@ -3,7 +3,7 @@ import styled from "styled-components"
 
 import config from "~/config"
 
-import LessonContext from "~/Contexts/Lesson"
+import LessonContext from "~/Contexts/Lesson.context"
 import UserContext from "~/Contexts/User"
 import { useInterval } from "~/utils/hooks"
 
@@ -19,12 +19,13 @@ import {
 	useBootstrap,
 	useChangeListener,
 	useFullScreenListener,
-	saveLesson,
 } from "./hooks"
+import { newError } from "~/Contexts/notifications.actions"
+import { saveSections } from "~/Contexts/section.actions"
 
 const Wrapper = styled.div`
-	position: relative;
-	width: 100%;
+    position: relative;
+    width: 100%;
 `
 
 const Lesson = props => {
@@ -40,26 +41,23 @@ const Lesson = props => {
 		const regex = /courses[\/]([a-f0-9]{24})\/topics[\/]([a-f0-9]{24})/
 		const [, _courseId, topicId] = regex.exec(location.toString())
 
-		if (topicId && _courseId) {
+		if (topicId && _courseId){
 			id = topicId
 			courseId = _courseId
 		}
 	} catch (err) {
-		console.log(
-			"invalid url: has to look like /courses/:courseId/topics/:topicId",
-		)
+		console.log('invalid url: has to look like /courses/:courseId/topics/:topicId', err)
 	}
 
 	useBootstrap(id, courseId, dispatch, dispatchUserAction)
 	useChangeListener(store, dispatch)
-	// useInterval(() => saveLesson(store, dispatch), 10000)
 
 	useEffect(() => {
-		if (store.bootstrapFinished && store.editing === false)
-			saveLesson(store, dispatch, true)
-	}, [store.editing])
+		if (store.view.bootstrapFinished && store.view.editing === false)
+			dispatch(saveSections())
+	}, [store.view.editing])
 
-	if (store.loading) {
+	if (store.view.loading) {
 		return (
 			<Container>
 				<Flex justifyCenter alignCenter style={{ minHeight: "70vh" }}>

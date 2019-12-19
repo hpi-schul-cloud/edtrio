@@ -12,7 +12,7 @@ export const createBoard = async (lessonId, title) => {
 
         nexboardAttachment = await serverApi.post("/editor/attachments", {
             key: "nexboard",
-            value: nexboardProject.id,
+            value: nexboardProject._id,
             lesson: lessonId,
         })
     } else {

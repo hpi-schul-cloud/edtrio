@@ -19,26 +19,26 @@ const OuterMost = styled(Flex)`
 
 /* eslint-disable */
 const Preview = React.forwardRef(
-	(
-		{
-			store,
-			k,
-			dispatch,
-			section,
-			index,
-			isDragging,
-			connectDragSource,
-			connectDropTarget,
-			connectDragPreview,
-			...props
-		},
-		ref,
-	) => {
-		const expanded = store.sectionOverviewExpanded
+    (
+        {
+            store,
+            k,
+            dispatch,
+            section,
+            index,
+            isDragging,
+            connectDragSource,
+            connectDropTarget,
+            connectDragPreview,
+            ...props
+        },
+        ref,
+    ) => {
+        const expanded = store.view.sectionOverviewExpanded
 
-		const activeSectionIndex = store.lesson.sections.findIndex(
-			el => el.id === store.activeSectionId,
-		)
+        const activeSectionIndex = store.sections.findIndex(
+            el => el._id === store.view.activeSectionId,
+        )
 
 		// DnD
 		const wrapperRef = useRef(null)
@@ -52,36 +52,36 @@ const Preview = React.forwardRef(
 			}))
 		}
 
-		const p = (
-			<div>
-				<OuterMost noWrap ref={wrapperRef} delete={section.delete}>
-					<Controls
-						connectDragSource={connectDragSource}
-						sectionId={section.id}
-						store={store}
-						index={index}
-						dispatch={dispatch}
-						visible={section.visible}
-						sectionTitle={section.title}
-					/>
-					<EditorPreview
-						store={store}
-						section={section}
-						expanded={expanded}
-						index={index}
-						connectDragSource={connectDragSource}
-						activeSectionIndex={activeSectionIndex}
-						dispatch={dispatch}
-						wrapperRef={wrapperRef}
-						previewRef={previewRef}
-						isDragging={isDragging}
-						k={k}
-					/>
-				</OuterMost>
-			</div>
-		)
-		return connectDragSource(p)
-	},
+        const p = (
+            <div>
+                <OuterMost noWrap ref={wrapperRef} delete={section.delete}>
+                    <Controls
+                        connectDragSource={connectDragSource}
+                        sectionId={section._id}
+                        store={store}
+                        index={index}
+                        dispatch={dispatch}
+                        visible={section.visible}
+                        sectionTitle={section.title}
+                    />
+                    <EditorPreview
+                        store={store}
+                        section={section}
+                        expanded={expanded}
+                        index={index}
+                        connectDragSource={connectDragSource}
+                        activeSectionIndex={activeSectionIndex}
+                        dispatch={dispatch}
+                        wrapperRef={wrapperRef}
+                        previewRef={previewRef}
+                        isDragging={isDragging}
+                        k={k}
+                    />
+                </OuterMost>
+            </div>
+        )
+        return connectDragSource(p)
+    },
 )
 
 export default DnDHOC(Preview)

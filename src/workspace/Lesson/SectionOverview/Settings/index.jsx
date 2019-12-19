@@ -2,7 +2,7 @@ import React, { useContext } from "react"
 import { Portal } from "react-portal"
 import styled, { css } from "styled-components"
 
-import LessonContext from "~/Contexts/Lesson"
+import LessonContext from "~/Contexts/Lesson.context"
 
 import Flex from "~/components/Flex"
 
@@ -16,16 +16,19 @@ import closeIcon from "~/assets/close-white.svg"
 
 import DeleteModal from "./DeleteModal"
 import { editorWS } from "~/utils/socket"
+import { switchSectionVisibility , removeSection } from "~/Contexts/section.actions"
+import { toggleSectionSettings } from "~/Contexts/view.actions"
+
 
 const Wrapper = styled(Flex)`
-	background-color: #455b6a;
-	width: 100vw;
-	position: fixed;
-	left: 0;
-	top: 62px;
-	padding: 10px 15px;
-	z-index: 99999;
-	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.18);
+    background-color: #455b6a;
+    width: 100vw;
+    position: fixed;
+    left: 0;
+    top: 62px;
+    padding: 10px 15px;
+    z-index: 6;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.18);
 `
 
 const Icon = styled.img`
@@ -39,65 +42,54 @@ const Icon = styled.img`
 
     /* ${props =>
 		!props.visible &&
-		css`
-			display: none;
-		`} */
+        css`
+            display: none;
+        `} */
 
     ${props => {
 		return (
-			props.isOnly &&
-			css`
-				cursor: not-allowed;
-				user-select: none;
-				opacity: 0.5;
-				&:active {
-					cursor: not-allowed;
-				}
-			`
+			props.isOnly && // only one section
+            css`
+                cursor: not-allowed;
+                user-select: none;
+                opacity: 0.5;
+                &:active {
+                    cursor: not-allowed;
+                }
+            `
 		)
 	}}
 `
 
 const Settings = () => {
 	const { store, dispatch } = useContext(LessonContext)
-	const activeSectionId = store.activeSectionId
-	const activeSection = store.lesson.sections.find(
-		el => el.id === activeSectionId,
+	const activeSectionId = store.view.activeSectionId
+	const activeSection = store.sections.find(
+		el => el._id === activeSectionId,
 	)
-	const activeSectionIndex = store.lesson.sections.findIndex(
-		el => el.id === activeSectionId,
+	const activeSectionIndex = store.sections.findIndex(
+		el => el._id === activeSectionId,
 	)
 
-	const isOnly = store.lesson.sections.length === 1
+	const isOnly = store.sections.length === 1
 
 	async function confirmDelete() {
-		dispatch({
-			type: "PREPARE_DELETE_SECTION",
-			payload: activeSectionId,
-		})
-
-		try {
-			await editorWS.emit(
-				"remove",
-				`lesson/${store.lesson.id}/sections`,
-				activeSectionId,
-			)
-			dispatch({
-				type: "DELETE_SECTION",
-				payload: activeSectionId,
-			})
-		} catch (err) {}
+		dispatch(removeSection(activeSectionId))
 	}
 
-	if (!store.showSectionSettings) return null
+	if (!store.view.showSectionSettings) return null
+
 	return (
 		<Portal>
 			<Wrapper justifyBetween>
 				<Flex noWrap>
+					<Icon src={duplicateIcon} />
+					<Icon src={shareIcon} />
+					<Icon src={infoIcon} />
 					<DeleteModal
 						sectionTitle={
 							activeSection.title ||
-							`Abschnitt ${activeSectionIndex + 1}`
+                            `Abschnitt ${activeSectionIndex + 1}`
 						}
 						confirmDelete={confirmDelete}
 						renderIcon={openModal => {
@@ -110,60 +102,28 @@ const Settings = () => {
 								/>
 							)
 						}}
+					/> { /* 
+					<Icon
+						src={
+							activeSection.visible ? previewIcon : noPreviewIcon
+						}
+						onClick={() => dispatch(switchSectionVisibility(activeSectionId))}
+						visible
+					/>
+					*/}
+				</Flex>
+				<Flex noWrap>
+					<Icon
+						src={closeIcon}
+						onClick={() => {
+							dispatch(toggleSectionSettings())
+						}}
 					/>
 				</Flex>
+				
 			</Wrapper>
 		</Portal>
 	)
-	/* code is needed later
-    return (
-        <Portal>
-            <Wrapper justifyBetween>
-                <Flex noWrap>
-                    <Icon src={duplicateIcon} />
-                    <Icon src={shareIcon} />
-                    <Icon src={infoIcon} />
-                    <DeleteModal
-                        sectionTitle={
-                            activeSection.title ||
-                            `Abschnitt ${activeSectionIndex + 1}`
-                        }
-                        confirmDelete={confirmDelete}
-                        renderIcon={openModal => {
-                            return (
-                                <Icon
-                                    src={trashIcon}
-                                    isOnly={isOnly}
-                                    visible
-                                    onClick={e => !isOnly && openModal(e)}
-                                />
-                            )
-                        }}
-                    />
-                    <Icon
-                        src={
-                            activeSection.visible ? previewIcon : noPreviewIcon
-                        }
-                        onClick={() => {
-                            dispatch({
-                                type: "SECTION_VISIBILITY",
-                                payload: activeSectionId,
-                            })
-                        }}
-                        visible
-                    />
-                </Flex>
-                <Flex noWrap>
-                    <Icon
-                        src={closeIcon}
-                        onClick={() => {
-                            dispatch({ type: "TOGGLE_SECTION_SETTINGS" })
-                        }}
-                    />
-                </Flex>
-            </Wrapper>
-        </Portal>
-    ) */
 }
 
 export default Settings

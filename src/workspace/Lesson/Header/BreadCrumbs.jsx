@@ -4,6 +4,7 @@ import styled from "styled-components"
 import Action from "~/components/Action"
 import Flex from "~/components/Flex"
 import Input from "~/components/Input"
+import { changeLessonTitle } from "~/Contexts/lesson.actions"
 
 // TODO:   width: 170px; should not set fix, take length of Input
 const TitleInput = styled(Input)`
@@ -24,9 +25,9 @@ const Crumb = ({ to, caption }) => {
 			<Action a to={to} target="_self" style={{ whiteSpace: "nowrap" }}>
 				{caption}
 			</Action>
-			&nbsp;&nbsp;
+            &nbsp;&nbsp;
 			<span style={{ color: "#879096" }}>{"/"}</span>
-			&nbsp;&nbsp;
+            &nbsp;&nbsp;
 		</StyledCrumb>
 	)
 }
@@ -46,11 +47,8 @@ const BreadCrumbs = ({ store, dispatch }) => {
 		],
 	})
 
-	const updateTitle = async value => {
-		dispatch({
-			type: "LESSON_TITLE_CHANGE",
-			payload: value,
-		})
+	const updateTitle = async (title) => {
+		dispatch(changeLessonTitle(title));
 	}
 
 	useEffect(() => {
@@ -71,9 +69,9 @@ const BreadCrumbs = ({ store, dispatch }) => {
 				noMargin
 				size={16}
 				value={store.lesson.title}
-				readOnly={!store.editing}
+				readOnly={!store.view.editing}
 				placeholder="Titel für das Thema"
-				onChange={updateTitle}
+				onChange={ updateTitle }
 			/>
 		</Flex>
 	)

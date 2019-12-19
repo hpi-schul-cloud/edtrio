@@ -1,14 +1,16 @@
 import React from "react"
 import styled, { css } from "styled-components"
-import uuid from "uuid/v4"
 
 import api from "~/utils/api"
 import theme from "~/theme"
 
-import { getFakeSection } from "~/utils/fake"
-import { createSection } from "~/actions/section"
+import { createSection } from "~/Contexts/section.actions"
 import Flex from "~/components/Flex"
-import { editorWS } from "~/utils/socket"
+import { toggleSectionOverview } from "~/Contexts/view.actions"
+
+import plusRedRound from "~/assets/plus-red-round.svg";
+import doubleArrowLeftRed from "~/assets/double-arrow-left-red.svg";
+import doubleArrowLeftwhite from "~/assets/double-arrow-left-white.svg";
 
 const Wrapper = styled(Flex)`
 	width: 100%;
@@ -17,7 +19,6 @@ const Wrapper = styled(Flex)`
 	bottom: 0;
 	left: 0;
 `
-
 const StyledIcon = styled.img`
 	cursor: pointer;
 	margin: 15px;
@@ -27,44 +28,6 @@ const StyledIcon = styled.img`
 	transform: ${props => !props.expanded && "rotate(180deg)"};
 	transition: 250ms all ease-in-out;
 `
-
-async function addNewSection(store, dispatch) {
-	const tempId = uuid()
-	const lessonId = store.lesson.id
-	const position = store.lesson.sections.length - 1
-	dispatch({
-		type: "ADD_SECTION",
-		payload: {
-			position,
-			tempId,
-		},
-	})
-	const newSection = await editorWS.emit(
-		"create",
-		`lesson/${lessonId}/sections`,
-	)
-	/* const newSection = await api.post(
-        "/editor/sections",
-        {
-            lesson: lessonId,
-            visible: true,
-            position,
-            notes: "",
-            title: "",
-        },
-        null,
-        null,
-        getFakeSection(lessonId),
-    )
-*/
-	dispatch({
-		type: "REPLACE_ADDED_SECTION_ID",
-		payload: {
-			tempId,
-			backendId: newSection._id,
-		},
-	})
-}
 
 const AddWrapper = styled.div`
 	height: 24px;
@@ -89,19 +52,23 @@ const AddWrapper = styled.div`
 `
 
 const SidebarControls = ({ store, dispatch }) => {
-	const expanded = store.sectionOverviewExpanded
-	const { lesson } = store
+	const {
+		sections,
+		view: {
+			sectionOverviewExpanded: expanded,
+			editing
+		}
+	} = store
 	return (
 		<Wrapper justifyEnd column={!expanded} alignCenter expanded={expanded}>
-			{store.editing && (
+			{editing && (
 				<AddWrapper visible={!expanded}>
 					<StyledIcon
 						onClick={() => {
-							dispatch(createSection(lesson.sections.length - 1))
-							// addNewSection(store, dispatch)
+							dispatch(createSection(sections.length))
 						}}
 						style={{ width: 40, height: 40 }}
-						src={require("~/assets/plus-red-round.svg")}
+						src={plusRedRound}
 						redRound={!expanded}
 					/>
 				</AddWrapper>
@@ -109,15 +76,12 @@ const SidebarControls = ({ store, dispatch }) => {
 			<StyledIcon
 				src={
 					!expanded
-						? require("~/assets/double-arrow-left-red.svg")
-						: require("~/assets/double-arrow-left-white.svg")
+						? doubleArrowLeftRed
+						: doubleArrowLeftwhite
 				}
 				expanded={expanded}
 				onClick={() => {
-					dispatch({
-						type: "TOGGLE_SECTION_OVERVIEW",
-						payload: !expanded,
-					})
+					dispatch(toggleSectionOverview())
 				}}
 			/>
 		</Wrapper>
