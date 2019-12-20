@@ -1,5 +1,6 @@
 import { SET_LESSON, UPDATE_LESSON, LESSON_UPDATED , CHANGE_LESSON_TITLE , LESSON_SAVED, SWAP_SECTIONS } from "./lesson.actions"
 import { ADD_SECTION , REPLACE_ADDED_SECTION_ID } from "./section.actions"
+import { invertSplice } from "~/utils/reducer"
 
 export const lessonInitialState = {
 	title: ''
@@ -57,14 +58,15 @@ export function lessonReducer(state = lessonInitialState, { type, payload }) {
 	case ADD_SECTION: // TODO: should be saved to local storage but not to the backend
 		return {
 			...state,
-			sections: [...state.sections].splice(payload.position, 0, payload.tempId)
+			sections: invertSplice(state.sections, payload.position, 0, payload.tempId)
 		}
 
 	case REPLACE_ADDED_SECTION_ID:
 		state.changed.add('sections') // TODO: is this needed or is it already done on server side
 		return {
 			...state,
-			sections: [...state.sections].splice(
+			sections: invertSplice(
+				state.sections,
 				state.sections.indexOf(payload.tempId),
 				1,
 				payload.backendId
