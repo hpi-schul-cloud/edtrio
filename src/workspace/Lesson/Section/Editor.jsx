@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import styled from "styled-components"
 import {
 	Editor as Edtr,
@@ -121,11 +121,8 @@ export const Editor = (props) => {
 			</Edtr>
 		</EditorWrapper>
 	)
-
 }
 export default Editor
-
-
 
 function PlainEditorContainerInner(props) {
 	const dispatch = useScopedDispatch()

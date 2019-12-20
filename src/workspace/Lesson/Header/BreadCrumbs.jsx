@@ -6,16 +6,17 @@ import Flex from "~/components/Flex"
 import Input from "~/components/Input"
 import { changeLessonTitle } from "~/Contexts/lesson.actions"
 
+// TODO:   width: 170px; should not set fix, take length of Input
 const TitleInput = styled(Input)`
-    font-weight: 700;
-    width: 150px;
-    margin-top: 0px;
+	font-weight: 700;
+	width: 170px;
+	margin-top: 0px;
 `
 
 const StyledCrumb = styled(Flex)`
-    @media (max-width: 900px) {
-        display: none;
-    }
+	@media (max-width: 900px) {
+		display: none;
+	}
 `
 
 const Crumb = ({ to, caption }) => {
@@ -30,7 +31,6 @@ const Crumb = ({ to, caption }) => {
 		</StyledCrumb>
 	)
 }
-
 
 const BreadCrumbs = ({ store, dispatch }) => {
 	const {
