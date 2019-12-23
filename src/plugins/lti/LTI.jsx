@@ -1,21 +1,11 @@
 import React, { useState, useEffect, useContext } from "react"
-import {default as UUID} from "node-uuid";
+import shortid from "shortid"
 
 import UserContext from "~/Contexts/User"
 
-import Input from "~/components/Input"
 import Flex from "~/components/Flex"
 import Loader from "~/components/Loader"
-import { getTools, getPseudonym, sign } from './utils'
-
-const generateNonce = (length) => {
-  let text = '';
-  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  for (let i = 0; i < length; i += 1) {
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-  }
-  return text;
-};
+import { getTools, getPseudonym, sign, depseudonymizationFrame } from './utils'
 
 const LTI = ({ state, editable }) => {
   const [tools, setTools] = useState({})
@@ -28,14 +18,15 @@ const LTI = ({ state, editable }) => {
       const iss = window.location.protocol + '//' + window.location.host + '/';
       const pseudonym = await getPseudonym(user.id, state.templateId.value)
       const current = new Date();
+      const name = encodeURI(depseudonymizationFrame(iss, pseudonym));
       const request = {
         iss,
-        name: pseudonym,
+        name,
         aud: state.clientId.value,
         sub: pseudonym,
         exp: current.getTime() + 3 * 60,
         iat: current.getTime(),
-        nonce: generateNonce(16),
+        nonce: shortid.generate() + shortid.generate(),
         'https://purl.imsglobal.org/spec/lti/claim/message_type': state.ltiMessageType.value,
         'https://purl.imsglobal.org/spec/lti/claim/roles': [
           `http://purl.imsglobal.org/vocab/lis/v2/membership#${user.roles[0].name}`,
@@ -46,7 +37,7 @@ const LTI = ({ state, editable }) => {
         'https://purl.imsglobal.org/spec/lti/claim/version': state.ltiVersion.value,
         'https://purl.imsglobal.org/spec/lti/claim/deployment_id': state.id.value,
         'https://purl.imsglobal.org/spec/lti-dl/claim/deep_linking_settings':
-          (state.ltiMessageType === 'LtiDeepLinkingRequest'
+          (state.ltiMessageType.value === 'LtiDeepLinkingRequest'
             ? {
               accept_types: ['ltiLink'],
               accept_media_types: 'image/*,text/html',
@@ -56,6 +47,11 @@ const LTI = ({ state, editable }) => {
             : undefined),
       }
       setIdToken(await sign(request))
+      window["link-" + state.id.value] = (url) => {
+        state.ltiMessageType.set('basic-lti-launch-request')
+        state.url.set(url)
+        setIdToken(null)
+      }
     } else {
       setTools(await getTools())
     }
@@ -67,7 +63,7 @@ const LTI = ({ state, editable }) => {
   }, [])
 
   const setTool = (tool) => {
-    state.id.set(UUID.v4())
+    state.id.set(shortid.generate())
     state.templateId.set(tool._id)
     state.clientId.set(tool.oAuthClientId)
     state.ltiMessageType.set(tool.lti_message_type)
@@ -78,17 +74,18 @@ const LTI = ({ state, editable }) => {
   if (loading) {
     return (
       <Flex justifyCenter>
-        <p>lade genrell</p>
+        <Loader />
       </Flex>
     )
   } else {
-    console.log('loading stopped', state.url.value)
     if (state.url.value) {
       if (idToken) {
+        const csrf = document.getElementsByName('_csrf')[0].value
         const html = `data:text/html;charset=utf-8,<html>
         <body onLoad="document.getElementById('lti').submit()">
           <form id="lti" method="post" action=${state.url.value}>
             <input type="hidden" name="id_token" value="${idToken}" />
+            <input type="hidden" name="_csrf" value="${csrf}" />
           </form>
         </body>
       </html>`
@@ -100,18 +97,33 @@ const LTI = ({ state, editable }) => {
         bootstrap()
         return (
           <Flex justifyCenter>
-            <p>Lade shit</p>
+            <Loader />
           </Flex>
         )
       }
     } else {
-      console.log('such was')
-      return <Flex justifyCenter>
-        <p>Wähle ein Tool aus</p>
-        <ul>
-          {tools.data.map(tool => (<li onClick={() => setTool(tool) }>{tool.name}</li>))}
-        </ul>
-      </Flex>
+      if(editable) {
+        return <Flex justifyCenter style={{ maxHeight: '400px', overflowY: 'scroll', overflowX: 'hidden', }}>
+          {tools.data.map(tool => (
+            <Flex
+              onClick={() => setTool(tool) }
+              justifyCenter
+              alignCenter
+              style={{
+                cursor: 'pointer',
+                textAlign: 'center',
+                margin: '1.5%',
+                padding: '3%',
+                width: '27%',
+                backgroundColor: "rgba(240, 240, 240)",
+              }}>
+              {tool.name}
+            </Flex>
+          ))}
+        </Flex>
+      } else {
+        return <div></div>
+      }
     }
   }
 }
