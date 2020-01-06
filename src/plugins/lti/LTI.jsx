@@ -42,7 +42,7 @@ const LTI = ({ state, editable }) => {
               accept_types: ['ltiLink'],
               accept_media_types: 'image/*,text/html',
               accept_presentation_document_targets: ['iframe', 'window'],
-              deep_link_return_url: `${iss}courses/x/tools/link/${state.id.value}`,
+              deep_link_return_url: `http://localhost:3030/tools/${state.id.value}/link`,
             }
             : undefined),
       }
