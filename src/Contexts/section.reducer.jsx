@@ -1,5 +1,6 @@
 import { mergeDiff } from "~/utils/diff"
 import { SWITCH_SECTION_VISIBILTY, SET_SECTIONS , ADD_SECTION , REPLACE_ADDED_SECTION_ID , PREPARE_DELETE_SECTION , DELETE_SECTION , DELETING_SECTION_FAILED , UPDATE_SECTION , SECTION_DOCVALUE_CHANGE , SECTION_SAVED , DOCVALUE_SAVED } from "./section.actions"
+import { invertSplice } from "~/utils/reducer"
 
 export const sectionInitialState = []
 
@@ -19,7 +20,7 @@ export function sectionReducer(state = sectionInitialState, { type, payload }) {
 		}))
 
 	case ADD_SECTION:
-		return [...state].splice(payload.position, 0, payload)
+		return invertSplice(state, payload.position, 0, payload)
 
 	case REPLACE_ADDED_SECTION_ID: {
 		return state.map(section =>
