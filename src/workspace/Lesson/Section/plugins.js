@@ -17,6 +17,7 @@ import nexboardPlugin from "~/plugins/nexboard"
 import etherpadPlugin from "~/plugins/etherpad"
 import notesPlugin from "~/plugins/notes"
 import ltiPlugin from "~/plugins/lti"
+import oauth2Plugin from "~/plugins/oauth2"
 
 function readFile(file) {
 	return new Promise(resolve => {
@@ -93,6 +94,7 @@ const plugins = {
 	// inputExercise: inputExercisePlugin,
 	video: videoPlugin,
 	lti: ltiPlugin,
+	oauth2: oauth2Plugin,
 	// equations: equationsPlugin,
 	// anchor: anchorPlugin,
 	// nexboard: nexboardPlugin,
