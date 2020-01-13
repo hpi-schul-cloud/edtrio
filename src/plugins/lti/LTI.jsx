@@ -19,38 +19,40 @@ const LTI = ({ state, editable }) => {
       const pseudonym = await getPseudonym(user.id, state.templateId.value)
       const current = new Date();
       const name = encodeURI(depseudonymizationFrame(iss, pseudonym));
-      const request = {
-        iss,
-        name,
-        aud: state.clientId.value,
-        sub: pseudonym,
-        exp: current.getTime() + 3 * 60,
-        iat: current.getTime(),
-        nonce: shortid.generate() + shortid.generate(),
-        'https://purl.imsglobal.org/spec/lti/claim/message_type': state.ltiMessageType.value,
-        'https://purl.imsglobal.org/spec/lti/claim/roles': [
-          `http://purl.imsglobal.org/vocab/lis/v2/membership#${user.roles[0].name}`,
-        ],
-        'https://purl.imsglobal.org/spec/lti/claim/resource_link': {
-          id: state.id.value,
-        },
-        'https://purl.imsglobal.org/spec/lti/claim/version': state.ltiVersion.value,
-        'https://purl.imsglobal.org/spec/lti/claim/deployment_id': state.id.value,
-        'https://purl.imsglobal.org/spec/lti-dl/claim/deep_linking_settings':
-          (state.ltiMessageType.value === 'LtiDeepLinkingRequest'
-            ? {
-              accept_types: ['ltiLink'],
-              accept_media_types: 'image/*,text/html',
-              accept_presentation_document_targets: ['iframe', 'window'],
-              deep_link_return_url: `http://localhost:3030/tools/${state.id.value}/link`,
-            }
-            : undefined),
-      }
-      setIdToken(await sign(request))
-      window["link-" + state.id.value] = (url) => {
-        state.ltiMessageType.set('basic-lti-launch-request')
-        state.url.set(url)
-        setIdToken(null)
+      if(state.ltiVersion.value === '1.3.0') {
+        const request = {
+          iss,
+          name,
+          aud: state.clientId.value,
+          sub: pseudonym,
+          exp: current.getTime() + 3 * 60,
+          iat: current.getTime(),
+          nonce: shortid.generate() + shortid.generate(),
+          'https://purl.imsglobal.org/spec/lti/claim/message_type': state.ltiMessageType.value,
+          'https://purl.imsglobal.org/spec/lti/claim/roles': [
+            `http://purl.imsglobal.org/vocab/lis/v2/membership#${user.roles[0].name}`,
+          ],
+          'https://purl.imsglobal.org/spec/lti/claim/resource_link': {
+            id: state.id.value,
+          },
+          'https://purl.imsglobal.org/spec/lti/claim/version': state.ltiVersion.value,
+          'https://purl.imsglobal.org/spec/lti/claim/deployment_id': state.id.value,
+          'https://purl.imsglobal.org/spec/lti-dl/claim/deep_linking_settings':
+            (state.ltiMessageType.value === 'LtiDeepLinkingRequest'
+              ? {
+                accept_types: ['ltiLink'],
+                accept_media_types: 'image/*,text/html',
+                accept_presentation_document_targets: ['iframe', 'window'],
+                deep_link_return_url: `http://localhost:3030/tools/${state.id.value}/link`,
+              }
+              : undefined),
+        }
+        setIdToken(await sign(request))
+        window["link-" + state.id.value] = (url) => {
+          state.ltiMessageType.set('basic-lti-launch-request')
+          state.url.set(url)
+          setIdToken(null)
+        }
       }
     } else {
       setTools(await getTools())
@@ -80,7 +82,7 @@ const LTI = ({ state, editable }) => {
   } else {
     if (state.url.value) {
       if (idToken) {
-        const csrf = document.getElementsByName('_csrf')[0].value
+        const csrf = (document.getElementsByName('_csrf')[0] ? document.getElementsByName('_csrf')[0].value : undefined)
         const html = `data:text/html;charset=utf-8,<html>
         <body onLoad="document.getElementById('lti').submit()">
           <form id="lti" method="post" action=${state.url.value}>
@@ -91,6 +93,13 @@ const LTI = ({ state, editable }) => {
       </html>`
         return (
           <iframe src={html} style={{width: '100%', height: '400px',}}>
+          </iframe>
+        )
+      } else if (state.ltiVersion.value === 'LTI-1p0') {
+        return (
+          <iframe
+            src={`${window.location.protocol}//${window.location.host}/courses/X/tools/run/${state.templateId.value}`}
+            style={{width: '100%', height: '400px',}}>
           </iframe>
         )
       } else {

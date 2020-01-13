@@ -92,7 +92,6 @@ const plugins = {
 	geogebra: geogebraPlugin,
 	// inputExercise: inputExercisePlugin,
 	video: videoPlugin,
-	lti: ltiPlugin,
 	// equations: equationsPlugin,
 	// anchor: anchorPlugin,
 	// nexboard: nexboardPlugin,
@@ -100,5 +99,7 @@ const plugins = {
 	// highlight: highlightPlugin,
 	// h5p: h5pPlugin,
 }
+
+if(process.env.ENABLE_LTI) plugins['lti'] = ltiPlugin;
 
 export default plugins
