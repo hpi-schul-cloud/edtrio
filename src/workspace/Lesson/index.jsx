@@ -38,7 +38,7 @@ const Lesson = props => {
 	let courseId = "TEST_COURSE"
 	try {
 		const location = window.location.pathname
-		const regex = /courses[\/]([a-f0-9]{24})\/topics[\/]([a-f0-9]{24})/
+		const regex = /courses[/]([a-f0-9]{24})\/topics[/]([a-f0-9]{24})/
 		const [, _courseId, topicId] = regex.exec(location.toString())
 
 		if (topicId && _courseId){
@@ -46,6 +46,7 @@ const Lesson = props => {
 			courseId = _courseId
 		}
 	} catch (err) {
+		// eslint-disable-next-line no-console
 		console.log('invalid url: has to look like /courses/:courseId/topics/:topicId', err)
 	}
 
