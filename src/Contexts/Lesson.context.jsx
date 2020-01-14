@@ -8,12 +8,6 @@ import { notificationReducer , notificationInitialState } from "./notifications.
 import { courseReducer , courseInitialState } from "./course.reducer"
 import { lessonReducer , lessonInitialState } from './lesson.reducer'
 
-
-
-
-
-
-
 const combinedReducer = combineReducers({
 	lesson: lessonReducer,
 	sections: sectionReducer,
@@ -29,7 +23,6 @@ const combinedInitalState = {
 	notifications: notificationInitialState,
 	course: courseInitialState
 }
-
 
 const LessonContext = React.createContext()
 const lessonDisptachCreator = prepareCreateDispatch(logger, thunkMiddleware)
