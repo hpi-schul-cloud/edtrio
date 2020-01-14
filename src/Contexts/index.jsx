@@ -10,14 +10,14 @@ import { UserContextProvider } from "./User"
 
 
 const Contexts = ({ children }) => {
-    return (
-        <DndProvider
-            backend={isTouchDevice() ? TouchBackend : HTML5Backend}>
-            <UserContextProvider>
-                <LessonContextProvider>{children}</LessonContextProvider>
-            </UserContextProvider>
-        </DndProvider>
-    )
+	return (
+		<DndProvider
+			backend={isTouchDevice() ? TouchBackend : HTML5Backend}>
+			<UserContextProvider>
+				<LessonContextProvider>{children}</LessonContextProvider>
+			</UserContextProvider>
+		</DndProvider>
+	)
 }
 
 export default Contexts
