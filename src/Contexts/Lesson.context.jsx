@@ -33,7 +33,7 @@ const combinedInitalState = {
 
 
 const LessonContext = React.createContext()
-const lessonDisptachCreator = prepareCreateDispatch(logger, thunkMiddleware, sentryMiddleware)
+const lessonDisptachCreator = prepareCreateDispatch(logger, thunkMiddleware)
 export function LessonContextProvider({ children}) {
 
 	const [state, dispatch] = useReducer(combinedReducer, combinedInitalState)

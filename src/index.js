@@ -7,19 +7,19 @@ import { version } from '~/../package.json';
 
 function renderApp() {
 
-    if(process.env.SENTRY_DSN){
-        Sentry.init({
-            dsn: process.env.SENTRY_DSN,
-            environment: process.env.ENVIRONMENT,
-            release: version,
-            integrations: [
-                new Sentry.Integrations.Breadcrumbs({ console: true })
-            ],
-        })
-    }
+	if(process.env.SENTRY_DSN){
+		Sentry.init({
+			dsn: process.env.SENTRY_DSN,
+			environment: process.env.ENVIRONMENT,
+			release: version,
+			integrations: [
+				new Sentry.Integrations.Breadcrumbs({})
+			],
+		})
+	}
 
-    const Application = require("~/Application/index").default
-    ReactDOM.render(<Application />, document.getElementById("editor"))
+	const Application = require("~/Application/index").default
+	ReactDOM.render(<Application />, document.getElementById("editor"))
 }
 
 // implement Promise.allSettled if not supported by browser
@@ -28,5 +28,5 @@ bindAllSettledToPromise()
 renderApp()
 
 if (module.hot) {
-    module.hot.accept(renderApp)
+	module.hot.accept(renderApp)
 }
