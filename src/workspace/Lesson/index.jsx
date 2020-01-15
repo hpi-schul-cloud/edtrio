@@ -39,17 +39,20 @@ const Lesson = props => {
 	let courseId = "TEST_COURSE"
 	try {
 		const location = window.location.pathname
-		const regex = /courses[\/]([a-f0-9]{24})\/topics[\/]([a-f0-9]{24})/
-		const [, _courseId, topicId] = regex.exec(location.toString())
 
-        if (topicId && _courseId){
-            id = topicId
-            courseId = _courseId
-        }
-    } catch (err) {
-        console.log('invalid url: has to look like /courses/:courseId/topics/:topicId')
-        throw new UserInformationError(err, 'Die URL scheint nicht die nötigen Informationen zu beinhalten, bitte URL prüfen')
-    }
+		if(location !== '' || location !== '/'){
+			const regex = /courses[\/]([a-f0-9]{24})\/topics[\/]([a-f0-9]{24})/
+			const [, _courseId, topicId] = regex.exec(location.toString())
+
+			if (topicId && _courseId){
+				id = topicId
+				courseId = _courseId
+			}
+		}
+	} catch (err) {
+		console.log('invalid url: has to look like /courses/:courseId/topics/:topicId')
+		throw new UserInformationError(err, 'Die URL scheint nicht die nötigen Informationen zu beinhalten, bitte URL prüfen')
+	}
 
 
 	useBootstrap(id, courseId, dispatch, dispatchUserAction)
