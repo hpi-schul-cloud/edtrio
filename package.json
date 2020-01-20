@@ -30,7 +30,7 @@
         "@edtr-io/plugin-rows": "^0.12.0",
         "@edtr-io/plugin-sc-mc-exercise": "^0.12.0",
         "@edtr-io/plugin-spoiler": "^0.12.0",
-        "@edtr-io/plugin-text": "^0.12.0",
+        "@edtr-io/plugin-text": "^0.13.7",
         "@edtr-io/plugin-video": "^0.12.0",
         "@edtr-io/renderer-ui": "^0.12.0",
         "@edtr-io/store": "^0.12.0",
