@@ -87,7 +87,7 @@
         "eslint-plugin-styled-components-config": "0.0.2",
         "fs-extra": "^8.1.0",
         "gh-pages": "^2.1.1",
-        "lint-staged": "^9.4.3",
+        "lint-staged": "^10.0.5",
         "mongodb": "^3.3.4",
         "parcel-bundler": "^1.12.3",
         "parcel-plugin-bundle-visualiser": "^1.2.0",
