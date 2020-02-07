@@ -1,5 +1,17 @@
 import { mergeDiff } from "~/utils/diff"
-import { SWITCH_SECTION_VISIBILTY, SET_SECTIONS , ADD_SECTION , REPLACE_ADDED_SECTION_ID , PREPARE_DELETE_SECTION , DELETE_SECTION , DELETING_SECTION_FAILED , UPDATE_SECTION , SECTION_DOCVALUE_CHANGE , SECTION_SAVED , DOCVALUE_SAVED } from "./section.actions"
+import { 
+	SWITCH_SECTION_VISIBILTY, 
+	SET_SECTIONS, 
+	ADD_SECTION, 
+	REPLACE_ADDED_SECTION_ID, 
+	PREPARE_DELETE_SECTION, 
+	DELETE_SECTION, 
+	DELETING_SECTION_FAILED, 
+	UPDATE_SECTION, 
+	SECTION_DOCVALUE_CHANGE, 
+	SECTION_SAVED, 
+	DOCVALUE_SAVED 
+} from "./section.actions"
 import { invertSplice } from "~/utils/reducer"
 
 export const sectionInitialState = []
@@ -23,7 +35,7 @@ export function sectionReducer(state = sectionInitialState, { type, payload }) {
 		return invertSplice(state, payload.position, 0, payload)
 
 	case REPLACE_ADDED_SECTION_ID: {
-		return state.map(section =>
+		return state.map((section) =>
 			section._id === payload.tempId
 				? {...section, _id: payload.backendId}
 				: section
@@ -31,7 +43,7 @@ export function sectionReducer(state = sectionInitialState, { type, payload }) {
 	}
 
 	case SWITCH_SECTION_VISIBILTY:
-		return state.map(section => {
+		return state.map((section) => {
 			if (section._id === payload) {
 				section.changed.add("visible")
 				return { ...section, visible: !section.visible }

@@ -3,6 +3,8 @@ export const SET_EDITING = "SET_EDITING"
 export const SET_LOADING = "SET_LOADING"
 export const TOGGLE_SECTION_OVERVIEW = "TOGGEL_SECTION_OVERVIEW"
 export const TOGGLE_SECTION_SETTINGS = "TOGGLE_SECTION_SETTINGS"
+export const SET_LESSON_EDITING = "SET_LESSON_EDITING"
+export const GET_SCOPE_PERMISSIONS = "GET_SCOPE_PERMISSIONS"
 
 
 export const setActiveSection = (sectionId) => ({
@@ -14,12 +16,21 @@ export const setActiveSection = (sectionId) => ({
 /**
  * Set section editing mode
  *
- * @param {boolean} editing - activate or deactivate editing mode
+ * @param {boolean} hasPermission - activate or deactivate editing mode
  */
-export const setEditing = (editing) => ({
+export const setEditing = (hasPermission) => ({
 	type: SET_EDITING,
-	payload: editing
+	payload: hasPermission
 })
+
+export const setLessonEditing = (hasPermission) => ({
+	type: SET_LESSON_EDITING,
+	payload: hasPermission
+})
+
+export const getPermissions = () => ({
+	type: GET_SCOPE_PERMISSIONS
+});
 
 export const startLoading = () => ({
 	type: SET_LOADING,

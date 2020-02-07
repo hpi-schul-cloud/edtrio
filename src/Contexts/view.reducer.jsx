@@ -1,7 +1,7 @@
 import qs from "qs"
 
 import { ADD_SECTION , REPLACE_ADDED_SECTION_ID , SET_SECTIONS } from "./section.actions"
-import { TOGGLE_SECTION_SETTINGS, TOGGLE_SECTION_OVERVIEW, SET_ACTIVE_SECTION , SET_EDITING , SET_LOADING } from "./view.actions"
+import { TOGGLE_SECTION_SETTINGS, TOGGLE_SECTION_OVERVIEW, SET_ACTIVE_SECTION, SET_EDITING, SET_LESSON_EDITING, SET_LOADING, GET_SCOPE_PERMISSIONS } from "./view.actions"
 import { BOOTSTRAP_FINISHED } from "./lesson.actions"
 
 
@@ -10,8 +10,9 @@ const q = qs.parse(window.location.search, { ignoreQueryPrefix: true })
 
 export const viewInitialState = {
 	loading: true,
-	studentView: !!q.student_view,
-	editing: !q.student_view,
+	// studentView: false, // !!q.student_view,
+	editing: false, // !q.student_view,
+	lessonEditing: false,
 	bootstrapFinished: false,
 	sectionOverviewExpanded: false,
 	showSectionSettings: false,
@@ -25,20 +26,28 @@ export const viewInitialState = {
  */
 export function viewReducer(state = viewInitialState, { type, payload }) {
 	switch (type) {
+	case SET_LESSON_EDITING:
+		return {
+			...state,
+			lessonEditing: payload,
+		}
 	case SET_EDITING:
 		// switch between editing and view mode
-		if (state.studentView) return state
+		// if (state.studentView) return state
 		return {
 			...state,
 			editing: payload,
 		}
-
+	case GET_SCOPE_PERMISSIONS: 
+		return {
+			editing: state.editing,
+			lessonEditing: state.lessonEditing
+		}
 	case SET_SECTIONS:
 		return {
 			...state,
 			activeSectionId: payload[0]._id || null
 		}
-
 	case SET_LOADING:
 		return {
 			...state,

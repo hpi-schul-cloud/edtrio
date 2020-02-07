@@ -1,11 +1,11 @@
 import React, { useEffect, useContext, useState } from "react"
 import styled from "styled-components"
 
-import config from "~/config"
+// import config from "~/config"
 
 import LessonContext from "~/Contexts/Lesson.context"
 import UserContext from "~/Contexts/User"
-import { useInterval } from "~/utils/hooks"
+// import { useInterval } from "~/utils/hooks"
 
 import Container from "~/components/Container"
 import Flex from "~/components/Flex"
@@ -18,9 +18,9 @@ import SectionOverview from "./SectionOverview"
 import {
 	useBootstrap,
 	useChangeListener,
-	useFullScreenListener,
+//	useFullScreenListener,
 } from "./hooks"
-import { newError } from "~/Contexts/notifications.actions"
+// import { newError } from "~/Contexts/notifications.actions"
 import { saveSections } from "~/Contexts/section.actions"
 
 const Wrapper = styled.div`
@@ -28,26 +28,25 @@ const Wrapper = styled.div`
     width: 100%;
 `
 
-const Lesson = props => {
+const Lesson = (props) => {
 	const { store, dispatch } = useContext(LessonContext)
 	const { store: userStore, dispatch: dispatchUserAction } = useContext(
 		UserContext,
 	)
-
+		
 	let id = "TEST"
 	let courseId = "TEST_COURSE"
 	try {
 		const location = window.location.pathname
 		const regex = /courses[/]([a-f0-9]{24})\/topics[/]([a-f0-9]{24})/
 		const [, _courseId, topicId] = regex.exec(location.toString())
-
 		if (topicId && _courseId){
 			id = topicId
 			courseId = _courseId
 		}
 	} catch (err) {
 		// eslint-disable-next-line no-console
-		console.log('invalid url: has to look like /courses/:courseId/topics/:topicId', err)
+		console.log('invalid url: has to look like /courses/:courseId/topics/:topicId');
 	}
 
 	useBootstrap(id, courseId, dispatch, dispatchUserAction)

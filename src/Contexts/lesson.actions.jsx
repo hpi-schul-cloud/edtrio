@@ -74,14 +74,14 @@ export const saveLesson = () => async ({state, dispatch}) => {
 		})
 
 		const newHash = generateHash(lesson)
-
+		/*
 		const message = await editorWS.emit(
 			'patch',
 			`course/${course._id}/lessons`,
 			lesson._id,
 			changes
 		)
-
+		*/
 		const payload = {
 			hash: newHash,
 			// timestamp: message.updatedAt || message.insertedAt

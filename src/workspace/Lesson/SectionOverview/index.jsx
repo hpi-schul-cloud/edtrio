@@ -53,6 +53,8 @@ const Previews = styled.div`
 `
 
 function useResizeListener(store, dispatch) {
+	// TODO: was hat es mit dem resizeListener
+	/*
 	function resizeListener() {
 		if (store.view.sectionOverviewExpanded && window.innerWidth < 1350) {
 			dispatch(showSectionOverview(false))
@@ -65,7 +67,7 @@ function useResizeListener(store, dispatch) {
 			dispatch(showSectionOverview(true))
 		}
 	}
-
+	*/
 	useEffect(() => {
 		if (window.innerWidth > 1350 && !store.view.bootstrapFinished) {
 			dispatch(showSectionOverview(true))
@@ -81,7 +83,8 @@ const SectionOverview = ({ store, dispatch }) => {
 	const sections = store.sections
 	const {
 		sectionOverviewExpanded: expanded,
-		editing
+		editing,
+		lessonEditing
 	} = store.view
 
 	function moveSection(fromIndex, toIndex) {
@@ -91,29 +94,24 @@ const SectionOverview = ({ store, dispatch }) => {
 	return (
 		<React.Fragment>
 			<Wrapper expanded={expanded} editing={editing}>
-				<Previews editing={editing} expanded={expanded}>
-					{sections
-						.filter((section, index) => {
-							if (editing) return true
-							return section.visible
-						})
-						.map((section, index) => {
-							const editorKey =
+				<Previews editing={editing} lessonEditing={lessonEditing} expanded={expanded}>
+					{sections.map((section, index) => {
+						const editorKey =
                                 section._id +
                                 "-" +
                                 Math.round(new Date().getTime() / 5000)
-							return (
-								<Preview
-									k={editorKey}
-									store={store}
-									moveSection={moveSection}
-									dispatch={dispatch}
-									section={section}
-									index={index}
-									key={section._id}
-								/>
-							)
-						})}
+						return (
+							<Preview
+								k={editorKey}
+								store={store}
+								moveSection={moveSection}
+								dispatch={dispatch}
+								section={section}
+								index={index}
+								key={section._id}
+							/>
+						)
+					})}
 				</Previews>
 				<SidebarControls store={store} dispatch={dispatch} />
 			</Wrapper>

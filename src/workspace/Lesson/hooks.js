@@ -17,6 +17,7 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
 		}
 
 		const cachedLessonData = loadLessonCache(id)
+
 		if (
 			cachedLessonData &&
 			Object.prototype.hasOwnProperty.call(cachedLessonData, 'sections') &&
@@ -24,10 +25,15 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
 		) {
 			// TODO: compare timestamps and hash with server state and save if possible or set
 			// saved to true if hash is the same (needs server route, to do not send all data)
+			// TODO: prüfen welche lesson gerade offen ist, mehre lesson cachen
+			// eslint-disable-next-line no-console
 			console.log('Data are loaded from cach', !cachedLessonData.savedToBackend)
+			// eslint-disable-next-line no-console
+			console.log('cached lesson', cachedLessonData);
 			dispatch(setLesson(cachedLessonData))
 			const sections = loadSectionCache(...cachedLessonData.sections)
-
+			// eslint-disable-next-line no-console
+			console.log('cached sections', sections);
 			dispatch(setSections(sections))
 
 			if(sections.length !== cachedLessonData.sections.length){

@@ -5,6 +5,7 @@ import { saveSectionCache } from "~/utils/cache"
 import { generateHash } from "~/utils/crypto"
 import { SET_ACTIVE_SECTION } from "./view.actions"
 import { mapSection } from "~/utils/reducer"
+import logger from "redux-logger"
 
 export const SET_SECTIONS = 'SET_SECTIONS'
 export const ADD_SECTION = 'ADD_SECTION'
@@ -123,28 +124,36 @@ export const createSection = (position) => async ({dispatch, state}) => {
 	const tempId = uuid()
 	const {lesson} = state
 	position = position || state.sections.length
+
 	dispatch(addSection({
 		_id: tempId,
 		position
-	}))
-	try{
-		const section = await editorWS.emit('create', `lesson/${lesson._id}/sections`, {})
-		dispatch({
-			type: REPLACE_ADDED_SECTION_ID,
-			payload: {
-				tempId,
-				backendId: section._id,
-			},
-		})
-	} catch (err){
-		dispatch({ // TODO: Recognice it and save it later, have to be a post and not a patch
-			// trigger could be the connection, need to be sockets as component und bind do a store
-			type: SAVING_SECTION_FAILED,
-			payload: {
-				_id: tempId
-			}
-		})
+	}));
+
+	if (lesson && lesson._id && !Number.isInteger(lesson._id)) {
+		try{
+			const section = await editorWS.emit('create', `lesson/${lesson._id}/sections`, {})
+			dispatch({
+				type: REPLACE_ADDED_SECTION_ID,
+				payload: {
+					tempId,
+					backendId: section._id,
+				},
+			})
+		} catch (err){
+			logger.log('err', err);
+			dispatch({ // TODO: Recognice it and save it later, have to be a post and not a patch
+				// trigger could be the connection, need to be sockets as component und bind do a store
+				type: SAVING_SECTION_FAILED,
+				payload: {
+					_id: tempId,
+					err
+				}
+			})
+		}
 	}
+	// eslint-disable-next-line no-console
+	console.log('TODO: task without lesson should also work');
 }
 
 /**

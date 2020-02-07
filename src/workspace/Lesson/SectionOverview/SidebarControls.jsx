@@ -1,8 +1,8 @@
 import React from "react"
 import styled, { css } from "styled-components"
 
-import api from "~/utils/api"
-import theme from "~/theme"
+// import api from "~/utils/api"
+// import theme from "~/theme"
 
 import { createSection } from "~/Contexts/section.actions"
 import Flex from "~/components/Flex"
@@ -59,6 +59,7 @@ const SidebarControls = ({ store, dispatch }) => {
 			editing
 		}
 	} = store
+
 	return (
 		<Wrapper justifyEnd column={!expanded} alignCenter expanded={expanded}>
 			{editing && (
