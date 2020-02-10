@@ -19,6 +19,9 @@ env:
 # do not run on develop if it is just a dependency update from dependabot to preserve resources
 if: (not branch = develop) or (branch = develop and not commit_message ~= /^Bump.*from.*to.*$/)
 
+services:
+  - mongodb
+
 stages:
   - test
   - name: build
