@@ -25,7 +25,7 @@ function useResizeListener(visible, setVisible, store) {
     }
 
     useEffect(() => {
-        if (window.innerWidth > 1250 && !store.bootstrapFinished) {
+        if (window.innerWidth > 1250 && !store.view.bootstrapFinished) {
             setVisible(true)
         }
 

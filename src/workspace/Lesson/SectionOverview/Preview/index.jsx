@@ -12,9 +12,9 @@ import EditorPreview from "./EditorPreview"
 import { isTouchDevice } from "~/utils/device"
 
 const OuterMost = styled(Flex)`
-    width: 100%;
-    transition: 250ms all ease-in-out;
-    transform: ${props => props.delete && "translateX(100%)"};
+	width: 100%;
+	transition: 250ms all ease-in-out;
+	transform: ${props => props.delete && "translateX(100%)"};
 `
 
 /* eslint-disable */
@@ -34,30 +34,30 @@ const Preview = React.forwardRef(
         },
         ref,
     ) => {
-        const expanded = store.sectionOverviewExpanded
+        const expanded = store.view.sectionOverviewExpanded
 
-        const activeSectionIndex = store.lesson.sections.findIndex(
-            el => el.id === store.activeSectionId,
+        const activeSectionIndex = store.sections.findIndex(
+            el => el._id === store.view.activeSectionId,
         )
 
-        // DnD
-        const wrapperRef = useRef(null)
-        const previewRef = useRef(null)
-        if (connectDragSource) {
-            connectDragPreview(previewRef)
-            connectDropTarget(wrapperRef)
-            // const opacity = isDragging ? 0 : 1
-            useImperativeHandle(ref, () => ({
-                getNode: () => wrapperRef.current,
-            }))
-        }
+		// DnD
+		const wrapperRef = useRef(null)
+		const previewRef = useRef(null)
+		if (connectDragSource) {
+			connectDragPreview(previewRef)
+			connectDropTarget(wrapperRef)
+			// const opacity = isDragging ? 0 : 1
+			useImperativeHandle(ref, () => ({
+				getNode: () => wrapperRef.current,
+			}))
+		}
 
         const p = (
             <div>
                 <OuterMost noWrap ref={wrapperRef} delete={section.delete}>
                     <Controls
                         connectDragSource={connectDragSource}
-                        sectionId={section.id}
+                        sectionId={section._id}
                         store={store}
                         index={index}
                         dispatch={dispatch}
