@@ -44,7 +44,7 @@
         "@types/slate": "^0.47.3",
         "axios": "^0.19.0",
         "curl": "^0.1.4",
-        "object-hash": "^2.0.1",
+        "object-hash": "^2.0.2",
         "react": "^16.12.0",
         "react-dnd": "^9.4.0",
         "react-dnd-html5-backend": "^9.4.0",
