@@ -14,8 +14,9 @@ export function loadLessonCache(lessonId) {
 	return {}
 }
 
-export function saveSectionCache(...sections) {
-	sections.forEach((section) => {
+export function saveSectionCache(sections) {
+	const array = Array.isArray(sections) ? sections : [sections];
+	array.forEach((section) => {
 		localStorage.setItem(`${EDITOR_SECTION_DATA}-${section._id}`, JSON.stringify(section))
 	})
 }
