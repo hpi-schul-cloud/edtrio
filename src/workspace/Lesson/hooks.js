@@ -45,8 +45,6 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
         }) */
 	}
 
-
-
 	async function registerHandler(){
 
 		const dispatchLessonUpdate = (lesson) =>

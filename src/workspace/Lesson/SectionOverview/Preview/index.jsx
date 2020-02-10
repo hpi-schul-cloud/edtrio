@@ -12,9 +12,9 @@ import EditorPreview from "./EditorPreview"
 import { isTouchDevice } from "~/utils/device"
 
 const OuterMost = styled(Flex)`
-    width: 100%;
-    transition: 250ms all ease-in-out;
-    transform: ${props => props.delete && "translateX(100%)"};
+	width: 100%;
+	transition: 250ms all ease-in-out;
+	transform: ${props => props.delete && "translateX(100%)"};
 `
 
 /* eslint-disable */
@@ -40,17 +40,17 @@ const Preview = React.forwardRef(
             el => el._id === store.view.activeSectionId,
         )
 
-        // DnD
-        const wrapperRef = useRef(null)
-        const previewRef = useRef(null)
-        if (connectDragSource) {
-            connectDragPreview(previewRef)
-            connectDropTarget(wrapperRef)
-            // const opacity = isDragging ? 0 : 1
-            useImperativeHandle(ref, () => ({
-                getNode: () => wrapperRef.current,
-            }))
-        }
+		// DnD
+		const wrapperRef = useRef(null)
+		const previewRef = useRef(null)
+		if (connectDragSource) {
+			connectDragPreview(previewRef)
+			connectDropTarget(wrapperRef)
+			// const opacity = isDragging ? 0 : 1
+			useImperativeHandle(ref, () => ({
+				getNode: () => wrapperRef.current,
+			}))
+		}
 
         const p = (
             <div>

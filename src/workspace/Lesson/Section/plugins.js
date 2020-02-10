@@ -18,85 +18,85 @@ import etherpadPlugin from "~/plugins/etherpad"
 import notesPlugin from "~/plugins/notes"
 
 function readFile(file) {
-    return new Promise(resolve => {
-        const reader = new FileReader()
-        reader.onload = function(e) {
-            const dataUrl = e.target.result
-            // simulate uploadtime
-            setTimeout(() => resolve({ file, dataUrl }), 1000)
-        }
+	return new Promise(resolve => {
+		const reader = new FileReader()
+		reader.onload = function(e) {
+			const dataUrl = e.target.result
+			// simulate uploadtime
+			setTimeout(() => resolve({ file, dataUrl }), 1000)
+		}
 
-        reader.readAsDataURL(file)
-    })
+		reader.readAsDataURL(file)
+	})
 }
 
 const mockUploadFileHandler = file => {
-    return readFile(file).then(loaded => {
-        return {
-            location: loaded.dataUrl,
-            name: loaded.file.name,
-            type: parseFileType(loaded.file.name),
-        }
-    })
+	return readFile(file).then(loaded => {
+		return {
+			location: loaded.dataUrl,
+			name: loaded.file.name,
+			type: parseFileType(loaded.file.name),
+		}
+	})
 }
 
 const ALLOWED_EXTENSIONS = ["gif", "jpg", "jpeg", "png", "svg"]
 
 function matchesAllowedExtensions(fileName) {
-    const extension = fileName
-        .toLowerCase()
-        .slice(fileName.lastIndexOf(".") + 1)
-    return ALLOWED_EXTENSIONS.indexOf(extension) >= 0
+	const extension = fileName
+		.toLowerCase()
+		.slice(fileName.lastIndexOf(".") + 1)
+	return ALLOWED_EXTENSIONS.indexOf(extension) >= 0
 }
 
 function validateFile(file) {
-    if (matchesAllowedExtensions(file.name)) {
-        return { valid: true }
-    } else {
-        return {
-            valid: false,
-            errors:
-                "Die ausgewählte Datei konnte nicht als Bild erkannt werden.",
-        }
-    }
+	if (matchesAllowedExtensions(file.name)) {
+		return { valid: true }
+	} else {
+		return {
+			valid: false,
+			errors:
+				"Die ausgewählte Datei konnte nicht als Bild erkannt werden.",
+		}
+	}
 }
 export function mockUploadImageHandler(file) {
-    const validation = validateFile(file)
-    if (!validation.valid) {
-        alert(validation.errors)
-        return Promise.reject(validation.errors)
-    }
+	const validation = validateFile(file)
+	if (!validation.valid) {
+		alert(validation.errors)
+		return Promise.reject(validation.errors)
+	}
 
-    return readFile(file).then(loaded => {
-        return loaded.dataUrl
-    })
+	return readFile(file).then(loaded => {
+		return loaded.dataUrl
+	})
 }
 
 const filesPlugin = createFilePlugin({ upload: mockUploadFileHandler })
 const imagePlugin = createImagePlugin({
-    upload: mockUploadImageHandler,
-    validate: validateFile,
-    secondInput: "description",
+	upload: mockUploadImageHandler,
+	validate: validateFile,
+	secondInput: "description",
 })
 
 const plugins = {
-    text: textPlugin,
-    // notes: notesPlugin,
-    rows: rowsPlugin,
-    blockquote: blockquotePlugin,
-    etherpad: etherpadPlugin,
-    image: imagePlugin, // has to be implemented before files
-    files: filesPlugin,
-    spoiler: spoilerPlugin,
-    geogebra: geogebraPlugin,
-    // inputExercise: inputExercisePlugin,
-    video: videoPlugin,
-    // equations: equationsPlugin,
-    // anchor: anchorPlugin,
-    // nexboard: nexboardPlugin,
-    // singleMultipleChoice: scMcExercisePlugin,
-    // highlight: highlightPlugin,
-    // h5p: h5pPlugin,
+	text: textPlugin,
+	// notes: notesPlugin,
+	rows: rowsPlugin,
+	blockquote: blockquotePlugin,
+	etherpad: etherpadPlugin,
+	image: imagePlugin, // has to be implemented before files
+	files: filesPlugin,
+	spoiler: spoilerPlugin,
+	geogebra: geogebraPlugin,
+	// inputExercise: inputExercisePlugin,
+	video: videoPlugin,
+	// equations: equationsPlugin,
+	// anchor: anchorPlugin,
+	// nexboard: nexboardPlugin,
+	// singleMultipleChoice: scMcExercisePlugin,
+	// highlight: highlightPlugin,
+	// h5p: h5pPlugin,
 }
 
 export default plugins

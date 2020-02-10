@@ -27,7 +27,7 @@ const Wrapper = styled(Flex)`
     left: 0;
     top: 62px;
     padding: 10px 15px;
-    z-index: 99999;
+    z-index: 6;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.18);
 `
 
@@ -83,9 +83,11 @@ const Settings = () => {
 		<Portal>
 			<Wrapper justifyBetween>
 				<Flex noWrap>
+					{/*
 					<Icon src={duplicateIcon} />
 					<Icon src={shareIcon} />
 					<Icon src={infoIcon} />
+					*/}
 					<DeleteModal
 						sectionTitle={
 							activeSection.title ||
@@ -102,7 +104,7 @@ const Settings = () => {
 								/>
 							)
 						}}
-					/>
+					/>{/* // show / hide section
 					<Icon
 						src={
 							activeSection.visible ? previewIcon : noPreviewIcon
@@ -110,6 +112,7 @@ const Settings = () => {
 						onClick={() => dispatch(switchSectionVisibility(activeSectionId))}
 						visible
 					/>
+					*/}
 				</Flex>
 				<Flex noWrap>
 					<Icon
@@ -119,6 +122,7 @@ const Settings = () => {
 						}}
 					/>
 				</Flex>
+				
 			</Wrapper>
 		</Portal>
 	)
