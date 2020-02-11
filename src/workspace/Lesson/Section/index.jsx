@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useEffect } from "react"
+import React, { useContext, useRef, useEffect, useState } from "react"
 import styled, { css } from "styled-components"
 
 import LessonContext from "~/Contexts/Lesson.context"
@@ -61,22 +61,69 @@ const Warning = styled(Text)`
 	margin-bottom: 25px;
 `
 
-const Section = ({ store, dispatch }) => {
+const getSectionData = (store, sectionId = '', setError) => {
+	const index = store.sections.findIndex(s => s._id === sectionId)
+	try {
+		return [store.sections[index], index];
+	} catch (err) {
+		if (index===-1) {
+			setError(new Error({message: 'Section existiert nicht...'}))
+		} else {
+			setError(err);
+		}
+		return [null, index];
+	}
+}
+
+const getErrorView = (error) => {
+	return (
+		<Container>
+			<Flex>
+				<Text center>{error.message || error}</Text>
+			</Flex>
+		</Container>
+	)
+}
+
+const Section = () => {
+	const { store, dispatch } = useContext(LessonContext)
 	const sectionRef = useRef(null)
 
-	if (!store.view.activeSectionId)
+	const [error, setError] = useState(null)
+	const [timeout, setTimeoutState] = useState(null)
+	const onChange = ({changed, getDocument}) => {
+		if (timeout) {
+			clearTimeout(timeout);
+			setTimeoutState(null)
+		}
+
+		setTimeoutState(setTimeout(() => {
+			setTimeoutState(null)
+			dispatch(updateSectionDocValue(store.view.activeSectionId, getDocument()))
+		}, 250))
+	}
+	const [section, index] = getSectionData(store, store.view.activeSectionId, setError)
+
+	if (!store.view.activeSectionId) {
+		setError(new Error({message: 'Kein Abschnitt ausgewählt...'}))
+	}
+
+	if (error) {
+		// in this case it start to many re-render..
 		return (
 			<Container>
 				<Flex>
-					<Text center>Kein Abschnitt ausgewählt...</Text>
+					<Text center>{error.message || JSON.stringify(error)}</Text>
 				</Flex>
 			</Container>
 		)
+	}
+	
+	// TODO: useEffect error
 
-	const index = store.sections.findIndex(
-		section => section._id === store.view.activeSectionId,
-	)
-	const section = store.sections[index]
+	// TODO: controls get section id as prop an fetch all other data
+	// TODO: how to use section.delete at this position?
+
 	return (
 		<StyledSection
 			column
@@ -93,14 +140,10 @@ const Section = ({ store, dispatch }) => {
 			</Flex>
 			<Wrapper visible={section.visible}>
 				<Editor
-					key={section._id}
-					docValue={section.docValue}
-					id={section._id}
-					index={index}
+					key={store.view.activeSectionId}
+					section={section}
 					editing={store.view.editing}
-					dispatchChange={docValue => {
-						dispatch(updateSectionDocValue(section._id, docValue))
-					}}
+					onChange={onChange}
 				/>
 				<Controls
 					dispatch={dispatch}

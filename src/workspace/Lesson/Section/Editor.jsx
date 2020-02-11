@@ -1,23 +1,25 @@
-import React, { useCallback, useEffect, useState } from "react"
+import React, { useCallback, useEffect, useState, useContext } from "react"
 import styled from "styled-components"
 import {
 	Editor as Edtr,
 	useScopedDispatch,
-	useScopedSelector
+//	useScopedSelector
 } from "@edtr-io/core"
 
+/*
 import {
-	/* focusNext,
+	 focusNext,
 		focusPrevious,
 		persist,
 		redo,
 		reset,
-		undo, */
+		undo, 
 	hasPendingChanges as hasPendingChangesSelector
 } from '@edtr-io/store'
-
+*/
 import theme from "~/theme"
 import plugins from "./plugins"
+import { createTheme } from "./createTheme"
 export { default as plugins } from "./plugins"
 
 export const EditorWrapper = styled.div`
@@ -43,80 +45,45 @@ export const EditorWrapper = styled.div`
 	}
 `
 
-export const editorTheme = {
-	editor: {
-		primary: {
-			background: theme.colors.primary,
-		},
-	},
-	plugins: {
-		rows: {
-			menu: {
-				highlightColor: theme.colors.primary,
-				dropzone: {
-					highlightColor: theme.colors.primary,
-				},
-			},
-		},
-		text: {
-			hoverColor: "#B6B6B6",
-		},
-	},
+const getInitialDocValue = (section) => {
+	const { docValue } = section;
+	// if error try catch
+	return (docValue && Object.keys(docValue).length) ? docValue : { plugin: "rows" }
 }
 
+const canWrite = (section, props) => {
+	// if section not exist or has no key, setError
+	return section.scopePermission === 'write' && props.editing
+}
 
 export const Editor = (props) => {
-
-	const docValue = (props.docValue && Object.keys(props.docValue).length)
-		? props.docValue
-		: { plugin: "rows" }
-
-	const children = React.useCallback(
-		document => {
-			return (
-				<PlainEditorContainerInner
-					docValue={docValue}>
-					{document}
-				</PlainEditorContainerInner>
-			)
-		}
-	)
-
-
-
-	const [timeout, setTimeoutState] = useState(null)
-
-
-	const onChange = ({changed, getDocument}) => {
-		if (timeout) {
-			clearTimeout(timeout);
-			setTimeoutState(null)
-		}
-
-		setTimeoutState(setTimeout(() => {
-			setTimeoutState(null)
-			props.dispatchChange(getDocument())
-		}, 250))
-	}
-
+	const docValue = getInitialDocValue(props.section)
+	const children = React.useCallback((document) => {
+		return (
+			<PlainEditorContainerInner
+				docValue={docValue}>
+				{document}
+			</PlainEditorContainerInner>
+		)
+	})
+	
 	const [initialState, setInitialState] = useState(docValue)
-
 	useEffect(() => {
-		if(!props.editing){
-			setInitialState(docValue)
+		if(canWrite(props.section, props)){
+			setInitialState(props.section.docValue)
 		}
-	}, [props.docValue])
+	}, [props.section.docValue])
 
 	return (
-		<EditorWrapper editing={true}>
+		<EditorWrapper>
 			<Edtr
-				theme={editorTheme}
+				theme={createTheme(theme)}
 				plugins={plugins}
 				defaultPlugin={"text"}
-				editable={props.editing}
+				editable={canWrite(props.section, props)}
 				omitDragDropContext
 				initialState={initialState}
-				onChange={onChange}>
+				onChange={props.onChange}>
 				{children}
 			</Edtr>
 		</EditorWrapper>
@@ -126,13 +93,12 @@ export default Editor
 
 function PlainEditorContainerInner(props) {
 	const dispatch = useScopedDispatch()
-	const hasPendingChanges = useScopedSelector(hasPendingChangesSelector())
-	const [editable, setEditable] = React.useState(
-		props.editable === undefined ? true : props.editable
-	)
+	//	const hasPendingChanges = useScopedSelector(hasPendingChangesSelector())
+	//	const [editable, setEditable] = React.useState(
+	//		props.editable === undefined ? true : props.editable
+	//	)
 	useEffect(() => {
 		if(props.docValue && props.docValue.state){
-
 			dispatch((scope) => ({
 				type: 'SetPartialState',
 				scope,
