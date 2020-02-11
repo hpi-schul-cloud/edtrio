@@ -135,7 +135,7 @@ const EditorPreview = ({
 	// reduzing the time a preview is rendered, added for performance reasosns
 	const [docValue, setDocValue] = useState(section.docValue)
 	useEffect(() => {
-		setDocValue(docValue)
+		setDocValue(section.docValue)
 	}, [section.changed.size])
 
 	return (
