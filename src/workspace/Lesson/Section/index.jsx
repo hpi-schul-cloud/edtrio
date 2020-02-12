@@ -1,10 +1,9 @@
-import React, { useContext, useRef, useEffect, useState } from "react"
+import React, { useContext, useRef, useState } from "react"
 import styled, { css } from "styled-components"
 
 import LessonContext from "~/Contexts/Lesson.context"
 
 import Flex from "~/components/Flex"
-import Input from "~/components/Input"
 import Text from "~/components/Text"
 import Container from "~/components/Container"
 
@@ -29,14 +28,13 @@ const StyledSection = styled(Flex)`
 					margin-left: 55px;
 			  `}
 `
-
+/*filter: ${props => !props.visible && "blur(2px)"};*/
 const Wrapper = styled.div`
 	flex-shrink: 1;
 	flex-grow: 1;
 	max-width: 850px;
 	width: 100%;
 
-	filter: ${props => !props.visible && "blur(2px)"};
 	/* box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); */
 	background-color: #fff;
 	border-radius: 5px;
@@ -61,35 +59,18 @@ const Warning = styled(Text)`
 	margin-bottom: 25px;
 `
 
-const getSectionData = (store, sectionId = '', setError) => {
+const getSectionData = (store, sectionId = '') => {
 	const index = store.sections.findIndex(s => s._id === sectionId)
-	try {
-		return [store.sections[index], index];
-	} catch (err) {
-		if (index===-1) {
-			setError(new Error({message: 'Section existiert nicht...'}))
-		} else {
-			setError(err);
-		}
+	if (index === -1) {
 		return [null, index];
 	}
-}
-
-const getErrorView = (error) => {
-	return (
-		<Container>
-			<Flex>
-				<Text center>{error.message || error}</Text>
-			</Flex>
-		</Container>
-	)
+	return [store.sections[index], index];
 }
 
 const Section = () => {
 	const { store, dispatch } = useContext(LessonContext)
 	const sectionRef = useRef(null)
 
-	const [error, setError] = useState(null)
 	const [timeout, setTimeoutState] = useState(null)
 	const onChange = ({changed, getDocument}) => {
 		if (timeout) {
@@ -102,18 +83,15 @@ const Section = () => {
 			dispatch(updateSectionDocValue(store.view.activeSectionId, getDocument()))
 		}, 250))
 	}
-	const [section, index] = getSectionData(store, store.view.activeSectionId, setError)
+	const [section, index] = getSectionData(store, store.view.activeSectionId)
 
-	if (!store.view.activeSectionId) {
-		setError(new Error({message: 'Kein Abschnitt ausgewählt...'}))
-	}
-
-	if (error) {
-		// in this case it start to many re-render..
+	if (!store.view.activeSectionId || index === -1) {
+		// TODO: notifcation and set new section
+		const text = index === -1 ?  'Der Abschnitt existiert nicht.' : 'Kein Abschnitt ausgewählt.'
 		return (
 			<Container>
 				<Flex>
-					<Text center>{error.message || JSON.stringify(error)}</Text>
+					<Text center>{text}</Text>
 				</Flex>
 			</Container>
 		)
@@ -138,7 +116,7 @@ const Section = () => {
                     +++ Beta-Testversion +++ wir freuen uns über Feedback 🙂 +++
 				</Warning>
 			</Flex>
-			<Wrapper visible={section.visible}>
+			<Wrapper>
 				<Editor
 					key={store.view.activeSectionId}
 					section={section}

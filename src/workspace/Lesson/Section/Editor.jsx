@@ -22,7 +22,7 @@ import plugins from "./plugins"
 import { createTheme } from "./createTheme"
 export { default as plugins } from "./plugins"
 
-export const EditorWrapper = styled.div`
+export const EdtrWrapper = styled.div`
 	min-height: 50px;
 	padding: 0 10px;
 	font-size: 1.3rem;
@@ -51,9 +51,9 @@ const getInitialDocValue = (section) => {
 	return (docValue && Object.keys(docValue).length) ? docValue : { plugin: "rows" }
 }
 
-const canWrite = (section, props) => {
+const canWrite = (section, editing) => {
 	// if section not exist or has no key, setError
-	return section.scopePermission === 'write' && props.editing
+	return section.scopePermission === 'write' && editing
 }
 
 /**
@@ -75,13 +75,13 @@ export const Editor = (props) => {
 	
 	const [initialState, setInitialState] = useState(docValue)
 	useEffect(() => {
-		if(canWrite(props.section, props)){
+		if(canWrite(props.section, props.editing)){
 			setInitialState(props.section.docValue)
 		}
 	}, [props.section.docValue])
 
 	return (
-		<EditorWrapper>
+		<EdtrWrapper>
 			<Edtr
 				theme={createTheme(theme)}
 				plugins={plugins}
@@ -92,7 +92,7 @@ export const Editor = (props) => {
 				onChange={props.onChange}>
 				{children}
 			</Edtr>
-		</EditorWrapper>
+		</EdtrWrapper>
 	)
 }
 export default Editor
@@ -104,9 +104,6 @@ export default Editor
 function PlainEditorContainerInner(props) {
 	const dispatch = useScopedDispatch()
 	//	const hasPendingChanges = useScopedSelector(hasPendingChangesSelector())
-	//	const [editable, setEditable] = React.useState(
-	//		props.editable === undefined ? true : props.editable
-	//	)
 	useEffect(() => {
 		if(props.docValue && props.docValue.state){
 			dispatch((scope) => ({

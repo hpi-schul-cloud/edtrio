@@ -125,7 +125,8 @@ export const createSection = (position) => async ({dispatch, state}) => {
 	position = position || state.sections.length
 	dispatch(addSection({
 		_id: tempId,
-		position
+		position,
+		scopePermission: 'write'
 	}))
 	try{
 		const section = await editorWS.emit('create', `lesson/${lesson._id}/sections`, {})
