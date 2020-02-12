@@ -103,7 +103,6 @@ class Api {
 	}
 
 	get (endpoint, fakeResponse) {
-		console.log(endpoint)
 		if (fakeResponse && config.DISABLE_BACKEND) {
 			return new Promise(resolve =>
 				setTimeout(() => resolve(fakeResponse), 250),
