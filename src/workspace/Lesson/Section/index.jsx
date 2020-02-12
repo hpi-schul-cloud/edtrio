@@ -28,7 +28,7 @@ const StyledSection = styled(Flex)`
 					margin-left: 55px;
 			  `}
 `
-/*filter: ${props => !props.visible && "blur(2px)"};*/
+
 const Wrapper = styled.div`
 	flex-shrink: 1;
 	flex-grow: 1;

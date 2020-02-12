@@ -46,7 +46,7 @@ const Lesson = props => {
 			courseId = _courseId
 		}
 	} catch (err) {
-		console.log('invalid url: has to look like /courses/:courseId/topics/:topicId', err)
+		console.error('invalid url: has to look like /courses/:courseId/topics/:topicId', err)
 	}
 
 	useBootstrap(id, courseId, dispatch, dispatchUserAction)
