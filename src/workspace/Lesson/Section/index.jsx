@@ -42,7 +42,7 @@ const Wrapper = styled.div`
 	border-radius: 5px;
 	transition: 250ms margin ease-in-out;
 `
-
+/*
 const SectionInput = styled(Input)`
 	font-weight: 700;
 	margin-left: 25px;
@@ -51,7 +51,7 @@ const SectionInput = styled(Input)`
 	width: calc(100% - 50px);
 	font-family: "PT Sans Narrow", sans-serif;
 `
-
+*/
 const Warning = styled(Text)`
 	width: auto;
 	max-width: 850px;

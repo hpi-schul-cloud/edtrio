@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState, useContext } from "react"
+import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import {
 	Editor as Edtr,
@@ -56,6 +56,12 @@ const canWrite = (section, props) => {
 	return section.scopePermission === 'write' && props.editing
 }
 
+/**
+ * props
+ * @param section
+ * @param editing
+ * @param onChange
+ */
 export const Editor = (props) => {
 	const docValue = getInitialDocValue(props.section)
 	const children = React.useCallback((document) => {
@@ -91,6 +97,10 @@ export const Editor = (props) => {
 }
 export default Editor
 
+/**
+ * props
+ * @param docValue 
+ */
 function PlainEditorContainerInner(props) {
 	const dispatch = useScopedDispatch()
 	//	const hasPendingChanges = useScopedSelector(hasPendingChangesSelector())
