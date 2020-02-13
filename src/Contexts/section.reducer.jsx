@@ -38,7 +38,7 @@ export function sectionReducer(state = sectionInitialState, { type, payload }) {
 		return invertSplice(state, payload.position, 0, payload)
 
 	case REPLACE_ADDED_SECTION_ID: {
-		return state.map(section =>
+		return state.map((section) =>
 			section._id === payload.tempId
 				? {...section, _id: payload.backendId}
 				: section
@@ -58,7 +58,7 @@ export function sectionReducer(state = sectionInitialState, { type, payload }) {
 		})
 
 	case SWITCH_SECTION_VISIBILTY:
-		return state.map(section => {
+		return state.map((section) => {
 			if (section._id === payload) {
 				section.changed.add("visible")
 				return { ...section, visible: !section.visible }
@@ -67,7 +67,7 @@ export function sectionReducer(state = sectionInitialState, { type, payload }) {
 		})
 
 	case PREPARE_DELETE_SECTION:
-		return state.map(section => {
+		return state.map((section) => {
 			if (section._id === payload)
 				return { ...section, delete: true }
 			return section
@@ -79,14 +79,14 @@ export function sectionReducer(state = sectionInitialState, { type, payload }) {
 		)
 
 	case DELETING_SECTION_FAILED:
-		return state.map(section => {
+		return state.map((section) => {
 			if (section._id === payload){
 				return { ...section, delete: false}
 			}
 		})
 
 	case UPDATE_SECTION:
-		return state.map(section => {
+		return state.map((section) => {
 			if(section._id === payload._id){
 				// section.changed.add(Object.keys(payload))
 				return {...section, ...payload}
@@ -103,7 +103,7 @@ export function sectionReducer(state = sectionInitialState, { type, payload }) {
                 }) */
         
 	case SECTION_DOCVALUE_CHANGE:
-		return state.map(section => {
+		return state.map((section) => {
 			if(section._id !== payload._id) return section
 			section.changed.add("docValue")
 			return {
@@ -113,7 +113,7 @@ export function sectionReducer(state = sectionInitialState, { type, payload }) {
 		})
 
 	case SECTION_SAVED:
-		return state.map(section => {
+		return state.map((section) => {
 			if (section._id === payload){
 				section = {
 					...section,
