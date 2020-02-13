@@ -73,7 +73,7 @@ const Header = () => {
 	const editPermission = hasPermission(sections, activeSectionId);
 	const showEditToggle = editPermission && !studentView;
 	// TODO: is disabled for the moment
-	const disabled = true;
+	const enabled = false;
 
 	return (
 		<StyledHeader noWrap justifyBetween alignCenter editing={editing}>
@@ -83,7 +83,7 @@ const Header = () => {
 			</Flex>
 
 			<Flex alignCenter noWrap>
-				{disabled && (<SaveStatus
+				{enabled && (<SaveStatus
 					noMargin
 					className="save-status"
 					inline

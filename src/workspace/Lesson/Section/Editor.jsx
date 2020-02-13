@@ -75,14 +75,15 @@ export const Editor = (props) => {
 			setInitialState(props.section.docValue)
 		}
 	}, [props.section.docValue])
-
+	
+	const editable = props.section.scopePermission === 'write' && props.editing;
 	return (
 		<EdtrWrapper>
 			<Edtr
 				theme={createTheme(theme)}
 				plugins={plugins}
 				defaultPlugin={"text"}
-				editable={props.editing}
+				editable={editable}
 				omitDragDropContext
 				initialState={initialState}
 				onChange={props.onChange}>
