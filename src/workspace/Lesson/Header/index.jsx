@@ -35,7 +35,7 @@ const SaveStatus = styled(Text)`
     margin-right: 25px;
 `
 
-const hasPermission = (sections, sectionId = '') => {
+const hasPermission = (sections = [], sectionId = '') => {
 	const section = sections.find(s => s._id.toString() === sectionId.toString()) || {};
 	return section.scopePermission === 'write';
 }
@@ -56,7 +56,7 @@ const Header = () => {
 		sections
 	} = store
 
-
+	// TODO: do not work re-implement
 	useEffect(() => {
 		let timeout
 		if (saveStatus === "Ungesicherte Änderungen")
@@ -72,6 +72,8 @@ const Header = () => {
 
 	const editPermission = hasPermission(sections, activeSectionId);
 	const showEditToggle = editPermission && !studentView;
+	// TODO: is disabled for the moment
+	const disabled = true;
 
 	return (
 		<StyledHeader noWrap justifyBetween alignCenter editing={editing}>
@@ -81,7 +83,7 @@ const Header = () => {
 			</Flex>
 
 			<Flex alignCenter noWrap>
-				<SaveStatus
+				{disabled && (<SaveStatus
 					noMargin
 					className="save-status"
 					inline
@@ -92,7 +94,7 @@ const Header = () => {
 						transition: "250ms all ease-in-out",
 					}}>
 					{saveStatus}
-				</SaveStatus>
+				</SaveStatus>)}
 				{showEditToggle && (
 					<Toggle
 						caption="Präsentieren"
