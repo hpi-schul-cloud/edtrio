@@ -11,7 +11,7 @@ const q = qs.parse(window.location.search, { ignoreQueryPrefix: true })
 export const viewInitialState = {
 	loading: true,
 	studentView: !!q.student_view,
-	editing: !q.student_view,
+	editing: false,
 	bootstrapFinished: false,
 	sectionOverviewExpanded: false,
 	showSectionSettings: false,

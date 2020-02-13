@@ -75,7 +75,8 @@ export const Editor = (props) => {
 	
 	const [initialState, setInitialState] = useState(docValue)
 	useEffect(() => {
-		if(canWrite(props.section, props.editing)){
+		// if the user not in write mode, the edtr is updating
+		if(!props.editing){
 			setInitialState(props.section.docValue)
 		}
 	}, [props.section.docValue])
@@ -86,7 +87,7 @@ export const Editor = (props) => {
 				theme={createTheme(theme)}
 				plugins={plugins}
 				defaultPlugin={"text"}
-				editable={canWrite(props.section, props)}
+				editable={props.editing}
 				omitDragDropContext
 				initialState={initialState}
 				onChange={props.onChange}>
