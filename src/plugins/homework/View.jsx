@@ -10,16 +10,11 @@ import Input from "~/components/Input"
 import Flex from "~/components/Flex"
 import { serverApi } from "~/utils/api";
 
-import Edit from "./Edit"
-import View from "./View"
 
-const Homework = ({ focused, state }) => {
-
-	if (focused){
-		return <Edit state={state} />
-	} else {
-		return <View state={state} />
-	}
+const View = ({state}) => {
+	return (
+		<div>
+			{state.name.get()}
+		</div>
+	)
 }
-
-export default Homework
