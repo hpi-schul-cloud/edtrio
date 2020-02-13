@@ -15,6 +15,7 @@ export const viewInitialState = {
 	bootstrapFinished: false,
 	sectionOverviewExpanded: false,
 	showSectionSettings: false,
+	activeSectionId: '',
 }
 
 /**

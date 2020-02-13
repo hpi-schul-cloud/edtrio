@@ -35,18 +35,27 @@ const SaveStatus = styled(Text)`
     margin-right: 25px;
 `
 
+const hasPermission = (sections, sectionId = '') => {
+	const section = sections.find(s => s._id.toString() === sectionId.toString()) || {};
+	return section.scopePermission === 'write';
+}
+
 const Header = () => {
 	const { store, dispatch } = useContext(LessonContext)
 	const [showSaveStatus, setShowSaveStatus] = useState(false)
 
 	const {
-		notifications:
-            {saveStatus},
+		notifications:{
+			saveStatus,
+		},
 		view: {
 			editing,
 			studentView,
-		}
+			activeSectionId,
+		},
+		sections
 	} = store
+
 
 	useEffect(() => {
 		let timeout
@@ -60,6 +69,9 @@ const Header = () => {
 
 		return () => clearTimeout(timeout)
 	}, [saveStatus])
+
+	const editPermission = hasPermission(sections, activeSectionId);
+	const showEditToggle = editPermission && !studentView;
 
 	return (
 		<StyledHeader noWrap justifyBetween alignCenter editing={editing}>
@@ -81,12 +93,12 @@ const Header = () => {
 					}}>
 					{saveStatus}
 				</SaveStatus>
-				{!studentView && (
+				{showEditToggle && (
 					<Toggle
 						caption="Präsentieren"
 						activeCaption="Bearbeiten"
 						active={editing}
-						onChange={newValue => {
+						onChange={(newValue) => {
 							dispatch(setEditing(newValue))
 						}}
 					/>
