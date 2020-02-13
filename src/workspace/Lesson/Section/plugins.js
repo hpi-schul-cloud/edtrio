@@ -16,6 +16,7 @@ import { createImagePlugin } from "@edtr-io/plugin-image"
 import nexboardPlugin from "~/plugins/nexboard"
 import etherpadPlugin from "~/plugins/etherpad"
 import notesPlugin from "~/plugins/notes"
+import homework from "~/plugins/homework"
 
 function readFile(file) {
 	return new Promise(resolve => {
@@ -91,6 +92,7 @@ const plugins = {
 	geogebra: geogebraPlugin,
 	// inputExercise: inputExercisePlugin,
 	video: videoPlugin,
+	homework,
 	// equations: equationsPlugin,
 	// anchor: anchorPlugin,
 	// nexboard: nexboardPlugin,
