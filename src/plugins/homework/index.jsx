@@ -4,7 +4,7 @@ import { object, string } from "@edtr-io/plugin"
 import Homework from "./Homework"
 export const HomeworkState = object({
 	color: string(),
-	title: string(),
+	name: string(),
 	link: string(),
 	_id: string(),
 })

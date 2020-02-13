@@ -9,6 +9,7 @@ import config from "~/config"
 import Input from "~/components/Input"
 import Flex from "~/components/Flex"
 import { serverApi } from "~/utils/api";
+import { setHomeworkState } from "./utils"
 
 const StyledHomework = styled.div`
     display: flex;
@@ -29,10 +30,7 @@ const StyledIcon = styled.div`
 const switchSelected = (state, homeworks) => (selected) => {
 	const homework = homeworks.find(({_id}) => selected.value === _id);
 	console.log("homework", selected)
-	state.color.set(homework.color);
-	state.title.set(homework.title);
-	state._id.set(homework._id);
-	state.link.set(homework.link);
+	setHomeworkState(state, homework)
 }
 
 const getSelectedOption = (state, options) => {
@@ -46,16 +44,10 @@ const createOptions =
     	.map(homework => ({value: homework._id, label: homework.name}));
 
 
-const Edit = ({ state }) => {
-
+const Edit = ({ state, homeworks}) => {
+	console.log(homeworks)
 	const { store: { course } } = useContext(LessonContext)
 
-	const [homeworks, setHomework] = useState([])
-
-	useEffect(async () => {
-		const result = await serverApi.get(`${config.HOMEWORK_URI}?courseId=${course._id}`)
-		setHomework(result.data)
-	}, [])
 	const options = createOptions(homeworks)
 	console.log(getSelectedOption(state, options))
 	const { store, dispatch } = useContext(LessonContext)

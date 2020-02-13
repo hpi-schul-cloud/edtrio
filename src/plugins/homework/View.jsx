@@ -14,7 +14,9 @@ import { serverApi } from "~/utils/api";
 const View = ({state}) => {
 	return (
 		<div>
-			{state.name.get()}
+			{state.name.get() || "Please select one"}
 		</div>
 	)
 }
+
+export default View;
