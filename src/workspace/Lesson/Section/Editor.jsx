@@ -51,11 +51,6 @@ const getInitialDocValue = (section) => {
 	return (docValue && Object.keys(docValue).length) ? docValue : { plugin: "rows" }
 }
 
-const canWrite = (section, editing) => {
-	// if section not exist or has no key, setError
-	return section.scopePermission === 'write' && editing
-}
-
 /**
  * props
  * @param section
