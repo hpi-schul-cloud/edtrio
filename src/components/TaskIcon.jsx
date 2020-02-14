@@ -16,7 +16,7 @@ const TaskIcon = () =>{
   
 	return (
 		<TaskBackground>
-			test
+			<img src={require("~/assets/task-icon.svg")} />
 		</TaskBackground>
 	)
 }
