@@ -14,10 +14,11 @@ background-color: blue;
 
 const TaskIcon = () =>{
   
-	return <TaskBackground>
-		<img src={require("~/assets/task-icon.svg")} />
-	</TaskBackground>
-    
+	return (
+		<TaskBackground>
+			test
+		</TaskBackground>
+	)
 }
 
 

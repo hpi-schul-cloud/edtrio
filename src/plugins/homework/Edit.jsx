@@ -6,10 +6,6 @@ import Select from 'react-select';
 import TaskIcon from '~/components/TaskIcon';
 
 import LessonContext from "~/Contexts/Lesson.context"
-import config from "~/config"
-import Input from "~/components/Input"
-import Flex from "~/components/Flex"
-import { serverApi } from "~/utils/api";
 import { setHomeworkState } from "./utils"
 
 const StyledHomework = styled.div`
@@ -17,15 +13,6 @@ const StyledHomework = styled.div`
     flex-direction: row;
 
 
-`
-
-const StyledIcon = styled.div`
-    background: url(${require("./assets/oval.svg")}) no-repeat #333;
-
-    img{
-        position: absolut;
-        margin: auto;
-    }
 `
 
 const switchSelected = (state, homeworks) => (selected) => {
@@ -46,7 +33,7 @@ const createOptions =
 
 
 const Edit = ({ state, homeworks}) => {
-	console.log(homeworks)
+	console.log('loaded edit with', homeworks)
 	const { store: { course } } = useContext(LessonContext)
 
 	const options = createOptions(homeworks)
@@ -54,8 +41,7 @@ const Edit = ({ state, homeworks}) => {
 	const { store, dispatch } = useContext(LessonContext)
 	return (
 		<StyledHomework>
-		
-			<TaskIcon></TaskIcon>
+			<TaskIcon />
 			<Select
 				selectedOption={getSelectedOption(state, options)}
 				onChange={switchSelected(state, homeworks)}

@@ -15,6 +15,7 @@ import View from "./View"
 import { setHomeworkState } from "./utils";
 
 const Homework = ({ focused, state }) => {
+	console.log("Homework ist loaded")
 	const [homeworks, setHomework] = useState([])
 	const { store: { course } } = useContext(LessonContext)
 
@@ -29,9 +30,10 @@ const Homework = ({ focused, state }) => {
 
 	useEffect(() => {
 		if(!focused && !state._id.get() && homeworks.length !== 0){
+			console.log("defaults are loaded")
 			setHomeworkState(state, homeworks[0]);
 		}
-	}, [focused])
+	}, [focused, homeworks])
 
 	if (focused){
 		return <Edit state={state} homeworks={homeworks} />
