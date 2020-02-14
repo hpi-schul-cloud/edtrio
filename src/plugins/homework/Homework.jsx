@@ -15,12 +15,11 @@ import View from "./View"
 import { setHomeworkState } from "./utils";
 
 const Homework = ({ focused, state }) => {
-
 	const [homeworks, setHomework] = useState([])
 	const { store: { course } } = useContext(LessonContext)
-	state.color.set(course.color);
 
 	useEffect(() => {
+		state.color.set(course.color);
 		async function fetchData(){
 			const result = await serverApi.get(`${config.HOMEWORK_URI}?courseId=${course._id}`);
 			setHomework(result.data);
@@ -29,8 +28,7 @@ const Homework = ({ focused, state }) => {
 	}, [])
 
 	useEffect(() => {
-		if(!focused && !state._id.get()){
-			console.log("set default state")
+		if(!focused && !state._id.get() && homeworks.length !== 0){
 			setHomeworkState(state, homeworks[0]);
 		}
 	}, [focused])
