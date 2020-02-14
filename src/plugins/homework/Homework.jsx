@@ -18,11 +18,12 @@ const Homework = ({ focused, state }) => {
 
 	const [homeworks, setHomework] = useState([])
 	const { store: { course } } = useContext(LessonContext)
+	state.color.set(course.color);
 
 	useEffect(() => {
 		async function fetchData(){
-			const result = await serverApi.get(`${config.HOMEWORK_URI}?courseId=${course._id}`)
-			setHomework(result.data)
+			const result = await serverApi.get(`${config.HOMEWORK_URI}?courseId=${course._id}`);
+			setHomework(result.data);
 		}
 		fetchData();
 	}, [])
