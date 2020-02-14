@@ -1,5 +1,5 @@
 import React from "react"
-import { object, string } from "@edtr-io/plugin"
+import { object, string, number } from "@edtr-io/plugin"
 
 import Homework from "./Homework"
 export const HomeworkState = object({
@@ -7,6 +7,7 @@ export const HomeworkState = object({
 	name: string(),
 	link: string(),
 	_id: string(),
+	dueDate: string(),
 })
 
 export const homeworkPlugin = {

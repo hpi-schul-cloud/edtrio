@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useContext } from "react"
-import shortid from "shortid"
+import React, { useContext } from "react"
 import styled, { css } from "styled-components"
 
 import Select from 'react-select';
@@ -17,7 +16,6 @@ const StyledHomework = styled.div`
 
 const switchSelected = (state, homeworks) => (selected) => {
 	const homework = homeworks.find(({_id}) => selected.value === _id);
-	console.log("homework", selected)
 	setHomeworkState(state, homework)
 }
 
@@ -33,17 +31,14 @@ const createOptions =
 
 
 const Edit = ({ state, homeworks}) => {
-	console.log('loaded edit with', homeworks)
 	const { store: { course } } = useContext(LessonContext)
 
 	const options = createOptions(homeworks)
-	console.log(getSelectedOption(state, options))
-	const { store, dispatch } = useContext(LessonContext)
 	return (
 		<StyledHomework>
 			<TaskIcon />
 			<Select
-				selectedOption={getSelectedOption(state, options)}
+				value={getSelectedOption(state, options)}
 				onChange={switchSelected(state, homeworks)}
 				options={options}
 			/>
