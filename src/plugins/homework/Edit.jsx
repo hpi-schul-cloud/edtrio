@@ -3,6 +3,7 @@ import shortid from "shortid"
 import styled, { css } from "styled-components"
 
 import Select from 'react-select';
+import TaskIcon from '~/components/TaskIcon';
 
 import LessonContext from "~/Contexts/Lesson.context"
 import config from "~/config"
@@ -53,7 +54,8 @@ const Edit = ({ state, homeworks}) => {
 	const { store, dispatch } = useContext(LessonContext)
 	return (
 		<StyledHomework>
-			<StyledIcon><img src={require("./assets/tasks.svg")} /></StyledIcon>
+		
+			<TaskIcon></TaskIcon>
 			<Select
 				selectedOption={getSelectedOption(state, options)}
 				onChange={switchSelected(state, homeworks)}
