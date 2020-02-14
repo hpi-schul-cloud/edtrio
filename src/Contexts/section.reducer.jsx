@@ -1,12 +1,28 @@
 import { mergeDiff } from "~/utils/diff"
-import { SWITCH_SECTION_VISIBILTY, SET_SECTIONS , ADD_SECTION , REPLACE_ADDED_SECTION_ID , PREPARE_DELETE_SECTION , DELETE_SECTION , DELETING_SECTION_FAILED , UPDATE_SECTION , SECTION_DOCVALUE_CHANGE , SECTION_SAVED , DOCVALUE_SAVED } from "./section.actions"
+import {
+	SWITCH_SECTION_VISIBILTY,
+	SET_SECTIONS,
+	ADD_SECTION,
+	REPLACE_ADDED_SECTION_ID,
+	PREPARE_DELETE_SECTION,
+	DELETE_SECTION,
+	DELETING_SECTION_FAILED,
+	UPDATE_SECTION,
+	SECTION_DOCVALUE_CHANGE,
+	SECTION_SAVED,
+	DOCVALUE_SAVED 
+} from "./section.actions"
+import {
+	SWAP_SECTIONS
+} from "./lesson.actions"
+import { invertSplice } from "~/utils/reducer"
 
 export const sectionInitialState = []
 
 /**
  * Most important part for the Edtior, handles all Section data and the Editor state itself
  * State is an Array of sections
- * 
+ *
  * @param {*} state - state of lesson
  * @param {Object} param1 - object with the parameters type and payload
  */
@@ -19,7 +35,7 @@ export function sectionReducer(state = sectionInitialState, { type, payload }) {
 		}))
 
 	case ADD_SECTION:
-		return [...state].splice(payload.position, 0, payload)
+		return invertSplice(state, payload.position, 0, payload)
 
 	case REPLACE_ADDED_SECTION_ID: {
 		return state.map(section =>
@@ -28,6 +44,18 @@ export function sectionReducer(state = sectionInitialState, { type, payload }) {
 				: section
 		)
 	}
+
+	case SWAP_SECTIONS:
+		return state.map((sectionId, index, sections) => {
+			switch(index){
+			case payload[0]:
+				return sections[payload[1]]
+			case payload[1]:
+				return sections[payload[0]]
+			default:
+				return sectionId
+			}
+		})
 
 	case SWITCH_SECTION_VISIBILTY:
 		return state.map(section => {

@@ -55,7 +55,7 @@
         "redux-logger": "^3.0.6",
         "shortid": "^2.2.14",
         "socket.io-client": "^2.2.0",
-        "styled-components": "^4.4.0",
+        "styled-components": "^5.0.1",
         "uuid": "^3.3.3"
     },
     "devDependencies": {
@@ -70,7 +70,7 @@
         "ava": "^2.4.0",
         "babel-eslint": "^10.0.2",
         "babel-loader": "^8.0.6",
-        "babel-plugin-module-resolver": "^3.2.0",
+        "babel-plugin-module-resolver": "^4.0.0",
         "babel-plugin-styled-components": "^1.10.6",
         "eslint": "^6.6.0",
         "eslint-config-prettier": "^6.5.0",
