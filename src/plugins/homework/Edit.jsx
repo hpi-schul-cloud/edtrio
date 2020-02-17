@@ -42,6 +42,7 @@ const Edit = ({ state, homeworks}) => {
 	const { store: { course } } = useContext(LessonContext)
 
 	const options = createOptions(homeworks)
+	const dueDate = state.dueDate.get()
 	return (
 		<StyledHomework>
 			<TaskIcon />
@@ -53,6 +54,10 @@ const Edit = ({ state, homeworks}) => {
 				label={'Aufgabe'}
 			/>
 			<a href={state.link.get()}><img src={require("./assets/open-new-window.svg")} /></a>
+			{
+				dueDate
+				&& <small>bis: {new Date(dueDate).toLocaleDateString('de-DE')}</small>
+			}
 		</StyledHomework>
 	)
 }
