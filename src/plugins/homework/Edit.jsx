@@ -11,14 +11,15 @@ const StyledHomework = styled.div`
     display: flex;
 		flex-direction: row;
 		align-items: center;
-
-
+		min-height: 6rem;
 `
 
 const customStyles = {
 	container: provided => ({
 		...provided,
 		width: '100%',
+		marginRight: '10px',
+
 	})
 };
 

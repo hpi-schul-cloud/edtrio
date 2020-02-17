@@ -11,24 +11,23 @@ const Container = styled.div`
 & span {
 	color: #4E6676;
 }
-& a{
-	color: #4E6676;
-}
-
-
+`
+const FlexContainer = styled(Flex)`
+align-items: center;
+min-height: 6rem;
 `
 
 
 const ViewBase = ({state}) => {
 	return (
-		<Flex>
+		<FlexContainer>
 			<TaskIcon color={state.color.get()}/>
 			<Container>
 				<b>Aufgabe</b>
 				<span>{state.name.get() || "Kein Kurs vorhanden"}</span>
 				<small>bis: {new Date(state.dueDate.get()).toLocaleDateString('de-DE')}</small>
 			</Container>
-		</Flex>
+		</FlexContainer>
 	)
 }
 
