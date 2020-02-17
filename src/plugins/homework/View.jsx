@@ -18,7 +18,7 @@ min-height: 6rem;
 `
 
 
-const ViewBase = ({state}) => {
+export const ViewBase = ({state}) => {
 	return (
 		<FlexContainer>
 			<TaskIcon color={state.color.get()}/>
@@ -31,7 +31,7 @@ const ViewBase = ({state}) => {
 	)
 }
 
-const View = ({state, editing}) => {
+export const View = ({state, editing}) => {
 	if (editing) {
 		 return (<ViewBase state={state} />)
 	} else {

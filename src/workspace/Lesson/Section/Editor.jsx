@@ -17,8 +17,7 @@ import {
 } from '@edtr-io/store'
 
 import theme from "~/theme"
-import plugins from "./plugins"
-export { default as plugins } from "./plugins"
+import { plugins } from "~/plugins"
 
 export const EditorWrapper = styled.div`
 	min-height: 50px;

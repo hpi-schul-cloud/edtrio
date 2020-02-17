@@ -2,9 +2,8 @@ import React from "react"
 import styled from "styled-components"
 import { Editor as Edtr } from "@edtr-io/core"
 
-import etherpadPluginPreview from "~/plugins/etherpad/Preview"
-import nexboardPluginPreview from "~/plugins/nexboard/Preview"
-import { plugins } from "~/workspace/Lesson/Section/Editor"
+
+import { previewPlugins } from "~/plugins"
 
 const EditorWrapper = styled.div`
     width: 850px;
@@ -18,33 +17,29 @@ const EditorWrapper = styled.div`
 `
 
 export default class Editor extends React.Component {
-    constructor(props) {
-        super(props)
-        this.docValue =
+	constructor(props) {
+		super(props)
+		this.docValue =
             this.props.docValue && Object.keys(this.props.docValue).length
-                ? this.props.docValue
-                : {
-                      plugin: "rows",
-                  }
-    }
+            	? this.props.docValue
+            	: {
+            		plugin: "rows",
+            	}
+	}
 
-    render() {
-        return (
-            <EditorWrapper
-                expanded={this.props.expanded}
-                editing={this.props.editing}>
-                <Edtr
-                    plugins={{
-                        ...plugins,
-                        etherpad: etherpadPluginPreview,
-                        nexboard: nexboardPluginPreview,
-                    }}
-                    defaultPlugin={"text"}
-                    editable={false}
-                    omitDragDropContext
-                    initialState={this.docValue}
-                />
-            </EditorWrapper>
-        )
-    }
+	render() {
+		return (
+			<EditorWrapper
+				expanded={this.props.expanded}
+				editing={this.props.editing}>
+				<Edtr
+					plugins={previewPlugins}
+					defaultPlugin={"text"}
+					editable={false}
+					omitDragDropContext
+					initialState={this.docValue}
+				/>
+			</EditorWrapper>
+		)
+	}
 }
