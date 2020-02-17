@@ -13,19 +13,19 @@
                         <mask id="mask-2" fill="white">
                             <use xlink:href="#path-1"></use>
                         </mask>
-                        <use id="Combined-Shape" fill="#FFFFFF" xlink:href="#path-1"></use>
+                        <use id="Combined-Shape" fill="currentColor" xlink:href="#path-1"></use>
                     </g>
                     <g id="Rectangle" transform="translate(0.000000, 6.000000)">
                         <mask id="mask-4" fill="white">
                             <use xlink:href="#path-3"></use>
                         </mask>
-                        <use id="Combined-Shape" fill="#FFFFFF" xlink:href="#path-3"></use>
+                        <use id="Combined-Shape" fill="currentColor" xlink:href="#path-3"></use>
                     </g>
                     <g id="Rectangle" transform="translate(0.000000, 12.000000)">
                         <mask id="mask-6" fill="white">
                             <use xlink:href="#path-5"></use>
                         </mask>
-                        <use id="Combined-Shape" fill="#FFFFFF" xlink:href="#path-5"></use>
+                        <use id="Combined-Shape" fill="currentColor" xlink:href="#path-5"></use>
                     </g>
                 </g>
             </g>

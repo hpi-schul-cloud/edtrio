@@ -2,6 +2,7 @@ import React from "react"
 import styled from "styled-components"
 
 import Flex from "~/components/Flex"
+import ArrowSVG from "~/assets/arrow-back.svg"
 
 const StyledBack = styled(Flex)`
     background-color: #af0437;
@@ -11,29 +12,25 @@ const StyledBack = styled(Flex)`
 `
 
 const Back = () => {
-    const currentUrl = window.location.href
-    const currentBaseURL = (/^((https|http):\/\/[\w\d:.-]+)/.exec(currentUrl) || [])[0]
-    const regexResult = /courses\/([a-f0-9]{24})\/topics\/([a-f0-9]{24})/.exec(currentUrl)
-    let jumpUrl = '/';
+	const currentUrl = window.location.href
+	const currentBaseURL = (/^((https|http):\/\/[\w\d:.-]+)/.exec(currentUrl) || [])[0]
+	const regexResult = /courses\/([a-f0-9]{24})\/topics\/([a-f0-9]{24})/.exec(currentUrl)
+	let jumpUrl = '/';
 
-    if (Array.isArray(regexResult) && regexResult[1]) {
-        jumpUrl = `${currentBaseURL}/courses/${regexResult[1]}`
-    }
+	if (Array.isArray(regexResult) && regexResult[1]) {
+		jumpUrl = `${currentBaseURL}/courses/${regexResult[1]}`
+	}
 
-    return (
-        <StyledBack
-            alignCenter
-            justifyCenter
-            onClick={() => {
-                window.location.href = jumpUrl
-            }}>
-            <img
-                src={require("~/assets/arrow-back.svg")}
-                height="42px"
-                alt=""
-            />
-        </StyledBack>
-    )
+	return (
+		<StyledBack
+			alignCenter
+			justifyCenter
+			onClick={() => {
+				window.location.href = jumpUrl
+			}}>
+			<ArrowSVG width="42px" height="42px" />
+		</StyledBack>
+	)
 }
 
 export default Back

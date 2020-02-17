@@ -1,6 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 
+import Icon from "~/assets/task-icon.svg"
 
 
 const TaskBackground = styled.div`
@@ -16,11 +17,11 @@ flex-shrink: 0;
 `
 
 
-const TaskIcon = () =>{
-  
+const TaskIcon = ({ color = "#FFF"}) =>{
+
 	return (
 		<TaskBackground >
-			<img src={require("~/assets/task-icon.svg")} />
+			<Icon color={color}/>
 		</TaskBackground>
 	)
 }
