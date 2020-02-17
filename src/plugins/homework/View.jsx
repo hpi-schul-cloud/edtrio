@@ -15,7 +15,7 @@ const ViewBase = ({state}) => {
 					<a href={state.link.get()}>
 						<img src={require("./assets/open-new-window.svg")} />
 					</a>
-					<small>bis: {new Date(state.dueDate.get()).toLocaleDateString()}</small>
+					<small>bis: {new Date(state.dueDate.get()).toLocaleDateString('de-DE')}</small>
 				</div>
 			</div>
 		</Flex>
