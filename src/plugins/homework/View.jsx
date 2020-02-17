@@ -4,6 +4,10 @@ import styled from "styled-components"
 import TaskIcon from "~/components/TaskIcon"
 import Flex from "~/components/Flex"
 
+const FlexContainer = styled(Flex)`
+align-items: center;
+min-height: 7rem;
+`
 const Container = styled.div`
     display: flex;
 		flex-direction: column;
@@ -12,11 +16,10 @@ const Container = styled.div`
 	color: #4E6676;
 }
 `
-const FlexContainer = styled(Flex)`
-align-items: center;
-min-height: 6rem;
+const Link = styled.a`
+text-decoration: none;
+color: black;
 `
-
 
 export const ViewBase = ({state}) => {
 	return (
@@ -36,9 +39,9 @@ export const View = ({state, editing}) => {
 		 return (<ViewBase state={state} />)
 	} else {
 		return (
-			<a href={state.link.get()}>
+			<Link  href={state.link.get()}>
 				<ViewBase state={state} />
-			</a>
+			</Link>
 		)
 	}
 }

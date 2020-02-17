@@ -8,20 +8,32 @@ import LessonContext from "~/Contexts/Lesson.context"
 import { setHomeworkState } from "./utils"
 
 const StyledHomework = styled.div`
+		width: 100%;
     display: flex;
 		flex-direction: row;
+		justify-content: space-between;
+		min-height: 7rem;
+		flex-wrap: wrap;
 		align-items: center;
-		min-height: 6rem;
+
+`
+const Container =styled.div`
+	flex-grow: 2;
+	display: flex;
+	flex-direction: column;
+	margin-right: 10px;
 `
 
 const customStyles = {
 	container: provided => ({
 		...provided,
 		width: '100%',
-		marginRight: '10px',
 
 	})
 };
+
+
+
 
 const switchSelected = (state, homeworks) => (selected) => {
 	const homework = homeworks.find(({_id}) => selected.value === _id);
@@ -47,18 +59,23 @@ const Edit = ({ state, homeworks}) => {
 	return (
 		<StyledHomework>
 			<TaskIcon />
-			<Select styles={customStyles}
-				value={getSelectedOption(state, options)}
-				onChange={switchSelected(state, homeworks)}
-				options={options}
-				placeholder={'Wähle eine Aufgabe aus'}
-				label={'Aufgabe'}
-			/>
-			<a href={state.link.get()}><img src={require("./assets/open-new-window.svg")} /></a>
-			{
-				dueDate
-				&& <small>bis: {new Date(dueDate).toLocaleDateString('de-DE')}</small>
-			}
+			<Container>
+				<small className="label">
+					Aufgabe
+				</small>
+				<Select styles={customStyles}
+					value={getSelectedOption(state, options)}
+					onChange={switchSelected(state, homeworks)}
+					options={options}
+					placeholder={'Wähle eine Aufgabe aus'}
+					label={'Aufgabe'}
+				/>
+				{
+					dueDate
+					&& <small className="date">bis: {new Date(dueDate).toLocaleDateString('de-DE')}</small>
+				}
+			</Container>
+			<a href={state.link.get()} ><img src={require("./assets/open-new-window.svg")} /></a>	
 		</StyledHomework>
 	)
 }
