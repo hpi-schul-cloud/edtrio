@@ -13,9 +13,14 @@ import { createImagePlugin } from "@edtr-io/plugin-image"
 // import { highlightPlugin } from "@edtr-io/plugin-highlight"
 // import { h5pPlugin } from "@edtr-io/plugin-h5p"
 
-import nexboardPlugin from "~/plugins/nexboard"
-import etherpadPlugin from "~/plugins/etherpad"
-import notesPlugin from "~/plugins/notes"
+import nexboardPlugin from "./nexboard"
+import etherpadPlugin from "./etherpad"
+import notesPlugin from "./notes"
+
+import etherpadPluginPreview from "./etherpad/Preview"
+import nexboardPluginPreview from "./nexboard/Preview"
+
+
 
 function readFile(file) {
 	return new Promise(resolve => {
@@ -79,7 +84,7 @@ const imagePlugin = createImagePlugin({
 	secondInput: "description",
 })
 
-const plugins = {
+export const plugins = {
 	text: textPlugin,
 	// notes: notesPlugin,
 	rows: rowsPlugin,
@@ -99,4 +104,10 @@ const plugins = {
 	// h5p: h5pPlugin,
 }
 
-export default plugins
+export const previewPlugins = {
+	...plugins,
+	etherpad: etherpadPluginPreview,
+	nexboard: nexboardPluginPreview
+}
+
+
