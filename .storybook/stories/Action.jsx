@@ -23,7 +23,7 @@ stories
                 disabled={boolean("disabled", false)}
                 block={boolean("block", false)}
                 noMargin={boolean("noMargin", false)}
-                onClick={() => console.log("Yess!")}>
+                onClick={() => console.info("Yess!")}>
                 Interactive Action
             </Action>
             <Text style={{ backgroundColor: "#DDBDD5" }}>Placeholder</Text>
@@ -47,7 +47,7 @@ stories
                 This will only trigger an event, not change the browser
                 location.
             </Text>
-            <Action clickable onClick={() => console.log("clicked")}>
+            <Action clickable onClick={() => console.info("clicked")}>
                 Click me
             </Action>
         </Container>
@@ -59,7 +59,7 @@ stories
             </Text>
             <Action
                 clickable
-                onClick={() => console.log("clicked")}
+                onClick={() => console.info("clicked")}
                 style={{ backgroundColor: "#DDBDD5" }}>
                 default inline Action
             </Action>
@@ -76,7 +76,7 @@ stories
             <Action
                 block
                 clickable
-                onClick={() => console.log("clicked")}
+                onClick={() => console.info("clicked")}
                 style={{ backgroundColor: "#DDBDD5" }}>
                 block Action
             </Action>
@@ -94,7 +94,7 @@ stories
                 block
                 noMargin
                 clickable
-                onClick={() => console.log("clicked")}
+                onClick={() => console.info("clicked")}
                 style={{ backgroundColor: "#DDBDD5" }}>
                 block Action without Margin
             </Action>

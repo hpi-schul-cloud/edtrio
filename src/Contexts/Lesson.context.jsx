@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from "react"
+import React, { useReducer } from "react"
 import logger from 'redux-logger'
 import { prepareCreateDispatch, thunkMiddleware, sentryMiddleware } from "~/utils/dispatch"
 
@@ -8,12 +8,6 @@ import { viewReducer , viewInitialState } from "./view.reducer"
 import { notificationReducer , notificationInitialState } from "./notifications.reducer"
 import { courseReducer , courseInitialState } from "./course.reducer"
 import { lessonReducer , lessonInitialState } from './lesson.reducer'
-
-
-
-
-
-
 
 const combinedReducer = combineReducers({
 	lesson: lessonReducer,
@@ -30,7 +24,6 @@ const combinedInitalState = {
 	notifications: notificationInitialState,
 	course: courseInitialState
 }
-
 
 const LessonContext = React.createContext()
 const lessonDisptachCreator = prepareCreateDispatch(logger, thunkMiddleware)

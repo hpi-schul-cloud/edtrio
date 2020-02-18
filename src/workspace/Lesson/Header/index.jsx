@@ -35,19 +35,28 @@ const SaveStatus = styled(Text)`
     margin-right: 25px;
 `
 
+const hasPermission = (sections = [], sectionId = '') => {
+	const section = sections.find(s => s._id.toString() === sectionId.toString()) || {};
+	return section.scopePermission === 'write';
+}
+
 const Header = () => {
 	const { store, dispatch } = useContext(LessonContext)
 	const [showSaveStatus, setShowSaveStatus] = useState(false)
 
 	const {
-		notifications:
-            {saveStatus},
+		notifications:{
+			saveStatus,
+		},
 		view: {
 			editing,
 			studentView,
-		}
+			activeSectionId,
+		},
+		sections
 	} = store
 
+	// TODO: do not work re-implement
 	useEffect(() => {
 		let timeout
 		if (saveStatus === "Ungesicherte Änderungen")
@@ -61,6 +70,11 @@ const Header = () => {
 		return () => clearTimeout(timeout)
 	}, [saveStatus])
 
+	const editPermission = hasPermission(sections, activeSectionId);
+	const showEditToggle = editPermission && !studentView;
+	// TODO: is disabled for the moment
+	const enabled = false;
+
 	return (
 		<StyledHeader noWrap justifyBetween alignCenter editing={editing}>
 			<Flex alignCenter>
@@ -69,7 +83,7 @@ const Header = () => {
 			</Flex>
 
 			<Flex alignCenter noWrap>
-				<SaveStatus
+				{enabled && (<SaveStatus
 					noMargin
 					className="save-status"
 					inline
@@ -80,13 +94,13 @@ const Header = () => {
 						transition: "250ms all ease-in-out",
 					}}>
 					{saveStatus}
-				</SaveStatus>
-				{!studentView && (
+				</SaveStatus>)}
+				{showEditToggle && (
 					<Toggle
 						caption="Präsentieren"
 						activeCaption="Bearbeiten"
 						active={editing}
-						onChange={newValue => {
+						onChange={(newValue) => {
 							dispatch(setEditing(newValue))
 						}}
 					/>

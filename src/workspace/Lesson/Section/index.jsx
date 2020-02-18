@@ -1,10 +1,9 @@
-import React, { useContext, useRef, useEffect } from "react"
+import React, { useContext, useRef, useState } from "react"
 import styled, { css } from "styled-components"
 
 import LessonContext from "~/Contexts/Lesson.context"
 
 import Flex from "~/components/Flex"
-import Input from "~/components/Input"
 import Text from "~/components/Text"
 import Container from "~/components/Container"
 
@@ -36,13 +35,12 @@ const Wrapper = styled.div`
 	max-width: 850px;
 	width: 100%;
 
-	filter: ${props => !props.visible && "blur(2px)"};
 	/* box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); */
 	background-color: #fff;
 	border-radius: 5px;
 	transition: 250ms margin ease-in-out;
 `
-
+/*
 const SectionInput = styled(Input)`
 	font-weight: 700;
 	margin-left: 25px;
@@ -51,7 +49,7 @@ const SectionInput = styled(Input)`
 	width: calc(100% - 50px);
 	font-family: "PT Sans Narrow", sans-serif;
 `
-
+*/
 const Warning = styled(Text)`
 	width: auto;
 	max-width: 850px;
@@ -61,22 +59,49 @@ const Warning = styled(Text)`
 	margin-bottom: 25px;
 `
 
-const Section = ({ store, dispatch }) => {
+const getSectionData = (store, sectionId = '') => {
+	const index = store.sections.findIndex(s => s._id === sectionId)
+	if (index === -1) {
+		return [null, index];
+	}
+	return [store.sections[index], index];
+}
+
+const Section = () => {
+	const { store, dispatch } = useContext(LessonContext)
 	const sectionRef = useRef(null)
 
-	if (!store.view.activeSectionId)
+	const [timeout, setTimeoutState] = useState(null)
+	const onChange = ({changed, getDocument}) => {
+		if (timeout) {
+			clearTimeout(timeout);
+			setTimeoutState(null)
+		}
+
+		setTimeoutState(setTimeout(() => {
+			setTimeoutState(null)
+			dispatch(updateSectionDocValue(store.view.activeSectionId, getDocument()))
+		}, 250))
+	}
+	const [section, index] = getSectionData(store, store.view.activeSectionId)
+
+	if (!store.view.activeSectionId || index === -1) {
+		// TODO: notifcation and set new section
+		const text = index === -1 ?  'Der Abschnitt existiert nicht.' : 'Kein Abschnitt ausgewählt.'
 		return (
 			<Container>
 				<Flex>
-					<Text center>Kein Abschnitt ausgewählt...</Text>
+					<Text center>{text}</Text>
 				</Flex>
 			</Container>
 		)
+	}
+	
+	// TODO: useEffect error
 
-	const index = store.sections.findIndex(
-		section => section._id === store.view.activeSectionId,
-	)
-	const section = store.sections[index]
+	// TODO: controls get section id as prop an fetch all other data
+	// TODO: how to use section.delete at this position?
+
 	return (
 		<StyledSection
 			column
@@ -91,16 +116,12 @@ const Section = ({ store, dispatch }) => {
                     +++ Beta-Testversion +++ wir freuen uns über Feedback 🙂 +++
 				</Warning>
 			</Flex>
-			<Wrapper visible={section.visible}>
+			<Wrapper>
 				<Editor
-					key={section._id}
-					docValue={section.docValue}
-					id={section._id}
-					index={index}
+					key={store.view.activeSectionId}
+					section={section}
 					editing={store.view.editing}
-					dispatchChange={docValue => {
-						dispatch(updateSectionDocValue(section._id, docValue))
-					}}
+					onChange={onChange}
 				/>
 				<Controls
 					dispatch={dispatch}
