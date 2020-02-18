@@ -27,6 +27,13 @@ const Container =styled.div`
 	display: flex;
 	flex-direction: column;
 	margin-right: 10px;
+
+	& date {
+		font-size: 0.875rem;
+	}
+	& label{
+		font-size: 0.875rem;
+	}
 `
 const WidthSelect = styled.div`
 width: 60%;
@@ -45,6 +52,7 @@ const customStyles = {
 		...provided,
 		width: '100%',
 		marginRight:'0.694rem',
+		fontSize: '1rem',
 	})
 };
 
@@ -74,9 +82,9 @@ const Edit = ({ state, homeworks}) => {
 		<StyledHomework>
 			<TaskIcon color={state.color.get()}/>
 			<Container>
-				<small className="label">
+				<label className="label">
 					Aufgabe
-				</small>
+				</label>
 				<WidthSelect>
 					<Select styles={customStyles}
 						value={getSelectedOption(state, options)}
@@ -89,7 +97,7 @@ const Edit = ({ state, homeworks}) => {
 				</WidthSelect>
 				{
 					dueDate
-					&& <small className="date">bis: {new Date(dueDate).toLocaleDateString('de-DE')}</small>
+					&& <date className="date">bis: {new Date(dueDate).toLocaleDateString('de-DE')}</date>
 				}
 			</Container>
 		</StyledHomework>

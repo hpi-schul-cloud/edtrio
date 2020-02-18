@@ -25,6 +25,8 @@ flex-direction: column;
 
 	& span {
 		color: #4E6676;
+		font-weight: bold;
+		font-size: 1rem
 	}
 	& b {
 		font-family: "PT Sans Narrow", sans-serif;
