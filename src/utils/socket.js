@@ -31,8 +31,7 @@ class Socket {
 		 })
 
 		this.socket.on('error', (error) => {
-
-			console.log(error)
+			console.error(error)
 			/* dispatch({
 				type: 'ERROR',
 				payload: 'Die Verbindung zum Server konnte nicht aufrecht erhalten werden'
