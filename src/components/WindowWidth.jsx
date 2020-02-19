@@ -19,14 +19,12 @@ class WindowWidth extends React.Component {
   	this.state = {width: window.innerWidth};
   	window.addEventListener("resize", onWidthChange(this.setState))
 
-		this.mofidifiedChildren = React.Children.map(child => Object.bind(child, {windowWidth: this.state.width} ))
-		console.log("test", this.mofidifiedChildren)
-		console.log("create windows tesr width")
-    
+		this.mofidifiedChildren =
+			React.Children.map(props.children,child =>
+				React.cloneElement(child, {windowWidth: this.state.width} ))
 	}
 
 	render() {
-		console.log("nlib", this.mofidifiedChildren)
   	return (
   		<React.Fragment>
   			{this.mofidifiedChildren}
