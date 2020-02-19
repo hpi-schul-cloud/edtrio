@@ -3,6 +3,7 @@ import styled from "styled-components"
 import config from "~/config"
 
 import Icon from "~/assets/task-icon.svg"
+import WindowWidth from "./WindowWidth"
 
 
 const TaskBackground = styled.div`
@@ -27,22 +28,23 @@ font-size: 12px;
 flex-shrink: 0;
 
 `
-const viewportWidth = () =>{
-	return window.innerWidth;
-}
-const onWidthChange = (setWidth) => () => {
-	setWidth(viewportWidth());
-}
+// const viewportWidth = () =>{
+// 	return window.innerWidth;
+// }
+// const onWidthChange = (setWidth) => () => {
+// 	setWidth(viewportWidth());
+// }
 
 
-const TaskIcon = ({ color = "#FFF"}) => {
+const TaskIcon = ({ color = "#FFF", windowWidth}) => {
 
-	const [width, setWidth]  = useState(viewportWidth());
-	window.addEventListener("resize", onWidthChange(setWidth))
+	// const [width, setWidth]  = useState(viewportWidth());
+	// window.addEventListener("resize", onWidthChange(setWidth))
+	console.log(windowWidth)
 
-	if (width > config.breakpoints.tablet ){
+	if (windowWidth > config.breakpoints.tablet ){
 		return (
-			<TaskBackground BackgroundColor={color}>
+			<TaskBackground BackgroundColor={color} >
 				<IconWhite />
 			</TaskBackground>
 		)
@@ -56,10 +58,16 @@ const TaskIcon = ({ color = "#FFF"}) => {
 }
 
 
+const ResponsivTaskIcon =  ({ color = "#FFF"}) =>{
+	return (
+		<WindowWidth>
+			<TaskIcon color={color} />
+		</WindowWidth>
+	)
+} 
 
 
 
 
 
-
-export default TaskIcon;
+export default ResponsivTaskIcon;
