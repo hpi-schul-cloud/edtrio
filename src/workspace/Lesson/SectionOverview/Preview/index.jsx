@@ -12,9 +12,6 @@ function collect(monitor) {
 	}
 }
 
-const style = {
-	cursor: 'move',
-}
 
 const Outer = styled.div`
 	/* padding: 3px; */
@@ -26,7 +23,7 @@ const Outer = styled.div`
 
 	transition: 250ms all ease-in-out;
 	width: 100%;
-	
+
 	${props =>
 		!props.active
 			? css`
@@ -114,7 +111,6 @@ const Preview = ({
 	index,
 	activeSectionIndex,
 	dispatch,
-	previewRef,
 	wrapperRef,
 	sourceOffset,
 	k,
@@ -154,23 +150,17 @@ const Preview = ({
 		},
 	})
 
-	const dragStyle =
-        !isDragging || !isTouchDevice()
-        	? {}
-        	: {
-        		transform: sourceOffset
-        			? `translate(${sourceOffset.x}px, ${sourceOffset.y -
-                        wrapperRef.current.offsetTop}px)`
-        			: "",
-        	}
-	const opacity = isDragging ? 0 : 1
+	const dragStyles = {
+		opacity: isDragging ? 0 : 1,
+		cursor: isDragging ? 'auto' : 'move',
+	}
 	return (
 		<Outer
 			ref={node => drag(drop(node))}
 			active={store.view.activeSectionId === section._id}
 			expanded={expanded}
 			editing={store.view.editing}
-			style={{...style, opacity}}>
+			style={{opacity}}>
 			<Wrapper
 				active={active}
 				visible={section.visible}
