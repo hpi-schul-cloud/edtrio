@@ -18,6 +18,7 @@ import DeleteModal from "./DeleteModal"
 import { editorWS } from "~/utils/socket"
 import { switchSectionVisibility , removeSection } from "~/Contexts/section.actions"
 import { toggleSectionSettings } from "~/Contexts/view.actions"
+import BaseButton from "~/components/Button/BaseButton"
 
 
 const Wrapper = styled(Flex)`
@@ -31,10 +32,14 @@ const Wrapper = styled(Flex)`
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.18);
 `
 
+const buttonTheme = {
+	height: "28px",
+	padding: "1px",
+}
 const Icon = styled.img`
     cursor: pointer;
     margin-right: 25px;
-    width: 20px;
+    
 
     &:last-child {
         margin-right: 0;
@@ -96,12 +101,11 @@ const Settings = () => {
 						confirmDelete={confirmDelete}
 						renderIcon={openModal => {
 							return (
-								<TrashIcon
+								<BaseButton theme={buttonTheme}><TrashIcon
 									isOnly={isOnly}
 									visible
 									onClick={e => !isOnly && openModal(e)}
-									height="18px"
-								/>
+								/></BaseButton>
 							)
 						}}
 					/>{/* // show / hide section
@@ -114,14 +118,13 @@ const Settings = () => {
 					/>
 					*/}
 				</Flex>
-				<Flex noWrap>
+				<BaseButton theme={buttonTheme} noWrap>
 					<CloseIcon
 						onClick={() => {
 							dispatch(toggleSectionSettings())
 						}}
-						height="18px"
 					/>
-				</Flex>
+				</BaseButton>
 			</Wrapper>
 		</Portal>
 	)

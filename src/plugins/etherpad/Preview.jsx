@@ -1,6 +1,8 @@
 import React from "react"
 import Flex from "~/components/Flex"
 
+import LogoIcon from "./assets/logo.svg"
+
 const etherpadPlugin = {
 	Component: () => {
 		return (
@@ -16,7 +18,7 @@ const etherpadPlugin = {
 		)
 	},
 	icon: () => (
-		{/* <img src={require("./assets/logo.svg")} style={{ height: 50 }} alt="" /> */}
+		<LogoIcon height="50px" />
 	),
 	title: "Etherpad",
 	description: "Real time collaboration.",
