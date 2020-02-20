@@ -111,8 +111,6 @@ const Preview = ({
 	index,
 	activeSectionIndex,
 	dispatch,
-	wrapperRef,
-	sourceOffset,
 	k,
 	getSectionIndex,
 	moveSection
@@ -160,7 +158,7 @@ const Preview = ({
 			active={store.view.activeSectionId === section._id}
 			expanded={expanded}
 			editing={store.view.editing}
-			style={{opacity}}>
+			style={dragStyles}>
 			<Wrapper
 				active={active}
 				visible={section.visible}

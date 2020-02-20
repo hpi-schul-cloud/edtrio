@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useContext } from "react"
 import styled, { css } from "styled-components"
-import Heading from "~/components/Heading"
 
 import theme from "~/theme"
 
@@ -10,7 +9,6 @@ import SidebarControls from "./SidebarControls"
 import { showSectionOverview } from "~/Contexts/view.actions"
 
 import {useDrop} from 'react-dnd'
-import { findPreviousNode } from "@edtr-io/store"
 
 const Wrapper = styled.div`
     left: 0;
@@ -87,7 +85,6 @@ const SectionOverview = ({ store, dispatch }) => {
 	} = store;
 
 	function moveSection(fromIndex, toIndex) {
-		console.log(fromIndex, toIndex);
 		dispatch({ type: "SWAP_SECTIONS", payload: [fromIndex, toIndex] })
 	}
 
