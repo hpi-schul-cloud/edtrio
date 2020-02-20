@@ -4,13 +4,18 @@ import styled, { css } from "styled-components"
 import api from "~/utils/api"
 import theme from "~/theme"
 
+import BaseButton from "~/components/Button/BaseButton"
 import { createSection } from "~/Contexts/section.actions"
 import Flex from "~/components/Flex"
 import { toggleSectionOverview } from "~/Contexts/view.actions"
 
-import plusRedRound from "~/assets/plus-red-round.svg";
-import doubleArrowLeftRed from "~/assets/double-arrow-left-red.svg";
-import doubleArrowLeftwhite from "~/assets/double-arrow-left-white.svg";
+import PlusRedRound from "~/assets/plus-red-round.svg";
+import DoubleArrowLeftRed from "~/assets/double-arrow-left-red.svg";
+import DoubleArrowLeftWhite from "~/assets/double-arrow-left-white.svg";
+
+const DoubleArrowLeftRedRotated = styled(DoubleArrowLeftRed)`
+	transform: rotate(180deg);
+`
 
 const Wrapper = styled(Flex)`
 	width: 100%;
@@ -19,7 +24,9 @@ const Wrapper = styled(Flex)`
 	bottom: 0;
 	left: 0;
 `
-const StyledIcon = styled.img`
+
+const StyledIcon = ({children}) => {
+	const Styled = styled.div`
 	cursor: pointer;
 	margin: 15px;
 	width: 24px;
@@ -28,6 +35,12 @@ const StyledIcon = styled.img`
 	transform: ${props => !props.expanded && "rotate(180deg)"};
 	transition: 250ms all ease-in-out;
 `
+	return (
+		<Styled>
+			{children}
+		</Styled>
+	)
+}
 
 const AddWrapper = styled.div`
 	height: 24px;
@@ -51,6 +64,24 @@ const AddWrapper = styled.div`
 			  `}
 `
 
+const ExpandButton = ({expanded, onClick}) => {
+
+	const ModifiedBaseButton = Object.assign(BaseButton, onClick)
+
+	if(expanded){
+		return (
+			<ModifiedBaseButton onClick={onClick}>
+				<DoubleArrowLeftWhite />
+			</ModifiedBaseButton>)
+	} else {
+		return (
+			<ModifiedBaseButton onClick={onClick}>
+				<DoubleArrowLeftRedRotated />
+			</ModifiedBaseButton>)
+	}
+}
+
+
 const SidebarControls = ({ store, dispatch }) => {
 	const {
 		sections,
@@ -63,22 +94,15 @@ const SidebarControls = ({ store, dispatch }) => {
 		<Wrapper justifyEnd column={!expanded} alignCenter expanded={expanded}>
 			{editing && (
 				<AddWrapper visible={!expanded}>
-					<StyledIcon
+					<BaseButton
 						onClick={() => {
 							dispatch(createSection(sections.length))
 						}}
-						style={{ width: 40, height: 40 }}
-						src={plusRedRound}
 						redRound={!expanded}
-					/>
+					><PlusRedRound height="49px"/></BaseButton>
 				</AddWrapper>
 			)}
-			<StyledIcon
-				src={
-					!expanded
-						? doubleArrowLeftRed
-						: doubleArrowLeftwhite
-				}
+			<ExpandButton
 				expanded={expanded}
 				onClick={() => {
 					dispatch(toggleSectionOverview())

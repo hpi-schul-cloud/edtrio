@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 
 import Flex from "~/components/Flex"
-import ArrowSVG from "~/assets/arrow-back.svg"
+import ArrowIcon from "~/assets/arrow-back.svg"
 
 const StyledBack = styled(Flex)`
     background-color: #af0437;
@@ -28,7 +28,7 @@ const Back = () => {
 			onClick={() => {
 				window.location.href = jumpUrl
 			}}>
-			<ArrowSVG width="42px" height="42px" />
+			<ArrowIcon height="42px"/>
 		</StyledBack>
 	)
 }

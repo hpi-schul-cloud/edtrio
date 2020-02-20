@@ -11,11 +11,6 @@ import Controls from "./Controls"
 import EditorPreview from "./EditorPreview"
 import { isTouchDevice } from "~/utils/device"
 
-const OuterMost = styled(Flex)`
-	width: 100%;
-	transition: 250ms all ease-in-out;
-	transform: ${props => props.delete && "translateX(100%)"};
-`
 
 /* eslint-disable */
 const Preview = React.forwardRef(
@@ -54,16 +49,6 @@ const Preview = React.forwardRef(
 
         const p = (
             <div>
-                <OuterMost noWrap ref={wrapperRef} delete={section.delete}>
-                    <Controls
-                        connectDragSource={connectDragSource}
-                        sectionId={section._id}
-                        store={store}
-                        index={index}
-                        dispatch={dispatch}
-                        visible={section.visible}
-                        sectionTitle={section.title}
-                    />
                     <EditorPreview
                         store={store}
                         section={section}
@@ -77,7 +62,6 @@ const Preview = React.forwardRef(
                         isDragging={isDragging}
                         k={k}
                     />
-                </OuterMost>
             </div>
         )
         return connectDragSource(p)

@@ -19,11 +19,9 @@ const Outer = styled.div`
 	border-radius: 3px;
 	background: ${props =>
 		props.expanded ? "rgba(163, 163, 163, 1)" : "transparent"};
-	flex-shrink: 0;
-	margin: 8px 0;
-	width: 155px;
-	height: 118px;
-	flex-shrink: 0;
+	margin: 8px 10px;
+	width: 200px;
+	height: 160px;
 	transition: 250ms all ease-in-out;
 
 	${props =>
@@ -32,9 +30,7 @@ const Outer = styled.div`
 					border-color: transparent;
 					background: transparent;
 			  `
-			: css`
-					margin: 24px 0;
-			  `}
+			: css``}
 	${props =>
 		!props.expanded &&
 		css`
@@ -53,15 +49,12 @@ const Wrapper = styled.div`
     position: relative;
     font-size: 20px;
     line-height: 1.42;
-    width: 135px;
-    height: 98px;
+    height: 100%;
     flex-shrink: 0;
 
     ${props =>
 		props.expanded
 			? css`
-					padding: 15px 0;
-					height: 98px;
 					border-radius: 3px;
 					background-color: #fff;
 					border: 3px solid rgba(68, 68, 68, 1);

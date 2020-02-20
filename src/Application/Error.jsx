@@ -27,30 +27,30 @@ const ErrorWrapper = styled.div`
     animation: ${slideIn} 500ms ease-in-out 1;
 
     width: ${props => {
-        if (props.width) return props.width
-        if (props.full) return "100%"
-        return "auto"
-    }};
+		if (props.width) return props.width
+		if (props.full) return "100%"
+		return "auto"
+	}};
 
     max-width: 250px;
 `
 
 const Error = () => {
-    const { store, dispatch } = useContext(LessonContext)
-    if (!store.notifications.error.length) return null
-    return (
-        <ErrorWrapper onClick={() => dispatch({ type: "ERROR", payload: "" })}>
-            <Flex inline alignCenter noWrap>
-                {store.notifications.error}
-                <img
+	const { store, dispatch } = useContext(LessonContext)
+	if (!store.notifications.error.length) return null
+	return (
+		<ErrorWrapper onClick={() => dispatch({ type: "ERROR", payload: "" })}>
+			<Flex inline alignCenter noWrap>
+				{store.notifications.error}
+				{/* <img
                     src={require("~/assets/remove.svg")}
                     style={{ cursor: "pointer", marginLeft: 5 }}
                     width="16px"
                     alt=""
-                />
-            </Flex>
-        </ErrorWrapper>
-    )
+                /> */}
+			</Flex>
+		</ErrorWrapper>
+	)
 }
 
 export default Error
