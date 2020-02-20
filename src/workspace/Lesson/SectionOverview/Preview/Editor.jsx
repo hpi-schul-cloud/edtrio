@@ -2,12 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import { Editor as Edtr } from "@edtr-io/core"
 
-import etherpadPluginPreview from "~/plugins/etherpad/Preview"
-import nexboardPluginPreview from "~/plugins/nexboard/Preview"
-import lichtblickPluginPreview from '~/plugins/lichtblick/Preview'
-import { plugins } from "~/workspace/Lesson/Section/Editor"
 import { previewPlugins } from "~/plugins"
-
 
 const EditorWrapper = styled.div`
     width: 850px;
