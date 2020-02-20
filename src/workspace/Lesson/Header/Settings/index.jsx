@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 
 import Flex from "~/components/Flex"
+import SettingsSVG from "~/assets/header-settings.svg"
 
 import Content from "./Content"
 
@@ -14,42 +15,39 @@ const StyledSettings = styled(Flex)`
 `
 
 function useResizeListener(visible, setVisible, store) {
-    function resizeListener() {
-        if (visible && window.innerWidth < 1250) {
-            setVisible(false)
-        }
+	function resizeListener() {
+		if (visible && window.innerWidth < 1250) {
+			setVisible(false)
+		}
 
-        if (!visible && window.innerWidth > 1250) {
-            setVisible(true)
-        }
-    }
+		if (!visible && window.innerWidth > 1250) {
+			setVisible(true)
+		}
+	}
 
-    useEffect(() => {
-        if (window.innerWidth > 1250 && !store.view.bootstrapFinished) {
-            setVisible(true)
-        }
+	useEffect(() => {
+		if (window.innerWidth > 1250 && !store.view.bootstrapFinished) {
+			setVisible(true)
+		}
 
-        // window.addEventListener("resize", resizeListener)
-        // return () => window.removeEventListener("resize", resizeListener)
-    }, [visible])
+		// window.addEventListener("resize", resizeListener)
+		// return () => window.removeEventListener("resize", resizeListener)
+	}, [visible])
 }
 
 const Settings = ({ store, dispatch }) => {
-    const [expanded, setExpanded] = useState(false)
-    useResizeListener(expanded, setExpanded, store)
-    return (
-        <StyledSettings alignCenter justifyCenter>
-            <img
-                src={require("~/assets/header-settings.svg")}
-                height="42px"
-                alt=""
-                onClick={() => {
-                    setExpanded(!expanded)
-                }}
-            />
-            <Content store={store} visible={expanded} />
-        </StyledSettings>
-    )
+	const [expanded, setExpanded] = useState(false)
+	useResizeListener(expanded, setExpanded, store)
+	return (
+		<StyledSettings alignCenter justifyCenter
+			onClick={() => {
+				setExpanded(!expanded)
+			}}
+		>
+			<SettingsSVG height="42px"/>
+			<Content store={store} visible={expanded} />
+		</StyledSettings>
+	)
 }
 
 export default Settings

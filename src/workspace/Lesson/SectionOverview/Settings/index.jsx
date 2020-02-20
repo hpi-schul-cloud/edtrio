@@ -8,11 +8,11 @@ import Flex from "~/components/Flex"
 
 import previewIcon from "~/assets/preview-white.svg"
 import noPreviewIcon from "~/assets/no-preview-white.svg"
-import trashIcon from "~/assets/trash-white.svg"
+import TrashIcon from "~/assets/trash-white.svg"
 import duplicateIcon from "~/assets/duplicate-white.svg"
 import shareIcon from "~/assets/share-white.svg"
 import infoIcon from "~/assets/info-white.svg"
-import closeIcon from "~/assets/close-white.svg"
+import CloseIcon from "~/assets/close-white.svg"
 
 import DeleteModal from "./DeleteModal"
 import { editorWS } from "~/utils/socket"
@@ -96,11 +96,11 @@ const Settings = () => {
 						confirmDelete={confirmDelete}
 						renderIcon={openModal => {
 							return (
-								<Icon
-									src={trashIcon}
+								<TrashIcon
 									isOnly={isOnly}
 									visible
 									onClick={e => !isOnly && openModal(e)}
+									height="18px"
 								/>
 							)
 						}}
@@ -115,14 +115,13 @@ const Settings = () => {
 					*/}
 				</Flex>
 				<Flex noWrap>
-					<Icon
-						src={closeIcon}
+					<CloseIcon
 						onClick={() => {
 							dispatch(toggleSectionSettings())
 						}}
+						height="18px"
 					/>
 				</Flex>
-				
 			</Wrapper>
 		</Portal>
 	)

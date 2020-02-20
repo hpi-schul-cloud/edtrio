@@ -13,7 +13,7 @@ const Wrapper = styled.div`
     left: 0;
     position: fixed;
     bottom: 0;
-    width: ${props => (props.expanded ? 220 : 50)}px;
+    min-width: 50px;
     height: calc(100vh - 62px);
     overflow: hidden;
     transition: 250ms all ease-in-out;
@@ -32,12 +32,7 @@ const Wrapper = styled.div`
 `
 
 const Previews = styled.div`
-    padding: ${props =>
-		props.editing && props.expanded
-			? "15px 30px 15px 5px"
-			: !props.expanded
-				? "15px 10px"
-				: "15px 30px 15px 0"};
+
     width: 100%;
     height: calc(100vh - 62px);
     overflow: auto;
