@@ -12,6 +12,8 @@ import settingsIcon from "~/assets/settings.svg"
 import Flex from "~/components/Flex"
 
 import DeleteModal from "./DeleteModal"
+import { removeSection } from "~/Contexts/section.actions"
+import { toggleSectionSettings } from "~/Contexts/view.actions"
 
 const StyledControls = styled(Flex)`
     width: 30px;
@@ -21,14 +23,14 @@ const StyledControls = styled(Flex)`
 
     transition: 250ms all ease-in-out;
     ${props =>
-        !props.expanded
-            ? css`
+		!props.expanded
+			? css`
                   width: 0;
                   opacity: 0;
                   height: 0;
                   pointer-events: none;
               `
-            : !props.editing &&
+			: !props.editing &&
               css`
                   opacity: 0;
                   width: 30px;
@@ -43,14 +45,14 @@ const Icon = styled.img`
     width: 20px;
 
     ${props =>
-        !props.visible &&
+		!props.visible &&
         css`
             display: none;
         `}
 
     ${props => {
-        return (
-            props.drag &&
+		return (
+			props.drag &&
             css`
                 cursor: grab;
                 user-select: none;
@@ -59,12 +61,12 @@ const Icon = styled.img`
                     cursor: grabbing;
                 }
             `
-        )
-    }}
+		)
+	}}
 
     ${props => {
-        return (
-            props.isOnly &&
+		return (
+			props.isOnly && // only one section
             css`
                 cursor: not-allowed;
                 user-select: none;
@@ -73,75 +75,57 @@ const Icon = styled.img`
                     cursor: not-allowed;
                 }
             `
-        )
-    }}
+		)
+	}}
 `
 
 const DragHandle = ({ connectDragSource, ...props }) => {
-    const dh = (
-        <span style={{ height: 30 }}>
-            <Icon src={dragIcon} drag {...props} visible onClick={() => {}} />
-        </span>
-    )
+	const dh = (
+		<span style={{ height: 30 }}>
+			<Icon src={dragIcon} drag {...props} visible onClick={() => {}} />
+		</span>
+	)
 
-    return connectDragSource(dh)
+	return connectDragSource(dh)
 }
 
 const Controls = ({
-    sectionId,
-    store,
-    index,
-    dispatch,
-    visible,
-    sectionTitle,
-    connectDragSource,
+	sectionId,
+	store,
+	index,
+	dispatch,
+	visible,
+	sectionTitle,
+	connectDragSource,
 }) => {
-    function handleOrderChange(down) {
-        dispatch({
-            type: "SWAP_SECTIONS",
-            payload: [index, down === true ? index + 1 : index - 1],
-        })
-    }
+	function handleOrderChange(down) {
+		dispatch({
+			type: "SWAP_SECTIONS",
+			payload: [index, down === true ? index + 1 : index - 1],
+		})
+	}
 
-    async function confirmDelete() {
-        dispatch({
-            type: "PREPARE_DELETE_SECTION",
-            payload: sectionId,
-        })
+	async function confirmDelete() {
+		dispatch(removeSection(sectionId))
+	}
 
-        setTimeout(() => {
-            dispatch({
-                type: "DELETE_SECTION",
-                payload: sectionId,
-            })
-        }, 250)
+	const isOnly = store.sections.length === 1
 
-        await api.delete(`/editor/sections/${sectionId}`)
-    }
-
-    const isOnly = store.lesson.sections.length === 1
-
-    return (
-        <StyledControls
-            column
-            alignStart
-            editing={store.editing}
-            expanded={store.sectionOverviewExpanded}>
-            <DragHandle connectDragSource={connectDragSource} isOnly={isOnly} />
-            <Icon
-                src={settingsIcon}
-                visible
-                onClick={() => {
-                    dispatch({ type: "TOGGLE_SECTION_SETTINGS" })
-                }}
-            />
-            {/* <Icon
-                src={visible ? previewIcon : noPreviewIcon}
-                visible
-                onClick={() => {
-                    dispatch({ type: "SECTION_VISIBILITY", payload: sectionId })
-                }}
-            />
+	return (
+		<StyledControls
+			column
+			alignStart
+			editing={store.view.editing}
+			expanded={store.view.sectionOverviewExpanded}>
+			<DragHandle connectDragSource={connectDragSource} isOnly={isOnly} />
+			<Icon
+				src={settingsIcon}
+				visible
+				onClick={() => {
+					dispatch(toggleSectionSettings())
+				}}
+			/>
+			{/*
             <DeleteModal
                 sectionTitle={sectionTitle || `Abschnitt ${index + 1}`}
                 confirmDelete={confirmDelete}
@@ -156,8 +140,8 @@ const Controls = ({
                     )
                 }}
             /> */}
-        </StyledControls>
-    )
+		</StyledControls>
+	)
 }
 
 export default Controls

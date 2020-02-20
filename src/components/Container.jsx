@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 import styled, { css } from "styled-components"
-import LessonContext from "~/Contexts/Lesson"
+import LessonContext from "~/Contexts/Lesson.context"
 
 const StyledContainer = styled.div`
     padding: 25px calc((100vw - 995px) / 2);

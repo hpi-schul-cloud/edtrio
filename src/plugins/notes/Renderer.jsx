@@ -10,7 +10,7 @@ const Text = styled.p`
 const TextWrapper = styled.div`
     background-color: rgb(250, 250, 250);
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-    z-index: 50;
+    z-index: 4;
     transition: 250ms all ease-in-out;
     opacity: ${props => (props.visible ? 1 : 0)};
     pointer-events: ${props => (props.visible ? "all" : "none")};
@@ -62,7 +62,7 @@ const Arrow = styled.div`
     transform: translate(-100%, -50%);
     overflow: hidden;
     background-color: transparent;
-    z-index: 51;
+    z-index: 5;
 
     &::after {
         content: "";
