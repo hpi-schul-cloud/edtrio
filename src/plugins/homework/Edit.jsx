@@ -93,7 +93,7 @@ const Edit = ({ state, homeworks}) => {
 						placeholder={'Wähle eine Aufgabe aus'}
 						label={'Aufgabe'}
 					/>
-					<a href={state.link.get()} ><img src={require("./assets/open-new-window.svg")} /></a>	
+					{/* <a href={state.link.get()} ><img src={require("./assets/open-new-window.svg")} /></a> */}	
 				</WidthSelect>
 				{
 					dueDate
