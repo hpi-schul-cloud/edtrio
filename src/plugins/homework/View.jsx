@@ -26,11 +26,11 @@ flex-direction: column;
 	> span {
 		color: #4E6676;
 		font-weight: bold;
-		font-size: 1rem
+		font-size: 1.1rem
 	}
 	> b {
 		font-family: "PT Sans Narrow", sans-serif;
-		font-size: 1.05rem;
+		font-size: 1.1rem;
 	}
 	> .date {
 		font-size: 0.875rem;
