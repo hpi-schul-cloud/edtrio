@@ -13,7 +13,7 @@ const lichtblickPlugin = {
     icon: () => (
         <img src={require("./assets/logo.svg")} style={{ height: 50 }} alt="" />
     ),
-    title: "Lichtblick",
+    title: "Lichtblick (Demo)",
     description: "Medienanalyse 2.0.",
 }
 
