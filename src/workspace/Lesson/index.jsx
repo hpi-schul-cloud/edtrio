@@ -50,7 +50,7 @@ const Lesson = props => {
 
     useBootstrap(id, courseId, dispatch, dispatchUserAction)
     useChangeListener(store, dispatch)
-    useInterval(() => saveLesson(store, dispatch), 10000)
+    useInterval(() => saveLesson(store, dispatch), 10000000)
 
     useEffect(() => {
         if (store.bootstrapFinished && store.editing === false)
