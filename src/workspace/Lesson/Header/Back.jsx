@@ -12,14 +12,14 @@ const StyledBack = styled(Flex)`
 `
 
 const Back = () => {
-    const currentUrl = window.location.href
-    const currentBaseURL = (/^((https|http):\/\/[\w\d:.-]+)/.exec(currentUrl) || [])[0]
-    const regexResult = /courses\/([a-f0-9]{24})\/topics\/([a-f0-9]{24})/.exec(currentUrl)
-    let jumpUrl = '/';
+	const currentUrl = window.location.href
+	const currentBaseURL = (/^((https|http):\/\/[\w\d:.-]+)/.exec(currentUrl) || [])[0]
+	const regexResult = /courses\/([a-f0-9]{24})\/topics\/([a-f0-9]{24})/.exec(currentUrl)
+	let jumpUrl = '/';
 
-    if (Array.isArray(regexResult) && regexResult[1]) {
-        jumpUrl = `${currentBaseURL}/courses/${regexResult[1]}`
-    }
+	if (Array.isArray(regexResult) && regexResult[1]) {
+		jumpUrl = `${currentBaseURL}/courses/${regexResult[1]}`
+	}
 
 	return (
 		<StyledBack
