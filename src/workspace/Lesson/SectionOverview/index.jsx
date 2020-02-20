@@ -9,6 +9,9 @@ import Settings from "./Settings"
 import SidebarControls from "./SidebarControls"
 import { showSectionOverview } from "~/Contexts/view.actions"
 
+import {useDrop} from 'react-dnd'
+import { findPreviousNode } from "@edtr-io/store"
+
 const Wrapper = styled.div`
     left: 0;
     position: fixed;
@@ -71,22 +74,33 @@ function useResizeListener(store, dispatch) {
 	}, [store.view.sectionOverviewExpanded])
 }
 
+
+
 const SectionOverview = ({ store, dispatch }) => {
 	useResizeListener(store, dispatch)
-	const sections = store.sections
 	const {
-		sectionOverviewExpanded: expanded,
-		editing
-	} = store.view
+		sections,
+		view: {
+			sectionOverviewExpanded: expanded,
+			editing,
+		}
+	} = store;
 
 	function moveSection(fromIndex, toIndex) {
+		console.log(fromIndex, toIndex);
 		dispatch({ type: "SWAP_SECTIONS", payload: [fromIndex, toIndex] })
 	}
 
+	const getSectionIndex = id => {
+		return sections.findIndex(s => s._id === id)
+
+	}
+
+	const [, drop] = useDrop({ accept: 'Preview' })
 	return (
 		<React.Fragment>
 			<Wrapper expanded={expanded} editing={editing}>
-				<Previews editing={editing} expanded={expanded}>
+				<Previews ref={drop} editing={editing} expanded={expanded}>
 					{sections
 						.filter((section, index) => {
 							if (editing) return true
@@ -105,7 +119,10 @@ const SectionOverview = ({ store, dispatch }) => {
 									dispatch={dispatch}
 									section={section}
 									index={index}
+									expanded={expanded}
+									active={store.view.activeSectionId === section._id}
 									key={section._id}
+									getSectionIndex={getSectionIndex}
 								/>
 							)
 						})}

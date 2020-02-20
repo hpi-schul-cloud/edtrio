@@ -29,44 +29,44 @@ const Content = styled(Container)`
 `
 
 function DeleteModal({ confirmDelete, renderIcon, sectionTitle }) {
-    return (
-        <PortalWithState closeOnOutsideClick closeOnEsc>
-            {({ openPortal, closePortal, isOpen, portal }) => (
-                <React.Fragment>
-                    {renderIcon(openPortal)}
-                    {portal(
-                        <Wrapper>
-                            <Content small>
-                                <Heading h3>"{sectionTitle}" löschen</Heading>
-                                <Text size={20}>
+	return (
+		<PortalWithState closeOnOutsideClick closeOnEsc>
+			{({ openPortal, closePortal, isOpen, portal }) => (
+				<React.Fragment>
+					{renderIcon(openPortal)}
+					{portal(
+						<Wrapper>
+							<Content small>
+								<Heading h3>"{sectionTitle}" löschen</Heading>
+								<Text size={20}>
                                     Bist du dir sicher, dass du diesen Abschnitt
                                     löschen möchtest? Du kannst dies nicht
                                     rückgängig machen.
-                                </Text>
-                                <br />
-                                <Flex justifyBetween>
-                                    <Button
-                                        noMargin
-                                        secondary
-                                        onClick={closePortal}>
+								</Text>
+								<br />
+								<Flex justifyBetween>
+									<Button
+										noMargin
+										secondary
+										onClick={closePortal}>
                                         Abbrechen
-                                    </Button>
-                                    <Button
-                                        noMargin
-                                        onClick={() => {
-                                            confirmDelete()
-                                            closePortal()
-                                        }}>
+									</Button>
+									<Button
+										noMargin
+										onClick={() => {
+											confirmDelete()
+											closePortal()
+										}}>
                                         Löschen
-                                    </Button>
-                                </Flex>
-                            </Content>
-                        </Wrapper>,
-                    )}
-                </React.Fragment>
-            )}
-        </PortalWithState>
-    )
+									</Button>
+								</Flex>
+							</Content>
+						</Wrapper>,
+					)}
+				</React.Fragment>
+			)}
+		</PortalWithState>
+	)
 }
 
 export default DeleteModal

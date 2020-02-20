@@ -5,6 +5,9 @@ import Flex from "~/components/Flex"
 
 import LessonContext from "~/Contexts/Lesson.context"
 
+import RemoveIcon from "~/assets/remove.svg"
+import BaseButton from "~/components/Button/BaseButton"
+
 const slideIn = keyframes`
     from {
         transform: translateX(-50%) translateY(-100%);
@@ -33,6 +36,8 @@ const ErrorWrapper = styled.div`
 	}};
 
     max-width: 250px;
+
+    z-index: 1000;
 `
 
 const Error = () => {
@@ -42,12 +47,7 @@ const Error = () => {
 		<ErrorWrapper onClick={() => dispatch({ type: "ERROR", payload: "" })}>
 			<Flex inline alignCenter noWrap>
 				{store.notifications.error}
-				{/* <img
-                    src={require("~/assets/remove.svg")}
-                    style={{ cursor: "pointer", marginLeft: 5 }}
-                    width="16px"
-                    alt=""
-                /> */}
+				<BaseButton><RemoveIcon width="16px" /></BaseButton>
 			</Flex>
 		</ErrorWrapper>
 	)
