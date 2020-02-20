@@ -19,6 +19,7 @@ const TaskBackground = styled.div`
 
 const IconWhite = styled(Icon)`
 	color: white;
+	height: 1rem
 `;
 const IconColor = styled(Icon)`
 	color: ${(props) => props.Color};
@@ -31,7 +32,7 @@ const TaskIcon = ({ color = "#FFF", windowWidth }) => {
 	if (windowWidth > config.breakpoints.tablet) {
 		return (
 			<TaskBackground BackgroundColor={color}>
-				<IconWhite height="1rem" />
+				<IconWhite />
 			</TaskBackground>
 		);
 	} else {

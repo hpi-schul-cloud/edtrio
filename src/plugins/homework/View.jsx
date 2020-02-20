@@ -23,16 +23,16 @@ const Container = styled.div`
 display: flex;
 flex-direction: column;
 
-	& span {
+	> span {
 		color: #4E6676;
 		font-weight: bold;
 		font-size: 1rem
 	}
-	& b {
+	> b {
 		font-family: "PT Sans Narrow", sans-serif;
 		font-size: 1.05rem;
 	}
-	& date {
+	> .date {
 		font-size: 0.875rem;
 	}
 `
@@ -48,7 +48,9 @@ export const ViewBase = ({state}) => {
 			<Container>
 				<b>Aufgabe</b>
 				<span>{state.name.get() || "Kein Kurs vorhanden"}</span>
-				<date>bis: {new Date(state.dueDate.get()).toLocaleDateString('de-DE')}</date>
+				<small className="date">
+					bis: {new Date(state.dueDate.get()).toLocaleDateString('de-DE')}
+				</small>
 			</Container>
 		</FlexContainer>
 	)
