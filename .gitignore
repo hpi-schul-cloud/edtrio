@@ -16,9 +16,6 @@ yarn.lock
 # production
 **/*/build
 
-# allow build folder for lichtblick assets
-!/static/lichtblick/build
-
 # misc
 .DS_Store
 .env.local
