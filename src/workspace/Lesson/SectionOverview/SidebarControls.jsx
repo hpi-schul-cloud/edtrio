@@ -98,7 +98,6 @@ const SidebarControls = ({ store, dispatch }) => {
 						onClick={() => {
 							dispatch(createSection(sections.length))
 						}}
-						redRound={!expanded}
 					><PlusRedRound height="49px"/></BaseButton>
 				</AddWrapper>
 			)}

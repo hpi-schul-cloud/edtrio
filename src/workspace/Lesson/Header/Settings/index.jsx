@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 
 import Flex from "~/components/Flex"
-import SettingsSVG from "~/assets/header-settings.svg"
+import BaseButton from "~/components/Button/BaseButton"
+import SettingsIcon from "~/assets/header-settings.svg"
 
 import Content from "./Content"
 
-const StyledSettings = styled(Flex)`
+const dd = styled(Flex)`
     background-color: #af0437;
     padding: 10px 0;
     height: 100%;
@@ -35,18 +36,19 @@ function useResizeListener(visible, setVisible, store) {
 	}, [visible])
 }
 
-const Settings = ({ store, dispatch }) => {
+const Settings = ({ store, theme }) => {
 	const [expanded, setExpanded] = useState(false)
 	useResizeListener(expanded, setExpanded, store)
 	return (
-		<StyledSettings alignCenter justifyCenter
+		<BaseButton
+			theme={theme}
 			onClick={() => {
 				setExpanded(!expanded)
 			}}
 		>
-			<SettingsSVG height="42px"/>
+			<SettingsIcon />
 			<Content store={store} visible={expanded} />
-		</StyledSettings>
+		</BaseButton>
 	)
 }
 
