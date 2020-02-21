@@ -13,6 +13,7 @@ import { createImagePlugin } from "@edtr-io/plugin-image"
 // import { highlightPlugin } from "@edtr-io/plugin-highlight"
 // import { h5pPlugin } from "@edtr-io/plugin-h5p"
 
+import config from "~/config"
 import nexboardPlugin from "~/plugins/nexboard"
 import etherpadPlugin from "~/plugins/etherpad"
 import notesPlugin from "~/plugins/notes"
@@ -100,6 +101,6 @@ const plugins = {
 	// h5p: h5pPlugin,
 }
 
-if(process.env.ENABLE_LTI) plugins['lti'] = ltiPlugin;
+if(config.ENABLE_LTI) plugins['lti'] = ltiPlugin;
 
 export default plugins

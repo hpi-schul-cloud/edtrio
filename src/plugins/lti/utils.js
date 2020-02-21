@@ -10,7 +10,7 @@ export const getPseudonym = async (userId, toolId) => {
 }
 
 export const sign = async (request) => {
-  return await serverApi.post('/tools/sign', {request})
+  return await serverApi.post('/tools/sign/lti13', {request})
 }
 
 export const depseudonymizationFrame = (url, pseudonym) => {

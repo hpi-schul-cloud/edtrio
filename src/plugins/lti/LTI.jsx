@@ -1,11 +1,56 @@
 import React, { useState, useEffect, useContext } from "react"
 import shortid from "shortid"
 
+import config from "~/config.js"
 import UserContext from "~/Contexts/User"
 
 import Flex from "~/components/Flex"
 import Loader from "~/components/Loader"
 import { getTools, getPseudonym, sign, depseudonymizationFrame } from './utils'
+
+const loader = <Flex justifyCenter>
+  <Loader />
+</Flex>
+
+const toolSelector = (tools, setTool) => <Flex justifyCenter style={{ maxHeight: '400px', overflowY: 'scroll', overflowX: 'hidden', }}>
+  {tools.data.map(tool => (
+    <Flex
+      onClick={() => setTool(tool) }
+      justifyCenter
+      alignCenter
+      style={{
+        cursor: 'pointer',
+        textAlign: 'center',
+        margin: '1.5%',
+        padding: '3%',
+        width: '27%',
+        backgroundColor: "rgba(240, 240, 240)",
+      }}>
+      {tool.name}
+    </Flex>
+  ))}
+</Flex>
+
+const LTI11Frame = (state) => <iframe
+  src={`${window.location.protocol}//${window.location.host}/courses/X/tools/run/${state.templateId.value}`}
+  style={{width: '100%', height: '400px',}}>
+</iframe>
+
+const LTI13Frame = (state, idToken) => {
+  const csrf = (document.getElementsByName('_csrf')[0] ? document.getElementsByName('_csrf')[0].value : undefined)
+  const html = `data:text/html;charset=utf-8,<html>
+        <body onLoad="document.getElementById('lti').submit()">
+          <form id="lti" method="post" action=${state.url.value}>
+            <input type="hidden" name="id_token" value="${idToken}" />
+            <input type="hidden" name="_csrf" value="${csrf}" />
+          </form>
+        </body>
+      </html>`
+  return (
+    <iframe src={html} style={{width: '100%', height: '400px',}}>
+    </iframe>
+  )
+}
 
 const LTI = ({ state, editable }) => {
   const [tools, setTools] = useState({})
@@ -43,15 +88,22 @@ const LTI = ({ state, editable }) => {
                 accept_types: ['ltiLink'],
                 accept_media_types: 'image/*,text/html',
                 accept_presentation_document_targets: ['iframe', 'window'],
-                deep_link_return_url: `http://localhost:3030/tools/${state.id.value}/link`,
+                deep_link_return_url: `${config.SERVER_API_URL}/tools/${state.id.value}/link`,
               }
               : undefined),
         }
         setIdToken(await sign(request))
-        window["link-" + state.id.value] = (url) => {
-          state.ltiMessageType.set('basic-lti-launch-request')
-          state.url.set(url)
-          setIdToken(null)
+        window.addEventListener("message", receiveMessage, false);
+
+        function receiveMessage(event) {
+          if (event.origin !== config.SERVER_API_URL)
+            return;
+
+          if (event.data.id === state.id.value) {
+            state.ltiMessageType.set('basic-lti-launch-request')
+            state.url.set(event.data.url)
+            setIdToken(null)
+          }
         }
       }
     } else {
@@ -74,62 +126,20 @@ const LTI = ({ state, editable }) => {
   }
 
   if (loading) {
-    return (
-      <Flex justifyCenter>
-        <Loader />
-      </Flex>
-    )
+    return loader
   } else {
     if (state.url.value) {
       if (idToken) {
-        const csrf = (document.getElementsByName('_csrf')[0] ? document.getElementsByName('_csrf')[0].value : undefined)
-        const html = `data:text/html;charset=utf-8,<html>
-        <body onLoad="document.getElementById('lti').submit()">
-          <form id="lti" method="post" action=${state.url.value}>
-            <input type="hidden" name="id_token" value="${idToken}" />
-            <input type="hidden" name="_csrf" value="${csrf}" />
-          </form>
-        </body>
-      </html>`
-        return (
-          <iframe src={html} style={{width: '100%', height: '400px',}}>
-          </iframe>
-        )
+        return LTI13Frame(state, idToken)
       } else if (state.ltiVersion.value === 'LTI-1p0') {
-        return (
-          <iframe
-            src={`${window.location.protocol}//${window.location.host}/courses/X/tools/run/${state.templateId.value}`}
-            style={{width: '100%', height: '400px',}}>
-          </iframe>
-        )
+        return LTI11Frame(state)
       } else {
         bootstrap()
-        return (
-          <Flex justifyCenter>
-            <Loader />
-          </Flex>
-        )
+        return loader
       }
     } else {
       if(editable) {
-        return <Flex justifyCenter style={{ maxHeight: '400px', overflowY: 'scroll', overflowX: 'hidden', }}>
-          {tools.data.map(tool => (
-            <Flex
-              onClick={() => setTool(tool) }
-              justifyCenter
-              alignCenter
-              style={{
-                cursor: 'pointer',
-                textAlign: 'center',
-                margin: '1.5%',
-                padding: '3%',
-                width: '27%',
-                backgroundColor: "rgba(240, 240, 240)",
-              }}>
-              {tool.name}
-            </Flex>
-          ))}
-        </Flex>
+        return toolSelector(tools, setTool)
       } else {
         return <div></div>
       }
