@@ -1,9 +1,9 @@
 import React, { useContext, useRef, useState } from "react";
 import styled, { css } from "styled-components";
-import WindowWidth from "~/components/WindowWidth";
-
+import Text from "~/components/Text";
 import Icon from "~/assets/chat-bubble.svg";
 import config from "~/config";
+import WindowWidth from "./WindowWidth";
 
 const Banner = styled.div`
 	 padding-box;
@@ -56,7 +56,7 @@ const Ribbon = styled.div`
 	background-color: #455b6a;
 `;
 
-const Feedback = styled.text`
+const Feedback = styled(Text)`
 	color: #b1063a;
 	align-text: top;
 	float: right;
@@ -73,25 +73,38 @@ const ChatIcon = styled(Icon)`
 	height: 1rem;
 `;
 
-const InfoBanner = ({ editing, expanded, windowWidth }) => {
-	if (editing && windowWidth > config.breakpoints.tablet) {
+const BannerText = ({ windowWidth }) => {
+	if (windowWidth > config.breakpoints.tablet) {
+		return (
+			<span>
+				Erstellte Inhalte werden gespeichert und können Schüler:innen
+				bereitgestellt werden.
+				<br />
+				Teilen und Kopieren der Inhalte ist noch nicht möglich.
+			</span>
+		);
+	}
+	return null;
+};
+
+const InfoBanner = ({ editing, expanded }) => {
+	if (editing) {
 		return (
 			<Banner expanded={expanded}>
 				<Ribbon>BETA</Ribbon>
 				<ContainerFeedback>
-					<span>
-						Erstellte Inhalte werden gespeichert und können
-						Schüler:innen bereitgestellt werden.
-						<br />
-						Teilen und Kopieren der Inhalte ist noch nicht möglich.
-					</span>
+					<WindowWidth>
+						<BannerText />
+					</WindowWidth>
 					<StyledLink href="mailto:feedback@schul-cloud.org?subject=Mein%20Feedback%20zum%20neuen%20Themen-Werkzeug&amp;body=Liebes%20Schul-Cloud-Team%2C%0A%0AHier%20kommt%20mein%20Feedback%20zum%20neuen%20Editor.%0A%0ADas%20hat%20gut%20funktioniert%3A%0A%0A%0AHier%20hatte%20ich%20Probleme%3A%0A%0A%0ADiese%20Funktion%20w%C3%BCnsche%20ich%20mir%20am%20meisten%3A%0A%0A%0A">
 						<Feedback>Wir freuen uns über Feedback</Feedback>
 					</StyledLink>
 				</ContainerFeedback>
 			</Banner>
 		);
-	} else return <Banner></Banner>;
+	} else {
+		return null;
+	}
 };
 
 export default InfoBanner;
