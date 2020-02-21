@@ -21,15 +21,11 @@ const Banner = styled.div`
 			? css`
 					padding: 0 240px 0 40px;
 					margin: -13px -38px 15px;
-					overflow: hidden;
-					width: 100vw;
 					margin-left: 220px;
 			  `
 			: css`
 					padding: 0px 18px 0 92px;
 					margin: -13px 1px 15px;
-					overflow: hidden;
-					width: 100vw;
 			  `}
 `;
 
