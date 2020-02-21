@@ -1,7 +1,7 @@
 import React, { useContext, useRef, useState } from "react";
 import styled, { css } from "styled-components";
+import WindowWidth from "~/components/WindowWidth";
 
-import LessonContext from "~/Contexts/Lesson.context";
 import Icon from "~/assets/chat-bubble.svg";
 import config from "~/config";
 
@@ -73,8 +73,8 @@ const ChatIcon = styled(Icon)`
 	height: 1rem;
 `;
 
-const InfoBanner = ({ editing, expanded }) => {
-	if (editing) {
+const InfoBanner = ({ editing, expanded, windowWidth }) => {
+	if (editing && windowWidth > config.breakpoints.tablet) {
 		return (
 			<Banner expanded={expanded}>
 				<Ribbon>BETA</Ribbon>
