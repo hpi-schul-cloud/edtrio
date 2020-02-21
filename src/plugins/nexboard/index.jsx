@@ -9,7 +9,7 @@ export const nexboardState = object({
 	id: string(),
 })
 
-const generatePlugin = (Component) => ({
+export const generatePlugin = (Component) => ({
 	Component,
 	state: nexboardState,
 	icon: () => (
