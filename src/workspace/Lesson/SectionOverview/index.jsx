@@ -6,9 +6,10 @@ import theme from "~/theme"
 import Preview from "./Preview"
 import Settings from "./Settings"
 import SidebarControls from "./SidebarControls"
-import { showSectionOverview } from "~/Contexts/view.actions"
+import { showSectionOverview , setActiveSection } from "~/Contexts/view.actions"
 
 import {useDrop} from 'react-dnd'
+
 
 const Wrapper = styled.div`
     left: 0;
@@ -93,33 +94,31 @@ const SectionOverview = ({ store, dispatch }) => {
 
 	}
 
+	const setSection = (section) => {
+		dispatch(setActiveSection(section._id))
+	}
+
 	const [, drop] = useDrop({ accept: 'Preview' })
 	return (
 		<React.Fragment>
-			<Wrapper expanded={expanded} editing={editing}>
-				<Previews ref={drop} editing={editing} expanded={expanded}>
+			<Wrapper expanded={expanded}>
+				<Previews ref={drop} expanded={expanded}>
 					{sections
 						.filter((section, index) => {
 							if (editing) return true
 							return section.visible
 						})
 						.map((section, index) => {
-							const editorKey =
-                                section._id +
-                                "-" +
-                                Math.round(new Date().getTime() / 5000)
 							return (
 								<Preview
-									k={editorKey}
-									store={store}
-									moveSection={moveSection}
 									dispatch={dispatch}
 									section={section}
-									index={index}
 									expanded={expanded}
 									active={store.view.activeSectionId === section._id}
 									key={section._id}
 									getSectionIndex={getSectionIndex}
+									moveSection={moveSection}
+									onClick={setSection}
 								/>
 							)
 						})}

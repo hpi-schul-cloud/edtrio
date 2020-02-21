@@ -99,19 +99,13 @@ const Wrapper = styled.div`
 		)
 	}}
 
-    display: ${({ hidden }) => hidden && "none"};
-
 `
 
 const Preview = ({
-	store,
 	active,
 	section,
 	expanded,
-	index,
-	activeSectionIndex,
-	dispatch,
-	k,
+	onClick,
 	getSectionIndex,
 	moveSection
 }) => {
@@ -155,24 +149,18 @@ const Preview = ({
 	return (
 		<Outer
 			ref={node => drag(drop(node))}
-			active={store.view.activeSectionId === section._id}
+			active={active}
 			expanded={expanded}
-			editing={store.view.editing}
 			style={dragStyles}>
 			<Wrapper
 				active={active}
 				visible={section.visible}
-				hidden={!section.visible && !store.view.editing}
 				expanded={expanded}
-				isDone={index <= activeSectionIndex}
-				onClick={() => {
-					dispatch(setActiveSection(section._id))
-				}}>
+				onClick={() => onClick(section)}>
 				{expanded && (
 					<Editor
-						key={k}
 						expanded={expanded}
-						editing={store.view.editing}
+						editing={false}
 						docValue={docValue}
 					/>
 				)}
