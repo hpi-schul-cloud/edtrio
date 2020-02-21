@@ -6,18 +6,18 @@ import { jwt } from "./jwt"
 // EXAMPLE:
 // 1. normal get request
 // api.get('/editor/lessons/123').then(data => {
-//     console.log(data)
+//     console.info(data)
 // })
 
 // // 2. post request with body
 // api.post('/editor/lessons/123', { name: 'Augustiner' }).then(data => {
-//     console.log(data)
+//     console.info(data)
 // })
 
 // // 3. post request with body with an error
 // api.post('/editor/sections/456', { name: 'Augustiner' })
 //     .then(data => {
-//         console.log(data)
+//         console.info(data)
 //     })
 //     .catch(err => {
 //         console.error(err)
@@ -27,7 +27,7 @@ import { jwt } from "./jwt"
 // api.post('/editor/sections/456', { name: 'Whatever' }, { picture: store.picture })
 //     .then(data => {
 //     // picture will be sent as FormData
-//         console.log(data)
+//         console.info(data)
 //     }
 // )
 

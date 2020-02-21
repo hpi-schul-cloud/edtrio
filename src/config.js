@@ -4,4 +4,6 @@ const config = {
     EDITOR_SOCKET_URL: process.env.EDITOR_SOCKET_URL || "ws://localhost:4001",
     ENABLE_LTI: process.env.ENABLE_LTI || false,
 }
+// eslint-disable-next-line no-console
+console.info('config', config)
 export default config

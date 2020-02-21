@@ -14,10 +14,14 @@ import { createImagePlugin } from "@edtr-io/plugin-image"
 // import { h5pPlugin } from "@edtr-io/plugin-h5p"
 
 import config from "~/config"
-import nexboardPlugin from "~/plugins/nexboard"
-import etherpadPlugin from "~/plugins/etherpad"
-import notesPlugin from "~/plugins/notes"
-import ltiPlugin from "~/plugins/lti"
+import nexboardPlugin from "./nexboard"
+import etherpadPlugin from "./etherpad"
+import notesPlugin from "./notes"
+import ltiPlugin from "./lti"
+
+import etherpadPluginPreview from "./etherpad/Preview"
+import nexboardPluginPreview from "./nexboard/Preview"
+
 
 function readFile(file) {
 	return new Promise(resolve => {
@@ -104,3 +108,9 @@ const plugins = {
 if(config.ENABLE_LTI) plugins['lti'] = ltiPlugin;
 
 export default plugins
+
+export const previewPlugins = {
+	...plugins,
+	etherpad: etherpadPluginPreview,
+	nexboard: nexboardPluginPreview
+}

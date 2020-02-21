@@ -23,7 +23,7 @@ stories.add("Interactive", () => {
                 block={boolean("block", false)}
                 full={boolean("full", false)}
                 noMargin={boolean("noMargin", false)}
-                onClick={() => console.log("Yess!")}>
+                onClick={() => console.info("Yess!")}>
                 Click me!
             </Button>
             <Text>
