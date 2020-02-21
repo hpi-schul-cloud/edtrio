@@ -85,7 +85,7 @@ const imagePlugin = createImagePlugin({
 	secondInput: "description",
 })
 
-const plugins = {
+export const plugins = {
 	text: textPlugin,
 	// notes: notesPlugin,
 	rows: rowsPlugin,
@@ -103,11 +103,8 @@ const plugins = {
 	// singleMultipleChoice: scMcExercisePlugin,
 	// highlight: highlightPlugin,
 	// h5p: h5pPlugin,
+  lti: (config.ENABLE_LTI ? ltiPlugin : undefined),
 }
-
-if(config.ENABLE_LTI) plugins['lti'] = ltiPlugin;
-
-export default plugins
 
 export const previewPlugins = {
 	...plugins,
