@@ -80,6 +80,7 @@ export const Editor = (props) => {
 	return (
 		<EdtrWrapper>
 			<Edtr
+				theme={createTheme(theme)}
 				plugins={plugins}
 				defaultPlugin={"text"}
 				editable={editable}
