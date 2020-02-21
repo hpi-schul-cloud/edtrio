@@ -1,7 +1,7 @@
 import React from "react"
 import { object, string } from "@edtr-io/plugin"
 
-import Logo from "./assets/logo.svg"
+import EtherpadIcon from "./assets/logo.svg"
 
 import Etherpad from "./Etherpad"
 export const etherpadState = object({
@@ -10,14 +10,16 @@ export const etherpadState = object({
 	description: string(),
 })
 
-const etherpadPlugin = {
-	Component: Etherpad,
+export const generatePlugin = (Component) => ({
+	Component,
 	state: etherpadState,
 	icon: () => (
-		<Logo height="50px" />
+		<EtherpadIcon height="50px" />
 	),
 	title: "Etherpad",
 	description: "Real time collaboration.",
-}
+})
+
+const etherpadPlugin = generatePlugin(Etherpad)
 
 export default etherpadPlugin

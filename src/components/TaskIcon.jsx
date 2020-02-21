@@ -26,11 +26,4 @@ const TaskIcon = ({ color = "#FFF"}) =>{
 	)
 }
 
-
-
-
-
-
-
-
 export default TaskIcon;
