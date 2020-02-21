@@ -16,9 +16,11 @@ import { createImagePlugin } from "@edtr-io/plugin-image"
 import nexboardPlugin from "./nexboard"
 import etherpadPlugin from "./etherpad"
 import notesPlugin from "./notes"
+import lichtblickPlugin from "./lichtblick"
 
 import etherpadPluginPreview from "./etherpad/Preview"
 import nexboardPluginPreview from "./nexboard/Preview"
+import lichtblickPluginPreview from "./lichtblick/Preview"
 
 
 
@@ -96,6 +98,7 @@ export const plugins = {
 	geogebra: geogebraPlugin,
 	// inputExercise: inputExercisePlugin,
 	video: videoPlugin,
+	lichtblick: lichtblickPlugin,
 	// equations: equationsPlugin,
 	// anchor: anchorPlugin,
 	// nexboard: nexboardPlugin,
@@ -107,7 +110,8 @@ export const plugins = {
 export const previewPlugins = {
 	...plugins,
 	etherpad: etherpadPluginPreview,
-	nexboard: nexboardPluginPreview
+	nexboard: nexboardPluginPreview,
+	lichtblick: lichtblickPluginPreview,
 }
 
 
