@@ -5,9 +5,12 @@ import {
 	ListStateType, 
 	UploadHandler,
 	UploadStateType,
+	ChildStateType,
+	ChildStateTypeConfig,
 } from '@edtr-io/plugin';
 
-import { createRowsPlugin } from "@edtr-io/plugin-rows"
+import { createRowsPlugin, RowsConfig } from "@edtr-io/plugin-rows"
+console.log(RowsConfig);
 // import { anchorPlugin } from "@edtr-io/plugin-anchor"
 import { createBlockquotePlugin } from "@edtr-io/plugin-blockquote"
 import { createSpoilerPlugin } from "@edtr-io/plugin-spoiler"
@@ -18,8 +21,8 @@ import { createGeogebraPlugin } from "@edtr-io/plugin-geogebra"
 import { createVideoPlugin } from "@edtr-io/plugin-video"
 // import { inputExercisePlugin } from "@edtr-io/plugin-input-exercise"
 import { createFilesPlugin, parseFileType } from "@edtr-io/plugin-files"
-import x from "@edtr-io/plugin-files"
-console.log(x);
+console.log('####', createTextPlugin, parseFileType, ChildStateTypeConfig, ChildStateType);
+
 import { createImagePlugin } from "@edtr-io/plugin-image"
 // import { highlightPlugin } from "@edtr-io/plugin-highlight"
 // import { h5pPlugin } from "@edtr-io/plugin-h5p"
@@ -86,25 +89,42 @@ export function mockUploadImageHandler(file) {
 	})
 }
 
-const filesPlugin = createFilesPlugin({ upload: mockUploadFileHandler })
+const filesPlugin = createFilesPlugin({ 
+	upload: mockUploadFileHandler,
+	content: { plugin: "files" }, 
+})
+
 const imagePlugin = createImagePlugin({
 	upload: mockUploadImageHandler,
 	validate: validateFile,
 	secondInput: "description",
+	content: { plugin: "image" }
 })
 
 export const plugins = {
-	text: createTextPlugin,
+	rows: createRowsPlugin({
+		content: { plugin: "rows" }
+	}),
+	text: createTextPlugin({
+		context: { plugin: "text" }
+	}),
 	// notes: notesPlugin,
-	rows: createRowsPlugin,
-	blockquote: createBlockquotePlugin,
-	etherpad: etherpadPlugin,
-	image: imagePlugin, // has to be implemented before files
-	files: filesPlugin,
-	spoiler: createSpoilerPlugin,
-	geogebra: createGeogebraPlugin,
+	blockquote: createBlockquotePlugin({
+		content: { plugin: "blockquote" }
+	}),
+	// etherpad: etherpadPlugin,
+	// image: imagePlugin, 
+	// files: filesPlugin,
+	spoiler: createSpoilerPlugin({
+		content: { plugin: "spoiler" }
+	}),
+	geogebra: createGeogebraPlugin({
+		content: { plugin: "geogebra" }
+	}),
 	// inputExercise: inputExercisePlugin,
-	video: createVideoPlugin,
+	video: createVideoPlugin({
+		content: { plugin: "video" }
+	}),
 	// equations: equationsPlugin,
 	// anchor: anchorPlugin,
 	// nexboard: nexboardPlugin,
@@ -115,7 +135,7 @@ export const plugins = {
 
 export const previewPlugins = {
 	...plugins,
-	etherpad: etherpadPluginPreview,
+	// etherpad: etherpadPluginPreview,
 	// nexboard: nexboardPluginPreview
 }
 

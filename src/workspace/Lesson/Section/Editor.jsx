@@ -56,6 +56,7 @@ const getInitialDocValue = (section) => {
  * @param section
  * @param editing
  * @param onChange
+ * https://github.com/edtr-io/edtr-io/blob/master/api/core.api.md
  */
 export const Editor = (props) => {
 	const docValue = getInitialDocValue(props.section)
@@ -75,6 +76,11 @@ export const Editor = (props) => {
 			setInitialState(props.section.docValue)
 		}
 	}, [props.section.docValue])
+
+	// TODO: PluginToolbar, onError, DocumentEditor?, createStoreEnhancer?
+	// TODO: getKey, setKey
+
+	console.log('plugins', plugins);
 	
 	const editable = props.section.scopePermission === 'write' && props.editing;
 	return (
@@ -82,11 +88,11 @@ export const Editor = (props) => {
 			<Edtr
 				theme={createTheme(theme)}
 				plugins={plugins}
-				defaultPlugin={"text"}
 				editable={editable}
 				omitDragDropContext
 				initialState={initialState}
-				onChange={props.onChange}>
+				onChange={props.onChange}
+			>
 				{children}
 			</Edtr>
 		</EdtrWrapper>

@@ -31,10 +31,9 @@ export default class Editor extends React.Component {
 		return (
 			<EditorWrapper
 				expanded={this.props.expanded}
-				editing={this.props.editing}>
+			>
 				<Edtr
 					plugins={previewPlugins}
-					defaultPlugin={"text"}
 					editable={false}
 					omitDragDropContext
 					initialState={this.docValue}
