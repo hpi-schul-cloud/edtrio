@@ -1,3 +1,12 @@
+
+import {
+	EditorPlugin, 
+	EditorPluginProps, 
+	ListStateType, 
+	UploadHandler,
+	UploadStateType,
+} from '@edtr-io/plugin';
+
 import { createRowsPlugin } from "@edtr-io/plugin-rows"
 // import { anchorPlugin } from "@edtr-io/plugin-anchor"
 import { createBlockquotePlugin } from "@edtr-io/plugin-blockquote"
