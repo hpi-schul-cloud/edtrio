@@ -23,7 +23,6 @@
         "@edtr-io/plugin": "^0.52.0",
         "@edtr-io/plugin-anchor": "^0.52.0",
         "@edtr-io/plugin-blockquote": "^0.52.0",
-        "@edtr-io/plugin-equations": "^0.14.0",
         "@edtr-io/plugin-files": "^0.52.0",
         "@edtr-io/plugin-geogebra": "^0.52.0",
         "@edtr-io/plugin-highlight": "^0.52.1",

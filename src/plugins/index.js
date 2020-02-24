@@ -136,7 +136,7 @@ export const plugins = {
 	anchor: createAnchorPlugin({}),
 	// nexboard: nexboardPlugin,
 	singleMultipleChoice: createScMcExercisePlugin({
-		content: { plugin: "text" },
+	//	content: { plugin: "text" },
 		feedback: { plugin: "text" }
 	}),
 	highlight: createHighlightPlugin({}),
