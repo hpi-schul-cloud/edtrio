@@ -86,7 +86,6 @@ const SectionOverview = ({ store, dispatch }) => {
 	} = store;
 
 	function moveSection(fromIndex, toIndex) {
-		console.log(fromIndex, toIndex);
 		dispatch({ type: "SWAP_SECTIONS", payload: [fromIndex, toIndex] })
 	}
 

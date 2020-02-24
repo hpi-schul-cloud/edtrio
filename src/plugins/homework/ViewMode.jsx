@@ -56,7 +56,7 @@ export const ViewBase = ({state}) => {
 	)
 }
 
-export const View = ({state, editing}) => {
+export const ViewMode = ({state, editing}) => {
 	if (editing) {
 		 return (<ViewBase state={state} />)
 	} else {
@@ -68,4 +68,4 @@ export const View = ({state, editing}) => {
 	}
 }
 
-export default View;
+export default ViewMode;
