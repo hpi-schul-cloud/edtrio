@@ -37,7 +37,7 @@ const ErrorWrapper = styled.div`
 
     max-width: 250px;
 
-    z-index: 1000;
+    z-index: 13713;
 `
 
 const Error = () => {

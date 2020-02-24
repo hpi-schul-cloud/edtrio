@@ -12,9 +12,6 @@ function collect(monitor) {
 	}
 }
 
-const style = {
-	cursor: 'move',
-}
 
 const Outer = styled.div`
 	/* padding: 3px; */
@@ -26,7 +23,7 @@ const Outer = styled.div`
 
 	transition: 250ms all ease-in-out;
 	width: 100%;
-	
+
 	${props =>
 		!props.active
 			? css`
@@ -102,22 +99,13 @@ const Wrapper = styled.div`
 		)
 	}}
 
-    display: ${({ hidden }) => hidden && "none"};
-
 `
 
 const Preview = ({
-	store,
 	active,
 	section,
 	expanded,
-	index,
-	activeSectionIndex,
-	dispatch,
-	previewRef,
-	wrapperRef,
-	sourceOffset,
-	k,
+	onClick,
 	getSectionIndex,
 	moveSection
 }) => {
@@ -154,37 +142,25 @@ const Preview = ({
 		},
 	})
 
-	const dragStyle =
-        !isDragging || !isTouchDevice()
-        	? {}
-        	: {
-        		transform: sourceOffset
-        			? `translate(${sourceOffset.x}px, ${sourceOffset.y -
-                        wrapperRef.current.offsetTop}px)`
-        			: "",
-        	}
-	const opacity = isDragging ? 0 : 1
+	const dragStyles = {
+		opacity: isDragging ? 0 : 1,
+		cursor: isDragging ? 'auto' : 'move',
+	}
 	return (
 		<Outer
 			ref={node => drag(drop(node))}
-			active={store.view.activeSectionId === section._id}
+			active={active}
 			expanded={expanded}
-			editing={store.view.editing}
-			style={{...style, opacity}}>
+			style={dragStyles}>
 			<Wrapper
 				active={active}
 				visible={section.visible}
-				hidden={!section.visible && !store.view.editing}
 				expanded={expanded}
-				isDone={index <= activeSectionIndex}
-				onClick={() => {
-					dispatch(setActiveSection(section._id))
-				}}>
+				onClick={() => onClick(section)}>
 				{expanded && (
 					<Editor
-						key={k}
 						expanded={expanded}
-						editing={store.view.editing}
+						editing={false}
 						docValue={docValue}
 					/>
 				)}
