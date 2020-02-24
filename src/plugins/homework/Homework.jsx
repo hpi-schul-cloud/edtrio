@@ -10,8 +10,8 @@ import Input from "~/components/Input"
 import Flex from "~/components/Flex"
 import { serverApi } from "~/utils/api";
 
-import Edit from "./Edit"
-import View from "./View"
+import EditMode from "./EditMode"
+import ViewMode from "./ViewMode"
 import { setHomeworkState } from "./utils";
 
 const Homework = ({ focused, state, editable }) => {
@@ -34,9 +34,9 @@ const Homework = ({ focused, state, editable }) => {
 	}, [focused, homeworks])
 
 	if (focused){
-		return <Edit state={state} homeworks={homeworks} />
+		return <EditMode state={state} homeworks={homeworks} />
 	} else {
-		return <View state={state} editing={editable}/>
+		return <ViewMode state={state} editing={editable}/>
 	}
 }
 
