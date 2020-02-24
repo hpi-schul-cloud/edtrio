@@ -1,19 +1,21 @@
 import React, { useEffect, useState, useContext } from "react"
 import styled, { css } from "styled-components"
-import Heading from "~/components/Heading"
 
 import theme from "~/theme"
 
 import Preview from "./Preview"
 import Settings from "./Settings"
 import SidebarControls from "./SidebarControls"
-import { showSectionOverview } from "~/Contexts/view.actions"
+import { showSectionOverview , setActiveSection } from "~/Contexts/view.actions"
+
+import {useDrop} from 'react-dnd'
+
 
 const Wrapper = styled.div`
     left: 0;
     position: fixed;
     bottom: 0;
-    width: ${props => (props.expanded ? 220 : 50)}px;
+    min-width: 50px;
     height: calc(100vh - 62px);
     overflow: hidden;
     transition: 250ms all ease-in-out;
@@ -32,12 +34,7 @@ const Wrapper = styled.div`
 `
 
 const Previews = styled.div`
-    padding: ${props =>
-		props.editing && props.expanded
-			? "15px 30px 15px 5px"
-			: !props.expanded
-				? "15px 10px"
-				: "15px 30px 15px 0"};
+
     width: 100%;
     height: calc(100vh - 62px);
     overflow: auto;
@@ -76,41 +73,52 @@ function useResizeListener(store, dispatch) {
 	}, [store.view.sectionOverviewExpanded])
 }
 
+
+
 const SectionOverview = ({ store, dispatch }) => {
 	useResizeListener(store, dispatch)
-	const sections = store.sections
 	const {
-		sectionOverviewExpanded: expanded,
-		editing
-	} = store.view
+		sections,
+		view: {
+			sectionOverviewExpanded: expanded,
+			editing,
+		}
+	} = store;
 
 	function moveSection(fromIndex, toIndex) {
 		dispatch({ type: "SWAP_SECTIONS", payload: [fromIndex, toIndex] })
 	}
 
+	const getSectionIndex = id => {
+		return sections.findIndex(s => s._id === id)
+
+	}
+
+	const setSection = (section) => {
+		dispatch(setActiveSection(section._id))
+	}
+
+	const [, drop] = useDrop({ accept: 'Preview' })
 	return (
 		<React.Fragment>
-			<Wrapper expanded={expanded} editing={editing}>
-				<Previews editing={editing} expanded={expanded}>
+			<Wrapper expanded={expanded}>
+				<Previews ref={drop} expanded={expanded}>
 					{sections
 						.filter((section, index) => {
 							if (editing) return true
 							return section.visible
 						})
 						.map((section, index) => {
-							const editorKey =
-                                section._id +
-                                "-" +
-                                Math.round(new Date().getTime() / 5000)
 							return (
 								<Preview
-									k={editorKey}
-									store={store}
-									moveSection={moveSection}
 									dispatch={dispatch}
 									section={section}
-									index={index}
+									expanded={expanded}
+									active={store.view.activeSectionId === section._id}
 									key={section._id}
+									getSectionIndex={getSectionIndex}
+									moveSection={moveSection}
+									onClick={setSection}
 								/>
 							)
 						})}

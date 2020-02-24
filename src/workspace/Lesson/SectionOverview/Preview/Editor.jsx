@@ -6,9 +6,10 @@ import { Editor as Edtr } from "@edtr-io/core"
 import { previewPlugins } from "~/plugins"
 
 const EditorWrapper = styled.div`
+	padding: 20px;
     width: 850px;
     transform-origin: left top;
-    transform: ${props => props.expanded && "scale(0.15)"};
+    transform: ${props => props.expanded && "scale(0.2)"};
     overflow: hidden;
     user-select: none;
     * {
