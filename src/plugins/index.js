@@ -1,24 +1,24 @@
-import { rowsPlugin } from "@edtr-io/plugin-rows"
-import { anchorPlugin } from "@edtr-io/plugin-anchor"
-import { blockquotePlugin } from "@edtr-io/plugin-blockquote"
-import { spoilerPlugin } from "@edtr-io/plugin-spoiler"
-import { textPlugin } from "@edtr-io/plugin-text"
-import { scMcExercisePlugin } from "@edtr-io/plugin-sc-mc-exercise"
-import { equationsPlugin } from "@edtr-io/plugin-equations"
-import { geogebraPlugin } from "@edtr-io/plugin-geogebra"
-import { videoPlugin } from "@edtr-io/plugin-video"
-import { inputExercisePlugin } from "@edtr-io/plugin-input-exercise"
-import { createFilePlugin, parseFileType } from "@edtr-io/plugin-files"
+import { createRowsPlugin } from "@edtr-io/plugin-rows"
+// import { anchorPlugin } from "@edtr-io/plugin-anchor"
+import { createBlockquotePlugin } from "@edtr-io/plugin-blockquote"
+import { createSpoilerPlugin } from "@edtr-io/plugin-spoiler"
+import { createTextPlugin } from "@edtr-io/plugin-text"
+// import { scMcExercisePlugin } from "@edtr-io/plugin-sc-mc-exercise"
+// import { equationsPlugin } from "@edtr-io/plugin-equations"
+import { createGeogebraPlugin } from "@edtr-io/plugin-geogebra"
+import { createVideoPlugin } from "@edtr-io/plugin-video"
+// import { inputExercisePlugin } from "@edtr-io/plugin-input-exercise"
+import { createFilesPlugin, parseFileType } from "@edtr-io/plugin-files"
 import { createImagePlugin } from "@edtr-io/plugin-image"
 // import { highlightPlugin } from "@edtr-io/plugin-highlight"
 // import { h5pPlugin } from "@edtr-io/plugin-h5p"
 
-import nexboardPlugin from "./nexboard"
+// import nexboardPlugin from "./nexboard"
 import etherpadPlugin from "./etherpad"
-import notesPlugin from "./notes"
+// import notesPlugin from "./notes"
 
 import etherpadPluginPreview from "./etherpad/Preview"
-import nexboardPluginPreview from "./nexboard/Preview"
+// import nexboardPluginPreview from "./nexboard/Preview"
 
 
 
@@ -77,7 +77,7 @@ export function mockUploadImageHandler(file) {
 	})
 }
 
-const filesPlugin = createFilePlugin({ upload: mockUploadFileHandler })
+const filesPlugin = createFilesPlugin({ upload: mockUploadFileHandler })
 const imagePlugin = createImagePlugin({
 	upload: mockUploadImageHandler,
 	validate: validateFile,
@@ -85,17 +85,17 @@ const imagePlugin = createImagePlugin({
 })
 
 export const plugins = {
-	text: textPlugin,
+	text: createTextPlugin,
 	// notes: notesPlugin,
-	rows: rowsPlugin,
-	blockquote: blockquotePlugin,
+	rows: createRowsPlugin,
+	blockquote: createBlockquotePlugin,
 	etherpad: etherpadPlugin,
 	image: imagePlugin, // has to be implemented before files
 	files: filesPlugin,
-	spoiler: spoilerPlugin,
-	geogebra: geogebraPlugin,
+	spoiler: createSpoilerPlugin,
+	geogebra: createGeogebraPlugin,
 	// inputExercise: inputExercisePlugin,
-	video: videoPlugin,
+	video: createVideoPlugin,
 	// equations: equationsPlugin,
 	// anchor: anchorPlugin,
 	// nexboard: nexboardPlugin,
@@ -107,7 +107,7 @@ export const plugins = {
 export const previewPlugins = {
 	...plugins,
 	etherpad: etherpadPluginPreview,
-	nexboard: nexboardPluginPreview
+	// nexboard: nexboardPluginPreview
 }
 
 
