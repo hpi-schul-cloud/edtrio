@@ -7,14 +7,6 @@ import SettingsIcon from "~/assets/header-settings.svg"
 
 import Content from "./Content"
 
-const dd = styled(Flex)`
-    background-color: #af0437;
-    padding: 10px 0;
-    height: 100%;
-    margin-left: 15px;
-    cursor: pointer;
-`
-
 function useResizeListener(visible, setVisible, store) {
 	function resizeListener() {
 		if (visible && window.innerWidth < 1250) {
