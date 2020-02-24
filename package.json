@@ -10,7 +10,7 @@
         "dev:client": "parcel src/index.js -d dist/dev",
         "storybook": "start-storybook -p 9001 -c .storybook",
         "build": "node build/index.js && parcel build src/index.js",
-        "clean:start": "rd /s /q .cache && rd /s /q dist && npm run build && npm run dev",
+        "clean:start": "rd /s /q .cache && rd /s /q dist && npm run dev",
         "build:standalone": "parcel build src/index.html",
         "build:storybook": "build-storybook -c .storybook -o dist/storybook",
         "dist:demo": "rm -rf dist && npm run build:standalone && npm run build:storybook && firebase deploy",
@@ -18,7 +18,7 @@
         "test:watch": "ava --watch --verbose"
     },
     "dependencies": {
-        "@edtr-io/core": "^0.52.0",
+        "@edtr-io/core": "^0.52.1",
         "@edtr-io/editor-ui": "^0.52.0",
         "@edtr-io/plugin": "^0.52.0",
         "@edtr-io/plugin-anchor": "^0.52.0",
@@ -26,6 +26,7 @@
         "@edtr-io/plugin-equations": "^0.14.0",
         "@edtr-io/plugin-files": "^0.52.0",
         "@edtr-io/plugin-geogebra": "^0.52.0",
+        "@edtr-io/plugin-highlight": "^0.52.1",
         "@edtr-io/plugin-image": "^0.52.0",
         "@edtr-io/plugin-input-exercise": "^0.52.0",
         "@edtr-io/plugin-rows": "^0.52.0",

@@ -9,22 +9,21 @@ import {
 	ChildStateTypeConfig,
 } from '@edtr-io/plugin';
 
-import { createRowsPlugin, RowsConfig } from "@edtr-io/plugin-rows"
-console.log(RowsConfig);
-// import { anchorPlugin } from "@edtr-io/plugin-anchor"
+import { createRowsPlugin } from "@edtr-io/plugin-rows"
+
+import { createAnchorPlugin } from "@edtr-io/plugin-anchor"
 import { createBlockquotePlugin } from "@edtr-io/plugin-blockquote"
 import { createSpoilerPlugin } from "@edtr-io/plugin-spoiler"
 import { createTextPlugin } from "@edtr-io/plugin-text"
-// import { scMcExercisePlugin } from "@edtr-io/plugin-sc-mc-exercise"
-// import { equationsPlugin } from "@edtr-io/plugin-equations"
+import { createScMcExercisePlugin } from "@edtr-io/plugin-sc-mc-exercise"
+import { createEquationsPlugin } from "@edtr-io/plugin-equations"
 import { createGeogebraPlugin } from "@edtr-io/plugin-geogebra"
 import { createVideoPlugin } from "@edtr-io/plugin-video"
-// import { inputExercisePlugin } from "@edtr-io/plugin-input-exercise"
+import { createInputExercisePlugin } from "@edtr-io/plugin-input-exercise"
 import { createFilesPlugin, parseFileType } from "@edtr-io/plugin-files"
-console.log('####', createTextPlugin, parseFileType, ChildStateTypeConfig, ChildStateType);
 
 import { createImagePlugin } from "@edtr-io/plugin-image"
-// import { highlightPlugin } from "@edtr-io/plugin-highlight"
+import { createHighlightPlugin } from "@edtr-io/plugin-highlight"
 // import { h5pPlugin } from "@edtr-io/plugin-h5p"
 
 // import nexboardPlugin from "./nexboard"
@@ -91,14 +90,14 @@ export function mockUploadImageHandler(file) {
 
 const filesPlugin = createFilesPlugin({ 
 	upload: mockUploadFileHandler,
-	content: { plugin: "text" }, 
+	// content: { plugin: "text" }, 
 })
 
 const imagePlugin = createImagePlugin({
 	upload: mockUploadImageHandler,
 	validate: validateFile,
 	secondInput: "description",
-	content: { plugin: "text" }
+	// content: { plugin: "text" }
 })
 
 export const plugins = {
@@ -113,23 +112,34 @@ export const plugins = {
 		content: { plugin: "text" }
 	}),
 	// etherpad: etherpadPlugin,
-	// image: imagePlugin, 
-	// files: filesPlugin,
+//	image: imagePlugin, 
+//	files: filesPlugin,
 	spoiler: createSpoilerPlugin({
 		content: { plugin: "text" }
 	}),
 	geogebra: createGeogebraPlugin({
-	//	content: { plugin: "geogebra" }
+		content: { plugin: "text" }
 	}),
-	// inputExercise: inputExercisePlugin,
+	inputExercise: createInputExercisePlugin({
+		// type: { plugin: "text" },
+		// answers: { plugin: "text" },
+		// unit: { plugin: "text" },
+		content: { plugin: "text" },
+		feedback: { plugin: "text" }
+	}),
 	video: createVideoPlugin({
 	// 	content: { plugin: "video" }
 	}),
-	// equations: equationsPlugin,
-	// anchor: anchorPlugin,
+	equations: createEquationsPlugin({
+
+	}),
+	anchor: createAnchorPlugin({}),
 	// nexboard: nexboardPlugin,
-	// singleMultipleChoice: scMcExercisePlugin,
-	// highlight: highlightPlugin,
+	singleMultipleChoice: createScMcExercisePlugin({
+		content: { plugin: "text" },
+		feedback: { plugin: "text" }
+	}),
+	highlight: createHighlightPlugin({}),
 	// h5p: h5pPlugin,
 }
 

@@ -76,8 +76,8 @@ const Lesson = props => {
 	return (
 		<Wrapper>
 			<Header title={store.lesson.title} dispatch={dispatch} />
-			<Section />
 			<SectionOverview store={store} dispatch={dispatch} />
+			<Section />
 		</Wrapper>
 	)
 }
