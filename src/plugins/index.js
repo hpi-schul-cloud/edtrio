@@ -9,21 +9,19 @@ import {
 	ChildStateTypeConfig,
 } from '@edtr-io/plugin';
 
-import { createRowsPlugin } from "@edtr-io/plugin-rows"
-
-import { createAnchorPlugin } from "@edtr-io/plugin-anchor"
+import { createRowsPlugin, RowsConfig } from "@edtr-io/plugin-rows"
+// import { anchorPlugin } from "@edtr-io/plugin-anchor"
 import { createBlockquotePlugin } from "@edtr-io/plugin-blockquote"
 import { createSpoilerPlugin } from "@edtr-io/plugin-spoiler"
 import { createTextPlugin } from "@edtr-io/plugin-text"
 import { createScMcExercisePlugin } from "@edtr-io/plugin-sc-mc-exercise"
-import { createEquationsPlugin } from "@edtr-io/plugin-equations"
 import { createGeogebraPlugin } from "@edtr-io/plugin-geogebra"
 import { createVideoPlugin } from "@edtr-io/plugin-video"
 import { createInputExercisePlugin } from "@edtr-io/plugin-input-exercise"
 import { createFilesPlugin, parseFileType } from "@edtr-io/plugin-files"
 
 import { createImagePlugin } from "@edtr-io/plugin-image"
-import { createHighlightPlugin } from "@edtr-io/plugin-highlight"
+// import { highlightPlugin } from "@edtr-io/plugin-highlight"
 // import { h5pPlugin } from "@edtr-io/plugin-h5p"
 
 // import nexboardPlugin from "./nexboard"
@@ -31,6 +29,8 @@ import etherpadPlugin from "./etherpad"
 // import notesPlugin from "./notes"
 
 import etherpadPluginPreview from "./etherpad/Preview"
+console.log(RowsConfig);
+console.log('####', createTextPlugin, parseFileType, ChildStateTypeConfig, ChildStateType);
 // import nexboardPluginPreview from "./nexboard/Preview"
 
 function readFile(file) {
@@ -112,34 +112,30 @@ export const plugins = {
 		content: { plugin: "text" }
 	}),
 	// etherpad: etherpadPlugin,
-//	image: imagePlugin, 
-//	files: filesPlugin,
+	// image: imagePlugin,
+	// files: filesPlugin,
 	spoiler: createSpoilerPlugin({
 		content: { plugin: "text" }
 	}),
 	geogebra: createGeogebraPlugin({
-		content: { plugin: "text" }
+	//	content: { plugin: "geogebra" }
 	}),
-	inputExercise: createInputExercisePlugin({
-		// type: { plugin: "text" },
-		// answers: { plugin: "text" },
-		// unit: { plugin: "text" },
-		content: { plugin: "text" },
-		feedback: { plugin: "text" }
-	}),
+	/* inputExercise: createInputExercisePlugin({
+		feedback: { plugin: "text", confg: { placeholder: "Lösungshinweis" }}
+	}), */
 	video: createVideoPlugin({
-	// 	content: { plugin: "video" }
+	 	content: { plugin: "video" }
 	}),
-	equations: createEquationsPlugin({
-
-	}),
-	anchor: createAnchorPlugin({}),
+	// anchor: anchorPlugin,
 	// nexboard: nexboardPlugin,
 	singleMultipleChoice: createScMcExercisePlugin({
-	//	content: { plugin: "text" },
-		feedback: { plugin: "text" }
-	}),
-	highlight: createHighlightPlugin({}),
+		feedback: { plugin: "text", config: { placeholder: "Lösungshinweis" }},
+		content: { plugin: "text", config: { placeholder: "Antwort" }},
+		i18n: {
+		  answer: { addLabel: 'Antwort hinzufügen' }
+		}
+	  }),
+	// highlight: createHighlightPlugin({}),
 	// h5p: h5pPlugin,
 }
 
