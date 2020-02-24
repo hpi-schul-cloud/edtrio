@@ -16,7 +16,7 @@ const Wrapper = styled.div`
     position: fixed;
     bottom: 0;
     min-width: 50px;
-    height: calc(100vh - 62px);
+    height: calc(100vh - 55px);
     overflow: hidden;
     transition: 250ms all ease-in-out;
     background-color: rgba(69, 91, 106, 0.25);
