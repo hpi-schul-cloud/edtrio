@@ -18,6 +18,8 @@ import { createGeogebraPlugin } from "@edtr-io/plugin-geogebra"
 import { createVideoPlugin } from "@edtr-io/plugin-video"
 // import { inputExercisePlugin } from "@edtr-io/plugin-input-exercise"
 import { createFilesPlugin, parseFileType } from "@edtr-io/plugin-files"
+import x from "@edtr-io/plugin-files"
+console.log(x);
 import { createImagePlugin } from "@edtr-io/plugin-image"
 // import { highlightPlugin } from "@edtr-io/plugin-highlight"
 // import { h5pPlugin } from "@edtr-io/plugin-h5p"
@@ -28,8 +30,6 @@ import etherpadPlugin from "./etherpad"
 
 import etherpadPluginPreview from "./etherpad/Preview"
 // import nexboardPluginPreview from "./nexboard/Preview"
-
-
 
 function readFile(file) {
 	return new Promise(resolve => {
