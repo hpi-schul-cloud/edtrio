@@ -91,39 +91,39 @@ export function mockUploadImageHandler(file) {
 
 const filesPlugin = createFilesPlugin({ 
 	upload: mockUploadFileHandler,
-	content: { plugin: "files" }, 
+	content: { plugin: "text" }, 
 })
 
 const imagePlugin = createImagePlugin({
 	upload: mockUploadImageHandler,
 	validate: validateFile,
 	secondInput: "description",
-	content: { plugin: "image" }
+	content: { plugin: "text" }
 })
 
 export const plugins = {
 	rows: createRowsPlugin({
-		content: { plugin: "rows" }
+		content: { plugin: "text" }
 	}),
 	text: createTextPlugin({
-		context: { plugin: "text" }
+		// context: { plugin: "text" }
 	}),
 	// notes: notesPlugin,
 	blockquote: createBlockquotePlugin({
-		content: { plugin: "blockquote" }
+		content: { plugin: "text" }
 	}),
 	// etherpad: etherpadPlugin,
 	// image: imagePlugin, 
 	// files: filesPlugin,
 	spoiler: createSpoilerPlugin({
-		content: { plugin: "spoiler" }
+		content: { plugin: "text" }
 	}),
 	geogebra: createGeogebraPlugin({
-		content: { plugin: "geogebra" }
+	//	content: { plugin: "geogebra" }
 	}),
 	// inputExercise: inputExercisePlugin,
 	video: createVideoPlugin({
-		content: { plugin: "video" }
+	// 	content: { plugin: "video" }
 	}),
 	// equations: equationsPlugin,
 	// anchor: anchorPlugin,
