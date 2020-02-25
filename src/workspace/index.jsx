@@ -3,12 +3,12 @@ import Lesson from "./Lesson"
 import Feedback from "./Feedback"
 
 const Workspace = () => {
-    return (
-        <React.Fragment>
-            <Feedback />
-            <Lesson />
-        </React.Fragment>
-    )
+	return (
+		<React.Fragment>
+			<Feedback />
+			<Lesson />
+		</React.Fragment>
+	)
 }
 
 export default Workspace
