@@ -28,6 +28,10 @@ export const EdtrWrapper = styled.div`
 	font-size: 1.3rem;
 	line-height: 1.4;
 
+	svg{
+		font-size: 1.4rem
+	}
+
 	.fa-4x{
 		font-size: 3rem;
 	}
