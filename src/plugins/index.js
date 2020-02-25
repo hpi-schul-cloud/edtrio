@@ -33,6 +33,7 @@ import { createImagePlugin } from "@edtr-io/plugin-image"
 // import { createHighlightPlugin } from "@edtr-io/plugin-highlight"
 // import { h5pPlugin } from "@edtr-io/plugin-h5p"
 
+
 // import nexboardPlugin from "./nexboard"
 import etherpadPlugin from "./etherpad"
 
@@ -188,8 +189,11 @@ addPlugin({
 	title: 'Choice Exercise',
 	icon: createIcon(faDotCircle),
 	plugin: createScMcExercisePlugin({
-		content: { plugin: "text" },
-		feedback: { plugin: "text" }
+		content: { plugin: "text", config: { placeholder: "Lösungshinweis" }},
+		feedback: { plugin: "text", config: { placeholder: "Antwort" }},
+		i18n: {
+			answer: { addLabel: 'Antwort hinzufügen' }
+		}
 	})
 });
 
@@ -206,7 +210,9 @@ addPlugin({
 	name: 'text',
 	title: 'Text',
 	icon: createIcon(faParagraph),
-	plugin: createTextPlugin({})
+	plugin: createTextPlugin({
+		placeholder: 'Schreibe etwas oder füge ein neues Element hinzu ⊕'
+	})
 });
 
 addPlugin({
