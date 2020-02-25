@@ -218,13 +218,14 @@ addPlugin({
 	})
 });
 
-const meta = extractPlugins(pluginList);
-meta.rows = createRowsPlugin({
+const pList = extractPlugins(pluginList);
+pList.rows = createRowsPlugin({
 	content: { plugin: "text" },
 	plugins: extractMenü(pluginList)
 });
 
-export const plugins = meta;
+console.log(pList);
+export const plugins = pList;
 // TODOs etherpadPlugin, 
 // etherpad: etherpadPlugin, highlightPlugin, h5pPlugin,nexboardPlugin, createEquationsPlugin, serloInjectionPlugin, Markdown Table
 
