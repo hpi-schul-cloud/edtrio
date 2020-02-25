@@ -31,15 +31,15 @@ const StyledTextInput = styled.input`
 `
 
 const TextInput = ({ value, onChange, size = 20, readOnly, ...props }) => {
-    return (
-        <StyledTextInput
-            value={value}
-            onChange={evt => onChange(evt.target.value)}
-            size={size}
-            readOnly={readOnly}
-            {...props}
-        />
-    )
+	return (
+		<StyledTextInput
+			value={value}
+			onChange={evt => onChange(evt.target.value)}
+			size={size}
+			readOnly={readOnly}
+			{...props}
+		/>
+	)
 }
 
 export default TextInput
