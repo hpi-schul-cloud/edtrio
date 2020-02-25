@@ -9,8 +9,7 @@ import { editorWS } from "~/utils/socket"
 
 export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
 	async function bootstrap() {
-		console.info('courseId', courseId);
-		if (!courseId) {
+		if (courseId) {
 			try {
 				const user = await serverApi.get("/me")
 				dispatchUserAction({ type: "BOOTSTRAP_USER", payload: user })
