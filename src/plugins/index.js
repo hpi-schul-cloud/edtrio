@@ -124,6 +124,10 @@ addPlugin({
 	icon: createIcon(faFileAlt),
 	plugin: createFilesPlugin({
 		upload: mockUploadFileHandler,
+		i18n: {
+			label: "Datei hinzufügen",
+			failedUploadMessage: "Die ausgewählte Datei konnte nicht hinzugefügt werden."
+		}
 	})
 });
 
@@ -135,15 +139,45 @@ addPlugin({
 		upload: mockUploadImageHandler,
 		validate: validateFile,
 		secondInput: "description",
+		i18n: {
+			label: 'Bild hinzufügen',
+			failedUploadMessage: "Die ausgewählte Bild konnte nicht hinzugefügt werden.",
+			src: {
+				label: 'Bild Quelle',
+				placeholder: {
+					empty: 'https://beispiel.de/bild.png',
+					uploading: 'Bild wird hinzugefügt',
+					failed: 'Bild konnte nicht hinzugefügt werden',
+				},
+				retryLabel: 'Erneut versuchen',
+			},
+			link: {
+				href: {
+					label: 'Link',
+					placeholder: 'Link zum Bild',
+				},
+				openInNewTab: {
+					label: 'In neuem Fenster öffnen',
+				},
+			},
+			alt: {
+				label: 'Bildbeschreibung',
+				placeholder: 'Füge eine Beschreinung hinzu',
+			},
+			maxWidth: {
+				label: 'Maximale breite',
+				placeholder: '300px',
+			},
+		}
 	})
 });
 
-addPlugin({
+/* addPlugin({
 	name: 'anchor',
 	title: 'Anchor',
 	icon: createIcon(faAnchor),
 	plugin: createAnchorPlugin({}),
-});
+}); */
 
 addPlugin({
 	name: 'blockquote',
@@ -169,9 +203,30 @@ addPlugin({
 	icon: createIcon(faKeyboard),
 	plugin: createInputExercisePlugin({
 		content: { plugin: "text" },
-		feedback: { plugin: "text" }
+		feedback: { plugin: "text" },
+		i18n: {
+			// types: Record<InputExerciseType, string>,
+			type: {
+				label: 'Typ',
+			},
+			unit: {
+				label: 'Einheit',
+			},
+			answer: {
+				addLabel: 'Anwort hinzufügen',
+				value: {
+					placeholder: 'Füge ein Antwort hinzu',
+				},
+			},
+			inputPlaceholder: 'Antwort',
+			fallbackFeedback: {
+				correct: 'Richtig',
+				wrong: 'Falsch',
+			},
+		},
 	})
 });
+
 /*
 addPlugin({
 	name: 'multimediaExplanation',
@@ -220,7 +275,14 @@ addPlugin({
 	title: 'Video',
 	icon: createIcon(faFilm),
 	plugin: createVideoPlugin({
-		content: { plugin: "video" }
+		i18n: {
+			src: {
+				label: 'Quelle',
+			},
+			alt: {
+				label: 'Beschreibung',
+			},
+		},
 	})
 });
 
