@@ -39,6 +39,29 @@ import etherpadPlugin from "./etherpad"
 import etherpadPluginPreview from "./etherpad/Preview"
 // import nexboardPluginPreview from "./nexboard/Preview"
 
+const createPluginAdder = (list = []) => ({ name, title, icon, plugin }) => {
+	if (!name || !title || !icon || !plugin) {
+		// eslint-disable-next-line no-console
+		console.error('plugin metadata missing', { name, title, icon, plugin });
+	}
+	list.push({ name, title, icon, plugin });
+	return list;
+};
+
+const extractMenü = list => list.map(({title, icon, name}) => ({ title, icon, name }));
+
+const extractPlugins = list => {
+	const meta = {};
+	list.forEach(({ name, plugin }) => {
+		meta[name] = plugin;
+	});
+	return meta;
+};
+
+const pluginList = [];
+const addPlugin = createPluginAdder(pluginList);
+
+
 function readFile(file) {
 	return new Promise(resolve => {
 		const reader = new FileReader()
@@ -94,123 +117,116 @@ export function mockUploadImageHandler(file) {
 	})
 }
 
-const filesPlugin = createFilesPlugin({
-	upload: mockUploadFileHandler,
-})
+addPlugin({
+	name: 'filesPlugin',
+	title: 'Files',
+	icon: createIcon(faFileAlt),
+	plugin: createFilesPlugin({
+		upload: mockUploadFileHandler,
+	})
+});
 
-const imagePlugin = createImagePlugin({
-	upload: mockUploadImageHandler,
-	validate: validateFile,
-	secondInput: "description",
-})
+addPlugin({
+	name: 'image',
+	title: 'Image',
+	icon: createIcon(faImages),
+	plugin: createImagePlugin({
+		upload: mockUploadImageHandler,
+		validate: validateFile,
+		secondInput: "description",
+	})
+});
 
-export const plugins = {
-	rows: createRowsPlugin({
-		content: { plugin: "text" },
-		plugins: [
-			{
-			  name: 'anchor',
-			  title: 'Anchor',
-			  icon: createIcon(faAnchor)
-			},
-			{
-			  name: 'blockquote',
-			  title: 'Blockquote',
-			  icon: createIcon(faQuoteRight)
-			},
- 			{
-			  name: 'files',
-			  title: 'Files',
-			  icon: createIcon(faFileAlt)
-			},
-			{
-			  name: 'geogebra',
-			  title: 'GeoGebra',
-			  icon: createIcon(faCubes)
-			},
-/* 			{
-			  name: 'highlight',
-			  title: 'Code Highlight',
-			  icon: createIcon(faCode)
-			}, */
- 			{
-			  name: 'image',
-			  title: 'Image',
-			  icon: createIcon(faImages)
-			},
-			{
-			  name: 'inputExercise',
-			  title: 'Input Exercise',
-			  icon: createIcon(faKeyboard)
-			},
-			{
-			  name: 'multimediaExplanation',
-			  title: 'Multimedia Explanation',
-			  icon: createIcon(faPhotoVideo)
-			},
-			{
-			  name: 'scMcExercise',
-			  title: 'Choice Exercise',
-			  icon: createIcon(faDotCircle)
-			},
-/* 			{
-			  name: 'serloInjection',
-			  title: 'Serlo Content',
-			  icon: createIcon(faNewspaper)
-			}, */
-			{
-			  name: 'spoiler',
-			  title: 'Spoiler',
-			  icon: createIcon(faCaretSquareDown)
-			},
-/* 			{
-			  name: 'table',
-			  title: 'Markdown Table'
-			}, */
-			{
-			  name: 'text',
-			  title: 'Text',
-			  icon: createIcon(faParagraph)
-			},
-			{
-			  name: 'video',
-			  title: 'Video',
-			  icon: createIcon(faFilm)
-			}
-		  ]
-	}),
-	text: createTextPlugin({}),
-	blockquote: createBlockquotePlugin({
+addPlugin({
+	name: 'anchor',
+	title: 'Anchor',
+	icon: createIcon(faAnchor),
+	plugin: createAnchorPlugin({}),
+});
+
+addPlugin({
+	name: 'blockquote',
+	title: 'Blockquote',
+	icon: createIcon(faQuoteRight),
+	plugin: createBlockquotePlugin({
 		content: { plugin: "text" }
-	}),
-	// etherpad: etherpadPlugin,
-	image: imagePlugin,
-	files: filesPlugin,
-	spoiler: createSpoilerPlugin({
+	})
+});
+
+addPlugin({
+	name: 'geogebra',
+	title: 'GeoGebra',
+	icon: createIcon(faCubes),
+	plugin: createGeogebraPlugin({
 		content: { plugin: "text" }
-	}),
-	geogebra: createGeogebraPlugin({
-		content: { plugin: "text" }
-	}),
-	inputExercise: createInputExercisePlugin({
+	})
+});
+
+addPlugin({
+	name: 'inputExercise',
+	title: 'Input Exercise',
+	icon: createIcon(faKeyboard),
+	plugin: createInputExercisePlugin({
 		content: { plugin: "text" },
 		feedback: { plugin: "text" }
-	}),
-	video: createVideoPlugin({
+	})
+});
+/*
+addPlugin({
+	name: 'multimediaExplanation',
+	title: 'Multimedia Explanation',
+	icon: createIcon(faPhotoVideo),
+	plugin: createInputExercisePlugin({ // todo
+		content: { plugin: "text" },
+		feedback: { plugin: "text" }
+	})
+});
+*/
+
+addPlugin({
+	name: 'scMcExercise',
+	title: 'Choice Exercise',
+	icon: createIcon(faDotCircle),
+	plugin: createScMcExercisePlugin({
+		content: { plugin: "text" },
+		feedback: { plugin: "text" }
+	})
+});
+
+addPlugin({
+	name: 'spoiler',
+	title: 'Spoiler',
+	icon: createIcon(faCaretSquareDown),
+	plugin: createSpoilerPlugin({
+		content: { plugin: "text" }
+	})
+});
+
+addPlugin({
+	name: 'text',
+	title: 'Text',
+	icon: createIcon(faParagraph),
+	plugin: createTextPlugin({})
+});
+
+addPlugin({
+	name: 'video',
+	title: 'Video',
+	icon: createIcon(faFilm),
+	plugin: createVideoPlugin({
 		content: { plugin: "video" }
-	}),
-	// equations: createEquationsPlugin({
-	//
-	// }),
-	anchor: createAnchorPlugin({}),
-	// nexboard: nexboardPlugin,
-	singleMultipleChoice: createScMcExercisePlugin({
-		content: { plugin: "text" },
-		feedback: { plugin: "text" }
-	}),
-	// highlight: createHighlightPlugin({}),
-	// h5p: h5pPlugin,
-}
+	})
+});
+
+const meta = extractPlugins(pluginList);
+meta.rows = createRowsPlugin({
+	content: { plugin: "text" },
+	plugins: extractMenü(pluginList)
+});
+
+export const plugins = meta;
+// TODOs etherpadPlugin, 
+// etherpad: etherpadPlugin, highlightPlugin, h5pPlugin,nexboardPlugin, createEquationsPlugin, serloInjectionPlugin, Markdown Table
 
 export const previewPlugins = {
 	...plugins,
