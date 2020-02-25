@@ -1,14 +1,4 @@
 import {
-	EditorPlugin,
-	EditorPluginProps,
-	ListStateType,
-	UploadHandler,
-	UploadStateType,
-	ChildStateType,
-	ChildStateTypeConfig,
-} from '@edtr-io/plugin';
-
-import {
 	createIcon,
 	faAnchor,
 	faCaretSquareDown,
@@ -45,7 +35,6 @@ import { createImagePlugin } from "@edtr-io/plugin-image"
 
 // import nexboardPlugin from "./nexboard"
 import etherpadPlugin from "./etherpad"
-// import notesPlugin from "./notes"
 
 import etherpadPluginPreview from "./etherpad/Preview"
 // import nexboardPluginPreview from "./nexboard/Preview"
@@ -107,14 +96,12 @@ export function mockUploadImageHandler(file) {
 
 const filesPlugin = createFilesPlugin({
 	upload: mockUploadFileHandler,
-	// content: { plugin: "text" },
 })
 
 const imagePlugin = createImagePlugin({
 	upload: mockUploadImageHandler,
 	validate: validateFile,
 	secondInput: "description",
-	// content: { plugin: "text" }
 })
 
 export const plugins = {
@@ -131,7 +118,7 @@ export const plugins = {
 			  title: 'Blockquote',
 			  icon: createIcon(faQuoteRight)
 			},
-			{
+ 			{
 			  name: 'files',
 			  title: 'Files',
 			  icon: createIcon(faFileAlt)
@@ -146,7 +133,7 @@ export const plugins = {
 			  title: 'Code Highlight',
 			  icon: createIcon(faCode)
 			}, */
-			{
+ 			{
 			  name: 'image',
 			  title: 'Image',
 			  icon: createIcon(faImages)
@@ -192,16 +179,13 @@ export const plugins = {
 			}
 		  ]
 	}),
-	text: createTextPlugin({
-		// context: { plugin: "text" }
-	}),
-	// notes: notesPlugin,
+	text: createTextPlugin({}),
 	blockquote: createBlockquotePlugin({
 		content: { plugin: "text" }
 	}),
 	// etherpad: etherpadPlugin,
-	// image: imagePlugin,
-	// files: filesPlugin,
+	image: imagePlugin,
+	files: filesPlugin,
 	spoiler: createSpoilerPlugin({
 		content: { plugin: "text" }
 	}),
@@ -209,9 +193,6 @@ export const plugins = {
 		content: { plugin: "text" }
 	}),
 	inputExercise: createInputExercisePlugin({
-		// type: { plugin: "text" },
-		// answers: { plugin: "text" },
-		// unit: { plugin: "text" },
 		content: { plugin: "text" },
 		feedback: { plugin: "text" }
 	}),

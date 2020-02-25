@@ -77,10 +77,7 @@ export const Editor = (props) => {
 		}
 	}, [props.section.docValue])
 
-	// TODO: PluginToolbar, onError, DocumentEditor?, createStoreEnhancer?
-	// TODO: getKey, setKey
-
-	console.log('plugins', plugins);
+	// TODO: onError pass to Edtr 
 	
 	const editable = props.section.scopePermission === 'write' && props.editing;
 	return (
