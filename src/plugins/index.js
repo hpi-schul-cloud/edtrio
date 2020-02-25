@@ -1,8 +1,7 @@
-
 import {
-	EditorPlugin, 
-	EditorPluginProps, 
-	ListStateType, 
+	EditorPlugin,
+	EditorPluginProps,
+	ListStateType,
 	UploadHandler,
 	UploadStateType,
 	ChildStateType,
@@ -16,14 +15,14 @@ import { createBlockquotePlugin } from "@edtr-io/plugin-blockquote"
 import { createSpoilerPlugin } from "@edtr-io/plugin-spoiler"
 import { createTextPlugin } from "@edtr-io/plugin-text"
 import { createScMcExercisePlugin } from "@edtr-io/plugin-sc-mc-exercise"
-import { createEquationsPlugin } from "@edtr-io/plugin-equations"
+// import { createEquationsPlugin } from "@edtr-io/plugin-equations"
 import { createGeogebraPlugin } from "@edtr-io/plugin-geogebra"
 import { createVideoPlugin } from "@edtr-io/plugin-video"
 import { createInputExercisePlugin } from "@edtr-io/plugin-input-exercise"
 import { createFilesPlugin, parseFileType } from "@edtr-io/plugin-files"
 
 import { createImagePlugin } from "@edtr-io/plugin-image"
-import { createHighlightPlugin } from "@edtr-io/plugin-highlight"
+// import { createHighlightPlugin } from "@edtr-io/plugin-highlight"
 // import { h5pPlugin } from "@edtr-io/plugin-h5p"
 
 // import nexboardPlugin from "./nexboard"
@@ -88,9 +87,9 @@ export function mockUploadImageHandler(file) {
 	})
 }
 
-const filesPlugin = createFilesPlugin({ 
+const filesPlugin = createFilesPlugin({
 	upload: mockUploadFileHandler,
-	// content: { plugin: "text" }, 
+	// content: { plugin: "text" },
 })
 
 const imagePlugin = createImagePlugin({
@@ -112,8 +111,8 @@ export const plugins = {
 		content: { plugin: "text" }
 	}),
 	// etherpad: etherpadPlugin,
-//	image: imagePlugin, 
-//	files: filesPlugin,
+	// image: imagePlugin,
+	// files: filesPlugin,
 	spoiler: createSpoilerPlugin({
 		content: { plugin: "text" }
 	}),
@@ -128,18 +127,18 @@ export const plugins = {
 		feedback: { plugin: "text" }
 	}),
 	video: createVideoPlugin({
-	// 	content: { plugin: "video" }
+		content: { plugin: "video" }
 	}),
-	equations: createEquationsPlugin({
-
-	}),
+	// equations: createEquationsPlugin({
+	//
+	// }),
 	anchor: createAnchorPlugin({}),
 	// nexboard: nexboardPlugin,
 	singleMultipleChoice: createScMcExercisePlugin({
-	//	content: { plugin: "text" },
+		content: { plugin: "text" },
 		feedback: { plugin: "text" }
 	}),
-	highlight: createHighlightPlugin({}),
+	// highlight: createHighlightPlugin({}),
 	// h5p: h5pPlugin,
 }
 
@@ -148,5 +147,3 @@ export const previewPlugins = {
 	// etherpad: etherpadPluginPreview,
 	// nexboard: nexboardPluginPreview
 }
-
-
