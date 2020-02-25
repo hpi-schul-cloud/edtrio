@@ -39,21 +39,21 @@ import etherpadPlugin from "./etherpad"
 import etherpadPluginPreview from "./etherpad/Preview"
 // import nexboardPluginPreview from "./nexboard/Preview"
 
-const createPluginAdder = (list = []) => ({ name, title, icon, plugin }) => {
+const createPluginAdder = (list = []) => ({ name, title, icon, plugin, preview }) => {
 	if (!name || !title || !icon || !plugin) {
 		// eslint-disable-next-line no-console
 		console.error('plugin metadata missing', { name, title, icon, plugin });
 	}
-	list.push({ name, title, icon, plugin });
+	list.push({ name, title, icon, plugin, preview });
 	return list;
 };
 
 const extractMenü = list => list.map(({title, icon, name}) => ({ title, icon, name }));
 
-const extractPlugins = list => {
+const extractPlugins = (list, forPreview = false) => {
 	const meta = {};
-	list.forEach(({ name, plugin }) => {
-		meta[name] = plugin;
+	list.forEach(({ name, plugin, preview}) => {
+		meta[name] = forPreview ? (preview || plugin) : plugin;
 	});
 	return meta;
 };
@@ -224,13 +224,16 @@ pList.rows = createRowsPlugin({
 	plugins: extractMenü(pluginList)
 });
 
+const previewList = extractPlugins(pluginList, true);
+previewList.rows = createRowsPlugin({
+	content: { plugin: "text" }
+	// without plugins menü
+});
+
 console.log(pList);
+console.log(previewList);
 export const plugins = pList;
 // TODOs etherpadPlugin, 
 // etherpad: etherpadPlugin, highlightPlugin, h5pPlugin,nexboardPlugin, createEquationsPlugin, serloInjectionPlugin, Markdown Table
 
-export const previewPlugins = {
-	...plugins,
-	// etherpad: etherpadPluginPreview,
-	// nexboard: nexboardPluginPreview
-}
+export const previewPlugins = previewList;
