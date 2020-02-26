@@ -301,8 +301,6 @@ previewList.rows = createRowsPlugin({
 	// without plugins menü
 });
 
-console.log(pList);
-console.log(previewList);
 export const plugins = pList;
 // TODOs etherpadPlugin, 
 // etherpad: etherpadPlugin, highlightPlugin, h5pPlugin,nexboardPlugin, createEquationsPlugin, serloInjectionPlugin, Markdown Table
