@@ -1,16 +1,18 @@
 import React from "react"
 import styled from "styled-components"
 
-import Flex from "~/components/Flex"
-
+import BaseButton from "~/components/Button/BaseButton"
+import ArrowIcon from "~/assets/arrow-back.svg"
+/*
 const StyledBack = styled(Flex)`
     background-color: #af0437;
     padding: 10px;
     height: 100%;
     cursor: pointer;
 `
+*/
 
-const Back = () => {
+const Back = ({theme}) => {
 	const currentUrl = window.location.href
 	const currentBaseURL = (/^((https|http):\/\/[\w\d:.-]+)/.exec(currentUrl) || [])[0]
 	const regexResult = /courses\/([a-f0-9]{24})\/topics\/([a-f0-9]{24})/.exec(currentUrl)
@@ -21,18 +23,13 @@ const Back = () => {
 	}
 
 	return (
-		<StyledBack
-			alignCenter
-			justifyCenter
+		<BaseButton
+			theme={theme}
 			onClick={() => {
 				window.location.href = jumpUrl
 			}}>
-			<img
-				src={require("~/assets/arrow-back.svg")}
-				height="42px"
-				alt=""
-			/>
-		</StyledBack>
+			<ArrowIcon height="42px"/>
+		</BaseButton>
 	)
 }
 

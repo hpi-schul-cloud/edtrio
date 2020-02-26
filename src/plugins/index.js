@@ -36,9 +36,12 @@ import { createImagePlugin } from "@edtr-io/plugin-image"
 
 // import nexboardPlugin from "./nexboard"
 import etherpadPlugin from "./etherpad"
+import homework from "./homework"
+
 
 import etherpadPluginPreview from "./etherpad/Preview"
 // import nexboardPluginPreview from "./nexboard/Preview"
+import homeworkPreview from "./homework/Preview"
 
 const createPluginAdder = (list = []) => ({ name, title, icon, plugin, preview }) => {
 	if (!name || !title || !icon || !plugin) {

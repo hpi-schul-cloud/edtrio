@@ -5,6 +5,8 @@ import qs from "qs"
 import Action from "~/components/Action"
 import Flex from "~/components/Flex"
 
+import EyeSVG from "~/assets/eye-red.svg"
+
 const Wrapper = styled(Flex)`
     padding: 15px;
     right: 0;
@@ -32,34 +34,33 @@ const ActionWrapper = styled.div`
 const StyledAction = styled(Action)`
     display: flex;
     align-items: center;
+    cursor: pointer;
 `
 
-const StyledIcon = styled.img`
-    width: 24px;
-    cursor: pointer;
-    margin-left: 10px;
+const StyledText = styled.span`
+    margin-right: 7px;
 `
 
 const Settings = ({ store, visible }) => {
-    const q = qs.parse(window.location.search, { ignoreQueryPrefix: true })
+	const q = qs.parse(window.location.search, { ignoreQueryPrefix: true })
 
-    const studentQuery = qs.stringify({ ...q, student_view: true })
+	const studentQuery = qs.stringify({ ...q, student_view: true })
 
-    return (
-        <Wrapper column visible={visible} alignEnd>
-            {!store.studentView && (
-                <ActionWrapper>
-                    <StyledAction
-                        to={`${window.location.pathname}?${studentQuery}`}>
-                        Schüleransicht
-                        <StyledIcon src={require("~/assets/eye-red.svg")} />
-                    </StyledAction>
-                </ActionWrapper>
-            )}
-        </Wrapper>
-    )
-    // code that is uses later
-    /*
+	return (
+		<Wrapper column visible={visible} alignEnd>
+			{!store.studentView && (
+				<ActionWrapper>
+					<StyledAction
+						to={`${window.location.pathname}?${studentQuery}`}>
+						<StyledText>Schüleransicht</StyledText> 
+						<EyeSVG width="24px"/>
+					</StyledAction>
+				</ActionWrapper>
+			)}
+		</Wrapper>
+	)
+	// code that is uses later
+	/*
     return (
         <Wrapper column visible={visible} alignEnd>
             <ActionWrapper>
