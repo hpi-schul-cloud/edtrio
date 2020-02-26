@@ -14,11 +14,11 @@ import {
 	faPhotoVideo,
 	faQuoteRight
 } from '@edtr-io/ui'
-  
+
 
 import { createRowsPlugin } from "@edtr-io/plugin-rows"
 
-import { createAnchorPlugin } from "@edtr-io/plugin-anchor"
+// import { createAnchorPlugin } from "@edtr-io/plugin-anchor"
 import { createBlockquotePlugin } from "@edtr-io/plugin-blockquote"
 import { createSpoilerPlugin } from "@edtr-io/plugin-spoiler"
 import { createTextPlugin } from "@edtr-io/plugin-text"
@@ -36,23 +36,23 @@ import { createImagePlugin } from "@edtr-io/plugin-image"
 
 // import nexboardPlugin from "./nexboard"
 import etherpadPlugin from "./etherpad"
-import homework from "./homework"
+import homework, {SizedHomeworkIcon} from "./homework"
 
 
 import etherpadPluginPreview from "./etherpad/Preview"
 // import nexboardPluginPreview from "./nexboard/Preview"
 import homeworkPreview from "./homework/Preview"
 
-const createPluginAdder = (list = []) => ({ name, title, icon, plugin, preview }) => {
+const createPluginAdder = (list = []) => ({ name, title, icon, description, plugin, preview, ...other }) => {
 	if (!name || !title || !icon || !plugin) {
 		// eslint-disable-next-line no-console
 		console.error('plugin metadata missing', { name, title, icon, plugin });
 	}
-	list.push({ name, title, icon, plugin, preview });
+	list.push({ name, title, icon, description, plugin, preview, ...other });
 	return list;
 };
 
-const extractMenü = list => list.map(({title, icon, name}) => ({ title, icon, name }));
+const extractMenü = list => list.map(({title, icon, name, description}) => ({ title, icon, name, description}));
 
 const extractPlugins = (list, forPreview = false) => {
 	const meta = {};
@@ -123,8 +123,9 @@ export function mockUploadImageHandler(file) {
 
 addPlugin({
 	name: 'filesPlugin',
-	title: 'Files',
+	title: 'Dateien',
 	icon: createIcon(faFileAlt),
+	description: 'Ein Plugin für den Upload von beliebigen Dateien.',
 	plugin: createFilesPlugin({
 		upload: mockUploadFileHandler,
 		i18n: {
@@ -136,8 +137,9 @@ addPlugin({
 
 addPlugin({
 	name: 'image',
-	title: 'Image',
+	title: 'Bild',
 	icon: createIcon(faImages),
+	description: 'Lade Bilder hoch oder verwende Bilder, die bereits online sind.',
 	plugin: createImagePlugin({
 		upload: mockUploadImageHandler,
 		validate: validateFile,
@@ -184,8 +186,9 @@ addPlugin({
 
 addPlugin({
 	name: 'blockquote',
-	title: 'Blockquote',
+	title: 'Zitat',
 	icon: createIcon(faQuoteRight),
+	description: 'Erzeuge eingerückten Text, zum Beispiel für Zitate.',
 	plugin: createBlockquotePlugin({
 		content: { plugin: "text" }
 	})
@@ -195,6 +198,7 @@ addPlugin({
 	name: 'geogebra',
 	title: 'GeoGebra',
 	icon: createIcon(faCubes),
+	description: 'Binde Applets von Geogebratube via Link oder ID ein.',
 	plugin: createGeogebraPlugin({
 		content: { plugin: "text" }
 	})
@@ -202,8 +206,9 @@ addPlugin({
 
 addPlugin({
 	name: 'inputExercise',
-	title: 'Input Exercise',
+	title: 'Eingabefeld',
 	icon: createIcon(faKeyboard),
+	description: 'Füge deiner Aufgabe ein Eingabefeld für die Lernenden hinzu.',
 	plugin: createInputExercisePlugin({
 		content: { plugin: "text" },
 		feedback: { plugin: "text" },
@@ -244,8 +249,9 @@ addPlugin({
 
 addPlugin({
 	name: 'scMcExercise',
-	title: 'Choice Exercise',
+	title: 'Auswahlaufgabe',
 	icon: createIcon(faDotCircle),
+	description: 'Füge deiner Aufgabe mehrere Single- oder Multiplechoice-Antworten hinzu.',
 	plugin: createScMcExercisePlugin({
 		content: { plugin: "text", config: { placeholder: "Lösungshinweis" }},
 		feedback: { plugin: "text", config: { placeholder: "Antwort" }},
@@ -258,6 +264,7 @@ addPlugin({
 addPlugin({
 	name: 'spoiler',
 	title: 'Spoiler',
+	description: 'In diese ausklappbaren Box kannst du zum Beispiel Exkurse hinzufügen.',
 	icon: createIcon(faCaretSquareDown),
 	plugin: createSpoilerPlugin({
 		content: { plugin: "text" }
@@ -267,6 +274,7 @@ addPlugin({
 addPlugin({
 	name: 'text',
 	title: 'Text',
+	description: 'Schreibe Text und Matheformeln und formatiere sie.',
 	icon: createIcon(faParagraph),
 	plugin: createTextPlugin({
 		placeholder: 'Schreibe etwas oder füge ein neues Element hinzu ⊕'
@@ -276,6 +284,7 @@ addPlugin({
 addPlugin({
 	name: 'video',
 	title: 'Video',
+	description: 'Binde Videos von Youtube, Vimeo, Wikimedia und BR ein.',
 	icon: createIcon(faFilm),
 	plugin: createVideoPlugin({
 		i18n: {
@@ -288,6 +297,17 @@ addPlugin({
 		},
 	})
 });
+
+
+
+addPlugin({
+	name: 'homework',
+	title: 'Aufgabe',
+	icon: SizedHomeworkIcon,
+	description: "Binde eine Aufgabe aus dem Kurs ein.",
+	plugin: homework,
+	preview: homeworkPreview,
+})
 
 const pList = extractPlugins(pluginList);
 pList.rows = createRowsPlugin({
@@ -302,7 +322,7 @@ previewList.rows = createRowsPlugin({
 });
 
 export const plugins = pList;
-// TODOs etherpadPlugin, 
+// TODOs etherpadPlugin,
 // etherpad: etherpadPlugin, highlightPlugin, h5pPlugin,nexboardPlugin, createEquationsPlugin, serloInjectionPlugin, Markdown Table
 
 export const previewPlugins = previewList;
