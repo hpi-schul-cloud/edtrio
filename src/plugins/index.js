@@ -285,6 +285,8 @@ addPlugin({
 		},
 	})
 });
+// TODOs etherpadPlugin, 
+// etherpad: etherpadPlugin, highlightPlugin, h5pPlugin,nexboardPlugin, createEquationsPlugin, serloInjectionPlugin, Markdown Table
 
 const pList = extractPlugins(pluginList);
 pList.rows = createRowsPlugin({
@@ -294,14 +296,9 @@ pList.rows = createRowsPlugin({
 
 const previewList = extractPlugins(pluginList, true);
 previewList.rows = createRowsPlugin({
-	content: { plugin: "text" }
-	// without plugins menü
+	content: { plugin: "text" },
+	plugins: []
 });
 
-console.log(pList);
-console.log(previewList);
 export const plugins = pList;
-// TODOs etherpadPlugin, 
-// etherpad: etherpadPlugin, highlightPlugin, h5pPlugin,nexboardPlugin, createEquationsPlugin, serloInjectionPlugin, Markdown Table
-
 export const previewPlugins = previewList;
