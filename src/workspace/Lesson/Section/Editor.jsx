@@ -49,12 +49,6 @@ export const EdtrWrapper = styled.div`
 	}
 `
 
-const getInitialDocValue = (section) => {
-	const { docValue } = section;
-	// if error try catch
-	return (docValue && Object.keys(docValue).length) ? docValue : { plugin: "rows" }
-}
-
 /**
  * props
  * @param section
@@ -63,17 +57,16 @@ const getInitialDocValue = (section) => {
  * https://github.com/edtr-io/edtr-io/blob/master/api/core.api.md
  */
 export const Editor = (props) => {
-	const docValue = getInitialDocValue(props.section)
 	const children = React.useCallback((document) => {
 		return (
 			<PlainEditorContainerInner
-				docValue={docValue}>
+				docValue={props.section.docValue}>
 				{document}
 			</PlainEditorContainerInner>
 		)
 	})
-	
-	const [initialState, setInitialState] = useState(docValue)
+
+	const [initialState, setInitialState] = useState(props.section.docValue)
 	useEffect(() => {
 		// if the user not in write mode, the edtr is updating
 		if(!props.editing){
@@ -81,9 +74,10 @@ export const Editor = (props) => {
 		}
 	}, [props.section.docValue])
 
-	// TODO: onError pass to Edtr 
-	
+	// TODO: onError pass to Edtr
+
 	const editable = props.section.scopePermission === 'write' && props.editing;
+
 	return (
 		<EdtrWrapper>
 			<Edtr
