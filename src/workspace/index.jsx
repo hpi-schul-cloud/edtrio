@@ -1,14 +1,12 @@
-import React, { useEffect } from "react"
-import Lesson from "./Lesson"
-import Feedback from "./Feedback"
+import React, { useEffect } from "react";
+import Lesson from "./Lesson";
 
 const Workspace = () => {
 	return (
 		<React.Fragment>
-			<Feedback />
 			<Lesson />
 		</React.Fragment>
-	)
-}
+	);
+};
 
-export default Workspace
+export default Workspace;
