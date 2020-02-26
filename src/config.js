@@ -4,12 +4,14 @@ const config = {
 	EDITOR_SOCKET_URL: process.env.EDITOR_SOCKET_URL || "ws://localhost:4001",
 	HOMEWORK_URI: process.env.HOMEWORK_URI || "/homework",
 
+
 	breakpoints: {
 		tablet: 750,
 		desktop: 991,
 		desktopLg: 1200,
 	},
-}
+};
+
 // eslint-disable-next-line no-console
-console.info('config', config)
-export default config
+console.info("config", config);
+export default config;
