@@ -5,10 +5,18 @@ export const TOGGLE_SECTION_OVERVIEW = "TOGGEL_SECTION_OVERVIEW"
 export const TOGGLE_SECTION_SETTINGS = "TOGGLE_SECTION_SETTINGS"
 
 
-export const setActiveSection = (sectionId) => ({
-	type: SET_ACTIVE_SECTION,
-	payload: sectionId
-})
+export const setActiveSection = (sectionId) => ({state, dispatch}) => {
+
+	if (state.view.activeSectionId === sectionId) {
+		dispatch(showSectionSettings(!state.view.showSectionSettings))
+	} else {
+		dispatch(showSectionSettings(false))
+		dispatch({
+			type: SET_ACTIVE_SECTION,
+			payload: sectionId
+		})
+	}
+}
 
 
 /**

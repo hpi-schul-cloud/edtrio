@@ -16,11 +16,12 @@ import { createImagePlugin } from "@edtr-io/plugin-image"
 import nexboardPlugin from "./nexboard"
 import etherpadPlugin from "./etherpad"
 import notesPlugin from "./notes"
+import homework from "./homework"
+
 
 import etherpadPluginPreview from "./etherpad/Preview"
 import nexboardPluginPreview from "./nexboard/Preview"
-
-
+import homeworkPreview from "./homework/Preview"
 
 function readFile(file) {
 	return new Promise(resolve => {
@@ -94,12 +95,13 @@ export const plugins = {
 	files: filesPlugin,
 	spoiler: spoilerPlugin,
 	geogebra: geogebraPlugin,
-	// inputExercise: inputExercisePlugin,
+	inputExercise: inputExercisePlugin,
 	video: videoPlugin,
+	homework,
 	// equations: equationsPlugin,
 	// anchor: anchorPlugin,
 	// nexboard: nexboardPlugin,
-	// singleMultipleChoice: scMcExercisePlugin,
+	singleMultipleChoice: scMcExercisePlugin,
 	// highlight: highlightPlugin,
 	// h5p: h5pPlugin,
 }
@@ -107,7 +109,8 @@ export const plugins = {
 export const previewPlugins = {
 	...plugins,
 	etherpad: etherpadPluginPreview,
-	nexboard: nexboardPluginPreview
+	nexboard: nexboardPluginPreview,
+	homework: homeworkPreview,
 }
 
 

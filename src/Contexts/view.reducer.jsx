@@ -48,7 +48,8 @@ export function viewReducer(state = viewInitialState, { type, payload }) {
 	case ADD_SECTION:
 		return {
 			...state,
-			activeSectionId: payload._id
+			activeSectionId: payload._id,
+			showSectionSettings: false,
 		}
 
 	case REPLACE_ADDED_SECTION_ID:
