@@ -19,13 +19,13 @@ const Banner = styled.div`
 	${(props) =>
 		props.expanded
 			? css`
-					padding: 0 240px 0 40px;
-					margin: -13px -38px 15px;
-					margin-left: 220px;
+					padding: 0 278px 0 40px;
+					margin: -20px -38px 15px;
+					margin-left: 240px;
 			  `
 			: css`
 					padding: 0px 18px 0 92px;
-					margin: -13px 1px 15px;
+					margin: -20px 1px 15px;
 			  `}
 `;
 
