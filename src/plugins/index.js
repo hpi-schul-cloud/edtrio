@@ -16,6 +16,8 @@ import {
 } from '@edtr-io/ui'
 
 
+
+
 import { createRowsPlugin } from "@edtr-io/plugin-rows"
 
 // import { createAnchorPlugin } from "@edtr-io/plugin-anchor"
@@ -35,11 +37,12 @@ import { createImagePlugin } from "@edtr-io/plugin-image"
 
 
 // import nexboardPlugin from "./nexboard"
-import etherpadPlugin from "./etherpad"
+import etherpadPlugin, {SizedEtherpadIcon} from "./etherpad"
+import etherpadPluginPreview from "./etherpad/Preview"
 import homework, {SizedHomeworkIcon} from "./homework"
 
 
-import etherpadPluginPreview from "./etherpad/Preview"
+
 // import nexboardPluginPreview from "./nexboard/Preview"
 import homeworkPreview from "./homework/Preview"
 
@@ -71,8 +74,7 @@ function readFile(file) {
 		const reader = new FileReader()
 		reader.onload = function(e) {
 			const dataUrl = e.target.result
-			// simulate uploadtime
-			setTimeout(() => resolve({ file, dataUrl }), 1000)
+			resolve({ file, dataUrl });
 		}
 
 		reader.readAsDataURL(file)
@@ -122,7 +124,7 @@ export function mockUploadImageHandler(file) {
 }
 
 addPlugin({
-	name: 'filesPlugin',
+	name: 'files',
 	title: 'Dateien',
 	icon: createIcon(faFileAlt),
 	description: 'Ein Plugin für den Upload von beliebigen Dateien.',
@@ -298,7 +300,14 @@ addPlugin({
 	})
 });
 
-
+addPlugin({
+	name: 'etherpad',
+	title: 'Etherpad',
+	icon: SizedEtherpadIcon,
+	description: 'Real time collaboration',
+	plugin: etherpadPlugin,
+	preview: etherpadPluginPreview
+})
 
 addPlugin({
 	name: 'homework',
@@ -312,13 +321,15 @@ addPlugin({
 const pList = extractPlugins(pluginList);
 pList.rows = createRowsPlugin({
 	content: { plugin: "text" },
-	plugins: extractMenü(pluginList)
+	plugins: extractMenü(pluginList),
+	// onPaste: (data) => console.log(data)
 });
 
 const previewList = extractPlugins(pluginList, true);
 previewList.rows = createRowsPlugin({
-	content: { plugin: "text" }
+	content: { plugin: "text" },
 	// without plugins menü
+	plugins: []
 });
 
 export const plugins = pList;

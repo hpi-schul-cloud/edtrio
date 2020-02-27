@@ -97,7 +97,7 @@ export default Editor
 
 /**
  * props
- * @param docValue 
+ * @param docValue
  */
 function PlainEditorContainerInner(props) {
 	const dispatch = useScopedDispatch()
