@@ -28,6 +28,10 @@ export const EdtrWrapper = styled.div`
 	font-size: 1.3rem;
 	line-height: 1.4;
 
+	svg{
+		font-size: 1.4rem
+	}
+
 	.fa-4x{
 		font-size: 3rem;
 	}
@@ -45,48 +49,45 @@ export const EdtrWrapper = styled.div`
 	}
 `
 
-const getInitialDocValue = (section) => {
-	const { docValue } = section;
-	// if error try catch
-	return (docValue && Object.keys(docValue).length) ? docValue : { plugin: "rows" }
-}
-
 /**
  * props
  * @param section
  * @param editing
  * @param onChange
+ * https://github.com/edtr-io/edtr-io/blob/master/api/core.api.md
  */
 export const Editor = (props) => {
-	const docValue = getInitialDocValue(props.section)
 	const children = React.useCallback((document) => {
 		return (
 			<PlainEditorContainerInner
-				docValue={docValue}>
+				docValue={props.section.docValue}>
 				{document}
 			</PlainEditorContainerInner>
 		)
 	})
-	
-	const [initialState, setInitialState] = useState(docValue)
+
+	const [initialState, setInitialState] = useState(props.section.docValue)
 	useEffect(() => {
 		// if the user not in write mode, the edtr is updating
 		if(!props.editing){
 			setInitialState(props.section.docValue)
 		}
 	}, [props.section.docValue])
-	
+
+	// TODO: onError pass to Edtr
+
 	const editable = props.section.scopePermission === 'write' && props.editing;
+
 	return (
 		<EdtrWrapper>
 			<Edtr
 				theme={createTheme(theme)}
 				plugins={plugins}
-				defaultPlugin={"text"}
 				editable={editable}
 				omitDragDropContext
 				initialState={initialState}
-				onChange={props.onChange}>
+				onChange={props.onChange}
+			>
 				{children}
 			</Edtr>
 		</EdtrWrapper>
@@ -96,7 +97,7 @@ export default Editor
 
 /**
  * props
- * @param docValue 
+ * @param docValue
  */
 function PlainEditorContainerInner(props) {
 	const dispatch = useScopedDispatch()

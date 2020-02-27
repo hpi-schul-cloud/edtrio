@@ -26,7 +26,7 @@ const Wrapper = styled(Flex)`
     width: 100vw;
     position: fixed;
     left: 0;
-    top: 62px;
+    top: 55px;
     padding: 10px 15px;
     z-index: 6;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.18);
@@ -39,7 +39,6 @@ const buttonTheme = {
 const Icon = styled.img`
     cursor: pointer;
     margin-right: 25px;
-    
 
     &:last-child {
         margin-right: 0;
@@ -101,11 +100,12 @@ const Settings = () => {
 						confirmDelete={confirmDelete}
 						renderIcon={openModal => {
 							return (
-								<BaseButton theme={buttonTheme}><TrashIcon
-									isOnly={isOnly}
-									visible
+								<BaseButton
 									onClick={e => !isOnly && openModal(e)}
-								/></BaseButton>
+									theme={buttonTheme}
+								>
+									<TrashIcon/>
+								</BaseButton>
 							)
 						}}
 					/>{/* // show / hide section

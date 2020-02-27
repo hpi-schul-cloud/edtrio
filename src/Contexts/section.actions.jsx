@@ -66,7 +66,7 @@ export const addSection = (section) => ({
 		title: "",
 		_id: uuid(), // TODO: mark, so it will not be saved to backend with this id
 		visible: true,
-		docValue: {},
+		docValue: { plugin: "rows" },
 		changed: new Set(),
 		position: -1, // added at last pos
 		...section
