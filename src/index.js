@@ -5,6 +5,9 @@ import * as Sentry from '@sentry/browser'
 import { bindAllSettledToPromise } from '~/utils/promise'
 import { version } from '~/../package.json';
 
+import Application from '~/Application/index';
+
+
 function renderApp() {
 
 	if(process.env.SENTRY_DSN){
@@ -18,7 +21,7 @@ function renderApp() {
 		})
 	}
 
-	const Application = require("~/Application/index").default
+	// const Application = require("~/Application/index").default
 	ReactDOM.render(<Application />, document.getElementById("editor"))
 }
 
