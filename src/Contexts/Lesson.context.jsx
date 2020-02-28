@@ -25,8 +25,14 @@ const combinedInitalState = {
 	course: courseInitialState
 }
 
+const Middlewares = [thunkMiddleware]
+
+if(process.env.NODE_ENV !== 'production'){
+	Middlewares.unshift(logger)
+}
+
 const LessonContext = React.createContext()
-const lessonDisptachCreator = prepareCreateDispatch(logger, thunkMiddleware)
+const lessonDisptachCreator = prepareCreateDispatch(...Middlewares)
 export function LessonContextProvider({ children}) {
 
 	const [state, dispatch] = useReducer(combinedReducer, combinedInitalState)
