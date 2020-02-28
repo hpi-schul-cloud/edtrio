@@ -35,6 +35,17 @@ const SaveStatus = styled(Text)`
     margin-right: 25px;
 `
 
+const buttonTheme = {
+	background: "#af0437",
+	height: "55px",
+	padding: "10px",
+}
+
+const smallButtonTheme = {
+	...buttonTheme,
+	padding: "10px 0"
+}
+
 const hasPermission = (sections = [], sectionId = '') => {
 	const section = sections.find(s => s._id.toString() === sectionId.toString()) || {};
 	return section.scopePermission === 'write';
@@ -78,7 +89,7 @@ const Header = () => {
 	return (
 		<StyledHeader noWrap justifyBetween alignCenter editing={editing}>
 			<Flex alignCenter>
-				<Back />
+				<Back theme={buttonTheme} />
 				<BreadCrumbs store={store} dispatch={dispatch} />
 			</Flex>
 
@@ -105,7 +116,7 @@ const Header = () => {
 						}}
 					/>
 				)}
-				<Settings store={store} dispatch={dispatch} />
+				<Settings store={store} theme={smallButtonTheme}/>
 			</Flex>
 		</StyledHeader>
 	)

@@ -9,11 +9,15 @@ import { editorWS } from "~/utils/socket"
 
 export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
 	async function bootstrap() {
-		try {
-			const user = await serverApi.get("/me")
-			dispatchUserAction({ type: "BOOTSTRAP_USER", payload: user })
-		} catch (err) {
-			dispatch(newError('Es konnten nicht alle Daten geladen werden, eventuell kommt es zu einschränkungen'))
+		if (courseId) {
+			try {
+				const user = await serverApi.get("/me")
+				dispatchUserAction({ type: "BOOTSTRAP_USER", payload: user })
+			} catch (err) {
+				dispatch(newError('Es konnten nicht alle Daten geladen werden, eventuell kommt es zu einschränkungen'))
+			}
+		} else {
+			console.warn('TODO: Set fake user with permissions.');
 		}
 
 		const cachedLessonData = loadLessonCache(id)
@@ -34,8 +38,6 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
 				const sectionsNotInChache = cachedLessonData.sections.filter(secId => !sections.find(section => section.id === secId))
 				dispatch(fetchSection(...sectionsNotInChache))
 			}
-
-
 		} else {
 			await dispatch(fetchLessonWithSections(id, courseId, true))
 		}

@@ -6,7 +6,9 @@ export const mapSection = (section) => {
 	return {
 		...section,
 		id: section._id, // needed for old version, please use _id instead
-		docValue: section.state,
+		docValue: (section.state && Object.keys(section.state).length !== 0)
+			? section.state
+			: { plugin: "rows" },
 		savedDocValue: section.state, // value of docValue that is saved on the backend, needed for creating diff when docValue was changed
 		notes: section.note,
 		visible: section.visible || true, // TODO: remove should be set by server and blur mode should removed
