@@ -176,6 +176,13 @@ Internal plugins will lie in `src/plugins` and should be mostly isolated, althou
 
 To build the editor, simply run `npm run build`.
 
+##### ENV variables
+
+there exist a script called `build/generate_config.js` which you can run to build a file which makes all used process.env variables available in the window object. This allows you to change configuration parameters without rebuilding the project.
+**If you want to use this feature, you need to import the `dist/env.js` before `dist/index.js`.**
+
+`node build/generate_config.js` (`dist` is the default output directoy, to overwrite it just append the directory path like `node build/generate_config.js other/dir`)
+
 #### Integration in schulcloud-client
 
 Once built, push your build to github. Then, copy the commit hash and use jsdelivr to generate a static link to the script, for example: `https://cdn.jsdelivr.net/gh/schul-cloud/edtrio@COMMIT_HASH/dist/index.js`. You can then pass this url to the schulcloud-editor as `process.env.EDTR_SOURCE`. When you go to the current topic editor, you can now add the query `?edtr=true` to load the new editor.

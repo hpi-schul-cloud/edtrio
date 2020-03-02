@@ -9,9 +9,10 @@
         "debug": "npm run dev",
         "dev:client": "npx parcel src/index.js -d dist/dev",
         "storybook": "start-storybook -p 9001 -c .storybook",
-        "build": "node build/index.js && npx parcel build src/index.js",
+        "build:env": "node build/generate_config.js",
+        "build": "node build/index.js && npx parcel build src/index.js && npm run build:env",
         "clean:start": "rd /s /q .cache && rd /s /q dist && npm run dev",
-        "build:standalone": "npx parcel build src/index.html",
+        "build:standalone": "npx parcel build src/index.html && npm run build:env",
         "build:storybook": "build-storybook -c .storybook -o dist/storybook",
         "dist:demo": "rm -rf dist && npm run build:standalone && npm run build:storybook && firebase deploy",
         "test": "ava --verbose",
@@ -162,14 +163,5 @@
             "@babel/polyfill"
         ],
         "modules": false
-    },
-    "staticFiles": {
-        "staticPath": [
-            {
-                "staticPath": "src/static",
-                "watcherGlob": "**",
-                "staticOutDir": "static"
-            }
-        ]
     }
 }
