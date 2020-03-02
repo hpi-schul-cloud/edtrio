@@ -22,5 +22,4 @@ const config = {
 
 // eslint-disable-next-line no-console
 console.info("config", config);
-
-export default config
+export default config;

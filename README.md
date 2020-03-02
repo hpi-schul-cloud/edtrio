@@ -179,7 +179,7 @@ To build the editor, simply run `npm run build`.
 ##### ENV variables
 
 there exist a script called `build/generate_config.js` which you can run to build a file which makes all used process.env variables available in the window object. This allows you to change configuration parameters without rebuilding the project.
-**If you want to use this feature, you need to import the `dist/env.js` before `dist/index.js`.**
+**If you want to use this feature, you need to import the `dist/env.js` before `dist/index.js` in your HTML code.**
 
 `node build/generate_config.js` (`dist` is the default output directoy, to overwrite it just append the directory path like `node build/generate_config.js other/dir`)
 

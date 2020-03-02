@@ -23,6 +23,5 @@ const generateConfig = (filepath = "dist") =>
 if (require.main === module) { // execute directly if called from CLI
 	generateConfig(process.argv[2]); // read destination from arguments (first and only parameter)
 } else {
-	// otherwise export the method to generate
 	module.exports = generateConfig;
 }
