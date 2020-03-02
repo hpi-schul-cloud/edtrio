@@ -1,20 +1,28 @@
-const fs = require("fs");
-const { envs } = require("../src/config.js");
+// list of process.env variables used in the project
+const envs = [
+	"EDITOR_API_URL",
+	"SERVER_API_URL",
+	"EDITOR_SOCKET_URL",
+	"HOMEWORK_URI",
+];
 
+// ----------------------------------------------
+
+const fs = require("fs");
 const config = envs
 	.map((env) => `window.${env} = ${process.env[env]};\n`)
 	.join("");
 
 const generateConfig = (filepath = "dist") =>
 	fs.writeFileSync(`${filepath}/env.js`, config, function(err) {
-			if (err) throw err;
-			`env saved to "${filepath}/env.js"`
-		});
+		if (err) throw err;
+		// eslint-disable-next-line no-console
+		console.log(`env saved to "${filepath}/env.js"`);
+	});
 
-// execute directly if called from CLI and not required
-// https://stackoverflow.com/questions/6398196/detect-if-called-through-require-or-directly-by-command-line
-if (require.main === module) {
+if (require.main === module) { // execute directly if called from CLI
 	generateConfig(process.argv[2]); // read destination from arguments (first and only parameter)
-}else{
-	module.exports = generateConfig
+} else {
+	// otherwise export the method to generate
+	module.exports = generateConfig;
 }
