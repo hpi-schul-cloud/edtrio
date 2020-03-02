@@ -7,7 +7,12 @@ envs=(
     "HOMEWORK_URI"
 )
 
-file="env.js"
+file=$1
+if [ -z "${file:-}" ]; then
+    echo "missing parameter output file"
+    echo "Usage: bash env.sh output/filename.js"
+    exit 1
+fi
 
 # clear file
 > $file
