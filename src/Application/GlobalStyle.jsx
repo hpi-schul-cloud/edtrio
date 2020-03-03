@@ -2,9 +2,9 @@ import { createGlobalStyle } from "styled-components"
 import React from "react"
 import theme from "~/theme"
 
+
+// import of katex was removed because of problem in styled-componenten to load import
 const GS = createGlobalStyle`
-	@import url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css');
-	@import url('https://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700|PT+Sans:400,400i,700|Kalam|Faster+One');
 	* {
 		box-sizing: border-box;
 	}
@@ -18,7 +18,7 @@ const GS = createGlobalStyle`
 		min-height: 100vh;
 		padding: 0;
 	}
-	
+
 	body {
 		padding-top: 75px;
 	}
@@ -34,9 +34,9 @@ const GS = createGlobalStyle`
 `
 
 const GlobalStyle = () => {
-    // TODO make distinction for schul-cloud?
-    // TODO include theme?
-    return <GS />
+	// TODO make distinction for schul-cloud?
+	// TODO include theme?
+	return <GS />
 }
 
 export default GlobalStyle
