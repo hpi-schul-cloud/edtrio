@@ -178,10 +178,18 @@ To build the editor, simply run `npm run build`.
 
 ##### ENV variables
 
-there exist a script called `build/generate_config.js` which you can run to build a file which makes all used process.env variables available in the window object. This allows you to change configuration parameters without rebuilding the project.
+there exist a script called `deploy/env.sh` which you can run to build a file which makes all used process.env variables available in the window object. This allows you to change configuration parameters without rebuilding the Docker Container.
 **If you want to use this feature, you need to import the `dist/env.js` before `dist/index.js` in your HTML code.**
 
-`node build/generate_config.js` (`dist` is the default output directoy, to overwrite it just append the directory path like `node build/generate_config.js other/dir`)
+`bash ./deploy/env.sh dist/env.js` (`dist/env.js` is the output file)
+
+The generated file will look like similar to this:
+
+```js
+window.EDITOR_API_URL = "Content of process.env.EDITOR_API_URL";
+window.SERVER_API_URL = "Content of process.env.SERVER_API_URL";
+// ...
+```
 
 #### Integration in schulcloud-client
 
