@@ -176,6 +176,21 @@ Internal plugins will lie in `src/plugins` and should be mostly isolated, althou
 
 To build the editor, simply run `npm run build`.
 
+##### ENV variables
+
+there exist a script called `deploy/env.sh` which you can run to build a file which makes all used process.env variables available in the window object. This allows you to change configuration parameters without rebuilding the Docker Container.
+**If you want to use this feature, you need to import the `dist/env.js` before `dist/index.js` in your HTML code.**
+
+`bash ./deploy/env.sh dist/env.js` (`dist/env.js` is the output file)
+
+The generated file will look like similar to this:
+
+```js
+window.EDITOR_API_URL = "Content of process.env.EDITOR_API_URL";
+window.SERVER_API_URL = "Content of process.env.SERVER_API_URL";
+// ...
+```
+
 #### Integration in schulcloud-client
 
 Once built, push your build to github. Then, copy the commit hash and use jsdelivr to generate a static link to the script, for example: `https://cdn.jsdelivr.net/gh/schul-cloud/edtrio@COMMIT_HASH/dist/index.js`. You can then pass this url to the schulcloud-editor as `process.env.EDTR_SOURCE`. When you go to the current topic editor, you can now add the query `?edtr=true` to load the new editor.

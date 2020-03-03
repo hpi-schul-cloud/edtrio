@@ -1,0 +1,4 @@
+.github
+dist
+.cache
+node_modules
