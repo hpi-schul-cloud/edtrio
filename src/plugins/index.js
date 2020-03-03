@@ -124,20 +124,6 @@ export function mockUploadImageHandler(file) {
 }
 
 addPlugin({
-	name: 'files',
-	title: 'Dateien',
-	icon: createIcon(faFileAlt),
-	description: 'Ein Plugin für den Upload von beliebigen Dateien.',
-	plugin: createFilesPlugin({
-		upload: mockUploadFileHandler,
-		i18n: {
-			label: "Datei hinzufügen",
-			failedUploadMessage: "Die ausgewählte Datei konnte nicht hinzugefügt werden."
-		}
-	})
-});
-
-addPlugin({
 	name: 'image',
 	title: 'Bild',
 	icon: createIcon(faImages),
@@ -175,6 +161,20 @@ addPlugin({
 				label: 'Maximale breite',
 				placeholder: '300px',
 			},
+		}
+	})
+});
+
+addPlugin({
+	name: 'files',
+	title: 'Dateien',
+	icon: createIcon(faFileAlt),
+	description: 'Ein Plugin für den Upload von beliebigen Dateien.',
+	plugin: createFilesPlugin({
+		upload: mockUploadFileHandler,
+		i18n: {
+			label: "Datei hinzufügen",
+			failedUploadMessage: "Die ausgewählte Datei konnte nicht hinzugefügt werden."
 		}
 	})
 });
