@@ -13,5 +13,5 @@ services:
      - SERVER_API_URL=https://api.$SYSTEM.schul-cloud.org
      - EDITOR_SOCKET_URL=wss://editor.$SYSTEM.schul-cloud.org
     ports:
-      - \"5000:80\""
+      - \"5000:80\"
     restart: always
