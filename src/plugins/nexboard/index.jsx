@@ -9,12 +9,12 @@ export const nexboardState = object({
 	id: string(),
 })
 
+const getIcon = () => (<NextboadIcon width="100%" />);
+
 export const generatePlugin = (Component) => ({
 	Component,
 	state: nexboardState,
-	icon: () => (
-		<NextboadIcon width="100%" />
-	),
+	icon: getIcon,
 	title: "Nexboard",
 	description:
         "Benutze das digitale Nexboard, um all deine Ideen festzuhalten!",
