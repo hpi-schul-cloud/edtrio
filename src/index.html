@@ -4,6 +4,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>Editor</title>
         <link
             href="https://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700|PT+Sans:400,400i,700|Kalam|Faster+One"
             rel="stylesheet"
@@ -12,10 +13,18 @@
             href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"
             rel="stylesheet"
         />
-        <title>Editor</title>
+        <script>
+            // hack to prevent parcel touching the script path.
+            // We need the RAW file from the root dir
+            // https://github.com/parcel-bundler/parcel/issues/1087#issuecomment-576810737
+            const script = document.createElement("script");
+            script.setAttribute("src", "env.js");
+            script.setAttribute("type", "text/javascript");
+            document.head.prepend(script);
+        </script>
+        <script src="./index.js" type="text/javascript" defer></script>
     </head>
     <body>
         <div id="editor"></div>
-        <script src="./index.js" type="text/javascript"></script>
     </body>
 </html>
