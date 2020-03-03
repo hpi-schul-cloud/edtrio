@@ -1,0 +1,17 @@
+---
+version: \"3.7\"
+
+services:
+  edtr:
+    image: schulcloud/schulcloud-edtrio:$DOCKERTAG
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+    environment:
+     - EDITOR_API_URL=https://editor.$SYSTEM.schul-cloud.org
+     - SERVER_API_URL=https://api.$SYSTEM.schul-cloud.org
+     - EDITOR_SOCKET_URL=wss://editor.$SYSTEM.schul-cloud.org
+    ports:
+      - \"5000:80\""
+    restart: always
