@@ -9,7 +9,7 @@
         "debug": "npm run dev",
         "dev:client": "npx parcel src/index.js -d dist/dev",
         "storybook": "start-storybook -p 9001 -c .storybook",
-        "build:env": "node build/generate_config.js",
+        "build:env": "bash deploy/env.sh",
         "build": "node build/index.js && npx parcel build src/index.js",
         "clean:start": "rd /s /q .cache && rd /s /q dist && npm run dev",
         "build:standalone": "npx parcel build src/index.html",

@@ -1,11 +1,17 @@
 #!/bin/sh -eu
 
+# ------------------------------------
+# LIST ALL USED ENV VARIABLES HERE
+# ------------------------------------
+
 envs=(
     "EDITOR_API_URL"
     "SERVER_API_URL"
     "EDITOR_SOCKET_URL"
     "HOMEWORK_URI"
 )
+
+# ------------------------------------
 
 file=$1
 if [ -z "${file:-}" ]; then

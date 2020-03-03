@@ -5,7 +5,7 @@
 
 // ⚠ DANGER ⚠
 // If you introduce new config options with process.env
-// also add them to build/generate_config.js
+// also add them to deploy/env.sh
 
 const config = {
 	EDITOR_API_URL: window.EDITOR_API_URL || process.env.EDITOR_API_URL || "http://localhost:4001",
