@@ -3,7 +3,7 @@ const config = {
 	SERVER_API_URL: process.env.SERVER_API_URL || "http://localhost:3030",
 	EDITOR_SOCKET_URL: process.env.EDITOR_SOCKET_URL || "ws://localhost:4001",
 	HOMEWORK_URI: process.env.HOMEWORK_URI || "/homework",
-
+	ETHERPAD_URL: process.env.ETHERPAD_URL || "https://etherpad.schul-cloud.org/p/",
 
 	breakpoints: {
 		tablet: 750,
