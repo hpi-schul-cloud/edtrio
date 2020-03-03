@@ -8,10 +8,10 @@ COPY . .
 RUN npm run build
 
 FROM nginx:alpine
-EXPOSE 80
+RUN apk update && apk add bash
 COPY --from=builder /app/dist /usr/share/nginx/html/
 COPY --from=builder /app/deploy/env.sh ./
+EXPOSE 80
 
-# TODO copy env generator file
-# and execute on startup (CMD)
-CMD bash env.sh
+# read envs and start nginx
+CMD bash ./env.sh /usr/share/nginx/html/env.js && nginx -g "daemon off;"
