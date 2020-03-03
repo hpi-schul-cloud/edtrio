@@ -3,7 +3,7 @@ import { object, string } from "@edtr-io/plugin"
 
 import Nexboard from "./Nexboard"
 
-import NextboadIcon from "./assets/logo.png"
+import NextboadIcon from "./assets/logo.svg"
 
 export const nexboardState = object({
 	id: string(),

@@ -5,6 +5,7 @@ import { createBoard, getBoard } from "./utils"
 import Action from "~/components/Action"
 import Flex from "~/components/Flex"
 import Loader from "~/components/Loader"
+import logger from "redux-logger"
 
 const Nexboard = ({ focused, state }) => {
 	const [loading, setLoading] = useState(true)
@@ -24,7 +25,9 @@ const Nexboard = ({ focused, state }) => {
 			}
 			state._id.set(board._id)
 			setBoard(board)
-		} catch (err) {}
+		} catch (err) {
+			logger.warning(err);
+		}
 
 		setLoading(false)
 	}
