@@ -1,11 +1,16 @@
 import React from "react"
 import { object, string, boolean } from "@edtr-io/plugin"
+import LichtblickIcon from "./assets/logo.svg"
 
 import Lichtblick from "./Lichtblick"
 export const lichtblickState = object({
 	data: object({}),
 	changed: boolean(false),
 })
+
+export const  SizedLichtblickIcon = () => (
+	<LichtblickIcon height="100%" />
+)
 
 export const generatePlugin = (Component) => ({
 	Component,

@@ -35,11 +35,9 @@ import { createImagePlugin } from "@edtr-io/plugin-image"
 // import { createHighlightPlugin } from "@edtr-io/plugin-highlight"
 // import { h5pPlugin } from "@edtr-io/plugin-h5p"
 
-import lichtblickPlugin from "./lichtblick"
-
-// import nexboardPlugin from "./nexboard"
 import etherpadPlugin, {SizedEtherpadIcon} from "./etherpad"
 import etherpadPluginPreview from "./etherpad/Preview"
+import lichtblickPlugin, {SizedLichtblickIcon} from "./lichtblick"
 import lichtblickPluginPreview from "./lichtblick/Preview"
 import homework, {SizedHomeworkIcon} from "./homework"
 
@@ -318,6 +316,15 @@ addPlugin({
 	description: "Binde eine Aufgabe aus dem Kurs ein.",
 	plugin: homework,
 	preview: homeworkPreview,
+})
+
+addPlugin({
+	name: 'lichtblick',
+	title: 'Lichtblick (Demo)',
+	icon: SizedLichtblickIcon,
+	description: "Kommentierung, Strukturierung und Analyse von Filmen und Videos",
+	plugin: lichtblickPlugin,
+	preview: lichtblickPluginPreview,
 })
 
 const pList = extractPlugins(pluginList);
