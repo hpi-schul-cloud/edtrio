@@ -13,7 +13,7 @@ export const LichtblickWrapper = styled.div`
     height: auto;
 `
 
-const Lichtblick = ({ focused, state }) => {
+const Lichtblick = ({ focused, state, editable }) => {
 	const initData = {
 		items:[
 			{
@@ -84,8 +84,15 @@ const Lichtblick = ({ focused, state }) => {
 		}
 	})
 
-	if(focused){
-		return (<EditMode state={state} />)
+	if(editable){
+		return (
+			<div>
+				<LichtblickWrapper>
+					{lichtblickFrame}
+				</LichtblickWrapper>
+				<EditMode state={state} focused={focused}/>
+			</div>
+		)
 	}else{
 		if(state.videoTitle.get()) {
 			return (<LichtblickWrapper>{lichtblickFrame}</LichtblickWrapper>)

@@ -23,15 +23,46 @@ const videos = [
 
 const videoUri = ''
 
+const Overlay =styled.div`
+	display: block;
+    position: absolute;
+    top: 0;
+	width: 100%;
+	height: 100%;
+	right: 0;
+	${(props) =>
+		props.focused
+			? css`
+					background-color: rgb(125,125,125,0.7);
+			  `
+			: css`
+					background-color: rgb(125,125,125,0);
+			  `}
+`
+
 const Container =styled.div`
+	position: relative;
+	top: 40%;
+    left: 50%;
+    transform: translate(-50%,-50%);
 	flex-grow: 2;
-	display: flex;
 	flex-direction: column;
 	margin-right: 10px;
 
 	& label{
-		font-size: 0.875rem;
+		font-size: 22px;
+		color: #ffffff;
+		text-align: center;
+		padding: 50px;
 	}
+	${(props) =>
+		props.focused
+			? css`
+					display: flex;
+			  `
+			: css`
+					display: none;
+			  `}
 `
 
 const customStyles = {
@@ -44,7 +75,7 @@ const customStyles = {
 };
 
 const WidthSelect = styled.div`
-width: 60%;
+margin: 0 20%;
 display: flex;
 flex-direction:row;
 align-items: center;
@@ -75,24 +106,25 @@ const createOptions = () => videos
 // }
 
 
-const Edit = ({ state }) => {
+const Edit = ({ state, focused }) => {
 	const options = createOptions();
-
 	return (
-		<Container>
-			<label className="label">
+		<Overlay focused={focused}>
+			<Container focused={focused}>
+				<label className="label">
 				Lichtblick (Demo)
-			</label>
-			<WidthSelect>
-				<Select styles={customStyles}
-					value={getSelectedOption(state, options)}
-					onChange={switchSelected(state)}
-					options={options}
-					placeholder={'Wähle ein Demo-Video aus'}
-					label={'Demo-Video'}
-				/>
-			</WidthSelect>
-		</Container>
+				</label>
+				<WidthSelect>
+					<Select styles={customStyles}
+						value={getSelectedOption(state, options)}
+						onChange={switchSelected(state)}
+						options={options}
+						placeholder={'Wähle ein Demo-Video aus'}
+						label={'Demo-Video'}
+					/>
+				</WidthSelect>
+			</Container>
+		</Overlay>
 	)
 
 	// videoUri = state.uri.get();
