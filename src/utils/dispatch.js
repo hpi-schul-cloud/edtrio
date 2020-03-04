@@ -1,8 +1,8 @@
 
 import * as Sentry from '@sentry/browser'
-import { initialState } from "~/Contexts/User";
-import { useReducer } from "react";
-import { isRedirect } from "@reach/router";
+// import { initialState } from "~/Contexts/User";
+// import { useReducer } from "react";
+// import { isRedirect } from "@reach/router";
 
 
 /**
@@ -54,10 +54,10 @@ export const prepareCreateDispatch = (...middlewares) => {
 	const preparedDispatcher = middlewares
 	// maps state and dispatch to every Middleware
 	// this is important to give every middleware the new dispatcher and not the old one
-	.map((a) => a( MiddlewareApi ))
+		.map((a) => a( MiddlewareApi ))
 	// returns a function where each calls a(b(...args)), when called the chian will build and
 	// the last function get the argument, the function is called with... here it is the original dispatcher
-	.reduce((a,b) => (...args) => a(b(...args)))
+		.reduce((a,b) => (...args) => a(b(...args)))
 
 	return (rdispatch, state) => {
 

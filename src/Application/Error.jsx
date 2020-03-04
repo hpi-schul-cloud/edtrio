@@ -5,6 +5,9 @@ import Flex from "~/components/Flex"
 
 import LessonContext from "~/Contexts/Lesson.context"
 
+import RemoveIcon from "~/assets/remove.svg"
+import BaseButton from "~/components/Button/BaseButton"
+
 const slideIn = keyframes`
     from {
         transform: translateX(-50%) translateY(-100%);
@@ -27,30 +30,27 @@ const ErrorWrapper = styled.div`
     animation: ${slideIn} 500ms ease-in-out 1;
 
     width: ${props => {
-        if (props.width) return props.width
-        if (props.full) return "100%"
-        return "auto"
-    }};
+		if (props.width) return props.width
+		if (props.full) return "100%"
+		return "auto"
+	}};
 
     max-width: 250px;
+
+    z-index: 13713;
 `
 
 const Error = () => {
-    const { store, dispatch } = useContext(LessonContext)
-    if (!store.notifications.error.length) return null
-    return (
-        <ErrorWrapper onClick={() => dispatch({ type: "ERROR", payload: "" })}>
-            <Flex inline alignCenter noWrap>
-                {store.notifications.error}
-                <img
-                    src={require("~/assets/remove.svg")}
-                    style={{ cursor: "pointer", marginLeft: 5 }}
-                    width="16px"
-                    alt=""
-                />
-            </Flex>
-        </ErrorWrapper>
-    )
+	const { store, dispatch } = useContext(LessonContext)
+	if (!store.notifications.error.length) return null
+	return (
+		<ErrorWrapper onClick={() => dispatch({ type: "ERROR", payload: "" })}>
+			<Flex inline alignCenter noWrap>
+				{store.notifications.error}
+				<BaseButton><RemoveIcon width="16px" /></BaseButton>
+			</Flex>
+		</ErrorWrapper>
+	)
 }
 
 export default Error

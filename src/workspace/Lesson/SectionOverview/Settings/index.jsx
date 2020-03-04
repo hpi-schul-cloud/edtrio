@@ -8,16 +8,17 @@ import Flex from "~/components/Flex"
 
 import previewIcon from "~/assets/preview-white.svg"
 import noPreviewIcon from "~/assets/no-preview-white.svg"
-import trashIcon from "~/assets/trash-white.svg"
+import TrashIcon from "~/assets/trash-white.svg"
 import duplicateIcon from "~/assets/duplicate-white.svg"
 import shareIcon from "~/assets/share-white.svg"
 import infoIcon from "~/assets/info-white.svg"
-import closeIcon from "~/assets/close-white.svg"
+import CloseIcon from "~/assets/close-white.svg"
 
 import DeleteModal from "./DeleteModal"
 import { editorWS } from "~/utils/socket"
 import { switchSectionVisibility , removeSection } from "~/Contexts/section.actions"
 import { toggleSectionSettings } from "~/Contexts/view.actions"
+import BaseButton from "~/components/Button/BaseButton"
 
 
 const Wrapper = styled(Flex)`
@@ -25,16 +26,19 @@ const Wrapper = styled(Flex)`
     width: 100vw;
     position: fixed;
     left: 0;
-    top: 62px;
+    top: 55px;
     padding: 10px 15px;
     z-index: 6;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.18);
 `
 
+const buttonTheme = {
+	height: "28px",
+	padding: "1px",
+}
 const Icon = styled.img`
     cursor: pointer;
     margin-right: 25px;
-    width: 20px;
 
     &:last-child {
         margin-right: 0;
@@ -96,12 +100,12 @@ const Settings = () => {
 						confirmDelete={confirmDelete}
 						renderIcon={openModal => {
 							return (
-								<Icon
-									src={trashIcon}
-									isOnly={isOnly}
-									visible
+								<BaseButton
 									onClick={e => !isOnly && openModal(e)}
-								/>
+									theme={buttonTheme}
+								>
+									<TrashIcon/>
+								</BaseButton>
 							)
 						}}
 					/>{/* // show / hide section
@@ -114,15 +118,13 @@ const Settings = () => {
 					/>
 					*/}
 				</Flex>
-				<Flex noWrap>
-					<Icon
-						src={closeIcon}
+				<BaseButton theme={buttonTheme} noWrap>
+					<CloseIcon
 						onClick={() => {
 							dispatch(toggleSectionSettings())
 						}}
 					/>
-				</Flex>
-				
+				</BaseButton>
 			</Wrapper>
 		</Portal>
 	)
