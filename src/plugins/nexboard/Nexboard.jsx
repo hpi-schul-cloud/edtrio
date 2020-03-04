@@ -5,28 +5,32 @@ import { createBoard, getBoard } from "./utils"
 import Action from "~/components/Action"
 import Flex from "~/components/Flex"
 import Loader from "~/components/Loader"
-import logger from "redux-logger"
 
 const Nexboard = ({ focused, state }) => {
 	const [loading, setLoading] = useState(true)
+	const [error, setError] = useState(null)
 	const [board, setBoard] = useState({})
-	const { lesson: lessonStore, user: userStore } = useContext(LessonContext)
+	const { store } = useContext(LessonContext)
 	
 	async function bootstrap() {
 		try {
 			let board
-			if (state._id.value) {
-				board = await getBoard(state._id.value)
+			const id = state.id.get();
+			if (id && id !== '<empty string>') {
+				board = await getBoard(id)
 			} else {
-				board = await createBoard(
-					lessonStore._id,
-					`${lessonStore.title} Nexboard`, // TODO: section title?
-				)
-			}
-			state._id.set(board._id)
+				const { _id: lessonId, attachments, title } = store.lesson;
+				board = await createBoard(lessonId.toString(),{ 
+					title:`${title} Nexboard`, // TODO: section title?
+					attachments, 
+					description: ''
+				})
+				state.id.set(board._id.toString())
+			}	
 			setBoard(board)
 		} catch (err) {
-			logger.warning(err);
+			console.warn(err);
+			setError(err);
 		}
 
 		setLoading(false)
@@ -36,17 +40,25 @@ const Nexboard = ({ focused, state }) => {
 		bootstrap()
 	}, [])
 
-	if (loading) {
+	if (error) {
+		return (
+			<div>
+				<p>Can not render nexboard!</p>
+				{JSON.stringify(error.message)}
+			</div>
+		)
+	} else if (loading) {
 		return (
 			<Flex justifyCenter>
 				<Loader />
 			</Flex>
 		)
 	} else {
+		const displayName = (store.user || {}).displayName || 'user';
 		return (
 			<Flex column alignEnd>
 				<iframe
-					src={`${board.publicLink}?username=${userStore.displayName}`}
+					src={`${board.publicLink}?username=${displayName}`}
 					style={{
 						width: "100%",
 						height: "600px",
@@ -57,7 +69,7 @@ const Nexboard = ({ focused, state }) => {
 				/>
 				<Action
 					a
-					to={`${board.publicLink}?username=${userStore.displayName}`}
+					to={`${board.publicLink}?username=${displayName}`}
 					target="_blank">
                     in neuem Tab öffnen
 				</Action>
