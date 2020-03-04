@@ -5,6 +5,10 @@ import LichtblickIcon from "./assets/logo.svg"
 import Lichtblick from "./Lichtblick"
 export const lichtblickState = object({
 	data: object({}),
+	videoTitle: string(),
+	videoUuid: string(),
+	videoUri: string(),
+	video: object({}),
 	changed: boolean(false),
 })
 

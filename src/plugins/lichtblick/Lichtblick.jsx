@@ -4,12 +4,7 @@ import shortid from "shortid"
 import uuidv4 from 'uuid/v4'
 
 import LessonContext from "~/Contexts/Lesson.context"
-
-import Input from "~/components/Input"
-import Flex from "~/components/Flex"
-
-import { createBoard } from "./utils"
-import none from "ramda/es/none"
+import EditMode from "./EditMode"
 
 
 export const LichtblickWrapper = styled.div`
@@ -31,9 +26,9 @@ const Lichtblick = ({ focused, state }) => {
 		]
 	}
 	const { store, dispatch } = useContext(LessonContext)
-	const uuid = uuidv4()
-
-	const videoUrl = 'http://localhost:3060/assets/video/test.mp4'
+	const videoUrl = state.videoUri.get()
+	const videoUuid = state.videoUuid.get()
+	const videoTitle = state.videoTitle.get()
 
 	// testmovie: https://www10-fms.hpi.uni-potsdam.de/vod/media/SCHUL-CLOUD/explainer2018/hd/video.mp4
 	// http://pbojinov.github.io/iframe-communication/iframe.html
@@ -41,19 +36,19 @@ const Lichtblick = ({ focused, state }) => {
 	// page to iframe https://robertnyman.com/html5/postMessage/postMessage.html
 	// `/lichtblick/index.html?src=${encodeURI(videoUrl)}&id=${uuid}` 
 	// `http://localhost:3060/index.html?src=${encodeURI(videoUrl)}&id=${uuid}`
-	const src = `http://localhost:3060/index.html?src=${encodeURI(videoUrl)}&id=${uuid}` 
+	const src = `http://localhost/lichtblick/?src=${encodeURIComponent(videoUrl)}&title=${videoTitle}` 
 
 	const [height, setHeight] = useState(500)
 
 	useEffect(() => {
-		const iframeContent = document.getElementById(uuid).contentWindow
+		// const iframeContent = document.getElementById(uuid).contentWindow
 		// iframeContent.postMessage(state.data, '*')
 	}, [state.changed])
 
 
 	const lichtblickFrame = (
 		<iframe
-			id={uuid}
+			id={videoUuid}
 			src={src}
 			allowFullScreen={true}
 			style={{
@@ -61,6 +56,7 @@ const Lichtblick = ({ focused, state }) => {
 				height: height,
 				border: 0,
 				overflow: "none",
+				backgroundColor: "rgba(240, 240, 240)",
 			}}
 			scrolling="0"
 			data-identifier="iframe-lichtblick"
@@ -70,8 +66,8 @@ const Lichtblick = ({ focused, state }) => {
 	window.addEventListener('message', (e) => {
 		// console.log(e.data.action)
 		// console.log(e.data.data)
-		if(e.data.id === uuid){
-			var iframeContent = document.getElementById(uuid).contentWindow
+		if(e.data.id === videoUuid){
+			var iframeContent = document.getElementById(videoUuid).contentWindow
 			if (e.data.action && e.data.action === 'resize') {
 				setHeight(e.data.height)
 			} else if (e.data.action && e.data.action === 'getState') {
@@ -88,11 +84,15 @@ const Lichtblick = ({ focused, state }) => {
 		}
 	})
 
-	return (
-		<LichtblickWrapper>
-			{lichtblickFrame}
-		</LichtblickWrapper>
-	)
+	if(focused){
+		return (<EditMode state={state} />)
+	}else{
+		if(state.videoTitle.get()) {
+			return (<LichtblickWrapper>{lichtblickFrame}</LichtblickWrapper>)
+		}else{
+			return (<h5>[Lichtblick] Kein Video ausgewählt</h5>);
+		}
+	}
 }
 
 export default Lichtblick
