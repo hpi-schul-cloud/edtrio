@@ -21,11 +21,11 @@ const Nexboard = ({ focused, state }) => {
 			} else {
 				const { _id: lessonId, attachments, title } = store.lesson;
 				board = await createBoard(lessonId.toString(),{ 
-					title:`${title} Nexboard`, // TODO: section title?
+					title:`${title} Nexboard`, // TODO: should set by user
 					attachments, 
 					description: ''
 				})
-				state.id.set(board._id.toString())
+				state.id.set(board.id.toString())
 			}	
 			setBoard(board)
 		} catch (err) {
@@ -55,6 +55,7 @@ const Nexboard = ({ focused, state }) => {
 		)
 	} else {
 		const displayName = (store.user || {}).displayName || 'user';
+		// TODO: Username is not pass at he moment 
 		return (
 			<Flex column alignEnd>
 				<iframe
