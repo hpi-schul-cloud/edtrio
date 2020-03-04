@@ -36,7 +36,7 @@ const Lichtblick = ({ focused, state }) => {
 	// page to iframe https://robertnyman.com/html5/postMessage/postMessage.html
 	// `/lichtblick/index.html?src=${encodeURI(videoUrl)}&id=${uuid}` 
 	// `http://localhost:3060/index.html?src=${encodeURI(videoUrl)}&id=${uuid}`
-	const src = `http://localhost/lichtblick/?src=${encodeURIComponent(videoUrl)}&title=${videoTitle}` 
+	const src = `http://localhost/lichtblick/?src=${encodeURIComponent(videoUrl)}&title=${encodeURIComponent(videoTitle)}` 
 
 	const [height, setHeight] = useState(500)
 
