@@ -9,7 +9,7 @@ import { setVideo } from "./utils"
 const videos = [
 	{
 		title: 'Demo-Video 1',
-		uri: 'assets%2Fvideo%2Ftest.mp4'
+		uri: 'assets/video/test.mp4'
 	},
 	{
 		title: 'Demo-Video 2',
