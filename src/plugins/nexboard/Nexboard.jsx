@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react"
 import LessonContext from "~/Contexts/Lesson.context"
-import UserContext from "~/Contexts/User"
+
 import { createBoard, getBoard } from "./utils"
 import Action from "~/components/Action"
 import Flex from "~/components/Flex"
@@ -10,8 +10,8 @@ import logger from "redux-logger"
 const Nexboard = ({ focused, state }) => {
 	const [loading, setLoading] = useState(true)
 	const [board, setBoard] = useState({})
-	const { store } = useContext(LessonContext)
-	const { store: user } = useContext(UserContext)
+	const { lesson: lessonStore, user: userStore } = useContext(LessonContext)
+	
 	async function bootstrap() {
 		try {
 			let board
@@ -19,8 +19,8 @@ const Nexboard = ({ focused, state }) => {
 				board = await getBoard(state._id.value)
 			} else {
 				board = await createBoard(
-					store.lesson._id,
-					`${store.lesson.title} Nexboard`,
+					lessonStore._id,
+					`${lessonStore.title} Nexboard`, // TODO: section title?
 				)
 			}
 			state._id.set(board._id)
@@ -46,7 +46,7 @@ const Nexboard = ({ focused, state }) => {
 		return (
 			<Flex column alignEnd>
 				<iframe
-					src={`${board.publicLink}?username=${user.displayName}`}
+					src={`${board.publicLink}?username=${userStore.displayName}`}
 					style={{
 						width: "100%",
 						height: "600px",
@@ -57,7 +57,7 @@ const Nexboard = ({ focused, state }) => {
 				/>
 				<Action
 					a
-					to={`${board.publicLink}?username=${user.displayName}`}
+					to={`${board.publicLink}?username=${userStore.displayName}`}
 					target="_blank">
                     in neuem Tab öffnen
 				</Action>

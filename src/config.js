@@ -11,8 +11,11 @@ const config = {
 	EDITOR_API_URL: window.EDITOR_API_URL || process.env.EDITOR_API_URL || "http://localhost:4001",
 	SERVER_API_URL: window.SERVER_API_URL || process.env.SERVER_API_URL || "http://localhost:3030",
 	EDITOR_SOCKET_URL: window.EDITOR_SOCKET_URL || process.env.EDITOR_SOCKET_URL || "ws://localhost:4001",
-	HOMEWORK_URI: window.HOMEWORK_URI || process.env.HOMEWORK_URI || "/homework",
 	ETHERPAD_URL: window.ETHERPAD_URL || process.env.ETHERPAD_URL || "https://etherpad.schul-cloud.org/p/",
+
+	HOMEWORK_URI: window.HOMEWORK_URI || process.env.HOMEWORK_URI || "/homework",
+	NEXBOARD_BOARDS_URI: window.NEXBOARD_BOARD_URI || process.env.NEXBOARD_BOARD_URI || '/nexboard/boards',
+	NEXBOARD_PROJECTS_URI: window.NEXBOARD_PROJECTS_URI || process.env.NEXBOARD_PROJECTS_URI || '/nexboard/projects',
 
 	breakpoints: {
 		tablet: 750,
