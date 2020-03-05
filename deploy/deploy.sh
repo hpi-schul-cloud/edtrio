@@ -27,7 +27,7 @@ inform_staging() {
 deploy(){
 	SYSTEM=$1 # [staging, test, demo]
 
-	DOCKER_IMAGE=$2 # (edtrio), autoprefixed with "schulcloud-"
+	DOCKER_IMAGE=$2 # (edtrio)
 	DOCKER_TAG=$3 # version/tag of the image to use. Usually the branch name or a GIT_SHA
 	DOCKER_SERVICE_NAME=$4 # docker service name on server
 
@@ -46,7 +46,7 @@ deploy(){
 	ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i travis_rsa linux@$SYSTEM.schul-cloud.org /usr/bin/docker stack deploy -c /home/linux/docker-compose-$COMPOSE_TARGET $STACK_NAME
 
 	# deploy new dockerfile
-	ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i travis_rsa linux@$SYSTEM.schul-cloud.org /usr/bin/docker service update --force --image schulcloud/schulcloud-$DOCKER_IMAGE:$DOCKER_TAG $DOCKER_SERVICE_NAME
+	ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i travis_rsa linux@$SYSTEM.schul-cloud.org /usr/bin/docker service update --force --image schulcloud/$DOCKER_IMAGE:$DOCKER_TAG $DOCKER_SERVICE_NAME
 }
 
 # ----------------

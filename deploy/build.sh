@@ -19,20 +19,20 @@ dockerPush(){
 	echo "$MY_DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 
 	# Push Image
-	docker push schulcloud/schulcloud-$1:$2
+	docker push schulcloud/edtrio:$1
 }
 
 # BUILD SCRIPTS
 
 buildEdtrio(){
 	docker build \
-		-t schulcloud/schulcloud-edtrio:$DOCKERTAG \
-		-t schulcloud/schulcloud-edtrio:$GIT_SHA \
+		-t schulcloud/edtrio:$DOCKERTAG \
+		-t schulcloud/edtrio:$GIT_SHA \
 		-f Dockerfile \
 		../
 
-	dockerPush "edtrio" $DOCKERTAG
-	dockerPush "edtrio" $GIT_SHA
+	dockerPush $DOCKERTAG
+	dockerPush $GIT_SHA
 }
 
 # ----------------
