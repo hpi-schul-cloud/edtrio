@@ -1,14 +1,14 @@
 import { editorApi, serverApi } from "~/utils/api"
-import { NEXBOARD_BOARDS_URI, NEXBOARD_PROJECTS_URI } from "~/config"
+import config from "~/config"
 // TODO: do not use sockets for creating attachments
 // TODO: config is not set
-console.log('####', NEXBOARD_BOARDS_URI, NEXBOARD_PROJECTS_URI);
+const { NEXBOARD_BOARDS_URI, NEXBOARD_PROJECTS_URI } = config;
 
 const TYPE = 'nexboard-projectId';
 export const createBoard = async (lessonId, { title, attachments = [], description }) => {
 	let attach = attachments.find(a => a.type === TYPE)
 	if (!attach) {
-		const project = await serverApi.post(NEXBOARD_PROJECTS_URI || '/nexboard/projects', {
+		const project = await serverApi.post(NEXBOARD_PROJECTS_URI, {
 			title,
 		})
 		attach = await editorApi.post("attachments", {
@@ -19,7 +19,7 @@ export const createBoard = async (lessonId, { title, attachments = [], descripti
 		})
 	}
 
-	const board = await serverApi.post(NEXBOARD_BOARDS_URI || '/nexboard/boards', {
+	const board = await serverApi.post(NEXBOARD_BOARDS_URI, {
 		title,
 		projectId: attach.value.toString(),
 		description,
@@ -28,5 +28,5 @@ export const createBoard = async (lessonId, { title, attachments = [], descripti
 }
 
 export const getBoard = id => {
-	return serverApi.get(`${NEXBOARD_BOARDS_URI || '/nexboard/boards'}/${id.toString()}`)
+	return serverApi.get(`${NEXBOARD_BOARDS_URI }/${id.toString()}`)
 }

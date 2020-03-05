@@ -25,5 +25,5 @@ const config = {
 };
 
 // eslint-disable-next-line no-console
-console.info("config", config);
+console.info("config", JSON.stringify(config));
 export default config;
