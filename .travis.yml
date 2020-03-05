@@ -1,48 +1,59 @@
 branches:
   only:
-  - develop
-  - master
-  - "/^(?i:release|hotfix).*$/"
+    - develop
+    - master
+    - /^(?i:release|hotfix).*$/
 language: node_js
 node_js:
-- lts/*
+  - lts/*
 dist: xenial
+
 env:
   global:
-  - TZ=Europe/Berlin
-  - GIT_SHA=$( git rev-parse HEAD )
-  - DOCKERTAG="$( echo $TRAVIS_BRANCH | tr -s '[:punct:]' '-' | tr -s '[:upper:]'
-    '[:lower:]' )_v$( jq -r '.version' package.json )_$TRAVIS_COMMIT"
-if: "(not branch = develop) or (branch = develop and not commit_message ~= /^Bump.*from.*to.*$/)"
+    - TZ=Europe/Berlin
+    - GIT_SHA=$( git rev-parse HEAD )
+    - DOCKERTAG="$( echo $TRAVIS_BRANCH | tr -s '[:punct:]' '-' | tr -s '[:upper:]' '[:lower:]' )_v$( jq -r '.version' package.json )_$TRAVIS_COMMIT"
+
+# do not run on develop if it is just a dependency update from dependabot to preserve resources
+if: (not branch = develop) or (branch = develop and not commit_message ~= /^Bump.*from.*to.*$/)
+
 services:
-- mongodb
+  - mongodb
+
 stages:
-- test
-- name: build
-  if: type = push && (branch = master || branch = develop || branch ~= /^(?i:release|hotfix).*$/)
-- name: deploy
-  if: type = push && (branch = master || branch = develop || branch ~= /^(?i:release|hotfix).*$/)
+  - test
+  - name: build
+    if: type = push && (branch = master || branch = develop || branch ~= /^(?i:release|hotfix).*$/)
+  - name: deploy
+    if: type = push && (branch = master || branch = develop || branch ~= /^(?i:release|hotfix).*$/)
+
 jobs:
   include:
-  - stage: test
-    script: npm run build:standalone
-    name: build:react:standalone
-  - script: npm run build
-    name: build:react
-  - script: npm run test
-    name: mocha
-  - stage: build
-    name: build
-    language: generic
-    script: bash ./deploy/build.sh
-  - stage: deploy
-    name: deploy
-    language: generic
-    script: bash ./deploy/deploy.sh
+    # Build & Test
+    - stage: test
+      script: npm run build:standalone
+      name: "build:react:standalone"
+    - script: npm run build
+      name: "build:react"
+    - script: npm run test
+      name: "mocha"
+
+    # Build Docker Images
+    - stage: build
+      name: build
+      language: generic
+      script: bash ./deploy/build.sh
+
+    # Deploy
+    - stage: deploy
+      name: deploy
+      language: generic
+      script: bash ./deploy/deploy.sh
+
+
 cache: npm
 before_cache:
-- cd node_modules && find . -name .cache -type d -exec rm -rf {} + && cd ..
-- cd node_modules && find . -name .temp -type d -exec rm -rf {} + && cd ..
-before_install:
-- openssl aes-256-cbc -K $encrypted_b7bca0b0406c_key -iv $encrypted_b7bca0b0406c_iv
-  -in travis_rsa.enc -out travis_rsa -d
+  # delete all .cache folders before actually storing the cache.
+  # nuxt, storybook and vuepress stores some build artefacts here which invalidates the cache.
+  - cd node_modules && find . -name .cache -type d -exec rm -rf {} + && cd ..
+  - cd node_modules && find . -name .temp -type d -exec rm -rf {} + && cd ..
