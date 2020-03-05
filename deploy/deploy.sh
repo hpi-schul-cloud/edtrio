@@ -11,17 +11,17 @@
 
 inform_live() {
 	# $1: Project Name (client, storybook, vuepress)
-  if [[ "$TRAVIS_EVENT_TYPE" != "cron" ]]
-  then
-  curl -X POST -H 'Content-Type: application/json' --data '{"text":":rocket: Die Produktivsysteme können aktualisiert werden: Schul-Cloud Edtrio! Dockertag: '$DOCKERTAG'"}' $WEBHOOK_URL_CHAT
-  fi
+	if [[ "$TRAVIS_EVENT_TYPE" != "cron" ]]
+	then
+	curl -X POST -H 'Content-Type: application/json' --data '{"text":":rocket: Die Produktivsysteme können aktualisiert werden: Schul-Cloud Edtrio! Dockertag: '$DOCKERTAG'"}' $WEBHOOK_URL_CHAT
+	fi
 }
 
 inform_staging() {
-  if [[ "$TRAVIS_EVENT_TYPE" != "cron" ]]
-  then
-    curl -X POST -H 'Content-Type: application/json' --data '{"text":":boom: Das Staging-System wurde aktualisiert: Schul-Cloud Edtrio! (Dockertag: '$DOCKERTAG')"}' $WEBHOOK_URL_CHAT
-  fi
+	if [[ "$TRAVIS_EVENT_TYPE" != "cron" ]]
+	then
+		curl -X POST -H 'Content-Type: application/json' --data '{"text":":boom: Das Staging-System wurde aktualisiert: Schul-Cloud Edtrio! (Dockertag: '$DOCKERTAG')"}' $WEBHOOK_URL_CHAT
+	fi
 }
 
 deploy(){
@@ -76,11 +76,13 @@ case "$TRAVIS_BRANCH" in
 
 	develop)
 		echo "develop"
-    # deploy $SYSTEM $DOCKERFILE $DOCKERTAG $DOCKER_SERVICENAME $COMPOSE_DUMMY $COMPOSE_FILE $COMPOSE_SERVICENAME
-    deploy "test" "edtrio" $DOCKERTAG "test-schul-cloud_edtrio" "compose-edtrio_default.dummy" "edtrio.yml" "test-schul-cloud"
+		# deploy $SYSTEM $DOCKERFILE $DOCKERTAG $DOCKER_SERVICENAME $COMPOSE_DUMMY $COMPOSE_FILE $COMPOSE_SERVICENAME
+		deploy "test" "edtrio" $DOCKERTAG "test-schul-cloud_edtrio" "compose-edtrio_default.dummy" "edtrio.yml" "test-schul-cloud"
+	;;
 	release* | hotfix*)
-    echo "release/hotfix"
-    deploy "staging" "edtrio" $DOCKERTAG "staging_edtrio" "compose-edtrio_default.dummy" "edtrio_default.yml" "staging"
+		echo "release/hotfix"
+		deploy "staging" "edtrio" $DOCKERTAG "staging_edtrio" "compose-edtrio_default.dummy" "edtrio_default.yml" "staging"
+	;;
 esac
 
 exit 0
