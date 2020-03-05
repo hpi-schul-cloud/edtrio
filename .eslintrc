@@ -33,5 +33,13 @@
         "no-console": 1,
         "react/prop-types": 0,
         "no-case-declarations": 0
-    }
+    },
+    "overrides": [
+        {
+            "files": ["build/**/*.js"],
+            "env": {
+                "node": true
+            }
+        }
+    ]
 }
