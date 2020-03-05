@@ -4,6 +4,7 @@
 # DECLERATIONS
 # ----------------
 
+set -e # fail with exit 1 on any error
 
 # ----------------
 # SCRIPTS
