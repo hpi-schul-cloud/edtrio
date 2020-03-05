@@ -9,11 +9,11 @@ import { setVideo } from "./utils"
 const videos = [
 	{
 		title: 'Demo-Video 1',
-		uri: 'assets/video/test.mp4'
+		uri: 'https://s3.hidrive.strato.com/schul-cloud-hpi/Sport2.mp4'
 	},
 	{
 		title: 'Demo-Video 2',
-		uri: 'https://www.youtube.com/watch?v=QHLJERDWW5s'
+		uri: 'assets/video/test.mp4'
 	},
 	{
 		title: 'Demo-Video 3',
