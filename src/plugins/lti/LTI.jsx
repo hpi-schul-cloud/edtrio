@@ -16,6 +16,7 @@ const toolSelector = (tools, setTool) => <Flex justifyCenter style={{ maxHeight:
   {tools.data.map(tool => (
     <Flex
       onClick={() => setTool(tool) }
+      key={tool.id}
       justifyCenter
       alignCenter
       style={{
@@ -100,8 +101,8 @@ const LTI = ({ state, editable }) => {
             return;
 
           if (event.data.id === state.id.value) {
-            state.ltiMessageType.set('basic-lti-launch-request')
             state.url.set(event.data.url)
+            state.ltiMessageType.set('basic-lti-launch-request')
             setIdToken(null)
           }
         }

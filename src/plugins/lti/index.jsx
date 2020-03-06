@@ -1,7 +1,9 @@
 import React from "react"
 import { object, string } from "@edtr-io/plugin"
 
+import LtiIcon from "./assets/logo.svg"
 import LTI from "./LTI"
+
 export const ltiState = object({
   id: string(),
   templateId: string(),
@@ -11,14 +13,15 @@ export const ltiState = object({
   ltiVersion: string(),
 })
 
-const ltiPlugin = {
-    Component: LTI,
-    state: ltiState,
-    icon: () => (
-        <img src={require("./assets/logo.svg")} style={{ height: 50 }} alt="" />
-    ),
-    title: "LTI",
-    description: "Learning Tools Interoperability.",
-}
+export const  SizedLtiIcon = () => (
+  <LtiIcon height="100%" />
+)
+
+export const generatePlugin = (Component) => ({
+  Component,
+  state: ltiState,
+})
+
+const ltiPlugin = generatePlugin(LTI)
 
 export default ltiPlugin

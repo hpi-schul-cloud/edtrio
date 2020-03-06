@@ -12,7 +12,7 @@ const config = {
 	SERVER_API_URL: window.SERVER_API_URL || process.env.SERVER_API_URL || "http://localhost:3030",
 	EDITOR_SOCKET_URL: window.EDITOR_SOCKET_URL || process.env.EDITOR_SOCKET_URL || "ws://localhost:4001",
 	HOMEWORK_URI: window.HOMEWORK_URI || process.env.HOMEWORK_URI || "/homework",
-  ENABLE_LTI: process.env.ENABLE_LTI || false,
+  ENABLE_LTI: window.ENABLE_LTI || process.env.ENABLE_LTI || false,
 
 	breakpoints: {
 		tablet: 750,

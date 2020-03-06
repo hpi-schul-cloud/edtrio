@@ -39,11 +39,13 @@ import { createImagePlugin } from "@edtr-io/plugin-image"
 import etherpadPlugin, {SizedEtherpadIcon} from "./etherpad"
 import etherpadPluginPreview from "./etherpad/Preview"
 import homework, {SizedHomeworkIcon} from "./homework"
-import ltiPlugin from "./lti"
-
+import ltiPlugin, {SizedLtiIcon} from "./lti"
+import ltiPluginPreview from "./lti/Preview"
+import config from "~/config.js"
 
 // import nexboardPluginPreview from "./nexboard/Preview"
 import homeworkPreview from "./homework/Preview"
+import ltiPreview from "./lti/Preview"
 
 const createPluginAdder = (list = []) => ({ name, title, icon, description, plugin, preview, ...other }) => {
 	if (!name || !title || !icon || !plugin) {
@@ -320,7 +322,7 @@ if (config.ENABLE_LTI) {
   addPlugin({
     name: 'lti',
     title: 'LTI',
-    icon: createIcon(faParagraph),
+    icon: SizedLtiIcon,
     description: "Binde ein LTI-Tool ein.",
     plugin: ltiPlugin,
     preview: ltiPluginPreview,
