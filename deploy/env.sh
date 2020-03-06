@@ -10,6 +10,7 @@ envs=(
     "EDITOR_SOCKET_URL"
     "HOMEWORK_URI"
     "ETHERPAD_URL"
+    "ENABLE_LTI"
 )
 
 # ------------------------------------

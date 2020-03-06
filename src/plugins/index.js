@@ -35,7 +35,6 @@ import { createImagePlugin } from "@edtr-io/plugin-image"
 // import { createHighlightPlugin } from "@edtr-io/plugin-highlight"
 // import { h5pPlugin } from "@edtr-io/plugin-h5p"
 
-
 // import nexboardPlugin from "./nexboard"
 import etherpadPlugin, { SizedEtherpadIcon } from "./etherpad"
 import etherpadPluginPreview from "./etherpad/Preview"
@@ -44,11 +43,13 @@ import nexboardPlugin, { SizedNextboardIcon } from "./nexboard"
 import nexboardPluginPreview from "./nexboard/Preview"
 
 import homework, {SizedHomeworkIcon} from "./homework"
-
-
+import ltiPlugin, {SizedLtiIcon} from "./lti"
+import ltiPluginPreview from "./lti/Preview"
+import config from "~/config.js"
 
 // import nexboardPluginPreview from "./nexboard/Preview"
 import homeworkPreview from "./homework/Preview"
+import ltiPreview from "./lti/Preview"
 
 const createPluginAdder = (list = []) => ({ name, title, icon, description, plugin, preview, ...other }) => {
 	if (!name || !title || !icon || !plugin) {
@@ -71,7 +72,6 @@ const extractPlugins = (list, forPreview = false) => {
 
 const pluginList = [];
 const addPlugin = createPluginAdder(pluginList);
-
 
 function readFile(file) {
 	return new Promise(resolve => {
@@ -331,6 +331,17 @@ addPlugin({
 	plugin: homework,
 	preview: homeworkPreview,
 })
+
+if (config.ENABLE_LTI) {
+  addPlugin({
+    name: 'lti',
+    title: 'LTI',
+    icon: SizedLtiIcon,
+    description: "Binde ein LTI-Tool ein.",
+    plugin: ltiPlugin,
+    preview: ltiPluginPreview,
+  })
+}
 
 const pList = extractPlugins(pluginList);
 pList.rows = createRowsPlugin({
