@@ -3,7 +3,7 @@ version: "3.7"
 # example compose file
 
 services:
-  edtr:
+  edtrio:
     build:
       context: ../
       dockerfile: deploy/Dockerfile
@@ -14,5 +14,5 @@ services:
       - EDITOR_SOCKET_URL=wss://editor.test.schul-cloud.org
       - HOMEWORK_URI=/homework
     ports:
-      - 5000:80
+      - 4100:80
     restart: unless-stopped
