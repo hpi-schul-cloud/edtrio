@@ -33,7 +33,6 @@ class Socket {
 
 		this.socket.on('disconnect', () => {
 			this.isConnected = this.socket.connected
-			this.socket.recon
 		 })
 
 		this.socket.on('error', (error) => {
