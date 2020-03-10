@@ -1,6 +1,7 @@
 import React, { useContext } from "react"
-import { Portal } from "react-portal"
+
 import styled, { css } from "styled-components"
+
 
 import LessonContext from "~/Contexts/Lesson.context"
 
@@ -14,11 +15,13 @@ import shareIcon from "~/assets/share-white.svg"
 import infoIcon from "~/assets/info-white.svg"
 import CloseIcon from "~/assets/close-white.svg"
 
-import DeleteModal from "./DeleteModal"
+import ModalActions from "~/components/ModalActions"
 import { editorWS } from "~/utils/socket"
 import { switchSectionVisibility , removeSection } from "~/Contexts/section.actions"
 import { toggleSectionSettings } from "~/Contexts/view.actions"
 import BaseButton from "~/components/Button/BaseButton"
+import Button from "~/components/Button"
+import { colors } from "react-select/src/theme"
 
 
 const Wrapper = styled(Flex)`
@@ -65,6 +68,7 @@ const Icon = styled.img`
 	}}
 `
 
+
 const Settings = () => {
 	const { store, dispatch } = useContext(LessonContext)
 	const activeSectionId = store.view.activeSectionId
@@ -83,8 +87,9 @@ const Settings = () => {
 
 	if (!store.view.showSectionSettings) return null
 
+
 	return (
-		<Portal>
+
 			<Wrapper justifyBetween>
 				<Flex noWrap>
 					{/*
@@ -92,12 +97,18 @@ const Settings = () => {
 					<Icon src={shareIcon} />
 					<Icon src={infoIcon} />
 					*/}
-					<DeleteModal
+					<ModalActions 
 						sectionTitle={
 							activeSection.title ||
                             `Abschnitt ${activeSectionIndex + 1}`
 						}
-						confirmDelete={confirmDelete}
+						modalBody="Bist du dir sicher, dass du diesen Abschnitt
+	          löschen möchtest? Du kannst dies nicht
+						rückgängig machen."	
+						actions={[{
+							onClick: confirmDelete,
+							text:  "Löschen",
+					}]}
 						renderIcon={openModal => {
 							return (
 								<BaseButton
@@ -126,7 +137,7 @@ const Settings = () => {
 					/>
 				</BaseButton>
 			</Wrapper>
-		</Portal>
+
 	)
 }
 
