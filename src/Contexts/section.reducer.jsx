@@ -8,9 +8,9 @@ import {
 	DELETE_SECTION,
 	DELETING_SECTION_FAILED,
 	UPDATE_SECTION,
+	CHANGE_SECTION,
 	SECTION_DOCVALUE_CHANGE,
 	SECTION_SAVED,
-	DOCVALUE_SAVED 
 } from "./section.actions"
 import {
 	SWAP_SECTIONS
@@ -26,7 +26,7 @@ export const sectionInitialState = []
  * @param {*} state - state of lesson
  * @param {Object} param1 - object with the parameters type and payload
  */
-export function sectionReducer(state = sectionInitialState, { type, payload }) {
+export function sectionReducer(state = sectionInitialState, { type, payload, ...data }) {
 	switch (type) {
 	case SET_SECTIONS:
 		return payload.map((section) => ({
@@ -84,7 +84,14 @@ export function sectionReducer(state = sectionInitialState, { type, payload }) {
 				return { ...section, delete: false}
 			}
 		})
-
+	case CHANGE_SECTION:
+		return state.map((section) => {
+			if(section._id === payload._id){
+				section.changed.add(Object.keys(data))
+				return {...section, ...data}
+			}
+			return section
+		})
 	case UPDATE_SECTION:
 		return state.map((section) => {
 			if(section._id === payload._id){
@@ -94,14 +101,6 @@ export function sectionReducer(state = sectionInitialState, { type, payload }) {
 			return section
 		})
 
-		/* case "SECTION_TITLE_CHANGE":
-            return state.map(section => {
-                    if (section._id !== payload.sectionId) return section
-
-                    section.changed.add("title")
-                    return { ...section, title: payload.title }
-                }) */
-        
 	case SECTION_DOCVALUE_CHANGE:
 		return state.map((section) => {
 			if(section._id !== payload._id) return section
@@ -114,10 +113,11 @@ export function sectionReducer(state = sectionInitialState, { type, payload }) {
 
 	case SECTION_SAVED:
 		return state.map((section) => {
-			if (section._id === payload){
+			if (section._id === data._id){
 				section = {
 					...section,
-					savedDocValue: section.docValue
+					savedDocValue: section.docValue,
+					savedHash: data.hash,
 				}
 				section.changed.clear()
 			}

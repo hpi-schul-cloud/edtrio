@@ -28,9 +28,9 @@ export function useBootstrap(id, courseId, dispatch, dispatchUserAction) {
 		) {
 			// TODO: compare timestamps and hash with server state and save if possible or set
 			// saved to true if hash is the same (needs server route, to do not send all data)
-			console.info('Data are loaded from cach', !cachedLessonData.savedToBackend)
+			console.info('Data are loaded from cache', !cachedLessonData.savedToBackend)
 			dispatch(setLesson(cachedLessonData))
-			const sections = loadSectionCache(...cachedLessonData.sections)
+			// const sections = loadSectionCache(...cachedLessonData.sections)
 
 			dispatch(setSections(sections))
 

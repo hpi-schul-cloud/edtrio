@@ -74,6 +74,7 @@ export const saveLesson = () => async ({state, dispatch}) => {
 		})
 
 		const newHash = generateHash(lesson)
+		changes.hash = newHash
 
 		const message = await editorWS.emit(
 			'patch',
@@ -118,7 +119,7 @@ export const saveLesson = () => async ({state, dispatch}) => {
  * @param {Object} params - query params for request
  */
 export const fetchLesson = (lessonId, courseId, params) => async ({dispatch}) => {
-	try{
+	try {
 		const lesson = await editorWS.emit(
 			'get',
 			`course/${courseId}/lessons`,
@@ -131,7 +132,7 @@ export const fetchLesson = (lessonId, courseId, params) => async ({dispatch}) =>
 		})
 
 		return lesson
-	}catch(error){
+	} catch(error) {
 		dispatch(newError())
 	}
 

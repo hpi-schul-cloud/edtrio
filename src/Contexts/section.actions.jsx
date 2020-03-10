@@ -1,10 +1,12 @@
 import { editorWS } from "~/utils/socket"
 import { mergeDiff, buildDiff } from '~/utils/diff'
 import uuid from "uuid/v4"
-import { saveSectionCache } from "~/utils/cache"
+import { saveSectionCache, loadSectionCache } from "~/utils/cache"
 import { generateHash } from "~/utils/crypto"
 import { SET_ACTIVE_SECTION } from "./view.actions"
 import { mapSection } from "~/utils/reducer"
+import { faSmile } from "@edtr-io/ui"
+
 
 export const SET_SECTIONS = 'SET_SECTIONS'
 export const ADD_SECTION = 'ADD_SECTION'
@@ -14,6 +16,7 @@ export const PREPARE_DELETE_SECTION = 'PREPARE_DELETE_SECTION'
 export const DELETE_SECTION = 'DELETE_SECTION'
 export const DELETING_SECTION_FAILED = 'DELETING_SECTION_FAILED'
 export const UPDATE_SECTION = 'UPDATE_SECTION'
+export const CHANGE_SECTION = 'CHANGE_SECTION'
 export const SECTION_DOCVALUE_CHANGE = 'SECTION_DOCVALUE_CHANGE'
 export const SAVING_SECTION = 'SAVING_SECTION'
 export const SAVING_SECTION_FAILED = 'SAVING_SECTION_FAILED'
@@ -67,11 +70,12 @@ export const addSection = (section) => ({
 		_id: uuid(), // TODO: mark, so it will not be saved to backend with this id
 		visible: true,
 		docValue: { plugin: "rows" },
-		changed: new Set(),
 		position: -1, // added at last pos
-		...section
+		...section,
+		changed: section.changed ? new Set(section.changed) : new Set(),
 	}
 })
+
 
 /**
  * Fetch one or multible sections from the server and add it to sections state
@@ -79,32 +83,84 @@ export const addSection = (section) => ({
  *
  * @param  {...String} sectionIds - comma seperated list of section ids
  */
+
+const startFetching = (state, dispatch) => (_id) => {
+	dispatch({
+		type: FETCHING_SECTION,
+		payload: _id
+	})
+
+	return editorWS.emit(
+		'get',
+		`lesson/${state.lesson._id}/sections`,
+		_id
+	)
+}
+
+const handleChachedSections = (state, dispatch) => (section) => {
+	let params;
+	if (section.savedToBackend === false) {
+		// send hash from last save and hash from current state to compare on server
+		params = {
+			hash: section.savedHash,
+		}
+	} else {
+		// send hash to check if state is the latest
+		params = {
+			hash: section.hash
+		}
+	}
+
+	return editorWS.emit(
+		'get',
+		`lesson/${state.lesson._id}/sections`,
+		section._id,
+		params
+	)
+}
+
 export const fetchSection = (...sectionIds) => ({state, dispatch}) => {
 
 	// TODO: check connection and inform user
 
-	const proms = sectionIds.map(async (_id) => {
+	const [cachedSections, unresolvedIds] = loadSectionCache(...sectionIds);
 
-		dispatch({
-			type: FETCHING_SECTION,
-			payload: _id
-		})
+	const proms = unresolvedIds.map(startFetching(state, dispatch));
+	proms.push(cachedSections.map(handleChachedSections(state, dispatch)))
+	// proms.push(...sectionIds.map(startFetching(state, dispatch)));
 
-		return editorWS.emit(
-			'get',
-			`lesson/${state.lesson._id}/sections`,
-			_id
-		)
-	})
-
-	const resolved = Promise.allSettled(proms)
-	resolved.forEach((res, i) => {
+	Promise.allSettled(proms).forEach((res, i) => {
 		if(res.status === 'fulfilled'){
 			dispatch(addSection(mapSection(res.value)))
+
+			const {_id} = res.value
+
+			if (unresolvedIds.includes(res.value)) {
+				dispatch({
+					type: SECTION_FETCHED,
+					...res.value
+				})
+			} else {
+				const section = cachedSections.find((section) => (section._id === _id))
+				if(section.savedToBackend === false){
+					if (section.savedHash === res.value.hash) {
+						// save current cached version
+						// dispatch(addSection(section))
+					} else if (section.hash !== res.value.hash) {
+						// ask user for solution
+
+					}
+				} else if (section.hash !== res.value.hash) {
+					// there are updated
+					dispatch(updateSection(res.value))
+				}
+			}
+
 			dispatch({
 				type: SECTION_FETCHED,
 				payload: res.value._id
 			})
+			saveSectionCache(res.value)
 		} else {
 			dispatch({
 				type: FETCHING_SECTION_FAILED,
@@ -156,40 +212,57 @@ export const saveSections = () => async ({dispatch, state}) => {
 	const { sections, lesson } = state
 	const NOTHING_TO_SAVE = 'nothing to save'
 
-	const hashes = []
+	const savedHashes = {}
 	// keep care of adding or removing something, ...section is to generate hash and it should include
 	// everything witch is part of section, compared to database
-	const proms = sections.map(({changed, hash, timestamp, ...section}, index) => {
-		const changes = {}
+	const proms = sections.map(
+		({
+			changed,
+			hash,
+			timestamp,
+			savedToBackend,
+			savedHash,
+			scopePermission,
+			...section
+		}, index) => {
+			const changes = {}
 
-		if ( changed.size === 0 ) return Promise.resolve(NOTHING_TO_SAVE)
+			if ( changed.size === 0 ) return Promise.resolve(NOTHING_TO_SAVE)
 
-		dispatch({
-			type: SAVING_SECTION
+			dispatch({
+				type: SAVING_SECTION
+			})
+
+			changed.forEach(key => {
+				if(key === 'docValue'){
+					changes.stateDiff = buildDiff(
+						section.savedDocValue,
+						section.docValue,
+					)
+				} else if (Object.prototype.hasOwnProperty.call(section, key)) {
+					changes[key] = section[key]
+				}
+			})
+
+			const newHash = generateHash(section);
+			section.hash = newHash;
+			changes.hash = newHash;
+
+			dispatch({
+				type: UPDATE_SECTION,
+				payload: {
+					hash: newHash
+				}
+			})
+
+			return editorWS.emit(
+				'patch',
+				`lesson/${lesson._id}/sections`,
+				section._id,
+				changes,
+				{ state: 'diff' }
+			);
 		})
-
-		changed.forEach(key => {
-			if(key === 'docValue'){
-				changes.stateDiff = buildDiff(
-					section.savedDocValue,
-					section.docValue,
-				)
-			} else if (Object.prototype.hasOwnProperty.call(section, key)) {
-				changes[key] = section[key]
-			}
-		})
-
-		// meaby a hash should be part of the server request, but not implemented write now
-		hashes[index] = generateHash(section)
-
-		return editorWS.emit(
-			'patch',
-			`lesson/${lesson._id}/sections`,
-			section._id,
-			changes,
-			{ state: 'diff' }
-		);
-	})
 
 	const resolved = await Promise.allSettled(proms)
 
@@ -203,13 +276,14 @@ export const saveSections = () => async ({dispatch, state}) => {
 			if(res.value !== NOTHING_TO_SAVE){
 				dispatch({
 					type: SECTION_SAVED,
-					payload: sectionId
+					_id: section._id,
+					savedHash: section.hash
 				})
 
 				saveSectionCache({
 					...section,
+					savedHash: undefined,
 					// timestamp: res.value.updatedAt || res.value.instertedAt,
-					hash: hashes[i],
 					savedToBackend: true
 				})
 			}
@@ -219,8 +293,9 @@ export const saveSections = () => async ({dispatch, state}) => {
 				payload: sectionId
 			})
 			saveSectionCache({
-				section,
-				hash: hashes[i],
+				...section,
+				changed: Array.from(changed),
+				// timestamp,
 				savedToBackend: false
 			})
 		}
@@ -228,6 +303,36 @@ export const saveSections = () => async ({dispatch, state}) => {
 
 
 }
+
+
+/**
+ * Update setction state and save the changes by attribute name to backend
+ *
+ * @param {string} sectionId - ID of a section
+ * @param {Object} docValue - should be a Serlo Editor State
+ */
+export const changeSection = (sectionId, section) => ({
+	type: CHANGE_SECTION,
+	payload: {
+		_id: sectionId,
+		...section
+	}
+})
+
+/**
+ * Update section state without saving to backend
+ *
+ * @param {string} sectionId - ID of a section
+ * @param {Object} docValue - should be a Serlo Editor State
+ */
+export const updateSection = (sectionId, section) => ({
+	type: UPDATE_SECTION,
+	payload: {
+		_id: sectionId,
+		...section
+	}
+})
+
 
 /**
  * Sets docValue

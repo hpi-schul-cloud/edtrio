@@ -14,20 +14,22 @@ export function loadLessonCache(lessonId) {
 	return {}
 }
 
-export function saveSectionCache(sections) {
-	const array = Array.isArray(sections) ? sections : [sections];
-	array.forEach((section) => {
+export function saveSectionCache(...sections) {
+	sections.forEach((section) => {
 		localStorage.setItem(`${EDITOR_SECTION_DATA}-${section._id}`, JSON.stringify(section))
 	})
 }
 
 export function loadSectionCache(...sectionIds) {
+	const unresolvedIds = []
 	const sections = sectionIds.map(id => {
 		const data = localStorage.getItem(`${EDITOR_SECTION_DATA}-${id}`)
 		if (data) {
 			return JSON.parse(data)
+		} else {
+			unresolvedIds.push(id)
 		}
 	})
 
-	return sections
+	return [sections, unresolvedIds]
 }
