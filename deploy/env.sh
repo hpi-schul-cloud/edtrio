@@ -9,6 +9,7 @@ envs=(
     "SERVER_API_URL"
     "EDITOR_SOCKET_URL"
     "HOMEWORK_URI"
+    "ENABLE_LTI"
 )
 
 # ------------------------------------
