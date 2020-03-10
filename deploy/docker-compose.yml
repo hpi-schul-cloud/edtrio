@@ -1,0 +1,18 @@
+version: "3.7"
+
+# example compose file
+
+services:
+  edtrio:
+    build:
+      context: ../
+      dockerfile: deploy/Dockerfile
+    container_name: edtr
+    environment:
+      - EDITOR_API_URL=https://editor.test.schul-cloud.org
+      - SERVER_API_URL=https://api.test.schul-cloud.org
+      - EDITOR_SOCKET_URL=wss://editor.test.schul-cloud.org
+      - HOMEWORK_URI=/homework
+    ports:
+      - 4100:80
+    restart: unless-stopped
