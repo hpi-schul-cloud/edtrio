@@ -1,10 +1,12 @@
 import { editorWS } from '~/utils/socket'
-import { setSections , createSection } from './section.actions'
+import { setSections , createSection , fetchSection } from './section.actions'
 import { newError } from './notifications.actions'
 import { generateHash } from '~/utils/crypto'
-import { saveLessonCache } from '~/utils/cache'
+import { loadLessonCache, saveLessonCache } from '~/utils/cache'
 import { startLoading , finishLoading } from './view.actions'
 import { mapSection } from '~/utils/reducer'
+import { isFocused } from '@edtr-io/store'
+
 
 export const BOOTSTRAP = 'BOOTSTRAP'
 export const BOOTSTRAP_FINISHED = 'BOOTSTRAP_FINISHED'
@@ -85,13 +87,14 @@ export const saveLesson = () => async ({state, dispatch}) => {
 
 		const payload = {
 			hash: newHash,
-			// timestamp: message.updatedAt || message.insertedAt
+			timestamp: message.updatedAt || message.insertedAt
 		}
 
 		dispatch({
 			type: LESSON_SAVED,
 			payload
 		})
+
 		saveLessonCache({
 			...lesson,
 			...payload,
@@ -105,6 +108,8 @@ export const saveLesson = () => async ({state, dispatch}) => {
 
 		saveLessonCache({
 			...state.lesson,
+			changed: Array.from(changed),
+			savedHash: hash,
 			savedToBackend: false
 		})
 	}
@@ -118,24 +123,48 @@ export const saveLesson = () => async ({state, dispatch}) => {
  * @param {string} courseId - ID of course, lesson belong to
  * @param {Object} params - query params for request
  */
-export const fetchLesson = (lessonId, courseId, params) => async ({dispatch}) => {
+export const fetchLesson = (lessonId, courseId, bootstrap) => async ({dispatch}) => {
+
+	dispatch(startLoading())
+
 	try {
+
+		const cached = loadLessonCache(lessonId)
+		let sectionIds = []
+
+		if(Object.keys(cached).length !== 0){
+			dispatch({
+				type: SET_LESSON,
+				payload: cached
+			})
+
+			sectionIds = cached.sections
+
+			dispatch(fetchSection(...sectionIds))
+		}
+
 		const lesson = await editorWS.emit(
 			'get',
 			`course/${courseId}/lessons`,
-			lessonId,
-			params
+			lessonId
 		)
+
+		dispatch(
+			fetchSection(lesson.sections.filter(s => !sectionIds.includes(s)))
+		)
+
 		dispatch({
 			type: SET_LESSON,
-			lesson
+			payload: lesson
 		})
 
-		return lesson
-	} catch(error) {
-		dispatch(newError())
+	} catch (err) {
+		console.log(err)
+		dispatch(newError("Es konnten keine Daten vom Server oder aus dem Speicher geladen werden"))
 	}
 
+	dispatch(finishLoading())
+	if(bootstrap === true) dispatch({ type: BOOTSTRAP_FINISHED })
 }
 
 /**

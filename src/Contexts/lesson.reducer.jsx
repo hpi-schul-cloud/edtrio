@@ -17,7 +17,7 @@ export function lessonReducer(state = lessonInitialState, { type, payload }) {
 	case SET_LESSON:
 		return {
 			...payload,
-			changed: new Set()
+			changed: payload.chnaged ? new Set(payload.changed) : new Set()
 		}
 	case UPDATE_LESSON:
 	case LESSON_UPDATED:

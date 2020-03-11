@@ -119,23 +119,26 @@ const handleChachedSections = (state, dispatch) => (section) => {
 	)
 }
 
-export const fetchSection = (...sectionIds) => ({state, dispatch}) => {
+export const fetchSection = (...sectionIds) => async ({state, dispatch}) => {
 
 	// TODO: check connection and inform user
 
 	const [cachedSections, unresolvedIds] = loadSectionCache(...sectionIds);
-
 	const proms = unresolvedIds.map(startFetching(state, dispatch));
-	proms.push(cachedSections.map(handleChachedSections(state, dispatch)))
+	proms.concat(cachedSections.map(handleChachedSections(state, dispatch)))
 	// proms.push(...sectionIds.map(startFetching(state, dispatch)));
 
-	Promise.allSettled(proms).forEach((res, i) => {
+	const sections = await Promise.allSettled(proms);
+
+	sections.forEach((res, i) => {
 		if(res.status === 'fulfilled'){
 			dispatch(addSection(mapSection(res.value)))
 
 			const {_id} = res.value
-
-			if (unresolvedIds.includes(res.value)) {
+			console.log(unresolvedIds)
+			console.log(res.value)
+			console.log(unresolvedIds.includes(_id))
+			if (unresolvedIds.includes(_id)) {
 				dispatch({
 					type: SECTION_FETCHED,
 					...res.value
@@ -145,23 +148,27 @@ export const fetchSection = (...sectionIds) => ({state, dispatch}) => {
 				if(section.savedToBackend === false){
 					if (section.savedHash === res.value.hash) {
 						// save current cached version
-						// dispatch(addSection(section))
+						dispatch({
+							type: SECTION_FETCHED,
+							...section
+						})
 					} else if (section.hash !== res.value.hash) {
 						// ask user for solution
 
 					}
 				} else if (section.hash !== res.value.hash) {
 					// there are updated
-					dispatch(updateSection(res.value))
+					dispatch(addSection(res.value))
 				}
 			}
 
-			dispatch({
+			/* dispatch({
 				type: SECTION_FETCHED,
 				payload: res.value._id
-			})
+			}) */
 			saveSectionCache(res.value)
 		} else {
+			console.log(res)
 			dispatch({
 				type: FETCHING_SECTION_FAILED,
 				payload: sectionIds[i]

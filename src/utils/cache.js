@@ -22,10 +22,11 @@ export function saveSectionCache(...sections) {
 
 export function loadSectionCache(...sectionIds) {
 	const unresolvedIds = []
-	const sections = sectionIds.map(id => {
+	const sections = []
+	sectionIds.forEach(id => {
 		const data = localStorage.getItem(`${EDITOR_SECTION_DATA}-${id}`)
 		if (data) {
-			return JSON.parse(data)
+			sections.push(JSON.parse(data))
 		} else {
 			unresolvedIds.push(id)
 		}
