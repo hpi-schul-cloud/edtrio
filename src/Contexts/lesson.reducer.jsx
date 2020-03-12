@@ -3,7 +3,8 @@ import { ADD_SECTION , REPLACE_ADDED_SECTION_ID } from "./section.actions"
 import { invertSplice } from "~/utils/reducer"
 
 export const lessonInitialState = {
-	title: ''
+	title: '',
+	changed: new Set()
 }
 
 /**

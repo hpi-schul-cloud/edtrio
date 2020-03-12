@@ -5,6 +5,7 @@
 export const mapSection = (section) => {
 	return {
 		...section,
+		changed: section.changed ? new Set(section.chnaged) : new Set(),
 		id: section._id, // needed for old version, please use _id instead
 		docValue: (section.state && Object.keys(section.state).length !== 0)
 			? section.state

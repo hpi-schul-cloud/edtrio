@@ -24,6 +24,7 @@ export const SECTION_SAVED = 'SECTION_SAVED'
 export const FETCHING_SECTION = 'FETCHING_SECTION'
 export const SECTION_FETCHED = 'SECTION_FETCHED'
 export const FETCHING_SECTION_FAILED = 'SECTION_FETCHED'
+export const SORT_SECTIONS = 'SORT_SECTIONS'
 
 /**
  * Switch visibible of a section to true or false depending on the current value
@@ -69,13 +70,20 @@ export const addSection = (section) => ({
 		title: "",
 		_id: uuid(), // TODO: mark, so it will not be saved to backend with this id
 		visible: true,
+		changed: new Set(),
 		docValue: { plugin: "rows" },
 		position: -1, // added at last pos
 		...section,
-		changed: section.changed ? new Set(section.changed) : new Set(),
 	}
 })
 
+export const updateOrAdd = (section) => ({state, dispatch}) => {
+	if(state.sections.find((s => s._id === section._id))) {
+		dispatch(updateSection(section._id, mapSection(section)))
+	}else{
+		dispatch(addSection(mapSection(section)))
+	}
+}
 
 /**
  * Fetch one or multible sections from the server and add it to sections state
@@ -122,53 +130,37 @@ const handleChachedSections = (state, dispatch) => (section) => {
 export const fetchSection = (...sectionIds) => async ({state, dispatch}) => {
 
 	// TODO: check connection and inform user
-
 	const [cachedSections, unresolvedIds] = loadSectionCache(...sectionIds);
-	const proms = unresolvedIds.map(startFetching(state, dispatch));
-	proms.concat(cachedSections.map(handleChachedSections(state, dispatch)))
+	let proms = unresolvedIds.map(startFetching(state, dispatch));
+	proms = proms.concat(cachedSections.map(handleChachedSections(state, dispatch)))
 	// proms.push(...sectionIds.map(startFetching(state, dispatch)));
-
 	const sections = await Promise.allSettled(proms);
-
 	sections.forEach((res, i) => {
 		if(res.status === 'fulfilled'){
-			dispatch(addSection(mapSection(res.value)))
+			// dispatch(addSection(mapSection(res.value)))
 
 			const {_id} = res.value
-			console.log(unresolvedIds)
-			console.log(res.value)
-			console.log(unresolvedIds.includes(_id))
 			if (unresolvedIds.includes(_id)) {
-				dispatch({
-					type: SECTION_FETCHED,
-					...res.value
-				})
+				dispatch(updateOrAdd(res.value))
 			} else {
 				const section = cachedSections.find((section) => (section._id === _id))
 				if(section.savedToBackend === false){
 					if (section.savedHash === res.value.hash) {
 						// save current cached version
-						dispatch({
-							type: SECTION_FETCHED,
-							...section
-						})
+						dispatch(updateOrAdd(section))
 					} else if (section.hash !== res.value.hash) {
 						// ask user for solution
-
+						console.log('konflikt')
 					}
 				} else if (section.hash !== res.value.hash) {
-					// there are updated
-					dispatch(addSection(res.value))
+					// there are updates
+					dispatch(updateOrAdd(res.value))
 				}
 			}
 
-			/* dispatch({
-				type: SECTION_FETCHED,
-				payload: res.value._id
-			}) */
 			saveSectionCache(res.value)
 		} else {
-			console.log(res)
+			console.warn(res)
 			dispatch({
 				type: FETCHING_SECTION_FAILED,
 				payload: sectionIds[i]
@@ -421,3 +413,8 @@ export const removeSection = (sectionId) => async ({state, dispatch}) => {
 		})
 	}
 }
+
+export const sortSections = (_ids) => ({
+	type: SORT_SECTIONS,
+	_ids
+})

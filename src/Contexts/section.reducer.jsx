@@ -11,11 +11,12 @@ import {
 	CHANGE_SECTION,
 	SECTION_DOCVALUE_CHANGE,
 	SECTION_SAVED,
-} from "./section.actions"
+	SORT_SECTIONS , SECTION_FETCHED } from "./section.actions"
 import {
 	SWAP_SECTIONS
 } from "./lesson.actions"
 import { invertSplice } from "~/utils/reducer"
+
 
 export const sectionInitialState = []
 
@@ -123,6 +124,13 @@ export function sectionReducer(state = sectionInitialState, { type, payload, ...
 			}
 			return section
 		})
+
+	case SORT_SECTIONS:
+		return [
+			...state.sort((a, b) =>
+				data._ids.indexOf(a._id) - data._ids.indexOf(b._id)
+			)
+		]
 
 	case "RESET":
 		return sectionInitialState

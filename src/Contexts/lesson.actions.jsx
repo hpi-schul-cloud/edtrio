@@ -1,11 +1,13 @@
 import { editorWS } from '~/utils/socket'
-import { setSections , createSection , fetchSection } from './section.actions'
+import { setSections , createSection , fetchSection , removeSection , sortSections } from './section.actions'
 import { newError } from './notifications.actions'
 import { generateHash } from '~/utils/crypto'
 import { loadLessonCache, saveLessonCache } from '~/utils/cache'
 import { startLoading , finishLoading } from './view.actions'
 import { mapSection } from '~/utils/reducer'
 import { isFocused } from '@edtr-io/store'
+
+
 
 
 export const BOOTSTRAP = 'BOOTSTRAP'
@@ -139,7 +141,6 @@ export const fetchLesson = (lessonId, courseId, bootstrap) => async ({dispatch})
 			})
 
 			sectionIds = cached.sections
-
 			dispatch(fetchSection(...sectionIds))
 		}
 
@@ -149,17 +150,29 @@ export const fetchLesson = (lessonId, courseId, bootstrap) => async ({dispatch})
 			lessonId
 		)
 
-		dispatch(
-			fetchSection(lesson.sections.filter(s => !sectionIds.includes(s)))
-		)
+
+		sectionIds.forEach(s => {
+			if(!lesson.sections.includes(s)) {
+				dispatch(removeSection(s))
+			}
+		})
 
 		dispatch({
-			type: SET_LESSON,
+			type: UPDATE_LESSON,
 			payload: lesson
 		})
 
+		saveLessonCache(lesson);
+
+		// load lessons not already loaded
+		dispatch(
+			fetchSection(...lesson.sections.filter(s => !sectionIds.includes(s)))
+		)
+
+		dispatch(sortSections(lesson.sections))
+
 	} catch (err) {
-		console.log(err)
+		console.error(err)
 		dispatch(newError("Es konnten keine Daten vom Server oder aus dem Speicher geladen werden"))
 	}
 
