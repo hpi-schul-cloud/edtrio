@@ -14,6 +14,8 @@ import duplicateIcon from "~/assets/duplicate-white.svg"
 import shareIcon from "~/assets/share-white.svg"
 import infoIcon from "~/assets/info-white.svg"
 import CloseIcon from "~/assets/close-white.svg"
+import Heading from "~/components/Heading"
+import Text from "~/components/Text"
 
 import ModalActions from "~/components/ModalActions"
 import { editorWS } from "~/utils/socket"
@@ -27,7 +29,8 @@ import { colors } from "react-select/src/theme"
 const Wrapper = styled(Flex)`
     background-color: #455b6a;
     width: 100vw;
-    position: fixed;
+		position: fixed;
+		justify-content: space-between;
     left: 0;
     top: 55px;
     padding: 10px 15px;
@@ -91,28 +94,29 @@ const Settings = () => {
 
 	return (
 
-		<Wrapper justifyBetween>
+		<Wrapper>
 			<Flex noWrap>
 				{/*
 					<Icon src={duplicateIcon} />
 					<Icon src={shareIcon} />
 					<Icon src={infoIcon} />
-					*/}	
+					*/}
 				<ModalActions
 					isOpen={isOpen}
-					sectionTitle={
-					activeSection.title ||
-					`Abschnitt ${activeSectionIndex + 1}`
-				}
-				modalBody="Bist du dir sicher, dass du diesen Abschnitt
-				löschen möchtest? Du kannst dies nicht
-				rückgängig machen."
 					actions={[{
-					onClick: confirmDelete,
-					delete: "Löschen"
+						onClick: confirmDelete,
+						delete: "Löschen"
 					}]}
 					closeModal={() => setOpen(false)}
-			/>{/* // show / hide section
+					showModal={() => setOpen(true)}
+				>
+					<Heading h3>"{activeSection.title || `Abschnitt ${activeSectionIndex + 1}`}" löschen</Heading>
+					<Text size={20}>
+						{`Bist du dir sicher, dass du diesen Abschnitt
+				  löschen möchtest? Du kannst dies nicht
+						rückgängig machen.`}
+					</Text>
+				</ModalActions>{/* // show / hide section
 					// <Icon
 					// 	src={
 					// 		activeSection.visible ? previewIcon : noPreviewIcon
