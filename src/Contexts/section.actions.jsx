@@ -155,12 +155,13 @@ export const fetchSection = (...sectionIds) => async ({state, dispatch}) => {
 				} else if (section.hash !== res.value.hash) {
 					// there are updates
 					dispatch(updateOrAdd(res.value))
+					saveSectionCache(res.value)
+				} else {
+					dispatch(updateOrAdd(section))
 				}
 			}
 
-			saveSectionCache(res.value)
 		} else {
-			console.warn(res)
 			dispatch({
 				type: FETCHING_SECTION_FAILED,
 				payload: sectionIds[i]

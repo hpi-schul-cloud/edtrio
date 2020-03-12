@@ -57,9 +57,11 @@ export function lessonReducer(state = lessonInitialState, { type, payload }) {
 		}
 
 	case ADD_SECTION: // TODO: should be saved to local storage but not to the backend
+		console.warn('log')
+		console.log(payload)
 		return {
 			...state,
-			sections: invertSplice(state.sections, payload.position, 0, payload.tempId)
+			sections: invertSplice(state.sections, payload.position, 0, payload._id)
 		}
 
 	case REPLACE_ADDED_SECTION_ID:
