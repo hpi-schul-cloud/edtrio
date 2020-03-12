@@ -43,9 +43,7 @@ function ModalActions({ children, actions, cancelButton = true, isOpen, closeMod
   return (
     isOpen && <Portal>
       <Wrapper onClick={closeModal}>
-
         <Content onClick={(e) => e.stopPropagation()} small>
-
           {children}
           <br />
           <Flex justifyBetween>
