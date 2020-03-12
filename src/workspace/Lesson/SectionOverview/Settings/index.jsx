@@ -2,11 +2,11 @@ import React, { useContext } from "react"
 
 import styled, { css } from "styled-components"
 
-
+import { useState } from 'react';
 import LessonContext from "~/Contexts/Lesson.context"
 
 import Flex from "~/components/Flex"
-
+import { Portal } from "react-portal"
 import previewIcon from "~/assets/preview-white.svg"
 import noPreviewIcon from "~/assets/no-preview-white.svg"
 import TrashIcon from "~/assets/trash-white.svg"
@@ -17,7 +17,7 @@ import CloseIcon from "~/assets/close-white.svg"
 
 import ModalActions from "~/components/ModalActions"
 import { editorWS } from "~/utils/socket"
-import { switchSectionVisibility , removeSection } from "~/Contexts/section.actions"
+import { switchSectionVisibility, removeSection } from "~/Contexts/section.actions"
 import { toggleSectionSettings } from "~/Contexts/view.actions"
 import BaseButton from "~/components/Button/BaseButton"
 import Button from "~/components/Button"
@@ -49,14 +49,14 @@ const Icon = styled.img`
 
     /* ${props =>
 		!props.visible &&
-        css`
+		css`
             display: none;
         `} */
 
     ${props => {
 		return (
 			props.isOnly && // only one section
-            css`
+			css`
                 cursor: not-allowed;
                 user-select: none;
                 opacity: 0.5;
@@ -80,63 +80,63 @@ const Settings = () => {
 	)
 
 	const isOnly = store.sections.length === 1
+	const [isOpen, setOpen] = useState(false)
 
+	console.log(isOpen)
 	async function confirmDelete() {
 		dispatch(removeSection(activeSectionId))
 	}
-
 	if (!store.view.showSectionSettings) return null
 
 
 	return (
 
-			<Wrapper justifyBetween>
-				<Flex noWrap>
-					{/*
+		<Wrapper justifyBetween>
+			<Flex noWrap>
+				{/*
 					<Icon src={duplicateIcon} />
 					<Icon src={shareIcon} />
 					<Icon src={infoIcon} />
-					*/}
-					<ModalActions 
-						sectionTitle={
-							activeSection.title ||
-                            `Abschnitt ${activeSectionIndex + 1}`
-						}
-						modalBody="Bist du dir sicher, dass du diesen Abschnitt
-	          löschen möchtest? Du kannst dies nicht
-						rückgängig machen."	
-						actions={[{
-							onClick: confirmDelete,
-							text:  "Löschen",
+					*/}	
+				<ModalActions
+					isOpen={isOpen}
+					sectionTitle={
+					activeSection.title ||
+					`Abschnitt ${activeSectionIndex + 1}`
+				}
+				modalBody="Bist du dir sicher, dass du diesen Abschnitt
+				löschen möchtest? Du kannst dies nicht
+				rückgängig machen."
+					actions={[{
+					onClick: confirmDelete,
+					delete: "Löschen"
 					}]}
-						renderIcon={openModal => {
-							return (
-								<BaseButton
-									onClick={e => !isOnly && openModal(e)}
-									theme={buttonTheme}
-								>
-									<TrashIcon/>
-								</BaseButton>
-							)
-						}}
-					/>{/* // show / hide section
-					<Icon
-						src={
-							activeSection.visible ? previewIcon : noPreviewIcon
-						}
-						onClick={() => dispatch(switchSectionVisibility(activeSectionId))}
-						visible
-					/>
+					closeModal={() => setOpen(false)}
+			/>{/* // show / hide section
+					// <Icon
+					// 	src={
+					// 		activeSection.visible ? previewIcon : noPreviewIcon
+					// 	}
+					// 	onClick={() => dispatch(switchSectionVisibility(activeSectionId))}
+					// 	visible
+					// />
 					*/}
-				</Flex>
-				<BaseButton theme={buttonTheme} noWrap>
-					<CloseIcon
-						onClick={() => {
-							dispatch(toggleSectionSettings())
-						}}
-					/>
+
+				<BaseButton
+					onClick={() => setOpen(true)}
+					theme={buttonTheme}
+				>
+					<TrashIcon />
 				</BaseButton>
-			</Wrapper>
+			</Flex>
+			<BaseButton theme={buttonTheme} noWrap>
+				<CloseIcon
+					onClick={() => {
+						dispatch(toggleSectionSettings())
+					}}
+				/>
+			</BaseButton>
+		</Wrapper>
 
 	)
 }
