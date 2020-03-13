@@ -53,15 +53,16 @@ function ModalActions({ children, actions, cancelButton = true, isOpen, closeMod
                 onClick={closeModal}
               >Abbrechen</Button> : null
             }
-            {actions.map((action) => {
+            {actions.map((action, index) => {
               return (
                 <Button
+                  key={index}
                   onClick={() => {
                     closeModal()
                     action.onClick()
                   }}
                 >
-                  {action.delete}
+                  {action.name}
                 </Button>
               )
             })}

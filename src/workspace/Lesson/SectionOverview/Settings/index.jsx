@@ -85,7 +85,6 @@ const Settings = () => {
 	const isOnly = store.sections.length === 1
 	const [isOpen, setOpen] = useState(false)
 
-	console.log(isOpen)
 	async function confirmDelete() {
 		dispatch(removeSection(activeSectionId))
 	}
@@ -105,7 +104,7 @@ const Settings = () => {
 					isOpen={isOpen}
 					actions={[{
 						onClick: confirmDelete,
-						delete: "Löschen"
+						name: "Löschen"
 					}]}
 					closeModal={() => setOpen(false)}
 					showModal={() => setOpen(true)}
