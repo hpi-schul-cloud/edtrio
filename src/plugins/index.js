@@ -38,8 +38,8 @@ import { createImagePlugin } from "@edtr-io/plugin-image"
 // import nexboardPlugin from "./nexboard"
 import etherpadPlugin, {SizedEtherpadIcon} from "./etherpad"
 import etherpadPluginPreview from "./etherpad/Preview"
-// import lichtblickPlugin, {SizedLichtblickIcon} from "./lichtblick"
-// import lichtblickPluginPreview from "./lichtblick/Preview"
+import lichtblickPlugin, {SizedLichtblickIcon} from "./lichtblick"
+import lichtblickPluginPreview from "./lichtblick/Preview"
 import homework, {SizedHomeworkIcon} from "./homework"
 import ltiPlugin, {SizedLtiIcon} from "./lti"
 import ltiPluginPreview from "./lti/Preview"
@@ -320,14 +320,14 @@ addPlugin({
 	preview: homeworkPreview,
 })
 
-// addPlugin({
-// 	name: 'lichtblick',
-// 	title: 'Lichtblick (Demo)',
-// 	icon: SizedLichtblickIcon,
-// 	description: "Kommentierung, Strukturierung und Analyse von Filmen und Videos",
-// 	plugin: lichtblickPlugin,
-// 	preview: lichtblickPluginPreview,
-// })
+addPlugin({
+	name: 'lichtblick',
+	title: 'Lichtblick (Demo)',
+	icon: SizedLichtblickIcon,
+	description: "Kommentierung, Strukturierung und Analyse von Filmen und Videos",
+	plugin: lichtblickPlugin,
+	preview: lichtblickPluginPreview,
+})
 
 if (config.ENABLE_LTI) {
 	addPlugin({
