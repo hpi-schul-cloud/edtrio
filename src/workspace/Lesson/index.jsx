@@ -30,6 +30,7 @@ const Wrapper = styled.div`
 `
 
 const Lesson = props => {
+
 	const { store, dispatch } = useContext(LessonContext)
 	const { store: userStore, dispatch: dispatchUserAction } = useContext(
 		UserContext,
