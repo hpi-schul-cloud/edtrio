@@ -1,8 +1,6 @@
 import React, { useContext } from "react"
 import styled, { css } from "styled-components"
 import Select from 'react-select';
-// import Input from "~/components/Input"
-import config from "~/config"
 
 import { setVideo } from "./utils"
 
@@ -75,16 +73,11 @@ const customStyles = {
 };
 
 const WidthSelect = styled.div`
-margin: 0 20%;
-display: flex;
-flex-direction:row;
-align-items: center;
-
-// @media (max-width: ${config.breakpoints.tablet + 'px'}) {
-// 	width: 100%;
-// }
-
-// `
+	margin: 0 20%;
+	display: flex;
+	flex-direction:row;
+	align-items: center;
+`
 
 const switchSelected = (state) => (selected) => {
 	const video = videos.find((video) => selected.value === video.title)
@@ -99,11 +92,6 @@ const getSelectedOption = (state, options) => {
 
 const createOptions = () => videos
 	.map(video => ({value: video.title, label: video.title}))
-
-// const setUri = (state, uri) => {
-// 	videoUri = uri;
-// 	state.uri.set(uri);
-// }
 
 
 const Edit = ({ state, focused }) => {
@@ -126,17 +114,6 @@ const Edit = ({ state, focused }) => {
 			</Container>
 		</Overlay>
 	)
-
-	// videoUri = state.uri.get();
-
-	// return (
-	// 	<Container>
-	// 		<label className="label">
-	// 			Video-URL:
-	// 		</label>
-	// 		<Input value={videoUri} onChange={newValue => setUri(state,newValue)} />
-	// 	</Container>
-	// )
 }
 
 export default Edit
