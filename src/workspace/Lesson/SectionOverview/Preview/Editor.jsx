@@ -2,7 +2,6 @@ import React from "react"
 import styled from "styled-components"
 import { Editor as Edtr } from "@edtr-io/core"
 
-
 import { previewPlugins } from "~/plugins"
 
 const EditorWrapper = styled.div`

@@ -42,6 +42,9 @@ import etherpadPluginPreview from "./etherpad/Preview"
 import nexboardPlugin, { SizedNextboardIcon } from "./nexboard"
 import nexboardPluginPreview from "./nexboard/Preview"
 
+// import lichtblickPlugin, {SizedLichtblickIcon} from "./lichtblick"
+// import lichtblickPluginPreview from "./lichtblick/Preview"
+
 import homework, {SizedHomeworkIcon} from "./homework"
 import ltiPlugin, {SizedLtiIcon} from "./lti"
 import ltiPluginPreview from "./lti/Preview"
@@ -332,15 +335,24 @@ addPlugin({
 	preview: homeworkPreview,
 })
 
+// addPlugin({
+// 	name: 'lichtblick',
+// 	title: 'Lichtblick (Demo)',
+// 	icon: SizedLichtblickIcon,
+// 	description: "Kommentierung, Strukturierung und Analyse von Filmen und Videos",
+// 	plugin: lichtblickPlugin,
+// 	preview: lichtblickPluginPreview,
+// })
+
 if (config.ENABLE_LTI) {
-  addPlugin({
-    name: 'lti',
-    title: 'LTI',
-    icon: SizedLtiIcon,
-    description: "Binde ein LTI-Tool ein.",
-    plugin: ltiPlugin,
-    preview: ltiPluginPreview,
-  })
+	addPlugin({
+		name: 'lti',
+		title: 'LTI',
+		icon: SizedLtiIcon,
+		description: "Binde ein LTI-Tool ein.",
+		plugin: ltiPlugin,
+		preview: ltiPluginPreview,
+	})
 }
 
 const pList = extractPlugins(pluginList);
