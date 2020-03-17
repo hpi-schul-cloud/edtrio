@@ -3,9 +3,10 @@ import { setSections , createSection , fetchSection , removeSection , sortSectio
 import { newError } from './notifications.actions'
 import { generateHash } from '~/utils/crypto'
 import { loadLessonCache, saveLessonCache } from '~/utils/cache'
-import { startLoading , finishLoading } from './view.actions'
+import { startLoading , finishLoading , setActiveSection } from './view.actions'
 import { mapSection } from '~/utils/reducer'
 import { isFocused } from '@edtr-io/store'
+
 
 
 
@@ -156,6 +157,9 @@ export const fetchLesson = (lessonId, courseId, bootstrap) => async ({dispatch})
 				dispatch(removeSection(s))
 			}
 		})
+
+		// TODO: check if active section was already setted
+		dispatch(setActiveSection(lesson.section[0]))
 
 		dispatch({
 			type: UPDATE_LESSON,
