@@ -1,12 +1,10 @@
-import React, { useContext } from "react"
+import React, { useContext, useState } from "react"
 
 import styled, { css } from "styled-components"
 
-import { useState } from 'react';
 import LessonContext from "~/Contexts/Lesson.context"
 
 import Flex from "~/components/Flex"
-import { Portal } from "react-portal"
 import previewIcon from "~/assets/preview-white.svg"
 import noPreviewIcon from "~/assets/no-preview-white.svg"
 import TrashIcon from "~/assets/trash-white.svg"
@@ -16,13 +14,12 @@ import infoIcon from "~/assets/info-white.svg"
 import CloseIcon from "~/assets/close-white.svg"
 import Heading from "~/components/Heading"
 import Text from "~/components/Text"
+import Button from "~/components/Button"
 
-import ModalActions from "~/components/ModalActions"
-import { editorWS } from "~/utils/socket"
+import ModalActions from "~/components/Modals"
 import { switchSectionVisibility, removeSection } from "~/Contexts/section.actions"
 import { toggleSectionSettings } from "~/Contexts/view.actions"
 import BaseButton from "~/components/Button/BaseButton"
-import Button from "~/components/Button"
 import { colors } from "react-select/src/theme"
 
 
@@ -39,8 +36,8 @@ const Wrapper = styled(Flex)`
 `
 
 const buttonTheme = {
-	height: "28px",
-	padding: "1px",
+	height: "24px",
+	padding: "none",
 }
 const Icon = styled.img`
     cursor: pointer;
@@ -71,6 +68,20 @@ const Icon = styled.img`
 	}}
 `
 
+const TrashButton = ({inactive = false, onClick}) => {
+	if(inactive) return (
+		<TrashIcon height={buttonTheme.height} color="#333" />
+	)
+	return (
+		<BaseButton
+			onClick={onClick}
+			theme={buttonTheme}
+		>
+			<TrashIcon />
+		</BaseButton>
+	)
+}
+
 
 const Settings = () => {
 	const { store, dispatch } = useContext(LessonContext)
@@ -86,6 +97,7 @@ const Settings = () => {
 	const [isOpen, setOpen] = useState(false)
 
 	async function confirmDelete() {
+		setOpen(false)
 		dispatch(removeSection(activeSectionId))
 	}
 	if (!store.view.showSectionSettings) return null
@@ -101,19 +113,24 @@ const Settings = () => {
 					<Icon src={infoIcon} />
 					*/}
 				<ModalActions
-					isOpen={isOpen}
-					actions={[{
-						onClick: confirmDelete,
-						name: "Löschen"
-					}]}
-					closeModal={() => setOpen(false)}
-					showModal={() => setOpen(true)}
+					open={isOpen}
+					actions={
+						Button({
+							children: ['Löschen'],
+							onClick: confirmDelete
+						})
+					}
+					onClose={() => setOpen(false)}
 				>
-					<Heading h3>"{activeSection.title || `Abschnitt ${activeSectionIndex + 1}`}" löschen</Heading>
+					<Heading h3>
+						&quot;{activeSection.title || `Abschnitt ${activeSectionIndex + 1}`}&quot; löschen
+					</Heading>
 					<Text size={20}>
-						{`Bist du dir sicher, dass du diesen Abschnitt
-				  löschen möchtest? Du kannst dies nicht
-						rückgängig machen.`}
+						{
+							`Bist du dir sicher, dass du diesen Abschnitt
+							löschen möchtest? Du kannst dies nicht
+							rückgängig machen.`
+						}
 					</Text>
 				</ModalActions>{/* // show / hide section
 					// <Icon
@@ -125,12 +142,10 @@ const Settings = () => {
 					// />
 					*/}
 
-				<BaseButton
+				<TrashButton
+					inactive={isOnly}
 					onClick={() => setOpen(true)}
-					theme={buttonTheme}
-				>
-					<TrashIcon />
-				</BaseButton>
+				/>
 			</Flex>
 			<BaseButton theme={buttonTheme} noWrap>
 				<CloseIcon
