@@ -1,11 +1,12 @@
 import { editorWS } from '~/utils/socket'
-import { setSections , createSection , fetchSection , removeSection , sortSections } from './section.actions'
+import { setSections , createSection , fetchSection , removeSection , sortSections , addSection } from './section.actions'
 import { newError } from './notifications.actions'
-import { generateHash } from '~/utils/crypto'
+import { generateLessonHash } from '~/utils/crypto'
 import { loadLessonCache, saveLessonCache } from '~/utils/cache'
 import { startLoading , finishLoading , setActiveSection } from './view.actions'
 import { mapSection } from '~/utils/reducer'
 import { isFocused } from '@edtr-io/store'
+
 
 
 
@@ -78,7 +79,7 @@ export const saveLesson = () => async ({state, dispatch}) => {
 			}
 		})
 
-		const newHash = generateHash(lesson)
+		const newHash = generateLessonHash(lesson)
 		changes.hash = newHash
 
 		const message = await editorWS.emit(
@@ -132,10 +133,13 @@ export const fetchLesson = (lessonId, courseId, bootstrap) => async ({dispatch})
 
 	try {
 
-		const cached = loadLessonCache(lessonId)
-		let sectionIds = []
+		const cached = loadLessonCache(lessonId) || {};
+		let sectionIds = [];
+		let cachedDataExist = false;
 
 		if(Object.keys(cached).length !== 0){
+			cachedDataExist = true;
+
 			dispatch({
 				type: SET_LESSON,
 				payload: cached
@@ -151,30 +155,45 @@ export const fetchLesson = (lessonId, courseId, bootstrap) => async ({dispatch})
 			lessonId
 		)
 
+		if(!lesson.hash){
+			lesson.hash = generateLessonHash(lesson)
+		}
 
-		sectionIds.forEach(s => {
-			if(!lesson.sections.includes(s)) {
-				dispatch(removeSection(s))
+		if(lesson.hash !== cached.hash){
+		// lesson.sections = lesson.sections || 
+
+			// remove sections that are in cached lesson but not on server array
+			sectionIds.forEach(s => {
+				if(!lesson.sections.includes(s)) {
+					dispatch(removeSection(s))
+				}
+			})
+
+			dispatch({
+				type: cachedDataExist ? UPDATE_LESSON : SET_LESSON,
+				payload: lesson
+			})
+
+			saveLessonCache(lesson);
+
+			// load lessons not already loaded
+			dispatch(
+				fetchSection(...lesson.sections.filter(s => !sectionIds.includes(s)))
+			)
+
+			try {
+			// TODO: check if active section was already setted
+				dispatch(setActiveSection(lesson.sections[0]))
+			} catch (e) {
+				console.warn(e)
+				if(lesson.sections === undefined || lesson.sections.length === 0){
+					dispatch(createSection())
+				}
 			}
-		})
 
-		// TODO: check if active section was already setted
-		dispatch(setActiveSection(lesson.section[0]))
+			dispatch(sortSections(lesson.sections))
 
-		dispatch({
-			type: UPDATE_LESSON,
-			payload: lesson
-		})
-
-		saveLessonCache(lesson);
-
-		// load lessons not already loaded
-		dispatch(
-			fetchSection(...lesson.sections.filter(s => !sectionIds.includes(s)))
-		)
-
-		dispatch(sortSections(lesson.sections))
-
+		}
 	} catch (err) {
 		console.error(err)
 		dispatch(newError("Es konnten keine Daten vom Server oder aus dem Speicher geladen werden"))
