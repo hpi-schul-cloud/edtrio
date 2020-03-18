@@ -4,7 +4,8 @@ import { invertSplice } from "~/utils/reducer"
 
 export const lessonInitialState = {
 	title: '',
-	changed: new Set()
+	changed: new Set(),
+	sections: []
 }
 
 /**
@@ -17,8 +18,9 @@ export function lessonReducer(state = lessonInitialState, { type, payload }) {
 	switch (type) {
 	case SET_LESSON:
 		return {
+			sections: [],
 			...payload,
-			changed: payload.chnaged ? new Set(payload.changed) : new Set()
+			changed: payload.changed ? new Set(payload.changed) : new Set()
 		}
 	case UPDATE_LESSON:
 	case LESSON_UPDATED:
@@ -57,8 +59,7 @@ export function lessonReducer(state = lessonInitialState, { type, payload }) {
 		}
 
 	case ADD_SECTION: // TODO: should be saved to local storage but not to the backend
-		console.warn('log')
-		console.log(payload)
+		if(state.sections.includes(payload._id)) return state
 		return {
 			...state,
 			sections: invertSplice(state.sections, payload.position, 0, payload._id)
