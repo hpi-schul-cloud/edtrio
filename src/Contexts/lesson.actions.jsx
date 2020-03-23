@@ -91,7 +91,7 @@ export const saveLesson = () => async ({state, dispatch}) => {
 
 		const payload = {
 			hash: newHash,
-			timestamp: message.updatedAt || message.insertedAt
+			timestamp: message.updatedAt || message.createdAt
 		}
 
 		dispatch({
@@ -112,6 +112,7 @@ export const saveLesson = () => async ({state, dispatch}) => {
 
 		saveLessonCache({
 			...state.lesson,
+			timestamp: Date.now(),
 			changed: Array.from(changed),
 			savedHash: hash,
 			savedToBackend: false

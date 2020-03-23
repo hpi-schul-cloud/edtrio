@@ -228,7 +228,7 @@ export const saveSections = (diff = true, ...sectionIds) => async ({dispatch, st
 	if (sectionIds.length !== 0) {
 		sections = sections.filter(({_id}) => sectionIds.includes(_id))
 	}
-	
+
 	// keep care of adding or removing something, ...section is to generate hash and it should include
 	// everything witch is part of section, compared to database
 	const proms = sections.map(
@@ -293,13 +293,14 @@ export const saveSections = (diff = true, ...sectionIds) => async ({dispatch, st
 				dispatch({
 					type: SECTION_SAVED,
 					_id: section._id,
-					savedHash: section.hash
+					savedHash: section.hash,
+					timestamp: res.value.updatedAt || res.value.createdAt
 				})
 
 				saveSectionCache({
 					...section,
 					savedHash: undefined,
-					// timestamp: res.value.updatedAt || res.value.instertedAt,
+					timestamp: res.value.updatedAt || res.value.createdAt,
 					savedToBackend: true
 				})
 			}
@@ -311,7 +312,7 @@ export const saveSections = (diff = true, ...sectionIds) => async ({dispatch, st
 			saveSectionCache({
 				...section,
 				changed: Array.from(changed),
-				// timestamp,
+				timestamp: Date.now(),
 				savedToBackend: false
 			})
 		}
