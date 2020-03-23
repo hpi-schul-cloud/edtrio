@@ -1,5 +1,5 @@
 
-import { SAVING_LESSON , LESSON_SAVED } from "./lesson.actions"
+import { SAVING_LESSON , LESSON_SAVED, ADD_SECTION_STATE_CONFLICTS, SECTION_STATE_CONFLICTS_RESOLVED } from "./lesson.actions"
 import { DELETING_SECTION_FAILED } from "./section.actions"
 import { SAVE_STATUS } from "./notifications.actions"
 
@@ -9,6 +9,7 @@ export const notificationInitialState = {
 	error: "",
 	saveStatus: "",
 	isSaving: 0,
+	sectionStateConflicts: []
 }
 
 /**
@@ -17,15 +18,15 @@ export const notificationInitialState = {
  * @param {*} state - state of lesson
  * @param {Object} param1 - object with the parameters type and payload
  */
-export function notificationReducer(state = notificationInitialState, { type, payload }) {
+export function notificationReducer(state = notificationInitialState, { type, payload, ...data }) {
 	switch (type) {
 	case "ERROR":
 		return {
 			...state,
 			error:
-                    payload === undefined
+                    data.message === undefined
                     	? "Ein Fehler ist aufgetreten..."
-                    	: payload,
+                    	: data.message,
 		}
 	case DELETING_SECTION_FAILED:
 		return {
@@ -58,6 +59,21 @@ export function notificationReducer(state = notificationInitialState, { type, pa
 				isSaving: 0,
 				saveStatus: 'Gepspeichert'
 			}
+		}
+
+	case ADD_SECTION_STATE_CONFLICTS:
+		return {
+			...state,
+			sectionStateConflicts: [
+				...state.sectionStateConflicts,
+				data
+			]
+		}
+
+	case SECTION_STATE_CONFLICTS_RESOLVED:
+		return {
+			...state,
+			sectionStateConflicts: []
 		}
 
 	case "RESET":

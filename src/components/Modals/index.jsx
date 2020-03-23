@@ -28,7 +28,7 @@ const Content = styled(Container)`
 `
 
 
-function ModalBase({ children, actions, cancelButton = true, open, onClose }) {
+function ModalBase({ children, actions, disableClose, open, onClose }) {
 
 	const [isOpen, setOpen] = useState(open)
 
@@ -38,7 +38,7 @@ function ModalBase({ children, actions, cancelButton = true, open, onClose }) {
 
 	const onCloseHandler = () => {
 		setOpen(false)
-		onClose()
+		if( !disableClose ) onClose()
 	}
 
 	return (
@@ -48,11 +48,11 @@ function ModalBase({ children, actions, cancelButton = true, open, onClose }) {
 					{children}
 					<br />
 					<Flex justifyBetween>
-						{cancelButton === true ?
+						{!disableClose &&
 							<Button noMargin
 								secondary
 								onClick={onCloseHandler}
-							>Abbrechen</Button> : null
+							>Abbrechen</Button>
 						}
 						{actions}
 					</Flex>
@@ -71,7 +71,7 @@ ModalBase.propTypes = {
 		PropTypes.element,
 		PropTypes.arrayOf(PropTypes.element)
 	]),
-	channcelButton: PropTypes.bool,
+	disableClose: PropTypes.bool,
 	closeModal: PropTypes.func,
 	open: PropTypes.bool.isRequired
 }

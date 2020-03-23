@@ -6,6 +6,7 @@ import { generateHash } from "~/utils/crypto"
 import { SET_ACTIVE_SECTION } from "./view.actions"
 import { mapSection } from "~/utils/reducer"
 import { faSmile } from "@edtr-io/ui"
+import { addSectionStateConflict } from "./notifications.actions"
 
 
 export const SET_SECTIONS = 'SET_SECTIONS'
@@ -77,6 +78,11 @@ export const addSection = (section) => ({
 	}
 })
 
+/**
+ * section need to have an _id otherwise it will created
+ * 
+ * @param {Object} section
+ */
 export const updateOrAdd = (section) => ({state, dispatch}) => {
 	if(state.sections.find((s => s._id === section._id))) {
 		dispatch(updateSection(section._id, mapSection(section)))
@@ -85,14 +91,11 @@ export const updateOrAdd = (section) => ({state, dispatch}) => {
 	}
 }
 
-/**
- * Fetch one or multible sections from the server and add it to sections state
- * if no positon is setted by the server response it will be added at last position
- *
- * @param  {...String} sectionIds - comma seperated list of section ids
- */
 
-const startFetching = (state, dispatch) => (_id) => {
+/**
+ * helper function for fetchSection
+ */
+const startFetching = (state, dispatch, params = {}) => (_id) => {
 	dispatch({
 		type: FETCHING_SECTION,
 		payload: _id
@@ -101,10 +104,14 @@ const startFetching = (state, dispatch) => (_id) => {
 	return editorWS.emit(
 		'get',
 		`lesson/${state.lesson._id}/sections`,
-		_id
+		_id,
+		params
 	)
 }
 
+/**
+ * helper function for fetchSection
+ */
 const handleChachedSections = (state, dispatch) => (section) => {
 	let params;
 	if (section.savedToBackend === false) {
@@ -119,14 +126,16 @@ const handleChachedSections = (state, dispatch) => (section) => {
 		}
 	}
 
-	return editorWS.emit(
-		'get',
-		`lesson/${state.lesson._id}/sections`,
-		section._id,
-		params
-	)
+	startFetching(state, dispatch, params)(section._id);
 }
 
+
+/**
+ * Fetch one or multible sections from the server and add it to sections state
+ * if no positon is setted by the server response it will be added at last position
+ *
+ * @param  {...String} sectionIds - comma seperated list of section ids
+ */
 export const fetchSection = (...sectionIds) => async ({state, dispatch}) => {
 
 	// TODO: check connection and inform user
@@ -150,13 +159,13 @@ export const fetchSection = (...sectionIds) => async ({state, dispatch}) => {
 						dispatch(updateOrAdd(section))
 					} else if (section.hash !== res.value.hash) {
 						// ask user for solution
-						console.log('konflikt')
+						dispatch(addSectionStateConflict(section._id, section, res.value))
 					}
 				} else if (section.hash !== res.value.hash) {
 					// there are updates
 					dispatch(updateOrAdd(res.value))
 					saveSectionCache(res.value)
-				} else {
+				} else { // section.hash === res.value.hash => no changes
 					dispatch(updateOrAdd(section))
 				}
 			}
@@ -207,12 +216,15 @@ export const createSection = (position) => async ({dispatch, state}) => {
 /**
  * Saves all data to server, that are markes in the changed Set
  */
-export const saveSections = () => async ({dispatch, state}) => {
+export const saveSections = (diff = true, ...sectionIds) => async ({dispatch, state}) => {
 
-	const { sections, lesson } = state
+	let { sections, lesson } = state
 	const NOTHING_TO_SAVE = 'nothing to save'
 
-	const savedHashes = {}
+	if (sectionIds.length !== 0) {
+		sections = sections.filter(({_id}) => sectionIds.includes(_id))
+	}
+	
 	// keep care of adding or removing something, ...section is to generate hash and it should include
 	// everything witch is part of section, compared to database
 	const proms = sections.map(
@@ -260,7 +272,7 @@ export const saveSections = () => async ({dispatch, state}) => {
 				`lesson/${lesson._id}/sections`,
 				section._id,
 				changes,
-				{ state: 'diff' }
+				{ state: diff ? 'diff' : 'state' }
 			);
 		})
 

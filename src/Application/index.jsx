@@ -6,18 +6,20 @@ import GlobalStyle from "./GlobalStyle"
 import config from "~/config"
 import Contexts from "~/Contexts"
 import Error from "./Error"
+import ModalWrapper from "./ModalWrapper"
 import ErrorBoundary from "~/components/ErrorBoundary"
 
 const Application = () => {
-    return (
-        <ErrorBoundary>
-            <Contexts>
-                <Error />
-                <GlobalStyle />
-                <Workspace />
-            </Contexts>
-        </ErrorBoundary>
-    )
+	return (
+		<ErrorBoundary>
+			<Contexts>
+				<Error />
+				<GlobalStyle />
+				<Workspace />
+				<ModalWrapper />
+			</Contexts>
+		</ErrorBoundary>
+	)
 }
 
 export default hot(module)(Application)
