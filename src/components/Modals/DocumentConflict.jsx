@@ -7,7 +7,6 @@ import Text from '../Text'
 
 
 export const DocumentConflict = (props) => {
-
 	const [open, setOpen] = useState(props.open)
 
 	const keepOld = () => {
@@ -21,26 +20,26 @@ export const DocumentConflict = (props) => {
 
 	return (
 		<ModalBase
-			isOpen={open}
+			open={open}
 			disableClose
 			actions={[
 				Button({
+					key: 'old',
 					onClick: keepOld,
-					children: "Alt"
+					children: "Alter Stand"
 				}),
 				Button({
+					key: 'new',
 					onClick: keepNew,
-					children: "Neu"
+					children: "Neuerer Stand"
 				})
 			]}
 			closeModal={() => setOpen(false)}
 		>
 			<Heading h3>Konflikt in Dokument(en)</Heading>
-			<Text>
-				Aufgrund eines Konflikts können die lokale Version nicht mit dem Server abgeglichen werden.
-				Server: {props.serverTimestamp}
-				Lokal: {props.localTimestamp}
-			</Text>
+			<Text size="18">Aufgrund eines Konflikts kann die Version auf diesem Gerät nicht mit dem anderer abgeglichen werden.</Text>
+			<Text><b>Andere Geräte:</b> {props.localTimestamp.toString()}</Text>
+			<Text><b>Aktuelles Gerät:</b> {props.localTimestamp.toString()}</Text>
 		</ModalBase>
 	)
 }

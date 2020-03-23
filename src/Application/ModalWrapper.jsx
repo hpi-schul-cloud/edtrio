@@ -1,23 +1,25 @@
 import React, { useEffect , useContext, useState } from 'react'
 import LessonContext from '~/Contexts/Lesson.context'
 import DocumentConflict from '~/components/Modals/DocumentConflict'
-import { sectionDocConflictResolved } from '~/Contexts/notifications.actions';
+import { sectionStateConflictResolved } from '~/Contexts/notifications.actions';
 
 
 const types = {
 	SECTION_CONFLICTS: 'SECTION_CONFLICTS'
 }
 
-
 export const ModalWrapper = () => {
 
 	const {store, dispatch} = useContext(LessonContext);
 
-	const modals = {}
+	const [modals, setModals] = useState({})
 
 	useEffect(() => {
-		if(store.notifications.sectionStateConflicts.lenght === 0 && modals[types.SECTION_CONFLICTS]){
-			delete modals[types.SECTION_CONFLICTS]
+		if(store.notifications.sectionStateConflicts.length === 0){
+			setModals({
+				...modals,
+				[types.SECTION_CONFLICTS]: undefined
+			})
 		} else {
 			const {serverTimestamp, localTimestamp} =
 				store.notifications.sectionStateConflicts.reduce((acc, {local, server}) => {
@@ -32,19 +34,21 @@ export const ModalWrapper = () => {
 					localTimestamp: 0,
 					serverTimestamp: 0
 				})
-			modals[types.SECTION_CONFLICTS] = {
-				open: true,
-				serverTimestamp,
-				localTimestamp,
-				keepOld: () => {dispatch(sectionDocConflictResolved(localTimestamp > serverTimestamp))},
-				keepNew: () => {dispatch(sectionDocConflictResolved(localTimestamp < serverTimestamp))}
-			} 
+			setModals({
+				...modals,
+				[types.SECTION_CONFLICTS]:{
+					open: true,
+					serverTimestamp: new Date(serverTimestamp),
+					localTimestamp: new Date(localTimestamp),
+					keepOld: () => {dispatch(sectionStateConflictResolved(localTimestamp > serverTimestamp))},
+					keepNew: () => {dispatch(sectionStateConflictResolved(localTimestamp < serverTimestamp))}
+				}
+			})
 		}
 	}, [store.notifications.sectionStateConflicts])
 
-
 	if ( modals[types.SECTION_CONFLICTS] ){
-		return DocumentConflict(modals[types.SECTION_CONFLICTS])
+		return <DocumentConflict {...modals[types.SECTION_CONFLICTS]}/>
 	}
 
 	return null

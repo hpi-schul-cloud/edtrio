@@ -1,7 +1,7 @@
 
-import { SAVING_LESSON , LESSON_SAVED, ADD_SECTION_STATE_CONFLICTS, SECTION_STATE_CONFLICTS_RESOLVED } from "./lesson.actions"
+import { SAVING_LESSON , LESSON_SAVED } from "./lesson.actions"
 import { DELETING_SECTION_FAILED } from "./section.actions"
-import { SAVE_STATUS } from "./notifications.actions"
+import { SAVE_STATUS, ADD_SECTION_STATE_CONFLICT, SECTION_STATE_CONFLICTS_RESOLVED } from "./notifications.actions"
 
 
 
@@ -61,7 +61,7 @@ export function notificationReducer(state = notificationInitialState, { type, pa
 			}
 		}
 
-	case ADD_SECTION_STATE_CONFLICTS:
+	case ADD_SECTION_STATE_CONFLICT:
 		return {
 			...state,
 			sectionStateConflicts: [

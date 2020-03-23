@@ -6,7 +6,7 @@ import { saveSectionCache } from "~/utils/cache"
 export const ERROR = 'ERROR'
 export const SAVE_STATUS = 'SAVE_STATUS'
 
-export const ADD_SECTION_STATE_CONFLICTS = 'ADD_SECTION_STATE_CONFLICTS'
+export const ADD_SECTION_STATE_CONFLICT = 'ADD_SECTION_STATE_CONFLICT'
 export const SECTION_STATE_CONFLICTS_RESOLVED = 'SECTION_STATE_CONFLICTS_RESOLVED'
 
 
@@ -29,15 +29,15 @@ export const unsavedChanges = () => ({
 })
 
 export const addSectionStateConflict = (sectionId, local, server) => ({
-	type: ADD_SECTION_STATE_CONFLICTS,
+	type: ADD_SECTION_STATE_CONFLICT,
 	_id: sectionId,
 	local,
 	server
 })
 
-export const sectionStateConflictResolved = (loadFromServer) => ({store, dispatch}) => {
+export const sectionStateConflictResolved = (loadFromServer) => ({state, dispatch}) => {
 
-	const conflicts = store.notifictaions.sectionStateConflicts
+	const conflicts = state.notifications.sectionStateConflicts
 
 	if (loadFromServer) {
 		const _ids = conflicts.map(({_id, server}) => {
