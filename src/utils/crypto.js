@@ -14,11 +14,11 @@ export const generateLessonHash = ({position, courseId, sections, title, meta}) 
 		meta
 	})
 }
-	
-export const generateSessionHash = ({title, state, meta}) => {
+
+export const generateSessionHash = ({title, docValue, meta}) => {
 	return generateHash({
 		title,
-		state,
+		docValue,
 		meta
 	})
 }
