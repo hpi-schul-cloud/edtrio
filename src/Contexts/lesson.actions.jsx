@@ -137,7 +137,6 @@ export const fetchLesson = (lessonId, courseId, bootstrap) => async ({dispatch})
 		const cached = loadLessonCache(lessonId) || {};
 		let sectionIds = [];
 		let cachedDataExist = false;
-
 		if(Object.keys(cached).length !== 0){
 			cachedDataExist = true;
 

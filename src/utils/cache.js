@@ -6,7 +6,7 @@ export function saveLessonCache(lesson) {
 		localStorage.setItem(
 			`${EDITOR_LESSON_DATA}-${lesson._id}`,
 			JSON.stringify({
-				lesson,
+				...lesson,
 				change: Array.from(lesson.chnaged || [])
 			}))
 	}catch (err) {
