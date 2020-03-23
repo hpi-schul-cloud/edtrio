@@ -2,7 +2,7 @@ import { editorWS } from "~/utils/socket"
 import { mergeDiff, buildDiff } from '~/utils/diff'
 import uuid from "uuid/v4"
 import { saveSectionCache, loadSectionCache } from "~/utils/cache"
-import { generateHash } from "~/utils/crypto"
+import { generateHash, generateSessionHash } from "~/utils/crypto"
 import { SET_ACTIVE_SECTION } from "./view.actions"
 import { mapSection } from "~/utils/reducer"
 import { faSmile } from "@edtr-io/ui"
@@ -126,7 +126,7 @@ const handleChachedSections = (state, dispatch) => (section) => {
 		}
 	}
 
-	startFetching(state, dispatch, params)(section._id);
+	return startFetching(state, dispatch, params)(section._id);
 }
 
 
@@ -147,10 +147,14 @@ export const fetchSection = (...sectionIds) => async ({state, dispatch}) => {
 	sections.forEach((res, i) => {
 		if(res.status === 'fulfilled'){
 			// dispatch(addSection(mapSection(res.value)))
-
+			/* console.log(res)
+			const {_id} = res.value
+			const section = cachedSections.find((section) => (section._id === _id))
+			dispatch(addSectionStateConflict(section._id, section, res.value)) */
 			const {_id} = res.value
 			if (unresolvedIds.includes(_id)) {
 				dispatch(updateOrAdd(res.value))
+				saveSectionCache(res.value)
 			} else {
 				const section = cachedSections.find((section) => (section._id === _id))
 				if(section.savedToBackend === false){
@@ -256,7 +260,7 @@ export const saveSections = (diff = true, ...sectionIds) => async ({dispatch, st
 				}
 			})
 
-			const newHash = generateHash(section);
+			const newHash = generateSessionHash(section);
 			section.hash = newHash;
 			changes.hash = newHash;
 
