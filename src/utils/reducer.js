@@ -2,18 +2,18 @@
  * Maps Object from the backend to the needed section attribute
  * @param {Object} section - section object sended from the backend
  */
-export const mapSection = ({updatedAt, insertedAt, state, changed, note, ...section}) => {
+export const mapSection = ({type, updatedAt, insertedAt, state, changed, note, ...section}) => {
 	return {
 		savedDocValue: state, // value of docValue that is saved on the backend, needed for creating diff when docValue was changed
 		timestamp: updatedAt || updatedAt,
-		changed: changed ? new Set(changed) : new Set(),
 		id: section._id, // needed for old version, please use _id instead
 		docValue: (state && Object.keys(state).length !== 0)
 			? state
 			: { plugin: "rows" },
 		notes: note,
-		visible: true, // TODO: remove should be set by server and blur mode should removed
+		// visible: true, // TODO: remove should be set by server and blur mode should removed
 		...section,
+		visible: true
 	}
 }
 

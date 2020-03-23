@@ -154,7 +154,7 @@ export const fetchSection = (...sectionIds) => async ({state, dispatch}) => {
 			const {_id} = res.value
 			if (unresolvedIds.includes(_id)) {
 				dispatch(updateOrAdd(res.value))
-				saveSectionCache(res.value)
+				saveSectionCache(mapSection(res.value))
 			} else {
 				const section = cachedSections.find((section) => (section._id === _id))
 				if(section.savedToBackend === false){
@@ -168,7 +168,7 @@ export const fetchSection = (...sectionIds) => async ({state, dispatch}) => {
 				} else if (section.hash !== res.value.hash) {
 					// there are updates
 					dispatch(updateOrAdd(res.value))
-					saveSectionCache(res.value)
+					saveSectionCache(mapSection(res.value))
 				} else { // section.hash === res.value.hash => no changes
 					dispatch(updateOrAdd(section))
 				}
