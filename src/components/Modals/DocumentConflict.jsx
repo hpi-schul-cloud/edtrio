@@ -38,8 +38,8 @@ export const DocumentConflict = (props) => {
 		>
 			<Heading h3>Konflikt in Dokument(en)</Heading>
 			<Text size="18">Aufgrund eines Konflikts kann die Version auf diesem Gerät nicht mit dem anderer abgeglichen werden.</Text>
-			<Text><b>Andere Geräte:</b> {props.localTimestamp.toString()}</Text>
-			<Text><b>Aktuelles Gerät:</b> {props.localTimestamp.toString()}</Text>
+			<Text><b>Andere Geräte:</b> {props.localTimestamp.toLocalString()}</Text>
+			<Text><b>Aktuelles Gerät:</b> {props.localTimestamp.toLocalString()}</Text>
 		</ModalBase>
 	)
 }
