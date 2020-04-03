@@ -26,8 +26,6 @@ http {
     gzip on;
     gzip_static on;
 
-    include /etc/nginx/conf.d/*.conf;
-
     server {
         listen       80;
         server_name  0.0.0.0;
@@ -40,7 +38,7 @@ http {
             index  index.js;
 
             set $cors '';
-            if ($http_origin ~* (.*\.schul-cloud\.org)) {
+            if ($http_origin ~* (.${CORS_URL})) {
                 set $cors 'true' ;
             }
 
