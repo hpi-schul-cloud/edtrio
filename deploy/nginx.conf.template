@@ -40,7 +40,7 @@ http {
             index  index.js;
 
             set $cors '';
-            if ($http_origin ~* (.*\.${CORS_URL})) {
+            if ($http_origin ~* (.*\.schul-cloud\.org)) {
                 set $cors 'true' ;
             }
 
