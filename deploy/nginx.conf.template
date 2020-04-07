@@ -33,14 +33,14 @@ http {
         #charset koi8-r;
         #access_log  /var/log/nginx/host.access.log  main;
 
+        set $cors '';
+        if ($http_origin ~* (.${CORS_URL})) {
+            set $cors 'true' ;
+        }
+
         location / {
             root   /usr/share/nginx/html;
             index  index.js;
-
-            set $cors '';
-            if ($http_origin ~* (.${CORS_URL})) {
-                set $cors 'true' ;
-            }
 
             if ($cors = 'true') {
                 add_header 'Access-Control-Allow-Origin' "$http_origin" always;
