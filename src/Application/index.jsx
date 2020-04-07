@@ -6,14 +6,17 @@ import GlobalStyle from "./GlobalStyle"
 import config from "~/config"
 import Contexts from "~/Contexts"
 import Error from "./Error"
+import ErrorBoundary from "~/components/ErrorBoundary"
 
 const Application = () => {
     return (
-        <Contexts>
-            <Error />
-            <GlobalStyle />
-            <Workspace />
-        </Contexts>
+        <ErrorBoundary>
+            <Contexts>
+                <Error />
+                <GlobalStyle />
+                <Workspace />
+            </Contexts>
+        </ErrorBoundary>
     )
 }
 

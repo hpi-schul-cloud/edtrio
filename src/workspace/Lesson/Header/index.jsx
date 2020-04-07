@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react"
 import styled, { css } from "styled-components"
 
-import LessonContext from "~/Contexts/Lesson"
+import LessonContext from "~/Contexts/Lesson.context"
 
 import Flex from "~/components/Flex"
 import Text from "~/components/Text"
@@ -10,6 +10,7 @@ import { Toggle } from "~/components/Button"
 import Back from "./Back"
 import BreadCrumbs from "./BreadCrumbs"
 import Settings from "./Settings"
+import { setEditing } from "~/Contexts/view.actions"
 
 const StyledHeader = styled(Flex)`
     position: fixed;
@@ -18,11 +19,11 @@ const StyledHeader = styled(Flex)`
     background-color: #fff;
     width: 100vw;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.18);
-    z-index: 200;
+    z-index: 3;
 
     &:hover .save-status {
         ${props =>
-            props.editing &&
+		props.editing &&
             css`
                 opacity: 1 !important;
             `}
@@ -34,57 +35,91 @@ const SaveStatus = styled(Text)`
     margin-right: 25px;
 `
 
+const buttonTheme = {
+	background: "#af0437",
+	height: "55px",
+	padding: "10px",
+}
+
+const smallButtonTheme = {
+	...buttonTheme,
+	padding: "10px 0"
+}
+
+const hasPermission = (sections = [], sectionId = '') => {
+	const section = sections.find(s => s._id.toString() === sectionId.toString()) || {};
+	return section.scopePermission === 'write';
+}
+
 const Header = () => {
-    const { store, dispatch } = useContext(LessonContext)
-    const [showSaveStatus, setShowSaveStatus] = useState(false)
+	const { store, dispatch } = useContext(LessonContext)
+	const [showSaveStatus, setShowSaveStatus] = useState(false)
 
-    useEffect(() => {
-        let timeout
-        if (store.saveStatus === "Ungesicherte Änderungen")
-            return setShowSaveStatus(true)
-        if (
-            store.saveStatus === "Gespeichert" ||
-            store.saveStatus === "Lokal Gespeichert"
-        )
-            timeout = setTimeout(() => setShowSaveStatus(false), 1500)
+	const {
+		notifications:{
+			saveStatus,
+		},
+		view: {
+			editing,
+			studentView,
+			activeSectionId,
+		},
+		sections
+	} = store
 
-        return () => clearTimeout(timeout)
-    }, [store.saveStatus])
+	// TODO: do not work re-implement
+	useEffect(() => {
+		let timeout
+		if (saveStatus === "Ungesicherte Änderungen")
+			return setShowSaveStatus(true)
+		if (
+			saveStatus === "Gespeichert" ||
+            saveStatus === "Lokal Gespeichert"
+		)
+			timeout = setTimeout(() => setShowSaveStatus(false), 1500)
 
-    return (
-        <StyledHeader noWrap justifyBetween alignCenter editing={store.editing}>
-            <Flex alignCenter>
-                <Back />
-                <BreadCrumbs store={store} dispatch={dispatch} />
-            </Flex>
+		return () => clearTimeout(timeout)
+	}, [saveStatus])
 
-            <Flex alignCenter noWrap>
-                <SaveStatus
-                    noMargin
-                    className="save-status"
-                    inline
-                    style={{
-                        textAlign: "right",
-                        width: "185px",
-                        opacity: showSaveStatus ? 1 : 0,
-                        transition: "250ms all ease-in-out",
-                    }}>
-                    {store.saveStatus}
-                </SaveStatus>
-                {!store.studentView && (
-                    <Toggle
-                        caption="Präsentieren"
-                        activeCaption="Bearbeiten"
-                        active={store.editing}
-                        onChange={newValue => {
-                            dispatch({ type: "SET_EDITING", payload: newValue })
-                        }}
-                    />
-                )}
-                <Settings store={store} dispatch={dispatch} />
-            </Flex>
-        </StyledHeader>
-    )
+	const editPermission = hasPermission(sections, activeSectionId);
+	const showEditToggle = editPermission && !studentView;
+	// TODO: is disabled for the moment
+	const enabled = false;
+
+	return (
+		<StyledHeader noWrap justifyBetween alignCenter editing={editing}>
+			<Flex alignCenter>
+				<Back theme={buttonTheme} />
+				<BreadCrumbs store={store} dispatch={dispatch} />
+			</Flex>
+
+			<Flex alignCenter noWrap>
+				{enabled && (<SaveStatus
+					noMargin
+					className="save-status"
+					inline
+					style={{
+						textAlign: "right",
+						width: "185px",
+						opacity: showSaveStatus ? 1 : 0,
+						transition: "250ms all ease-in-out",
+					}}>
+					{saveStatus}
+				</SaveStatus>)}
+				{showEditToggle && (
+					<Toggle
+						caption="Präsentieren"
+						activeCaption="Bearbeiten"
+						active={editing}
+						onChange={(newValue) => {
+							dispatch(setEditing(newValue))
+						}}
+					/>
+				)}
+				<Settings store={store} theme={smallButtonTheme}/>
+			</Flex>
+		</StyledHeader>
+	)
 }
 
 export default Header

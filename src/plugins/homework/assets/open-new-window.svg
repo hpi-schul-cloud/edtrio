@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 62 (91390) - https://sketch.com -->
+    <title>01_Icon/open new window</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(-17.000000, -56.000000)" fill="#000000" fill-rule="nonzero" id="01_Icon/open-new-window">
+            <g transform="translate(17.000000, 56.000000)">
+                <g id="Mask">
+                    <path d="M15,16 L3,16 C2.45,16 2,15.55 2,15 L2,3 C2,2.45 2.45,2 3,2 L8,2 C8.55,2 9,1.55 9,1 C9,0.45 8.55,0 8,0 L2,0 C0.89,0 0,0.9 0,2 L0,16 C0,17.1 0.9,18 2,18 L16,18 C17.1,18 18,17.1 18,16 L18,10 C18,9.45 17.55,9 17,9 C16.45,9 16,9.45 16,10 L16,15 C16,15.55 15.55,16 15,16 Z M11,1 C11,1.55 11.45,2 12,2 L14.59,2 L5.46,11.13 C5.07,11.52 5.07,12.15 5.46,12.54 C5.85,12.93 6.48,12.93 6.87,12.54 L16,3.41 L16,6 C16,6.55 16.45,7 17,7 C17.55,7 18,6.55 18,6 L18,1 C18,0.45 17.55,0 17,0 L12,0 C11.45,0 11,0.45 11,1 Z" id="Shape"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

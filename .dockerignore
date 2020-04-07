@@ -1,0 +1,5 @@
+.github
+.git
+dist
+.cache
+node_modules

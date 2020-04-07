@@ -1,89 +1,150 @@
-import React, { useContext, useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import {
-    Editor as Edtr,
-    EditorContext,
-    useScopedSelector,
-    getPendingChanges,
+	Editor as Edtr,
+	useScopedDispatch,
+//	useScopedSelector
 } from "@edtr-io/core"
 
-import { serializeRootDocument } from "@edtr-io/store"
-
-import { CustomTheme, ThemeProvider } from "@edtr-io/ui"
-
+/*
+import {
+	 focusNext,
+		focusPrevious,
+		persist,
+		redo,
+		reset,
+		undo, 
+	hasPendingChanges as hasPendingChangesSelector
+} from '@edtr-io/store'
+*/
 import theme from "~/theme"
-import plugins from "./plugins"
-export { default as plugins } from "./plugins"
+import { createTheme } from "./createTheme"
 
-export const EditorWrapper = styled.div`
-    min-height: 50px;
-    font-size: 20px;
-    line-height: 1.4;
+import { plugins } from "~/plugins"
 
-    @media (max-width: 991px) {
-        font-size: 18px;
-    }
+export const EdtrWrapper = styled.div`
+	min-height: 50px;
+	padding: 0 10px;
+	font-size: 1.3rem;
+	line-height: 1.4;
 
-    @media (max-width: 768px) {
-        font-size: 18px;
-    }
+	svg{
+		font-size: 1.4rem
+	}
 
-    @media (max-width: 575px) {
-        font-size: 16px;
-    }
+	.fa-4x{
+		font-size: 3rem;
+	}
+
+	@media (max-width: 991px) {
+		font-size: 1.2rem;
+	}
+
+	@media (max-width: 768px) {
+		font-size: 1.2rem;
+	}
+
+	@media (max-width: 575px) {
+		font-size: 1.1rem;
+	}
 `
 
-export const editorTheme = {
-    editor: {
-        primary: {
-            background: theme.colors.primary,
-        },
-    },
-    plugins: {
-        rows: {
-            menu: {
-                highlightColor: theme.colors.primary,
-                dropzone: {
-                    highlightColor: theme.colors.primary,
-                },
-            },
-        },
-        text: {
-            hoverColor: "#B6B6B6",
-        },
-    },
+/**
+ * props
+ * @param section
+ * @param editing
+ * @param onChange
+ * https://github.com/edtr-io/edtr-io/blob/master/api/core.api.md
+ */
+export const Editor = (props) => {
+	const children = React.useCallback((document) => {
+		return (
+			<PlainEditorContainerInner
+				docValue={props.section.docValue}>
+				{document}
+			</PlainEditorContainerInner>
+		)
+	})
+
+	const [initialState, setInitialState] = useState(props.section.docValue)
+	useEffect(() => {
+		// if the user not in write mode, the edtr is updating
+		if(!props.editing){
+			setInitialState(props.section.docValue)
+		}
+	}, [props.section.docValue])
+
+	// TODO: onError pass to Edtr
+
+	const editable = props.section.scopePermission === 'write' && props.editing;
+
+	return (
+		<EdtrWrapper>
+			<Edtr
+				theme={createTheme(theme)}
+				plugins={plugins}
+				editable={editable}
+				omitDragDropContext
+				initialState={initialState}
+				onChange={props.onChange}
+			>
+				{children}
+			</Edtr>
+		</EdtrWrapper>
+	)
 }
+export default Editor
 
-export default class Editor extends React.Component {
-    constructor(props) {
-        super(props)
-        this.docValue =
-            this.props.docValue && Object.keys(this.props.docValue).length
-                ? this.props.docValue
-                : {
-                      plugin: "rows",
-                  }
+/**
+ * props
+ * @param docValue
+ */
+function PlainEditorContainerInner(props) {
+	const dispatch = useScopedDispatch()
+	//	const hasPendingChanges = useScopedSelector(hasPendingChangesSelector())
+	useEffect(() => {
+		if(props.docValue && props.docValue.state){
+			dispatch((scope) => ({
+				type: 'SetPartialState',
+				scope,
+				payload: props.docValue
+			}))
+		}
+	}, [props.docValue])
 
-        this.onChange = this.onChange.bind(this)
-    }
-
-    onChange({changed, getDocument}){
-        this.props.dispatchChange(getDocument())
-    }
-
-    render() {
-        return (
-            <EditorWrapper>
-                <Edtr
-                    theme={editorTheme}
-                    plugins={plugins}
-                    defaultPlugin={"text"}
-                    editable={this.props.editing}
-                    omitDragDropContext
-                    initialState={this.docValue}
-                    onChange={this.onChange}>
-                </Edtr>
-            </EditorWrapper>
-        )
-    }
+	return (
+		<React.Fragment>
+			<div style={{ margin: '20px 0' }}>{props.children}</div>
+			{/* <button
+					onClick={() => {
+						dispatch(undo())
+					}}
+				>
+					Undo
+				</button>
+				<button
+					onClick={() => {
+						dispatch(redo())
+					}}
+				>
+					Redo
+				</button>
+				<button
+					onClick={() => {
+						dispatch(persist())
+					}}
+					disabled={!hasPendingChanges}
+				>
+					Mark persisted
+				</button>
+				<button
+					onClick={() => {
+						dispatch(reset())
+					}}
+					disabled={!hasPendingChanges}
+				>
+					Reset
+				</button> */}
+		</React.Fragment>
+	)
 }

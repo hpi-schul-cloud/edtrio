@@ -5,6 +5,8 @@ import qs from "qs"
 import Action from "~/components/Action"
 import Flex from "~/components/Flex"
 
+import EyeSVG from "~/assets/eye-red.svg"
+
 const Wrapper = styled(Flex)`
     padding: 15px;
     right: 0;
@@ -15,7 +17,7 @@ const Wrapper = styled(Flex)`
     opacity: ${props => (props.visible ? 1 : 0)};
     transition: 250ms all ease-in-out;
     background-color: #fff;
-    z-index: 100;
+    z-index: 2;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.18);
 
     border-radius: 5px 0px 0px 5px;
@@ -32,19 +34,33 @@ const ActionWrapper = styled.div`
 const StyledAction = styled(Action)`
     display: flex;
     align-items: center;
+    cursor: pointer;
 `
 
-const StyledIcon = styled.img`
-    width: 24px;
-    cursor: pointer;
-    margin-left: 10px;
+const StyledText = styled.span`
+    margin-right: 7px;
 `
 
 const Settings = ({ store, visible }) => {
-    const q = qs.parse(window.location.search, { ignoreQueryPrefix: true })
+	const q = qs.parse(window.location.search, { ignoreQueryPrefix: true })
 
-    const studentQuery = qs.stringify({ ...q, student_view: true })
+	const studentQuery = qs.stringify({ ...q, student_view: true })
 
+	return (
+		<Wrapper column visible={visible} alignEnd>
+			{!store.studentView && (
+				<ActionWrapper>
+					<StyledAction
+						to={`${window.location.pathname}?${studentQuery}`}>
+						<StyledText>Schüleransicht</StyledText> 
+						<EyeSVG width="24px"/>
+					</StyledAction>
+				</ActionWrapper>
+			)}
+		</Wrapper>
+	)
+	// code that is uses later
+	/*
     return (
         <Wrapper column visible={visible} alignEnd>
             <ActionWrapper>
@@ -53,7 +69,7 @@ const Settings = ({ store, visible }) => {
                     <StyledIcon src={require("~/assets/share-red.svg")} />
                 </StyledAction>
             </ActionWrapper>
-            {!store.studentView && (
+            {!store.view.studentView && (
                 <ActionWrapper>
                     <StyledAction
                         to={`${window.location.pathname}?${studentQuery}`}>
@@ -64,6 +80,7 @@ const Settings = ({ store, visible }) => {
             )}
         </Wrapper>
     )
+    */
 }
 
 export default Settings
