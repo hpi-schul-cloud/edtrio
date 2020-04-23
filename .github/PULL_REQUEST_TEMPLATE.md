@@ -44,12 +44,14 @@ Base Links to copie from
 <!--
   Keep in mind the stability, performance, aktivity, actuality and author.
 
-  Discripe why the it is needed.
+  Discripe why it is needed.
 -->
 
 ## Screenshots of changes
 <!--
   only needed for visiual stuff
+
+  If visisual changes exists, work from beginning thogheter with UI/UX
 -->
 
 ## Approval for review
