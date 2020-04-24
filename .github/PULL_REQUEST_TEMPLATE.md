@@ -24,13 +24,13 @@ Base links to copy
   Short notice if a ticket exists, more detailed if not
 -->
 
-[//]: ## Datasecurity
+## Datasecurity
 <!--
   Notice about model changes, logging of user data and other user data stuff, should be noted here. If you are not sure if it is relevant, ask the data-security team. 
 
 -->
 
-[//]: ## Deployment
+## Deployment
 <!--
   Keep in mind to changes to seed data, if changes are done by migration scripts.
   Changes to the infrastructure have to discussed with the devops
@@ -40,7 +40,7 @@ Base links to copy
   - Migration scripts to run, other requirements
 -->
 
-[//]: ## New Repos, NPM pakages or vendor scripts
+## New Repos, NPM pakages or vendor scripts
 <!--
   Keep in mind the stability, performance, activity and author.
 
