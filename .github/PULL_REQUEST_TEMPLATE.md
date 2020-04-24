@@ -1,6 +1,6 @@
 # Description
 <!--
-  This is a template to give as much as possible Informations to the pull request, to help the person which will do the review and is a checklist for you. Points to recognize are set in the comments, please read and keep them in mind:
+  This is a template to add as many information as possible to the pull request, to help reviewer and as a checklist for you. Points to remember are set in the comments, please read and keep them in mind:
   
     - Code should be selfexplain and share your knowlege with others
     - Document code that is not selfexplain
