@@ -2,19 +2,19 @@
 <!--
   This is a template to add as many information as possible to the pull request, to help reviewer and as a checklist for you. Points to remember are set in the comments, please read and keep them in mind:
   
-    - Code should be selfexplain and share your knowlege with others
-    - Document code that is not selfexplain
-    - Think about Bugs and keep security in mind
+    - Code should be self-explanatory and share your knowledge with others
+    - Document code that is not self-explanatory
+    - Think about bugs and keep security in mind
     - Write tests (Unit and Integration), also for error cases
-    - Main logic should hided behind the api, never trust the client
-    - Visibile changes should be discussed with the UX-Team from the begining of Programming, they also have to accept them at the end
-    - Keep changes also in changelog
-    - Remove not needed lines or set them as comment
+    - Main logic should hidden behind the api, never trust the client
+    - Visible changes should be discussed with the UX-Team from the begining of development; they also have to accept them at the end
+    - Keep the changelog up-to-date
+    - Leave the code cleaner than you found it. Remove unnecessary lines. Listen to the linter.
 -->
 
 ## Links to Tickets or other pull requests
 <!--
-Base Links to copie from
+Base links to copy
 - https://github.com/schul-cloud/schulcloud-server/pull/????
 - https://ticketsystem.schul-cloud.org/browse/SC-????
 -->
@@ -26,38 +26,38 @@ Base Links to copie from
 
 [//]: ## Datasecurity
 <!--
-  Notice about model changes, logging of user data and other user data stuff, should be noticed here. If you are not sure if it is relevant, ask the datasecureity team. 
+  Notice about model changes, logging of user data and other user data stuff, should be noted here. If you are not sure if it is relevant, ask the data-security team. 
 
 -->
 
 [//]: ## Deployment
 <!--
-  Keep in mind to change seed data, if changes are done by migration scripts.
+  Keep in mind to changes to seed data, if changes are done by migration scripts.
   Changes to the infrastructure have to discussed with the devops
 
   This point should includes following informations:
   - Envirement variables like FEATURE_XY=true
-  - Migration scripts to run, to get it run
+  - Migration scripts to run, other requirements
 -->
 
 [//]: ## New Repos, NPM pakages or vendor scripts
 <!--
-  Keep in mind the stability, performance, aktivity, actuality and author.
+  Keep in mind the stability, performance, activity and author.
 
-  Discripe why it is needed.
+  Describe why it is needed.
 -->
 
 ## Screenshots of changes
 <!--
-  only needed for visiual stuff
+  only needed for visual changes
 
-  If visisual changes exists, work from beginning thogheter with UI/UX
+  If visual changes exist, work together with UI/UX from from beginning
 -->
 
 ## Approval for review
-[ ] All points were discussed with the ticket creator, support-team or product owner. The code resolved all quaility giddeline writen in comments.
+[ ] All points were discussed with the ticket creator, support-team or product owner. The code upholds all quality guidelines from the PR-template.
 
 > Notice: Please remove the WIP label if the PR is ready to review, otherwise nobody will review it.
 
 ## Link to Definiton of Done
-More and detailed Informations to the definition of Done are[in Confluence](https://docs.schul-cloud.org/pages/viewpage.action?pageId=92831762)
+More and detailed information on the *definition of done* can be found [on Confluence](https://docs.schul-cloud.org/pages/viewpage.action?pageId=92831762)
