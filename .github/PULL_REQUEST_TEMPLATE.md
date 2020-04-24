@@ -55,7 +55,7 @@ Base links to copy
 -->
 
 ## Approval for review
-[ ] All points were discussed with the ticket creator, support-team or product owner. The code upholds all quality guidelines from the PR-template.
+- [ ] All points were discussed with the ticket creator, support-team or product owner. The code upholds all quality guidelines from the PR-template.
 
 > Notice: Please remove the WIP label if the PR is ready to review, otherwise nobody will review it.
 
