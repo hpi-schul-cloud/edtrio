@@ -22,6 +22,7 @@ Base links to copy
 ## Changes
 <!--
   What will the PR change?
+  Why are the changes requiered?
   Short notice if a ticket exists, more detailed if not
 -->
 
@@ -41,6 +42,7 @@ Base links to copy
   Changes to the infrastructure have to discussed with the devops
 
   This point should includes following informations:
+  - What is required for deployment?
   - Envirement variables like FEATURE_XY=true
   - Migration scripts to run, other requirements
 -->
