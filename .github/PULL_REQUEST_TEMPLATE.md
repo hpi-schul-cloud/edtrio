@@ -25,7 +25,7 @@ Base links to copy
   Short notice if a ticket exists, more detailed if not
 -->
 
-## Datasecurity <sub><sup>details [on Confluence](https://docs.schul-cloud.org/display/SCDOK/Datasecurity)</sup></sub>
+## Datasecurity <sub><sup>details [on Confluence](https://docs.schul-cloud.org/x/2S3GBg)</sup></sub>
 <!--
   Notice about:
   - model changes
