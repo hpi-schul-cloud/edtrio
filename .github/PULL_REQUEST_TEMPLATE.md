@@ -25,10 +25,14 @@ Base links to copy
   Short notice if a ticket exists, more detailed if not
 -->
 
-## Datasecurity
+## Datasecurity <sub><sup>details [on Confluence](https://docs.schul-cloud.org/display/SCDOK/Datasecurity)</sup></sub>
 <!--
-  Notice about model changes, logging of user data and other user data stuff, should be noted here. If you are not sure if it is relevant, ask the data-security team. 
-
+  Notice about:
+  - model changes
+  - logging of user data
+  - right changes
+  - and other user data stuff
+  If you are not sure if it is relevant, ask the data-security team.
 -->
 
 ## Deployment
