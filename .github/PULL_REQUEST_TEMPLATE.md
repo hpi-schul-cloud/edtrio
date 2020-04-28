@@ -48,7 +48,7 @@ Base links to copy
   Describe why it is needed.
 -->
 
-## Screenshots of changes
+## Screenshots of UI changes
 <!--
   only needed for visual changes
 
