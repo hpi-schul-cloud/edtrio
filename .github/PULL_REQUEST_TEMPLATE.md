@@ -32,7 +32,7 @@ Base links to copy
   - logging of user data
   - right changes
   - and other user data stuff
-  If you are not sure if it is relevant, ask the data-security team.
+  If you are not sure if it is relevant, take a look at confluence or ask the data-security team.
 -->
 
 ## Deployment
