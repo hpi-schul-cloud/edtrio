@@ -21,6 +21,7 @@ Base links to copy
 
 ## Changes
 <!--
+  What will the PR change?
   Short notice if a ticket exists, more detailed if not
 -->
 
@@ -51,7 +52,7 @@ Base links to copy
 <!--
   only needed for visual changes
 
-  If visual changes exist, work together with UI/UX from from beginning
+  If visual changes exist, work together with UI/UX from beginning
 -->
 
 ## Approval for review
