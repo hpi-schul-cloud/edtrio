@@ -52,7 +52,7 @@ Base links to copy
 <!--
   only needed for visual changes
 
-  If visual changes exist, work together with UI/UX from beginning
+  If visual changes exist, work together with UI/UX from beginning/ping UX with final PR
 -->
 
 ## Approval for review
