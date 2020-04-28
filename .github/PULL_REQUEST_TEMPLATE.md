@@ -66,5 +66,5 @@ Base links to copy
 
 > Notice: Please remove the WIP label if the PR is ready to review, otherwise nobody will review it.
 
-## Link to Definiton of Done
+### Link to Definiton of Done
 More and detailed information on the *definition of done* can be found [on Confluence](https://docs.schul-cloud.org/pages/viewpage.action?pageId=92831762)
