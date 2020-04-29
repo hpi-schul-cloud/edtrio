@@ -26,7 +26,7 @@ inform_staging() {
 }
 
 deploy(){
-	SYSTEM=$1 # [staging, test, demo]
+	SYSTEM=$1 # [staging.schul-cloud.org, test.schul-cloud.org, demo.schul-cloud.org, ....]
 
 	DOCKER_IMAGE=$2 # (edtrio)
 	DOCKER_TAG=$3 # version/tag of the image to use. Usually the branch name or a GIT_SHA
@@ -35,7 +35,7 @@ deploy(){
 	echo "deploy " $DOCKER_IMAGE ":" $DOCKER_TAG " to " $SYSTEM " as " $DOCKER_SERVICE_NAME
 
 	# deploy new dockerfile
-	ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i travis_rsa linux@$SYSTEM.schul-cloud.org /usr/bin/docker service update --force --image schulcloud/$DOCKER_IMAGE:$DOCKER_TAG $DOCKER_SERVICE_NAME
+	ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i travis_rsa linux@$SYSTEM /usr/bin/docker service update --force --image schulcloud/$DOCKER_IMAGE:$DOCKER_TAG $DOCKER_SERVICE_NAME
 }
 
 # ----------------
@@ -61,8 +61,10 @@ case "$TRAVIS_BRANCH" in
 
 	master)
 		inform_live
+		echo "release/hotfix"
+		deploy "schul-cloud.org" "edtrio" $DOCKERTAG "SC_edtrio"
+		deploy "niedersachsen.cloud" "edtrio" $DOCKERTAG "NBC_edtrio"
 		;;
-
 	develop)
 		echo "develop"
 		# deploy $SYSTEM $DOCKERFILE $DOCKERTAG $DOCKER_SERVICENAME $COMPOSE_DUMMY $COMPOSE_FILE $COMPOSE_SERVICENAME
