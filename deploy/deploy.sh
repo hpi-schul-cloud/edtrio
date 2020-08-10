@@ -35,7 +35,7 @@ deploy(){
 	echo "deploy " $DOCKER_IMAGE ":" $DOCKER_TAG " to " $SYSTEM " as " $DOCKER_SERVICE_NAME
 
 	# deploy new dockerfile
-	ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i travis_rsa linux@$SYSTEM.schul-cloud.org /usr/bin/docker service update --force --image schulcloud/$DOCKER_IMAGE:$DOCKER_TAG $DOCKER_SERVICE_NAME
+	ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i travis_rsa travis@$SYSTEM.schul-cloud.org schulcloud/$DOCKER_IMAGE:$DOCKER_TAG $DOCKER_SERVICE_NAME
 }
 
 # ----------------
