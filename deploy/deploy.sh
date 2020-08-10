@@ -5,6 +5,15 @@
 # ----------------
 
 set -e # fail with exit 1 on any error
+trap 'catch $? $LINENO' EXIT
+catch() {
+  if [ "$1" != "0" ]; then
+    echo "An issue occured in line $2. Status code: $1"
+  fi
+
+  # Cleanup
+  rm -f travis_rsa
+}
 
 # ----------------
 # SCRIPTS
