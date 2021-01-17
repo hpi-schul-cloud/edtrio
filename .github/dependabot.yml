@@ -1,0 +1,18 @@
+version: 2
+updates:
+- package-ecosystem: docker
+  directory: "/deploy"
+  schedule:
+    interval: daily
+    time: "01:00"
+    timezone: Europe/Berlin
+  open-pull-requests-limit: 99
+  rebase-strategy: disabled
+- package-ecosystem: docker
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "01:00"
+    timezone: Europe/Berlin
+  open-pull-requests-limit: 99
+  rebase-strategy: disabled
