@@ -1,29 +1,20 @@
-import React, { useState, useEffect, useContext } from "react"
+import React, { useEffect } from "react"
 import shortid from "shortid"
 
-import LessonContext from "~/Contexts/Lesson.context"
+import config from "~/config"
 
-import Input from "~/components/Input"
-import Flex from "~/components/Flex"
-
-import { createBoard } from "./utils"
-
-const Etherpad = ({ focused, state }) => {
+const Etherpad = ({ state }) => {
 	useEffect(() => {
 		if (state._id.value) return
 		state._id.set(shortid.generate())
 	}, [])
 
-	const { store, dispatch } = useContext(LessonContext)
+	const url = config.ETHERPAD_URL;
 
-	let etherpadFrame
 	if (state._id.get()) {
 		return (
 			<iframe
-				src={`https://etherpad.schul-cloud.org/p/${
-					// TODO maybe make this variable?
-					state._id.value
-				}`}
+				src={url+state._id.value}
 				style={{
 					width: "100%",
 					height: 800,

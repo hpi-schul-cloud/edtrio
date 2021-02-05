@@ -36,10 +36,15 @@ import { createImagePlugin } from "@edtr-io/plugin-image"
 // import { h5pPlugin } from "@edtr-io/plugin-h5p"
 
 // import nexboardPlugin from "./nexboard"
-import etherpadPlugin, {SizedEtherpadIcon} from "./etherpad"
+import etherpadPlugin, { SizedEtherpadIcon } from "./etherpad"
 import etherpadPluginPreview from "./etherpad/Preview"
+
+import nexboardPlugin, { SizedNextboardIcon } from "./nexboard"
+import nexboardPluginPreview from "./nexboard/Preview"
+
 // import lichtblickPlugin, {SizedLichtblickIcon} from "./lichtblick"
 // import lichtblickPluginPreview from "./lichtblick/Preview"
+
 import homework, {SizedHomeworkIcon} from "./homework"
 import ltiPlugin, {SizedLtiIcon} from "./lti"
 import ltiPluginPreview from "./lti/Preview"
@@ -305,17 +310,27 @@ addPlugin({
 addPlugin({
 	name: 'etherpad',
 	title: 'Etherpad',
-	icon: SizedEtherpadIcon,
 	description: 'Real time collaboration',
+	icon: SizedEtherpadIcon,
 	plugin: etherpadPlugin,
 	preview: etherpadPluginPreview
+})
+
+
+addPlugin({
+	name: "nxboard",
+	title: "Nexboard",
+	description: "Benutze das digitale Nexboard, um all deine Ideen festzuhalten!",
+	icon: SizedNextboardIcon,
+	plugin: nexboardPlugin,
+	preview: nexboardPluginPreview
 })
 
 addPlugin({
 	name: 'homework',
 	title: 'Aufgabe',
-	icon: SizedHomeworkIcon,
 	description: "Binde eine Aufgabe aus dem Kurs ein.",
+	icon: SizedHomeworkIcon,
 	plugin: homework,
 	preview: homeworkPreview,
 })

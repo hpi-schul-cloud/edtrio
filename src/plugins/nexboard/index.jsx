@@ -3,21 +3,19 @@ import { object, string } from "@edtr-io/plugin"
 
 import Nexboard from "./Nexboard"
 
-import NextboadIcon from "./assets/logo.png"
+import NextboadIconSVG from "./assets/logo.svg"
 
 export const nexboardState = object({
 	id: string(),
 })
 
+export const  SizedNextboardIcon = () => (
+	<NextboadIconSVG width="100%" />
+)
+
 export const generatePlugin = (Component) => ({
 	Component,
 	state: nexboardState,
-	icon: () => (
-		<NextboadIcon width="100%" />
-	),
-	title: "Nexboard",
-	description:
-        "Benutze das digitale Nexboard, um all deine Ideen festzuhalten!",
 })
 
 const nexboardPlugin = generatePlugin(Nexboard)
