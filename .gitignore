@@ -37,3 +37,6 @@ dist/storybook/
 .firebaserc
 firebase.json
 .firebase/
+
+# secrets
+deploy/travis_rsa
