@@ -1,4 +1,4 @@
-FROM node:lts as builder
+FROM node:12.17 as builder
 
 WORKDIR '/app'
 COPY ./package.json ./
