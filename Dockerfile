@@ -10,7 +10,7 @@ RUN cd dist && gzip -k index.js
 
 FROM nginx:alpine
 RUN apk update && apk add bash
-WORKDIR /app
+
 COPY --from=builder /app/dist /usr/share/nginx/html/
 COPY --from=builder /app/deploy/env.sh ./
 COPY --from=builder /app/deploy/nginx.conf.template /etc/nginx/
