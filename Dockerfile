@@ -16,8 +16,8 @@ COPY --from=builder /app/deploy/env.sh ./
 COPY --from=builder /app/deploy/nginx.conf.template /etc/nginx/
 COPY --from=builder /app/deploy/docker-entrypoint.sh ./
 WORKDIR /app/deploy
-RUN chmod 550 docker-entrypoint.sh
+RUN chmod 550 /app/deploy/docker-entrypoint.sh
 EXPOSE 80
 
 # read envs and start nginx
-CMD ./docker-entrypoint.sh
+CMD /app/deploy/docker-entrypoint.sh
