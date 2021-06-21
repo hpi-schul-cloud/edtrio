@@ -8,7 +8,7 @@ COPY . .
 RUN npm run build
 RUN cd dist && gzip -k index.js
 
-FROM nginx:alpine
+FROM nginx:1.17.9-alpine
 RUN apk update && apk add bash
 
 COPY --from=builder /app/dist /usr/share/nginx/html/
