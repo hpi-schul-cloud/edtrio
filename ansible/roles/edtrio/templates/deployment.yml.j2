@@ -15,13 +15,6 @@ spec:
       labels:
         app: edtrio
     spec:
-      securityContext:
-        #readOnlyRootFilesystem: true
-        # run as user node (uid 1000)
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        runAsNonRoot: true
       containers:
       - name: edtrio
         image: {{ EDTRIO_IMAGE_NAME }}:{{ APP_IMAGE_TAG }}
