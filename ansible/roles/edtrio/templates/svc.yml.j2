@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: edtrio-svc
+  namespace: {{ NAMESPACE }}
+  labels:
+    app: edtrio
+spec:
+  type: ClusterIP
+  ports:
+    - port: 4100
+      targetPort: 80
+      protocol: TCP
+      name: edtrio
+  selector:
+    app: edtrio
