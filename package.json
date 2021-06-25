@@ -45,7 +45,7 @@
         "@sentry/browser": "^5.12.5",
         "@svgr/parcel-plugin-svgr": "^5.2.0",
         "@types/slate": "^0.47.5",
-        "axios": "^0.19.2",
+        "axios": "^0.21.1",
         "curl": "^0.1.4",
         "object-hash": "^2.0.3",
         "react": "^16.13.0",
