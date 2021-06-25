@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: edtrio-deployment
+  namespace: {{ NAMESPACE }}
+  labels:
+    app: edtrio
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: edtrio
+  template:
+    metadata:
+      labels:
+        app: edtrio
+    spec:
+      containers:
+      - name: edtrio
+        image: {{ EDTRIO_IMAGE_NAME }}:{{ APP_IMAGE_TAG }}
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3000
+        envFrom:
+        - configMapRef:
+            name: edtrio-configmap
+        resources:
+          limits:
+            cpu: "1000m"
+            memory: "1Gi"
+          requests:
+            cpu: "100m"
+            memory: "1Gi"

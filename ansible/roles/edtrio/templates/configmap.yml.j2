@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: edtrio-configmap
+  namespace: {{ NAMESPACE }}
+  labels:
+    app: edtrio
+data:  
+  NODE_ENV: "production"
+  EDITOR_API_URL: "https://{{DOMAIN}}/editor"
+  SERVER_API_URL: "http://api-svc:3030"
+  EDITOR_SOCKET_URL: "wss://{{DOMAIN}}/editor"
+  CORS_URL: "{{DOMAIN}}"
+  HOMEWORK_URI: "/homework"
