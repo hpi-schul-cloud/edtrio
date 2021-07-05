@@ -3,7 +3,9 @@ import { ADD_SECTION , REPLACE_ADDED_SECTION_ID } from "./section.actions"
 import { invertSplice } from "~/utils/reducer"
 
 export const lessonInitialState = {
-	title: ''
+	title: '',
+	changed: new Set(),
+	sections: []
 }
 
 /**
@@ -16,8 +18,9 @@ export function lessonReducer(state = lessonInitialState, { type, payload }) {
 	switch (type) {
 	case SET_LESSON:
 		return {
+			sections: [],
 			...payload,
-			changed: new Set()
+			changed: payload.changed ? new Set(payload.changed) : new Set()
 		}
 	case UPDATE_LESSON:
 	case LESSON_UPDATED:
@@ -56,9 +59,10 @@ export function lessonReducer(state = lessonInitialState, { type, payload }) {
 		}
 
 	case ADD_SECTION: // TODO: should be saved to local storage but not to the backend
+		if(state.sections.includes(payload._id)) return state
 		return {
 			...state,
-			sections: invertSplice(state.sections, payload.position, 0, payload.tempId)
+			sections: invertSplice(state.sections, payload.position, 0, payload._id)
 		}
 
 	case REPLACE_ADDED_SECTION_ID:

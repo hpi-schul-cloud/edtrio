@@ -13,7 +13,12 @@ class Socket {
 
 	constructor(url, authorization){
 		this.url = url
-		this.socket = io(url)
+		this.socket = io(url, {
+			reconnection: true,
+			reconnectionDelay: 1000,
+			reconnectionDelayMax : 5000,
+			reconnectionAttempts: Infinity
+		  })
 		this.isConnected = false
 
 		this.socket.on('connect', () => {
